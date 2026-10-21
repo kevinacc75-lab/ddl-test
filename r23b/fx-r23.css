@@ -1,0 +1,82 @@
+/* r23-fx (Claude, 21 Oct 2026): original presentation polish. Every animation runs for --fx23-ms, which the
+   presentation sets inside the event's existing duration, so pace timings are unchanged. Transform/opacity/filter only. */
+.fx23-cutin{position:fixed;inset:0;pointer-events:none;z-index:46;display:grid;place-items:center;--fx23-color:#10b981}
+.fx23-cutin .fx23-dim{position:absolute;inset:0;background:radial-gradient(ellipse at center,#02040bb0 0,#02040b70 45%,transparent 75%);animation:fx23-dim var(--fx23-ms) ease-out both}
+@keyframes fx23-dim{0%{opacity:0}12%,80%{opacity:1}100%{opacity:0}}
+.fx23-cutin .fx23-band{position:absolute;left:-10%;right:-10%;top:50%;height:min(46vh,380px);transform:translateY(-50%) skewY(-7deg);background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--fx23-color) 30%,#050814 70%) 18%,color-mix(in srgb,var(--fx23-color) 22%,#02040b 78%) 82%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--fx23-color) 60%,transparent),0 0 60px color-mix(in srgb,var(--fx23-color) 45%,transparent);animation:fx23-band var(--fx23-ms) cubic-bezier(.2,.8,.2,1) both}
+.fx23-cutin .fx23-band::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 22px,color-mix(in srgb,var(--fx23-color) 16%,transparent) 22px 24px);mix-blend-mode:screen;animation:fx23-scan var(--fx23-ms) linear both}
+.fx23-cutin .fx23-burst{position:absolute;left:50%;top:50%;width:min(70vh,560px);aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--fx23-color) 55%,transparent) 0,transparent 62%);filter:blur(6px);animation:fx23-burst var(--fx23-ms) ease-out both}
+.fx23-cutin .fx23-card{position:relative;height:min(44vh,360px);aspect-ratio:.686;border-radius:8px;overflow:hidden;background:#0b1020;box-shadow:0 0 0 2px var(--fx23-color),0 0 28px 6px color-mix(in srgb,var(--fx23-color) 75%,transparent),0 0 90px 18px color-mix(in srgb,var(--fx23-color) 35%,transparent),0 18px 40px #000a;animation:fx23-card var(--fx23-ms) cubic-bezier(.16,1,.3,1) both}
+.fx23-cutin.fx23-opp .fx23-card{animation-name:fx23-card-opp}
+.fx23-cutin .fx23-card img{width:100%;height:100%;object-fit:cover;display:block}
+.fx23-cutin .fx23-noart{display:grid;place-items:center;height:100%;padding:12px;text-align:center;font:700 16px/1.2 Orbitron,Inter,sans-serif;color:#fff}
+.fx23-cutin .fx23-rim{position:absolute;inset:0;border-radius:8px;box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--fx23-color) 80%,#fff 20%),inset 0 0 24px color-mix(in srgb,var(--fx23-color) 70%,transparent);animation:fx23-rim calc(var(--fx23-ms)/3) ease-in-out 3 alternate both}
+.fx23-cutin .fx23-sweep{position:absolute;inset:-20%;background:linear-gradient(105deg,transparent 40%,#ffffffd0 49%,color-mix(in srgb,var(--fx23-color) 60%,#fff 40%) 51%,transparent 60%);mix-blend-mode:screen;animation:fx23-sweep var(--fx23-ms) ease-in-out both}
+.fx23-cutin .fx23-tag{position:absolute;left:50%;top:calc(50% + min(22vh,180px) + 14px);translate:-50% 0;display:flex;gap:10px;align-items:center;font:800 13px/1 Orbitron,Inter,sans-serif;letter-spacing:.14em;color:#fff;text-shadow:0 0 10px var(--fx23-color);animation:fx23-tag var(--fx23-ms) ease-out both;white-space:nowrap}
+.fx23-cutin .fx23-tag b{padding:6px 12px;border-radius:999px;background:var(--fx23-color);color:#06110d;text-shadow:none}
+.fx23-cutin[data-kind="trap"] .fx23-tag b{color:#fff}
+.fx23-cutin .fx23-tag span{opacity:.92}.fx23-cutin .fx23-tag em{font-style:normal;padding:5px 9px;border:1px solid var(--fx23-color);border-radius:4px}
+.fx23-cutin .fx23-sparks{position:absolute;left:50%;top:50%;width:0;height:0}
+.fx23-cutin .fx23-sparks i{position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px var(--fx23-color);rotate:calc(var(--i)*25.7deg);animation:fx23-spark var(--fx23-ms) ease-out both;animation-delay:calc(var(--fx23-ms)*.12)}
+.fx23-cutin[data-kind="trap"] .fx23-band{transform:translateY(-50%) skewY(7deg)}
+.fx23-cutin[data-kind="trap"] .fx23-card,.fx23-cutin.fx23-opp[data-kind="trap"] .fx23-card{animation-name:fx23-card-trap;animation-timing-function:cubic-bezier(.2,1.3,.3,1)}
+@keyframes fx23-band{0%{opacity:0;clip-path:inset(0 100% 0 0)}14%{opacity:1;clip-path:inset(0 0 0 0)}80%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 100%)}}
+@keyframes fx23-scan{from{background-position:0 0}to{background-position:240px 0}}
+@keyframes fx23-burst{0%{opacity:0;scale:.3}20%{opacity:1;scale:1}100%{opacity:0;scale:1.25}}
+@keyframes fx23-card{0%{opacity:0;transform:translateX(-38vw) rotateY(35deg) scale(.7)}18%{opacity:1;transform:translateX(0) rotateY(-6deg) scale(1.04)}26%{transform:translateX(0) rotateY(0) scale(1)}82%{opacity:1;transform:scale(1.01)}100%{opacity:0;transform:translateX(8vw) scale(.92)}}
+@keyframes fx23-card-opp{0%{opacity:0;transform:translateX(38vw) rotateY(-35deg) scale(.7)}18%{opacity:1;transform:translateX(0) rotateY(6deg) scale(1.04)}26%{transform:translateX(0) rotateY(0) scale(1)}82%{opacity:1;transform:scale(1.01)}100%{opacity:0;transform:translateX(-8vw) scale(.92)}}
+@keyframes fx23-card-trap{0%{opacity:0;transform:perspective(900px) rotateX(88deg) scale(.86)}14%{opacity:1;transform:perspective(900px) rotateX(-10deg) scale(1.07)}22%{transform:perspective(900px) rotateX(0) scale(1)}26%{transform:translateX(-6px)}30%{transform:translateX(6px)}34%{transform:none}82%{opacity:1;transform:scale(1.01)}100%{opacity:0;transform:scale(1.12)}}
+@keyframes fx23-rim{from{opacity:.35}to{opacity:1}}
+@keyframes fx23-sweep{0%,15%{transform:translateX(-70%)}55%,100%{transform:translateX(70%)}}
+@keyframes fx23-tag{0%,12%{opacity:0;translate:-50% 12px}24%,84%{opacity:1;translate:-50% 0}100%{opacity:0}}
+@keyframes fx23-spark{0%{opacity:0;transform:translateX(0)}15%{opacity:1}100%{opacity:0;transform:translateX(min(34vh,280px)) scale(.3)}}
+/* Field Spell: the light washes out from the Field Zone over the whole playmat. */
+.fx23-field-wash{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(circle at var(--fx23-x) var(--fx23-y),color-mix(in srgb,var(--fx23-color) 60%,transparent) 0,color-mix(in srgb,var(--fx23-color) 24%,transparent) 32%,transparent 62%);mix-blend-mode:screen;animation:fx23-wash var(--fx23-ms) ease-out both}
+.fx23-field-wash .fx23-horizon{position:absolute;left:0;right:0;top:var(--fx23-y);height:2px;background:linear-gradient(90deg,transparent,#fff,var(--fx23-color),#fff,transparent);box-shadow:0 0 18px 4px var(--fx23-color);animation:fx23-horizon var(--fx23-ms) cubic-bezier(.2,.8,.2,1) both}
+.fx23-field-wash .fx23-grid{position:absolute;inset:0;background:linear-gradient(color-mix(in srgb,var(--fx23-color) 22%,transparent) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,color-mix(in srgb,var(--fx23-color) 22%,transparent) 1px,transparent 1px) 0 0/48px 48px;-webkit-mask:radial-gradient(circle at var(--fx23-x) var(--fx23-y),#000 0,transparent 55%);mask:radial-gradient(circle at var(--fx23-x) var(--fx23-y),#000 0,transparent 55%);animation:fx23-grid var(--fx23-ms) ease-out both}
+@keyframes fx23-wash{0%{opacity:0;clip-path:circle(0 at var(--fx23-x) var(--fx23-y))}35%{opacity:1}100%{opacity:0;clip-path:circle(150% at var(--fx23-x) var(--fx23-y))}}
+@keyframes fx23-horizon{0%{transform:scaleX(0);opacity:0}25%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1.2);opacity:0}}
+@keyframes fx23-grid{0%{opacity:0}30%{opacity:.9}100%{opacity:0}}
+.fx23-field-flare{animation:fx23-zone var(--fx23-ms) ease-out both!important;outline:2px solid var(--fx23-color)}
+/* Equip: four clamps close on the card; the tether links it to its monster. */
+.fx23-equip-lock{position:fixed;width:var(--fx23-size);height:var(--fx23-size);translate:-50% -50%;pointer-events:none;z-index:3;border-radius:50%;border:2px dashed color-mix(in srgb,var(--fx23-color) 80%,#fff);animation:fx23-lock var(--fx23-ms) cubic-bezier(.3,1.4,.4,1) both}
+.fx23-equip-lock i{position:absolute;left:50%;top:50%;width:16px;height:6px;border-radius:2px;background:#e5e7eb;box-shadow:0 0 8px var(--fx23-color);rotate:calc(var(--n,0)*90deg);transform-origin:0 50%}
+.fx23-equip-lock i:nth-child(1){--n:0}.fx23-equip-lock i:nth-child(2){--n:1}.fx23-equip-lock i:nth-child(3){--n:2}.fx23-equip-lock i:nth-child(4){--n:3}
+.fx23-equip-lock i{animation:fx23-clamp var(--fx23-ms) cubic-bezier(.3,1.4,.4,1) both}
+@keyframes fx23-lock{0%{opacity:0;scale:1.6;rotate:-45deg}30%{opacity:1;scale:1;rotate:0deg}80%{opacity:1}100%{opacity:0;scale:.9}}
+@keyframes fx23-clamp{0%{transform:translateX(calc(var(--fx23-size)*.75))}35%,85%{transform:translateX(calc(var(--fx23-size)*.42))}100%{transform:translateX(calc(var(--fx23-size)*.42));opacity:0}}
+.fx23-tether{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;overflow:visible}
+.fx23-tether line{stroke:var(--fx23-color);stroke-width:7;stroke-linecap:round;opacity:.35;filter:drop-shadow(0 0 6px var(--fx23-color));stroke-dasharray:2000;animation:fx23-draw var(--fx23-ms) ease-out both}
+.fx23-tether .fx23-tether-core{stroke:#fff;stroke-width:2;opacity:.95}
+@keyframes fx23-draw{0%{stroke-dashoffset:2000}45%{stroke-dashoffset:0}85%{opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+/* Chain links: numbered ring burst, bigger for higher links. */
+.fx23-chain-stamp{position:fixed;width:120px;height:120px;translate:-50% -50%;pointer-events:none;z-index:4;scale:var(--fx23-scale,1)}
+.fx23-chain-stamp i{position:absolute;inset:0;border-radius:50%;border:3px solid var(--fx23-color);box-shadow:0 0 18px var(--fx23-color),inset 0 0 12px var(--fx23-color);animation:fx23-ring var(--fx23-ms) cubic-bezier(.1,.8,.3,1) both;animation-delay:calc(var(--i)*var(--fx23-ms)*.08)}
+.fx23-chain-stamp b{position:absolute;left:50%;top:50%;translate:-50% -50%;white-space:nowrap;font:900 22px/1 Orbitron,Inter,sans-serif;letter-spacing:.08em;color:#fff;padding:6px 12px;border-radius:6px;background:color-mix(in srgb,var(--fx23-color) 78%,#000);box-shadow:0 0 0 2px #fff6,0 0 26px var(--fx23-color);animation:fx23-stamp var(--fx23-ms) cubic-bezier(.2,1.6,.4,1) both}
+.fx23-chain-stamp.fx23-resolve b,.fx23-chain-stamp.fx23-negate b{font-size:15px}
+@keyframes fx23-ring{0%{opacity:0;scale:.2}15%{opacity:1}100%{opacity:0;scale:2.4}}
+@keyframes fx23-stamp{0%{opacity:0;scale:2.2}18%{opacity:1;scale:.92}26%{scale:1}82%{opacity:1}100%{opacity:0;scale:1.05}}
+.fx23-link-flare{animation:fx23-zone var(--fx23-ms) ease-out both!important}
+/* Moves: both zones flare; the Deck pile swirls. */
+.fx23-zone-flare,.fx23-deck-flare{animation:fx23-zone var(--fx23-ms) ease-out both!important}
+@keyframes fx23-zone{0%{filter:brightness(1);box-shadow:0 0 0 0 transparent}25%{filter:brightness(1.6) saturate(1.3);box-shadow:0 0 0 3px var(--fx23-color),0 0 30px 8px var(--fx23-color)}100%{filter:brightness(1);box-shadow:0 0 0 0 transparent}}
+.fx23-deck-swirl{position:fixed;width:var(--fx23-size);height:var(--fx23-size);translate:-50% -50%;pointer-events:none;z-index:3}
+.fx23-deck-swirl .fx23-ring{position:absolute;inset:0;border-radius:50%;border:3px solid transparent;border-top-color:var(--fx23-color);border-right-color:color-mix(in srgb,var(--fx23-color) 50%,#fff);filter:drop-shadow(0 0 8px var(--fx23-color));animation:fx23-spin var(--fx23-ms) linear both}
+.fx23-deck-swirl .fx23-ring2{inset:16%;animation-direction:reverse}
+.fx23-deck-swirl s{position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px var(--fx23-color);rotate:calc(var(--i)*45deg);animation:fx23-orbit-in var(--fx23-ms) ease-in both}
+.fx23-deck-swirl.fx23-out s{animation-name:fx23-orbit-out;animation-timing-function:ease-out}
+.fx23-deck-swirl b{position:absolute;left:50%;top:-12px;translate:-50% -100%;white-space:nowrap;font:800 11px/1 Orbitron,Inter,sans-serif;letter-spacing:.12em;color:#fff;padding:5px 8px;border-radius:999px;background:color-mix(in srgb,var(--fx23-color) 70%,#000);box-shadow:0 0 14px var(--fx23-color);animation:fx23-tag var(--fx23-ms) ease-out both}
+@keyframes fx23-spin{0%{opacity:0;rotate:0deg;scale:.6}20%{opacity:1;scale:1}80%{opacity:1}100%{opacity:0;rotate:540deg;scale:.8}}
+@keyframes fx23-orbit-in{0%{opacity:0;transform:translateX(calc(var(--fx23-size)*.9))}25%{opacity:1}100%{opacity:0;transform:translateX(0) scale(.2)}}
+@keyframes fx23-orbit-out{0%{opacity:0;transform:translateX(0) scale(.2)}25%{opacity:1}100%{opacity:0;transform:translateX(calc(var(--fx23-size)*.9))}}
+/* The current chain link in the strip pops when it changes. */
+#event-chain-strip .chain-thumb.current,#chain .chain-thumb.current{animation:fx23-thumb .5s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes fx23-thumb{0%{scale:.9;filter:brightness(1.8)}60%{scale:1.06}100%{scale:1;filter:none}}
+/* Lighter graphics keep only the flares; reduced motion and quiet motion show nothing animated. */
+body[data-graphics="smooth"] .fx23-cutin .fx23-sparks,body[data-graphics="smooth"] .fx23-cutin .fx23-band::after,body[data-graphics="smooth"] .fx23-field-wash .fx23-grid{display:none}
+body.quiet-motion .fx23-cutin,body.quiet-motion .fx23-field-wash,body.quiet-motion .fx23-equip-lock,body.quiet-motion .fx23-tether,body.quiet-motion .fx23-chain-stamp,body.quiet-motion .fx23-deck-swirl{display:none}
+body.quiet-motion #event-chain-strip .chain-thumb.current,body.quiet-motion #chain .chain-thumb.current{animation:none}
+@media (prefers-reduced-motion:reduce){.fx23-cutin,.fx23-field-wash,.fx23-equip-lock,.fx23-tether,.fx23-chain-stamp,.fx23-deck-swirl{display:none}#event-chain-strip .chain-thumb.current,#chain .chain-thumb.current,.fx23-zone-flare,.fx23-deck-flare,.fx23-link-flare,.fx23-field-flare{animation:none!important}}
+
+/* The cut-in sits above the event callout; it pauses with the rest of the effects while the duel is held. */
+.fx-held .fx23-top,.fx-held .fx23-top *{animation-play-state:paused!important}
