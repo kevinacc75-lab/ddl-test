@@ -1,0 +1,12 @@
+{
+  "about": "r24: Kevy's duel soundtrack. Each duel picks one track at random (never the same twice in a row), fades it in, and loops it by crossfading into itself just before its natural ending (end, in seconds). A new duel crossfades to a new track. Remove all tracks to use the built-in score.",
+  "credit": "Duel soundtrack: original tracks by Kevy, made with Suno (21 Oct 2026).",
+  "fadeIn": 2.5,
+  "overlap": 2,
+  "newGame": 2,
+  "tracks": [
+    {"file": "ddl-track-pulse.mp3", "title": "Pulse", "end": 147.0},
+    {"file": "ddl-track-buoyant-groove.mp3", "title": "Buoyant Groove", "end": 147.5},
+    {"file": "ddl-track-buoyant-groove-2.mp3", "title": "Buoyant Groove II", "end": 146.0}
+  ]
+}
