@@ -1,0 +1,61 @@
+@font-face{font-family:Orbitron;src:url('fonts/orbitron.woff') format('woff');font-weight:400 900;font-style:normal;font-display:swap}:root{--font-display:Orbitron,Inter,sans-serif}
+@font-face{font-family:Inter;src:url('fonts/inter.woff') format('woff');font-weight:100 900;font-style:normal;font-display:swap}:root{--font-ui:Inter,system-ui,sans-serif}
+/* 1600 × 1000 tablet stage. Text scenes stay at native screen size. */
+body.in-duel.tablet-stage:not(.portrait-overview) #duel{inset:auto!important;left:50%!important;top:50%!important;width:1600px!important;height:1000px!important;transform:translate(-50%,-50%) scale(var(--stage-scale));transform-origin:center;overflow:hidden}
+body.in-duel.tablet-stage #duel .duel-table{max-width:none!important;width:100%!important;height:100%!important}
+body.in-duel.tablet-stage #duel #arena-scroll{inset:100px 105px 175px 175px!important;overflow:visible!important}
+body.in-duel.tablet-stage #duel .half{grid-template-columns:95px minmax(0,1fr) 95px!important;grid-template-rows:1fr!important;gap:15px!important}
+body.in-duel.tablet-stage #duel .placement-zones{grid-column:2!important;grid-row:1!important}
+body.in-duel.tablet-stage #duel .pile-col{display:flex!important;flex-direction:column!important;grid-row:1!important}
+body.in-duel.tablet-stage #duel .arena-surface{grid-template-rows:2fr 20px 1fr 2fr!important;gap:12px!important;max-height:none!important}
+body.in-duel.tablet-stage #duel .player-bar{width:330px!important;max-width:none!important}
+body.in-duel.tablet-stage #duel .player-bar.own{bottom:140px!important;left:20px!important;top:auto!important;right:auto!important}
+body.in-duel.tablet-stage #duel .player-bar.opponent{top:20px!important;right:20px!important;left:auto!important;bottom:auto!important}
+body.in-duel.tablet-stage #duel .player-avatar{width:55px!important;height:55px!important;flex-basis:55px!important}
+body.in-duel.tablet-stage #duel .player-identity{font-size:15px!important}body.in-duel.tablet-stage #duel .lp-value{font-size:40px!important}
+body.in-duel.tablet-stage #duel .hand{height:165px!important;bottom:-8px!important;left:27%!important;right:27%!important}
+body.in-duel.tablet-stage #duel .hand-card{height:160px!important;width:112px!important;flex-basis:112px!important;min-width:55px!important;margin-left:-18px!important}
+body.in-duel.tablet-stage #duel .opponent-hand{top:-12px!important;left:30%!important;right:30%!important;height:100px!important}
+body.in-duel.tablet-stage #duel .opponent-hand :is(button,.hand-back){height:95px!important;width:66px!important}
+body.in-duel.tablet-stage #duel .phase-tracker{right:18px!important;top:27%!important;bottom:27%!important;width:65px!important}
+body.in-duel.tablet-stage #duel .phase-tracker span{font-size:16px!important;padding:14px 5px!important}
+body.in-duel.tablet-stage #duel .chain-panel{top:135px!important;bottom:200px!important;left:12px!important;width:155px!important}
+body.in-duel.tablet-stage #duel .field-cue{right:18px!important;bottom:20px!important;width:340px!important;padding:14px!important;max-height:130px!important}
+body.in-duel.tablet-stage #duel .field-cue :is(p,button){font-size:19px!important}body.in-duel.tablet-stage #duel .field-cue p{max-height:50px!important}
+body.in-duel.tablet-stage #duel .decision-column{inset:100px 105px 175px 175px!important;padding:25px!important}
+body.in-duel.tablet-stage #duel :is(button,[role=button]){min-height:var(--touch-size,44px)}
+body.in-duel.tablet-stage #duel .zone.occupied{min-width:var(--touch-size,44px)}
+body.in-duel.tablet-stage #duel .zone-caption{font-size:13px!important}body.in-duel.tablet-stage #duel .card-stats{font-size:17px!important;padding:5px!important}
+#duel .hand.hand-expanded{bottom:90px!important;left:10%!important;right:10%!important;height:240px!important;gap:12px!important;background:#0c132bee;border:1px solid #78cffa66;border-radius:18px}
+#duel .hand.hand-expanded .hand-card{height:220px!important;width:155px!important;flex-basis:155px!important;transform:none!important;margin:0!important}
+.audio-buses{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:#0b1328;border:1px solid #64799b55;border-radius:12px;padding:18px;margin:20px 0}.audio-buses h3{grid-column:1/-1;margin:0}.audio-buses label{display:grid;gap:6px;font-size:14px}.audio-buses input[type=range]{width:100%;min-height:44px}
+.controls-grid label{line-height:1.4}.controls-grid select{min-height:44px}#timeline-tools{display:flex;gap:10px;margin-bottom:20px}.journal-entry[data-rewind]{cursor:pointer}.journal-entry[data-rewind]:hover{background:#70c6ff16}.journal-entry[data-rewind]::after{content:' ↶';opacity:.5}.bookmark{display:block;text-align:left;width:100%;padding:15px;min-height:44px}.bookmark small{display:block;color:#a5bad9}.optimal-note{color:#aad9c8;font-size:14px}
+#event-stage[data-compact=true]{display:flex!important;align-items:center;justify-content:center;gap:22px;padding:20px!important;background:transparent!important;backdrop-filter:none!important;pointer-events:none}
+#event-stage[data-compact=true] .event-card-wrap{width:125px!important;height:auto!important;position:relative!important;inset:auto!important}#event-stage[data-compact=true] #event-art{width:125px!important;max-height:190px!important;object-fit:contain}#event-stage[data-compact=true] .event-copy{position:static!important;width:min(420px,55vw);padding:18px!important;border:1px solid var(--event-color);background:#0b142bea!important}#event-stage[data-compact=true] #event-title{font-size:22px!important}#event-stage[data-compact=true] #event-line{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px!important;line-height:1.5}#event-stage[data-compact=true] :is(.event-orbit,.event-sweep,.event-bars){display:none!important}
+#event-ribbon{top:auto!important;bottom:70px!important;max-width:80vw!important}#summon-scene .scene-content{overflow:auto;max-height:90dvh;padding:35px 20px 70px!important}#summon-scene .scene-kicker{white-space:normal!important;line-height:1.4!important}#summon-scene .scene-name,#scene-name{line-height:1.2!important}
+#duelist-reaction{position:absolute;bottom:265px;left:25px;z-index:12;padding:15px 24px;background:#101a30eb;border:1px solid #8bd4f8;border-radius:18px;font:600 20px var(--font-ui)}#duelist-cutin{position:absolute;inset:30% 0 auto;height:210px;z-index:18;background:linear-gradient(90deg,#090f27,#406780aa,#090f27);border-block:2px solid #8edbff;display:flex;align-items:center;gap:60px;padding:0 170px}#duelist-cutin img{height:210px;width:210px;object-fit:cover;object-position:50% 25%}#duelist-cutin b{font:700 32px var(--font-display)}#duelist-cutin.cutin-live{animation:portrait-cutin 1s both}@keyframes portrait-cutin{from{opacity:0;transform:translateX(-100%)}20%,70%{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(100%)}}
+#rotate-hint{position:fixed;inset:0;z-index:500;background:radial-gradient(ellipse,#1b3051,#070d1c);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}#rotate-hint span{font-size:90px;color:#92d5ff}#rotate-hint button{min-height:48px}#rotate-hint[hidden],#duelist-cutin[hidden],#duelist-reaction[hidden]{display:none!important}
+body.portrait-overview.tablet-stage #duel{inset:0!important;width:100vw!important;height:100dvh!important;transform:none!important;left:0!important;top:0!important}body.portrait-overview.tablet-stage #duel #arena-scroll{inset:145px 25px 240px!important}body.portrait-overview.tablet-stage #duel .chain-panel{display:none!important}body.portrait-overview.tablet-stage #duel .half{grid-template-columns:45px minmax(0,1fr) 45px!important;gap:4px!important}body.portrait-overview.tablet-stage #duel .field-cue{width:190px!important;font-size:13px!important;bottom:125px!important}body.portrait-overview.tablet-stage #duel .field-cue :is(p,button){font-size:13px!important}body.portrait-overview.tablet-stage #duel .player-bar{width:220px!important}body.portrait-overview.tablet-stage #duel .player-bar.own{bottom:145px!important}body.portrait-overview.tablet-stage #duel .opponent-hand{top:85px!important;left:20%!important;right:20%!important}body.portrait-overview.tablet-stage #duel .hand{left:5%!important;right:5%!important;height:115px!important}body.portrait-overview.tablet-stage #duel .hand-card{height:110px!important;width:77px!important;flex-basis:77px!important}body.portrait-overview.tablet-stage #duel .phase-tracker{display:none!important}
+@media(prefers-reduced-motion:reduce){#duelist-cutin.cutin-live{animation:none}.clause-sweep,.event-orbit{animation:none!important}}
+
+@keyframes clause-pulse{0%,100%{opacity:1}50%{opacity:.86}}@keyframes card-aura{0%,100%{opacity:1}50%{opacity:.9}}.lp-meter i{transform-origin:left;transition:transform .08s linear}#duel-summary{padding:20px;border:1px solid #b8d7f455;border-radius:12px;margin-bottom:20px}#duel-summary li{margin:10px 0;line-height:1.6}
+
+body[data-chain-flow=true] .legacy-pacing,body[data-chain-flow=true] label:has(#controls-effect-pace),body[data-chain-flow=true] label:has(#controls-fx-pace){display:none!important}.duelist-title{display:block;font:500 12px/1.5 var(--font-ui);letter-spacing:.08em;color:#a9c9dd;margin-top:3px}
+/* Motion uses compositor properties; glows are static while the card pulses. */
+.fx-arrival,.fx-effect{box-shadow:0 0 20px var(--fx-color,#8bd4ff)}
+@keyframes arrival-glow{0%,100%{opacity:1}45%{opacity:.76}}
+@keyframes effect-glow{0%,100%{opacity:1}40%{opacity:.78}}
+@keyframes damage-shift{20%{transform:translateX(-4px);opacity:.7}40%{transform:translateX(3px);opacity:1}70%{transform:translateX(0)}}
+@keyframes ribbon-in{from{opacity:0}to{opacity:1}}
+@keyframes track-flow{from{opacity:.6}to{opacity:1}}
+@keyframes audition{30%{transform:translateY(-2px);opacity:.82}}
+@keyframes legal-glow{from{opacity:.78}to{opacity:1}}
+@keyframes stat-pulse{30%{opacity:.65;transform:scale(1.07)}}
+@keyframes card-fade{from{opacity:.65}to{opacity:1}}
+
+body.in-duel.tablet-stage:not(.portrait-overview) .field-chain-coin{font-size:calc(12px / var(--stage-scale))!important}body.in-duel.tablet-stage:not(.portrait-overview) #chain b{font-size:calc(12px / var(--stage-scale))!important}
+
+/* Banners must fit the native viewport, including long summon labels. */
+#event-title{max-width:100%;overflow-wrap:anywhere;white-space:normal!important;line-height:1.2!important}
+.event-copy{min-width:0}
+body.in-duel.tablet-stage #duel .hand{bottom:0!important;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain}
