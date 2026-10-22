@@ -2,7 +2,7 @@
   "name": "ddl-r18-checker-kit",
   "private": true,
   "type": "module",
-  "description": "Claude's r18 repo tests and tools at commit bcedcb0 (r32). Test-only; no game files. Put the r31 build folder next to tests/ as dist/.",
+  "description": "Claude's r18 repo tests and tools at commit bcedcb0 (r32). Test-only; no game files. Put the r32 build folder next to tests/ as dist/.",
   "devDependencies": {"jsdom": "30.1.2", "css-tree": "3.2.1"},
   "engines": {"node": ">=22.22.2"}
 }
