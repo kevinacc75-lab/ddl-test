@@ -1,0 +1,456 @@
+diff --git a/dist/ai/book/book.mjs b/dist/ai/book/book.mjs
+index fe6eb67..94d80eb 100644
+--- a/dist/ai/book/book.mjs
++++ b/dist/ai/book/book.mjs
+@@ -9,9 +9,11 @@ import kashtira from './kashtira-lines.mjs';
+ import blueeyes from './blueeyes-lines.mjs';
+ import luna from './luna-lines.mjs';
+ import toon from './toon-lines.mjs';
++import hero from './hero-lines.mjs';
++import mikanko from './mikanko-lines.mjs';
+ 
+ // r27 (Kevy 22 Oct: "ensure they are actually playing the deck optimally"): books for more decks.
+-export const BOOKS={branded,kashtira,blueeyes,toon,luna};
++export const BOOKS={branded,kashtira,blueeyes,toon,luna,hero,mikanko};/* r31: the Sky Striker draft (tools/drafts/sky-lines-draft.mjs) did not beat the base AI on 20 hands, so it is not shipped */
+ const MAIN1=4,MAIN2=256;
+ const EXTRA_TYPES=64|8192|8388608|67108864;
+ const names=(d,list)=>list.filter(Boolean).map(c=>d.name(c.code));
+diff --git a/dist/ai/book/branded-lines.mjs b/dist/ai/book/branded-lines.mjs
+index f611361..fa5d619 100644
+--- a/dist/ai/book/branded-lines.mjs
++++ b/dist/ai/book/branded-lines.mjs
+@@ -42,7 +42,12 @@ export default {
+   {"id": "B-02", "name": "Fusion Deployment for Albaz (also after Branded Fusion is negated)", "postBan": "survives", "when": {"hand": ["Fusion Deployment"], "notHand": ["Dark Magician"]},
+    "steps": [{"do": "activate", "card": "Fusion Deployment"}]},
+   {"id": "L-07", "name": "Dragoon (Dark Magician + Fusion Deployment + Super Polymerization)", "postBan": "dies (Dragoon Forbidden)", "when": {"hand": ["Dark Magician", "Fusion Deployment", "Super Polymerization"], "handMin": 4, "notHand": ["Aluber the Jester of Despia"]},
+-   "steps": [{"do": "summon", "card": "Dark Magician"}, {"do": "activate", "card": "Fusion Deployment"}, {"do": "activate", "card": "Super Polymerization"}]}
++   "steps": [{"do": "summon", "card": "Dark Magician"}, {"do": "activate", "card": "Fusion Deployment"}, {"do": "activate", "card": "Super Polymerization"}]},
++  {"id": "R30-QNS", "name": "Last resort: Normal Summon Guiding Quem (sends Albaz; a body for their turn)", "postBan": "r30 (Claude; Akiza review pending)", "when": {"hand": ["Guiding Quem, the Virtuous"]},
++   "steps": [{"do": "summon", "card": "Guiding Quem, the Virtuous"}]}
++ ],
++ "blocks": [
++  {"do": "activate", "card": "The Fallen & The Virtuous", "unless": {"oppCardsMin": 1, "fieldAny": ["Incredible Ecclesia, the Virtuous"]}, "why": "r30: its first effect must destroy a face-up card; with nothing of the opponent's on the field it would destroy our own (seen: our Blazing Cartesia). Hold it for their turn."}
+  ],
+  "picks": [
+   {"source": "Nadir Servant", "hint": [504], "prefer": ["Titaniklad the Ash Dragon", "Lubellion the Searing Dragon", "Granguignol the Dusk Dragon", "Albion the Sanctifire Dragon"], "why": "r28: Titaniklad in the GY adds or Special Summons Albaz / a Dogmatika in the End Phase; never Mirrorjade (its GY effect needs it to leave the field). Previously the boss rule kept Mirrorjade in the Extra Deck by accident."},
+diff --git a/dist/ai/book/hero-lines.mjs b/dist/ai/book/hero-lines.mjs
+new file mode 100644
+index 0000000..0409a46
+--- /dev/null
++++ b/dist/ai/book/hero-lines.mjs
+@@ -0,0 +1,45 @@
++// r31 data file: HERO playbook (Claude, 22 Oct 2026, for Kevy; Akiza review pending). Built from the cards' printed
++// texts and the deck's r31 audit (20 seeded hands going first, base AI): Fusion Destiny was discarded to Masked HERO
++// Furnace or never used; Polymerization made Vision HERO Trinity only to feed a Link; Destroyer Phoenix Enforcer's
++// Quick Effect destroyed our own Malicious and itself with nothing of the opponent's on the field.
++// Core line: Fusion Destiny (Malicious from the Deck + a Level 6+ HERO) -> Destiny HERO - Destroyer Phoenix Enforcer;
++// Malicious in the GY banishes itself to Special Summon another Malicious (DARK HERO, legal under Fusion Destiny's
++// lock); Mask Change stays set for the opponent's turn (Malicious -> Masked HERO Dark Law). Faris discards Malicious
++// (feeding that recursion) and places Vision HERO Increase as a Continuous Trap.
++export default {
++ "deck": "hero",
++ "source": "Claude r31 from the printed card texts and the r31 audit; not yet reviewed by Akiza or Alexis.",
++ "starters": ["Fusion Destiny", "Vision HERO Faris", "Masked HERO Furnace", "Elemental HERO Stratos", "E - Emergency Call", "Miracle Ejector"],
++ "lines": [
++  {"id": "HE-FD", "name": "Fusion Destiny -> Destroyer Phoenix Enforcer; Malicious recursion", "when": {"hand": ["Fusion Destiny"]},
++   "steps": [{"do": "activate", "card": "Fusion Destiny"}, {"do": "activate", "card": "Destiny HERO - Malicious"}]},
++  {"id": "HE-FURN", "name": "Masked HERO Furnace: add Mask Change, discard Malicious", "when": {"hand": ["Masked HERO Furnace"]},
++   "steps": [{"do": "activate", "card": "Masked HERO Furnace"}]},
++  {"id": "HE-FARIS", "name": "Vision HERO Faris: discard Malicious, place Vision HERO Increase", "when": {"hand": ["Vision HERO Faris"], "handAny": ["Destiny HERO - Malicious", "Elemental HERO Neos", "Masked HERO Furnace", "Neo-Spacian Aqua Dolphin", "Elemental HERO Stratos"]},
++   "steps": [{"do": "activate", "card": "Vision HERO Faris"}]},
++  {"id": "HE-STRAT", "name": "Elemental HERO Stratos: add a HERO", "when": {"hand": ["Elemental HERO Stratos"]},
++   "steps": [{"do": "summon", "card": "Elemental HERO Stratos"}]},
++  {"id": "HE-CALL", "name": "E - Emergency Call for Stratos", "when": {"hand": ["E - Emergency Call"]},
++   "steps": [{"do": "activate", "card": "E - Emergency Call"}]}
++ ],
++ "picks": [
++  {"source": "*", "hint": [533], "prefer": ["Vision HERO Vyon", "Vision HERO Increase", "Vision HERO Faris", "Elemental HERO Stratos", "Elemental HERO Shadow Mist", "Miracle Ejector", "Neo-Spacian Aqua Dolphin", "Destiny HERO - Malicious", "Masked HERO Fountain", "Masked HERO Dusk Crow"]},
++  {"source": "Fusion Destiny", "hint": [509], "prefer": ["Destiny HERO - Destroyer Phoenix Enforcer"]},
++  {"source": "Fusion Destiny", "hint": [511], "prefer": ["Destiny HERO - Malicious", "Destiny HERO - Denier"]},
++  {"source": "Masked HERO Furnace", "hint": [506], "prefer": ["Mask Change", "Polymerization"]},
++  {"source": "Masked HERO Furnace", "hint": [501], "prefer": ["Destiny HERO - Malicious", "Neo-Spacian Aqua Dolphin", "Elemental HERO Neos", "Masked HERO Fountain", "A Hero Lives", "Polymerization"]},
++  {"source": "Vision HERO Faris", "prefer": ["Destiny HERO - Malicious", "Elemental HERO Neos", "Neo-Spacian Aqua Dolphin", "Vision HERO Increase", "Vision HERO Vyon"]},
++  {"source": "Elemental HERO Stratos", "hint": [506], "prefer": ["Destiny HERO - Malicious", "Vision HERO Faris", "Elemental HERO Shadow Mist"]},
++  {"source": "E - Emergency Call", "prefer": ["Elemental HERO Stratos", "Elemental HERO Shadow Mist", "Miracle Ejector"]},
++  {"source": "Destiny HERO - Destroyer Phoenix Enforcer", "hint": [502], "prefer": ["Destiny HERO - Malicious", "Destiny HERO - Denier", "Vision HERO Increase"]}
++ ],
++ "options": [{"source": "Elemental HERO Stratos", "match": "add|hand"}],
++ "blocks": [
++  {"do": "special", "card": "Xtra HERO Infernal Devicer", "if": {"fieldAny": ["Destiny HERO - Destroyer Phoenix Enforcer", "Masked HERO Dark Law"]}, "why": "keep the boss: this Link would have to use Destroyer Phoenix Enforcer / Dark Law as material (seen)"},
++  {"do": "special", "card": "Xtra HERO Wonder Driver", "if": {"fieldAny": ["Destiny HERO - Destroyer Phoenix Enforcer", "Masked HERO Dark Law"]}, "why": "keep the boss: this Link would have to use Destroyer Phoenix Enforcer / Dark Law as material (seen)"},
++  {"do": "special", "card": "Xtra HERO Cross Crusader", "if": {"fieldAny": ["Destiny HERO - Destroyer Phoenix Enforcer", "Masked HERO Dark Law"]}, "why": "keep the boss: this Link would have to use Destroyer Phoenix Enforcer / Dark Law as material (seen)"},
++  {"do": "activate", "card": "Mask Change", "unless": {"notOwnTurn": true}, "why": "set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"},
++  {"do": "activate", "card": "Destiny HERO - Destroyer Phoenix Enforcer", "unless": {"oppCardsMin": 1}, "why": "its Quick Effect destroys one of ours and one card on the field: with nothing of the opponent's out it only destroys our own cards (seen: Malicious and Enforcer itself)"},
++  {"do": "activate", "card": "Polymerization", "if": {"handAny": ["Fusion Destiny"]}, "why": "Fusion Destiny makes Destroyer Phoenix Enforcer from the Deck; Polymerization from hand spends the cards Fusion Destiny needs"}
++ ]
++};
+diff --git a/dist/ai/book/mikanko-lines.mjs b/dist/ai/book/mikanko-lines.mjs
+new file mode 100644
+index 0000000..b29f526
+--- /dev/null
++++ b/dist/ai/book/mikanko-lines.mjs
+@@ -0,0 +1,17 @@
++// r31 data file: Mikanko / Kaiju playbook, light touch (Claude, 22 Oct 2026; Akiza review pending). The live search
++// already plays this deck's going-second board breaks well (one-turn wins on most seeded hands when it has its full
++// time), so this book adds only clear picks and keeps book-trust OFF ("trust": false): search still decides every move.
++// Note for Tea: this list has no "Mikanko Kagura", the Ritual Spell Ohime names; Preparation of Rites can only add
++// Ohime (no Ritual Spell to recover), and Ohime reaches the field through The Great Mikanko Ceremony or Noble Twins.
++export default {
++ "deck": "mikanko",
++ "trust": false,
++ "source": "Claude r31 from the printed card texts; not yet reviewed by Akiza or Alexis.",
++ "starters": ["Mikanko Shinbu - Noble Twins", "Ohime the Manifested Mikanko", "Preparation of Rites", "Mikanko Water Arabesque"],
++ "lines": [],
++ "picks": [
++  {"source": "Preparation of Rites", "prefer": ["Ohime the Manifested Mikanko"]},
++  {"source": "Mikanko Shinbu - Noble Twins", "hint": [504], "prefer": ["Mikanko Dance - Mayowashidori", "Sanaki the Mikanko Devotee"]}
++ ],
++ "blocks": []
++};
+diff --git a/dist/ai/goal-boards.mjs b/dist/ai/goal-boards.mjs
+new file mode 100644
+index 0000000..9c51671
+--- /dev/null
++++ b/dist/ai/goal-boards.mjs
+@@ -0,0 +1,35 @@
++// r30 goal boards (Claude, 22 Oct 2026; Kevy: "it needs to feel like I am watching a competitive player pilot the deck").
++// SELF-VERIFIED (builder = verifier), NOT independent; Akiza (lines) / Alexis (rulings) review pending.
++// The search judges a board with boardScore (bodies, ATK, cards in hand). That judge is the same for every deck, so it
++// can't tell a competitive end board from a pile of bodies. A goal board says what this deck is trying to end on; the
++// bonus below is added to boardScore when search compares moves. Values are in boardScore units (one plain monster is
++// about 120-250, one card in hand 85). Decks without an entry keep the generic judge.
++// Facts used: Mirrorjade's banish is a Quick Effect; Lunalight Liger Dancer is unaffected by non-Lunalight effects and
++// destroys every Special Summoned monster (Quick Effect); Uzuhime is the Mikanko Ritual boss.
++const onField=(d,seat)=>d.zone(seat,4).filter(c=>c&&(c.position&5)).map(c=>d.name(c.code));
++const setCards=(d,seat)=>d.zone(seat,8).filter(c=>c&&c.sequence<5&&!(c.position&5)).map(c=>d.name(c.code));
++const count=(names,re)=>names.filter(n=>re.test(n)).length;
++export const GOALS={
++ branded:{
++  why:'End on Mirrorjade (Quick Effect banish) plus another Fusion body, with Super Polymerization / Branded Retribution set for their turn.',
++  score(d,seat){const f=onField(d,seat),s=setCards(d,seat);let v=0;
++   if(f.includes('Mirrorjade the Iceblade Dragon'))v+=600;
++   v+=Math.min(2,count(f,/Albion the Sanctifire|Lubellion the Searing|Granguignol|Titaniklad|Rindbrumm|Alba-Lenatus|Luluwalilith|Devours the Dogma|Sprind/))*250;
++   v+=Math.min(2,count(s,/Super Polymerization|Branded Retribution|Branded in Red|The Fallen & The Virtuous/))*200;
++   return v}},
++ luna:{
++  why:'End on Lunalight Liger Dancer (with Perfume Dancer or Leo Dancer beside it); Wolf in the Pendulum Zone for a second Fusion.',
++  score(d,seat){const f=onField(d,seat);let v=0;
++   if(f.includes('Lunalight Liger Dancer'))v+=700;else if(f.includes('Lunalight Leo Dancer'))v+=350;
++   if(f.includes('Lunalight Perfume Dancer'))v+=150;
++   if(d.zone(seat,8).some(c=>c&&d.name(c.code)==='Lunalight Wolf'))v+=100;
++   return v}},
++ mikanko:{
++  why:'Going second: break their board (Kaiju, Lava Golem, Raigeki, Lightning Storm, Droplet), then win with Mikanko equips and Uzuhime; going first: Uzuhime with a Mikanko set.',
++  score(d,seat){const f=onField(d,seat);let v=0;
++   v-=d.zone(1-seat,4).filter(c=>c&&(c.position&5)).length*250;/* every opposing monster left is a problem for this deck */
++   v+=(8000-d.lp[1-seat])/30;/* damage dealt counts double compared with boardScore's LP gap */
++   if(f.includes('Uzuhime the Manifested Mikanko'))v+=300;
++   return v}}
++};
++export function goalScore(d,seat){const id=d.decks?.[seat]?.id,g=GOALS[id];return g?g.score(d,seat):0}
+diff --git a/dist/ai/info-set.mjs b/dist/ai/info-set.mjs
+index ae87f7a..b25558e 100644
+--- a/dist/ai/info-set.mjs
++++ b/dist/ai/info-set.mjs
+@@ -8,9 +8,10 @@ export const SNAPSHOT_CAP_BYTES=80*1048576;
+ export const MACROS=new Set([M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN]);
+ // Stream complete sampled-world evaluations. Live callers can cap compute;
+ // qualification uses only the deterministic node/proposal limits.
+-export function searchInfoSet({d,seat,sampler,options,policies,evaluate,nodeBudget,rng,onProgress,shouldStop=()=>false,unsafeTarget,verifyRestores=globalThis.DDL_VERIFY_RESTORES===true,branchByReplay=false,keepSamplingHook=false,snapshotCapBytes=SNAPSHOT_CAP_BYTES,seatCapBytes=snapshotCapBytes,pool=null,priorSearchRoots}){
++export function searchInfoSet({d,seat,sampler,options,policies,evaluate,nodeBudget,rng,onProgress,shouldStop=()=>false,unsafeTarget,verifyRestores=globalThis.DDL_VERIFY_RESTORES===true,branchByReplay=false,keepSamplingHook=false,snapshotCapBytes=SNAPSHOT_CAP_BYTES,seatCapBytes=snapshotCapBytes,pool=null,priorSearchRoots,turnHorizon=false}){
+  let nodes=0,opponentWindows=0,accepted=0,proposals=0,rootAccepted=false,risk=0;const stats=options.map(response=>({response,key:actionKey(d,response),sum:0,visits:0,rejected:0}));
+- const horizon=Math.max(1,Math.min(3,Math.floor(nodeBudget/(16*options.length)))),initialTurn=d.turn,semantics=options.map(response=>encodeResponse(d,d.prompt,response,seat,d.knowledge[seat]));
++ /* r29 experiment (off by default): turnHorizon plays each candidate on to the END OF THE CURRENT TURN with the rollout policy (book + heuristics), so the score is the finished board, not a half-built one three steps in. */
++ const horizon=turnHorizon?80:Math.max(1,Math.min(3,Math.floor(nodeBudget/(16*options.length)))),initialTurn=d.turn,semantics=options.map(response=>encodeResponse(d,d.prompt,response,seat,d.knowledge[seat]));
+  let matchedMode=false,memoryCapped=false,heldWorlds=0,poolReport=null;
+  // Seto's matched-worlds rule (snapshot search): moves are compared only on worlds where every
+  // compared move has a result. If fewer than eight such worlds exist, the move missing the most
+@@ -29,7 +30,7 @@ export function searchInfoSet({d,seat,sampler,options,policies,evaluate,nodeBudg
+    rootAccepted=false;risk=0;policies(0,true);if(!sim){stats[a].rejected++;return}
+    let score=null;
+    try{applyMacro(sim,remapResponse(sim,semantics[a],rng),true);for(let n=1;n<horizon&&!sim.finished&&nodes<nodeBudget&&!shouldStop();n++){
+-     if(sim.turn>initialTurn+1)break;const player=sim.prompt.seat;if(player!==seat&&sim.prompt.type===M.SELECT_CHAIN)opponentWindows++;
++     if(sim.turn>initialTurn+(turnHorizon?0:1))break;const player=sim.prompt.seat;if(player!==seat&&sim.prompt.type===M.SELECT_CHAIN)opponentWindows++;
+      const p=policies(player),plan=p.base(safeView(sim,player),{log:false});if(!plan)break;applyMacro(sim,plan.response);p.observe(plan)
+     }score=evaluate(sim,seat)-100000*risk;
+    }catch{stats[a].rejected++;if(rootAccepted)score=evaluate(sim,seat)-100000*(risk+1)}finally{if(!keep)sim.stop()}
+diff --git a/dist/index.html b/dist/index.html
+index 87218ea..94ebb60 100644
+--- a/dist/index.html
++++ b/dist/index.html
+@@ -1,9 +1,9 @@
+-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r28</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r31</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
+ <link rel="stylesheet" href="arenas.css">
+ <link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
+ <link rel="stylesheet" href="./fx-r23.css"><link rel="stylesheet" href="./r26-panels.css"><link rel="stylesheet" href="./learning-routes.css">
+ </head><body data-theme="vibrant">
+-<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r28</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
++<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r31</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
+ <main id="setup"><section class="intro"><div><p class="eyebrow"><span class="live-dot"></span> YOUR DUEL ROOM</p><h1>Your decks.<br><em>Either side</em> of the table.</h1><p class="lead">Learn the line. Face the interruption. Play it again.<br>Choose your deck, choose your rival, and take the seat you want.</p></div><div class="hero-art"><img src="art/44146295.jpg" alt="Mirrorjade the Iceblade Dragon"><span class="art-stamp">CRIMSON ABYSS<br><b>THE ICEBLADE DRAGON</b></span></div></section>
+ <div class="section-head"><div><p class="eyebrow">01 / CHOOSE YOUR DECKS</p><h2>Set the matchup</h2></div><button id="import" class="quiet">＋ Import .ydk</button><input id="file" type="file" accept=".ydk" hidden></div>
+ <div id="deck-grid" class="deck-grid" aria-label="Your deck collection"></div>
+diff --git a/dist/offline-assets.json b/dist/offline-assets.json
+index 1db5d11..ca3b042 100644
+--- a/dist/offline-assets.json
++++ b/dist/offline-assets.json
+@@ -8,6 +8,9 @@
+   "./ai/book/blueeyes-lines.mjs",
+   "./ai/book/toon-lines.mjs",
+   "./ai/book/luna-lines.mjs",
++  "./ai/book/hero-lines.mjs",
++  "./ai/book/mikanko-lines.mjs",
++  "./ai/goal-boards.mjs",
+   "./ai/constraints.mjs",
+   "./ai/determinize.mjs",
+   "./ai/engine-snapshot.mjs",
+diff --git a/dist/optimal-pilot.mjs b/dist/optimal-pilot.mjs
+index 26db864..48d0e44 100644
+--- a/dist/optimal-pilot.mjs
++++ b/dist/optimal-pilot.mjs
+@@ -10,7 +10,7 @@ import {ProceduralPilot} from './pilot-agent.mjs';
+ import {choosePilot,sumSelections} from './pilot.mjs';
+ import {Duel,M,R} from './duel.mjs';
+ import {buildPlan} from './pilot-notes.mjs';
+-import {newBookState,idleStep,passiveCheck,setDecision,holdReason,bookPick,optionPick,bookActivationBlock,bookSummonBlock,bookSpecialBlock,tributeBlock} from './ai/book/book.mjs';
++import {newBookState,idleStep,passiveCheck,setDecision,holdReason,bookPick,optionPick,bookActivationBlock,bookSummonBlock,bookSpecialBlock,tributeBlock,BOOKS} from './ai/book/book.mjs';
+ export const isPayoff=n=>/Mirrorjade|Dark Dragoon|Uzuhime|Liger Dancer|Leo Dancer|Kashtira Shangri-Ira|Blue-Eyes Spirit Dragon|Blue-Eyes Ultimate Spirit Dragon|Cosmic Blazar Dragon|Masked HERO Dark Law|Destroyer Phoenix Enforcer/.test(n);/* r27 (deck review): each deck's end-board boss is protected as a cost/material/tribute and scored by search */
+ const removal=n=>/Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon|Galaxy Cyclone|Mirrorjade|Dark Dragoon|Afterburners|Widow Anchor|Infinite Impermanence|Forbidden Droplet|Called by the Grave|Shark Cannon|Harpie|S:P Little Knight/.test(n);
+ const handTrap=n=>/Ash Blossom|Droll|Mulcharmy|Infinite Impermanence/.test(n);
+@@ -37,7 +37,7 @@ export function activationBlock(d,seat,c){
+ export function selectionBlock(d,seat,c,cards){
+  if(harmfulOwn(d,seat,c))return d.name(d.currentEffect?.code||0)+' on own '+d.name(c.code)+', no approved payoff';
+  const own=d.fromEngine(c.controller)===seat,n=d.name(c.code);
+- if([501,500,504,505,507,511,512,513,533].includes(d.hint)&&own&&isPayoff(n)&&!(c.location&(1|16|32|64))/* r28: 505/507 = return to hand / Deck: Lunalight Yellow Marten returned our own Liger Dancer *//* r28: only a boss in hand / on the field is spent; a copy in the Deck, Extra Deck, GY or banished is not (Lunalight Kaleido Chick sends Leo Dancer from the Extra Deck; Wolf banishes it from the GY for Liger Dancer) */&&cards.filter(x=>!isPayoff(d.name(x.code))).length>=Math.max(1,d.prompt?.min||1))return n+' preserved: another legal cost/material is available';
++ if([501,500,504,505,507,511,512,513,533].includes(d.hint)&&own&&isPayoff(n)&&!(c.location&(1|16|32|64))/* r28: 505/507 = return to hand / Deck: Lunalight Yellow Marten returned our own Liger Dancer *//* r28: only a boss in hand / on the field is spent; a copy in the Deck, Extra Deck, GY or banished is not (Lunalight Kaleido Chick sends Leo Dancer from the Extra Deck; Wolf banishes it from the GY for Liger Dancer) */&&cards.filter(x=>!isPayoff(d.name(x.code))).length>=Math.max(1,d.prompt?.type===M.SELECT_UNSELECT_CARD?1:d.prompt?.min||1)/* r31: in a one-at-a-time pick (Link / Synchro materials) one other non-boss card is enough (HERO Linked away Destroyer Phoenix Enforcer with Vision HERO Increase still free) */)return n+' preserved: another legal cost/material is available';
+  if(d.hint===501&&own&&n==='Branded Fusion'&&cards.filter(x=>d.name(x.code)!==n&&!isPayoff(d.name(x.code))).length>=Math.max(1,d.prompt?.min||1))return 'Preserve key combo access; discard an expendable card';
+  return null;
+ }
+@@ -51,8 +51,10 @@ export function boardScore(d,seat){
+  if(d.zone(seat,4).some(c=>c&&d.name(c.code)==='Red-Eyes Dark Dragoon')&&!hand.length)value-=550;
+  return value;
+ }
++// r30: true when the move should be played without search (see plan()).
++export const trustBook=(pilot,d,baseline)=>!!pilot.bookTrust&&(!d.decks||!!BOOKS[d.decks[pilot.seat]?.id]&&BOOKS[d.decks[pilot.seat]?.id].trust!==false)/* decks with a combo book only; Mikanko, Sky Striker and HERO play exactly as before */&&(baseline.book?.kind==='step'||d.prompt?.type===M.SELECT_CHAIN&&d.active===pilot.seat&&baseline.response?.index!=null);
+ export class OptimalPilot extends ProceduralPilot{
+- constructor(args){super({...args,style:'control',variation:'focused',strategy:'tactical'});this.style='optimal';this.variation='focused';this.strategy='tactical';this.blocks=[];this.nodeBudget=args.nodeBudget??args.budget??400;this.searchCore=args.searchCore||null;this.worldPool=args.worldPool??!!this.searchCore;this.poolKey=args.poolKey??null;this.poolSize=args.poolSize||POOL_SIZE;this.seatCapBytes=args.seatCapBytes;this.budget=this.nodeBudget;this.searchEnabled=args.searchEnabled!==false;this.searchStats={nodes:0,elapsedMs:0};this.excluded=new Map();this.logged=new Set();this.onProgress=args.onProgress;this.shouldStop=args.shouldStop||(()=>false);this.book=args.book!==false;this.bookState=newBookState()}
++ constructor(args){super({...args,style:'control',variation:'focused',strategy:'tactical'});this.style='optimal';this.variation='focused';this.strategy='tactical';this.blocks=[];this.nodeBudget=args.nodeBudget??args.budget??400;this.searchCore=args.searchCore||null;this.worldPool=args.worldPool??!!this.searchCore;this.poolKey=args.poolKey??null;this.poolSize=args.poolSize||POOL_SIZE;this.seatCapBytes=args.seatCapBytes;this.budget=this.nodeBudget;this.searchEnabled=args.searchEnabled!==false;this.searchStats={nodes:0,elapsedMs:0};this.excluded=new Map();this.logged=new Set();this.onProgress=args.onProgress;this.shouldStop=args.shouldStop||(()=>false);this.book=args.book!==false;this.bookState=newBookState();this.bookTrust=args.bookTrust!==false&&this.book/* r30 (measured 22 Oct): on by default */}
+  info(){return {...super.info(),style:'optimal',label:'Optimal',description:'Doctrine game plan, bounded combo search, threat-scored interruptions and blunder checks',variation:'none',strategy:'optimal',search:this.searchStats,book:this.book?{...this.bookState.stats,line:this.bookState.line}:null}}
+  // Remove style and seed-dependent play variation. Only deck shuffling is random.
+  random(){return 0}
+@@ -103,7 +105,7 @@ export class OptimalPilot extends ProceduralPilot{
+  }
+  plan(d){
+   if(this.cache?.revision===d.revision)return this.cache;const baseline=this.base(safeView(d,this.seat));if(!baseline)return null;let decision=baseline;
+-  if(this.searchEnabled&&MACROS.has(d.prompt.type)&&safeView(d,this.seat).choices().length>1&&this.nodeBudget>0)decision=this.search(d,baseline);
++  if(this.searchEnabled&&MACROS.has(d.prompt.type)&&safeView(d,this.seat).choices().length>1&&this.nodeBudget>0&&!trustBook(this,d,baseline))decision=this.search(d,baseline);/* r30: bookTrust (default on; tools can pass bookTrust:false) = a book step is played as written, and on our own turn our own trigger/chain activations that the policy wants are kept (search kept declining Perfume Dancer's search, Gold Leo's, Black Sheep's); search decides only where the book is silent and on the opponent's turn */
+   for(let i=0;i<12&&!this.shouldStop()&&!decision.search&&!(d.prompt.type===M.SELECT_CHAIN&&d.prompt.forced);i++){const reason=this.preflightUnsafe(safeView(d,this.seat),decision.response);if(!reason)break;this.block(d,reason);if([M.SELECT_YESNO,M.SELECT_EFFECTYN].includes(d.prompt.type)){decision=buildPlan(d,{type:d.prompt.type===M.SELECT_YESNO?R.SELECT_YESNO:R.SELECT_EFFECTYN,yes:false},{rule:'Preserve own field',reason,kind:'effect'});break}const key=d.prompt.type===M.SELECT_IDLECMD?decision.response.action===1?'special_summons':decision.response.action===0?'summons':'activates':d.prompt.type===M.SELECT_BATTLECMD?'chains':'selects';this.excluded.set(d.revision+':'+key+':'+decision.response.index,reason);decision=this.base(safeView(d,this.seat));if(!decision)return null;}
+   if(this.book){const st=this.bookState.stats,tag=JSON.stringify(decision.response)===JSON.stringify(baseline.response)?baseline.book:null;if(tag){if(tag.kind==='step')st.steps++;else if(tag.kind==='pick'||tag.kind==='option')st.picks++;else if(tag.kind==='set')st.sets++;else if(tag.kind==='hold')st.holds++;else if(tag.kind==='prevented')st.passivePrevented++;if(/Triple Tactics/.test(tag.reason))st.ttt++}
+    const view=safeView(d,this.seat),pv=passiveCheck(view,this.seat,view.prompt,decision.response,(c,key,i)=>!!this.excluded.get(d.revision+':'+key+':'+i)||(key==='activates'&&!!activationBlock(view,this.seat,c)));if(pv){st.passivePass++;decision={...decision,passivePass:pv.reason};d.record?.('passivePass: '+pv.reason,'guard');if(d.log?.at(-1)?.kind==='guard')d.log.at(-1).privateSeat=this.seat}}
+diff --git a/dist/sw.js b/dist/sw.js
+index 0ae672e..4269998 100644
+--- a/dist/sw.js
++++ b/dist/sw.js
+@@ -1,6 +1,6 @@
+-// r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
++// r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
+ // duel-lab-* cache (r17 and earlier), so devices that update don't keep stale copies; unrelated caches are left alone.
+-const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-22-r28',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
++const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-22-r31',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
+ self.addEventListener('install',event=>event.waitUntil((async()=>{const manifest=await fetch('./offline-assets.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Offline manifest unavailable');return r.json()});const cache=await caches.open(CACHE);for(let i=0;i<manifest.length;i+=12)await cache.addAll(manifest.slice(i,i+12));await self.skipWaiting()})()));
+ self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&OLD_PREFIXES.some(prefix=>key.startsWith(prefix)))await caches.delete(key);await self.clients.claim()})()));
+ self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==self.location.origin)return;event.respondWith((async()=>{const cache=await caches.open(CACHE);if(event.request.mode==='navigate'){try{const response=await fetch(event.request);if(response.ok){await cache.put('./',response.clone());return response}}catch{}return await cache.match('./')||await cache.match('./index.html')||Response.error()}return await cache.match(event.request)||await fetch(event.request)})())});
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index 6a0c309..408a0a5 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -23,14 +23,29 @@ let presentationDoneAt=0,searchRoots=[0,0],duelSerial=0,skipCutins=false;
+ // was given; the duel never waits longer, but the next decision may fall back to the public-information pick.
+ const deadlineBox=typeof SharedArrayBuffer==='function'?new Int32Array(new SharedArrayBuffer(8)):null,deadlineBase=Date.now();
+ const paceKind=()=>preset==='instant'?'instant':preset==='learning'||delay>=4000?'study':'normal';
++// r29 (Kevy 22 Oct 13:06: "have the learning mode mimic this time frame ... the feel of watching a true to life game";
++// Duel "happy to add 1-2 seconds"): human-paced decisions. A pause before the AI's choice is shown, sized like a
++// person's thinking time (Konami Swiss rounds: 50 min per best-of-3; Master Duel: 300 s bank, +60 s own turn, +30 s
++// opponent turn). Pace only: the AI's work (node budget) is unchanged, so every preset plays the same moves (Round 2b
++// ruling). Broadcast / Instant: no pause. Nothing to decide (one legal choice) = no pause, as Master Duel auto-passes.
++export const HUMAN_MS={learning:{auto:0,mechanical:600,quick:1500,pick:2000,step:3000,big:6000},duel:{auto:0,mechanical:0,quick:0,pick:0,step:0,big:1000}};
++let humanFirsts=new Set();
++export function decisionClass(d,seat){const p=d.prompt;if(!p)return 'auto';let n=0;try{n=safeView(d,seat).choices().length}catch{n=2}if(n<=1)return 'auto';
++ if([M.SELECT_PLACE,M.SELECT_DISFIELD,M.SELECT_POSITION].includes(p.type))return 'mechanical';
++ if(p.type===M.SELECT_CHAIN)return d.active===seat?'quick':'step';/* a hand trap in hand: a real pause on the opponent's turn */
++ if(p.type===M.SELECT_IDLECMD||p.type===M.SELECT_BATTLECMD){const key=d.turn+':'+seat+':'+p.type;if(!humanFirsts.has(key)){humanFirsts.add(key);return 'big'}return 'step'}/* planning the turn / the first attack */
++ if([M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(p.type))return 'quick';return 'pick'}
++const humanMs=(d,seat)=>(HUMAN_MS[preset]||{})[decisionClass(d,seat)]||0;
++let humanPending=null;/* {revision, ms, started} for the decision being shown */
++const humanWait=()=>humanPending&&humanPending.revision===duel?.revision?Math.max(humanPending.started,presentationDoneAt)+humanPending.ms-Date.now():0;
+ const thinkDeadline=started=>{const kind=paceKind(),visibleStart=Math.max(started,presentationPending?presentationUntil:presentationDoneAt);return kind==='instant'?started+400:kind==='study'?Math.max(started+4000,visibleStart+1500):visibleStart+1500};
+ function cancelThink(terminate=true){clearTimeout(thinkTimeout);thinkWorker?.postMessage({type:'cancel',id:thinking?.id});if(terminate){thinkWorker?.terminate();thinkWorker=null;thinkReady=null}thinking=null}
+ function warmThinkWorker(){if(typeof Worker==='undefined')return Promise.resolve();if(thinkReady)return thinkReady;thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});thinkReady=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('AI worker preparation timed out')),15000);thinkWorker.onmessage=({data:x})=>{if(x.type==='ready'){clearTimeout(timeout);resolve()}else if(x.type==='error'){clearTimeout(timeout);reject(Error(x.message))}};thinkWorker.onerror=e=>{clearTimeout(timeout);reject(Error(e.message||'AI worker preparation failed'))};thinkWorker.postMessage({type:'warm'})});return thinkReady}
+ function planned(){
+  if(!duel?.prompt||disabled)return null;if(plan?.revision===duel.revision)return plan;
+- if(typeof Worker==='undefined'){plan=pilots[duel.prompt.seat].plan(duel);return plan}
++ if(typeof Worker==='undefined'){humanPending={revision:duel.revision,ms:humanMs(duel,duel.prompt.seat),started:Date.now()};plan=pilots[duel.prompt.seat].plan(duel);return plan}
+  if(thinking?.revision===duel.revision)return null;if(thinking)cancelThink(false);
+- let bestAggregated=null,lastProgress=null;const publicDecision=pilots[duel.prompt.seat].base(safeView(duel,duel.prompt.seat));const id=++thinkId,revision=duel.revision,seat=duel.prompt.seat,started=Date.now(),deadlineAt=thinkDeadline(started),capMs=deadlineAt-started;thinking={id,revision,started,deadlineAt};if(deadlineBox){Atomics.store(deadlineBox,1,deadlineAt-deadlineBase);Atomics.store(deadlineBox,0,id)}
++ let bestAggregated=null,lastProgress=null;humanPending={revision:duel.revision,ms:humanMs(duel,duel.prompt.seat),started:Date.now()};const publicDecision=pilots[duel.prompt.seat].base(safeView(duel,duel.prompt.seat));const id=++thinkId,revision=duel.revision,seat=duel.prompt.seat,started=Date.now(),deadlineAt=thinkDeadline(started),capMs=deadlineAt-started;thinking={id,revision,started,deadlineAt};if(deadlineBox){Atomics.store(deadlineBox,1,deadlineAt-deadlineBase);Atomics.store(deadlineBox,0,id)}
+  const searchRoot=[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,priorSearchRoots=searchRoot?searchRoots[seat]++:searchRoots[seat];
+  thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});
+  const metric=stats=>postMessage({type:'ai-think-metric',preset:paceKind(),thinkMs:Date.now()-started,visibleWaitMs:presentationPending?0:Math.max(0,Date.now()-Math.max(started,presentationDoneAt)),capMs,seed:matchInfo.seed,decision:duel.responseHistory.length,seat,promptType:duel.prompt.type,isSearchRoot:[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,stats});
+@@ -52,7 +67,7 @@ function send(){
+  const message={type:'state',human,lastEventId:deliveredSeq,state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
+  schedule();
+ }
+-function schedule(){clearTimeout(timer);if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;timer=setTimeout(step,Math.max(delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay,presentationUntil-Date.now()))}}
++function schedule(){clearTimeout(timer);if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;timer=setTimeout(step,Math.max(delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay,presentationUntil-Date.now(),humanWait()))}}
+ 
+ function step(){
+  try{
+@@ -67,7 +82,7 @@ function step(){
+ onmessage=async ({data:x})=>{try{
+  if(interactionProtocol===2&&['pause','step','control','rewind'].includes(x.type)&&(x.clientSession!==humanBridge.clientSession||x.epoch!==humanBridge.epoch))return;
+  if(x.type==='load-library'){postMessage({type:'load-progress',message:'Decompressing card library…'});postMessage({type:'library',db:await readCompressed('cards.json.gz')});return}
+- if(x.type==='start'){interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;
++ if(x.type==='start'){interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
+   director.reset();preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;const run=++generation;clearTimeout(timer);disabled=false;paused=!!x.dealHand;dealHand=!!x.dealHand;replayHistory=[];view=x.view;mode=x.mode;study=x.study;delay=x.delay||2200;cinematics=x.cinematics!==false;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';learnHold=!!x.learnHold;thoughts=[];thoughtSeq=0;plan=null;deliveredSeq=0;presentationUntil=0;presentationPending=false;
+   if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}await warmThinkWorker();
+   if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',pilots:pilots.map(p=>p.info())};send();
+diff --git a/tests/r23-fx.test.mjs b/tests/r23-fx.test.mjs
+index 705be46..0bece0c 100644
+--- a/tests/r23-fx.test.mjs
++++ b/tests/r23-fx.test.mjs
+@@ -11,7 +11,7 @@ import {ChainDirector} from '../dist/event-data.mjs';import {createPresentation}
+ import {fxSpan,stKind,createFx} from '../dist/fx-r23.mjs';import {Soundscape,SOUND_EVENTS} from '../dist/sound-engine.mjs';import {jazzBeat,chordAt,beatSeconds,JAZZ_THEMES,SWING} from '../dist/jazz-score.mjs';
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ // 1. Pace.
+-const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda','dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'35087f989c18f1d5e8ba94dfe2a46facbca983329529912131a58c2b71684291'/* r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
++const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda','dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'82d98dff81347a395aba45762b2bad7dd484a7acdcbbe8964a0e5fd740f1e8c1'/* r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
+ for(const [f,h] of Object.entries(PINNED))assert.equal(sha(f),h,f+' must be unchanged from r22b (pace, holds, think time)');
+ // r24 restyles the summon scene (card art, materials as cards); its timing table must stay the same.
+ // r26: Kevy approved longer cutscenes (21 Oct 23:05); the B2 summon scene is now the one Fusion/Synchro/Xyz/Link cutscene
+diff --git a/tests/r29-human-pace.test.mjs b/tests/r29-human-pace.test.mjs
+new file mode 100644
+index 0000000..b338fc9
+--- /dev/null
++++ b/tests/r29-human-pace.test.mjs
+@@ -0,0 +1,24 @@
++// r29 (Claude, 22 Oct; Kevy 13:06: "have the learning mode mimic this time frame ... the feel of watching a true to life
++// game"; Duel: "happy to add 1-2 seconds"). SELF-VERIFIED (builder = verifier), NOT independent.
++//  1. Human-paced pauses: Learning = 0.6 s mechanical / 1.5 s quick / 2 s picks / 3 s combo steps / 6 s big decisions;
++//     Duel = +1 s on big decisions only; Broadcast / Instant: none; one legal choice = no pause.
++//  2. Pace only: the AI's work (node budget 400, 40 at Instant) is unchanged, so every preset plays the same moves.
++//  3. Classes on a real duel: the first main-phase decision of a turn is "big", later ones are "step".
++import assert from 'node:assert/strict';import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++globalThis.onmessage=null;globalThis.postMessage=()=>{};
++const {HUMAN_MS,decisionClass}=await import('../dist/worker.mjs');
++assert.deepEqual(HUMAN_MS.learning,{auto:0,mechanical:600,quick:1500,pick:2000,step:3000,big:6000});
++assert.deepEqual(HUMAN_MS.duel,{auto:0,mechanical:0,quick:0,pick:0,step:0,big:1000});
++assert.equal(HUMAN_MS.broadcast,undefined);assert.equal(HUMAN_MS.instant,undefined);
++const src=fs.readFileSync('dist/worker.mjs','utf8');
++assert.ok(src.includes("nodeBudget:preset==='instant'?40:400"),'node budget unchanged (pace only, never more work)');
++assert.ok(src.includes('presentationUntil-Date.now(),humanWait()'),'the pause is part of the step timer');
++const {Duel,M}=await import('../dist/duel.mjs');const {createOptimalPilots}=await import('../dist/optimal-pilot.mjs');
++const db=JSON.parse(gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
++const decks=JSON.parse(fs.readFileSync('dist/decks.json')).decks;const d=await Duel.create(db,scripts);d.start([decks.find(x=>x.id==='branded'),decks.find(x=>x.id==='luna')],{seed:5,first:0});
++const pilots=createOptimalPilots({seed:5,searchEnabled:false});const seen=[];let n=0;
++while(d.prompt&&!d.finished&&d.turn<=1&&n<400){const p=d.prompt;if(p.seat===0)seen.push([p.type,decisionClass(d,0)]);const plan=pilots[p.seat].plan(d);d.respond(plan.response);for(const x of pilots)x.observe?.(plan);n++}
++const idle=seen.filter(([t])=>t===M.SELECT_IDLECMD).map(([,c])=>c);
++assert.equal(idle[0],'big','first main-phase decision of the turn is big');assert.ok(idle.slice(1).every(c=>c==='step'||c==='auto'),'later main-phase decisions are combo steps');
++assert.ok(seen.filter(([t])=>[M.SELECT_PLACE,M.SELECT_POSITION].includes(t)).every(([,c])=>c==='mechanical'||c==='auto'),'zone and position choices are mechanical');
++d.stop?.();console.log(JSON.stringify({test:'r29-human-pace',pass:true,node:process.version,classes:[...new Set(seen.map(x=>x[1]))],selfVerified:true}));
+diff --git a/tests/r30-book-trust.test.mjs b/tests/r30-book-trust.test.mjs
+new file mode 100644
+index 0000000..b29f1b3
+--- /dev/null
++++ b/tests/r30-book-trust.test.mjs
+@@ -0,0 +1,31 @@
++// r30 (Claude, 22 Oct; Kevy: "it needs to feel like I am watching a competitive player pilot the deck").
++// SELF-VERIFIED (builder = verifier), NOT independent. Measured on 30 seeded hands per deck (REPLY r30): the live search
++// overrode good combo-book steps and declined our own useful triggers, so with search on the AI played its combo decks
++// worse than the book alone. bookTrust (default on) plays a book step as written and keeps our own-turn trigger
++// activations the policy wants; search still decides where the book is silent and on the opponent's turn.
++//  1. bookTrust is on by default, off when the book is off, and switchable for tools.
++//  2. The plan() rule: a book step skips search; an own-turn chain activation skips search; the opponent's turn does not.
++//  3. Branded book: The Fallen & The Virtuous is held while the opponent has no card (it would destroy our own), and the
++//     last-resort Guiding Quem summon line exists after every other line.
++import assert from 'node:assert/strict';import fs from 'node:fs';
++import {createOptimalPilots,OptimalPilot,trustBook} from '../dist/optimal-pilot.mjs';import {BOOKS} from '../dist/ai/book/book.mjs';import {M} from '../dist/duel.mjs';
++const [p0]=createOptimalPilots({seed:1});assert.equal(p0.bookTrust,true,'on by default');
++assert.equal(createOptimalPilots({seed:1,book:false})[0].bookTrust,false,'off without a book');
++assert.equal(new OptimalPilot({seat:0,seed:1,bookTrust:false}).bookTrust,false,'tools can switch it off');
++// 2. The rule: a book step and an own-turn chain activation skip search; the opponent's turn and a non-book move do not.
++const pl=new OptimalPilot({seat:0,seed:1}),D=(type,active)=>({prompt:{type},active});
++assert.equal(trustBook(pl,{prompt:{type:M.SELECT_IDLECMD},active:0,decks:[{id:'sky'},{id:'branded'}]},{response:{},book:{kind:'step'}}),false,'a deck with no combo book plays exactly as before');
++assert.equal(trustBook(pl,{prompt:{type:M.SELECT_CHAIN},active:0,decks:[{id:'mikanko'},{id:'branded'}]},{response:{index:0}}),false,'r31: Mikanko book has trust off, so search decides as before');
++assert.equal(trustBook(pl,{prompt:{type:M.SELECT_IDLECMD},active:0,decks:[{id:'hero'},{id:'branded'}]},{response:{},book:{kind:'step'}}),true,'r31: HERO book steps are trusted');
++assert.equal(trustBook(pl,{prompt:{type:M.SELECT_CHAIN},active:0,decks:[{id:'luna'},{id:'branded'}]},{response:{index:0}}),true,'Lunalight own-turn activation: no search');
++assert.equal(trustBook(pl,D(M.SELECT_IDLECMD,0),{response:{action:5,index:0},book:{kind:'step'}}),true,'book step: no search');
++assert.equal(trustBook(pl,D(M.SELECT_CHAIN,0),{response:{index:0}}),true,'own-turn activation: no search');
++assert.equal(trustBook(pl,D(M.SELECT_CHAIN,0),{response:{index:null}}),false,'own-turn pass: search may still find an activation');
++assert.equal(trustBook(pl,D(M.SELECT_CHAIN,1),{response:{index:0}}),false,"opponent's turn (hand traps): search");
++assert.equal(trustBook(pl,D(M.SELECT_IDLECMD,0),{response:{action:5,index:0}}),false,'no book step: search');
++assert.equal(trustBook(new OptimalPilot({seat:0,seed:1,bookTrust:false}),D(M.SELECT_IDLECMD,0),{response:{},book:{kind:'step'}}),false,'switched off: always search');
++assert.ok(fs.readFileSync('dist/optimal-pilot.mjs','utf8').includes('&&!trustBook(this,d,baseline))decision=this.search(d,baseline);'),'plan() uses the rule');
++// 3. Branded book data.
++const b=BOOKS.branded;assert.ok(b.blocks.some(x=>x.card==='The Fallen & The Virtuous'&&x.unless?.oppCardsMin===1),'F&V held with no opposing card');
++assert.equal(b.lines.at(-1).id,'R30-QNS','last-resort Quem summon is the last line');
++console.log(JSON.stringify({test:'r30-book-trust',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tools/drafts/sky-lines-draft.mjs b/tools/drafts/sky-lines-draft.mjs
+new file mode 100644
+index 0000000..4caee24
+--- /dev/null
++++ b/tools/drafts/sky-lines-draft.mjs
+@@ -0,0 +1,24 @@
++// r31 data file: Sky Striker playbook (Claude, 22 Oct 2026, for Kevy's "Pure Sky Striker"; Akiza review pending).
++// Built from the printed card texts and the r31 audit (20 seeded hands going first, base AI): turns often ended with
++// two Sky Striker Mobilize - Engage! still in hand while the Main Monster Zones were empty (Engage's only condition),
++// i.e. the deck's card-advantage engine was left unused.
++// r31 measured (20 hands going first, base AI): an Engage!-first line used Engage more (9 -> 5 left in hand) but ended
++// with fewer Extra Monster Zone Aces (15 -> 12-13 hands), so the line is NOT shipped; picks only, book-trust off.
++// Akiza: a proper Sky Striker book (going second first) is needed.
++// Core idea: keep the Main Monster Zones empty, draw first (Upstart Goblin), fire every Engage! (search a Sky Striker
++// card; draw 1 more once 3+ Spells are in the GY), make the Extra Monster Zone Ace with Raye / Linkage!, and set the
++// Mecha / Maneuver Quick-Plays (Widow Anchor, Jamming Waves!, Afterburners!) for the opponent's turn.
++export default {
++ "deck": "sky",
++ "trust": false,
++ "source": "Claude r31 from the printed card texts and the r31 audit; not yet reviewed by Akiza or Alexis.",
++ "starters": ["Sky Striker Mobilize - Engage!", "Sky Striker Ace - Raye", "Reinforcement of the Army", "Sky Striker Mecha - Hornet Drones", "Sky Striker Mobilize - Linkage!"],
++ "lines": [],
++ "picks": [
++  {"source": "Sky Striker Mobilize - Engage!", "hint": [506], "ifNotHand": ["Sky Striker Ace - Raye"], "prefer": ["Sky Striker Ace - Raye", "Sky Striker Mobilize - Linkage!", "Sky Striker Mecha - Widow Anchor"]},
++  {"source": "Sky Striker Mobilize - Engage!", "hint": [506], "ifNotHand": ["Sky Striker Mobilize - Linkage!"], "prefer": ["Sky Striker Mobilize - Linkage!", "Sky Striker Mecha - Widow Anchor"]},
++  {"source": "Sky Striker Mobilize - Engage!", "hint": [506], "prefer": ["Sky Striker Mecha - Widow Anchor", "Sky Striker Maneuver - Jamming Waves!", "Sky Striker Mobilize - Linkage!", "Sky Striker Maneuver - Afterburners!", "Sky Striker Mecha - Hornet Drones"]},
++  {"source": "Reinforcement of the Army", "prefer": ["Sky Striker Ace - Raye", "Sky Striker Ace - Roze"]}
++ ],
++ "blocks": []
++};
+diff --git a/tools/r27-deck-audit.mjs b/tools/r27-deck-audit.mjs
+index 63e6f7d..1b3a381 100644
+--- a/tools/r27-deck-audit.mjs
++++ b/tools/r27-deck-audit.mjs
+@@ -5,7 +5,7 @@
+ // Usage: node tools/r27-deck-audit.mjs --deck luna --seeds 10 --start 1 --order first|second|alternate --own-turns 1
+ //        [--opps sky,branded,...] [--search on] [--list tcg-2026-10-19] [--out file.json]
+ import fs from 'node:fs';import zlib from 'node:zlib';
+-import {Duel,M} from '../dist/duel.mjs';import {createOptimalPilots} from '../dist/optimal-pilot.mjs';import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';import {dropAllPools} from '../dist/ai/world-pool.mjs';
++import {Duel,M} from '../dist/duel.mjs';import {createOptimalPilots,boardScore} from '../dist/optimal-pilot.mjs';import {goalScore} from '../dist/ai/goal-boards.mjs';import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';import {dropAllPools} from '../dist/ai/world-pool.mjs';
+ const arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v};
+ const DECK=arg('deck','luna'),N=+arg('seeds',10),start=+arg('start',1),search=arg('search','off')==='on',deadlineMs=+arg('deadline-ms',1500),order=arg('order','first'),ownTurnsMax=+arg('own-turns',1),LIST=arg('list','tcg-2026-10-19');
+ const db=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
+@@ -26,9 +26,15 @@ function describe(p,r){
+  return '  '+(T[p.type]||p.type)+' '+JSON.stringify(r).slice(0,60)}
+ const zone=(s,l)=>d.zone(s,l).filter(Boolean);
+ const board=s=>({monsters:zone(s,4).map(c=>nm(c)+((c.position&5)?'':' (set)')+((c.position&4)?' DEF':'')),backrow:zone(s,8).filter(c=>c.sequence<5).map(c=>((c.position&5)?'':'set:')+nm(c)),field:zone(s,8).filter(c=>c.sequence===5).map(nm),hand:zone(s,2).map(nm),gy:zone(s,16).map(nm),banished:zone(s,32).length,lp:d.state?.players?.[s]?.lp??d.lp?.[s]});
++// r29 experiment: board score that also values interruptions held for the opponent's turn (Quick Effects on board,
++// set Spells/Traps, hand traps in hand), the way competitive players judge an end board.
++const HT=/Ash Blossom|Infinite Impermanence|Mulcharmy|Nibiru|Forbidden Droplet|Ghost Belle|Effect Veiler|Maxx|Ghost Ogre|Droll|Bystial/;
++function scoreInterrupts(dd,seat){let v=boardScore(dd,seat),k=0;for(const c of dd.zone(seat,4).filter(Boolean))if((c.position&5)&&/Quick Effect|during either player's turn|during your opponent's turn/i.test(dd.db[c.code]?.desc||''))k++;
++ for(const c of dd.zone(seat,8).filter(Boolean))if(c.sequence<5&&!(c.position&5))k++;for(const c of dd.zone(seat,2).filter(Boolean))if(HT.test(dd.name(c.code)))k++;return v+300*k}
+ const out=[];const t0=Date.now();
+ for(let k=0;k<N;k++){const seed=start+k,opp=opps[k%opps.length],first=order==='first'?0:order==='second'?1:k%2?1:0;
+- const pilots=createOptimalPilots({seed,searchEnabled:search,nodeBudget:400,searchCore,worldPool:search,poolKey:'audit:'+DECK+':'+seed,poolSize:10,seatCapBytes:40*1048576,shouldStop});
++ const pilots=createOptimalPilots({seed,searchEnabled:search,nodeBudget:+arg('node-budget',400),searchCore,worldPool:search,poolKey:'audit:'+DECK+':'+seed,poolSize:10,seatCapBytes:40*1048576,shouldStop});
++ {const o={};if(arg('turn-horizon','off')==='on')o.turnHorizon=true;if(arg('eval','base')==='interrupts')o.evaluate=scoreInterrupts;if(arg('eval','base')==='goal')o.evaluate=(dd,seat)=>boardScore(dd,seat)+goalScore(dd,seat);if(Object.keys(o).length)for(const p of pilots)p.searchTestOptions=o}{const bt=arg('book-trust','default');if(bt!=='default')for(const p of pilots)p.bookTrust=bt==='on'}/* r29 experiments */
+  d.start([decks.find(x=>x.id===DECK),decks.find(x=>x.id===opp)],{seed,first});
+  const row={deck:DECK,opp,seed,first:first===0,hand:zone(0,2).map(nm),turns:[]};let cur=null,n=0,ownTurns=0;
+  const close=()=>{if(cur){cur.end=board(0);cur.oppEnd=board(1);row.turns.push(cur);cur=null;ownTurns++}};

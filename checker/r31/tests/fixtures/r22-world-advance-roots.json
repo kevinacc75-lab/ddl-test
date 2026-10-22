@@ -1,0 +1,2466 @@
+{
+ "about": "world-advance roots re-recorded on r22 (fixed Link arrows/Pendulum scales) from tests/late-roots-result.json; base policy, book off",
+ "node": "v22.22.0",
+ "changes": [
+  {
+   "seed": 567571,
+   "pair": "mikanko-sky",
+   "seat": 1,
+   "from": 67,
+   "to": 68
+  },
+  {
+   "seed": 567571,
+   "pair": "mikanko-sky",
+   "seat": 1,
+   "from": 89,
+   "to": 91
+  },
+  {
+   "seed": 567571,
+   "pair": "mikanko-sky",
+   "seat": 0,
+   "from": 109,
+   "to": 112
+  },
+  {
+   "seed": 662599,
+   "pair": "sky-sky",
+   "seat": 0,
+   "from": 60,
+   "to": 61
+  },
+  {
+   "seed": 662599,
+   "pair": "sky-sky",
+   "seat": 0,
+   "from": 81,
+   "to": 85
+  },
+  {
+   "seed": 662599,
+   "pair": "sky-sky",
+   "seat": 0,
+   "from": 102,
+   "to": 243
+  },
+  {
+   "seed": 710113,
+   "pair": "sky-luna",
+   "seat": 0,
+   "from": 82,
+   "to": 85
+  }
+ ],
+ "rows": [
+  {
+   "seed": 330001,
+   "pair": [
+    "branded",
+    "branded"
+   ],
+   "first": 0,
+   "decision": 61,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 2278.3745360000003,
+   "firstFailure": null,
+   "recordedDecision": 61
+  },
+  {
+   "seed": 330001,
+   "pair": [
+    "branded",
+    "branded"
+   ],
+   "first": 0,
+   "decision": 82,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 224,
+   "discarded": 26,
+   "thinkMs": 28781.795940999997,
+   "firstFailure": {
+    "sample": 1,
+    "attempt": 1,
+    "reason": "prompt-type/seat differs",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 81,
+    "firstMisalignedStep": 81,
+    "expectedEvent": {
+     "promptType": 16,
+     "controller": 0,
+     "turn": 1,
+     "phase": 512,
+     "hint": 0,
+     "source": null
+    },
+    "actualEvent": {
+     "promptType": 16,
+     "controller": 1,
+     "turn": 1,
+     "phase": 512,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": null,
+    "offeredCodes": [],
+    "sampledOrigins": [],
+    "targetedPins": [
+     [
+      [
+       39,
+       33854624
+      ],
+      [
+       38,
+       62962630
+      ],
+      [
+       37,
+       6498706
+      ],
+      [
+       36,
+       68468459
+      ],
+      [
+       35,
+       19096726
+      ],
+      [
+       14,
+       44362883
+      ],
+      [
+       3,
+       45883110
+      ],
+      [
+       2,
+       25451383
+      ],
+      [
+       29,
+       73819701
+      ],
+      [
+       25,
+       55273560
+      ],
+      [
+       11,
+       82489470
+      ]
+     ],
+     [
+      [
+       39,
+       42141493
+      ],
+      [
+       30,
+       60242223
+      ]
+     ]
+    ],
+    "repaired": false
+   },
+   "recordedDecision": 82
+  },
+  {
+   "seed": 330001,
+   "pair": [
+    "branded",
+    "branded"
+   ],
+   "first": 0,
+   "decision": 109,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 14,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 2113.055711000001,
+   "firstFailure": null,
+   "recordedDecision": 109
+  },
+  {
+   "seed": 377515,
+   "pair": [
+    "branded",
+    "mikanko"
+   ],
+   "first": 1,
+   "decision": 69,
+   "seat": 0,
+   "promptType": 11,
+   "legalChoices": 9,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 2156.701353000004,
+   "firstFailure": null,
+   "recordedDecision": 69
+  },
+  {
+   "seed": 377515,
+   "pair": [
+    "branded",
+    "mikanko"
+   ],
+   "first": 1,
+   "decision": 91,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 25,
+   "discarded": 0,
+   "thinkMs": 3872.59908,
+   "firstFailure": {
+    "sample": 2,
+    "attempt": 1,
+    "reason": "public event timeline differs; first expected step 76",
+    "placement": null,
+    "timeline": {
+     "expected": [
+      "move",
+      0,
+      1,
+      6,
+      45883110,
+      {
+       "controller": 0,
+       "location": 16,
+       "sequence": 2,
+       "position": 5
+      }
+     ],
+     "actual": [
+      "move",
+      0,
+      1,
+      31,
+      68468459,
+      {
+       "controller": 0,
+       "location": 16,
+       "sequence": 2,
+       "position": 5
+      }
+     ]
+    },
+    "historyStep": 76,
+    "firstMisalignedStep": 76,
+    "expectedEvent": {
+     "promptType": 26,
+     "controller": 0,
+     "turn": 2,
+     "phase": 4,
+     "hint": 511,
+     "source": {
+      "code": 44362883,
+      "controller": 0,
+      "location": 8,
+      "description": "1170"
+     }
+    },
+    "actualEvent": {
+     "promptType": 18,
+     "controller": 0,
+     "turn": 2,
+     "phase": 4,
+     "hint": 0,
+     "source": {
+      "code": 44362883,
+      "controller": 0,
+      "location": 8,
+      "description": "1170"
+     }
+    },
+    "requiredCode": 45883110,
+    "offeredCodes": [
+     68468459
+    ],
+    "sampledOrigins": [
+     {
+      "player": 0,
+      "zone": "main",
+      "index": 8
+     }
+    ],
+    "targetedPins": [
+     [
+      [
+       39,
+       36637374
+      ],
+      [
+       38,
+       1984618
+      ],
+      [
+       37,
+       48130397
+      ],
+      [
+       36,
+       29948294
+      ],
+      [
+       35,
+       1984618
+      ],
+      [
+       34,
+       48130397
+      ],
+      [
+       30,
+       62962630
+      ],
+      [
+       18,
+       44362883
+      ],
+      [
+       8,
+       45883110
+      ]
+     ],
+     [
+      [
+       39,
+       11161666
+      ],
+      [
+       36,
+       84550369
+      ],
+      [
+       27,
+       81260679
+      ],
+      [
+       24,
+       41927278
+      ],
+      [
+       21,
+       43527730
+      ],
+      [
+       15,
+       6327734
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 91
+  },
+  {
+   "seed": 377515,
+   "pair": [
+    "branded",
+    "mikanko"
+   ],
+   "first": 1,
+   "decision": 112,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 26,
+   "discarded": 0,
+   "thinkMs": 4687.239958999999,
+   "firstFailure": {
+    "sample": 1,
+    "attempt": 1,
+    "reason": "public event timeline differs; first expected step 76",
+    "placement": null,
+    "timeline": {
+     "expected": [
+      "move",
+      0,
+      1,
+      6,
+      45883110,
+      {
+       "controller": 0,
+       "location": 16,
+       "sequence": 2,
+       "position": 5
+      }
+     ],
+     "actual": [
+      "move",
+      0,
+      1,
+      31,
+      68468459,
+      {
+       "controller": 0,
+       "location": 16,
+       "sequence": 2,
+       "position": 5
+      }
+     ]
+    },
+    "historyStep": 76,
+    "firstMisalignedStep": 76,
+    "expectedEvent": {
+     "promptType": 26,
+     "controller": 0,
+     "turn": 2,
+     "phase": 4,
+     "hint": 511,
+     "source": {
+      "code": 44362883,
+      "controller": 0,
+      "location": 8,
+      "description": "1170"
+     }
+    },
+    "actualEvent": {
+     "promptType": 18,
+     "controller": 0,
+     "turn": 2,
+     "phase": 4,
+     "hint": 0,
+     "source": {
+      "code": 44362883,
+      "controller": 0,
+      "location": 8,
+      "description": "1170"
+     }
+    },
+    "requiredCode": 45883110,
+    "offeredCodes": [
+     68468459
+    ],
+    "sampledOrigins": [
+     {
+      "player": 0,
+      "zone": "main",
+      "index": 27
+     }
+    ],
+    "targetedPins": [
+     [
+      [
+       39,
+       36637374
+      ],
+      [
+       38,
+       1984618
+      ],
+      [
+       37,
+       48130397
+      ],
+      [
+       36,
+       29948294
+      ],
+      [
+       35,
+       1984618
+      ],
+      [
+       34,
+       48130397
+      ],
+      [
+       30,
+       62962630
+      ],
+      [
+       20,
+       44362883
+      ],
+      [
+       15,
+       73819701
+      ],
+      [
+       8,
+       68468459
+      ],
+      [
+       27,
+       45883110
+      ]
+     ],
+     [
+      [
+       39,
+       11161666
+      ],
+      [
+       36,
+       84550369
+      ],
+      [
+       4,
+       81260679
+      ],
+      [
+       3,
+       41927278
+      ],
+      [
+       24,
+       43527730
+      ],
+      [
+       15,
+       6327734
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 112
+  },
+  {
+   "seed": 425029,
+   "pair": [
+    "branded",
+    "sky"
+   ],
+   "first": 0,
+   "decision": 61,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 1657.8056680000009,
+   "firstFailure": null,
+   "recordedDecision": 61
+  },
+  {
+   "seed": 425029,
+   "pair": [
+    "branded",
+    "sky"
+   ],
+   "first": 0,
+   "decision": 88,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 7,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 3080.031014,
+   "firstFailure": null,
+   "recordedDecision": 88
+  },
+  {
+   "seed": 425029,
+   "pair": [
+    "branded",
+    "sky"
+   ],
+   "first": 0,
+   "decision": 108,
+   "seat": 1,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 186,
+   "discarded": 11,
+   "thinkMs": 62688.277716,
+   "firstFailure": {
+    "sample": 0,
+    "attempt": 1,
+    "reason": "known draw differs",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 94,
+    "firstMisalignedStep": 94,
+    "expectedEvent": {
+     "promptType": 13,
+     "controller": 1,
+     "turn": 2,
+     "phase": 4,
+     "hint": 0,
+     "source": {
+      "code": 63166095,
+      "controller": 1,
+      "location": 8,
+      "description": "0"
+     }
+    },
+    "actualEvent": {
+     "promptType": 16,
+     "controller": 1,
+     "turn": 2,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": 37351133,
+    "offeredCodes": [
+     99550630
+    ],
+    "sampledOrigins": [
+     {
+      "player": 1,
+      "zone": "main",
+      "index": 7
+     }
+    ],
+    "targetedPins": [
+     [
+      [
+       39,
+       82489470
+      ],
+      [
+       38,
+       36637374
+      ],
+      [
+       35,
+       29948294
+      ],
+      [
+       36,
+       68468459
+      ],
+      [
+       37,
+       44362883
+      ],
+      [
+       11,
+       45883110
+      ],
+      [
+       20,
+       45883110
+      ],
+      [
+       12,
+       36637374
+      ],
+      [
+       29,
+       62962630
+      ],
+      [
+       32,
+       68468459
+      ]
+     ],
+     [
+      [
+       39,
+       9726840
+      ],
+      [
+       38,
+       63166095
+      ],
+      [
+       37,
+       35261759
+      ],
+      [
+       36,
+       24224830
+      ],
+      [
+       35,
+       24299458
+      ],
+      [
+       34,
+       25311006
+      ],
+      [
+       31,
+       14558127
+      ],
+      [
+       18,
+       98338152
+      ],
+      [
+       33,
+       63166095
+      ],
+      [
+       32,
+       9726840
+      ],
+      [
+       14,
+       24299458
+      ],
+      [
+       20,
+       50005218
+      ],
+      [
+       26,
+       94145021
+      ],
+      [
+       4,
+       24299458
+      ],
+      [
+       11,
+       32807846
+      ],
+      [
+       29,
+       14558127
+      ],
+      [
+       9,
+       24010609
+      ],
+      [
+       7,
+       37351133
+      ],
+      [
+       5,
+       70368879
+      ],
+      [
+       2,
+       26077387
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 108
+  },
+  {
+   "seed": 472543,
+   "pair": [
+    "branded",
+    "luna"
+   ],
+   "first": 1,
+   "decision": 60,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 10,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 3593.360151999994,
+   "firstFailure": null,
+   "recordedDecision": 60
+  },
+  {
+   "seed": 472543,
+   "pair": [
+    "branded",
+    "luna"
+   ],
+   "first": 1,
+   "decision": 85,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 7,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 3551.008474000002,
+   "firstFailure": null,
+   "recordedDecision": 85
+  },
+  {
+   "seed": 472543,
+   "pair": [
+    "branded",
+    "luna"
+   ],
+   "first": 1,
+   "decision": 108,
+   "seat": 0,
+   "promptType": 11,
+   "legalChoices": 9,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 41,
+   "discarded": 3,
+   "thinkMs": 10773.525580000001,
+   "firstFailure": {
+    "sample": 1,
+    "attempt": 1,
+    "reason": "semantic effect source differs",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 18,
+    "firstMisalignedStep": 18,
+    "expectedEvent": {
+     "promptType": 12,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "actualEvent": {
+     "promptType": 12,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": 35763582,
+    "offeredCodes": [
+     11876803
+    ],
+    "sampledOrigins": [
+     null
+    ],
+    "targetedPins": [
+     [
+      [
+       39,
+       82344137
+      ],
+      [
+       38,
+       1984618
+      ],
+      [
+       37,
+       25311006
+      ],
+      [
+       36,
+       48130397
+      ],
+      [
+       35,
+       19304410
+      ],
+      [
+       34,
+       46986414
+      ]
+     ],
+     [
+      [
+       37,
+       57103969
+      ],
+      [
+       35,
+       8379983
+      ],
+      [
+       39,
+       35726888
+      ],
+      [
+       1,
+       11317977
+      ],
+      [
+       32,
+       24094653
+      ],
+      [
+       5,
+       48444114
+      ],
+      [
+       24,
+       8379983
+      ],
+      [
+       22,
+       35618217
+      ],
+      [
+       38,
+       35763582
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 108
+  },
+  {
+   "seed": 520057,
+   "pair": [
+    "mikanko",
+    "mikanko"
+   ],
+   "first": 0,
+   "decision": 62,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 6,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 3662.3108019999927,
+   "firstFailure": null,
+   "recordedDecision": 62
+  },
+  {
+   "seed": 520057,
+   "pair": [
+    "mikanko",
+    "mikanko"
+   ],
+   "first": 0,
+   "decision": 91,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 3,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 40,
+   "discarded": 3,
+   "thinkMs": 8874.355992999976,
+   "firstFailure": {
+    "sample": 6,
+    "attempt": 1,
+    "reason": "semantic card unavailable",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 50,
+    "firstMisalignedStep": 50,
+    "expectedEvent": {
+     "promptType": 11,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "actualEvent": {
+     "promptType": 11,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": null,
+    "offeredCodes": [],
+    "sampledOrigins": [],
+    "targetedPins": [
+     [
+      [
+       38,
+       6327734
+      ],
+      [
+       37,
+       84550369
+      ],
+      [
+       32,
+       81260679
+      ],
+      [
+       15,
+       53174748
+      ],
+      [
+       28,
+       43527730
+      ],
+      [
+       26,
+       43527730
+      ],
+      [
+       8,
+       18377261
+      ]
+     ],
+     [
+      [
+       39,
+       35269904
+      ],
+      [
+       38,
+       8267140
+      ],
+      [
+       37,
+       102380
+      ],
+      [
+       36,
+       81260679
+      ],
+      [
+       35,
+       63941210
+      ],
+      [
+       34,
+       102380
+      ],
+      [
+       27,
+       84550369
+      ],
+      [
+       11,
+       11161666
+      ],
+      [
+       13,
+       43527730
+      ]
+     ]
+    ],
+    "repaired": false
+   },
+   "recordedDecision": 91
+  },
+  {
+   "seed": 520057,
+   "pair": [
+    "mikanko",
+    "mikanko"
+   ],
+   "first": 0,
+   "decision": 111,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 23,
+   "discarded": 0,
+   "thinkMs": 7521.805571000004,
+   "firstFailure": {
+    "sample": 2,
+    "attempt": 1,
+    "reason": "semantic card unavailable",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 50,
+    "firstMisalignedStep": 50,
+    "expectedEvent": {
+     "promptType": 11,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "actualEvent": {
+     "promptType": 11,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": 24299458,
+    "offeredCodes": [
+     53174748
+    ],
+    "sampledOrigins": [
+     null
+    ],
+    "targetedPins": [
+     [
+      [
+       38,
+       6327734
+      ],
+      [
+       37,
+       84550369
+      ],
+      [
+       39,
+       24299458
+      ],
+      [
+       35,
+       102380
+      ],
+      [
+       4,
+       81260679
+      ],
+      [
+       34,
+       24299458
+      ],
+      [
+       6,
+       43527730
+      ],
+      [
+       15,
+       43527730
+      ],
+      [
+       16,
+       18377261
+      ]
+     ],
+     [
+      [
+       39,
+       35269904
+      ],
+      [
+       38,
+       8267140
+      ],
+      [
+       37,
+       102380
+      ],
+      [
+       36,
+       81260679
+      ],
+      [
+       35,
+       63941210
+      ],
+      [
+       34,
+       102380
+      ],
+      [
+       32,
+       84550369
+      ],
+      [
+       16,
+       11161666
+      ],
+      [
+       7,
+       43527730
+      ],
+      [
+       8,
+       6327734
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 111
+  },
+  {
+   "seed": 567571,
+   "pair": [
+    "mikanko",
+    "sky"
+   ],
+   "first": 1,
+   "decision": 68,
+   "seat": 1,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 1024,
+   "discarded": 117,
+   "thinkMs": 154793.79551199998,
+   "firstFailure": {
+    "sample": 0,
+    "attempt": 1,
+    "reason": "hidden deck packet differs; first expected step 36",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 36,
+    "firstMisalignedStep": 36,
+    "expectedEvent": {
+     "promptType": 18,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": {
+      "code": 35261759,
+      "controller": null,
+      "location": 2,
+      "description": "0"
+     }
+    },
+    "actualEvent": {
+     "promptType": 16,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": {
+      "code": 35261759,
+      "controller": 1,
+      "location": 8,
+      "description": "0"
+     }
+    },
+    "requiredCode": null,
+    "offeredCodes": [],
+    "sampledOrigins": [],
+    "targetedPins": [
+     [],
+     [
+      [
+       39,
+       35261759
+      ],
+      [
+       38,
+       24299458
+      ],
+      [
+       37,
+       10045474
+      ],
+      [
+       36,
+       24299458
+      ],
+      [
+       35,
+       32807846
+      ],
+      [
+       24,
+       63166095
+      ],
+      [
+       20,
+       94145021
+      ],
+      [
+       33,
+       26077387
+      ],
+      [
+       31,
+       63166095
+      ],
+      [
+       2,
+       52340444
+      ],
+      [
+       26,
+       99550630
+      ],
+      [
+       28,
+       99550630
+      ],
+      [
+       10,
+       26077387
+      ],
+      [
+       34,
+       10045474
+      ],
+      [
+       23,
+       9726840
+      ],
+      [
+       18,
+       98338152
+      ],
+      [
+       17,
+       98338152
+      ],
+      [
+       8,
+       14558127
+      ],
+      [
+       22,
+       37351133
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 67
+  },
+  {
+   "seed": 567571,
+   "pair": [
+    "mikanko",
+    "sky"
+   ],
+   "first": 1,
+   "decision": 91,
+   "seat": 1,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 1124,
+   "discarded": 131,
+   "thinkMs": 234081.04928899993,
+   "firstFailure": {
+    "sample": 0,
+    "attempt": 1,
+    "reason": "hidden deck packet differs; first expected step 36",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 36,
+    "firstMisalignedStep": 36,
+    "expectedEvent": {
+     "promptType": 18,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": {
+      "code": 35261759,
+      "controller": null,
+      "location": 2,
+      "description": "0"
+     }
+    },
+    "actualEvent": {
+     "promptType": 16,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": {
+      "code": 35261759,
+      "controller": 1,
+      "location": 8,
+      "description": "0"
+     }
+    },
+    "requiredCode": null,
+    "offeredCodes": [],
+    "sampledOrigins": [],
+    "targetedPins": [
+     [
+      [
+       35,
+       48770333
+      ],
+      [
+       34,
+       81260679
+      ],
+      [
+       37,
+       53174748
+      ],
+      [
+       11,
+       84550369
+      ]
+     ],
+     [
+      [
+       39,
+       35261759
+      ],
+      [
+       38,
+       24299458
+      ],
+      [
+       37,
+       10045474
+      ],
+      [
+       36,
+       24299458
+      ],
+      [
+       35,
+       32807846
+      ],
+      [
+       18,
+       63166095
+      ],
+      [
+       23,
+       94145021
+      ],
+      [
+       32,
+       26077387
+      ],
+      [
+       12,
+       63166095
+      ],
+      [
+       1,
+       52340444
+      ],
+      [
+       21,
+       9726840
+      ],
+      [
+       29,
+       26077387
+      ],
+      [
+       19,
+       14558127
+      ],
+      [
+       5,
+       14558127
+      ],
+      [
+       9,
+       98338152
+      ],
+      [
+       11,
+       99550630
+      ],
+      [
+       8,
+       10045474
+      ],
+      [
+       26,
+       37351133
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 89
+  },
+  {
+   "seed": 567571,
+   "pair": [
+    "mikanko",
+    "sky"
+   ],
+   "first": 1,
+   "decision": 112,
+   "seat": 0,
+   "promptType": 11,
+   "legalChoices": 7,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 85,
+   "discarded": 5,
+   "thinkMs": 17745.150659000035,
+   "firstFailure": {
+    "sample": 0,
+    "attempt": 1,
+    "reason": "semantic card unavailable",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 49,
+    "firstMisalignedStep": 49,
+    "expectedEvent": {
+     "promptType": 11,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "actualEvent": {
+     "promptType": 11,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": null,
+    "offeredCodes": [],
+    "sampledOrigins": [],
+    "targetedPins": [
+     [
+      [
+       39,
+       96729612
+      ],
+      [
+       38,
+       96729612
+      ],
+      [
+       37,
+       53174748
+      ],
+      [
+       36,
+       25311006
+      ],
+      [
+       35,
+       48770333
+      ],
+      [
+       34,
+       81260679
+      ],
+      [
+       33,
+       84550369
+      ],
+      [
+       16,
+       11161666
+      ],
+      [
+       14,
+       43527730
+      ]
+     ],
+     [
+      [
+       35,
+       32807846
+      ],
+      [
+       34,
+       94145021
+      ],
+      [
+       39,
+       35261759
+      ],
+      [
+       24,
+       26077387
+      ],
+      [
+       22,
+       63166095
+      ],
+      [
+       28,
+       52340444
+      ],
+      [
+       18,
+       37351133
+      ]
+     ]
+    ],
+    "repaired": false
+   },
+   "recordedDecision": 109
+  },
+  {
+   "seed": 615085,
+   "pair": [
+    "mikanko",
+    "luna"
+   ],
+   "first": 0,
+   "decision": 65,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 15,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 2752.8187730000354,
+   "firstFailure": null,
+   "recordedDecision": 65
+  },
+  {
+   "seed": 615085,
+   "pair": [
+    "mikanko",
+    "luna"
+   ],
+   "first": 0,
+   "decision": 90,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 13,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 2339.119047000073,
+   "firstFailure": null,
+   "recordedDecision": 90
+  },
+  {
+   "seed": 615085,
+   "pair": [
+    "mikanko",
+    "luna"
+   ],
+   "first": 0,
+   "decision": 118,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 6,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 2363.5953389999922,
+   "firstFailure": null,
+   "recordedDecision": 118
+  },
+  {
+   "seed": 662599,
+   "pair": [
+    "sky",
+    "sky"
+   ],
+   "first": 1,
+   "decision": 61,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 3,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 33,
+   "discarded": 2,
+   "thinkMs": 2017.6443449999206,
+   "firstFailure": {
+    "sample": 2,
+    "attempt": 1,
+    "reason": "prompt-type/seat differs",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 10,
+    "firstMisalignedStep": 10,
+    "expectedEvent": {
+     "promptType": 12,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "actualEvent": {
+     "promptType": 16,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": null,
+    "offeredCodes": [],
+    "sampledOrigins": [],
+    "targetedPins": [
+     [
+      [
+       39,
+       25311006
+      ],
+      [
+       38,
+       34433770
+      ],
+      [
+       37,
+       24299458
+      ],
+      [
+       36,
+       51227866
+      ],
+      [
+       35,
+       32807846
+      ],
+      [
+       34,
+       98338152
+      ],
+      [
+       9,
+       26077387
+      ]
+     ],
+     [
+      [
+       39,
+       26077387
+      ],
+      [
+       38,
+       94145021
+      ],
+      [
+       20,
+       63166095
+      ],
+      [
+       22,
+       52340444
+      ],
+      [
+       17,
+       37351133
+      ]
+     ]
+    ],
+    "repaired": false
+   },
+   "recordedDecision": 60
+  },
+  {
+   "seed": 662599,
+   "pair": [
+    "sky",
+    "sky"
+   ],
+   "first": 1,
+   "decision": 85,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 3,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 1520.9410190000199,
+   "firstFailure": null,
+   "recordedDecision": 81
+  },
+  {
+   "seed": 662599,
+   "pair": [
+    "sky",
+    "sky"
+   ],
+   "first": 1,
+   "decision": 243,
+   "seat": 0,
+   "promptType": 11,
+   "legalChoices": 10,
+   "turn": 4,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 40,
+   "discarded": 3,
+   "thinkMs": 2912.7698720000917,
+   "firstFailure": {
+    "sample": 5,
+    "attempt": 1,
+    "reason": "prompt-type/seat differs",
+    "placement": null,
+    "timeline": null,
+    "historyStep": 10,
+    "firstMisalignedStep": 10,
+    "expectedEvent": {
+     "promptType": 12,
+     "controller": 1,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "actualEvent": {
+     "promptType": 16,
+     "controller": 0,
+     "turn": 1,
+     "phase": 4,
+     "hint": 0,
+     "source": null
+    },
+    "requiredCode": null,
+    "offeredCodes": [],
+    "sampledOrigins": [],
+    "targetedPins": [
+     [
+      [
+       39,
+       25311006
+      ],
+      [
+       38,
+       34433770
+      ],
+      [
+       37,
+       24299458
+      ],
+      [
+       36,
+       51227866
+      ],
+      [
+       35,
+       32807846
+      ],
+      [
+       34,
+       98338152
+      ],
+      [
+       0,
+       26077387
+      ]
+     ],
+     [
+      [
+       39,
+       26077387
+      ],
+      [
+       36,
+       10045474
+      ],
+      [
+       38,
+       94145021
+      ],
+      [
+       25,
+       63166095
+      ],
+      [
+       24,
+       52340444
+      ],
+      [
+       10,
+       37351133
+      ]
+     ]
+    ],
+    "repaired": false
+   },
+   "recordedDecision": 102
+  },
+  {
+   "seed": 710113,
+   "pair": [
+    "sky",
+    "luna"
+   ],
+   "first": 0,
+   "decision": 61,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 28,
+   "discarded": 0,
+   "thinkMs": 2373.3919450000394,
+   "firstFailure": {
+    "sample": 0,
+    "attempt": 1,
+    "reason": "public event timeline differs; first expected step 42",
+    "placement": null,
+    "timeline": {
+     "expected": [
+      "move",
+      0,
+      1,
+      12,
+      37351133,
+      {
+       "controller": 0,
+       "location": 4,
+       "sequence": 1,
+       "position": 1
+      }
+     ],
+     "actual": [
+      "move",
+      0,
+      1,
+      29,
+      26077387,
+      {
+       "controller": 0,
+       "location": 4,
+       "sequence": 1,
+       "position": 1
+      }
+     ]
+    },
+    "historyStep": 42,
+    "firstMisalignedStep": 42,
+    "expectedEvent": {
+     "promptType": 19,
+     "controller": 0,
+     "turn": 2,
+     "phase": 1,
+     "hint": 0,
+     "source": {
+      "code": 76072561,
+      "controller": 0,
+      "location": 4,
+      "description": "79767861723137"
+     }
+    },
+    "actualEvent": {
+     "promptType": 18,
+     "controller": 0,
+     "turn": 2,
+     "phase": 1,
+     "hint": 0,
+     "source": {
+      "code": 76072561,
+      "controller": 0,
+      "location": 4,
+      "description": "79767861723137"
+     }
+    },
+    "requiredCode": 37351133,
+    "offeredCodes": [
+     26077387
+    ],
+    "sampledOrigins": [
+     {
+      "player": 0,
+      "zone": "main",
+      "index": 12
+     }
+    ],
+    "targetedPins": [
+     [
+      [
+       39,
+       25311006
+      ],
+      [
+       38,
+       9726840
+      ],
+      [
+       37,
+       70368879
+      ],
+      [
+       36,
+       10045474
+      ],
+      [
+       35,
+       99550630
+      ],
+      [
+       34,
+       63166095
+      ],
+      [
+       7,
+       63166095
+      ],
+      [
+       23,
+       52340444
+      ],
+      [
+       13,
+       26077387
+      ],
+      [
+       12,
+       37351133
+      ]
+     ],
+     [
+      [
+       37,
+       2344618
+      ],
+      [
+       21,
+       35763582
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 61
+  },
+  {
+   "seed": 710113,
+   "pair": [
+    "sky",
+    "luna"
+   ],
+   "first": 0,
+   "decision": 85,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 26,
+   "discarded": 0,
+   "thinkMs": 2474.262776999967,
+   "firstFailure": {
+    "sample": 2,
+    "attempt": 1,
+    "reason": "public event timeline differs; first expected step 42",
+    "placement": null,
+    "timeline": {
+     "expected": [
+      "move",
+      0,
+      1,
+      12,
+      37351133,
+      {
+       "controller": 0,
+       "location": 4,
+       "sequence": 1,
+       "position": 1
+      }
+     ],
+     "actual": [
+      "move",
+      0,
+      1,
+      24,
+      26077387,
+      {
+       "controller": 0,
+       "location": 4,
+       "sequence": 1,
+       "position": 1
+      }
+     ]
+    },
+    "historyStep": 42,
+    "firstMisalignedStep": 42,
+    "expectedEvent": {
+     "promptType": 19,
+     "controller": 0,
+     "turn": 2,
+     "phase": 1,
+     "hint": 0,
+     "source": {
+      "code": 76072561,
+      "controller": 0,
+      "location": 4,
+      "description": "79767861723137"
+     }
+    },
+    "actualEvent": {
+     "promptType": 18,
+     "controller": 0,
+     "turn": 2,
+     "phase": 1,
+     "hint": 0,
+     "source": {
+      "code": 76072561,
+      "controller": 0,
+      "location": 4,
+      "description": "79767861723137"
+     }
+    },
+    "requiredCode": 37351133,
+    "offeredCodes": [
+     26077387
+    ],
+    "sampledOrigins": [
+     {
+      "player": 0,
+      "zone": "main",
+      "index": 30
+     }
+    ],
+    "targetedPins": [
+     [
+      [
+       39,
+       25311006
+      ],
+      [
+       38,
+       9726840
+      ],
+      [
+       37,
+       70368879
+      ],
+      [
+       36,
+       10045474
+      ],
+      [
+       35,
+       99550630
+      ],
+      [
+       34,
+       63166095
+      ],
+      [
+       8,
+       63166095
+      ],
+      [
+       11,
+       52340444
+      ],
+      [
+       30,
+       37351133
+      ]
+     ],
+     [
+      [
+       38,
+       50546208
+      ],
+      [
+       37,
+       2344618
+      ],
+      [
+       34,
+       87931906
+      ],
+      [
+       28,
+       35763582
+      ],
+      [
+       27,
+       35618217
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 82
+  },
+  {
+   "seed": 710113,
+   "pair": [
+    "sky",
+    "luna"
+   ],
+   "first": 0,
+   "decision": 103,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 23,
+   "discarded": 0,
+   "thinkMs": 2564.822267999989,
+   "firstFailure": {
+    "sample": 1,
+    "attempt": 1,
+    "reason": "public event timeline differs; first expected step 42",
+    "placement": null,
+    "timeline": {
+     "expected": [
+      "move",
+      0,
+      1,
+      12,
+      37351133,
+      {
+       "controller": 0,
+       "location": 4,
+       "sequence": 1,
+       "position": 1
+      }
+     ],
+     "actual": [
+      "move",
+      0,
+      1,
+      20,
+      26077387,
+      {
+       "controller": 0,
+       "location": 4,
+       "sequence": 1,
+       "position": 1
+      }
+     ]
+    },
+    "historyStep": 42,
+    "firstMisalignedStep": 42,
+    "expectedEvent": {
+     "promptType": 19,
+     "controller": 0,
+     "turn": 2,
+     "phase": 1,
+     "hint": 0,
+     "source": {
+      "code": 76072561,
+      "controller": 0,
+      "location": 4,
+      "description": "79767861723137"
+     }
+    },
+    "actualEvent": {
+     "promptType": 18,
+     "controller": 0,
+     "turn": 2,
+     "phase": 1,
+     "hint": 0,
+     "source": {
+      "code": 76072561,
+      "controller": 0,
+      "location": 4,
+      "description": "79767861723137"
+     }
+    },
+    "requiredCode": 37351133,
+    "offeredCodes": [
+     26077387
+    ],
+    "sampledOrigins": [
+     {
+      "player": 0,
+      "zone": "main",
+      "index": 27
+     }
+    ],
+    "targetedPins": [
+     [
+      [
+       39,
+       25311006
+      ],
+      [
+       38,
+       9726840
+      ],
+      [
+       37,
+       70368879
+      ],
+      [
+       36,
+       10045474
+      ],
+      [
+       35,
+       99550630
+      ],
+      [
+       34,
+       63166095
+      ],
+      [
+       2,
+       63166095
+      ],
+      [
+       0,
+       52340444
+      ],
+      [
+       9,
+       26077387
+      ],
+      [
+       27,
+       37351133
+      ]
+     ],
+     [
+      [
+       38,
+       50546208
+      ],
+      [
+       37,
+       2344618
+      ],
+      [
+       34,
+       87931906
+      ],
+      [
+       39,
+       87209160
+      ],
+      [
+       8,
+       35763582
+      ],
+      [
+       0,
+       2344618
+      ],
+      [
+       17,
+       35763582
+      ],
+      [
+       24,
+       35618217
+      ]
+     ]
+    ],
+    "repaired": true
+   },
+   "recordedDecision": 103
+  },
+  {
+   "seed": 757627,
+   "pair": [
+    "luna",
+    "luna"
+   ],
+   "first": 1,
+   "decision": 69,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 6,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 1692.759963999968,
+   "firstFailure": null,
+   "recordedDecision": 69
+  },
+  {
+   "seed": 757627,
+   "pair": [
+    "luna",
+    "luna"
+   ],
+   "first": 1,
+   "decision": 96,
+   "seat": 1,
+   "promptType": 11,
+   "legalChoices": 2,
+   "turn": 1,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 1806.7709049999248,
+   "firstFailure": null,
+   "recordedDecision": 96
+  },
+  {
+   "seed": 757627,
+   "pair": [
+    "luna",
+    "luna"
+   ],
+   "first": 1,
+   "decision": 123,
+   "seat": 0,
+   "promptType": 16,
+   "legalChoices": 2,
+   "turn": 2,
+   "accepted": 16,
+   "status": "full",
+   "different": 16,
+   "attempts": 16,
+   "discarded": 0,
+   "thinkMs": 2317.9350590000395,
+   "firstFailure": null,
+   "recordedDecision": 123
+  }
+ ]
+}
