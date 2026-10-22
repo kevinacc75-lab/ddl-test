@@ -1,0 +1,35 @@
+// r19 TASK a0 probe (Claude, 21 Oct; Seto: "measure a0 with a fixed node-budget probe, not the clock").
+// Same CPU-v-CPU duel as tools/r18-browser-probe.mjs (world pool on, 10 slots, 400 nodes), but every decision gets a
+// fixed WORK budget instead of a wall-clock deadline: shouldStop() turns true after --work engine responses (every
+// Duel.respond inside sampling, pool maintenance and search counts as one unit). Runs are deterministic and comparable
+// across builds and machines. --calibrate prints how many units this box does in --deadline-ms (default 1500), so the
+// work budget can be matched to the browser's per-decision time. The full response trajectory is saved with --out, so
+// any decision can be rebuilt for debugging. Usage:
+//   node tools/r19-budget-probe.mjs --seed 808 --a 0 --b 2 --first 0 --work 900 --max-decisions 900 --out f.json
+//   node tools/r19-budget-probe.mjs --replay saved.json --work 900   (same duel for every build: the AI still thinks at
+//     every decision, but the saved responses are played, so builds are compared on identical roots)
+//   node tools/r19-budget-probe.mjs --calibrate --deadline-ms 1500 --max-decisions 120
+// Calibration on Claude's box (21 Oct, Node 22.22.0): ~570 units/s, so --work 900 is about 1.5 s here.
+import fs from 'node:fs';import zlib from 'node:zlib';
+import {Duel} from '../dist/duel.mjs';import {createOptimalPilots} from '../dist/optimal-pilot.mjs';import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';import {dropAllPools,poolFor} from '../dist/ai/world-pool.mjs';
+const arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v},flag=k=>process.argv.includes('--'+k);
+const replay=arg('replay',null)?JSON.parse(fs.readFileSync(arg('replay'))):null;
+const seed=replay?replay.summary.seed:+arg('seed',808),A=+arg('a',0),B=+arg('b',2),first=+arg('first',0),work=+arg('work',900),maxDecisions=+arg('max-decisions',900),poolSize=+arg('pool-size',10),nodes=+arg('nodes',400),calibrate=flag('calibrate'),deadlineMs=+arg('deadline-ms',1500);
+const db=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/scripts.json.gz'))),decks=JSON.parse(fs.readFileSync('dist/decks.json')).decks;
+let units=0,limit=Infinity,deadline=Infinity;const respond=Duel.prototype.respond;Duel.prototype.respond=function(...a){units++;return respond.apply(this,a)};
+const shouldStop=()=>calibrate?performance.now()>=deadline:units>=limit;
+const d=await Duel.create(db,scripts),searchCore=await createSearchCore(db,scripts);
+const pilots=createOptimalPilots({seed,nodeBudget:nodes,searchCore,worldPool:true,poolKey:'probe:'+seed,poolSize,seatCapBytes:80*1048576/2,shouldStop});
+const n0=()=>d.responseHistory.length;const rows=[];let decisions=0,unitsInPlans=0,msInPlans=0;const t0=Date.now();
+const deckPair=replay?replay.summary.decks.map(id=>decks.find(x=>x.id===id)):[decks[A],decks[B]];
+try{d.start(deckPair,{seed,first:replay?replay.summary.first:first});
+ while(d.prompt&&!d.finished&&decisions<maxDecisions&&(!replay||n0()<replay.responses.length)){const seat=d.prompt.seat,p=pilots[seat],n=d.responseHistory.length;
+  const u0=units,start=performance.now();limit=units+work;deadline=start+deadlineMs;const plan=p.plan(d);const ms=performance.now()-start,used=units-u0;limit=Infinity;deadline=Infinity;decisions++;
+  const s=plan?.search;if(s&&s.determinizations!==undefined){unitsInPlans+=used;msInPlans+=ms;rows.push({n,seat,turn:d.turn,units:used,ms:Math.round(ms),worlds:s.determinizations,status:s.status,pinConflicts:s.pinConflicts||0,lastRejection:s.lastRejection??null,rejections:s.rejectionHistogram||{},pinDetails:s.pinConflictDetails||[],attempts:s.sampleAttempts,batch:s.batchPlacements??null,batchRetries:s.batchRetries??null,replaced:s.replacedCorrections??null,poolDiscard:s.poolDiscardReasons||null,pool:s.pool?{complete:s.pool.complete,created:s.pool.created,advanced:s.pool.advanced,behind:s.pool.behind,worlds:s.pool.worlds,discarded:s.pool.discarded,scheduled:s.pool.scheduled,turnCycle:s.pool.turnCycle,failedRefills:s.pool.failedRefills,repaired:s.pool.repaired||0,siblings:s.pool.siblings||0,exactSwaps:s.pool.exactSwaps||0,failedRepairs:s.pool.failedRepairs||0,renewDeferred:s.pool.renewDeferred||0,kept:s.pool.kept,reset:s.pool.reset?1:0,lostLineage:s.pool.lostLineage||0,skippedStale:s.pool.skippedStale||0,catchUp:s.pool.catchUpSteps||0}:null})}
+  if(!plan?.response&&!replay)break;const before=units;d.respond(replay?replay.responses[n]:plan.response);units=before;if(replay)for(const q of pilots)q.cache=null}
+}finally{d.stop();globalThis.__poolStats=[0,1].map(seat=>{const p=poolFor(['probe:'+seed,seat,poolSize].join('|'),poolSize);const {discardSamples,repairFailures,...rest}=p.stats;return {seat,stats:rest,discardSamples:discardSamples||[],repairFailures:repairFailures||[]}});dropAllPools()}
+const roots=rows.length,under8=rows.filter(r=>r.worlds<8).length,zero=rows.filter(r=>r.worlds===0).length,pins=rows.reduce((s,r)=>s+r.pinConflicts,0);
+const hist={};for(const r of rows)if(r.worlds<16)for(const [k,v] of Object.entries(r.rejections||{})){const key=k.replace(/\d+/g,'#').slice(0,90);hist[key]=(hist[key]||0)+v}
+const byTurn={};for(const r of rows){const t=r.turn<=5?'t1-5':r.turn<=10?'t6-10':'t11+';(byTurn[t]??={roots:0,under8:0,zero:0});byTurn[t].roots++;if(r.worlds<8)byTurn[t].under8++;if(r.worlds===0)byTurn[t].zero++}
+const summary={mode:(calibrate?'calibrate '+deadlineMs+' ms':'work '+work+' units')+(replay?' · replaying '+arg('replay'):''),seed,decks:deckPair.map(x=>x.id),first:replay?replay.summary.first:first,poolSize,nodes,node:process.version,decisions,searchRoots:roots,under8Pct:roots?+(100*under8/roots).toFixed(1):null,zeroWorldPct:roots?+(100*zero/roots).toFixed(1):null,meanWorlds:roots?+(rows.reduce((s,r)=>s+r.worlds,0)/roots).toFixed(2):null,pinConflicts:pins,rootsWithPinConflicts:rows.filter(r=>r.pinConflicts).length,batchPlacements:rows.reduce((a,r)=>a+(r.batch||0),0),replacedCorrections:rows.reduce((a,r)=>a+(r.replaced||0),0),byTurn,rejectionHistogram:Object.fromEntries(Object.entries(hist).sort((a,b)=>b[1]-a[1])),poolDiscardReasons:rows.reduce((a,r)=>{for(const [k,v] of Object.entries(r.poolDiscard||{}))a[k.replace(/\d+/g,'#').slice(0,70)]=Math.max(a[k.replace(/\d+/g,'#').slice(0,70)]||0,v);return a},{}),poolEvents:rows.reduce((a,r)=>{for(const k of ['kept','advanced','discarded','scheduled','turnCycle','created','repaired','siblings','exactSwaps','failedRepairs','renewDeferred','failedRefills','reset','lostLineage','skippedStale','catchUp'])a[k]=(a[k]||0)+(r.pool?.[k]||0);return a},{}),unitsPerSearchRoot:roots?Math.round(unitsInPlans/roots):null,unitsPerSecond:msInPlans?Math.round(unitsInPlans/(msInPlans/1000)):null,finished:d.finished,turns:d.turn,poolStats:globalThis.__poolStats,wallSec:Math.round((Date.now()-t0)/1000)};
+console.log(JSON.stringify(summary));const out=arg('out',null);if(out)fs.writeFileSync(out,JSON.stringify({summary,rows,responses:d.responseHistory},null,1));
