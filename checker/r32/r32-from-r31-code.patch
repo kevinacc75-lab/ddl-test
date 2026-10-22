@@ -1,0 +1,993 @@
+diff --git a/dist/ai/book/book.mjs b/dist/ai/book/book.mjs
+index 94d80eb..e0af025 100644
+--- a/dist/ai/book/book.mjs
++++ b/dist/ai/book/book.mjs
+@@ -1,6 +1,8 @@
+ // r18b (TASK a2): opening book + "never pass with a live hand" + spell/trap set/hold/activate rules.
+ // The book never forces a move and never bypasses legality: it only reorders what the base policy offers first.
+-// Search (when it runs) still scores the book step against the base policy's own choice and the other legal options.
++// r30: with book-trust on (the default for decks with a book), a book step is played as written; search still decides
++// where the book is silent, our own-turn passes and the opponent's turn. With trust off (Mikanko), search scores the book
++// step against the base policy's own choice and the other legal options.
+ // Only this seat's own hand, own field/GY/Extra Deck, public opposing cards and the public deck id are read.
+ import {M,R} from '../../duel.mjs';
+ import {GAME_PLANS} from '../../game-plans.mjs';
+@@ -50,6 +52,11 @@ function whenOk(d,book,w={},c){
+  if(w.fieldAny&&!w.fieldAny.some(n=>c.field.some(x=>d.name(x.code)===n)))return false;
+  if(w.first&&!c.first)return false;
+  if(w.lv4Synchro&&!lv4SynchroOk(d,c))return false;
++ // r32 (going second / board breaking): going-second only, opposing board size, own GY and field-absence conditions.
++ if(w.second&&c.first)return false;
++ if(w.oppMonstersMin&&d.zone(1-c.seat,4).filter(Boolean).length<w.oppMonstersMin)return false;
++ if(w.gyAny&&!w.gyAny.some(n=>c.gy.some(x=>d.name(x.code)===n)))return false;
++ if(w.notField&&w.notField.some(n=>c.field.some(x=>d.name(x.code)===n)))return false;
+  return true;
+ }
+ const KEY={activate:['activates',5],summon:['summons',0],special:['special_summons',1]};
+@@ -141,7 +148,41 @@ export function setDecision(d,seat,m){
+ 
+ // Book activation holds (applied with the pilot's own blunder checks): Super Polymerization is never spent on our own
+ // monsters alone; with no opposing monster it waits for the opponent's turn (S-SUPERPOLY / G-02).
++// r32 (Kevy 22 Oct item 3, all decks): competitive hand-trap timing on the opponent's turn. A response hand trap
++// (Ash Blossom, Ghost Belle, Effect Veiler, Infinite Impermanence) is saved for the opponent's KEY cards (their deck's
++// starters and extenders from the combo books and game plans, or an Extra Deck monster) while they still have a full hand;
++// it is used freely once they are down to 2 cards or fewer, after their first turn, or on any Extra Deck monster.
++// Nibiru, Droll & Lock Bird and Mulcharmy are not held. Public information only (deck id, card names on the chain).
++export const HANDTRAP={on:true};
++const HELD_TRAPS=/^(Ash Blossom & Joyous Spring|Ghost Belle & Haunted Mansion|Effect Veiler|Infinite Impermanence)$/;
++export function keyCards(oppId){const b=BOOKS[oppId],g=GAME_PLANS[oppId];return new Set([...(b?.starters||[]),...(b?.lines||[]).flatMap(l=>l.steps.map(s=>s.card)),...(g?.starters||[]),...(g?.extenders||[])])}
++export function handTrapHold(d,seat,c){
++ if(!HANDTRAP.on||d.active===seat||c?.location!==2||!HELD_TRAPS.test(d.name(c.code)))return null;
++ if(d.turn>2)return null;
++ const top=d.chain?.at?.(-1);if(!top||top.controller===seat)return null;
++ const topCard=d.db[top.code]||{},topName=d.name(top.code);
++ if(topCard.type&EXTRA_TYPES)return null;
++ if(d.zone(1-seat,2).filter(Boolean).length<=2)return null;
++ if(keyCards(deckId(d,1-seat)).has(topName))return null;
++ return 'Hand trap held: '+topName+' is not one of their key cards (save '+d.name(c.code)+' for a starter)';
++}
++// r32: the other half of the hand-trap rule. When the opponent's chain link is one of their key cards (or an Extra Deck
++// monster's effect), a hand trap that can answer it is USED (the base policy and the search tended to "save the
++// interruption" even on a starter; probe: 0 of 9 Ash / Impermanence windows on key cards were used). Ash Blossom and
++// Ghost Belle are only offered by the engine when they can negate; Impermanence / Effect Veiler are used only on a
++// monster effect. Public information only.
++const HT_ORDER=['Ash Blossom & Joyous Spring','Ghost Belle & Haunted Mansion','Infinite Impermanence','Effect Veiler'];
++export function handTrapUse(d,seat,m,blocked){
++ if(!HANDTRAP.on||m?.type!==M.SELECT_CHAIN||d.active===seat)return null;
++ const top=d.chain?.at?.(-1);if(!top||top.controller===seat)return null;
++ const topCard=d.db[top.code]||{},topName=d.name(top.code),extra=!!(topCard.type&EXTRA_TYPES),key=extra||keyCards(deckId(d,1-seat)).has(topName);if(!key)return null;
++ const monsterEffect=!!(topCard.type&1);
++ const opts=(m.selects||[]).map((c,i)=>({c,i,n:d.name(c.code)})).filter(x=>x.c.location===2&&HT_ORDER.includes(x.n)&&!blocked?.(x.c,x.i)&&(monsterEffect||!/Impermanence|Veiler/.test(x.n)));
++ opts.sort((a,b)=>HT_ORDER.indexOf(a.n)-HT_ORDER.indexOf(b.n));const best=opts[0];if(!best)return null;
++ return {index:best.i,card:best.n,reason:best.n+' on '+topName+(extra?' (an Extra Deck monster)':' (one of their key cards)')};
++}
+ export function bookActivationBlock(d,seat,c){
++ const ht=handTrapHold(d,seat,c);if(ht)return ht;
+  if(!BOOKS[deckId(d,seat)])return null;
+  if(d.name(c.code)==='Super Polymerization'&&!d.zone(1-seat,4).some(Boolean))return 'S-SUPERPOLY: hold Super Polymerization for a Fusion with an opposing monster';
+  return blockFor(d,seat,c,'activate');
+@@ -151,6 +192,7 @@ export function bookActivationBlock(d,seat,c){
+ function blockFor(d,seat,c,kind){
+  const book=BOOKS[deckId(d,seat)];if(!book?.blocks)return null;const n=d.name(c.code);
+  for(const b of book.blocks){if(b.do!==kind||b.card!==n)continue;
++  if(b.location&&!b.location.includes(c.location))continue;/* r32 (ChatGPT F1): a hold can name the zone it applies to, e.g. a field Quick Effect but not the same card's GY trigger */
+   if(b.if){const st=d.zone(seat,8).filter(x=>x&&(x.position&5)).map(x=>d.name(x.code)),hd=d.zone(seat,2).filter(Boolean).map(x=>d.name(x.code)),fd=d.zone(seat,4).filter(x=>x&&(x.position&5)).map(x=>d.name(x.code));if(!((b.if.stAny||[]).some(x=>st.includes(x))||(b.if.handAny||[]).some(x=>hd.includes(x))||(b.if.fieldAny||[]).some(x=>fd.includes(x))))continue}/* block only when its 'if' holds */if(b.desc&&!new RegExp(b.desc,'i').test(d.description?.(c.description)||''))continue;const u=b.unless||{};
+   const oppMons=d.zone(1-seat,4).filter(Boolean),oppCards=oppMons.length+d.zone(1-seat,8).filter(Boolean).length;
+   const lv=x=>x.level||(d.db[x.code]?.level||0)&255,mine=d.zone(seat,4).filter(x=>x&&(x.position&5)),hand=d.zone(seat,2).filter(Boolean);
+@@ -162,6 +204,7 @@ function blockFor(d,seat,c,kind){
+   if(u.notFirstTurn&&d.turn>1)continue;
+   if(u.countMin&&[...d.zone(seat,2).filter(x=>x&&!(d.db[x.code]?.type&EXTRA_TYPES)),...d.zone(seat,4).filter(x=>x&&(x.position&5))].filter(x=>(d.db[x.code]?.type&1)&&d.name(x.code).startsWith(u.countMin.prefix)).length>=u.countMin.min)continue;
+   if(u.notOwnTurn&&d.active!==seat)continue;
++  if(u.fieldOrGyNameHas&&[...d.zone(seat,4),...d.zone(seat,16)].some(x=>x&&(x.position&5||x.location===16)&&(d.db[x.code]?.type&1)&&d.name(x.code).includes(u.fieldOrGyNameHas)))continue;/* r32 (ChatGPT F2): e.g. an Ecclesia monster on our field or in our GY */
+   if(u.oppChainTop&&d.chain?.length&&d.chain.at(-1).controller!==seat)continue;
+   return 'Book hold ('+deckId(d,seat)+'): '+(b.why||n);}
+  return null;
+@@ -185,6 +228,9 @@ export function bookSummonBlock(d,seat,c,isPayoff){
+  const own=d.zone(seat,4).filter(Boolean),payoff=own.filter(x=>isPayoff(d.name(x.code)));if(!payoff.length)return null;
+  return own.length-payoff.length<(level>=7?2:1)?'Keep '+d.name(payoff[0].code)+': no Tribute Summon of '+d.name(c.code)+' over the payoff':null;
+ }
++// r32: how much an opposing monster matters (Kaiju / Lava Golem tribute target): Extra Deck bosses first, then
++// monsters with effects that work on our turn (Quick Effects, negation), then ATK. Public information only.
++export function oppValue(d,c){const card=d.db[c.code]||{},desc=card.desc||'';let v=(c.attack??card.attack??0);if(card.type&EXTRA_TYPES)v+=3000;if(/Quick Effect|during either player's turn|negate/i.test(desc))v+=1500;if(card.type&32)v+=300;if(!(c.position&5))v-=500;return Math.max(0,v)}
+ // Card picks inside the book's own effects (search target, Fusion target, materials). Never adds an illegal pick.
+ export function bookPick(d,seat,m,response){
+  if(![M.SELECT_CARD,M.SELECT_UNSELECT_CARD].includes(m?.type)||!response)return null;
+@@ -195,6 +241,10 @@ export function bookPick(d,seat,m,response){
+   &&(!p.ifField||p.ifField.every(onField))&&(!p.ifCount||[...c.hand.filter(x=>!(d.db[x.code]?.type&EXTRA_TYPES)),...c.field.filter(x=>x.position&5)].filter(x=>(d.db[x.code]?.type&1)&&d.name(x.code).startsWith(p.ifCount.prefix)&&d.name(x.code)!==source).length>=p.ifCount.min)/* r28: field Fusion monsters count as materials too */&&(!p.ifNotField||!p.ifNotField.some(onField))&&(p.ifOppNone===undefined||p.ifOppNone===oppNone));// r26: field / opponent-board conditions
+  if(!rule)return null;
+  const loc=rule.location||[];
++ if(rule.preferBest==='opp'){/* r32 (Mikanko board breaking): take the opponent's best monster, e.g. the Kaiju tribute */const own=x=>d.fromEngine?d.fromEngine(x.controller)===seat:x.controller===seat;
++  const best=cards.map((card,i)=>({i,v:own(card)?-1:oppValue(d,card)})).filter(x=>x.v>=0).sort((a,b)=>b.v-a.v)[0];if(!best)return null;
++  if(m.type===M.SELECT_UNSELECT_CARD){if(response.index==null||response.index===best.i)return null;return {response:{...response,index:best.i},rule:rule.source,card:d.name(cards[best.i].code)}}
++  const picks=response.indicies||[];if(!picks.length||picks.includes(best.i))return null;return {response:{...response,indicies:[best.i,...picks.filter(i=>i!==best.i)].slice(0,picks.length)},rule:rule.source,card:d.name(cards[best.i].code)}}
+  const ranked=cards.map((card,i)=>({i,p:rule.prefer.indexOf(d.name(card.code)),l:loc.indexOf(card.location)})).filter(x=>x.p>=0).sort((a,b)=>a.p-b.p||(a.l<0?99:a.l)-(b.l<0?99:b.l));
+  if(!ranked.length)return null;
+  const best=ranked[0].i;
+@@ -215,7 +265,7 @@ export function optionPick(d,seat,m){
+  if(source==='Branded Opening'){const i=text.findIndex(t=>/special summon/i.test(t));return i>=0?{type:R.SELECT_OPTION,index:i}:null}
+  // r27: per-deck effect modes from book data, e.g. Lunalight Black Sheep adds Polymerization when no Fusion Spell is in hand.
+  const book=BOOKS[deckId(d,seat)],handNames=d.zone(seat,2).filter(Boolean).map(x=>d.name(x.code));
+- for(const o of book?.options||[]){if(o.source!==source)continue;if(o.ifNotHand&&o.ifNotHand.some(n=>handNames.includes(n)))continue;const i=text.findIndex(t=>new RegExp(o.match,'i').test(t));if(i>=0)return {type:R.SELECT_OPTION,index:i}}
++ for(const o of book?.options||[]){if(o.source!==source)continue;if(o.ifNotHand&&o.ifNotHand.some(n=>handNames.includes(n)))continue;if(o.ifOppNoFaceUp&&[...d.zone(1-seat,4),...d.zone(1-seat,8)].some(x=>x&&(x.position&5)))continue;const i=text.findIndex(t=>new RegExp(o.match,'i').test(t));if(i>=0)return {type:R.SELECT_OPTION,index:i}}
+  if(source==='Albion the Branded Dragon'){const i=text.findIndex(t=>/\bset\b/i.test(t));return i>=0?{type:R.SELECT_OPTION,index:i}:null}
+  return null;
+ }
+diff --git a/dist/ai/book/branded-lines.mjs b/dist/ai/book/branded-lines.mjs
+index fa5d619..8d4a15e 100644
+--- a/dist/ai/book/branded-lines.mjs
++++ b/dist/ai/book/branded-lines.mjs
+@@ -47,8 +47,9 @@ export default {
+    "steps": [{"do": "summon", "card": "Guiding Quem, the Virtuous"}]}
+  ],
+  "blocks": [
+-  {"do": "activate", "card": "The Fallen & The Virtuous", "unless": {"oppCardsMin": 1, "fieldAny": ["Incredible Ecclesia, the Virtuous"]}, "why": "r30: its first effect must destroy a face-up card; with nothing of the opponent's on the field it would destroy our own (seen: our Blazing Cartesia). Hold it for their turn."}
++  {"do": "activate", "card": "The Fallen & The Virtuous", "unless": {"oppCardsMin": 1, "fieldOrGyNameHas": "Ecclesia"}, "why": "r32 (ChatGPT F2): its second effect (revive from either GY) is live with any Ecclesia monster on our field OR in our GY, and the option rule then picks it. r30: its first effect must destroy a face-up card; with nothing of the opponent's on the field it would destroy our own (seen: our Blazing Cartesia). Hold it for their turn."}
+  ],
++ "options": [{"source": "The Fallen & The Virtuous", "match": "Special Summon", "ifOppNoFaceUp": true, "why": "r32 (ChatGPT F2): with no face-up opposing card, revive instead of destroying our own card"}],
+  "picks": [
+   {"source": "Nadir Servant", "hint": [504], "prefer": ["Titaniklad the Ash Dragon", "Lubellion the Searing Dragon", "Granguignol the Dusk Dragon", "Albion the Sanctifire Dragon"], "why": "r28: Titaniklad in the GY adds or Special Summons Albaz / a Dogmatika in the End Phase; never Mirrorjade (its GY effect needs it to leave the field). Previously the boss rule kept Mirrorjade in the Extra Deck by accident."},
+   {"source": "Aluber the Jester of Despia", "hint": [506], "prefer": ["Branded Fusion", "Branded Retribution", "Branded in High Spirits"]},
+diff --git a/dist/ai/book/captions.mjs b/dist/ai/book/captions.mjs
+new file mode 100644
+index 0000000..afe1dd6
+--- /dev/null
++++ b/dist/ai/book/captions.mjs
+@@ -0,0 +1,41 @@
++// r32 (Kevy 22 Oct 16:50, item 4: "a short caption naming the combo line ... so you can see the plan as well as the moves").
++// Plain-words goal for each combo-book line, shown in Learning mode when the AI starts that line. Lines missing here
++// fall back to the line's own name. Data only: the AI's choices never read this file.
++export const LINE_GOALS={
++ // Branded
++ 'G-04':'Punishing their monster effect with Triple Tactics Talent',
++ 'G-01':'Fallen of Albaz eats their monster',
++ 'L-04':'Going for Mirrorjade (Aluber + Branded Opening)',
++ 'L-01':'Going for Mirrorjade (one-card Aluber)',
++ 'L-05':'Going for Mirrorjade (Branded Opening as Aluber)',
++ 'L-02':'Going for Mirrorjade (one-card Branded Fusion)',
++ 'G-03':'Stealing their monster for Super Polymerization',
++ 'L-06':'Extending with Branded in High Spirits',
++ 'V53-SYN':'Making Despian Luluwalilith',
++ 'V53-L3':'Granguignol into Titaniklad',
++ 'V53-QC':'Guiding Quem sends Albaz, then a Cartesia Fusion',
++ 'V53-WD':'Fallen of the White Dragon into a Cartesia Fusion',
++ 'V53-KITT':'Springans Kitt into Branded Fusion',
++ 'V53-CART':'Fusion with Blazing Cartesia',
++ 'RULE-NS-2':'Guiding Quem sends Albaz (saving Albaz for later)',
++ 'B-02':'Fusion Deployment for Fallen of Albaz',
++ 'L-07':'Going for Dragoon',
++ 'R30-QNS':'Guiding Quem for a body on their turn',
++ // Lunalight
++ 'LU-01':'Going for Lunalight Liger Dancer',
++ // Other decks
++ 'K-01':'Going for Kashtira Shangri-Ira',
++ 'BE-01':'Going for Blue-Eyes Spirit Dragon',
++ 'TO-01':'Going for Toon Black Luster Soldier',
++ 'HE-FD':'Going for Destroyer Phoenix Enforcer',
++ 'HE-FURN':'Masked HERO Furnace fetches Mask Change',
++ 'HE-FARIS':'Vision HERO Faris sets up Malicious',
++ 'HE-STRAT':'Stratos searches a HERO',
++ 'HE-CALL':'Emergency Call fetches Stratos',
++ 'HE-AHL':'A Hero Lives calls Shadow Mist or Stratos',
++ 'HE-VYON':'Vision HERO Vyon sets up two Malicious',
++ 'HE-MAL':'Malicious brings a second Malicious',
++ 'HE-EJ':'Miracle Ejector into EN Shuffle'
++};
++export const lineGoal=(id,line)=>LINE_GOALS[id]||String(line?.name||id||'').replace(/->/g,'→');
++export const lineRoute=line=>String(line?.name||'').replace(/->/g,'→');
+diff --git a/dist/ai/book/hero-lines.mjs b/dist/ai/book/hero-lines.mjs
+index 0409a46..650cd78 100644
+--- a/dist/ai/book/hero-lines.mjs
++++ b/dist/ai/book/hero-lines.mjs
+@@ -6,10 +6,12 @@
+ // Malicious in the GY banishes itself to Special Summon another Malicious (DARK HERO, legal under Fusion Destiny's
+ // lock); Mask Change stays set for the opponent's turn (Malicious -> Masked HERO Dark Law). Faris discards Malicious
+ // (feeding that recursion) and places Vision HERO Increase as a Continuous Trap.
++// r32 (Kevy item 5, deepen the book): Vyon sends Malicious (was Neos), Malicious recursion as its own line, A Hero Lives
++// for Shadow Mist (adds Mask Change) or Stratos, Miracle Ejector -> EN Shuffle into Shadow Mist / Stratos (was Neos).
+ export default {
+  "deck": "hero",
+  "source": "Claude r31 from the printed card texts and the r31 audit; not yet reviewed by Akiza or Alexis.",
+- "starters": ["Fusion Destiny", "Vision HERO Faris", "Masked HERO Furnace", "Elemental HERO Stratos", "E - Emergency Call", "Miracle Ejector"],
++ "starters": ["Fusion Destiny", "Vision HERO Faris", "Masked HERO Furnace", "Elemental HERO Stratos", "E - Emergency Call", "Miracle Ejector", "Vision HERO Vyon", "A Hero Lives"],
+  "lines": [
+   {"id": "HE-FD", "name": "Fusion Destiny -> Destroyer Phoenix Enforcer; Malicious recursion", "when": {"hand": ["Fusion Destiny"]},
+    "steps": [{"do": "activate", "card": "Fusion Destiny"}, {"do": "activate", "card": "Destiny HERO - Malicious"}]},
+@@ -17,10 +19,18 @@ export default {
+    "steps": [{"do": "activate", "card": "Masked HERO Furnace"}]},
+   {"id": "HE-FARIS", "name": "Vision HERO Faris: discard Malicious, place Vision HERO Increase", "when": {"hand": ["Vision HERO Faris"], "handAny": ["Destiny HERO - Malicious", "Elemental HERO Neos", "Masked HERO Furnace", "Neo-Spacian Aqua Dolphin", "Elemental HERO Stratos"]},
+    "steps": [{"do": "activate", "card": "Vision HERO Faris"}]},
++  {"id": "HE-AHL", "name": "A Hero Lives (no monsters yet): Shadow Mist for Mask Change, else Stratos", "when": {"hand": ["A Hero Lives"]},
++   "steps": [{"do": "activate", "card": "A Hero Lives"}]},
++  {"id": "HE-CALL", "name": "E - Emergency Call for Stratos", "when": {"hand": ["E - Emergency Call"]},
++   "steps": [{"do": "activate", "card": "E - Emergency Call"}]},
+   {"id": "HE-STRAT", "name": "Elemental HERO Stratos: add a HERO", "when": {"hand": ["Elemental HERO Stratos"]},
+    "steps": [{"do": "summon", "card": "Elemental HERO Stratos"}]},
+-  {"id": "HE-CALL", "name": "E - Emergency Call for Stratos", "when": {"hand": ["E - Emergency Call"]},
+-   "steps": [{"do": "activate", "card": "E - Emergency Call"}]}
++  {"id": "HE-VYON", "name": "Vision HERO Vyon sends Malicious, then Malicious brings a second Malicious", "when": {"hand": ["Vision HERO Vyon"], "notHand": ["Elemental HERO Stratos"]},
++   "steps": [{"do": "summon", "card": "Vision HERO Vyon"}, {"do": "activate", "card": "Destiny HERO - Malicious"}]},
++  {"id": "HE-MAL", "name": "Destiny HERO - Malicious in the GY: Special Summon another Malicious", "when": {"gyAny": ["Destiny HERO - Malicious"]},
++   "steps": [{"do": "activate", "card": "Destiny HERO - Malicious"}]},
++  {"id": "HE-EJ", "name": "Miracle Ejector adds EN Shuffle; EN Shuffle turns it into Shadow Mist or Stratos", "when": {"hand": ["Miracle Ejector"]},
++   "steps": [{"do": "summon", "card": "Miracle Ejector"}, {"do": "activate", "card": "EN Shuffle"}]}
+  ],
+  "picks": [
+   {"source": "*", "hint": [533], "prefer": ["Vision HERO Vyon", "Vision HERO Increase", "Vision HERO Faris", "Elemental HERO Stratos", "Elemental HERO Shadow Mist", "Miracle Ejector", "Neo-Spacian Aqua Dolphin", "Destiny HERO - Malicious", "Masked HERO Fountain", "Masked HERO Dusk Crow"]},
+@@ -31,7 +41,15 @@ export default {
+   {"source": "Vision HERO Faris", "prefer": ["Destiny HERO - Malicious", "Elemental HERO Neos", "Neo-Spacian Aqua Dolphin", "Vision HERO Increase", "Vision HERO Vyon"]},
+   {"source": "Elemental HERO Stratos", "hint": [506], "prefer": ["Destiny HERO - Malicious", "Vision HERO Faris", "Elemental HERO Shadow Mist"]},
+   {"source": "E - Emergency Call", "prefer": ["Elemental HERO Stratos", "Elemental HERO Shadow Mist", "Miracle Ejector"]},
+-  {"source": "Destiny HERO - Destroyer Phoenix Enforcer", "hint": [502], "prefer": ["Destiny HERO - Malicious", "Destiny HERO - Denier", "Vision HERO Increase"]}
++  {"source": "Destiny HERO - Destroyer Phoenix Enforcer", "hint": [502], "prefer": ["Destiny HERO - Malicious", "Destiny HERO - Denier", "Vision HERO Increase"]},
++  {"source": "Vision HERO Vyon", "hint": [504], "prefer": ["Destiny HERO - Malicious", "Elemental HERO Shadow Mist", "Destiny HERO - Denier"]},
++  {"source": "A Hero Lives", "ifNotHand": ["Mask Change"], "prefer": ["Elemental HERO Shadow Mist", "Elemental HERO Stratos"]},
++  {"source": "A Hero Lives", "prefer": ["Elemental HERO Stratos", "Elemental HERO Shadow Mist"]},
++  {"source": "EN Shuffle", "hint": [509], "prefer": ["Elemental HERO Shadow Mist", "Elemental HERO Stratos", "Miracle Ejector"]},
++  {"source": "Miracle Ejector", "hint": [506], "prefer": ["EN Shuffle", "Favorite Contact"]},
++  {"source": "Masked HERO Fountain", "hint": [509], "prefer": ["Elemental HERO Stratos", "Vision HERO Vyon", "Elemental HERO Shadow Mist", "Vision HERO Faris"]},
++  {"source": "Masked HERO Dusk Crow", "prefer": ["Masked HERO Furnace", "Masked HERO Fountain"]},
++  {"source": "Elemental HERO Shadow Mist", "hint": [506], "prefer": ["Mask Change", "Destiny HERO - Malicious", "Elemental HERO Stratos", "Vision HERO Faris"]}
+  ],
+  "options": [{"source": "Elemental HERO Stratos", "match": "add|hand"}],
+  "blocks": [
+@@ -39,7 +57,7 @@ export default {
+   {"do": "special", "card": "Xtra HERO Wonder Driver", "if": {"fieldAny": ["Destiny HERO - Destroyer Phoenix Enforcer", "Masked HERO Dark Law"]}, "why": "keep the boss: this Link would have to use Destroyer Phoenix Enforcer / Dark Law as material (seen)"},
+   {"do": "special", "card": "Xtra HERO Cross Crusader", "if": {"fieldAny": ["Destiny HERO - Destroyer Phoenix Enforcer", "Masked HERO Dark Law"]}, "why": "keep the boss: this Link would have to use Destroyer Phoenix Enforcer / Dark Law as material (seen)"},
+   {"do": "activate", "card": "Mask Change", "unless": {"notOwnTurn": true}, "why": "set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"},
+-  {"do": "activate", "card": "Destiny HERO - Destroyer Phoenix Enforcer", "unless": {"oppCardsMin": 1}, "why": "its Quick Effect destroys one of ours and one card on the field: with nothing of the opponent's out it only destroys our own cards (seen: Malicious and Enforcer itself)"},
++  {"do": "activate", "card": "Destiny HERO - Destroyer Phoenix Enforcer", "location": [4], "unless": {"oppCardsMin": 1}, "why": "its Quick Effect destroys one of ours and one card on the field: with nothing of the opponent's out it only destroys our own cards (seen: Malicious and Enforcer itself). r32 (ChatGPT F1): only its Quick Effect on the field; its revival trigger from the GY is never held"},
+   {"do": "activate", "card": "Polymerization", "if": {"handAny": ["Fusion Destiny"]}, "why": "Fusion Destiny makes Destroyer Phoenix Enforcer from the Deck; Polymerization from hand spends the cards Fusion Destiny needs"}
+  ]
+ };
+diff --git a/dist/ai/book/luna-lines.mjs b/dist/ai/book/luna-lines.mjs
+index 26bcabd..735d8b8 100644
+--- a/dist/ai/book/luna-lines.mjs
++++ b/dist/ai/book/luna-lines.mjs
+@@ -55,6 +55,7 @@ export default {
+   {"do": "activate", "card": "Polymerization", "if": {"fieldAny": ["Lunalight Perfume Dancer"]}, "unless": {"countMin": {"prefix": "Lunalight", "min": 4}}, "why": "Perfume Dancer is already out: keep Polymerization for Leo / Liger Dancer (Kaleido + 3 Lunalight)"},
+   {"do": "special", "card": "Knightmare Phoenix", "unless": {"oppCardsMin": 1}, "why": "Knightmare Phoenix would eat two Lunalight bodies with nothing of the opponent's to destroy"},
+   {"do": "special", "card": "Gorgon of Zilofthonia", "unless": {"oppMonstersMin": 1}, "why": "Gorgon would eat Lunalight bodies with no opposing monster to point at"},
++  {"do": "special", "card": "Gorgon of Zilofthonia", "unless": {"fieldAny": ["Lunalight Liger Dancer", "Lunalight Leo Dancer"]}, "why": "r32 going second: without Liger / Leo Dancer on our field, Gorgon eats our bodies and ends the turn alone with no ATK of its own (seen in 4 of 11 going-second hands)"},
+   {"do": "special", "card": "Tri-Brigade Ferrijit the Barren Blossom", "unless": {"oppMonstersMin": 1}, "why": "going first, Ferrijit trades two Lunalight bodies (often a Fusion monster) for a weaker Link 2; keep the Fusion board"}
+  ],
+  "setHold": {}
+diff --git a/dist/ai/book/mikanko-lines.mjs b/dist/ai/book/mikanko-lines.mjs
+index b29f526..513479e 100644
+--- a/dist/ai/book/mikanko-lines.mjs
++++ b/dist/ai/book/mikanko-lines.mjs
+@@ -3,6 +3,9 @@
+ // time), so this book adds only clear picks and keeps book-trust OFF ("trust": false): search still decides every move.
+ // Note for Tea: this list has no "Mikanko Kagura", the Ritual Spell Ohime names; Preparation of Rites can only add
+ // Ohime (no Ritual Spell to recover), and Ohime reaches the field through The Great Mikanko Ceremony or Noble Twins.
++// r32 (Kevy item 2, board breaker): a Kaiju / Lava Golem tributes the opponent's best monster (oppValue in book.mjs:
++// Extra Deck boss first, then effects that work on our turn, then ATK). Alexis: please rule on floating effects such as
++// Mirrorjade's "leaves the field by an opponent's card" when it is Tributed for a Kaiju.
+ export default {
+  "deck": "mikanko",
+  "trust": false,
+@@ -11,7 +14,8 @@ export default {
+  "lines": [],
+  "picks": [
+   {"source": "Preparation of Rites", "prefer": ["Ohime the Manifested Mikanko"]},
+-  {"source": "Mikanko Shinbu - Noble Twins", "hint": [504], "prefer": ["Mikanko Dance - Mayowashidori", "Sanaki the Mikanko Devotee"]}
++  {"source": "Mikanko Shinbu - Noble Twins", "hint": [504], "prefer": ["Mikanko Dance - Mayowashidori", "Sanaki the Mikanko Devotee"]},
++  {"source": "*", "hint": [500], "preferBest": "opp", "prefer": [], "why": "r32: a Kaiju (and Lava Golem) tributes the opponent's best monster: their Extra Deck boss first (seen: Thunder King tributed Dogmatika Fleurdelis and left Mirrorjade)"}
+  ],
+  "blocks": []
+ };
+diff --git a/dist/app-shell.mjs b/dist/app-shell.mjs
+index 665c147..4efeb15 100644
+--- a/dist/app-shell.mjs
++++ b/dist/app-shell.mjs
+@@ -1,7 +1,7 @@
+-import {installPlayFlow} from './play-flow.mjs';
++import {installPlayFlow} from './play-flow.mjs';import {createLearningCaptions} from './learning-captions.mjs';
+ const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ export function installShell({preferences,applyPreferences,sound,presentation,getState,getMatch,getDecks,getWorker,notify,openModal,beforeRewind=()=>{},getDecision=()=>null,submit=()=>{},navigate=()=>{},inspect=()=>{}}){
+- const play=installPlayFlow({preferences,save:applyPreferences,getDecision,submit,navigate,inspect,notify});
++ const play=installPlayFlow({preferences,save:applyPreferences,getDecision,submit,navigate,inspect,notify});const captions=createLearningCaptions({getDecks,on:()=>(preferences.preset||'learning')==='learning'});/* r32: Learning-mode combo captions */
+  const $=s=>document.querySelector(s);document.body.append($('#rotate-hint'));let portraitOverride=false,gesture=null,pressTimer,bookmarks=[],lastSummary=-1;try{bookmarks=JSON.parse(localStorage.getItem('lab-bookmarks-v2')||'[]')}catch{}
+  for(const bus of ['master','music','sfx','ui','voice'])$('#bus-'+bus).oninput=e=>{preferences.buses??={};preferences.buses[bus]=Number(e.target.value)/100;if(bus==='master')preferences.volume=preferences.buses.master;if(bus==='music')preferences.musicVolume=preferences.buses.music;applyPreferences()};
+  $('#lab-pace').onchange=e=>{preferences.preset=e.target.value;preferences.modePaces??={};preferences.modePaces[$('#mode').value]=preferences.preset;preferences.tapToContinue=false;$('#speed').value=String({learning:100,duel:75,broadcast:35,instant:1}[preferences.preset]);getWorker()?.postMessage({type:'speed',value:Number($('#speed').value)});applyPreferences()};
+@@ -20,7 +20,7 @@ export function installShell({preferences,applyPreferences,sound,presentation,ge
+  function cutin(player,text){const n=$('#duelist-cutin'),art=document.querySelector('.player-bar[data-seat=\"'+player+'\"] .player-avatar')||$('#my-avatar');n.querySelector('img').src=art.src;n.querySelector('b').textContent=text;n.hidden=false;n.classList.remove('cutin-live');void n.offsetWidth;n.classList.add('cutin-live');setTimeout(()=>n.hidden=true,1000)}
+  function summary(x){if(!x.state.finished||lastSummary===x.match?.seed)return;lastSummary=x.match?.seed;const turns=x.state.turn,history=x.coach?.history||[],key=history.filter(t=>['summon','chain','attack'].includes(t.kind)).slice(-5);let target=$('#duel-summary');if(!target){target=document.createElement('section');target.id='duel-summary';$('.journal-pane').prepend(target)}target.hidden=false;target.innerHTML='<h3>Duel review · '+turns+' turns</h3><p>Final LP '+x.state.players.map(p=>p.lp).join(' / ')+'</p><ol>'+key.map(t=>'<li>'+escape(t.title)+' — '+escape(t.reason)+'</li>').join('')+'</ol>';}
+  document.addEventListener('duel-presentation-event',({detail:e})=>{if(e.type==='attack'&&e.lethal)cutin(e.from?.controller,'One decisive strike.');if(e.type==='summon'&&e.special){cutin(e.player,'The next chapter begins.');reaction('Let’s see you answer this.')}if(e.type==='negate'||e.negated)reaction('You’ll need another line.');if(e.type==='damage'&&e.amount>=2000){reaction('Still in this duel.');sound.duck()}if(e.type==='win')reaction('That was the turning point.')});
+- const api={play,sync(){play.sync();for(const [id,key] of [['lab-tap','tapToContinue'],['lab-chain-flow','chainFlow'],['lab-stage','tabletStage'],['lab-voice','voice']])$('#'+id).checked=!!preferences[key];{const el=$('#lab-auto-skip-chain');if(el)el.checked=preferences.autoSkipEmptyChain!==false}document.body.dataset.chainFlow=String(preferences.chainFlow!==false);$('#lab-pace').value=preferences.preset||'learning';for(const id of ['lab-chain-view','setup-chain-view'])$('#'+id).value=preferences.chainView||'auto';for(const b of ['master','music','sfx','ui','voice'])$('#bus-'+b).value=100*(b==='master'?preferences.volume:preferences.buses?.[b]??sound.levels[b]);resize()},state(x){play.state(x);summary(x);resize()},rewound(){lastSummary=-1},rewind};api.sync();
++ const api={play,sync(){play.sync();for(const [id,key] of [['lab-tap','tapToContinue'],['lab-chain-flow','chainFlow'],['lab-stage','tabletStage'],['lab-voice','voice']])$('#'+id).checked=!!preferences[key];{const el=$('#lab-auto-skip-chain');if(el)el.checked=preferences.autoSkipEmptyChain!==false}document.body.dataset.chainFlow=String(preferences.chainFlow!==false);$('#lab-pace').value=preferences.preset||'learning';for(const id of ['lab-chain-view','setup-chain-view'])$('#'+id).value=preferences.chainView||'auto';for(const b of ['master','music','sfx','ui','voice'])$('#bus-'+b).value=100*(b==='master'?preferences.volume:preferences.buses?.[b]??sound.levels[b]);resize()},state(x){play.state(x);summary(x);captions.state(x);resize()},rewound(){lastSummary=-1},rewind};api.sync();
+  if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').then(async registration=>{await navigator.serviceWorker.ready;if(registration.active)notify('Offline duel files are ready. You can install the lab from your browser menu.');}).catch(()=>notify('Offline installation is unavailable in this browser. Online duels still work.'));
+  return api;
+ }
+diff --git a/dist/audio/soundtrack.json b/dist/audio/soundtrack.json
+index b6f66f7..bf16586 100644
+--- a/dist/audio/soundtrack.json
++++ b/dist/audio/soundtrack.json
+@@ -1,12 +1,68 @@
+ {
+-  "about": "r24: Kevy's duel soundtrack. Each duel picks one track at random (never the same twice in a row), fades it in, and loops it by crossfading into itself just before its natural ending (end, in seconds). A new duel crossfades to a new track. Remove all tracks to use the built-in score.",
+-  "credit": "Duel soundtrack: original tracks by Kevy, made with Suno (21 Oct 2026).",
+-  "fadeIn": 2.5,
+-  "overlap": 2,
+-  "newGame": 2,
+-  "tracks": [
+-    {"file": "ddl-track-pulse.mp3", "title": "Pulse", "end": 147.0},
+-    {"file": "ddl-track-buoyant-groove.mp3", "title": "Buoyant Groove", "end": 147.5},
+-    {"file": "ddl-track-buoyant-groove-2.mp3", "title": "Buoyant Groove II", "end": 146.0}
+-  ]
++ "about": "r24/r32: Kevy's duel soundtrack. Each duel picks one track at random (never the same twice in a row) and fades it in from the top. Near the track's natural ending (end, seconds) the next pass starts again and the two crossfade with an equal-power curve over 'overlap' seconds (a track can set a longer one: the big build-up tracks use 6 s so the climax eases back into the groove), so the track fades into itself as a seamless loop; loopStart (seconds) is where a repeat pass starts: the first point where the track is about as loud as its ending, so the crossfade has no drop (the first pass of each duel still plays the intro), and gain evens out loudness between tracks. A new duel crossfades to a new track. Remove all tracks to use the built-in score.",
++ "credit": "Duel soundtrack: original tracks by Kevy (r32 set, 22 Oct 2026).",
++ "fadeIn": 3,
++ "overlap": 3,
++ "newGame": 2.5,
++ "tracks": [
++  {
++   "file": "ddl-track-battle-groove.mp3",
++   "title": "Battle Groove",
++   "end": 195.5,
++   "gain": 0.84,
++   "loopStart": 13.5
++  },
++  {
++   "file": "ddl-track-buant-groove.mp3",
++   "title": "Buant Groove",
++   "end": 146.0,
++   "gain": 0.91,
++   "loopStart": 16.0
++  },
++  {
++   "file": "ddl-track-buoyant-groove-r32.mp3",
++   "title": "Buoyant Groove",
++   "end": 147.5,
++   "gain": 0.95,
++   "loopStart": 33.5
++  },
++  {
++   "file": "ddl-track-card-duel-groove.mp3",
++   "title": "Card Duel Groove",
++   "end": 120.8,
++   "gain": 0.91,
++   "loopStart": 1.0
++  },
++  {
++   "file": "ddl-track-euphoric-groove.mp3",
++   "title": "Euphoric Groove",
++   "end": 261.0,
++   "gain": 1.0,
++   "loopStart": 36.0,
++   "overlap": 6
++  },
++  {
++   "file": "ddl-track-pulse-eleve.mp3",
++   "title": "Pulse Élevé",
++   "end": 147.0,
++   "gain": 0.76,
++   "loopStart": 38.5
++  },
++  {
++   "file": "ddl-track-gods-awaken.mp3",
++   "title": "Gods Awaken",
++   "end": 290.3,
++   "gain": 0.75,
++   "loopStart": 44.0,
++   "overlap": 6
++  },
++  {
++   "file": "ddl-track-gods-awaken-2.mp3",
++   "title": "Gods Awaken II",
++   "end": 282.0,
++   "gain": 0.71,
++   "loopStart": 60.0,
++   "overlap": 6
++  }
++ ]
+ }
+diff --git a/dist/index.html b/dist/index.html
+index 94ebb60..cdbaabd 100644
+--- a/dist/index.html
++++ b/dist/index.html
+@@ -1,9 +1,9 @@
+-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r31</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r32</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
+ <link rel="stylesheet" href="arenas.css">
+ <link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
+ <link rel="stylesheet" href="./fx-r23.css"><link rel="stylesheet" href="./r26-panels.css"><link rel="stylesheet" href="./learning-routes.css">
+ </head><body data-theme="vibrant">
+-<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r31</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
++<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r32</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
+ <main id="setup"><section class="intro"><div><p class="eyebrow"><span class="live-dot"></span> YOUR DUEL ROOM</p><h1>Your decks.<br><em>Either side</em> of the table.</h1><p class="lead">Learn the line. Face the interruption. Play it again.<br>Choose your deck, choose your rival, and take the seat you want.</p></div><div class="hero-art"><img src="art/44146295.jpg" alt="Mirrorjade the Iceblade Dragon"><span class="art-stamp">CRIMSON ABYSS<br><b>THE ICEBLADE DRAGON</b></span></div></section>
+ <div class="section-head"><div><p class="eyebrow">01 / CHOOSE YOUR DECKS</p><h2>Set the matchup</h2></div><button id="import" class="quiet">＋ Import .ydk</button><input id="file" type="file" accept=".ydk" hidden></div>
+ <div id="deck-grid" class="deck-grid" aria-label="Your deck collection"></div>
+diff --git a/dist/learning-captions.mjs b/dist/learning-captions.mjs
+new file mode 100644
+index 0000000..bb59497
+--- /dev/null
++++ b/dist/learning-captions.mjs
+@@ -0,0 +1,27 @@
++// r32 Learning-mode combo captions (Kevy 22 Oct 16:50: "When the AI starts a line from its book, a short caption would
++// name what it's going for ... so you can see the plan as well as the moves").
++// Learning preset and watch mode only. When a computer pilot plays a combo-book step from a line it has not shown yet
++// this turn, a banner names the goal ("Going for Mirrorjade") with the line's route underneath; after a few seconds it
++// shrinks to a small "PLAN" chip that stays until that player's turn ends. Display only: it never changes a decision
++// or any timing. Original design; no Konami UI.
++import branded from './ai/book/branded-lines.mjs';import kashtira from './ai/book/kashtira-lines.mjs';import blueeyes from './ai/book/blueeyes-lines.mjs';
++import luna from './ai/book/luna-lines.mjs';import toon from './ai/book/toon-lines.mjs';import hero from './ai/book/hero-lines.mjs';import mikanko from './ai/book/mikanko-lines.mjs';
++import {lineGoal,lineRoute} from './ai/book/captions.mjs';
++const LINES={branded,kashtira,blueeyes,luna,toon,hero,mikanko};
++export const CAPTION_MS={banner:4200};
++// The book line a plan's step belongs to, or null ("Opening book L-01" -> "L-01").
++export function planLine(plan){if(plan?.book?.kind!=='step')return null;const m=/^Opening book (\S+)/.exec(plan.book.rule||'');return m?m[1]:null}
++export function captionFor(plan,decks=[]){const id=planLine(plan);if(!id)return null;const deck=decks[plan.seat],book=LINES[deck?.id];
++ const line=book?.lines?.find(l=>l.id===id);return {key:plan.seat+':'+plan.turn+':'+id,seat:plan.seat,turn:plan.turn,id,deck:deck?.name||'',goal:lineGoal(id,line),route:line?lineRoute(line):''}}
++export function createLearningCaptions({root=globalThis.document?.body,getDecks=()=>[],on=()=>false,timingScale=1}={}){
++ let node=null,shown=null,timer=null,seen=new Set(),seenTurn=null;const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
++ function el(){if(node?.isConnected)return node;const doc=root?.ownerDocument||globalThis.document;if(!doc||!root)return null;node=doc.createElement('div');node.className='lr-plan';node.setAttribute('role','status');node.setAttribute('aria-live','polite');node.hidden=true;root.append(node);return node}
++ function hide(){clearTimeout(timer);shown=null;if(node){node.hidden=true;node.className='lr-plan'}}
++ function show(c){const n=el();if(!n)return;clearTimeout(timer);shown=c;n.dataset.seat=String(c.seat);n.innerHTML=`<small>COMBO PLAN${c.deck?' · '+esc(c.deck):''}</small><b>${esc(c.goal)}</b>${c.route&&c.route!==c.goal?`<span>${esc(c.route)}</span>`:''}`;
++  n.hidden=false;n.className='lr-plan';void n.offsetWidth;n.className='lr-plan lr-plan-in';timer=setTimeout(()=>{if(shown===c)n.className='lr-plan lr-plan-mini'},CAPTION_MS.banner*timingScale)}
++ function state(x){try{if(!on()||!x?.coach){if(shown)hide();return}const st=x.state||{};
++   if(st.turn!==seenTurn){seenTurn=st.turn;seen=new Set()}if(shown&&(st.turn!==shown.turn||st.finished))hide();
++   const decks=getDecks();let next=null;for(const plan of [x.coach.last,x.coach.intent]){const c=captionFor(plan,decks);if(c&&c.turn===st.turn&&!seen.has(c.key)){seen.add(c.key);next=c}}/* each line is announced once per turn; the newest wins */
++   if(next)show(next)
++  }catch(err){console.warn('[learning-captions] skipped',err?.message)}}
++ return {state,hide,get shown(){return shown}}}
+diff --git a/dist/learning-routes.css b/dist/learning-routes.css
+index 300e8c3..43149a5 100644
+--- a/dist/learning-routes.css
++++ b/dist/learning-routes.css
+@@ -34,3 +34,16 @@
+ @keyframes lr-lock{from{transform:translate(-50%,-50%) scale(1.8) rotate(-40deg);opacity:0}to{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}}
+ @media (max-width:900px){.lr-tag b{font-size:16px}.lr-tag span{font-size:11px}.lr-under{stroke-width:14}.lr-line{stroke-width:7}}
+ @media (prefers-reduced-motion:reduce){.lr-route,.lr-tag,.lr-line,.lr-flow,.lr-from,.lr-to,.lr-glow,.lr-activate,.lr-target,.lr-crosshair{animation:none!important;opacity:1;stroke-dashoffset:0}.lr-tag{transform:translate(-50%,-50%) skewX(-9deg)}}
++/* r32 Learning-mode combo captions (Kevy 22 Oct): what the AI is going for. Banner, then a small chip until the turn ends. */
++.lr-plan{position:fixed;left:50%;top:clamp(56px,11vh,96px);z-index:48;pointer-events:none;transform:translateX(-50%) skewX(-8deg);max-width:min(92vw,620px);background:#07070c;color:#fff;border:3px solid #fde047;box-shadow:8px 8px 0 #fde047,0 0 30px rgba(253,224,71,.45);padding:9px 18px 10px;text-align:center;display:grid;gap:3px}
++.lr-plan[data-seat="1"]{border-color:#60a5fa;box-shadow:8px 8px 0 #60a5fa,0 0 30px rgba(96,165,250,.45)}
++.lr-plan small{font:800 11px/1.1 system-ui,sans-serif;letter-spacing:.14em;opacity:.8}
++.lr-plan b{font:900 clamp(17px,2.6vw,25px)/1.15 system-ui,sans-serif;letter-spacing:.01em}
++.lr-plan span{font:600 12px/1.3 system-ui,sans-serif;opacity:.85;white-space:normal}
++.lr-plan-in{animation:lr-plan-in .38s cubic-bezier(.2,1.4,.4,1) both}
++.lr-plan-mini{top:8px;padding:4px 12px 5px;box-shadow:4px 4px 0 currentColor;transition:top .35s ease,padding .35s ease}
++.lr-plan[data-seat="1"].lr-plan-mini{box-shadow:4px 4px 0 #60a5fa}.lr-plan[data-seat="0"].lr-plan-mini{box-shadow:4px 4px 0 #fde047}
++.lr-plan-mini b{font-size:14px}.lr-plan-mini span{display:none}
++@keyframes lr-plan-in{from{opacity:0;transform:translateX(-50%) skewX(-8deg) scale(.7)}to{opacity:1;transform:translateX(-50%) skewX(-8deg) scale(1)}}
++@media (max-width:600px){.lr-plan{max-width:calc(100vw - 32px)}}
++@media (prefers-reduced-motion:reduce){.lr-plan,.lr-plan-in,.lr-plan-mini{animation:none!important;transition:none!important}}
+diff --git a/dist/offline-assets.json b/dist/offline-assets.json
+index ca3b042..9bf0918 100644
+--- a/dist/offline-assets.json
++++ b/dist/offline-assets.json
+@@ -10,6 +10,7 @@
+   "./ai/book/luna-lines.mjs",
+   "./ai/book/hero-lines.mjs",
+   "./ai/book/mikanko-lines.mjs",
++  "./ai/book/captions.mjs",
+   "./ai/goal-boards.mjs",
+   "./ai/constraints.mjs",
+   "./ai/determinize.mjs",
+@@ -300,9 +301,14 @@
+   "./art/99330325.jpg",
+   "./art/99550630.jpg",
+   "./audio/CREDITS.md",
+-  "./audio/ddl-track-pulse.mp3",
+-  "./audio/ddl-track-buoyant-groove.mp3",
+-  "./audio/ddl-track-buoyant-groove-2.mp3",
++  "./audio/ddl-track-battle-groove.mp3",
++  "./audio/ddl-track-buant-groove.mp3",
++  "./audio/ddl-track-buoyant-groove-r32.mp3",
++  "./audio/ddl-track-card-duel-groove.mp3",
++  "./audio/ddl-track-euphoric-groove.mp3",
++  "./audio/ddl-track-pulse-eleve.mp3",
++  "./audio/ddl-track-gods-awaken.mp3",
++  "./audio/ddl-track-gods-awaken-2.mp3",
+   "./audio/heavy-chain.mp3",
+   "./audio/soundtrack.json",
+   "./banlists/index.json",
+@@ -385,6 +391,7 @@
+   "./r26-panels.css",
+   "./learning-routes.css",
+   "./learning-routes.mjs",
++  "./learning-captions.mjs",
+   "./audio/sfx/chain-1.mp3",
+   "./audio/sfx/chain-2.mp3",
+   "./audio/sfx/chain-3.mp3",
+diff --git a/dist/optimal-pilot.mjs b/dist/optimal-pilot.mjs
+index 48d0e44..5c9200b 100644
+--- a/dist/optimal-pilot.mjs
++++ b/dist/optimal-pilot.mjs
+@@ -10,7 +10,7 @@ import {ProceduralPilot} from './pilot-agent.mjs';
+ import {choosePilot,sumSelections} from './pilot.mjs';
+ import {Duel,M,R} from './duel.mjs';
+ import {buildPlan} from './pilot-notes.mjs';
+-import {newBookState,idleStep,passiveCheck,setDecision,holdReason,bookPick,optionPick,bookActivationBlock,bookSummonBlock,bookSpecialBlock,tributeBlock,BOOKS} from './ai/book/book.mjs';
++import {newBookState,idleStep,passiveCheck,setDecision,holdReason,bookPick,optionPick,bookActivationBlock,bookSummonBlock,bookSpecialBlock,tributeBlock,BOOKS,handTrapUse} from './ai/book/book.mjs';
+ export const isPayoff=n=>/Mirrorjade|Dark Dragoon|Uzuhime|Liger Dancer|Leo Dancer|Kashtira Shangri-Ira|Blue-Eyes Spirit Dragon|Blue-Eyes Ultimate Spirit Dragon|Cosmic Blazar Dragon|Masked HERO Dark Law|Destroyer Phoenix Enforcer/.test(n);/* r27 (deck review): each deck's end-board boss is protected as a cost/material/tribute and scored by search */
+ const removal=n=>/Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon|Galaxy Cyclone|Mirrorjade|Dark Dragoon|Afterburners|Widow Anchor|Infinite Impermanence|Forbidden Droplet|Called by the Grave|Shark Cannon|Harpie|S:P Little Knight/.test(n);
+ const handTrap=n=>/Ash Blossom|Droll|Mulcharmy|Infinite Impermanence/.test(n);
+@@ -52,7 +52,7 @@ export function boardScore(d,seat){
+  return value;
+ }
+ // r30: true when the move should be played without search (see plan()).
+-export const trustBook=(pilot,d,baseline)=>!!pilot.bookTrust&&(!d.decks||!!BOOKS[d.decks[pilot.seat]?.id]&&BOOKS[d.decks[pilot.seat]?.id].trust!==false)/* decks with a combo book only; Mikanko, Sky Striker and HERO play exactly as before */&&(baseline.book?.kind==='step'||d.prompt?.type===M.SELECT_CHAIN&&d.active===pilot.seat&&baseline.response?.index!=null);
++export const trustBook=(pilot,d,baseline)=>!!pilot.bookTrust&&(baseline.book?.kind==='handtrap'/* r32: a hand trap on their key card, every deck */||(!d.decks||!!BOOKS[d.decks[pilot.seat]?.id]&&BOOKS[d.decks[pilot.seat]?.id].trust!==false)/* decks with a combo book only; Mikanko, Sky Striker and HERO play exactly as before */&&(baseline.book?.kind==='step'||d.prompt?.type===M.SELECT_CHAIN&&d.active===pilot.seat&&baseline.response?.index!=null));
+ export class OptimalPilot extends ProceduralPilot{
+  constructor(args){super({...args,style:'control',variation:'focused',strategy:'tactical'});this.style='optimal';this.variation='focused';this.strategy='tactical';this.blocks=[];this.nodeBudget=args.nodeBudget??args.budget??400;this.searchCore=args.searchCore||null;this.worldPool=args.worldPool??!!this.searchCore;this.poolKey=args.poolKey??null;this.poolSize=args.poolSize||POOL_SIZE;this.seatCapBytes=args.seatCapBytes;this.budget=this.nodeBudget;this.searchEnabled=args.searchEnabled!==false;this.searchStats={nodes:0,elapsedMs:0};this.excluded=new Map();this.logged=new Set();this.onProgress=args.onProgress;this.shouldStop=args.shouldStop||(()=>false);this.book=args.book!==false;this.bookState=newBookState();this.bookTrust=args.bookTrust!==false&&this.book/* r30 (measured 22 Oct): on by default */}
+  info(){return {...super.info(),style:'optimal',label:'Optimal',description:'Doctrine game plan, bounded combo search, threat-scored interruptions and blunder checks',variation:'none',strategy:'optimal',search:this.searchStats,book:this.book?{...this.bookState.stats,line:this.bookState.line}:null}}
+@@ -91,14 +91,16 @@ export class OptimalPilot extends ProceduralPilot{
+   if(m.type===M.SELECT_IDLECMD&&r.action===4&&d.active===seat&&d.zone(seat,4).some(c=>c&&d.name(c.code)==='Red-Eyes Dark Dragoon')&&d.zone(seat,2).filter(Boolean).length<=1)r={type:R.SELECT_IDLECMD,action:m.to_bp?6:7,index:null};
+   let bookAlt=null;
+   if(this.book&&m.type===M.SELECT_IDLECMD){
+-   // r18b: the book step becomes the first choice; the base policy's own pick stays a search candidate (bookAlt).
++   // r18b: the book step becomes the first choice; the base policy's own pick is kept as bookAlt. Since r30 a book step
++   // is played as written (trustBook) when book-trust is on; search compares them only for decks with trust off.
+    const blocked=(c,key,i)=>!!this.excluded.get(d.revision+':'+key+':'+i)||(key==='activates'&&!!(activationBlock(d,seat,c)||bookActivationBlock(d,seat,c)))||(key==='special_summons'&&!!bookSpecialBlock(d,seat,c))||(key==='summons'&&!!(tributeBlock(d,seat,c)||bookSummonBlock(d,seat,c,isPayoff)));
+    const step=idleStep(d,seat,m,this.bookState,blocked);
+-   if(step){if(!(step.action===r.action&&step.index===r.index)){bookAlt=r;r={type:step.type,action:step.action,index:step.index}}bookTag={kind:'step',rule:'Opening book '+step.line,reason:(step.rule==='S-TTT'?'Triple Tactics Talent is live (the opponent activated a monster effect in our Main Phase this turn): use it.':'Book line '+step.line+': next step is '+(step.action===0?'Normal Summon ':'activate ')+step.card+'.')+' Search still compares it with the other legal moves.'}}
++   if(step){if(!(step.action===r.action&&step.index===r.index)){bookAlt=r;r={type:step.type,action:step.action,index:step.index}}bookTag={kind:'step',rule:'Opening book '+step.line,reason:(step.rule==='S-TTT'?'Triple Tactics Talent is live (the opponent activated a monster effect in our Main Phase this turn): use it.':'Book line '+step.line+': next step is '+(step.action===0?'Normal Summon ':'activate ')+step.card+'.')+(this.bookTrust&&(!d.decks||!!BOOKS[d.decks[seat]?.id]&&BOOKS[d.decks[seat]?.id].trust!==false)?' Played as written from the combo book.':' Search still compares it with the other legal moves.')}}
+    else if(!step){const passive=passiveCheck(d,seat,m,r,blocked);if(passive){if(log)this.block(d,'passivePass prevented: '+passive.reason);bookAlt=r;r={type:passive.live.type,action:passive.live.action,index:passive.live.index};bookTag={kind:'prevented',rule:'Never pass with a live hand',reason:'Play '+passive.live.card+' before '+passive.reason.replace(/ with .*/,'')+'.'}}}
+    if(r.action===4&&!bookTag&&m.spell_sets?.[r.index]){const why=holdReason(d,seat,m.spell_sets[r.index]);if(why){const set=setDecision(d,seat,m);bookAlt=r;r=set?.response||{type:R.SELECT_IDLECMD,action:m.to_bp&&d.zone(seat,4).some(Boolean)?6:7,index:null};bookTag={kind:set?.response?'set':'hold',rule:'Hold',reason:'Holding '+why+(set?.response?'; Set '+set.card+' instead':'')+'.'}}}
+    if((r.action===6||r.action===7)&&!bookTag){const set=setDecision(d,seat,m);if(set?.response){bookAlt=r;r=set.response;bookTag={kind:'set',rule:'Set before leaving the Main Phase',reason:'Set '+set.card+' at the first safe opportunity'+(set.held.length?'; holding '+set.held.join(', '):'')+'.'}}else if(set?.held?.length)bookTag={kind:'hold',rule:'Hold',reason:'Holding '+set.held.join(', ')+'.'}}
+   }
++  if(this.book&&m.type===M.SELECT_CHAIN&&!bookTag){const ht=handTrapUse(d,seat,m,(c,i)=>!!this.excluded.get(d.revision+':selects:'+i)||!!activationBlock(d,seat,c));if(ht){if(r?.index!==ht.index){bookAlt=r;r={type:R.SELECT_CHAIN,index:ht.index}}bookTag={kind:'handtrap',rule:'Hand trap on a key card',reason:ht.reason+'.'}}}/* r32 (Kevy item 3): use the hand trap on their key card */
+   const changed=JSON.stringify(r)!==JSON.stringify(plan.response);if(changed)plan={...buildPlan(d,r,{rule:'Blunder guard / relevant target',reason:'Preserve a key payoff or replace a wasteful target with the relevant legal card.',kind:plan.kind}),alternatives:plan.alternatives,battle:plan.battle};else plan={...plan,response:r};
+   if(bookTag){if(bookTag.kind!=='hold'||JSON.stringify(plan.response)!==JSON.stringify(r))plan={...buildPlan(d,r,{rule:bookTag.rule,reason:bookTag.reason,kind:plan.kind}),alternatives:plan.alternatives,battle:plan.battle};plan={...plan,response:r,book:bookTag,bookAlt}}
+   return plan;
+@@ -160,4 +162,4 @@ export class OptimalPilot extends ProceduralPilot{
+  }
+ 
+ }
+-export function createOptimalPilots({seed,doctrine=true,budget=400,nodeBudget=budget,searchEnabled=true,shouldStop,onProgress,searchCore=null,worldPool,poolKey,poolSize,seatCapBytes,book=true}={}){return [0,1].map(seat=>new OptimalPilot({seat,seed,doctrine,budget,nodeBudget,searchEnabled,shouldStop,onProgress,searchCore,worldPool,poolKey,poolSize,seatCapBytes,book}))}
++export function createOptimalPilots({seed,doctrine=true,budget=400,nodeBudget=budget,searchEnabled=true,shouldStop,onProgress,searchCore=null,worldPool,poolKey,poolSize,seatCapBytes,book=true,bookTrust}={}){return [0,1].map(seat=>new OptimalPilot({seat,seed,doctrine,budget,nodeBudget,searchEnabled,shouldStop,onProgress,searchCore,worldPool,poolKey,poolSize,seatCapBytes,book,bookTrust}))}/* r32 (ChatGPT F5): bookTrust is forwarded */
+diff --git a/dist/sound-engine.mjs b/dist/sound-engine.mjs
+index 2a22953..4b4b018 100644
+--- a/dist/sound-engine.mjs
++++ b/dist/sound-engine.mjs
+@@ -78,10 +78,17 @@ export class Soundscape{
+  startTrack(){const c=this.context;if(!c||!this.trackList?.length)return;this.stopTrack(0);const out=c.createGain(),f=c.createBiquadFilter();f.type='lowpass';f.connect(out);out.connect(this.duckBus);this.track={out,filter:f,segments:new Set(),session:(this.trackSession=(this.trackSession||0)+1)};this.musicTimer={track:true};this.applyTrack(true);this.playTrack(this.pickTrack(),this.trackCfg.fadeIn)}
+  async playTrack(t,fadeIn,at=null){const session=this.track?.session;if(!t||!session)return;let buffer;try{buffer=await this.decodeTrack(t)}catch(err){console.warn('[sound] track skipped',t.file,err?.message);this.trackList=this.trackList.filter(x=>x!==t);if(this.trackList.length)return this.playTrack(this.pickTrack(),fadeIn);this.trackState='none';this.stopTrack(0);this.musicTimer=null;return this.startMusic()}
+   if(this.track?.session!==session)return;this.nowPlaying=t;this.segment(t,buffer,at??this.context.currentTime+.05,fadeIn)}
+- segment(t,buffer,t0,fadeIn){const c=this.context,tr=this.track;if(!tr)return;const s=c.createBufferSource(),g=c.createGain(),end=Math.min(Number(t.end),buffer.duration),ov=this.trackCfg.overlap,next=t0+end-ov;
+-  s.buffer=buffer;s.connect(g);g.connect(tr.filter);g.gain.setValueAtTime(.0001,t0);g.gain.linearRampToValueAtTime(1,t0+Math.max(.05,fadeIn));g.gain.setValueAtTime(1,next);g.gain.linearRampToValueAtTime(.0001,next+ov+.3);s.start(t0);s.stop(next+ov+.4);
++ // r32 (Kevy 22 Oct: "each track to fade into itself so it can be like a seamless loop"): repeat passes start at the
++ // track's loopStart (skipping a quiet intro) and the two passes crossfade with equal-power curves (no dip in the middle);
++ // per-track gain evens out loudness; a track may set its own (longer) overlap. Without curve support the r24 linear ramps are used.
++ segment(t,buffer,t0,fadeIn,offset=0,xfade=false){const c=this.context,tr=this.track;if(!tr)return;const s=c.createBufferSource(),g=c.createGain(),end=Math.min(Number(t.end),buffer.duration),ov=Number(t.overlap)||this.trackCfg.overlap,off=Math.max(0,Math.min(Number(offset)||0,end-ov-4)),next=t0+(end-off)-ov,lvl=Math.max(.05,Math.min(1.5,Number(t.gain)||1));
++  const curve=(rise,n=64)=>{const v=new Float32Array(n);for(let i=0;i<n;i++){const x=i/(n-1);v[i]=Math.max(.0001,lvl*(rise?Math.sin(x*Math.PI/2):Math.cos(x*Math.PI/2)))}return v},curves=typeof g.gain.setValueCurveAtTime==='function';
++  s.buffer=buffer;s.connect(g);g.connect(tr.filter);
++  if(xfade&&curves)g.gain.setValueCurveAtTime(curve(true),t0,Math.max(.05,fadeIn));else{g.gain.setValueAtTime(.0001,t0);g.gain.linearRampToValueAtTime(lvl,t0+Math.max(.05,fadeIn))}
++  if(curves){g.gain.setValueCurveAtTime(curve(false),next,ov);g.gain.setValueAtTime(.0001,next+ov+.3)}else{g.gain.setValueAtTime(lvl,next);g.gain.linearRampToValueAtTime(.0001,next+ov+.3)}
++  s.start(t0,off);s.stop(next+ov+.4);
+   const seg={s,g,t,next};tr.segments.add(seg);s.onended=()=>{tr.segments.delete(seg);try{g.disconnect()}catch{}};
+-  clearTimeout(tr.timer);tr.timer=setTimeout(()=>{if(this.track===tr)this.segment(t,buffer,next,ov)},Math.max(0,(next-c.currentTime-4)*1000))}// scheduled 4 s early on the audio clock
++  clearTimeout(tr.timer);tr.timer=setTimeout(()=>{if(this.track===tr)this.segment(t,buffer,next,ov,t.loopStart,true)},Math.max(0,(next-c.currentTime-4)*1000))}// scheduled 4 s early on the audio clock
+  newGame(){const tr=this.track,c=this.context;if(!tr||!c||(this.trackList?.length||0)<1)return;const fade=this.trackCfg.newGame,now=c.currentTime;clearTimeout(tr.timer);for(const seg of tr.segments){seg.g.gain.cancelScheduledValues(now);seg.g.gain.setValueAtTime(seg.g.gain.value||1,now);seg.g.gain.linearRampToValueAtTime(.0001,now+fade);try{seg.s.stop(now+fade+.1)}catch{}}
+   tr.session=(this.trackSession=(this.trackSession||0)+1);this.playTrack(this.pickTrack(),fade,now+.05)}
+  applyTrack(now=false){const c=this.context,t=this.track;if(!c||!t?.out)return;const k=now?.01:.8,i=this.intensity||0;t.filter.frequency.setTargetAtTime([9000,16000,20000][i]??20000,c.currentTime,k);t.out.gain.setTargetAtTime([.85,.95,1.05][i]??1,c.currentTime,k)}
+diff --git a/dist/sw.js b/dist/sw.js
+index 4269998..a97fd65 100644
+--- a/dist/sw.js
++++ b/dist/sw.js
+@@ -1,6 +1,6 @@
+-// r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
++// r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31, r32 (captions, hand traps, going-second holds, new soundtrack): 2026-10-22-r32): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
+ // duel-lab-* cache (r17 and earlier), so devices that update don't keep stale copies; unrelated caches are left alone.
+-const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-22-r31',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
++const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-22-r32',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
+ self.addEventListener('install',event=>event.waitUntil((async()=>{const manifest=await fetch('./offline-assets.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Offline manifest unavailable');return r.json()});const cache=await caches.open(CACHE);for(let i=0;i<manifest.length;i+=12)await cache.addAll(manifest.slice(i,i+12));await self.skipWaiting()})()));
+ self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&OLD_PREFIXES.some(prefix=>key.startsWith(prefix)))await caches.delete(key);await self.clients.claim()})()));
+ self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==self.location.origin)return;event.respondWith((async()=>{const cache=await caches.open(CACHE);if(event.request.mode==='navigate'){try{const response=await fetch(event.request);if(response.ok){await cache.put('./',response.clone());return response}}catch{}return await cache.match('./')||await cache.match('./index.html')||Response.error()}return await cache.match(event.request)||await fetch(event.request)})())});
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index 408a0a5..5f48435 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -35,17 +35,23 @@ export function decisionClass(d,seat){const p=d.prompt;if(!p)return 'auto';let n
+  if(p.type===M.SELECT_CHAIN)return d.active===seat?'quick':'step';/* a hand trap in hand: a real pause on the opponent's turn */
+  if(p.type===M.SELECT_IDLECMD||p.type===M.SELECT_BATTLECMD){const key=d.turn+':'+seat+':'+p.type;if(!humanFirsts.has(key)){humanFirsts.add(key);return 'big'}return 'step'}/* planning the turn / the first attack */
+  if([M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(p.type))return 'quick';return 'pick'}
+-const humanMs=(d,seat)=>(HUMAN_MS[preset]||{})[decisionClass(d,seat)]||0;
+ let humanPending=null;/* {revision, ms, started} for the decision being shown */
+-const humanWait=()=>humanPending&&humanPending.revision===duel?.revision?Math.max(humanPending.started,presentationDoneAt)+humanPending.ms-Date.now():0;
++// r32 (ChatGPT review F3/F4): Learning's hold is a minimum that the AI's thinking runs inside (human thinking time);
++// Duel's +1 s on big decisions is ADDED after the normal step timer, once the plan is ready, so thinking time can't
++// absorb it. A preset change mid-decision recomputes the pending hold (Instant / Broadcast drop it).
++const ADDED_HOLD={duel:true};
++const newHumanHold=()=>{const cls=decisionClass(duel,duel.prompt.seat);return {revision:duel.revision,cls,ms:(HUMAN_MS[preset]||{})[cls]||0,started:Date.now(),add:!!ADDED_HOLD[preset],dueAt:null}};/* decisionClass marks the turn's first plan as 'big', so it is called once per decision */
++const humanWait=()=>humanPending&&humanPending.revision===duel?.revision&&!humanPending.add?Math.max(humanPending.started,presentationDoneAt)+humanPending.ms-Date.now():0;
++const addedWait=stepMs=>{const h=humanPending;if(!h||h.revision!==duel?.revision||!h.add||!(h.ms>0))return 0;if(h.dueAt==null)h.dueAt=Date.now()+Math.max(stepMs,presentationUntil-Date.now(),0)+h.ms;return h.dueAt-Date.now()};
++const rehold=()=>{const h=humanPending;if(!h||h.revision!==duel?.revision)return;const ms=(HUMAN_MS[preset]||{})[h.cls]||0;Object.assign(h,{ms,add:!!ADDED_HOLD[preset],dueAt:null})};
+ const thinkDeadline=started=>{const kind=paceKind(),visibleStart=Math.max(started,presentationPending?presentationUntil:presentationDoneAt);return kind==='instant'?started+400:kind==='study'?Math.max(started+4000,visibleStart+1500):visibleStart+1500};
+ function cancelThink(terminate=true){clearTimeout(thinkTimeout);thinkWorker?.postMessage({type:'cancel',id:thinking?.id});if(terminate){thinkWorker?.terminate();thinkWorker=null;thinkReady=null}thinking=null}
+ function warmThinkWorker(){if(typeof Worker==='undefined')return Promise.resolve();if(thinkReady)return thinkReady;thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});thinkReady=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('AI worker preparation timed out')),15000);thinkWorker.onmessage=({data:x})=>{if(x.type==='ready'){clearTimeout(timeout);resolve()}else if(x.type==='error'){clearTimeout(timeout);reject(Error(x.message))}};thinkWorker.onerror=e=>{clearTimeout(timeout);reject(Error(e.message||'AI worker preparation failed'))};thinkWorker.postMessage({type:'warm'})});return thinkReady}
+ function planned(){
+  if(!duel?.prompt||disabled)return null;if(plan?.revision===duel.revision)return plan;
+- if(typeof Worker==='undefined'){humanPending={revision:duel.revision,ms:humanMs(duel,duel.prompt.seat),started:Date.now()};plan=pilots[duel.prompt.seat].plan(duel);return plan}
++ if(typeof Worker==='undefined'){humanPending=newHumanHold();plan=pilots[duel.prompt.seat].plan(duel);return plan}
+  if(thinking?.revision===duel.revision)return null;if(thinking)cancelThink(false);
+- let bestAggregated=null,lastProgress=null;humanPending={revision:duel.revision,ms:humanMs(duel,duel.prompt.seat),started:Date.now()};const publicDecision=pilots[duel.prompt.seat].base(safeView(duel,duel.prompt.seat));const id=++thinkId,revision=duel.revision,seat=duel.prompt.seat,started=Date.now(),deadlineAt=thinkDeadline(started),capMs=deadlineAt-started;thinking={id,revision,started,deadlineAt};if(deadlineBox){Atomics.store(deadlineBox,1,deadlineAt-deadlineBase);Atomics.store(deadlineBox,0,id)}
++ let bestAggregated=null,lastProgress=null;humanPending=newHumanHold();const publicDecision=pilots[duel.prompt.seat].base(safeView(duel,duel.prompt.seat));const id=++thinkId,revision=duel.revision,seat=duel.prompt.seat,started=Date.now(),deadlineAt=thinkDeadline(started),capMs=deadlineAt-started;thinking={id,revision,started,deadlineAt};if(deadlineBox){Atomics.store(deadlineBox,1,deadlineAt-deadlineBase);Atomics.store(deadlineBox,0,id)}
+  const searchRoot=[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,priorSearchRoots=searchRoot?searchRoots[seat]++:searchRoots[seat];
+  thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});
+  const metric=stats=>postMessage({type:'ai-think-metric',preset:paceKind(),thinkMs:Date.now()-started,visibleWaitMs:presentationPending?0:Math.max(0,Date.now()-Math.max(started,presentationDoneAt)),capMs,seed:matchInfo.seed,decision:duel.responseHistory.length,seat,promptType:duel.prompt.type,isSearchRoot:[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,stats});
+@@ -67,7 +73,7 @@ function send(){
+  const message={type:'state',human,lastEventId:deliveredSeq,state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
+  schedule();
+ }
+-function schedule(){clearTimeout(timer);if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;timer=setTimeout(step,Math.max(delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay,presentationUntil-Date.now(),humanWait()))}}
++function schedule(){clearTimeout(timer);if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;const stepMs=delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay;timer=setTimeout(step,Math.max(stepMs,presentationUntil-Date.now(),humanWait(),addedWait(stepMs)))}}
+ 
+ function step(){
+  try{
+@@ -98,7 +104,7 @@ onmessage=async ({data:x})=>{try{
+  else if(x.type==='control'){clearTimeout(timer);view=x.seat;mode='play';paused=false;resetHumanTransport();send()}
+  else if(x.type==='study'){study=x.value;send()}
+  else if(x.type==='speed'){delay=x.value;send()}
+- else if(x.type==='cinematics'){preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;pilots.forEach(p=>p.budget=p.nodeBudget=preset==='instant'?40:400);cinematics=x.value;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';schedule()}
++ else if(x.type==='cinematics'){preset=x.preset||'learning';rehold();tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;pilots.forEach(p=>p.budget=p.nodeBudget=preset==='instant'?40:400);cinematics=x.value;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';schedule()}
+  else if(x.type==='learn'){learnHold=x.value;send()}
+  else if(x.type==='skip-scene'||x.type==='presentation-done'){if(x.eventId>=deliveredSeq){presentationUntil=0;presentationPending=false;presentationDoneAt=Date.now();if(thinking?.fallback&&paceKind()!=='instant'){const due=thinkDeadline(thinking.started);if(due<thinking.deadlineAt){thinking.deadlineAt=due;if(deadlineBox&&Atomics.load(deadlineBox,0)===thinking.id)Atomics.store(deadlineBox,1,due-deadlineBase);clearTimeout(thinkTimeout);thinkTimeout=setTimeout(thinking.fallback,Math.max(0,due-Date.now()))}}schedule()}}
+  else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,responses:duel.responseHistory}})}
+diff --git a/tests/r23-fx.test.mjs b/tests/r23-fx.test.mjs
+index 0bece0c..649629b 100644
+--- a/tests/r23-fx.test.mjs
++++ b/tests/r23-fx.test.mjs
+@@ -11,7 +11,7 @@ import {ChainDirector} from '../dist/event-data.mjs';import {createPresentation}
+ import {fxSpan,stKind,createFx} from '../dist/fx-r23.mjs';import {Soundscape,SOUND_EVENTS} from '../dist/sound-engine.mjs';import {jazzBeat,chordAt,beatSeconds,JAZZ_THEMES,SWING} from '../dist/jazz-score.mjs';
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ // 1. Pace.
+-const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda','dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'82d98dff81347a395aba45762b2bad7dd484a7acdcbbe8964a0e5fd740f1e8c1'/* r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
++const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda','dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'d3eb2e401a1758a48e6bc593b599aae6b8d04e41bef369cea99d4df87a8e4092'/* r32 (22 Oct, Claude): hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
+ for(const [f,h] of Object.entries(PINNED))assert.equal(sha(f),h,f+' must be unchanged from r22b (pace, holds, think time)');
+ // r24 restyles the summon scene (card art, materials as cards); its timing table must stay the same.
+ // r26: Kevy approved longer cutscenes (21 Oct 23:05); the B2 summon scene is now the one Fusion/Synchro/Xyz/Link cutscene
+diff --git a/tests/r24-soundtrack.test.mjs b/tests/r24-soundtrack.test.mjs
+index 0c61156..8c5859e 100644
+--- a/tests/r24-soundtrack.test.mjs
++++ b/tests/r24-soundtrack.test.mjs
+@@ -4,8 +4,8 @@
+ import assert from 'node:assert/strict';import fs from 'node:fs';
+ import {Soundscape} from '../dist/sound-engine.mjs';
+ const cfg=JSON.parse(fs.readFileSync('dist/audio/soundtrack.json'));
+-assert.ok(cfg.tracks.length>=3,'three tracks listed');
+-for(const t of cfg.tracks){assert.ok(fs.existsSync('dist/audio/'+t.file),t.file+' shipped');assert.ok(t.end>100&&t.end<150,'loop point before the natural ending');
++assert.ok(cfg.tracks.length>=3,'at least three tracks listed');
++for(const t of cfg.tracks){assert.ok(fs.existsSync('dist/audio/'+t.file),t.file+' shipped');assert.ok(t.end>100&&t.end<300,'loop point before the natural ending (r32 set: up to 4.4 min tracks)');
+  const assets=JSON.parse(fs.readFileSync('dist/offline-assets.json'));assert.ok(assets.includes('./audio/'+t.file),t.file+' cached for offline play')}
+ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ let now=0,starts=[],ramps=[];const param=()=>({value:1,setValueAtTime(v){this.value=v},setTargetAtTime(v){this.value=v},linearRampToValueAtTime(v,t){ramps.push([v,t]);this.value=v},exponentialRampToValueAtTime(v){this.value=v},cancelScheduledValues(){}});
+diff --git a/tests/r32-books-handtraps.test.mjs b/tests/r32-books-handtraps.test.mjs
+new file mode 100644
+index 0000000..da730b7
+--- /dev/null
++++ b/tests/r32-books-handtraps.test.mjs
+@@ -0,0 +1,69 @@
++// r32 (Claude, 22 Oct; Kevy 16:50 items 1, 2, 3 and 5). SELF-VERIFIED (builder = verifier), NOT independent.
++//  1. Hand traps (all decks): on the opponent's turn, Ash Blossom / Ghost Belle / Effect Veiler / Infinite Impermanence
++//     from the hand are saved for the opponent's key cards (their deck's starters and combo pieces, or an Extra Deck
++//     monster) while they still hold 3+ cards in their first turns; Nibiru, Droll and Mulcharmy are never held; our own
++//     turn and our own chain links are never affected; the rule can be switched off for tools.
++//  2. Mikanko: a Kaiju / Lava Golem tribute takes the opponent's best monster (Extra Deck boss first).
++//  3. Book conditions for going second: second, oppMonstersMin, gyAny, notField.
++//  4. HERO book: Vyon sends Malicious, Malicious recursion, A Hero Lives, Miracle Ejector -> EN Shuffle into Shadow Mist.
++import assert from 'node:assert/strict';
++import {BOOKS,HANDTRAP,handTrapUse,handTrapHold,keyCards,bookActivationBlock,oppValue,bookPick,idleStep,newBookState} from '../dist/ai/book/book.mjs';import {M,R} from '../dist/duel.mjs';
++const NAMES={1:'Ash Blossom & Joyous Spring',2:'Infinite Impermanence',3:'Nibiru, the Primal Being',4:'Branded Fusion',5:'Guiding Quem, the Virtuous',6:'Mirrorjade the Iceblade Dragon',7:'Aluber the Jester of Despia',8:'Dogmatika Fleurdelis, the Knighted',9:'Effect Veiler',10:'Foolish Burial Goods',11:'Thunder King, the Lightningstrike Kaiju',12:'Lunalight Gold Leo',13:'Fusion Deployment',14:'Mulcharmy Fuwalos'};
++const DB={1:{type:0x21,desc:'Quick Effect'},2:{type:0x20004,desc:''},3:{type:0x21},4:{type:2},5:{type:0x21,desc:''},6:{type:0x41,attack:3000,desc:'Quick Effect: banish'},7:{type:0x21,attack:1200},8:{type:0x41,attack:2500,desc:'negate'},9:{type:0x21},10:{type:2},11:{type:0x21,attack:3300},12:{type:0x21,attack:1600},13:{type:2},14:{type:0x21}};
++function fake({seat=0,active=1,turn=1,top=4,topSeat=1,oppHand=5,oppMons=[],own=[],ownHand=[],gy=[],first=false,decks=['luna','branded']}={}){
++ const card=(code,controller,location,position=1)=>({code,controller,location,position});
++ return {active,turn,phase:4,db:DB,name:c=>NAMES[c]||'?',decks:decks.map(id=>({id})),order:first?[seat,1-seat]:[1-seat,seat],chain:top?[{code:top,controller:topSeat}]:[],fromEngine:x=>x,
++  zone:(s,l)=>s===seat?(l===2?ownHand.map(c=>card(c,s,2)):l===4?own.map(c=>card(c,s,4)):l===16?gy.map(c=>card(c,s,16)):[]):(l===2?Array.from({length:oppHand},()=>card(0,s,2)):l===4?oppMons.map(c=>card(c,s,4)):[])}}
++const ash={code:1,location:2},imperm={code:2,location:2},nib={code:3,location:2},veiler={code:9,location:2},fuwa={code:14,location:2};
++// 1. Hand traps.
++assert.ok(keyCards('branded').has('Branded Fusion')&&keyCards('branded').has('Fusion Deployment'),'key cards come from the books and game plans');
++assert.equal(handTrapHold(fake({top:4}),0,ash),null,'Ash on Branded Fusion (a key card): allowed');
++assert.match(handTrapHold(fake({top:10}),0,ash)||'',/held/,'Ash on a non-key card while they hold 5 cards: held');
++assert.match(bookActivationBlock(fake({top:10}),0,ash)||'',/held/,'the hold is part of the activation blocks (binds search too)');
++assert.equal(handTrapHold(fake({top:10,oppHand:2}),0,ash),null,'down to 2 cards: use it');
++assert.equal(handTrapHold(fake({top:10,turn:3}),0,ash),null,'after their first turns: use it');
++assert.equal(handTrapHold(fake({top:8}),0,imperm),null,'an Extra Deck monster: use it');
++assert.match(handTrapHold(fake({top:10}),0,veiler)||'',/held/,'Effect Veiler held the same way');
++assert.equal(handTrapHold(fake({top:10}),0,nib),null,'Nibiru is never held');
++assert.equal(handTrapHold(fake({top:10}),0,fuwa),null,'Mulcharmy is never held');
++assert.equal(handTrapHold(fake({top:10,active:0}),0,ash),null,'our own turn: not affected');
++assert.equal(handTrapHold(fake({top:10,topSeat:0}),0,ash),null,'our own chain link: not affected');
++assert.equal(handTrapHold(fake({top:10}),0,{code:2,location:8}),null,'a Set Imperm on the field is not a hand trap');
++HANDTRAP.on=false;assert.equal(handTrapHold(fake({top:10}),0,ash),null,'switchable for tools');HANDTRAP.on=true;
++{const chain=(sel)=>({type:M.SELECT_CHAIN,selects:sel.map(c=>({...c}))});
++ assert.equal(handTrapUse(fake({top:4}),0,chain([ash]))?.index,0,'Ash is USED on Branded Fusion (key card)');
++ assert.equal(handTrapUse(fake({top:10}),0,chain([ash])),null,'not on a non-key card');
++ assert.equal(handTrapUse(fake({top:4}),0,chain([imperm])),null,'Impermanence is not spent on a Spell');
++ assert.equal(handTrapUse(fake({top:7}),0,chain([veiler,ash]))?.index,1,'Ash first when both can answer');
++ assert.equal(handTrapUse(fake({top:7}),0,chain([imperm]))?.index,0,'Impermanence on a key monster effect (Aluber)');
++ assert.equal(handTrapUse(fake({top:8}),0,chain([imperm]))?.index,0,'any Extra Deck monster effect');
++ assert.equal(handTrapUse(fake({top:4,active:0}),0,chain([ash])),null,'never on our own turn');
++ assert.equal(handTrapUse(fake({top:4}),0,chain([ash]),()=>true),null,'a blocked activation is not forced');
++ assert.equal(handTrapUse(fake({top:4}),0,chain([{code:1,location:8}])),null,'only hand traps from the hand')}
++{const {trustBook,OptimalPilot}=await import('../dist/optimal-pilot.mjs');const pl=new OptimalPilot({seat:0,seed:1});
++ assert.equal(trustBook(pl,{prompt:{type:M.SELECT_CHAIN},active:1,decks:[{id:'sky'},{id:'branded'}]},{response:{index:0},book:{kind:'handtrap'}}),true,'a hand trap on a key card is played without search, for every deck');}
++// 2. Mikanko Kaiju tribute: the best opposing monster.
++assert.ok(oppValue(fake(),{code:6,position:1})>oppValue(fake(),{code:8,position:1})&&oppValue(fake(),{code:8,position:1})>oppValue(fake(),{code:7,position:1}),'Mirrorjade > Fleurdelis > Aluber');
++{const d=fake({decks:['mikanko','branded'],active:0,oppMons:[7,8,6]});d.hint=500;d.currentEffect={code:0};
++ const m={type:M.SELECT_UNSELECT_CARD,selects:[{code:7,controller:1,location:4,position:1},{code:8,controller:1,location:4,position:1},{code:6,controller:1,location:4,position:1}]};
++ const r=bookPick(d,0,m,{type:R.SELECT_UNSELECT_CARD,index:1});assert.equal(r?.response.index,2,'Thunder King tributes Mirrorjade, not Fleurdelis');
++ const own={type:M.SELECT_UNSELECT_CARD,selects:[{code:5,controller:0,location:4,position:1}]};assert.equal(bookPick(d,0,own,{type:R.SELECT_UNSELECT_CARD,index:0}),null,'own-only tributes (Rituals) are left to the base policy')}
++{const D2={db:{20:{type:0x11,attack:3000,desc:''},21:{type:0x1021,attack:0,desc:'discard this card ... negate its effects'}}};assert.ok(oppValue(D2,{code:20,position:4})>oppValue(D2,{code:21,position:1}),'a 3000 ATK Blue-Eyes White Dragon outranks a 0 ATK hand trap on the field (reads the card database ATK field)')}
++assert.ok(BOOKS.mikanko.picks.some(p=>p.source==='*'&&p.hint?.includes(500)&&p.preferBest==='opp'));
++// 3. Going-second conditions.
++{const lines=[{id:'X',when:{second:true,oppMonstersMin:1},steps:[{do:'activate',card:'Fusion Deployment'}]}];const save=BOOKS.luna;BOOKS.luna={...save,lines};
++ const m={type:M.SELECT_IDLECMD,activates:[{code:13,controller:0,location:2}],summons:[],special_summons:[]};
++ const step=(o)=>idleStep({...fake({active:0,...o}),attempts:new Map(),key:()=>'k',turn:2},0,m,newBookState(),()=>false);
++ assert.equal(step({first:false,oppMons:[12]})?.line,'X','going second with an opposing monster');
++ assert.equal(step({first:true,oppMons:[12]}),null,'not when going first');
++ assert.equal(step({first:false,oppMons:[]}),null,'not into an empty board');
++ BOOKS.luna={...save,lines:[{id:'Y',when:{gyAny:['Lunalight Gold Leo'],notField:['Guiding Quem, the Virtuous']},steps:[{do:'activate',card:'Fusion Deployment'}]}]};
++ assert.equal(step({gy:[12]})?.line,'Y');assert.equal(step({gy:[]}),null,'gyAny');assert.equal(step({gy:[12],own:[5]}),null,'notField');
++ BOOKS.luna=save}
++// 4. HERO book.
++const h=BOOKS.hero,pick=s=>h.picks.find(p=>p.source===s);
++assert.equal(pick('Vision HERO Vyon').prefer[0],'Destiny HERO - Malicious','Vyon sends Malicious (was Neos)');
++assert.equal(pick('EN Shuffle').prefer[0],'Elemental HERO Shadow Mist','EN Shuffle brings Shadow Mist (was Neos)');
++for(const id of ['HE-AHL','HE-VYON','HE-MAL','HE-EJ'])assert.ok(h.lines.some(l=>l.id===id),id);
++assert.ok(h.lines.findIndex(l=>l.id==='HE-AHL')<h.lines.findIndex(l=>l.id==='HE-STRAT'),'A Hero Lives before a Normal Summon (it needs an empty field)');
++console.log(JSON.stringify({test:'r32-books-handtraps',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tests/r32-learning-captions.test.mjs b/tests/r32-learning-captions.test.mjs
+new file mode 100644
+index 0000000..eaf8dbe
+--- /dev/null
++++ b/tests/r32-learning-captions.test.mjs
+@@ -0,0 +1,43 @@
++// r32 (Claude, 22 Oct; Kevy 16:50 item 4). SELF-VERIFIED (builder = verifier), NOT independent.
++// Learning-mode combo captions: when a computer pilot plays a combo-book step, a banner names the goal of that line in
++// plain words, once per line per turn; it shrinks to a small chip and clears when the turn changes. Other presets and
++// play-vs-human mode show nothing. Every book line has a plain-words goal.
++import assert from 'node:assert/strict';import fs from 'node:fs';import {JSDOM} from 'jsdom';
++import {planLine,captionFor,CAPTION_MS} from '../dist/learning-captions.mjs';
++import {LINE_GOALS,lineGoal} from '../dist/ai/book/captions.mjs';
++import {BOOKS} from '../dist/ai/book/book.mjs';
++// 1. Every shipped book line has a plain-words goal; every goal belongs to a shipped line (no orphan captions).
++const ids=Object.values(BOOKS).flatMap(b=>b.lines.map(l=>l.id)).concat(['G-04']);
++for(const id of ids)assert.ok(LINE_GOALS[id],'caption for '+id);
++for(const id of Object.keys(LINE_GOALS))assert.ok(ids.includes(id),'caption '+id+' has a book line');
++for(const g of Object.values(LINE_GOALS))assert.ok(g.length<=64&&!/->/.test(g),'short, plain caption: '+g);
++assert.equal(lineGoal('X-1',{name:'A -> B'}),'A → B','fallback is the line name with arrows');
++// 2. Which plans are captioned.
++const decks=[{id:'branded',name:'Branded Dragoon'},{id:'luna',name:'Lunalight'}];
++const step=(seat,turn,line)=>({seat,turn,book:{kind:'step',rule:'Opening book '+line}});
++assert.equal(planLine(step(0,1,'L-01')),'L-01');
++assert.equal(planLine({seat:0,turn:1,book:{kind:'pick',rule:'Opening book pick (Aluber)'}}),null,'picks are not captioned');
++assert.equal(planLine({seat:0,turn:1}),null);
++const c=captionFor(step(0,1,'L-01'),decks);
++assert.equal(c.goal,LINE_GOALS['L-01']);assert.equal(c.deck,'Branded Dragoon');assert.equal(c.route,'1-card Aluber');assert.match(captionFor(step(1,2,'LU-01'),decks).route,/→/);
++// 3. In the page (JSDOM): banner, once per line per turn, chip, cleared on the next turn, nothing outside Learning.
++const dom=new JSDOM('<!doctype html><body></body>',{url:'https://lab.test/'});Object.assign(globalThis,{document:dom.window.document,window:dom.window});
++const {createLearningCaptions}=await import('../dist/learning-captions.mjs');
++let preset='learning';const cap=createLearningCaptions({root:dom.window.document.body,getDecks:()=>decks,on:()=>preset==='learning',timingScale:0.01});
++const msg=(turn,last,intent,coach=true)=>({state:{turn,finished:false},coach:coach?{last,intent}:null});
++cap.state(msg(1,null,step(0,1,'L-01')));
++let n=dom.window.document.querySelector('.lr-plan');assert.ok(n&&!n.hidden,'banner shown');assert.match(n.textContent,/Mirrorjade/);assert.match(n.textContent,/Branded Dragoon/);assert.ok(n.classList.contains('lr-plan-in'));
++cap.state(msg(1,step(0,1,'L-01'),step(0,1,'L-01')));assert.equal(cap.shown.id,'L-01');
++await new Promise(r=>setTimeout(r,CAPTION_MS.banner*0.01+30));assert.ok(n.classList.contains('lr-plan-mini'),'shrinks to a chip');
++cap.state(msg(1,step(0,1,'L-01'),step(0,1,'V53-CART')));assert.equal(cap.shown.id,'V53-CART','a new line is announced');
++cap.state(msg(1,step(0,1,'L-01'),null));assert.equal(cap.shown.id,'V53-CART','an older line is not announced again');
++cap.state(msg(2,null,null));assert.ok(n.hidden&&!cap.shown,'cleared when the turn changes');
++cap.state(msg(2,null,step(1,2,'LU-01')));assert.equal(n.dataset.seat,'1');assert.match(n.textContent,/Liger Dancer/);
++cap.state(msg(3,null,step(0,3,'L-01'),false));assert.ok(n.hidden,'nothing when playing against the computer (no coach data)');
++preset='duel';cap.state(msg(3,null,step(0,3,'L-02')));assert.ok(n.hidden,'nothing outside Learning');
++// 4. Wired in the shell, styled, and listed for offline use.
++const shell=fs.readFileSync('dist/app-shell.mjs','utf8');assert.match(shell,/captions\.state\(x\)/);assert.match(shell,/createLearningCaptions/);
++assert.match(fs.readFileSync('dist/learning-routes.css','utf8'),/\.lr-plan\{/);
++const assets=JSON.parse(fs.readFileSync('dist/offline-assets.json','utf8'));const list=JSON.stringify(assets);
++for(const f of ['learning-captions.mjs','ai/book/captions.mjs'])assert.ok(list.includes(f),f+' in offline assets');
++console.log('r32-learning-captions: PASS');
+diff --git a/tests/r32-review-fixes.test.mjs b/tests/r32-review-fixes.test.mjs
+new file mode 100644
+index 0000000..187043e
+--- /dev/null
++++ b/tests/r32-review-fixes.test.mjs
+@@ -0,0 +1,45 @@
++// r32 (Claude, 22 Oct): fixes for ChatGPT's independent r31 review (REPLY - ChatGPT - independent r31 review, F1–F6).
++// SELF-VERIFIED (builder = verifier), NOT independent; ChatGPT's native fixtures (tools/r32-native-fixtures/) re-run too.
++//  F1 HERO: the Destroyer Phoenix Enforcer hold covers only its Quick Effect on the field, never its GY revival trigger.
++//  F2 Branded: The Fallen & The Virtuous is not held when an Ecclesia monster is on our field or in our GY, and with no
++//     face-up opposing card its revival mode is chosen.
++//  F3 Duel's +1 s on a big decision is added after the normal step timer, whatever the thinking time.
++//  F4 A preset change mid-decision recomputes the pending hold (Instant / Broadcast: none).
++//  F5 createOptimalPilots forwards bookTrust:false.
++//  F6 The player-facing reason for a trusted book step no longer says search compares it.
++import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
++import {M,R} from '../dist/duel.mjs';import {bookActivationBlock,optionPick} from '../dist/ai/book/book.mjs';import {createOptimalPilots} from '../dist/optimal-pilot.mjs';
++const DPE=60461804,NAMES={[DPE]:'Destiny HERO - Destroyer Phoenix Enforcer',2:'The Fallen & The Virtuous',3:'Incredible Ecclesia, the Virtuous',4:'Blazing Cartesia, the Virtuous',5:'Ecclesia, the Exiled'};
++const fake=({id='hero',own=[],gy=[],opp=[]}={})=>({decks:[{id},{id:'branded'}],active:0,turn:1,phase:4,chain:[],db:{[DPE]:{type:0x61},3:{type:0x21},4:{type:0x21},5:{type:0x21}},name:c=>NAMES[c]||String(c),description:x=>String(x),fromEngine:s=>s,
++ zone:(s,l)=>s===0?(l===4?own.map(code=>({code,location:4,position:1})):l===16?gy.map(code=>({code,location:16,position:1})):[]):(l===4?opp.map(code=>({code,location:4,position:1})):[])});
++// F1
++assert.match(bookActivationBlock(fake(),0,{code:DPE,location:4})||'',/Book hold/,'Quick Effect on the field with no opposing card: held');
++assert.equal(bookActivationBlock(fake(),0,{code:DPE,location:16}),null,'GY revival trigger: never held');
++// F2
++const fv={code:2,location:2};
++assert.match(bookActivationBlock(fake({id:'branded'}),0,fv)||'',/Book hold/,'no opposing card and no Ecclesia: held (it would destroy our own card)');
++assert.equal(bookActivationBlock(fake({id:'branded',gy:[3]}),0,fv),null,'Incredible Ecclesia in our GY: revival mode live, not held');
++assert.equal(bookActivationBlock(fake({id:'branded',gy:[5]}),0,fv),null,'any Ecclesia monster counts');
++assert.equal(bookActivationBlock(fake({id:'branded',own:[3]}),0,fv),null,'Ecclesia on our field');
++{const d={...fake({id:'branded',gy:[3]}),currentEffect:{code:2},description:v=>['Destroy 1 face-up card on the field','Special Summon 1 monster from either GY'][v]};
++ assert.equal(optionPick(d,0,{type:M.SELECT_OPTION,options:[0,1]})?.index,1,'no face-up opposing card: revive');
++ const d2={...d,zone:(s,l)=>s===1&&l===4?[{code:4,location:4,position:1}]:d.zone(s,l)};assert.equal(optionPick(d2,0,{type:M.SELECT_OPTION,options:[0,1]}),null,'an opposing card: the base policy decides')}
++// F5
++assert.deepEqual(createOptimalPilots({seed:1,bookTrust:false}).map(p=>p.bookTrust),[false,false],'factory forwards bookTrust:false');
++assert.deepEqual(createOptimalPilots({seed:1}).map(p=>p.bookTrust),[true,true],'default stays on');
++// F6
++const src=fs.readFileSync('dist/optimal-pilot.mjs','utf8');assert.ok(src.includes("' Played as written from the combo book.'"),'trusted steps say so');
++// F3 / F4 (worker in a VM, the same way ChatGPT's review probe drives it)
++function timing({switchTo=null,compute=1500}={}){let now=1000+compute,scheduled=[];
++ const w=fs.readFileSync('dist/worker.mjs','utf8').replace(/^import .*;\s*$/gm,'').replace(/export /g,'');
++ const ctx=vm.createContext({HumanResponseBridge:class{},WorkerPauseOwners:class{},ChainDirector:class{},Date:{now:()=>now},M,postMessage(){},setTimeout:(f,ms)=>{scheduled.push(ms);return 1},clearTimeout(){},safeView:()=>({choices:()=>[1,2]})});
++ vm.runInContext(w,ctx);
++ vm.runInContext("duel={revision:1,prompt:{type:M.SELECT_IDLECMD,seat:0},finished:false};mode='watch';paused=false;disabled=false;presentationPending=false;presentationUntil=0;presentationDoneAt=1000;preset='duel';delay=75;plan={revision:1};thinking=null;humanPending={revision:1,started:1000,ms:1000,add:true,dueAt:null,cls:'big'};",ctx);
++ if(switchTo){vm.runInContext("preset='learning';delay=1;humanPending={revision:1,started:1000,ms:6000,add:false,dueAt:null,cls:'big'};",ctx);vm.runInContext("onmessage({data:{type:'cinematics',preset:'"+switchTo+"',value:false}})",ctx)}
++ vm.runInContext('schedule()',ctx);return scheduled.at(-1)}
++assert.equal(timing(),1075,'Duel big decision after 1.5 s of thinking: 75 ms step + 1000 ms added');
++assert.equal(timing({compute:0}),1075,'the same with no thinking time');
++assert.ok(timing({switchTo:'instant'})<=1,'Learning hold dropped when switching to Instant');
++assert.ok(timing({switchTo:'broadcast'})<=1,'and to Broadcast');
++assert.equal(timing({switchTo:'duel'}),1001,'switching to Duel: its own +1 s on a big decision');
++console.log(JSON.stringify({test:'r32-review-fixes',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tests/r32-soundtrack.test.mjs b/tests/r32-soundtrack.test.mjs
+new file mode 100644
+index 0000000..eded71b
+--- /dev/null
++++ b/tests/r32-soundtrack.test.mjs
+@@ -0,0 +1,35 @@
++// r32 (Kevy 22 Oct 18:51 / 18:52): new duel tracks from the Drive Audio folder; "fade in when the game starts, a random
++// track each time"; "each track to fade into itself so it can be like a seamless loop". SELF-VERIFIED, NOT independent.
++//  1. Shipped set: every listed track exists, is cached for offline play, has its loop point before the natural ending,
++//     a loop start inside the track and a loudness gain; the old r24 files are gone.
++//  2. Playback: a duel fades a random track in from the top; the repeat pass starts at loopStart and crossfades with
++//     equal-power curves (sin in, cos out) over the overlap; the gain sets the level; without curve support the r24
++//     linear ramps are used (r24-soundtrack covers that path).
++import assert from 'node:assert/strict';import fs from 'node:fs';
++import {Soundscape} from '../dist/sound-engine.mjs';
++const cfg=JSON.parse(fs.readFileSync('dist/audio/soundtrack.json')),assets=JSON.parse(fs.readFileSync('dist/offline-assets.json'));
++assert.ok(cfg.tracks.length>=8,'Kevy\'s r32 set (8 tracks: 6 from Drive, the 2 Gods Awaken tracks attached in chat)');assert.ok(cfg.overlap>=3&&cfg.fadeIn>=2,'a 3 s crossfade and a fade-in');
++for(const t of cfg.tracks){assert.ok(fs.existsSync('dist/audio/'+t.file),t.file);assert.ok(assets.includes('./audio/'+t.file),t.file+' offline');
++ assert.ok(t.end>100&&t.end<300,'loop point');assert.ok(!t.loopStart||t.loopStart<t.end-30,'loop start inside the track');assert.ok(t.gain>0&&t.gain<=1,'gain never boosts past the file level');if(t.overlap)assert.ok(t.overlap<=8&&t.end-(t.loopStart||0)>3*t.overlap,'a per-track crossfade fits inside the loop')}
++assert.match(fs.readFileSync('dist/sound-engine.mjs','utf8'),/ov=Number\(t\.overlap\)\|\|this\.trackCfg\.overlap/,'per-track overlap is read');
++for(const f of ['ddl-track-pulse.mp3','ddl-track-buoyant-groove.mp3','ddl-track-buoyant-groove-2.mp3'])assert.ok(!fs.existsSync('dist/audio/'+f)&&!assets.includes('./audio/'+f),f+' replaced');
++const sleep=ms=>new Promise(r=>setTimeout(r,ms));
++let now=0,starts=[],ramps=[],curves=[];const param=()=>({value:1,setValueAtTime(v){this.value=v},setTargetAtTime(v){this.value=v},linearRampToValueAtTime(v,t){ramps.push([v,t]);this.value=v},setValueCurveAtTime(v,t,d){curves.push({v:[...v],t,d})},exponentialRampToValueAtTime(v){this.value=v},cancelScheduledValues(){}});
++class Audio{constructor(){this.state='running';this.sampleRate=100;this.destination={}}get currentTime(){return now}createGain(){return {gain:param(),connect(){},disconnect(){}}}createDynamicsCompressor(){return {threshold:param(),ratio:param(),connect(){}}}createStereoPanner(){return {pan:param(),connect(){}}}createBuffer(){return {getChannelData:()=>new Float32Array(100)}}createOscillator(){return {type:'',frequency:param(),detune:param(),connect(){},start(){},stop(){},disconnect(){}}}
++ createBufferSource(){const n={connect(){},start(t,off=0){if(n.buffer?.file)starts.push({file:n.buffer.file,t,off})},stop(){}};return n}createBiquadFilter(){return {frequency:param(),Q:param(),connect(){},disconnect(){}}}
++ decodeAudioData(b,ok){ok({file:new TextDecoder().decode(b),duration:20})}}
++globalThis.fetch=async url=>{const u=String(url);if(u.endsWith('soundtrack.json'))return {ok:true,json:async()=>({fadeIn:2.5,overlap:2,newGame:2,tracks:[{file:'a.mp3',end:8,loopStart:1,gain:.8}]})};return {ok:true,arrayBuffer:async()=>new TextEncoder().encode(u.split('/').pop()).buffer}};
++globalThis.AudioContext=Audio;globalThis.document={body:{classList:{contains:()=>true}}};
++const s=new Soundscape();s.unlock();await sleep(30);
++try{
++ assert.equal(starts.length,1);const a=starts[0];assert.equal(a.off,0,'the duel starts the track from the top');
++ assert.ok(ramps.some(([v,t])=>v===.8&&Math.abs(t-(a.t+2.5))<1e-9),'fades in over 2.5 s to the track gain');
++ const out1=curves.find(c=>Math.abs(c.t-(a.t+8-2))<1e-9);assert.ok(out1&&out1.d===2,'equal-power fade-out over the 2 s overlap before the end');
++ assert.ok(Math.abs(out1.v[0]-.8)<1e-6&&out1.v.at(-1)<.001,'fade-out runs from the gain to silence');
++ await sleep(2200);
++ assert.equal(starts.length,2,'it loops');const b=starts[1];assert.equal(b.file,'a.mp3');assert.equal(b.off,1,'the repeat pass starts at loopStart');assert.ok(Math.abs(b.t-(a.t+6))<1e-9,'it starts as the first pass fades out');
++ const in2=curves.find(c=>Math.abs(c.t-b.t)<1e-9&&c.v[0]<.001);assert.ok(in2&&in2.d===2,'equal-power fade-in over the overlap');
++ const mid=in2.v[Math.floor(in2.v.length/2)],midOut=out1.v[Math.floor(out1.v.length/2)];assert.ok(Math.abs(mid*mid+midOut*midOut-.64)<.02,'equal power: no dip in the middle of the crossfade');
++ assert.ok(curves.some(c=>Math.abs(c.t-(b.t+(8-1)-2))<1e-9),'the repeat pass is shorter by its loop start');
++}finally{s.stopMusic?.()}
++console.log(JSON.stringify({test:'r32-soundtrack',pass:true,node:process.version,tracks:cfg.tracks.map(t=>t.title)}));process.exit(0);
+diff --git a/tools/r27-deck-audit.mjs b/tools/r27-deck-audit.mjs
+index 1b3a381..de8c8a1 100644
+--- a/tools/r27-deck-audit.mjs
++++ b/tools/r27-deck-audit.mjs
+@@ -31,16 +31,23 @@ const board=s=>({monsters:zone(s,4).map(c=>nm(c)+((c.position&5)?'':' (set)')+((
+ const HT=/Ash Blossom|Infinite Impermanence|Mulcharmy|Nibiru|Forbidden Droplet|Ghost Belle|Effect Veiler|Maxx|Ghost Ogre|Droll|Bystial/;
+ function scoreInterrupts(dd,seat){let v=boardScore(dd,seat),k=0;for(const c of dd.zone(seat,4).filter(Boolean))if((c.position&5)&&/Quick Effect|during either player's turn|during your opponent's turn/i.test(dd.db[c.code]?.desc||''))k++;
+  for(const c of dd.zone(seat,8).filter(Boolean))if(c.sequence<5&&!(c.position&5))k++;for(const c of dd.zone(seat,2).filter(Boolean))if(HT.test(dd.name(c.code)))k++;return v+300*k}
++// r32: --record-prefix DIR saves the responses up to the start of our first turn; --replay-prefix DIR replays them
++// (the opponent's turn-1 board is then identical across variants and is not re-planned, which is the slow part).
++// r32: --best-picks off removes the 'preferBest' picks (Kaiju / Super Polymerization targets) for an A/B run.
++if(arg('best-picks','on')==='off'){const {BOOKS}=await import('../dist/ai/book/book.mjs');for(const b of Object.values(BOOKS))b.picks=b.picks.filter(p=>!p.preferBest)}
++const recDir=arg('record-prefix',null),repDir=arg('replay-prefix',null);if(recDir)fs.mkdirSync(recDir,{recursive:true});
+ const out=[];const t0=Date.now();
+ for(let k=0;k<N;k++){const seed=start+k,opp=opps[k%opps.length],first=order==='first'?0:order==='second'?1:k%2?1:0;
+  const pilots=createOptimalPilots({seed,searchEnabled:search,nodeBudget:+arg('node-budget',400),searchCore,worldPool:search,poolKey:'audit:'+DECK+':'+seed,poolSize:10,seatCapBytes:40*1048576,shouldStop});
+  {const o={};if(arg('turn-horizon','off')==='on')o.turnHorizon=true;if(arg('eval','base')==='interrupts')o.evaluate=scoreInterrupts;if(arg('eval','base')==='goal')o.evaluate=(dd,seat)=>boardScore(dd,seat)+goalScore(dd,seat);if(Object.keys(o).length)for(const p of pilots)p.searchTestOptions=o}{const bt=arg('book-trust','default');if(bt!=='default')for(const p of pilots)p.bookTrust=bt==='on'}/* r29 experiments */
+  d.start([decks.find(x=>x.id===DECK),decks.find(x=>x.id===opp)],{seed,first});
++ const pf=repDir&&repDir+'/'+DECK+'-'+order+'-'+seed+'-'+opp+'.json',prefix=pf&&fs.existsSync(pf)?JSON.parse(fs.readFileSync(pf)):null;
+  const row={deck:DECK,opp,seed,first:first===0,hand:zone(0,2).map(nm),turns:[]};let cur=null,n=0,ownTurns=0;
+  const close=()=>{if(cur){cur.end=board(0);cur.oppEnd=board(1);row.turns.push(cur);cur=null;ownTurns++}};
+  while(d.prompt&&!d.finished&&n<2500){
+-  if(d.active===0&&(!cur||cur.turn!==d.turn)){close();if(ownTurns>=ownTurnsMax)break;cur={turn:d.turn,startHand:zone(0,2).map(nm),oppStart:board(1),moves:[]}}
++  if(d.active===0&&(!cur||cur.turn!==d.turn)){close();if(ownTurns>=ownTurnsMax)break;cur={turn:d.turn,startHand:zone(0,2).map(nm),oppStart:board(1),moves:[]};if(recDir&&ownTurns===0&&!prefix)fs.writeFileSync(recDir+'/'+DECK+'-'+order+'-'+seed+'-'+opp+'.json',JSON.stringify(d.responseHistory))}
+   if(d.active!==0&&cur)close();if(ownTurns>=ownTurnsMax)break;
++  if(prefix&&n<prefix.length){d.respond(prefix[n]);n++;continue}/* r32: replay the recorded opening (opponent's turn 1) instead of re-planning it */
+   const p=d.prompt,s=p.seat;deadline=search?performance.now()+deadlineMs:Infinity;const ex0=new Set(pilots[0].excluded.keys());const plan=pilots[s].plan(d);deadline=Infinity;if(!plan)break;
+   if(s===0)for(const [k,why] of pilots[0].excluded)if(!ex0.has(k)){const [,key,i]=k.split(':');(row.excluded||=[]).push('t'+d.turn+' '+nm(p[key]?.[+i])+' ('+key+'): '+why)}
+   if(s===0&&cur){const txt=describe(p,plan.response);if(txt)cur.moves.push(txt+(plan.book?.rule?'   ['+plan.book.rule+']':''))}
+diff --git a/tools/r32-handtrap-probe.mjs b/tools/r32-handtrap-probe.mjs
+new file mode 100644
+index 0000000..d78e0de
+--- /dev/null
++++ b/tools/r32-handtrap-probe.mjs
+@@ -0,0 +1,29 @@
++// r32 hand-trap probe (Claude, 22 Oct; Kevy item 3: "Smarter hand traps on your turn ... Ash Blossom on the key search
++// rather than the first thing you see, Nibiru after the fifth summon, Imperm on the starter").
++// Seeded CPU-v-CPU duels; logs every chain window on the NON-active player's side where a hand trap was offered: what was
++// on the chain, whether the AI used the hand trap, and on what. Usage:
++//   node tools/r32-handtrap-probe.mjs --seeds 16 --start 1 --turns 3 [--handtrap-rule on|off] [--search on --deadline-ms N] [--decks branded,luna,...] [--out f.json]
++import fs from 'node:fs';import zlib from 'node:zlib';
++import {Duel,M} from '../dist/duel.mjs';import {createOptimalPilots} from '../dist/optimal-pilot.mjs';import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';import {dropAllPools} from '../dist/ai/world-pool.mjs';import {HANDTRAP} from '../dist/ai/book/book.mjs';
++const arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v};
++HANDTRAP.on=arg('handtrap-rule','on')!=='off';
++const N=+arg('seeds',16),start=+arg('start',1),maxTurn=+arg('turns',3),search=arg('search','off')==='on',deadlineMs=+arg('deadline-ms',1500),LIST=arg('list','tcg-2026-10-19');
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
++const decks=JSON.parse(fs.readFileSync('dist/decks.json')).decks.map(x=>{const v=x.banlistVariants?.[LIST];return v?{...x,...v}:x});
++const ids=arg('decks',decks.map(x=>x.id).join(',')).split(',');
++export const HT=/^(Ash Blossom & Joyous Spring|Infinite Impermanence|Effect Veiler|Ghost Belle & Haunted Mansion|Ghost Ogre & Snow Rabbit|Nibiru, the Primal Being|Mulcharmy Fuwalos|Mulcharmy Purulia|Droll & Lock Bird|Forbidden Droplet|Maxx "C"|Bystial Saronir|Bystial Magnamhut|Bystial Druiswurm|Called by the Grave|Crossout Designator|D\.D\. Crow|Dimension Shifter|Triple Tactics Thrust|Ghost Mourner & Moonlit Chill)$/;
++const d=await Duel.create(db,scripts),searchCore=search?await createSearchCore(db,scripts):null;let deadline=Infinity;const shouldStop=()=>performance.now()>=deadline;
++const nm=c=>c?d.name(c.code):'?';const rows=[],ends=[];const t0=Date.now();
++for(let k=0;k<N;k++){const seed=start+k,a=ids[k%ids.length],b=ids[(k*3+1)%ids.length]===a?ids[(k*3+2)%ids.length]:ids[(k*3+1)%ids.length],first=k%2;
++ const pilots=createOptimalPilots({seed,searchEnabled:search,nodeBudget:400,searchCore,worldPool:search,poolKey:'ht:'+seed,poolSize:10,seatCapBytes:40*1048576,shouldStop});
++ d.start([decks.find(x=>x.id===a),decks.find(x=>x.id===b)],{seed,first});let n=0;const summons=[0,0];let lastTurn=-1;
++ while(d.prompt&&!d.finished&&n<2500&&d.turn<=maxTurn){const p=d.prompt,s=p.seat;if(d.turn!==lastTurn){lastTurn=d.turn;summons[0]=summons[1]=0}
++  const logBefore=d.log.length;deadline=search?performance.now()+deadlineMs:Infinity;const plan=pilots[s].plan(d);deadline=Infinity;if(!plan)break;
++  if(p.type===M.SELECT_CHAIN&&s!==d.active){const offered=(p.selects||[]).map((c,i)=>({i,name:nm(c),loc:c.location})).filter(x=>HT.test(x.name));
++   if(offered.length){const top=d.chain?.at?.(-1);const r=plan.response;
++    rows.push({seed,deck:d.decks[s].id,opp:d.decks[1-s].id,turn:d.turn,phase:d.phase,offered:offered.map(x=>x.name),used:r.index!=null?nm(p.selects[r.index]):null,
++     chainTop:top?{card:d.name(top.code),own:top.controller===s}:null,oppHand:d.zone(1-s,2).filter(Boolean).length,oppMonsters:d.zone(1-s,4).filter(Boolean).map(nm),rule:plan.rule||plan.book?.rule||'',searched:!!plan.search?.nodes})}}
++  d.respond(plan.response);for(const x of pilots)x.observe?.(plan);n++}
++ ends.push({seed,first:d.decks[first].id,second:d.decks[1-first].id,firstBoard:d.zone(first,4).filter(Boolean).map(nm),firstBackrow:d.zone(first,8).filter(Boolean).length,secondHand:d.zone(1-first,2).filter(Boolean).map(nm)});
++ d.stop();if(search)dropAllPools();process.stderr.write(`seed ${seed} ${a} v ${b} done (${Math.round((Date.now()-t0)/1000)}s)\n`)}
++const out=arg('out',null),json=JSON.stringify({handtrapRule:HANDTRAP.on,search,node:process.version,rows,ends},null,1);if(out)fs.writeFileSync(out,json);else console.log(json);
+diff --git a/tools/r32-native-fixtures/native-dpe-empty-field.mjs b/tools/r32-native-fixtures/native-dpe-empty-field.mjs
+new file mode 100644
+index 0000000..8ef8d1e
+--- /dev/null
++++ b/tools/r32-native-fixtures/native-dpe-empty-field.mjs
+@@ -0,0 +1,27 @@
++// From ChatGPT's independent r31 review evidence (22 Oct 2026, zip SHA-256 022092ce…), adapted by Claude to run against this repo's dist. Writes its JSON next to this file.
++import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++const build=process.argv[2]||'r32';
++const root=new URL('../../dist/',import.meta.url),{Duel,M,R}=await import(new URL('duel.mjs',root)),{createOptimalPilots}=await import(new URL('optimal-pilot.mjs',root)),{safeView}=await import(new URL('ai/knowledge.mjs',root)),{bookActivationBlock}=await import(new URL('ai/book/book.mjs',root));
++const db=JSON.parse(gunzipSync(fs.readFileSync(new URL('cards.json.gz',root)))),scripts=JSON.parse(gunzipSync(fs.readFileSync(new URL('scripts.json.gz',root)))),decks=JSON.parse(fs.readFileSync(new URL('decks.json',root))).decks;
++const d=await Duel.create(db,scripts);let output={node:process.version,scope:'Auditor chooses engine-legal setup responses on shipped base decks: Normal Summon Shadow Mist, Fusion Destiny into DPE, destroy both own monsters. Opponent declines optional chains. Native trigger window and unmodified base policy are observed; no search, rule or build changes.',found:false};
++for(let seed=1;seed<=1000&&!output.found;seed++){
++ d.start([decks.find(x=>x.id==='hero'),decks.find(x=>x.id==='branded')],{seed,first:0});const hand=d.zone(0,2).map(c=>d.name(c.code));if(!hand.includes('Fusion Destiny')||!hand.includes('Elemental HERO Shadow Mist'))continue;
++ console.log('candidate hand',seed);const pilots=createOptimalPilots({seed,searchEnabled:false});let summoned=false,activatedFD=false,destroying=false;const trace=[];
++ for(let step=0;step<120&&d.prompt&&!d.finished&&d.turn===1;step++){
++  const p=d.prompt,seat=p.seat,cards=p.selects||p.select_cards||[];let response;
++  const ix=p.type===M.SELECT_CHAIN?cards.findIndex(c=>c.code===60461804&&c.location===16):-1;
++  if(ix>=0){const baseline=pilots[seat].base(safeView(d,seat));trace.push({step,type:p.type,offered:cards,revivalIndex:ix,response:baseline.response,block:bookActivationBlock(safeView(d,seat),seat,cards[ix])});
++   output={...output,found:true,seed,opponentCards:[4,8].reduce((n,l)=>n+d.zone(1,l).filter(Boolean).length,0),trace,history:d.responseHistory.slice(),triggerSequence:[]};
++   for(let n=0;n<8&&d.prompt?.type===M.SELECT_CHAIN;n++){const pp=d.prompt,cc=pp.selects||[],di=cc.findIndex(c=>c.code===60461804&&c.location===16);if(di<0)break;const pl=pilots[pp.seat].base(safeView(d,pp.seat));output.triggerSequence.push({offered:cc.map(c=>({code:c.code,location:c.location})),response:pl.response,dpeIndex:di,block:bookActivationBlock(safeView(d,pp.seat),pp.seat,cc[di])});if(pl.response.index===null){output.declinedRevival=true;break}d.respond(pl.response)}break;}
++  if(seat===1&&p.type===M.SELECT_CHAIN&&!p.forced)response={type:R.SELECT_CHAIN,index:null};
++  if(seat===0&&p.type===M.SELECT_IDLECMD){
++   if(!summoned){const i=p.summons.findIndex(c=>d.name(c.code)==='Elemental HERO Shadow Mist');if(i>=0){response={type:R.SELECT_IDLECMD,action:0,index:i};summoned=true}}
++   else if(!activatedFD){const i=p.activates.findIndex(c=>d.name(c.code)==='Fusion Destiny');if(i>=0){response={type:R.SELECT_IDLECMD,action:5,index:i};activatedFD=true}}
++   else if(!destroying){const i=p.activates.findIndex(c=>c.code===60461804);if(i>=0){response={type:R.SELECT_IDLECMD,action:5,index:i};destroying=true}}
++  }
++  if(seat===0&&p.type===M.SELECT_CHAIN&&!p.forced){const i=cards.findIndex(c=>c.code===60461804&&c.location===4);if(activatedFD&&summoned&&i>=0&&!destroying&&d.zone(0,4).filter(Boolean).length>=2){response={type:R.SELECT_CHAIN,index:i};destroying=true}else response??={type:R.SELECT_CHAIN,index:null}}
++  if(destroying&&d.hint===502){if(p.type===M.SELECT_UNSELECT_CARD)response={type:R.SELECT_UNSELECT_CARD,index:p.can_finish?null:Math.max(0,cards.findIndex(c=>c.code===60461804))};if(p.type===M.SELECT_CARD)response={type:R.SELECT_CARD,indicies:cards.map((_,i)=>i).slice(0,p.min||1)}}
++  response??=pilots[seat].base(safeView(d,seat))?.response;if(!response)break;trace.push({step,type:p.type,hint:d.hint,response});const before=d.retries;d.respond(response);if(d.retries!==before){console.log('rejected',seed,step);break;}
++ }
++}
++d.stop();output.build=build;fs.writeFileSync(new URL('./native-dpe-empty-field-'+build+'.json',import.meta.url),JSON.stringify(output,(_,v)=>typeof v==='bigint'?String(v):v,2));console.log(JSON.stringify({found:output.found,seed:output.seed,opponentCards:output.opponentCards,triggerSequence:output.triggerSequence},(_,v)=>typeof v==='bigint'?String(v):v));
+diff --git a/tools/r32-native-fixtures/native-fv-revival.mjs b/tools/r32-native-fixtures/native-fv-revival.mjs
+new file mode 100644
+index 0000000..2d6705d
+--- /dev/null
++++ b/tools/r32-native-fixtures/native-fv-revival.mjs
+@@ -0,0 +1,20 @@
++// From ChatGPT's independent r31 review evidence (22 Oct 2026, zip SHA-256 022092ce…), adapted by Claude to run against this repo's dist. Writes its JSON next to this file.
++import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++const build=process.argv[2]||'r32';const root=new URL('../../dist/',import.meta.url),{Duel,M,R}=await import(new URL('duel.mjs',root)),{bookActivationBlock}=await import(new URL('ai/book/book.mjs',root)),{safeView}=await import(new URL('ai/knowledge.mjs',root));
++const db=JSON.parse(gunzipSync(fs.readFileSync(new URL('cards.json.gz',root)))),scripts=JSON.parse(gunzipSync(fs.readFileSync(new URL('scripts.json.gz',root)))),decks=JSON.parse(fs.readFileSync(new URL('decks.json',root))).decks.map(x=>({...x,...(x.banlistVariants?.['tcg-2026-10-19']||{})}));const d=await Duel.create(db,scripts);let out={build,node:process.version,scope:'Native legal fixture on the 19-Oct variant: Normal Summon Incredible Ecclesia, tribute it for Albaz, observe The Fallen & The Virtuous revival option with Ecclesia in the GY and no opposing cards. Auditor chooses setup actions; no build changes.',found:false};
++for(let seed=1;seed<=1000&&!out.found;seed++){
++ d.start([decks.find(x=>x.id==='branded'),decks.find(x=>x.id==='mikanko')],{seed,first:0});const hand=d.zone(0,2).map(c=>d.name(c.code));if(!hand.includes('The Fallen & The Virtuous')||!hand.includes('Incredible Ecclesia, the Virtuous'))continue;let ns=false,act=false;
++ console.log('candidate',seed);
++ for(let i=0;i<60&&d.prompt&&d.turn===1;i++){
++  const p=d.prompt,opts=d.choices();let r;
++  if(p.type===M.SELECT_IDLECMD&&p.seat===0){
++   const fv=p.activates.findIndex(c=>d.name(c.code)==='The Fallen & The Virtuous');if(act&&fv>=0&&d.zone(0,16).some(c=>c&&d.name(c.code)==='Incredible Ecclesia, the Virtuous')){
++    out={...out,found:true,seed,history:d.responseHistory.slice(),opposingCards:[4,8].reduce((n,l)=>n+d.zone(1,l).filter(Boolean).length,0),ecclesiaGY:true,block:bookActivationBlock(safeView(d,0),0,p.activates[fv])};d.respond({type:R.SELECT_IDLECMD,action:5,index:fv});for(let n=0;n<5&&d.prompt?.type!==M.SELECT_OPTION;n++){if(d.prompt.type!==M.SELECT_PLACE)break;d.respond(d.choices()[0].response)}out.nextPrompt={type:d.prompt.type,choices:d.choices().map(x=>({label:x.label,response:x.response}))};out.revivalOptionOffered=d.choices().some(x=>/Special Summon.*either GY/i.test(x.label));{const {optionPick}=await import(new URL('ai/book/book.mjs',root));const o=optionPick(safeView(d,0),0,d.prompt);out.bookOption=o;out.bookOptionLabel=o?d.choices().find(x=>x.response.index===o.index)?.label:null}break;}
++   const arr=ns?p.activates:p.summons,j=arr.findIndex(c=>d.name(c.code)==='Incredible Ecclesia, the Virtuous');if(j>=0){r={type:R.SELECT_IDLECMD,action:ns?5:0,index:j};if(ns)act=true;ns=true;}
++  }
++  if(!r&&p.type===M.SELECT_CHAIN&&!p.forced)r={type:R.SELECT_CHAIN,index:null};
++  if(!r&&p.type===M.SELECT_CARD){const j=p.selects.findIndex(c=>d.name(c.code)==='Fallen of Albaz');r={type:R.SELECT_CARD,indicies:[Math.max(0,j)]}}
++  r??=opts.find(x=>x.response.yes===false)?.response||opts[0]?.response;if(!r)break;const before=d.retries;d.respond(r);if(d.retries!==before)break;
++ }
++}
++d.stop();fs.writeFileSync(new URL('./native-fv-revival-'+build+'.json',import.meta.url),JSON.stringify(out,(_,v)=>typeof v==='bigint'?String(v):v,2));console.log(JSON.stringify({...out,history:undefined},(_,v)=>typeof v==='bigint'?String(v):v));
