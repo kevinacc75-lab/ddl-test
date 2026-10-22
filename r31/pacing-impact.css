@@ -1,0 +1,81 @@
+/* Stage 1: parallel LP counter/bar, field resolutions, and visible lethal. */
+body.in-duel #duel .lp-display{overflow:visible}
+body.in-duel #duel .lp-delta.lp-float{color:var(--lp-colour);font:800 50px/1 var(--font-display);top:-48px;z-index:60;animation:lp-float var(--lp-float-duration,900ms) ease-out both;text-shadow:0 0 16px currentColor;pointer-events:none}
+@keyframes lp-float{0%{opacity:0;transform:translateY(0) scale(0)}12%{opacity:1;transform:translateY(-3px) scale(1.2)}20%{opacity:1;transform:translateY(-8px) scale(1)}75%{opacity:1;transform:translateY(-30px) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(1)}}
+.lp-impact-edge,.lp-impact-white{position:fixed;inset:0;pointer-events:none;z-index:85}
+.lp-impact-edge{background:radial-gradient(ellipse,transparent 45%,#ec184888)}
+.lp-impact-white{background:white}
+.on-field-resolution{position:fixed;z-index:80;pointer-events:none}
+.on-field-card{position:absolute;left:calc(var(--card-width)/-2);top:calc(var(--card-height)/-2);width:var(--card-width);height:var(--card-height);box-shadow:0 0 22px var(--resolve-colour),0 0 44px var(--resolve-colour);border:2px solid var(--resolve-colour);border-radius:6px;background:#0e1529}
+.on-field-card img{width:100%;height:100%;object-fit:contain}
+.on-field-coin{position:absolute;top:-26px;left:50%;transform:translateX(-50%);padding:6px 9px;border:1px solid #fff3bc;border-radius:20px;background:#221d34;color:#fff0b4;font:700 12px/1.2 var(--font-ui);white-space:nowrap}
+.on-field-clause{position:absolute;top:calc(var(--card-height)*.65);width:420px;padding:10px 14px;border:1px solid var(--resolve-colour);border-radius:10px;background:#101326f2;color:#fff;font:700 15px/1.35 var(--font-ui);box-shadow:0 0 16px var(--resolve-colour);text-align:center}
+.on-field-resolution.is-negated .on-field-card img{filter:grayscale(1)}
+.on-field-resolution.is-negated .on-field-coin{color:#ff6476;border-color:#ff6476}
+.ko-loser{filter:grayscale(1) saturate(0)}
+.ko-slam{position:fixed;inset:35% 3% auto;z-index:100;text-align:center;color:#ff5873;font:800 clamp(28px,5vw,78px)/1.25 var(--font-display);text-shadow:0 0 30px #ff2943;background:#080e1bdd;padding:28px;animation:ko-slam var(--ko-duration,800ms) ease-out both;pointer-events:none}
+@keyframes ko-slam{0%{opacity:0;transform:scale(1.8)}18%,80%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+.quiet-motion .ko-slam{animation:none}
+.quiet-motion #duel .lp-delta.lp-float{animation:lp-fade var(--lp-float-duration,900ms) linear both}
+@keyframes lp-fade{0%,80%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.ko-slam{animation:none}body.in-duel #duel .lp-delta.lp-float{animation:lp-fade var(--lp-float-duration,900ms) linear both}}
+
+body.in-duel #duel .player-bar.opponent .lp-delta.lp-float{top:38px}
+
+.on-field-clause{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+body.in-duel #phase-tracker [aria-current=step] button{opacity:1;color:#fff5c2;background:#454035;box-shadow:0 0 12px #ffd87577;border-color:#ffdf92}
+
+/* Stage 1.1: rails and field share the same stage coordinate system. */
+body.in-duel.tablet-stage #duel .phase-tracker{position:absolute!important;right:18px!important;width:65px!important}
+body.in-duel.tablet-stage #duel #arena-scroll{right:120px!important}
+body.in-duel.tablet-stage #duel .arena-surface{width:100%!important;min-width:0!important}
+body.in-duel.tablet-stage #duel .player-bar{width:470px!important;box-sizing:border-box}
+body.in-duel #duel .player-identity{flex:1;max-width:none!important;min-width:0}
+body.in-duel #duel .player-identity :is(b,small){display:block;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:anywhere;line-height:1.3}
+body.in-duel.tablet-stage #duel .duelist-title{font-size:17px!important;letter-spacing:0}
+#duelist-reaction{left:190px!important;max-width:650px;bottom:235px!important}
+#event-stage[data-compact=true]{left:max(115px,14vw)!important;right:80px!important;width:auto!important}
+#skip-fx{top:16px!important;bottom:auto!important;right:85px!important;min-height:44px}
+.victory-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:20px 0}
+.victory-actions button{min-height:44px;padding:12px 18px}
+#victory-scene .victory-content{min-height:0;height:100dvh;max-height:100dvh;overflow:auto;padding:74px 24px 28px}
+#victory-title{font-size:clamp(32px,8vw,90px)!important}
+#victory-kicker{white-space:normal;line-height:1.5;overflow-wrap:anywhere}
+#pace-control{display:grid;gap:8px}#setup-pace-slot select{min-height:44px}
+#duel-pace-slot:empty{display:none}
+
+/* 2.1.2: explicit bounded grid dimensions in the 1600 x 1000 stage. */
+body.in-duel.tablet-stage #duel :is(.arena-surface,.half,.placement-zones,.zone-row,.shared-emz,.emz-shell,.pile-col,.zone){box-sizing:border-box;min-width:0!important;min-height:0!important;max-width:100%}
+body.in-duel.tablet-stage #duel #arena-scroll{inset:115px 130px 215px 180px!important;width:auto!important;height:auto!important;padding:0!important}
+body.in-duel.tablet-stage #duel .arena-surface{height:100%!important;grid-template-rows:minmax(0,2fr) 20px minmax(0,1fr) minmax(0,2fr)!important;gap:8px!important;padding:8px 12px!important;transform:rotateX(15deg)!important}
+body.in-duel.tablet-stage #duel .half{width:100%!important;height:100%!important;margin:0!important;transform:none!important;grid-template-columns:90px minmax(0,1fr) 90px!important;padding:0!important}
+body.in-duel.tablet-stage #duel .placement-zones{width:100%;height:100%;grid-template-rows:repeat(2,minmax(0,1fr))!important}
+body.in-duel.tablet-stage #duel .zone-row{width:100%;height:100%;margin:0!important;grid-template-columns:repeat(5,minmax(0,1fr))!important}
+body.in-duel.tablet-stage #duel .zone{height:100%!important;aspect-ratio:auto!important;transform:none!important}
+body.in-duel.tablet-stage #duel .zone>img{inset:3px 3px 25px;width:calc(100% - 6px)!important;height:calc(100% - 28px)!important;object-fit:contain;transform:none!important;opacity:1!important;filter:none!important}
+body.in-duel.tablet-stage #duel .card-stats{position:absolute;inset:auto 0 0;height:24px;padding:3px!important;background:#071224ee;line-height:18px;font-size:17px!important}
+body.in-duel.tablet-stage #duel .zone .hand-back{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);transform:none}
+body.in-duel.tablet-stage #duel .phase-tracker{left:auto!important;right:18px!important;width:80px!important;top:160px!important;bottom:235px!important}
+body.in-duel.tablet-stage #duel .player-bar{position:absolute!important}
+body.in-duel.tablet-stage #duel .player-bar.own{bottom:180px!important}
+body.in-duel.tablet-stage #duel .shared-emz{margin:0 auto!important;width:54%!important;height:100%!important}
+body.in-duel.tablet-stage #duel .field-cue{bottom:18px!important;right:16px!important;max-height:165px!important;width:370px!important;display:flex;flex-direction:column;align-items:stretch;gap:7px}
+body.in-duel.tablet-stage #duel .field-cue p{max-height:80px!important;overflow:auto;margin:0!important;flex:none}
+#skip-fx{inset:auto auto 12px 50%!important;transform:translateX(-50%);z-index:110}
+#scene-chain-coin{top:12px!important;right:12px!important;left:auto!important;transform:none!important}
+.ko-plate{background:repeating-linear-gradient(35deg,#f32d4866 0 2px,#080e1fee 2px 35px)!important;box-shadow:0 0 60px #ff3157;animation:ko-flash .16s linear 5}
+.ko-slow .arena-surface{filter:brightness(.6)}
+.winner-lp{color:#ffe19c;font-weight:800}
+@keyframes ko-flash{50%{opacity:.3}}
+body.in-duel.tablet-stage #duel .zone>.back{position:absolute;inset:3px!important;width:calc(100% - 6px)!important;height:calc(100% - 6px)!important;transform:none!important;border-radius:5px;background:radial-gradient(ellipse,#452a75,#151329 65%);border:2px solid #9978c4;display:grid;place-items:center}
+#chain .chain-thumb::before{position:static!important;float:none!important;margin-right:5px;flex:0 0 auto}
+/* Reserve HUD gutters even after stage-level perspective expands the mat. */
+body.in-duel.tablet-stage #duel #arena-scroll{inset:115px 180px 215px 230px!important}
+body.in-duel.tablet-stage #duel .player-bar.own{bottom:32px!important}
+body.in-duel.tablet-stage #duel .hand{left:500px!important;right:410px!important}
+body.in-duel.tablet-stage #duel .field-cue{max-height:195px!important;box-sizing:border-box}
+body.in-duel.tablet-stage #duel .field-cue>div{width:100%;min-width:0;flex:0 0 auto}
+body.in-duel.tablet-stage #duel .field-cue p{max-height:45px!important;line-height:1.3!important;font-size:18px!important}
+body.in-duel.tablet-stage #duel .field-cue .eyebrow{font-size:16px!important;line-height:21px;margin:0!important}
+body.in-duel.tablet-stage #duel .field-cue button{width:100%;flex:0 0 auto;margin:0!important}
