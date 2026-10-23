@@ -1,0 +1,1484 @@
+{
+ "102380": {
+  "name": "Lava Golem",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "213326": {
+  "name": "E - Emergency Call",
+  "decks": [
+   "hero"
+  ]
+ },
+ "1948619": {
+  "name": "Xtra HERO Wonder Driver",
+  "decks": [
+   "hero"
+  ]
+ },
+ "1984618": {
+  "name": "Nadir Servant",
+  "decks": [
+   "branded"
+  ]
+ },
+ "2295440": {
+  "name": "One for One",
+  "decks": [
+   "toon"
+  ]
+ },
+ "2344618": {
+  "name": "Lunalight Masquerade",
+  "decks": [
+   "luna"
+  ]
+ },
+ "2857636": {
+  "name": "Knightmare Phoenix",
+  "decks": [
+   "mikanko",
+   "luna",
+   "toon"
+  ]
+ },
+ "3410461": {
+  "name": "Alba-Lenatus the Abyss Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "4928565": {
+  "name": "Tearlaments Kashtira",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "6327734": {
+  "name": "Hu-Li the Jewel Mikanko",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "6498706": {
+  "name": "Fusion Deployment",
+  "decks": [
+   "branded"
+  ]
+ },
+ "6958551": {
+  "name": "Shadow Toon",
+  "decks": [
+   "toon"
+  ]
+ },
+ "8240199": {
+  "name": "Sage with Eyes of Blue",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "8264361": {
+  "name": "Dharc the Dark Charmer, Gloomy",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "8267140": {
+  "name": "Cosmic Cyclone",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "8379983": {
+  "name": "Lunalight Gold Leo",
+  "decks": [
+   "luna"
+  ]
+ },
+ "8491308": {
+  "name": "Sky Striker Ace - Hayate",
+  "decks": [
+   "sky"
+  ]
+ },
+ "8949584": {
+  "name": "A Hero Lives",
+  "decks": [
+   "hero"
+  ]
+ },
+ "8953369": {
+  "name": "Kashtira Overlap",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "9411399": {
+  "name": "Destiny HERO - Malicious",
+  "decks": [
+   "hero"
+  ]
+ },
+ "9726840": {
+  "name": "Sky Striker Mobilize - Linkage!",
+  "decks": [
+   "sky"
+  ]
+ },
+ "9839945": {
+  "name": "Lyna the Light Charmer, Lustrous",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "10045474": {
+  "name": "Infinite Impermanence",
+  "decks": [
+   "sky",
+   "luna",
+   "blueeyes",
+   "toon"
+  ]
+ },
+ "10186633": {
+  "name": "EN Shuffle",
+  "decks": [
+   "hero"
+  ]
+ },
+ "10443957": {
+  "name": "Cyber Dragon Infinity",
+  "decks": [
+   "toon"
+  ]
+ },
+ "10515412": {
+  "name": "Lightstorm Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "10808715": {
+  "name": "Masked HERO Dusk Crow",
+  "decks": [
+   "hero"
+  ]
+ },
+ "10813327": {
+  "name": "Waking the Dragon",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "11161666": {
+  "name": "Sanaki the Mikanko Devotee",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "11317977": {
+  "name": "Lunalight Black Sheep",
+  "decks": [
+   "luna"
+  ]
+ },
+ "11321089": {
+  "name": "Guardian Chimera",
+  "decks": [
+   "luna"
+  ]
+ },
+ "11443677": {
+  "name": "Blue-Eyes Tyrant Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "11765832": {
+  "name": "Garura, Wings of Resonant Life",
+  "decks": [
+   "branded"
+  ]
+ },
+ "11876803": {
+  "name": "Lunalight Scarlet Tiger",
+  "decks": [
+   "luna"
+  ]
+ },
+ "12067160": {
+  "name": "Gorgon of Zilofthonia",
+  "decks": [
+   "luna"
+  ]
+ },
+ "12421694": {
+  "name": "Sky Striker Ace - Kaina",
+  "decks": [
+   "sky"
+  ]
+ },
+ "12580477": {
+  "name": "Raigeki",
+  "decks": [
+   "mikanko",
+   "toon"
+  ]
+ },
+ "13935001": {
+  "name": "Lunalight Serenade Dance",
+  "decks": [
+   "luna"
+  ]
+ },
+ "14152693": {
+  "name": "Lunalight Emerald Bird",
+  "decks": [
+   "luna"
+  ]
+ },
+ "14532163": {
+  "name": "Lightning Storm",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "14558127": {
+  "name": "Ash Blossom & Joyous Spring",
+  "decks": [
+   "branded",
+   "sky",
+   "luna",
+   "blueeyes",
+   "toon",
+   "hero"
+  ]
+ },
+ "15259703": {
+  "name": "Toon World",
+  "decks": [
+   "toon"
+  ]
+ },
+ "15270885": {
+  "name": "Toon Goblin Attack Force",
+  "decks": [
+   "toon"
+  ]
+ },
+ "16259549": {
+  "name": "Number 49: Fortune Tune",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "16605586": {
+  "name": "Destiny HERO - Denier",
+  "decks": [
+   "hero"
+  ]
+ },
+ "17217034": {
+  "name": "Combined Maneuver - Engage Zero!",
+  "decks": [
+   "sky"
+  ]
+ },
+ "17725109": {
+  "name": "Roar of the Blue-Eyed Dragons",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "17751597": {
+  "name": "Branded Retribution",
+  "decks": [
+   "branded"
+  ]
+ },
+ "17947697": {
+  "name": "Maiden of White",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "17955766": {
+  "name": "Neo-Spacian Aqua Dolphin",
+  "decks": [
+   "hero"
+  ]
+ },
+ "18094166": {
+  "name": "Vision HERO Faris",
+  "decks": [
+   "hero"
+  ]
+ },
+ "18144506": {
+  "name": "Harpie's Feather Duster",
+  "decks": [
+   "mikanko",
+   "toon"
+  ]
+ },
+ "18377261": {
+  "name": "Ha-Re the Sword Mikanko",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "19096726": {
+  "name": "Tri-Brigade Mercourier",
+  "decks": [
+   "branded"
+  ]
+ },
+ "19222426": {
+  "name": "Elemental HERO Thunder Giant - Voltic Thunder",
+  "decks": [
+   "hero"
+  ]
+ },
+ "19324993": {
+  "name": "Xtra HERO Infernal Devicer",
+  "decks": [
+   "hero"
+  ]
+ },
+ "21123811": {
+  "name": "Cosmic Blazar Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "21143940": {
+  "name": "Mask Change",
+  "decks": [
+   "hero"
+  ]
+ },
+ "21296502": {
+  "name": "Toon Dark Magician",
+  "decks": [
+   "toon"
+  ]
+ },
+ "21639276": {
+  "name": "Kashtira Preparations",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "22865492": {
+  "name": "Vision HERO Increase",
+  "decks": [
+   "hero"
+  ]
+ },
+ "22908820": {
+  "name": "Elemental HERO Sunrise",
+  "decks": [
+   "hero"
+  ]
+ },
+ "23204029": {
+  "name": "Contrast HERO Chaos",
+  "decks": [
+   "hero"
+  ]
+ },
+ "23656668": {
+  "name": "Gravity Controller",
+  "decks": [
+   "toon"
+  ]
+ },
+ "24010609": {
+  "name": "Sky Striker Mecha Modules - Multirole",
+  "decks": [
+   "sky"
+  ]
+ },
+ "24094653": {
+  "name": "Polymerization",
+  "decks": [
+   "luna",
+   "hero"
+  ]
+ },
+ "24299458": {
+  "name": "Forbidden Droplet",
+  "decks": [
+   "mikanko",
+   "sky",
+   "hero"
+  ]
+ },
+ "24361622": {
+  "name": "Hieratic Seal of the Heavenly Spheres",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "24382602": {
+  "name": "Mausoleum of White",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "24550676": {
+  "name": "Lunalight Leo Dancer",
+  "decks": [
+   "luna"
+  ]
+ },
+ "24915933": {
+  "name": "Granguignol the Dusk Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "25072579": {
+  "name": "Prototype Sky Striker Ace - Amatsu",
+  "decks": [
+   "sky"
+  ]
+ },
+ "25451383": {
+  "name": "Albion the Shrouded Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "25733157": {
+  "name": "Sky Striker Mecha - Eagle Booster",
+  "decks": [
+   "sky"
+  ]
+ },
+ "25955749": {
+  "name": "Sky Striker Maneuver - Jamming Waves!",
+  "decks": [
+   "sky"
+  ]
+ },
+ "26077387": {
+  "name": "Sky Striker Ace - Raye",
+  "decks": [
+   "sky"
+  ]
+ },
+ "26847978": {
+  "name": "Tri-Brigade Ferrijit the Barren Blossom",
+  "decks": [
+   "luna"
+  ]
+ },
+ "27699122": {
+  "name": "Toon Page-Flip",
+  "decks": [
+   "toon"
+  ]
+ },
+ "27780618": {
+  "name": "Vision HERO Vyon",
+  "decks": [
+   "hero"
+  ]
+ },
+ "28674152": {
+  "name": "Radian, the Multidimensional Kaiju",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "28711704": {
+  "name": "Toon Black Luster Soldier",
+  "decks": [
+   "toon"
+  ]
+ },
+ "29095457": {
+  "name": "Primite Drillbeam",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "29301450": {
+  "name": "S:P Little Knight",
+  "decks": [
+   "mikanko",
+   "sky",
+   "toon"
+  ]
+ },
+ "29726552": {
+  "name": "Kumongous, the Sticky String Kaiju",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "29948294": {
+  "name": "Branded in High Spirits",
+  "decks": [
+   "branded"
+  ]
+ },
+ "30241314": {
+  "name": "Macro Cosmos",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "30271097": {
+  "name": "The Fallen & The Virtuous",
+  "decks": [
+   "branded"
+  ]
+ },
+ "30875635": {
+  "name": "Miracle Ejector",
+  "decks": [
+   "hero"
+  ]
+ },
+ "31149212": {
+  "name": "Kashtira Riseheart",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "31733941": {
+  "name": "Red-Eyes Toon Dragon",
+  "decks": [
+   "toon"
+  ]
+ },
+ "32807846": {
+  "name": "Reinforcement of the Army",
+  "decks": [
+   "sky"
+  ]
+ },
+ "32828466": {
+  "name": "Wake Up Your Elemental HERO",
+  "decks": [
+   "hero"
+  ]
+ },
+ "32909498": {
+  "name": "Kashtira Fenrir",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "33453260": {
+  "name": "Comic Hand",
+  "decks": [
+   "toon"
+  ]
+ },
+ "33698022": {
+  "name": "Black Rose Moonlight Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "33854624": {
+  "name": "Bystial Magnamhut",
+  "decks": [
+   "branded"
+  ]
+ },
+ "33925864": {
+  "name": "Kashtira Big Bang",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "34433770": {
+  "name": "Sky Striker Special Maneuver - Lemnisgate!",
+  "decks": [
+   "sky"
+  ]
+ },
+ "34447918": {
+  "name": "Kashtiratheosis",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "35261759": {
+  "name": "Pot of Desires",
+  "decks": [
+   "sky"
+  ]
+ },
+ "35269904": {
+  "name": "Triple Tactics Thrust",
+  "decks": [
+   "mikanko",
+   "toon"
+  ]
+ },
+ "35618217": {
+  "name": "Lunalight Kaleido Chick",
+  "decks": [
+   "luna"
+  ]
+ },
+ "35726888": {
+  "name": "Foolish Burial Goods",
+  "decks": [
+   "luna"
+  ]
+ },
+ "35763582": {
+  "name": "Lunalight Silver Hound",
+  "decks": [
+   "luna"
+  ]
+ },
+ "36637374": {
+  "name": "Branded Opening",
+  "decks": [
+   "branded"
+  ]
+ },
+ "37351133": {
+  "name": "Sky Striker Ace - Roze",
+  "decks": [
+   "sky"
+  ]
+ },
+ "38342335": {
+  "name": "Knightmare Unicorn",
+  "decks": [
+   "mikanko",
+   "toon"
+  ]
+ },
+ "38811586": {
+  "name": "Albion the Sanctifire Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "40044918": {
+  "name": "Elemental HERO Stratos",
+  "decks": [
+   "hero"
+  ]
+ },
+ "41373230": {
+  "name": "Titaniklad the Ash Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "41927278": {
+  "name": "Double-Edged Sword",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "42097666": {
+  "name": "Spirit with Eyes of Blue",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "42141493": {
+  "name": "Mulcharmy Fuwalos",
+  "decks": [
+   "branded",
+   "mikanko",
+   "sky",
+   "blueeyes",
+   "toon",
+   "hero"
+  ]
+ },
+ "43175858": {
+  "name": "Toon Kingdom",
+  "decks": [
+   "toon"
+  ]
+ },
+ "43219114": {
+  "name": "Majesty of the White Dragons",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "43321985": {
+  "name": "Ancient Fairy Life Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "43527730": {
+  "name": "Mikanko Water Arabesque",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "44146295": {
+  "name": "Mirrorjade the Iceblade Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "44362883": {
+  "name": "Branded Fusion",
+  "decks": [
+   "branded"
+  ]
+ },
+ "44649322": {
+  "name": "The Great Mikanko Ceremony",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "44886582": {
+  "name": "Super Duper Polymerization",
+  "decks": [
+   "luna"
+  ]
+ },
+ "45484331": {
+  "name": "Springans Kitt",
+  "decks": [
+   "branded"
+  ]
+ },
+ "45725480": {
+  "name": "Sacred Sword of Seven Stars",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "45883110": {
+  "name": "Guiding Quem, the Virtuous",
+  "decks": [
+   "branded"
+  ]
+ },
+ "45906428": {
+  "name": "Miracle Fusion",
+  "decks": [
+   "hero"
+  ]
+ },
+ "46759931": {
+  "name": "Vision HERO Trinity",
+  "decks": [
+   "hero"
+  ]
+ },
+ "47643326": {
+  "name": "Lunar Rabbit Omajinai",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "47705572": {
+  "name": "Lunalight Wolf",
+  "decks": [
+   "luna"
+  ]
+ },
+ "48130397": {
+  "name": "Super Polymerization",
+  "decks": [
+   "branded"
+  ]
+ },
+ "48444114": {
+  "name": "Luna Light Perfume",
+  "decks": [
+   "luna"
+  ]
+ },
+ "48770333": {
+  "name": "Thunder King, the Lightningstrike Kaiju",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "49202162": {
+  "name": "Black Luster Soldier - Soldier of Chaos",
+  "decks": [
+   "toon"
+  ]
+ },
+ "50005218": {
+  "name": "Sky Striker Airspace - Area Zero",
+  "decks": [
+   "sky"
+  ]
+ },
+ "50546208": {
+  "name": "Lunalight Yellow Marten",
+  "decks": [
+   "luna"
+  ]
+ },
+ "50720316": {
+  "name": "Elemental HERO Shadow Mist",
+  "decks": [
+   "hero"
+  ]
+ },
+ "51227866": {
+  "name": "Sky Striker Mecha - Shark Cannon",
+  "decks": [
+   "sky"
+  ]
+ },
+ "51409648": {
+  "name": "Rindbrumm the Striking Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "51777272": {
+  "name": "Lunalight Cat Dancer",
+  "decks": [
+   "luna"
+  ]
+ },
+ "52038441": {
+  "name": "Ghost Mourner & Moonlit Chill",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "52340444": {
+  "name": "Sky Striker Mecha - Hornet Drones",
+  "decks": [
+   "sky"
+  ]
+ },
+ "52947044": {
+  "name": "Fusion Destiny",
+  "decks": [
+   "hero"
+  ]
+ },
+ "53094821": {
+  "name": "Toon Terror",
+  "decks": [
+   "toon"
+  ]
+ },
+ "53174748": {
+  "name": "Mikanko Spiritwalk",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "53701457": {
+  "name": "Number 28: Titanic Moth",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "53971455": {
+  "name": "Despian Luluwalilith",
+  "decks": [
+   "branded"
+  ]
+ },
+ "54701958": {
+  "name": "Lunalight Liger Dancer",
+  "decks": [
+   "luna"
+  ]
+ },
+ "55273560": {
+  "name": "Incredible Ecclesia, the Virtuous",
+  "decks": [
+   "branded"
+  ]
+ },
+ "56506740": {
+  "name": "Primite Lordly Lode",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "56532353": {
+  "name": "Neo Blue-Eyes Ultimate Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "56733747": {
+  "name": "Elemental HERO Shining Neos Wingman",
+  "decks": [
+   "hero"
+  ]
+ },
+ "57103969": {
+  "name": "Fire Formation - Tenki",
+  "decks": [
+   "luna"
+  ]
+ },
+ "57566760": {
+  "name": "Uzuhime the Manifested Mikanko",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "57736667": {
+  "name": "Mikanko Dance - Mayowashidori",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "58004362": {
+  "name": "Xtra HERO Cross Crusader",
+  "decks": [
+   "hero"
+  ]
+ },
+ "58069384": {
+  "name": "Cyber Dragon Nova",
+  "decks": [
+   "toon"
+  ]
+ },
+ "58288218": {
+  "name": "Masked HERO Furnace",
+  "decks": [
+   "hero"
+  ]
+ },
+ "58481572": {
+  "name": "Masked HERO Dark Law",
+  "decks": [
+   "hero"
+  ]
+ },
+ "59822133": {
+  "name": "Blue-Eyes Spirit Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "60195675": {
+  "name": "Infinitrack Mountain Smasher",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "60242223": {
+  "name": "Bystial Saronir",
+  "decks": [
+   "branded"
+  ]
+ },
+ "60303245": {
+  "name": "Salamangreat Almiraj",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "60461804": {
+  "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+  "decks": [
+   "hero"
+  ]
+ },
+ "62089826": {
+  "name": "True Light",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "62962630": {
+  "name": "Aluber the Jester of Despia",
+  "decks": [
+   "branded"
+  ]
+ },
+ "63013339": {
+  "name": "Sky Striker Ace - Camellia",
+  "decks": [
+   "sky"
+  ]
+ },
+ "63166095": {
+  "name": "Sky Striker Mobilize - Engage!",
+  "decks": [
+   "sky"
+  ]
+ },
+ "63198739": {
+  "name": "Primite Dragon Ether Beryl",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "63288573": {
+  "name": "Sky Striker Ace - Kagari",
+  "decks": [
+   "sky"
+  ]
+ },
+ "63436931": {
+  "name": "Crimson Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "63941210": {
+  "name": "Jizukiru, the Star Destroying Kaiju",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "64116319": {
+  "name": "Toon Harpie Lady",
+  "decks": [
+   "toon"
+  ]
+ },
+ "65741786": {
+  "name": "I:P Masquerena",
+  "decks": [
+   "mikanko",
+   "toon"
+  ]
+ },
+ "66206748": {
+  "name": "Masked HERO Fountain",
+  "decks": [
+   "hero"
+  ]
+ },
+ "66574418": {
+  "name": "The Black Stone of Legend",
+  "decks": [
+   "toon"
+  ]
+ },
+ "68304193": {
+  "name": "Kashtira Unicorn",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "68468459": {
+  "name": "Fallen of Albaz",
+  "decks": [
+   "branded"
+  ]
+ },
+ "69540484": {
+  "name": "Kashtira Birth",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "69680031": {
+  "name": "Dogmatika Fleurdelis, the Knighted",
+  "decks": [
+   "branded"
+  ]
+ },
+ "69946549": {
+  "name": "Predaplant Dragostapelia",
+  "decks": [
+   "branded"
+  ]
+ },
+ "70368879": {
+  "name": "Upstart Goblin",
+  "decks": [
+   "sky"
+  ]
+ },
+ "70493141": {
+  "name": "The Ascended of Thunder",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "70534340": {
+  "name": "Lubellion the Searing Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "71222868": {
+  "name": "Raidraptor - Rising Rebellion Falcon",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "72167543": {
+  "name": "Downerd Magician",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "73542331": {
+  "name": "Kashtira Shangri-Ira",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "73628505": {
+  "name": "Terraforming",
+  "decks": [
+   "toon"
+  ]
+ },
+ "73642296": {
+  "name": "Ghost Belle & Haunted Mansion",
+  "decks": [
+   "sky",
+   "luna",
+   "blueeyes"
+  ]
+ },
+ "73819701": {
+  "name": "Fallen of the White Dragon",
+  "decks": [
+   "branded"
+  ]
+ },
+ "75047173": {
+  "name": "Favorite Contact",
+  "decks": [
+   "hero"
+  ]
+ },
+ "75147529": {
+  "name": "Sky Striker Ace - Zeke",
+  "decks": [
+   "sky"
+  ]
+ },
+ "76072561": {
+  "name": "Sky Striker Ace = Zero",
+  "decks": [
+   "sky"
+  ]
+ },
+ "76666602": {
+  "name": "The Dragon that Devours the Dogma",
+  "decks": [
+   "branded"
+  ]
+ },
+ "78144171": {
+  "name": "Dark Armed, the Dragon of Annihilation",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "78534861": {
+  "name": "Scareclaw Kashtira",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "79447365": {
+  "name": "Toon Mask",
+  "decks": [
+   "toon"
+  ]
+ },
+ "79912449": {
+  "name": "Mikanko Reflection Rondo",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "80044027": {
+  "name": "Mikanko Fire Dance",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "80117527": {
+  "name": "Number 11: Big Eye",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "80326401": {
+  "name": "Wishes for Eyes of Blue",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "80843006": {
+  "name": "Mixousia the Confounder",
+  "decks": [
+   "branded"
+  ]
+ },
+ "81196066": {
+  "name": "Lunalight Perfume Dancer",
+  "decks": [
+   "luna"
+  ]
+ },
+ "81260679": {
+  "name": "Ohime the Manifested Mikanko",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "81439173": {
+  "name": "Foolish Burial",
+  "decks": [
+   "luna",
+   "hero"
+  ]
+ },
+ "82344137": {
+  "name": "Phara the Primordial Goddess",
+  "decks": [
+   "branded"
+  ]
+ },
+ "82738008": {
+  "name": "Branded in Red",
+  "decks": [
+   "branded"
+  ]
+ },
+ "83190280": {
+  "name": "Lunalight Tiger",
+  "decks": [
+   "luna"
+  ]
+ },
+ "83629030": {
+  "name": "Toon Cyber Dragon",
+  "decks": [
+   "toon"
+  ]
+ },
+ "84192580": {
+  "name": "Mulcharmy Purulia",
+  "decks": [
+   "toon"
+  ]
+ },
+ "84550369": {
+  "name": "Mikanko Shinbu - Noble Twins",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "84988419": {
+  "name": "Bloom Diva the Melodious Choir",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "85692042": {
+  "name": "Primathmech Alembertian",
+  "decks": [
+   "luna"
+  ]
+ },
+ "86066372": {
+  "name": "Accesscode Talker",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "87116928": {
+  "name": "Chimeratech Megafleet Dragon",
+  "decks": [
+   "toon"
+  ]
+ },
+ "87209160": {
+  "name": "Tri-Brigade Fraktall",
+  "decks": [
+   "luna"
+  ]
+ },
+ "87931906": {
+  "name": "Lunalight Fusion",
+  "decks": [
+   "luna"
+  ]
+ },
+ "88032456": {
+  "name": "Mimicat",
+  "decks": [
+   "toon"
+  ]
+ },
+ "88753594": {
+  "name": "Lunalight Sabre Dancer",
+  "decks": [
+   "luna"
+  ]
+ },
+ "89604813": {
+  "name": "Blue-Eyes Ultimate Spirit Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "89631139": {
+  "name": "Blue-Eyes White Dragon",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "89943723": {
+  "name": "Elemental HERO Neos",
+  "decks": [
+   "hero"
+  ]
+ },
+ "89997728": {
+  "name": "Toon Table of Contents",
+  "decks": [
+   "toon"
+  ]
+ },
+ "90448279": {
+  "name": "Divine Arsenal AA-ZEUS - Sky Thunder",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "90673288": {
+  "name": "Sky Striker Ace - Shizuku",
+  "decks": [
+   "sky"
+  ]
+ },
+ "91500017": {
+  "name": "Toon Bookmark",
+  "decks": [
+   "toon"
+  ]
+ },
+ "92519087": {
+  "name": "Virtual World Kyubi - Shenshen",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "93039339": {
+  "name": "Super Starslayer TY-PHON - Sky Crisis",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "93347961": {
+  "name": "Elemental HERO Flame Wingman - Infernal Rage",
+  "decks": [
+   "hero"
+  ]
+ },
+ "94145021": {
+  "name": "Droll & Lock Bird",
+  "decks": [
+   "sky",
+   "hero"
+  ]
+ },
+ "94259633": {
+  "name": "Relinquished Anima",
+  "decks": [
+   "toon"
+  ]
+ },
+ "94392192": {
+  "name": "Kashtira Ogre",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "94503794": {
+  "name": "Kerzebs, the Gaoled Glutton",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "95515789": {
+  "name": "Blazing Cartesia, the Virtuous",
+  "decks": [
+   "branded"
+  ]
+ },
+ "96381979": {
+  "name": "Brotherhood of the Fire Fist - Tiger King",
+  "decks": [
+   "luna"
+  ]
+ },
+ "96729612": {
+  "name": "Preparation of Rites",
+  "decks": [
+   "mikanko"
+  ]
+ },
+ "97045737": {
+  "name": "Dominus Purge",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "97165977": {
+  "name": "Lunalight Panther Dancer",
+  "decks": [
+   "luna"
+  ]
+ },
+ "97268402": {
+  "name": "Effect Veiler",
+  "decks": [
+   "blueeyes"
+  ]
+ },
+ "98127546": {
+  "name": "Underworld Goddess of the Closed World",
+  "decks": [
+   "mikanko",
+   "toon"
+  ]
+ },
+ "98338152": {
+  "name": "Sky Striker Mecha - Widow Anchor",
+  "decks": [
+   "sky"
+  ]
+ },
+ "98462037": {
+  "name": "Sky Striker Ace - Azalea",
+  "decks": [
+   "sky"
+  ]
+ },
+ "99330325": {
+  "name": "Interrupted Kaiju Slumber",
+  "decks": [
+   "kashtira"
+  ]
+ },
+ "99550630": {
+  "name": "Sky Striker Maneuver - Afterburners!",
+  "decks": [
+   "sky"
+  ]
+ }
+}
