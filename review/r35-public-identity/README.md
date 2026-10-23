@@ -55,3 +55,6 @@ Every engine MOVE in the duels it plays is paired with the event and log line th
 - `r35-public-identity.patch`, `public-identity.mjs`, `duel.mjs`, `fusion-materials.mjs`, both tests, `r35-identity-hash.mjs`.
 - Identity outputs: `identity-base-before/after.json`, `identity-search40-before/after.json`.
 - `move-categories-56-duels.txt`: every move category over 56 natural base-AI duels (8 decks × 7 opponents, seed 500), run on the **fixed** build, with named counts and `wrong 0` (a named code always equals the real card).
+
+## Addendum (01:40): search AI, 150 decisions per S2b seed
+Before f017211 vs after 8e0317b, the optimal pilot with nodeBudget 400, first 150 decisions on each of the 8 S2b seeds: **8/8 identical**. Combined hash `69c095a8f83ccb602b7299ee6fde9533a50b1bb1` in both runs. Files: `identity-search150-before/after.json`.
