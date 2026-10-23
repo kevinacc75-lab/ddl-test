@@ -1,0 +1,526 @@
+diff --git a/dist/audio/CREDITS.md b/dist/audio/CREDITS.md
+index 02bc8ca..479def4 100644
+--- a/dist/audio/CREDITS.md
++++ b/dist/audio/CREDITS.md
+@@ -23,3 +23,6 @@ made that these sounds reproduce or were auditioned against that video's audio.
+ 
+ ## r28 (22 Oct 2026)
+ `sfx/chain-*.mp3` and `sfx/chain-resolve.mp3` layer slices of the CC0 "Heavy chain" recording above (pitched and filtered) under original synthesized metal hits. Every other file in `sfx/` is original synthesis from `tools/r28-render-sfx.py`.
++
++## r34.1 (23 Oct 2026)
++`sfx/chain-1..4.mp3`, `sfx/chain-lock.mp3` and `sfx/chain-resolve.mp3` were re-rendered as a "card slap" (a short whoosh into a card slammed on the table; Kevy's pick over gong, chime, hyoshigi, tsuke and taiko versions) by `tools/r34-render-wood-sfx.py ... card-slap`. Original synthesis; the same CC0 "Heavy chain" slices stay quietly underneath.
+diff --git a/dist/audio/sfx/chain-1.mp3 b/dist/audio/sfx/chain-1.mp3
+index a9a0d07..65d4660 100644
+Binary files a/dist/audio/sfx/chain-1.mp3 and b/dist/audio/sfx/chain-1.mp3 differ
+diff --git a/dist/audio/sfx/chain-2.mp3 b/dist/audio/sfx/chain-2.mp3
+index e6d315f..f2f138e 100644
+Binary files a/dist/audio/sfx/chain-2.mp3 and b/dist/audio/sfx/chain-2.mp3 differ
+diff --git a/dist/audio/sfx/chain-3.mp3 b/dist/audio/sfx/chain-3.mp3
+index 24e67ea..79290fe 100644
+Binary files a/dist/audio/sfx/chain-3.mp3 and b/dist/audio/sfx/chain-3.mp3 differ
+diff --git a/dist/audio/sfx/chain-4.mp3 b/dist/audio/sfx/chain-4.mp3
+index a8f7127..293ab8c 100644
+Binary files a/dist/audio/sfx/chain-4.mp3 and b/dist/audio/sfx/chain-4.mp3 differ
+diff --git a/dist/audio/sfx/chain-lock.mp3 b/dist/audio/sfx/chain-lock.mp3
+index 6e65bd6..f355833 100644
+Binary files a/dist/audio/sfx/chain-lock.mp3 and b/dist/audio/sfx/chain-lock.mp3 differ
+diff --git a/dist/audio/sfx/chain-resolve.mp3 b/dist/audio/sfx/chain-resolve.mp3
+index b4e7aa5..c04fd70 100644
+Binary files a/dist/audio/sfx/chain-resolve.mp3 and b/dist/audio/sfx/chain-resolve.mp3 differ
+diff --git a/dist/audio/sfx/sfx.json b/dist/audio/sfx/sfx.json
+index 74aa255..6ece220 100644
+--- a/dist/audio/sfx/sfx.json
++++ b/dist/audio/sfx/sfx.json
+@@ -1,30 +1,30 @@
+ {
+- "version": "r28",
+- "note": "Original rendered SFX (tools/r28-render-sfx.py); chain layers use the CC0 BigSoundBank 0359 recording.",
++ "version": "r34.1",
++ "note": "Original rendered SFX (tools/r28-render-sfx.py; chain-1..4, chain-lock, chain-resolve re-rendered as card-slap by tools/r34-render-wood-sfx.py). Chain rattle layer uses the CC0 BigSoundBank 0359 recording.",
+  "sounds": {
+   "chain-1": {
+    "file": "chain-1.mp3",
+-   "seconds": 2.18
++   "seconds": 1.04
+   },
+   "chain-2": {
+    "file": "chain-2.mp3",
+-   "seconds": 2.44
++   "seconds": 1.12
+   },
+   "chain-3": {
+    "file": "chain-3.mp3",
+-   "seconds": 2.93
++   "seconds": 1.09
+   },
+   "chain-4": {
+    "file": "chain-4.mp3",
+-   "seconds": 4.04
++   "seconds": 1.16
+   },
+   "chain-lock": {
+    "file": "chain-lock.mp3",
+-   "seconds": 4.48
++   "seconds": 1.92
+   },
+   "chain-resolve": {
+    "file": "chain-resolve.mp3",
+-   "seconds": 1.91
++   "seconds": 0.95
+   },
+   "activate-spell": {
+    "file": "activate-spell.mp3",
+diff --git a/dist/chain-glow.mjs b/dist/chain-glow.mjs
+index 265cddd..9b234ad 100644
+--- a/dist/chain-glow.mjs
++++ b/dist/chain-glow.mjs
+@@ -12,6 +12,6 @@ export function installChainGlow({navigate=()=>{}}={}){
+  let live=new Set(),view=0;
+  const slotOf=n=>n?.dataset.slot??(n?.dataset.handSequence!==undefined?view+':2:'+n.dataset.handSequence:null);
+  function state(x){live=chainSlots(x);view=x?.view??0;document.body.dataset.humanDecision=String(!!x&&['play','manual'].includes(x.mode)&&!x.ai&&!x.disabled&&!x.state?.finished);/* r34 (ChatGPT RELAY-022 #5): legal-zone outlines only when a person is choosing */for(const n of document.querySelectorAll('[data-slot],#my-hand [data-hand-sequence]')){const on=live.has(slotOf(n));n.classList.toggle('can-chain',on);if(on)n.setAttribute('aria-description','You can chain this now');else if(n.getAttribute('aria-description')==='You can chain this now')n.removeAttribute('aria-description')}}
+- document.addEventListener('click',e=>{const n=e.target.closest?.('.can-chain');if(!n||n.classList.contains('can-act')||document.querySelector('dialog[open]'))return;navigate('play')},true);
++ document.addEventListener('click',e=>{const n=e.target.closest?.('.can-chain');if(!n||n.classList.contains('can-act')||document.querySelector('dialog[open]'))return;e.stopPropagation();e.preventDefault();navigate('play')/* r34.1 (ChatGPT RELAY-030 R34-02): a tap only opens the choices; long-press still opens the card dossier */},true);
+  return {state};
+ }
+diff --git a/dist/fusion-materials.mjs b/dist/fusion-materials.mjs
+index 27ebd45..cb0bc6a 100644
+--- a/dist/fusion-materials.mjs
++++ b/dist/fusion-materials.mjs
+@@ -13,20 +13,52 @@ export function publicMaterial(e) {
+   const overlay = to.overlay_sequence !== undefined && from.location === 4;
+   // r34 (ChatGPT RELAY-022 #4): a material shuffled into the Deck from a public place (face-up on the field, the GY or
+   // face-up banished, e.g. Lubellion's Fusion) was already known, so it keeps its name. From the hand it stays anonymous.
+-  const publicToDeck = to.location === 1 && !faceDown && [4,8,16,32].includes(from.location) && (from.location === 16 || (from.position & 5));
+-  const hidden = faceDown || !e.code || (!overlay && !publicToDeck && [1,2,64].includes(to.location)) || (to.location === 32 && !(to.position & 5));
++  // r34.1 (ChatGPT RELAY-030 R34-01): the same holds for a public material returned face-down to the Extra Deck. The
++  // engine wrapper masks such codes (duel.mjs, by destination), so FusionMaterials restores them from earlier public
++  // events (PublicTracker below); a card that never was public stays anonymous.
++  const publicSource = !faceDown && [4,8,16,32].includes(from.location) && (from.location === 16 || (from.position & 5));
++  const hidden = faceDown || !e.code || (!overlay && !publicSource && [1,2,64].includes(to.location)) || (to.location === 32 && !(to.position & 5));
+   return Object.freeze({code:hidden ? 0 : e.code, hidden, origin:zone(from.location), destination:overlay ? 'Xyz Material' : zone(to.location), controller:from.controller, destinationController:to.controller, destinationLocation:to.location});
+ }
+ 
+ // Match in native public order BEFORE ChainDirector extracts boss cut-ins. This
+ // matters when one resolution confirms more than one Fusion. No choice inference.
+-export class FusionMaterials {
++// r34.1: remembers which card is where, from the public event stream only (moves that named a card, summons). Field
++// zones by slot; GY and banishment as ordered piles (the engine's sequence is the index; later cards shift down when
++// one leaves). Face-down cards are stored as unknown. Used only to put back a name the wrapper masked on a material
++// that left a public place.
++export class PublicTracker {
+   constructor() { this.reset(); }
+-  reset() { this.pending = []; this.confirmed = new Map(); }
++  reset() { this.field = new Map(); this.piles = new Map(); }
++  pile(c, l) { const k = c + ':' + l; if (!this.piles.has(k)) this.piles.set(k, []); return this.piles.get(k); }
++  take(z) {
++    if (!z) return 0;
++    if (z.overlay_sequence !== undefined && (z.location === 4 || z.location === 64)) return 0; // an Xyz Material leaving its monster: not the monster itself
++    if (z.location === 4 || z.location === 8) { const k = z.controller + ':' + z.location + ':' + z.sequence, c = this.field.get(k) || 0; this.field.delete(k); return c; }
++    if (z.location === 16 || z.location === 32) { const p = this.pile(z.controller, z.location); return z.sequence >= 0 && z.sequence < p.length ? (p.splice(z.sequence, 1)[0] || 0) : 0; }
++    return 0;
++  }
++  put(z, code) {
++    if (!z) return;
++    const up = !!(z.position & 5);
++    if (z.location === 4 || z.location === 8) { if (z.overlay_sequence === undefined) this.field.set(z.controller + ':' + z.location + ':' + z.sequence, up ? code : 0); return; }
++    if (z.location === 16 || z.location === 32) { const p = this.pile(z.controller, z.location), c = z.location === 32 && !up ? 0 : code; if (z.sequence >= 0 && z.sequence <= p.length) p.splice(z.sequence, 0, c); else p.push(c); }
++  }
++  // returns the public code for a move (the event's own code, or the remembered one if the source was public)
++  // Only field slots are trusted: on 24 base-AI duels (6 matchups x seeds 121-124) the field memory matched every named move out of the field
++  // (557 / 557), but GY / banished piles drifted (21 wrong of 184: owner vs controller, simultaneous sends), so a pile
++  // source is never re-named (it stays "face-down material" rather than risk a wrong name).
++  move(e) { const was = this.take(e.from), code = e.code || was; this.put(e.to, code); return e.from && (e.from.location === 4 || e.from.location === 8) ? was : 0; }
++}
++
++export class FusionMaterials {
++  constructor() { this.tracker = new PublicTracker(); this.reset(); }
++  reset() { this.pending = []; this.confirmed = new Map(); this.tracker?.reset(); }
+   observe(events, db) {
+     for (const e of events) {
+       if (['turn','win','chainEnd','resolve','resolutionReady'].includes(e.type) || e.type === 'activate') this.pending = [];
+-      if (isMaterial(e)) this.pending.push({id:e.id, value:publicMaterial(e)});
++      const was = e.type === 'move' ? this.tracker.move(e) : 0;
++      if (isMaterial(e)) this.pending.push({id:e.id, value:publicMaterial(e.code || !was ? e : {...e, code:was})});
+       if (e.type === 'summon') {
+         if (e.special && (db[e.code]?.type & 64) && this.pending.length) {
+           this.confirmed.set(e.id, {items:this.pending.map(m=>m.value), moveIds:this.pending.map(m=>m.id)});
+diff --git a/dist/index.html b/dist/index.html
+index 7d9dceb..5de5405 100644
+--- a/dist/index.html
++++ b/dist/index.html
+@@ -1,9 +1,9 @@
+-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r34</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r34.1</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
+ <link rel="stylesheet" href="arenas.css">
+ <link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
+ <link rel="stylesheet" href="./fx-r23.css"><link rel="stylesheet" href="./r26-panels.css"><link rel="stylesheet" href="./learning-routes.css"><link rel="stylesheet" href="./deck-list.css"><link rel="stylesheet" href="./r33-polish.css"><link rel="stylesheet" href="./r34-arena.css"><link rel="stylesheet" href="./r34-persona.css">
+ </head><body data-theme="vibrant">
+-<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r34</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
++<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r34.1</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
+ <main id="setup"><section class="intro"><div><p class="eyebrow"><span class="live-dot"></span> YOUR DUEL ROOM</p><h1>Your decks.<br><em>Either side</em> of the table.</h1><p class="lead">Learn the line. Face the interruption. Play it again.<br>Choose your deck, choose your rival, and take the seat you want.</p></div><div class="hero-art"><img src="art/44146295.jpg" alt="Mirrorjade the Iceblade Dragon"><span class="art-stamp">CRIMSON ABYSS<br><b>THE ICEBLADE DRAGON</b></span></div></section>
+ <div class="section-head"><div><p class="eyebrow">01 / CHOOSE YOUR DECKS</p><h2>Set the matchup</h2></div><button id="import" class="quiet">＋ Import .ydk</button><input id="file" type="file" accept=".ydk" hidden></div>
+ <div id="deck-grid" class="deck-grid" aria-label="Your deck collection"></div>
+diff --git a/dist/presentation.mjs b/dist/presentation.mjs
+index f00321e..53390b0 100644
+--- a/dist/presentation.mjs
++++ b/dist/presentation.mjs
+@@ -212,7 +212,7 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+   stage.hidden=true;if(!victory.open)victory.showModal();sound.play(lost?'defeat':deck?'victory':'win',theme);
+  }
+  let finishAttack=null,finishHit=null;/* r34 (ChatGPT RELAY-022 #10): the confirmed last blow, for the result screen */
+- function trackFinish(e){if(e.type==='turn'){finishAttack=null;finishHit=null}else if(e.type==='attack')finishAttack={code:e.code,direct:!e.to,to:e.to?.code};else if(['damage','lpUpdate'].includes(e.type)&&e.after<e.before)finishHit={player:e.player,amount:e.before-e.after,after:e.after,attack:e.type==='damage'&&!e.combat?null:finishAttack}}
++ function trackFinish(e){if(e.type==='turn'){finishAttack=null;finishHit=null}else if(e.type==='attack')finishAttack={code:e.code,direct:!e.to,to:e.to?.code};else if(['damage','lpUpdate'].includes(e.type)&&e.after<e.before)finishHit={player:e.player,amount:e.type==='damage'&&e.amount?e.amount:e.before-e.after,after:e.after,attack:e.type==='damage'&&!e.combat?null:finishAttack}}/* r34.1 (ChatGPT RELAY-030 R34-04): the confirmed damage (1700), not the LP left to lose (1400) */
+  function finishLine(e){const h=finishHit;if(!h||h.after>0||e.player===null||h.player===e.player)return '';const name=c=>db()[c]?.name||'';const a=h.attack;
+   return a&&name(a.code)?name(a.code)+(a.direct?' attacks directly':' battles'+(name(a.to)?' '+name(a.to):''))+' · '+h.amount+' damage':h.amount+' damage from a card effect'}
+  function event(batch,duration){
+@@ -320,7 +320,7 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+   syncLifePoints(values,events=[]){actualLP=values.map(n=>Math.max(0,n));for(const e of events)if(e.id>seen&&lpTypes.has(e.type))pendingLife.set(e.id,e);if(!playing)settleLife();else writeLife()},
+   configure({cinematics,skipCutins:nextSkipCutins=false,motion,pace:nextPace=1,effectPace:nextEffectPace,preset:nextPreset='learning',chainView:nextView,tapToContinue:nextTap=false,chainFlow:nextFlow=true}){skipCutins=!!nextSkipCutins;preset=nextPreset;chainView=nextView;tapToContinue=nextTap;chainFlow=nextFlow;const changed=enabled!==cinematics||reduced!==motion;enabled=cinematics;reduced=motion;pace=nextPace;effectPace=nextEffectPace;if(changed)skipAll();else if(materialsScene.node&&!materialsVisual()||summonScene.node&&!summonVisual())skipCurrent()},
+   play(events,ackId){const fresh=[];for(const e of events||[])if(e.id>seen){seen=e.id;fresh.push(e)}seen=Math.max(seen,Number(ackId)||0);for(const e of fresh)if(lpTypes.has(e.type))pendingLife.set(e.id,e);fusionMaterials.observe(fresh,db());summonCutscenes.observe(fresh,db());const batches=director.ingest(fresh,db(),{cinematics:enabled,skipCutins,motion:reduced,pace,effectPace,preset,chainView:chainView==='auto'?undefined:chainView,tapToContinue,chainFlow,deferResolution:true});for(const e of fresh){if(e.type==='activate'&&!chainVisual.has(e.chain))chainVisual.set(e.chain,{...e,name:db()[e.code]?.name,status:'pending'});if(e.type==='target'){const c=chainVisual.get(e.chain)||[...chainVisual.values()].at(-1);if(c)c.targets=e.cards}}refreshField();queue.push(...summonCutscenes.decorate(fusionMaterials.decorate(batches,preset),preset));if(queue.length&&!playing)next();else if(!playing)clearArriving(),onBusy?.(false,seen)},
+-  reset(){fx23.clear();document.querySelectorAll('.ko-loser,.ko-slow').forEach(n=>n.classList.remove('ko-loser','ko-slow'));director.reset();summonCutscenes.reset();summonScene.reset();fusionMaterials.reset();materialsScene.reset();hold(false);skipAll();$('#effect-dock').hidden=true;actualLP=[8000,8000],effectMetrics=[],activeEffect=null,currentHold=false;displayLP=[8000,8000];writeLife();seen=0;clearTimeout(ribbonTimer);ribbon.hidden=true},
++  reset(){fx23.clear();document.querySelectorAll('.ko-loser,.ko-slow').forEach(n=>n.classList.remove('ko-loser','ko-slow'));director.reset();summonCutscenes.reset();summonScene.reset();fusionMaterials.reset();materialsScene.reset();hold(false);skipAll();$('#effect-dock').hidden=true;actualLP=[8000,8000],effectMetrics=[],activeEffect=null,currentHold=false;displayLP=[8000,8000];writeLife();seen=0;clearTimeout(ribbonTimer);ribbon.hidden=true;/* r34.1 (ChatGPT RELAY-030): a held chain from the last duel must not stay in the side panel */$('#chain').innerHTML='';const st=$('#event-chain-strip');if(st){st.innerHTML='';st.hidden=true}},
+   refreshField,
+   get metrics(){return [...effectMetrics]},
+   hold,
+diff --git a/dist/r34-arena.css b/dist/r34-arena.css
+index 9a7b3fe..9879041 100644
+--- a/dist/r34-arena.css
++++ b/dist/r34-arena.css
+@@ -87,3 +87,27 @@ body[data-pace=broadcast].in-duel #event-log :is(.event-log-line:nth-child(n+6 o
+ /* 13. Landscape phones (height under 500px): no room beside the hand, so the quick Pause / One action buttons hide there;
+    both stay in Duel controls (gear). */
+ @media(max-height:500px){#duel-quickbar{display:none!important}}
++
++/* 14. r34.1 smoothness on tablets and phones (Kevy 20:00 "animation seems janky / stuttering"; his sister's tablet video,
++   Duel pace, measured about 40 fps with hitches at the full chain scene, cut-ins, the Fusion cut-scene and the result
++   screen). Balanced graphics is what Auto picks on touch screens. These effects re-blur or re-shadow the whole screen on
++   every frame there, so in Balanced they become flat equivalents (High graphics on desktops is unchanged):
++   - full-screen background blur behind dialogs, cut-scenes and the chain scene -> a darker solid veil;
++   - blur behind the LP bars, bottom bar, decision panel and field cue -> more opaque panels;
++   - the result-screen halo's 120px glow -> none, and 12 confetti pieces instead of 32;
++   - the gold aura pulses its outline (cheap) instead of re-filtering a drop-shadow every frame;
++   - moving Phantom slabs are layer-promoted so their shadows are drawn once, not every frame. */
++body[data-graphics=balanced] dialog::backdrop,body[data-graphics=balanced] #summon-scene::backdrop{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(5,7,16,.88)!important}
++body[data-graphics=balanced] #event-stage[data-spotlight=true]{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background-color:rgba(5,7,16,.9)!important}
++body[data-graphics=balanced] :is(.duel-nav,#duel .player-bar,#duel .decision-column,#duel .field-cue){backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
++body[data-graphics=balanced] #duel .player-bar{background:rgba(9,12,28,.92)!important}
++body[data-graphics=balanced] .victory-halo{box-shadow:none!important}
++body[data-graphics=balanced] .victory-confetti i:nth-child(n+13){display:none}
++body[data-graphics=balanced].in-duel :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){filter:drop-shadow(0 0 6px rgba(255,200,60,.9));animation:r34-aura-lite 1.6s ease-in-out infinite}
++@keyframes r34-aura-lite{0%,100%{outline-color:#ffd76a;outline-offset:1px}50%{outline-color:#fff4c2;outline-offset:3px}}
++body[data-theme=showtime] #event-stage.live:is([data-kind=phase],[data-kind=draw]) .event-copy,body[data-theme=showtime] .on-field-resolution{will-change:transform,opacity}
++@media (prefers-reduced-motion:reduce){body[data-graphics=balanced].in-duel :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){animation:none}}
++body[data-graphics=balanced].in-duel.quiet-motion :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){animation:none}
++/* r34.1 (ChatGPT RELAY-030 R34-03): with Tap to continue on, the quick Pause / One action buttons sit above the
++   Continue effect button instead of covering its left part. */
++@media(min-width:761px){body:has(#continue-effect:not([hidden])) #duel-quickbar{bottom:84px}}
+diff --git a/dist/sw.js b/dist/sw.js
+index 26db7ae..84346e7 100644
+--- a/dist/sw.js
++++ b/dist/sw.js
+@@ -1,6 +1,6 @@
+-// r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31, r32 (captions, hand traps, going-second holds, new soundtrack): 2026-10-22-r32, r32.1 (Link boss hold, draw spells, Mirrorjade wipe, music picker): 2026-10-22-r32-1, r33 (deck lists, tablet smoothness, Branded deck brain): 2026-10-23-r33, r34 (deck brains, Mikanko/Sky/Branded book updates, ChatGPT N3-N5 fixes): 2026-10-23-r34, r33.1 (ChatGPT review fixes: Imperm/Veiler targets, caption reset): 2026-10-23-r33-1): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
++// r34.1 (card-slap chain sounds, tablet smoothness): cache 2026-10-23-r34.1. r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31, r32 (captions, hand traps, going-second holds, new soundtrack): 2026-10-22-r32, r32.1 (Link boss hold, draw spells, Mirrorjade wipe, music picker): 2026-10-22-r32-1, r33 (deck lists, tablet smoothness, Branded deck brain): 2026-10-23-r33, r34 (deck brains, Mikanko/Sky/Branded book updates, ChatGPT N3-N5 fixes): 2026-10-23-r34, r33.1 (ChatGPT review fixes: Imperm/Veiler targets, caption reset): 2026-10-23-r33-1): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
+ // duel-lab-* cache (r17 and earlier), so devices that update don't keep stale copies; unrelated caches are left alone.
+-const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-23-r34',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
++const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-23-r34.1',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
+ self.addEventListener('install',event=>event.waitUntil((async()=>{const manifest=await fetch('./offline-assets.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Offline manifest unavailable');return r.json()});const cache=await caches.open(CACHE);for(let i=0;i<manifest.length;i+=12)await cache.addAll(manifest.slice(i,i+12));await self.skipWaiting()})()));
+ self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&OLD_PREFIXES.some(prefix=>key.startsWith(prefix)))await caches.delete(key);await self.clients.claim()})()));
+ self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==self.location.origin)return;event.respondWith((async()=>{const cache=await caches.open(CACHE);if(event.request.mode==='navigate'){try{const response=await fetch(event.request);if(response.ok){await cache.put('./',response.clone());return response}}catch{}return await cache.match('./')||await cache.match('./index.html')||Response.error()}return await cache.match(event.request)||await fetch(event.request)})())});
+diff --git a/tests/r34-book-additions.test.mjs b/tests/r34-book-additions.test.mjs
+index dae08a3..a9032be 100644
+--- a/tests/r34-book-additions.test.mjs
++++ b/tests/r34-book-additions.test.mjs
+@@ -57,7 +57,16 @@ assert.doesNotMatch(css,/url\(/,'no external images');
+ const xyzMat=publicMaterial({type:'move',code:94392192,reason:2097160,from:{controller:0,location:4,sequence:0,position:1},to:{controller:0,location:64,sequence:0,position:1,overlay_sequence:0}});
+ assert.equal(xyzMat.hidden,false);assert.equal(xyzMat.code,94392192);assert.equal(xyzMat.destination,'Xyz Material');
+ assert.equal(publicMaterial({type:'move',code:94392192,reason:2097160,from:{controller:0,location:4,sequence:0,position:8},to:{controller:0,location:64,sequence:0,position:1,overlay_sequence:0}}).hidden,true,'face-down origin stays hidden');
+-assert.equal(publicMaterial({type:'move',code:94392192,reason:8,from:{controller:0,location:16,sequence:0,position:1},to:{controller:0,location:64,sequence:0,position:1}}).hidden,true,'a real Extra Deck destination stays hidden');
++assert.equal(publicMaterial({type:'move',code:94392192,reason:8,from:{controller:0,location:2,sequence:0,position:10},to:{controller:0,location:64,sequence:0,position:10}}).hidden,true,'a card from the hand to the Extra Deck stays hidden');
++{const {FusionMaterials}=await import('../dist/fusion-materials.mjs'),fm=new FusionMaterials(),FUS=262144|8,mirror=code('Mirrorjade the Iceblade Dragon'),albaz=code('Fallen of Albaz'),gran=code('Granguignol the Dusk Dragon');
++ // r34.1 (ChatGPT RELAY-030 R34-01): the wrapper masks the code of a material going face-down into the Extra Deck / Deck;
++ // a card seen face-up on the field keeps its name, a GY source stays anonymous (pile memory is not trusted).
++ fm.observe([{id:1,type:'move',code:albaz,reason:0,from:{controller:0,location:2,sequence:0,position:10},to:{controller:0,location:4,sequence:2,position:1}},
++  {id:2,type:'move',code:gran,reason:0,from:{controller:0,location:64,sequence:0,position:10},to:{controller:0,location:4,sequence:5,position:1}},
++  {id:3,type:'move',code:0,reason:FUS,from:{controller:0,location:4,sequence:5,position:1},to:{controller:0,location:64,sequence:0,position:10}},
++  {id:4,type:'move',code:0,reason:FUS,from:{controller:0,location:16,sequence:0,position:1},to:{controller:0,location:1,sequence:0,position:10}},
++  {id:5,type:'summon',code:mirror,player:0,sequence:6,special:true}],db);
++ const g=[...fm.confirmed.values()][0];assert.equal(g.items[0].code,gran,'field material named again (Field -> Extra Deck)');assert.equal(g.items[0].hidden,false);assert.equal(g.items[1].hidden,true,'GY source stays anonymous')}
+ {const toDeck=(loc,pos)=>publicMaterial({type:'move',code:94392192,reason:2097160,from:{controller:0,location:loc,sequence:0,position:pos},to:{controller:0,location:1,sequence:0,position:1}});
+  assert.equal(toDeck(16,1).hidden,false,'GY material shuffled into the Deck keeps its name (Lubellion)');assert.equal(toDeck(4,1).hidden,false,'face-up field material keeps its name');
+  assert.equal(toDeck(2,1).hidden,true,'hand material stays anonymous');assert.equal(toDeck(4,8).hidden,true,'face-down material stays anonymous');assert.equal(toDeck(16,1).destination,'Deck')}
+diff --git a/tools/r34-render-chain-sfx.py b/tools/r34-render-chain-sfx.py
+new file mode 100644
+index 0000000..e461031
+--- /dev/null
++++ b/tools/r34-render-chain-sfx.py
+@@ -0,0 +1,56 @@
++#!/usr/bin/env python3
++# r34.1 chain sounds (Claude, 23 Oct 2026; Kevy 20:00: "the gong sound when chain links happen is actually immersion
++# breaking ... it needs to be pleasant ... vibrant or crisp. The actual chain rustling sound is great").
++# Replaces chain-1..4, chain-lock and chain-resolve from tools/r28-render-sfx.py. The low inharmonic metal partials with
++# long decays + sub boom + heavy saturation (the "gong") are gone. Each link is now:
++#   - the CC0 chain rattle Kevy liked (BigSoundBank 0359, see dist/audio/CREDITS.md), slightly forward in the mix,
++#   - a short crisp high "clink" (bright metal partials, ~70 ms decay: no ring),
++#   - a clean bell chime with harmonic partials, rising one step per link on a major pentatonic (E5 G5 A5 C6),
++#   - a light, short body thump instead of the long boom; little reverb, gentle saturation.
++# Chain lock = rising two-note chime + rattle; resolve = soft falling chime + light rattle.
++# Original sounds (no Konami / Master Duel audio). Deterministic. Same helper functions as r28 (executed from that file).
++# Usage: python3 tools/r34-render-chain-sfx.py <chain.wav 44.1 kHz mono decode of dist/audio/heavy-chain.mp3> <out dir>
++import sys, os, json, subprocess
++HERE = os.path.dirname(os.path.abspath(__file__))
++src = open(os.path.join(HERE, 'r28-render-sfx.py')).read()
++exec(src[: src.index('S = {}')])  # helpers + the chain recording (rattle); sys.argv is read there
++
++def bell(f, d=1.2, dec=0.35, partials=((1, 1.0), (2, 0.42), (3, 0.2), (4.0, 0.12), (5.0, 0.05))):
++    # harmonic (in-tune) bell / chime: pleasant, no gong-like inharmonic beating
++    t = t_(d); out = np.zeros(len(t))
++    for r, g in partials:
++        fr = f * r
++        if fr > SR / 2.2: continue
++        out += g * np.sin(2 * np.pi * fr * t) * np.exp(-t / (dec / (1 + 0.8 * (r - 1))))
++    return endfade(out * env(len(t), 0.0015, 10), 0.2)
++
++def clink(f=2400, d=0.25):
++    return mix(metal(f, d, 0.07, 0.75) * 0.8, crack(0.025, 3500, 14000) * 0.9)
++
++def thump(d=0.22): return boom(150, 70, d, 0.05)
++
++S = {}
++notes = [659.25, 783.99, 880.0, 1046.5]  # E5 G5 A5 C6
++for n in range(1, 5):
++    f = notes[n - 1]
++    rat = mix(rattle(2.18, 0.75, 1 + 0.04 * (n - 1), 0.75 + 0.05 * n), at(rattle(1.02, 0.5, 1.1 + 0.05 * n, 0.35), 0.1) if n >= 2 else np.zeros(1))
++    chime = mix(bell(f, 1.1, 0.32 + 0.04 * n) * 0.55, at(bell(f * 1.5, 0.9, 0.22) * 0.18, 0.012))
++    if n >= 3: chime = mix(chime, at(bell(f * 2, 0.8, 0.2) * 0.15, 0.03))
++    x = mix(clink(2300 + 120 * n) * 0.7, at(chime, 0.008), thump() * 0.45, at(rat, 0.015))
++    S[f'chain-{n}'] = sat(norm(verb(x, 0.14 + 0.02 * n, 0.8 + 0.1 * n, 7500), 0.93), 1.15)
++S['chain-lock'] = sat(norm(verb(mix(clink(2600) * 0.8, at(bell(880, 1.4, 0.4) * 0.5, 0.01), at(bell(1318.5, 1.6, 0.5) * 0.5, 0.11),
++                                   at(bell(1760, 1.4, 0.4) * 0.2, 0.12), thump(0.3) * 0.6, at(rattle(2.18, 0.9, 0.95, 0.9), 0.02)), 0.22, 1.4, 7500), 0.93), 1.15)
++S['chain-resolve'] = sat(norm(verb(mix(at(bell(1046.5, 0.9, 0.22) * 0.45, 0.0), at(bell(783.99, 0.9, 0.24) * 0.4, 0.07),
++                                      at(rattle(2.25, 0.5, 0.97, 0.55), 0.02), clink(1900, 0.2) * 0.4, thump(0.2) * 0.35), 0.16, 1.0, 7000), 0.9), 1.1)
++
++manifest = json.load(open(os.path.join(OUT, 'sfx.json'))) if os.path.exists(os.path.join(OUT, 'sfx.json')) else {'sounds': {}}
++for name, x in S.items():
++    x = norm(fade_tail(trim(x)), 0.84)
++    wav = os.path.join(OUT, name + '.wav'); mp3 = os.path.join(OUT, name + '.mp3')
++    wavfile.write(wav, SR, (np.clip(x, -1, 1) * 32767).astype(np.int16))
++    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', wav, '-codec:a', 'libmp3lame', '-b:a', '128k', '-map_metadata', '-1', mp3], check=True)
++    os.remove(wav); manifest['sounds'][name] = {'file': name + '.mp3', 'seconds': round(len(x) / SR, 2)}
++manifest['version'] = 'r34.1'
++manifest['note'] = 'Original rendered SFX (tools/r28-render-sfx.py; chain-1..4, chain-lock, chain-resolve re-rendered by tools/r34-render-chain-sfx.py). Chain layers use the CC0 BigSoundBank 0359 recording.'
++json.dump(manifest, open(os.path.join(OUT, 'sfx.json'), 'w'), indent=1)
++print(json.dumps({k: manifest['sounds'][k] for k in S}))
+diff --git a/tools/r34-render-hyoshigi-sfx.py b/tools/r34-render-hyoshigi-sfx.py
+new file mode 100644
+index 0000000..1bfdcd5
+--- /dev/null
++++ b/tools/r34-render-hyoshigi-sfx.py
+@@ -0,0 +1,61 @@
++#!/usr/bin/env python3
++# r34.1 chain sounds, hyoshigi version (Claude, 23 Oct 2026; Kevy 20:09: "I want like Japanese Hyoshigi sound").
++# Hyoshigi are the two hardwood clappers struck together in kabuki and sumo: a dry, bright, resonant "kan!" with a short
++# wooden ring, and at big moments an accelerating roll (kizami) that ends on a hard double strike.
++# Built by modal synthesis (no recordings of real hyoshigi): a very short impulse drives a few damped wood modes
++# (free-bar ratios 1, 2.76, 5.40 + a body mode), the two sticks give a tiny flam, and a small wooden hall adds space.
++# The chain rattle Kevy liked (CC0 BigSoundBank 0359, see dist/audio/CREDITS.md) stays underneath, softer.
++#   chain-1..4: one strike per link, each link a little higher and harder (link 3+ adds a second strike: "kan-kan").
++#   chain-lock: the kabuki roll (strikes speeding up) ending on a hard double strike.
++#   chain-resolve: one soft, lower strike.
++# Original sounds; no Konami / Master Duel audio. Deterministic. Helpers are executed from tools/r28-render-sfx.py.
++# Usage: python3 tools/r34-render-hyoshigi-sfx.py <chain.wav 44.1 kHz mono decode of dist/audio/heavy-chain.mp3> <out dir>
++import sys, os, json, subprocess
++HERE = os.path.dirname(os.path.abspath(__file__))
++src = open(os.path.join(HERE, 'r28-render-sfx.py')).read()
++exec(src[: src.index('S = {}')])
++
++def wood(f=1250, d=0.5, dec=0.07, hard=1.0):
++    # one hardwood strike: damped modes, phase-aligned at the hit, plus the contact click
++    t = t_(d); out = np.zeros(len(t))
++    for r, g, k in ((1.0, 1.0, 1.0), (2.76, 0.55 * hard, 0.55), (5.40, 0.28 * hard, 0.35), (0.48, 0.35, 1.6)):
++        fr = f * r * (1 + rng.uniform(-0.004, 0.004))
++        if fr > SR / 2.2: continue
++        out += g * np.sin(2 * np.pi * fr * t) * np.exp(-t / (dec * k))
++    click = bp(noise(0.006), 2000, 12000) * env(int(0.006 * SR), 0.0002, 0.0012) * 1.6 * hard
++    return endfade(mix(out * env(len(t), 0.0004, 10), click), 0.15)
++
++def strike(f, hard=1.0, flam=0.006):
++    # the two sticks meet: main strike + a slightly detuned partner a few ms later
++    return mix(wood(f, 0.5, 0.075 + 0.02 * hard, hard), at(wood(f * 1.035, 0.45, 0.06, hard * 0.8) * 0.55, flam))
++
++def hall(x, wet=0.26, length=1.3): return verb(x, wet, length, 6500, 0.012)
++
++S = {}
++base = [1180, 1250, 1325, 1400]
++for n in range(1, 5):
++    f = base[n - 1]; h = 0.85 + 0.08 * n
++    hits = strike(f, h)
++    if n >= 3: hits = mix(hits, at(strike(f * 1.06, h * 0.9), 0.17))
++    if n >= 4: hits = mix(hits, at(strike(f * 1.12, h), 0.30))
++    rat = rattle(2.18, 0.7, 1 + 0.04 * (n - 1), 0.3 + 0.04 * n)
++    S[f'chain-{n}'] = sat(norm(hall(mix(hits, at(rat, 0.03))), 0.93), 1.1)
++# kabuki roll: gaps shrink from 0.16 s to 0.035 s, getting louder, then a hard double strike
++t = 0.0; roll = []; gap = 0.16; i = 0
++while gap > 0.034:
++    roll.append(at(strike(1300 + 6 * i, 0.55 + 0.03 * i) * (0.45 + 0.035 * i), t)); t += gap; gap *= 0.84; i += 1
++roll.append(at(strike(1380, 1.25) * 1.15, t + 0.09)); roll.append(at(strike(1420, 1.3) * 1.2, t + 0.27))
++S['chain-lock'] = sat(norm(hall(mix(*roll, at(rattle(2.18, 0.9, 0.95, 0.4), t + 0.1)), 0.3, 1.6), 0.93), 1.1)
++S['chain-resolve'] = sat(norm(hall(mix(strike(1050, 0.7) * 0.8, at(rattle(2.25, 0.5, 0.97, 0.3), 0.02)), 0.22, 1.1), 0.9), 1.05)
++
++manifest = json.load(open(os.path.join(OUT, 'sfx.json'))) if os.path.exists(os.path.join(OUT, 'sfx.json')) else {'sounds': {}}
++for name, x in S.items():
++    x = norm(fade_tail(trim(x)), 0.84)
++    wav = os.path.join(OUT, name + '.wav'); mp3 = os.path.join(OUT, name + '.mp3')
++    wavfile.write(wav, SR, (np.clip(x, -1, 1) * 32767).astype(np.int16))
++    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', wav, '-codec:a', 'libmp3lame', '-b:a', '128k', '-map_metadata', '-1', mp3], check=True)
++    os.remove(wav); manifest['sounds'][name] = {'file': name + '.mp3', 'seconds': round(len(x) / SR, 2)}
++manifest['version'] = 'r34.1'
++manifest['note'] = 'Original rendered SFX (tools/r28-render-sfx.py; chain-1..4, chain-lock, chain-resolve re-rendered as hyoshigi wood strikes by tools/r34-render-hyoshigi-sfx.py). Chain rattle layer uses the CC0 BigSoundBank 0359 recording.'
++json.dump(manifest, open(os.path.join(OUT, 'sfx.json'), 'w'), indent=1)
++print(json.dumps({k: manifest['sounds'][k] for k in S}))
+diff --git a/tools/r34-render-taiko-sfx.py b/tools/r34-render-taiko-sfx.py
+new file mode 100644
+index 0000000..f67a0f0
+--- /dev/null
++++ b/tools/r34-render-taiko-sfx.py
+@@ -0,0 +1,61 @@
++#!/usr/bin/env python3
++# r34.1 chain sounds, taiko version (Claude, 23 Oct 2026; Kevy 20:12: "What about a Taiko drum sound? ... I'll compare
++# the two" — the other is tools/r34-render-hyoshigi-sfx.py).
++# Taiko: a big barrel drum. "DON" = the stick on the skin (deep pitched boom that drops in pitch, skin slap, shell ring);
++# "KA" = the stick on the wooden rim (short dry click). Built by modal synthesis (circular-membrane mode ratios), no
++# recordings of real taiko. The chain rattle (CC0 BigSoundBank 0359, see dist/audio/CREDITS.md) stays underneath, soft.
++#   chain-1..4: one DON per link, each a little higher and harder; link 3 = DON-DON, link 4 = DON-ka-DON.
++#   chain-lock: a roll that speeds up and ends on a huge DON plus a rim KA.
++#   chain-resolve: rim KA then a soft don.
++# Original sounds; no Konami / Master Duel audio. Deterministic. Helpers are executed from tools/r28-render-sfx.py.
++# Usage: python3 tools/r34-render-taiko-sfx.py <chain.wav 44.1 kHz mono decode of dist/audio/heavy-chain.mp3> <out dir>
++import sys, os, json, subprocess
++HERE = os.path.dirname(os.path.abspath(__file__))
++src = open(os.path.join(HERE, 'r28-render-sfx.py')).read()
++exec(src[: src.index('S = {}')])
++
++def don(f=78, d=1.6, dec=0.55, hard=1.0):
++    t = t_(d); out = np.zeros(len(t))
++    bend = 1 + 0.35 * hard * np.exp(-t / 0.035)  # the skin is tighter at the moment of the hit
++    for r, g, k in ((1.0, 1.0, 1.0), (1.59, 0.45, 0.6), (2.14, 0.28, 0.45), (2.30, 0.2, 0.4), (2.65, 0.14, 0.35)):
++        ph = 2 * np.pi * np.cumsum(f * r * bend) / SR
++        out += g * np.sin(ph) * np.exp(-t / (dec * k))
++    slap = lp(noise(0.05), 2200) * env(int(0.05 * SR), 0.0005, 0.012) * 0.9 * hard
++    stick = bp(noise(0.008), 1500, 7000) * env(int(0.008 * SR), 0.0002, 0.002) * 0.6 * hard
++    return endfade(mix(out * env(len(t), 0.001, 10), slap, stick), 0.3)
++
++def ka(f=1650, hard=1.0):
++    t = t_(0.25); out = np.zeros(len(t))
++    for r, g, k in ((1.0, 1.0, 1.0), (2.76, 0.5, 0.5), (5.4, 0.25, 0.3)):
++        out += g * np.sin(2 * np.pi * f * r * t) * np.exp(-t / (0.04 * k))
++    click = bp(noise(0.005), 2500, 12000) * env(int(0.005 * SR), 0.0002, 0.001) * 1.5
++    return endfade(mix(out * env(len(t), 0.0003, 10), click) * hard, 0.08)
++
++def hall(x, wet=0.32, length=1.8): return verb(x, wet, length, 5000, 0.02)
++
++S = {}
++for n in range(1, 5):
++    f = 74 * 1.06 ** (n - 1); h = 0.85 + 0.1 * n
++    hits = don(f, 1.6, 0.5 + 0.05 * n, h)
++    if n == 3: hits = mix(hits, at(don(f * 1.04, 1.4, 0.5, h), 0.2))
++    if n >= 4: hits = mix(hits, at(ka(1700, 0.6), 0.16), at(don(f * 1.06, 1.6, 0.6, h * 1.05), 0.3))
++    rat = rattle(2.18, 0.7, 1 + 0.04 * (n - 1), 0.22 + 0.03 * n)
++    S[f'chain-{n}'] = sat(norm(hall(mix(hits, at(rat, 0.03))), 0.93), 1.25)
++t = 0.0; roll = []; gap = 0.18; i = 0
++while gap > 0.045:
++    roll.append(at(don(82 + i, 0.6, 0.25, 0.5 + 0.03 * i) * (0.35 + 0.04 * i), t)); t += gap; gap *= 0.84; i += 1
++roll += [at(don(70, 2.2, 0.8, 1.4) * 1.5, t + 0.08), at(ka(1650, 1.0) * 0.8, t + 0.08)]
++S['chain-lock'] = sat(norm(hall(mix(*roll, at(rattle(2.18, 0.9, 0.95, 0.3), t + 0.1)), 0.36, 2.2), 0.94), 1.25)
++S['chain-resolve'] = sat(norm(hall(mix(ka(1550, 0.8), at(don(92, 1.0, 0.3, 0.7) * 0.7, 0.12), at(rattle(2.25, 0.5, 0.97, 0.2), 0.02)), 0.26, 1.4), 0.9), 1.15)
++
++manifest = json.load(open(os.path.join(OUT, 'sfx.json'))) if os.path.exists(os.path.join(OUT, 'sfx.json')) else {'sounds': {}}
++for name, x in S.items():
++    x = norm(fade_tail(trim(x)), 0.84)
++    wav = os.path.join(OUT, name + '.wav'); mp3 = os.path.join(OUT, name + '.mp3')
++    wavfile.write(wav, SR, (np.clip(x, -1, 1) * 32767).astype(np.int16))
++    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', wav, '-codec:a', 'libmp3lame', '-b:a', '128k', '-map_metadata', '-1', mp3], check=True)
++    os.remove(wav); manifest['sounds'][name] = {'file': name + '.mp3', 'seconds': round(len(x) / SR, 2)}
++manifest['version'] = 'r34.1'
++manifest['note'] = 'Original rendered SFX (tools/r28-render-sfx.py; chain-1..4, chain-lock, chain-resolve re-rendered as taiko by tools/r34-render-taiko-sfx.py). Chain rattle layer uses the CC0 BigSoundBank 0359 recording.'
++json.dump(manifest, open(os.path.join(OUT, 'sfx.json'), 'w'), indent=1)
++print(json.dumps({k: manifest['sounds'][k] for k in S}))
+diff --git a/tools/r34-render-wood-sfx.py b/tools/r34-render-wood-sfx.py
+new file mode 100644
+index 0000000..a12ae4d
+--- /dev/null
++++ b/tools/r34-render-wood-sfx.py
+@@ -0,0 +1,73 @@
++#!/usr/bin/env python3
++# r34.1 chain-sound candidates, round 2 (Claude, 23 Oct 2026; Kevy 20:16: taiko "isn't it"; the hyoshigi "sounds more like
++# a xylophone ... any other variant?"). The first hyoshigi had clean, in-tune modes ringing ~80 ms: that pitch is the
++# xylophone. These styles are mostly noise and very short, so they read as a CRACK / SLAP, not a note:
++#   hyoshigi-dry : two hardwood blocks clapped: a dense cluster of short, slightly out-of-tune wood modes (~25 ms) +
++#                  a hard click + a hollow knock, flammed by 3 ms, in a big theatre room (the echo is half the sound).
++#   tsuke        : the kabuki stage clappers beaten on a wooden board ("ba-TAN!"): a board thud + wood crack, two beats.
++#   card-slap    : a card slammed on the table: a short whoosh into a sharp paper/card slap and a table knock.
++# Each: chain-1..4 grow (link 3+ doubles), chain-lock = a speeding roll ending on a big hit, chain-resolve = one soft hit.
++# The chain rattle Kevy liked (CC0 BigSoundBank 0359, see dist/audio/CREDITS.md) stays underneath, soft.
++# Original sounds; no recordings of real instruments, no Konami / Master Duel audio. Deterministic.
++# Usage: python3 tools/r34-render-wood-sfx.py <chain.wav> <out dir> <style>
++import sys, os, json, subprocess
++HERE = os.path.dirname(os.path.abspath(__file__))
++STYLE = sys.argv[3]
++src = open(os.path.join(HERE, 'r28-render-sfx.py')).read()
++exec(src[: src.index('S = {}')])
++
++def modes(f, ratios, dec, d=0.25):
++    t = t_(d); out = np.zeros(len(t))
++    for i, r in enumerate(ratios):
++        fr = f * r * (1 + rng.uniform(-0.03, 0.03))
++        if fr < SR / 2.2: out += np.sin(2 * np.pi * fr * t) * np.exp(-t / (dec * (1 - 0.08 * i))) / (1 + 0.25 * i)
++    return out * env(len(t), 0.0003, 10)
++
++def burst(d, lo, hi, dec, a=0.0002): x = bp(noise(d), lo, hi); return x * env(len(x), a, dec)
++
++def hit(style, power=1.0, pitch=1.0):
++    if style == 'hyoshigi-dry':
++        one = lambda f: mix(burst(0.02, 1500, 11000, 0.0025) * 1.6, modes(f, (1, 1.17, 1.43, 1.9, 2.35, 2.9, 3.6), 0.024) * 0.9,
++                            burst(0.06, f * 0.7, f * 1.4, 0.016) * 0.8)
++        f = 1450 * pitch
++        return mix(one(f), at(one(f * 1.05) * 0.7, 0.003)) * power
++    if style == 'tsuke':
++        return mix(burst(0.15, 110, 700, 0.04, 0.0006) * 1.5, modes(190 * pitch, (1, 1.6, 2.3), 0.05, 0.3) * 0.7,
++                   burst(0.015, 1800, 9000, 0.003) * 1.2, modes(900 * pitch, (1, 1.3, 1.75, 2.4), 0.018) * 0.5) * power
++    if style == 'card-slap':
++        whoosh = swept_noise(0.16, 700, 4500 * pitch, 1.6, 0.12, None) * 0.35
++        slap = mix(burst(0.05, 500, 7000, 0.009) * 1.7, burst(0.1, 80, 400, 0.03, 0.001) * 1.0, burst(0.01, 4000, 14000, 0.002) * 0.6)
++        return mix(whoosh, at(slap, 0.16)) * power
++    raise SystemExit('unknown style ' + style)
++
++LEAD = 0.16 if STYLE == 'card-slap' else 0.0
++ROOM = {'hyoshigi-dry': (0.42, 2.2), 'tsuke': (0.3, 1.6), 'card-slap': (0.18, 1.0)}[STYLE]
++def room(x, extra=0.0): return verb(x, ROOM[0] + extra, ROOM[1], 7000, 0.015)
++
++S = {}
++for n in range(1, 5):
++    p = 0.8 + 0.1 * n; pitch = 1 + 0.04 * (n - 1)
++    x = hit(STYLE, p, pitch)
++    if n >= 3: x = mix(x, at(hit(STYLE, p * 0.9, pitch * 1.03), 0.16 if STYLE != 'card-slap' else 0.12))
++    if n >= 4: x = mix(x, at(hit(STYLE, p * 1.05, pitch * 1.06), 0.30 if STYLE != 'card-slap' else 0.24))
++    rat = rattle(2.18, 0.7, 1 + 0.04 * (n - 1), 0.25 + 0.04 * n)
++    S[f'chain-{n}'] = sat(norm(room(mix(x, at(rat, LEAD + 0.03))), 0.93), 1.15)
++t = 0.0; roll = []; gap = 0.15; i = 0
++while gap > 0.035:
++    roll.append(at(hit(STYLE if STYLE != 'card-slap' else 'tsuke', 0.4 + 0.035 * i, 1 + 0.01 * i), t)); t += gap; gap *= 0.84; i += 1
++roll.append(at(hit(STYLE, 1.4, 1.02), t + 0.08 - LEAD))
++if STYLE == 'tsuke': roll.append(at(hit(STYLE, 1.5, 0.98), t + 0.08 + 0.11))
++S['chain-lock'] = sat(norm(room(mix(*[r if len(r) else np.zeros(1) for r in roll], at(rattle(2.18, 0.9, 0.95, 0.35), t + 0.1)), 0.06), 0.93), 1.15)
++S['chain-resolve'] = sat(norm(room(mix(hit(STYLE, 0.6, 0.92), at(rattle(2.25, 0.5, 0.97, 0.25), LEAD + 0.02))), 0.9), 1.1)
++
++manifest = json.load(open(os.path.join(OUT, 'sfx.json'))) if os.path.exists(os.path.join(OUT, 'sfx.json')) else {'sounds': {}}
++for name, x in S.items():
++    x = norm(fade_tail(trim(x)), 0.84)
++    wav = os.path.join(OUT, name + '.wav'); mp3 = os.path.join(OUT, name + '.mp3')
++    wavfile.write(wav, SR, (np.clip(x, -1, 1) * 32767).astype(np.int16))
++    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', wav, '-codec:a', 'libmp3lame', '-b:a', '128k', '-map_metadata', '-1', mp3], check=True)
++    os.remove(wav); manifest['sounds'][name] = {'file': name + '.mp3', 'seconds': round(len(x) / SR, 2)}
++manifest['version'] = 'r34.1'
++manifest['note'] = f'Original rendered SFX (tools/r28-render-sfx.py; chain-1..4, chain-lock, chain-resolve re-rendered as {STYLE} by tools/r34-render-wood-sfx.py). Chain rattle layer uses the CC0 BigSoundBank 0359 recording.'
++json.dump(manifest, open(os.path.join(OUT, 'sfx.json'), 'w'), indent=1)
++print(json.dumps({k: manifest['sounds'][k] for k in S}))
