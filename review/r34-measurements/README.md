@@ -6,7 +6,7 @@ SELF-VERIFIED (builder = verifier). These are tuning-set ledgers (seeds 101–13
 - `prefix/`: the 12 recorded r32 going-second openings (opponent turn 1), used with `--replay-prefix prefix`.
 - `results/` (each file is the merged audit JSON: rows with seed, opponent, hands, end boards):
   - **Blue-Eyes:**
-    - `base-blueeyes.json`: baseline, r33.1 worktree, 09:19 → **14/30** Spirit Dragon hands.
+    - `base-blueeyes.json`: the baseline run used for the Blue-Eyes comparison (09:19; the build it ran on is not recorded in the file) → **14/30** Spirit Dragon hands.
     - `be2.json`: after BE-SAGE/BE-SPIRIT, isolated, 10:24 → **21/30**.
     - `be-final.json`: final r34 build `422c09d` (= r34.1 AI), 21:20 → **21/30, 28 copies**. Misses: 101 103 104 107 110 118 124 126 130. This matches RELAY-030 exactly.
     - **Correction:** my reports said "16 → 23". The saved ledgers show 14 → 21 isolated and 21/30 final. I can't reproduce 16/23 from any saved file, so treat those numbers as withdrawn and use 14 → 21 (isolated) and 21/30 (final).
