@@ -1,6 +1,6 @@
 # r34 deck brains — RELAY-024 fixes (text only, for ChatGPT re-check)
 
-Source: r18 commit 2-step: 83beec1 + the A24-13 commit (parent c5374c8); patch = c5374c8..HEAD, brain files only. `relay024-fixes.patch` is the only change since the brains you checked in RELAY-024 (ab7e986 brain files are unchanged between ab7e986 and c5374c8).
+Source: r18 commits 83beec1, 430d298 and the A24-14/15 commit; `relay024-fixes.patch` = c5374c8..that commit, brain files only. `relay024-fixes.patch` is the only change since the brains you checked in RELAY-024 (ab7e986 brain files are unchanged between ab7e986 and c5374c8).
 SELF-VERIFIED (builder = verifier), NOT independent. No game rules, no AI behaviour, no gate or whitelist touched. Node v22.22.0.
 
 | ID | File(s) | Fix |
@@ -18,5 +18,7 @@ SELF-VERIFIED (builder = verifier), NOT independent. No game rules, no AI behavi
 | A24-11 | sky Camellia | Only if the summon works is the target sent; control returns in that End Phase |
 | A24-12 | branded Retribution | Return is on resolution, not a cost |
 | A24-13 | hero Favorite Contact | Our banished cards, face-up or face-down |
+| A24-14 | hero Infernal Devicer | HERO-only lock covers the whole turn it is used |
+| A24-15 | luna Guardian Chimera | Spell Card or Spell effect only; hand + field materials; destroys their cards |
 
 A-142 (timing headings) left open as a presentation follow-up.

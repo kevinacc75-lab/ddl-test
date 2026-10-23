@@ -49,7 +49,7 @@ index a98ed7e..dc628f1 100644
    'Lubellion the Searing Dragon': {role: 'payoff', does: 'The bridge to Mirrorjade: on Fusion Summon, discard 1 to Fusion Summon a Level 8 or lower Fusion (not Lubellion) by shuffling its materials (Albaz and Lubellion itself) back from the field, GY or face-up banishment. For the rest of that turn Lubellion cannot attack and only Fusion Monsters come out of the Extra Deck.', links: {fusion: ['Mirrorjade the Iceblade Dragon']}},
    'Granguignol the Dusk Dragon': {role: 'payoff', does: 'Cartesia + a LIGHT or DARK monster. On Fusion Summon it sends a Level 6+ LIGHT or DARK monster from the Deck or Extra Deck to the GY (Titaniklad). When the opponent Special Summons with an activated monster effect: banish it from the field or GY to bring out a Dogmatika from the Deck or a Despia Fusion from the Extra Deck. It does not mention Albaz, so it is never a Mirrorjade or Fallen & Virtuous cost.'},
 diff --git a/dist/ai/brain/hero-brain.mjs b/dist/ai/brain/hero-brain.mjs
-index 5f50d6c..3c21894 100644
+index 5f50d6c..7e7e31c 100644
 --- a/dist/ai/brain/hero-brain.mjs
 +++ b/dist/ai/brain/hero-brain.mjs
 @@ -20,7 +20,7 @@ export default {
@@ -70,15 +70,18 @@ index 5f50d6c..3c21894 100644
    'Foolish Burial': {role: 'starter', does: 'Send Malicious (or Shadow Mist) from the Deck to the GY.', links: {send: ['Destiny HERO - Malicious', 'Elemental HERO Shadow Mist']}},
    'Destiny HERO - Destroyer Phoenix Enforcer': {role: 'payoff', does: 'Their monsters lose 200 ATK per HERO card in your GY. Quick Effect: destroy one of your cards and one card on the field. If destroyed, a Destiny HERO returns next Standby.'},
    'Elemental HERO Flame Wingman - Infernal Rage': {role: 'utility', does: 'Fusion: adds a "Favorite" card on summon.'},
-@@ -38,7 +38,7 @@ export default {
+@@ -38,9 +38,9 @@ export default {
    'Elemental HERO Thunder Giant - Voltic Thunder': {role: 'utility', does: 'Fusion: if they have more cards, destroys everything else on summon.'},
    'Elemental HERO Shining Neos Wingman': {role: 'payoff', does: 'Neos + a Wingman Fusion: destroys cards on summon; cannot be destroyed by effects.'},
    'Contrast HERO Chaos': {role: 'payoff', does: 'Fusion of two Masked HEROs: on either turn, negate a face-up card.'},
 -  'Masked HERO Dark Law': {role: 'payoff', does: 'Mask Change into it from a DARK HERO. While it is on the field, cards sent to their GY are banished instead. Once per turn, after they add a card from the Deck to the hand outside the Draw Phase, banish a random card from their hand.'},
 +  'Masked HERO Dark Law': {role: 'payoff', does: 'Mask Change into it from a DARK HERO. While it is on the field, cards sent to their GY are banished instead. Once per turn, after they add a card from the Deck to the hand (not during the Draw Phase or the Damage Step), banish a random card from their hand.'},
    'Xtra HERO Cross Crusader': {role: 'extender', does: 'Link 2: revive a Destiny HERO; Tribute a Destiny HERO to add a HERO.'},
-   'Xtra HERO Infernal Devicer': {role: 'extender', does: 'Link 2 from HEROs. Reveal a HERO Fusion and add up to 2 different monsters that it names as materials from the Deck (only cards named exactly, e.g. Neos for Shining Neos); HERO-only Special Summons for the rest of that turn. It removes nothing from their field.'},
+-  'Xtra HERO Infernal Devicer': {role: 'extender', does: 'Link 2 from HEROs. Reveal a HERO Fusion and add up to 2 different monsters that it names as materials from the Deck (only cards named exactly, e.g. Neos for Shining Neos); HERO-only Special Summons for the rest of that turn. It removes nothing from their field.'},
++  'Xtra HERO Infernal Devicer': {role: 'extender', does: 'Link 2 from HEROs. Reveal a HERO Fusion and add up to 2 different monsters that it names as materials from the Deck (only cards named exactly, e.g. Neos for Shining Neos). HERO-only Special Summons for the whole turn it is used, so it cannot be used after a non-HERO Special Summon that turn. It removes nothing from their field.'},
    'Xtra HERO Wonder Driver': {role: 'extender', does: 'Link 2: when a HERO is summoned where it points, Set a Polymerization, Fusion or Change Spell from the GY.'},
+   'Wake Up Your Elemental HERO': {role: 'payoff', does: 'Fusion of an Elemental HERO Fusion + Warriors: attacks many times and burns.'},
+   'Vision HERO Trinity': {role: 'payoff', does: 'Fusion of 3 HEROs. When Fusion Summoned its ATK doubles that turn; it can attack monsters up to three times each Battle Phase, but never directly.'}
 diff --git a/dist/ai/brain/kashtira-brain.mjs b/dist/ai/brain/kashtira-brain.mjs
 index 09a4853..5d0d040 100644
 --- a/dist/ai/brain/kashtira-brain.mjs
@@ -93,11 +96,15 @@ index 09a4853..5d0d040 100644
    'Number 28: Titanic Moth': {role: 'utility', does: 'Rank 7: while it is our only monster it can attack directly, but that battle damage is halved; after battle damage, detach to burn 500 per card in their hand.'},
    'Kerzebs, the Gaoled Glutton': {role: 'interruption', does: 'Rank 7, +700 ATK per material. Once per Chain, when a Normal or Quick-Play Spell is activated: attach that card to it, and Kerzebs is unaffected by it (the Spell still resolves on other cards). Once per turn in the End Phase, Set an attached Spell.'},
 diff --git a/dist/ai/brain/luna-brain.mjs b/dist/ai/brain/luna-brain.mjs
-index f62f1b7..64986a2 100644
+index f62f1b7..c7a894e 100644
 --- a/dist/ai/brain/luna-brain.mjs
 +++ b/dist/ai/brain/luna-brain.mjs
-@@ -38,7 +38,7 @@ export default {
-   'Guardian Chimera': {role: 'payoff', does: 'Fusion Summoned from 3 monsters with different names, at least one from the hand and one from the field. If Fusion Summoned by a Spell or effect: draw for each material from the hand, then destroy for each from the field.'},
+@@ -35,10 +35,10 @@ export default {
+   'Lunalight Liger Dancer': {role: 'payoff', does: 'Leo Dancer + 3 Lunalights (Kaleido Chick can stand in as Leo Dancer). Unaffected by non-Lunalight cards, attacks twice, and once per turn (Quick Effect) sends a Lunalight from the Extra Deck to destroy all their Special Summoned monsters.'},
+   'Lunalight Perfume Dancer': {role: 'extender', does: '2 Lunalights. On Fusion Summon: add Luna Light Perfume. Return another Lunalight card you control to the hand, then Special Summon a Lunalight from the hand (re-use a summon effect such as Gold Leo\'s next turn). From the GY: banish it so their monsters lose ATK equal to their original DEF this turn.', links: {search: ['Luna Light Perfume']}},
+   'Lunalight Sabre Dancer': {role: 'payoff', does: '3 Lunalights; grows with every Beast-Warrior in the GYs and banishment. From the GY, on a later turn than it was sent there: banish it so a Fusion gains 3000 ATK until the end of the turn.'},
+-  'Guardian Chimera': {role: 'payoff', does: 'Fusion Summoned from 3 monsters with different names, at least one from the hand and one from the field. If Fusion Summoned by a Spell or effect: draw for each material from the hand, then destroy for each from the field.'},
++  'Guardian Chimera': {role: 'payoff', does: 'Fusion Summoned from 3 monsters with different names, using only materials from the hand and field, at least one from each. If Fusion Summoned by a Spell Card or Spell effect (not a monster effect such as Cartesia): draw 1 for each material from the hand, then destroy 1 card they control for each material from the field. Once per turn.'},
    'Tri-Brigade Ferrijit the Barren Blossom': {role: 'utility', does: 'Link 2 from Fraktall: Special Summon a Level 4 or lower Beast, Beast-Warrior or Winged Beast from the hand (Link Material is then limited to those Types). In the GY it draws 1, then puts a hand card on the bottom of the Deck.'},
    'Brotherhood of the Fire Fist - Tiger King': {role: 'utility', does: 'Rank 4 from two Level 4 Beast-Warriors: sets a Fire Formation from the Deck; negates non-Beast-Warrior monsters.'},
 -  'Gorgon of Zilofthonia': {role: 'utility', does: 'Link from 2+ Effect Monsters: the monsters it points to cannot attack and their activated effects are negated, and we cannot summon into those zones. Only worth it next to Liger or Leo Dancer (strategy, not a rule).'},
