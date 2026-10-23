@@ -58,3 +58,7 @@ Every engine MOVE in the duels it plays is paired with the event and log line th
 
 ## Addendum (01:40): search AI, 150 decisions per S2b seed
 Before f017211 vs after 8e0317b, the optimal pilot with nodeBudget 400, first 150 decisions on each of the 8 S2b seeds: **8/8 identical**. Combined hash `69c095a8f83ccb602b7299ee6fde9533a50b1bb1` in both runs. Files: `identity-search150-before/after.json`.
+
+## Addendum (02:30): seed-808 pool probe (Seto 02:15)
+`r35-pool-leak-probe.mjs` (r18 commit 18af57b, `tools/`) plays seed 808 (Branded v Lunalight, Branded first) twice in one process on one search core, as the gate does. It prints the snapshot bytes held before each search. Pass 2 starts with 51.8 MB still held from pass 1, against the 80 MB cap. Usage: `node r35-pool-leak-probe.mjs <root>`.
+SHA256SUMS history: `03a52c30…` (01:10) → `ba2acecb…` (01:40, the search-150 addendum) → this version (02:30, probe added).
