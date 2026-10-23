@@ -1,0 +1,3 @@
+import branded from './plans/branded.mjs';import mikanko from './plans/mikanko.mjs';import sky from './plans/sky.mjs';import luna from './plans/luna.mjs';
+export const GAME_PLANS={branded,mikanko,sky,luna};
+export function openingPlan(d,seat){const profile=GAME_PLANS[d.decks[seat]?.id];if(!profile)return null;const hand=d.zone(seat,2).filter(Boolean).map(c=>d.name(c.code)),starters=profile.starters.filter(n=>hand.includes(n));return {deck:profile.id,starter:starters[0]||null,availableStarters:starters,target:profile[seat===d.order[0]?'first':'second'],line:profile.lines.find(line=>starters.includes(line[0]))||profile.lines[0],source:profile.source};}

@@ -1,0 +1,68 @@
+{
+ "about": "r24/r32: Kevy's duel soundtrack. Each duel picks one track at random (never the same twice in a row) and fades it in from the top. Near the track's natural ending (end, seconds) the next pass starts again and the two crossfade with an equal-power curve over 'overlap' seconds (a track can set a longer one: the big build-up tracks use 6 s so the climax eases back into the groove), so the track fades into itself as a seamless loop; loopStart (seconds) is where a repeat pass starts: the first point where the track is about as loud as its ending, so the crossfade has no drop (the first pass of each duel still plays the intro), and gain evens out loudness between tracks. A new duel crossfades to a new track. Remove all tracks to use the built-in score.",
+ "credit": "Duel soundtrack: original tracks by Kevy (r32 set, 22 Oct 2026).",
+ "fadeIn": 3,
+ "overlap": 3,
+ "newGame": 2.5,
+ "tracks": [
+  {
+   "file": "ddl-track-battle-groove.mp3",
+   "title": "Battle Groove",
+   "end": 195.5,
+   "gain": 0.84,
+   "loopStart": 13.5
+  },
+  {
+   "file": "ddl-track-buant-groove.mp3",
+   "title": "Buant Groove",
+   "end": 146.0,
+   "gain": 0.91,
+   "loopStart": 16.0
+  },
+  {
+   "file": "ddl-track-buoyant-groove-r32.mp3",
+   "title": "Buoyant Groove",
+   "end": 147.5,
+   "gain": 0.95,
+   "loopStart": 33.5
+  },
+  {
+   "file": "ddl-track-card-duel-groove.mp3",
+   "title": "Card Duel Groove",
+   "end": 120.8,
+   "gain": 0.91,
+   "loopStart": 1.0
+  },
+  {
+   "file": "ddl-track-euphoric-groove.mp3",
+   "title": "Euphoric Groove",
+   "end": 261.0,
+   "gain": 1.0,
+   "loopStart": 36.0,
+   "overlap": 6
+  },
+  {
+   "file": "ddl-track-pulse-eleve.mp3",
+   "title": "Pulse Élevé",
+   "end": 147.0,
+   "gain": 0.76,
+   "loopStart": 38.5
+  },
+  {
+   "file": "ddl-track-gods-awaken.mp3",
+   "title": "Gods Awaken",
+   "end": 290.3,
+   "gain": 0.75,
+   "loopStart": 44.0,
+   "overlap": 6
+  },
+  {
+   "file": "ddl-track-gods-awaken-2.mp3",
+   "title": "Gods Awaken II",
+   "end": 282.0,
+   "gain": 0.71,
+   "loopStart": 60.0,
+   "overlap": 6
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+/* r34 arena polish (Claude, 23 Oct 2026; Kevy 10:18: "Master Duel level ... rehaul visuals"). Presentation only:
+   no game rules, no AI. Our own styling; no Konami UI or logos.
+   1. Field cards fill their zone (they were drawn at about half the zone height) and lift off the mat.
+   2. Defence Position cards lie sideways again on the tablet stage.
+   3. ATK / DEF read as a small chip on the card instead of a strip under it.
+   4. Outside Learn pace, phase changes and draws are a slim ribbon on the midline instead of a full-board banner (turn changes stay big).
+   5. Calmer mat: empty zones lose the hazard stripes (corner marks and a soft glow stay), so the cards stand out.
+   6. Gold aura (Kevy 13:04): in Play / Control-both modes every card you can use right now (summon, activate, attack,
+      or chain - e.g. Ash Blossom in hand during their combo) glows gold and pulses. Was a thin green outline.
+   7. Legal-zone outlines (where a card may be placed) only show when a person is choosing (ChatGPT RELAY-022 #5): in
+      AI duels they looked like an unanswered prompt.
+   8. Quick Pause / One action buttons beside Skip FX (ChatGPT RELAY-022 #9). */
+
+/* 1-3 */
+body.in-duel.tablet-stage #duel .zone.occupied>img{inset:2px!important;width:calc(100% - 4px)!important;height:calc(100% - 4px)!important;
+ filter:drop-shadow(0 5px 7px rgba(0,0,0,.6))!important;transition:transform .25s ease}
+body.in-duel.tablet-stage #duel .zone.occupied>img{background:none!important}
+body.in-duel.tablet-stage #duel .zone.occupied.defence[data-slot*=":4:"]>img{transform:rotate(90deg)!important}
+body.in-duel.tablet-stage #duel .zone.occupied .zone-caption{opacity:0}
+body.in-duel.tablet-stage #duel .zone.occupied .card-stats{position:absolute!important;left:50%!important;right:auto!important;bottom:3px!important;top:auto!important;
+ transform:translateX(-50%);z-index:3;margin:0!important;padding:1px 8px!important;border-radius:999px;white-space:nowrap;
+ background:rgba(6,8,20,.86)!important;border:1px solid color-mix(in srgb,var(--zone-color,#7aa7ff) 70%,#fff);
+ font:800 11px/1.35 var(--font-ui)!important;letter-spacing:.02em;color:#fff!important;box-shadow:0 2px 6px rgba(0,0,0,.5)}
+body.in-duel.tablet-stage #duel .zone.occupied .card-stats.stat-changed{background:#ffd21a!important;color:#0b0b10!important}
+
+/* 4 */
+body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]){background:none!important;box-shadow:none!important;border:0!important;pointer-events:none}
+body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw])::before,
+body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw])::after{display:none!important}
+body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) :is(.event-sweep,.event-bars,.event-orbit,#event-line,#event-seal,#event-art,#event-effect,#event-lp){display:none!important}
+body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) .event-copy{position:fixed!important;top:calc(50% - 46px)!important;left:50%!important;right:auto!important;bottom:auto!important;
+ transform:translateX(-50%)!important;width:auto!important;max-width:none!important;margin:0!important;padding:5px 18px 6px!important;display:flex!important;align-items:center;gap:10px;
+ background:rgba(8,10,22,.9)!important;border:0!important;border-left:6px solid var(--event-color,#ffd21a)!important;clip-path:none!important;
+ box-shadow:0 6px 18px rgba(0,0,0,.45)!important;animation:r34-phase var(--event-duration,1.2s) ease-out both!important}
+body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) #event-kicker{display:none!important}
+body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) #event-title{position:static!important;font-size:18px!important;line-height:1.1!important;margin:0!important;padding:0!important;
+ background:none!important;color:#fff!important;transform:none!important;white-space:nowrap}
+@keyframes r34-phase{0%{opacity:0;transform:translate(-50%,-8px)}12%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) .event-copy{animation:none!important}}
+
+/* 5 */
+body[data-theme=showtime].in-duel #duel .zone:not(.occupied){background:linear-gradient(135deg,var(--fam) 0 7px,transparent 7.5px),linear-gradient(-45deg,var(--fam) 0 7px,transparent 7.5px),
+ radial-gradient(ellipse at 50% 55%,color-mix(in srgb,var(--fam) 10%,transparent),transparent 70%),rgba(8,10,20,.42)!important;border-color:color-mix(in srgb,var(--fam) 48%,transparent)!important}
+body[data-theme=showtime].in-duel #duel .zone.occupied{background:radial-gradient(ellipse at 50% 60%,color-mix(in srgb,var(--fam) 26%,transparent),transparent 72%),rgba(8,10,20,.5)!important}
+
+/* 6 */
+/* Outline + an animated drop-shadow filter: box-shadow is switched off on hand cards and zones by the Balanced graphics
+   setting (master-duel.css), and an !important box-shadow would also freeze the pulse. */
+body.in-duel :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){outline:2px solid #ffd76a!important;outline-offset:1px;z-index:3;
+ filter:drop-shadow(0 0 5px rgba(255,200,60,.95)) drop-shadow(0 0 12px rgba(255,170,0,.7));animation:r34-aura 1.6s ease-in-out infinite}
+body.in-duel #my-hand .hand-card:is(.can-act,.can-chain){transform:translateY(-10px)!important}
+@keyframes r34-aura{0%,100%{filter:drop-shadow(0 0 4px rgba(255,200,60,.85)) drop-shadow(0 0 10px rgba(255,170,0,.55))}
+ 50%{filter:drop-shadow(0 0 8px rgba(255,230,140,1)) drop-shadow(0 0 22px rgba(255,180,0,.9))}}
+@media (prefers-reduced-motion:reduce){body.in-duel :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){animation:none}}
+body.in-duel.quiet-motion :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){animation:none}
+
+/* 7 */
+body[data-human-decision=false] #duel .zone.legal-target{outline:none!important;box-shadow:none!important;animation:none!important}
+
+/* 8 */
+#duel-quickbar{position:fixed;z-index:46;right:150px;bottom:28px;display:flex;gap:6px}
+#duel-quickbar[hidden]{display:none}
+#duel-quickbar button{min-width:46px;min-height:44px;padding:8px 12px;font:800 12px/1 var(--font-ui);color:#fff;background:rgba(10,12,28,.88);border:1px solid rgba(255,255,255,.35);border-radius:4px;cursor:pointer}
+#duel-quickbar button[aria-pressed=true]{background:#ffd21a;color:#0b0b10}
+#duel-quickbar button:disabled{opacity:.4;cursor:default}
+@media(min-width:761px){body.in-duel:has(.decision-column:not([hidden])) #duel-quickbar{right:300px}}/* clear of the YOUR DECISION panel */
+@media(max-width:760px){#duel-quickbar{right:14px;bottom:calc(130px + env(safe-area-inset-bottom))}}
+
+/* 9. Field resolution bubble (ChatGPT RELAY-022 #3): a card-name line (+ the short action title when effect-titles.mjs has
+   one), then up to two lines of the effect at 16px, so the verb ("... Special Summon ...") is no longer cut off after one line. */
+body.in-duel .on-field-clause{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;font-size:16px!important;line-height:1.3!important;padding:7px 14px 9px!important}
+body.in-duel .on-field-clause .on-field-name{display:block;font:800 11px/1.3 var(--font-ui);letter-spacing:.04em;text-transform:uppercase;opacity:.8;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.in-duel .on-field-clause .on-field-text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden}
+@media(max-width:760px){body.in-duel .on-field-clause{font-size:14px!important}}
+
+/* 10. Showtime colour family for HERO (and imported "custom" decks). HERO joined the deck list after the families were set,
+   so its zones had no colour and drew as thick white boxes (this is what ChatGPT RELAY-022 #5 saw in HERO v Sky Striker). */
+body[data-theme=showtime] :is([data-deck-theme=hero],[data-deck-theme=custom]){--fam:var(--st-yellow);--fam-dark:var(--st-ink);--fam-stripe:var(--st-stripe);--fam-on:#0B0B10}
+
+/* 11. Result screen: the confirmed finishing blow under the LP line (ChatGPT RELAY-022 #10). */
+#victory-result .victory-finish{display:block;margin-top:6px;font:800 15px/1.3 var(--font-ui);letter-spacing:.02em;color:#ffd21a}
+
+/* 12. Broadcast pace: the side event log shows only the 5 newest lines (ChatGPT RELAY-022 #7: it read like a debug feed).
+   The full log stays in Learn / Duel pace and in the Journal. */
+body[data-pace=broadcast].in-duel #event-log :is(.event-log-line:nth-child(n+6 of .event-log-line),.event-log-turn:not(:first-child)){display:none}
+
+/* 13. Landscape phones (height under 500px): no room beside the hand, so the quick Pause / One action buttons hide there;
+   both stay in Duel controls (gear). */
+@media(max-height:500px){#duel-quickbar{display:none!important}}
+
+/* 14. r34.1 smoothness on tablets and phones (Kevy 20:00 "animation seems janky / stuttering"; his sister's tablet video,
+   Duel pace, measured about 40 fps with hitches at the full chain scene, cut-ins, the Fusion cut-scene and the result
+   screen). Balanced graphics is what Auto picks on touch screens. These effects re-blur or re-shadow the whole screen on
+   every frame there, so in Balanced they become flat equivalents (High graphics on desktops is unchanged):
+   - full-screen background blur behind dialogs, cut-scenes and the chain scene -> a darker solid veil;
+   - blur behind the LP bars, bottom bar, decision panel and field cue -> more opaque panels;
+   - the result-screen halo's 120px glow -> none, and 12 confetti pieces instead of 32;
+   - the gold aura pulses its outline (cheap) instead of re-filtering a drop-shadow every frame;
+   - moving Phantom slabs are layer-promoted so their shadows are drawn once, not every frame. */
+body[data-graphics=balanced] dialog::backdrop,body[data-graphics=balanced] #summon-scene::backdrop{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(5,7,16,.88)!important}
+body[data-graphics=balanced] #event-stage[data-spotlight=true]{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background-color:rgba(5,7,16,.9)!important}
+body[data-graphics=balanced] :is(.duel-nav,#duel .player-bar,#duel .decision-column,#duel .field-cue){backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body[data-graphics=balanced] #duel .player-bar{background:rgba(9,12,28,.92)!important}
+body[data-graphics=balanced] .victory-halo{box-shadow:none!important}
+body[data-graphics=balanced] .victory-confetti i:nth-child(n+13){display:none}
+body[data-graphics=balanced].in-duel :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){filter:drop-shadow(0 0 6px rgba(255,200,60,.9));animation:r34-aura-lite 1.6s ease-in-out infinite}
+@keyframes r34-aura-lite{0%,100%{outline-color:#ffd76a;outline-offset:1px}50%{outline-color:#fff4c2;outline-offset:3px}}
+body[data-theme=showtime] #event-stage.live:is([data-kind=phase],[data-kind=draw]) .event-copy,body[data-theme=showtime] .on-field-resolution{will-change:transform,opacity}
+@media (prefers-reduced-motion:reduce){body[data-graphics=balanced].in-duel :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){animation:none}}
+body[data-graphics=balanced].in-duel.quiet-motion :is(#my-hand .hand-card,#duel [data-slot]):is(.can-act,.can-chain){animation:none}
+/* r34.1 (ChatGPT RELAY-030 R34-03): with Tap to continue on, the quick Pause / One action buttons sit above the
+   Continue effect button instead of covering its left part. */
+@media(min-width:761px){body:has(#continue-effect:not([hidden])) #duel-quickbar{bottom:84px}}
