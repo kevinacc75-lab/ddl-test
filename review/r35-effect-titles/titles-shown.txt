@@ -1,0 +1,185 @@
+# Titles shown in 56 base-AI duels (tools/r35-title-probe.mjs, seeds 7300+, Lab + TCG text). count  card [key] -> title
+
+   4  A Hero Lives [zero] → Pay half LP: summon an Elemental HERO
+   4  Albion the Sanctifire Dragon [0] → Revive 2 monsters, one to each field
+   4  Albion the Shrouded Dragon [0] → Send Albaz/Branded: summon or recycle Albion
+  32  Aluber the Jester of Despia [0] → Add a Branded Spell/Trap
+  60  Ash Blossom & Joyous Spring [0] → Discard Ash: negate a Deck-related effect
+  12  Blazing Cartesia, the Virtuous [0] → Summon Cartesia from your hand
+  24  Blazing Cartesia, the Virtuous [1] → Fusion Summon a Level 8 or higher monster
+  12  Blazing Cartesia, the Virtuous [2] → End Phase: recover Cartesia
+  32  Blue-Eyes Spirit Dragon [1] → Tribute: summon a LIGHT Dragon Synchro
+  10  Blue-Eyes Ultimate Spirit Dragon [0] → Negate an on-field activation; gain 1000 ATK
+   4  Blue-Eyes Ultimate Spirit Dragon [1] → Revive a different LIGHT Dragon
+  24  Branded Fusion [native:1170] → Fusion Summon an Albaz Fusion with 2 cards
+  20  Branded Opening [zero] → Discard, then add or summon a Despia
+   8  Branded in High Spirits [0] → Reveal; send a Fusion; may discard to search
+   4  Branded in Red [0] → Recover Albaz/Despia; may Fusion Summon
+   4  Brotherhood of the Fire Fist - Tiger King [0] → Set a Fire Formation Spell/Trap from Deck
+   2  Brotherhood of the Fire Fist - Tiger King [1] → Detach 1: negate non-Beast-Warrior monsters
+   4  Comic Hand [native:1068] → Equip: take their monster as a Toon
+   4  Cosmic Cyclone [zero] → Pay 1000 LP: banish a Spell/Trap
+   4  Destiny HERO - Denier [0] → Put a Destiny HERO on top of your Deck
+  24  Destiny HERO - Destroyer Phoenix Enforcer [0] → Destroy 1 of yours + 1 on the field
+  20  Destiny HERO - Destroyer Phoenix Enforcer [1] → Next Standby: revive a Destiny HERO
+  12  Destiny HERO - Malicious [0] → Banish Malicious: summon another from Deck
+  16  Dogmatika Fleurdelis, the Knighted [0] → Summon Fleurdelis; may negate a monster
+   4  Dominus Purge [0] → Negate a Deck-to-hand effect; may destroy
+  12  Droll & Lock Bird [0] → Send Droll: stop both players' Deck searches
+   8  E - Emergency Call [zero] → Add an Elemental HERO monster
+   4  EN Shuffle [0] → Shuffle an ally back; summon a different one
+  12  Effect Veiler [0] → Send Veiler: negate their Effect Monster
+   8  Elemental HERO Shadow Mist [0] → Add a Change Quick-Play Spell
+   4  Elemental HERO Shadow Mist [1] → Add a different HERO monster
+  24  Elemental HERO Stratos [0] → Summon trigger: search a HERO or destroy S/T
+   8  Fallen of Albaz [0] → Discard: fuse Albaz with opposing monsters
+  16  Fire Formation - Tenki [zero] → Add a Level 4 or lower Beast-Warrior
+   8  Foolish Burial Goods [zero] → Send a Spell/Trap from Deck to GY
+   4  Foolish Burial [0] → Send a monster from Deck to GY
+  28  Forbidden Droplet [zero] → Send cards: negate and halve their monsters
+  12  Fusion Deployment [zero] → Reveal a Fusion; summon its named material
+  12  Fusion Destiny [native:1170] → Fuse a Destiny HERO; DARK HERO summons only
+   6  Ghost Belle & Haunted Mansion [0] → Discard: negate a listed GY-related effect
+  16  Ghost Mourner & Moonlit Chill [0] → Negate a new monster; burn if it leaves
+  20  Granguignol the Dusk Dragon [0] → Send a Level 6+ LIGHT/DARK from Deck or Extra
+   4  Granguignol the Dusk Dragon [1] → Banish Granguignol: summon Dogmatika/Despia
+   4  Guiding Quem, the Virtuous [0] → Send Albaz or a card that names it to GY
+  16  Ha-Re the Sword Mikanko [0] → Add a Mikanko Equip Spell
+  14  Hu-Li the Jewel Mikanko [0] → Add a Mikanko Trap
+   8  Incredible Ecclesia, the Virtuous [1] → End Phase: recover Ecclesia
+  34  Infinite Impermanence [zero] → Negate a monster; Set copy may negate column
+   4  Interrupted Kaiju Slumber [0] → Destroy monsters; summon 1 Kaiju per field
+   4  Kashtira Big Bang [0] → Players banish down to 1 monster each
+   4  Kashtira Birth [1] → Summon a non-Xyz Kashtira from GY/banishment
+  16  Kashtira Fenrir [0] → Add a Kashtira monster
+  24  Kashtira Ogre [0] → Add a Kashtira Trap
+  16  Kashtira Ogre [1] → Excavate their top 5; banish 1 face-down
+  16  Kashtira Riseheart [0] → Summon Riseheart; only Xyz from Extra Deck
+  16  Kashtira Riseheart [1] → Banish 3 from their Deck; become Level 7
+  28  Kashtira Shangri-Ira [0] → Standby: summon a Kashtira from Deck
+  14  Kashtira Shangri-Ira [1] → Lock an unused monster or Spell/Trap Zone
+  24  Kashtira Unicorn [0] → Add a Kashtira Spell
+   8  Kashtira Unicorn [1] → Inspect Extra Deck; banish 1 face-down
+  20  Kashtiratheosis [0] → Summon a Kashtira with a different Attribute
+   2  Knightmare Phoenix [0] → Discard: destroy their Spell/Trap
+  20  Lubellion the Searing Dragon [0] → Discard 1: shuffle materials to Fusion Summon
+  24  Luna Light Perfume [0] → Revive a Lunalight
+  24  Luna Light Perfume [1] → Banish Perfume; discard: add a Lunalight
+  24  Lunalight Black Sheep [0] → Discard Sheep: recover Lunalight or add Poly
+   4  Lunalight Fusion [native:1170] → Fusion Summon a Lunalight
+  34  Lunalight Gold Leo [0] → Add a Lunalight, then discard 1
+  24  Lunalight Gold Leo [1] → Recover a Lunalight just sent to your GY
+  32  Lunalight Kaleido Chick [0] → Send a Lunalight; copy its Fusion name
+   8  Lunalight Kaleido Chick [1] → Recover Polymerization
+   4  Lunalight Kaleido Chick [2] → Block opposing effects in the Battle Phase
+  12  Lunalight Masquerade [0] → Send a Lunalight from Deck to GY
+  24  Lunalight Perfume Dancer [0] → Add Luna Light Perfume
+  24  Lunalight Perfume Dancer [1] → Return a Lunalight; may summon from hand
+   8  Lunalight Perfume Dancer [2] → Banish Perfume Dancer: foes lose ATK
+  28  Lunalight Scarlet Tiger [0] → Summon Scarlet; may add Polymerization
+  16  Lunalight Scarlet Tiger [1] → Revive a non-Level 5 Lunalight
+   8  Lunalight Serenade Dance [1] → Send a hand card: summon a Lunalight
+  32  Lunalight Silver Hound [0] → Summon a different Lunalight from Deck
+   6  Lunalight Silver Hound [1] → Banish Hound + a Fusion: negate Spell/Trap
+   4  Lunalight Tiger [0] → Pendulum: revive a Lunalight with limits
+  20  Lunalight Wolf [0] → Banish field/GY materials: fuse a Lunalight
+  20  Macro Cosmos [0] → Activate; may summon Helios
+  20  Maiden of White [0] → Send Maiden: place True Light face-up
+  40  Maiden of White [1] → Revive Maiden after Blue-Eyes is summoned
+  20  Majesty of the White Dragons [0] → Show up to 3 Blue-Eyes; destroy that many
+   2  Mask Change [zero] → Send a HERO: summon a matching Masked HERO
+  12  Mausoleum of White [1] → Send a Normal Monster: boost an ally
+   4  Mikanko Dance - Mayowashidori [1] → Revive a Mikanko and equip Mayowashidori
+   4  Mikanko Dance - Mayowashidori [native:1068] → Equip: prevent effect destruction
+  12  Mikanko Fire Dance [0] → Summon a Mikanko and equip Fire Dance
+   4  Mikanko Reflection Rondo [native:1068] → Equip: take control while you have Mikanko
+  42  Mikanko Shinbu - Noble Twins [0] → Send a Mikanko; may Set a Mikanko S/T
+   4  Mikanko Shinbu - Noble Twins [1] → Banish Twins; detach 1: summon a Ritual
+   4  Mikanko Spiritwalk [0] → Equip their monster to your Mikanko
+  24  Mikanko Water Arabesque [1] → Summon a Mikanko, then return old host
+  40  Mikanko Water Arabesque [native:1068] → Equip: prevent effect destruction
+   4  Mimicat [zero] → Take a monster or Set a Spell/Trap from GY
+   4  Miracle Ejector [0] → Send a Neo-Spacian: summon Ejector
+   4  Miracle Ejector [1] → Add a Spell/Trap naming an Elemental HERO
+   4  Miracle Ejector [2] → Banish a card from their GY
+   8  Mirrorjade the Iceblade Dragon [0] → Send an Albaz Fusion; banish a monster
+   4  Mixousia the Confounder [1] → Banish field/GY materials to Fusion Summon
+  48  Mulcharmy Fuwalos [0] → Discard: draw on Deck/Extra Deck summons
+   4  Neo Blue-Eyes Ultimate Dragon [zero] → Banish this card: negate a targeting effect
+  16  Neo-Spacian Aqua Dolphin [0] → Discard: inspect hand; destroy a monster
+  38  Ohime the Manifested Mikanko [0] → Reveal Ohime: add a Mikanko, then discard
+   2  Ohime the Manifested Mikanko [1] → Equip a GY Equip Spell to a legal monster
+  20  Phara the Primordial Goddess [0] → Reveal Phara + Spell/Trap: block responses
+   8  Phara the Primordial Goddess [1] → Revive Phara after a Spell/Trap sends it
+  40  Polymerization [native:1170] → Fusion Summon using hand or field
+  16  Pot of Desires [zero] → Banish the top 10 face-down: draw 2
+  28  Preparation of Rites [zero] → Add a Ritual monster; may recover a Ritual Spell
+  52  Primite Dragon Ether Beryl [0] → Set a Primite Spell/Trap from Deck
+  24  Primite Dragon Ether Beryl [1] → Tribute Beryl: send a Normal from Deck
+   4  Primite Dragon Ether Beryl [2] → Standby: recover Ether Beryl
+   8  Primite Drillbeam [0] → Negate and banish a face-up card
+  44  Primite Lordly Lode [0] → Add a Primite card
+  38  Primite Lordly Lode [1] → Declare and summon a Normal Monster
+   8  Red-Eyes Toon Dragon [zero] → Summon another Toon from your hand
+   4  Reinforcement of the Army [zero] → Add a Level 4 or lower Warrior
+   8  Roar of the Blue-Eyed Dragons [0] → Summon a Blue-Eyes in Defense Position
+  20  Sacred Sword of Seven Stars [zero] → Banish a Level 7 monster: draw 2
+   2  Salamangreat Almiraj [0] → Tribute: protect a monster from destruction
+  20  Sanaki the Mikanko Devotee [1] → Summon a non-Illusion Mikanko from Deck
+   4  Sanaki the Mikanko Devotee [2] → Equip Sanaki to a face-up monster
+   2  Scareclaw Kashtira [0] → Summon Scareclaw, then banish an ally card
+   4  Sky Striker Ace - Hayate [0] → Send a Sky Striker card to the GY
+  32  Sky Striker Ace - Kagari [0] → Recover a Sky Striker Spell
+  44  Sky Striker Ace - Raye [0] → Tribute Raye: summon an Ace to Extra Zone
+   4  Sky Striker Ace - Raye [1] → Revive Raye after your Ace Link leaves
+  16  Sky Striker Ace - Shizuku [0] → End Phase: add a Sky Striker Spell
+  52  Sky Striker Ace = Zero [0] → Add a Sky Striker Spell from Deck or GY
+  12  Sky Striker Ace = Zero [1] → Tribute Zero: summon Raye + Roze; may pop
+   4  Sky Striker Airspace - Area Zero [0] → Excavate 3; may add Sky Striker and send
+   8  Sky Striker Maneuver - Jamming Waves! [zero] → Destroy a Set Spell/Trap; bonus monster pop
+  24  Sky Striker Mecha - Hornet Drones [0] → Summon a Sky Striker Ace Token
+   8  Sky Striker Mecha - Widow Anchor [0] → Negate an Effect Monster; may take control
+   4  Sky Striker Mecha Modules - Multirole [0] → Send a card: protect your Spell activations
+  40  Sky Striker Mobilize - Engage! [zero] → Add a Sky Striker card; may draw 1
+  72  Sky Striker Mobilize - Linkage! [0] → Send another card: summon a Sky Striker Ace
+   4  Sky Striker Special Maneuver - Lemnisgate! [0] → Recycle Aces + Spells; bounce per 3 cards
+  16  Spirit with Eyes of Blue [0] → Take Mausoleum of White from your Deck
+  16  Spirit with Eyes of Blue [2] → Tribute Spirit: summon a Blue-Eyes
+   4  Springans Kitt [0] → Summon Kitt from your hand
+   4  Springans Kitt [1] → Add a Branded card; bottom-deck 1
+   4  Super Duper Polymerization [0] → Pay 2000: summon from Extra; fuse or send
+   4  Super Polymerization [native:1170] → Discard: Fusion Summon using either field
+  32  Tearlaments Kashtira [0] → Summon this card, then banish an ally card
+  28  Tearlaments Kashtira [1] → Mill 3 cards from either Deck
+   4  Tearlaments Kashtira [2] → Mill 2 cards from your Deck
+   8  Terraforming [zero] → Add a Field Spell
+   4  The Black Stone of Legend [zero] → Tribute Stone: summon a Level 7- Red-Eyes
+   8  The Dragon that Devours the Dogma [1] → End Phase: add a Dogmatika or Tri-Brigade
+  38  The Fallen & The Virtuous [0] → Destroy a face-up card or revive a monster
+   4  The Great Mikanko Ceremony [0] → Summon a Mikanko from hand, ignoring rules
+   4  The Great Mikanko Ceremony [1] → Banish Ceremony: send a Mikanko from Deck
+  16  Titaniklad the Ash Dragon [0] → End Phase: add or summon Dogmatika/Albaz
+   8  Toon Black Luster Soldier [0] → Banish a card; this monster cannot attack
+   8  Toon Dark Magician [0] → Discard a Toon: summon a Toon or search
+   8  Toon Harpie Lady [0] → Summon Harpie; may destroy a Spell/Trap
+  40  Toon Kingdom [zero] → Activate Kingdom: banish the top 3 face-down
+   4  Toon Page-Flip [0] → Reveal 3 Toons; randomly summon 1
+   4  Toon Table of Contents [zero] → Add a Toon card
+   8  Toon World [zero] → Pay 1000 LP: activate Toon World
+   4  Tri-Brigade Fraktall [0] → Send Fraktall: mill a Level 3 or lower ally
+  24  Triple Tactics Thrust [0] → Set a Normal Spell/Trap; may add instead
+  36  True Light [1] → Summon Blue-Eyes from hand or GY
+   4  True Light [2] → Set a Spell/Trap naming Blue-Eyes
+  24  Upstart Goblin [zero] → Draw 1; they gain 1000 LP
+  20  Uzuhime the Manifested Mikanko [0] → Add an Equip Spell from Deck or GY
+  32  Vision HERO Faris [0] → Discard a HERO: summon Faris
+  32  Vision HERO Faris [1] → Place a Vision HERO as a Continuous Trap
+  20  Vision HERO Increase [1] → Tribute a HERO: summon Increase
+  20  Vision HERO Increase [2] → Summon a Level 4 or lower Vision HERO
+  16  Vision HERO Vyon [0] → Send a HERO from Deck to GY
+   4  Wishes for Eyes of Blue [0] → Discard: add a Tuner + Blue-Eyes Spell/Trap
+   4  Wishes for Eyes of Blue [1] → Equip a Blue-Eyes from Extra Deck
+   2  Xtra HERO Cross Crusader [0] → Revive a Destiny HERO
+   4  Xtra HERO Infernal Devicer [0] → Reveal a HERO Fusion: search named materials
+
+# Entries present but not titled in these duels (should be empty or noEffect)
