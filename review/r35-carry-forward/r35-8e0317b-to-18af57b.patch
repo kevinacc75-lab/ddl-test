@@ -1,0 +1,95 @@
+diff --git a/dist/effect-titles.mjs b/dist/effect-titles.mjs
+index cc8b34d..17106e2 100644
+--- a/dist/effect-titles.mjs
++++ b/dist/effect-titles.mjs
+@@ -226,7 +226,7 @@ export const EFFECT_TITLES={"102380":{"1":{"clause":"Once per turn, during your
+ "57566760":{"0":{"clause":"If this card is Special Summoned: You can add 1 Equip Spell from your Deck or GY to your hand.","title":"Add an Equip Spell from Deck or GY"},
+ "1":{"clause":"If this card attacks and battles, at the end of the Damage Step: You can detach 1 material from this card; it can attack again in a row.","title":"Detach 1: attack again in a row"}},
+ "57736667":{"0":{"clause":"At the end of the Damage Step, if your \"Mikanko\" monster battled: You can target 1 card on the field; return it to the hand.","title":"After a Mikanko battle: return a field card"},
+-"1":{"clause":"If this card is in your GY: You can target 1 \"Mikanko\" monster in your GY; Special Summon it, and if you do, equip it with this card, but banish it when it leaves the field.","title":"Revive a Mikanko and equip Mayowashidori"},"zero":{"clause":"The equipped monster cannot be destroyed by card effects.","title":"Equip: prevent effect destruction"},"native:1068":{"clause":"The equipped monster cannot be destroyed by card effects.","title":"Equip: prevent effect destruction"}},
++"1":{"clause":"If this card is in your GY: You can target 1 \"Mikanko\" monster in your GY; Special Summon it, and if you do, equip it with this card, but banish it when it leaves the field.","title":"Revive a Mikanko and equip Mayowashidori"},"native:1068":{"clause":"The equipped monster cannot be destroyed by card effects.","title":"Equip: prevent effect destruction"}},
+ "58004362":{"0":{"clause":"If this card is Link Summoned: You can target 1 \"Destiny HERO\" monster in your GY; Special Summon it.","title":"Revive a Destiny HERO"},
+ "1":{"clause":"You can Tribute 1 \"Destiny HERO\" monster; add 1 \"HERO\" monster with a different name from your Deck to your hand.","title":"Tribute a Destiny HERO: search another HERO"}},
+ "58069384":{"0":{"clause":"Once per turn: You can detach 1 material from this card, then target 1 \"Cyber Dragon\" in your GY; Special Summon that target.","title":"Detach 1: revive Cyber Dragon"},
+@@ -281,7 +281,7 @@ export const EFFECT_TITLES={"102380":{"1":{"clause":"Once per turn, during your
+ "73542331":{"0":{"clause":"During each Standby Phase: You can Special Summon 1 \"Kashtira\" monster from your Deck.","title":"Standby: summon a Kashtira from Deck"},
+ "1":{"clause":"Each time a card(s) your opponent owns and possesses is banished face-down (except during the Damage Step): You can choose 1 unused Main Monster Zone or Spell & Trap Zone; it cannot be used while this monster is face-up on the field.","title":"Lock an unused monster or Spell/Trap Zone"}},
+ "73628505":{"zero":{"clause":"Add 1 Field Spell from your Deck to your hand.","title":"Add a Field Spell"}},
+-"73642296":{"0":{"clause":"When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that activation.\r\n● Add a card(s) from the GY to the hand, Deck, and/or Extra Deck.\r\n● Special Summon a Monster Card(s) from the GY.\r\n● Banish a card(s) from the GY.","tcgClause":"When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that activation.\n●Add a card(s) from the GY to the hand, Deck, and/or Extra Deck.\n●Special Summon a Monster Card(s) from the GY.\n●Banish a card(s) from the GY.","title":"Discard: negate a listed GY-related effect"}},
++"73642296":{"0":{"clause":"When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that activation.\r\n● Add a card(s) from the GY to the hand, Deck, and/or Extra Deck.\r\n● Special Summon a Monster Card(s) from the GY.\r\n● Banish a card(s) from the GY.","tcgClause":"When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that activation.\n●Add a card(s) from the GY to the hand, Deck, and/or Extra Deck.\n●Special Summon a Monster Card(s) from the GY.\n●Banish a card(s) from the GY.","title":"Discard: negate a GY-related activation"}},
+ "73819701":{"0":{"clause":"If this card is in your hand: You can send 1 monster that mentions \"Fallen of Albaz\" from your Extra Deck to the GY; Special Summon this card, also you cannot Special Summon from the Extra Deck for the rest of this turn, except Level 8 Fusion or Synchro Monsters.","title":"Send an Albaz-related Extra monster: summon"},
+ "1":{"clause":"If this card is Normal or Special Summoned: You can Special Summon 1 \"Ecclesia\" monster from your hand, Deck, or GY.","title":"Summon an Ecclesia from hand, Deck or GY"}},
+ "75047173":{"zero":{"clause":"Special Summon 1 Fusion Monster from your Extra Deck that mentions a \"HERO\" monster as material, ignoring its Summoning conditions, by placing the Fusion Materials mentioned on it on the bottom of the Deck in any order, from among the monsters in your hand, field, GY, and/or your banished monsters. If you placed \"Elemental HERO Neos\" into the Deck, neither player can return the monster Special Summoned by this effect to the Extra Deck.","tcgClause":"Special Summon 1 Fusion Monster from your Extra Deck that mentions a \"HERO\" monster as material, ignoring its Summoning conditions, by placing the Fusion Materials mentioned on it on the bottom of the Deck in any order, from among cards in your hand, field, GY, and/or your banished cards. If you placed \"Elemental HERO Neos\" into the Deck, neither player can return the monster Special Summoned by this effect to the Extra Deck.","title":"Recycle materials to summon a HERO Fusion"},"native:1170":{"clause":"Special Summon 1 Fusion Monster from your Extra Deck that mentions a \"HERO\" monster as material, ignoring its Summoning conditions, by placing the Fusion Materials mentioned on it on the bottom of the Deck in any order, from among the monsters in your hand, field, GY, and/or your banished monsters. If you placed \"Elemental HERO Neos\" into the Deck, neither player can return the monster Special Summoned by this effect to the Extra Deck.","tcgClause":"Special Summon 1 Fusion Monster from your Extra Deck that mentions a \"HERO\" monster as material, ignoring its Summoning conditions, by placing the Fusion Materials mentioned on it on the bottom of the Deck in any order, from among cards in your hand, field, GY, and/or your banished cards. If you placed \"Elemental HERO Neos\" into the Deck, neither player can return the monster Special Summoned by this effect to the Extra Deck.","title":"Recycle materials to summon a HERO Fusion"}},
+@@ -338,7 +338,7 @@ export const EFFECT_TITLES={"102380":{"1":{"clause":"Once per turn, during your
+ "93039339":{"1":{"clause":"Once per turn: You can detach 1 material from this card; return 1 monster from the field to the hand.","title":"Detach 1: return a monster to the hand"}},
+ "93347961":{"0":{"clause":"If this card is Special Summoned: You can add 1 card with \"Favorite\" in its name from your Deck or GY to your hand.","title":"Add a Favorite card from Deck or GY"},
+ "1":{"clause":"You can Tribute this card that was Fusion Summoned using a Normal Monster(s) as material; Special Summon 1 Level 7 or lower \"Elemental HERO\" monster from your Deck or Extra Deck that cannot be Normal Summoned/Set, ignoring its Summoning conditions.","title":"Tribute: summon a Level 7- Elemental HERO"}},
+-"94145021":{"0":{"clause":"If a card(s) is added from the Main Deck to your opponent's hand, except during the Draw Phase (Quick Effect): You can send this card from your hand to the GY; for the rest of this turn, cards cannot be added from either player's Main Deck to the hand.","title":"Send Droll: stop both players' Deck searches"}},
++"94145021":{"0":{"clause":"If a card(s) is added from the Main Deck to your opponent's hand, except during the Draw Phase (Quick Effect): You can send this card from your hand to the GY; for the rest of this turn, cards cannot be added from either player's Main Deck to the hand.","title":"Send Droll: stop both players drawing/searching"}},
+ "94259633":{"0":{"clause":"You can target 1 face-up monster this card points to; equip that face-up monster to this card (max. 1).","title":"Equip the monster Anima points to"}},
+ "94392192":{"0":{"clause":"During your Main Phase: You can add 1 \"Kashtira\" Trap from your Deck to your hand.","title":"Add a Kashtira Trap"},
+ "1":{"clause":"When this card declares an attack, or if your opponent activates a monster effect (except during the Damage Step): You can excavate up to 5 cards from the top of your opponent's Deck, banish 1 excavated card, face-down, and place the rest on the top of the Deck in the same order.","title":"Excavate their top 5; banish 1 face-down"}},
+diff --git a/tests/r35-effect-titles.test.mjs b/tests/r35-effect-titles.test.mjs
+index 97ed8eb..115bb3e 100644
+--- a/tests/r35-effect-titles.test.mjs
++++ b/tests/r35-effect-titles.test.mjs
+@@ -16,7 +16,7 @@ const body=c=>(c?.desc||'').split(/\r?\n\r?\n\* The above text/)[0].trim(),code=
+ let n=0;for(const [c,keys] of Object.entries(EFFECT_TITLES))for(const [k,e] of Object.entries(keys))for(const r of e.variants||[e]){n++;
+  assert.match(k,/^(zero|native:\d{1,4}|\d+)$/,c+':'+k);assert.ok(r.title&&r.title.length<=48,c+':'+k+' title');
+  for(const cl of [r.clause,r.tcgClause].filter(Boolean))assert.ok(body(lab[c]).includes(cl)||body(ui[c]).includes(cl),c+':'+k+' clause not exact text')}
+-assert.ok(n>=380,'records '+n);
++assert.ok(n>=389,'records '+n);assert.equal(EFFECT_TITLES[57736667]?.zero,undefined,'RELAY-036: Mayowashidori raw 0 has no title');
+ // 2 + 3
+ const sword=code('Double-Edged Sword');
+ let f=effectFocus(sword,0n,lab,{type:'resolve',location:8});assert.equal(f.label,'Send Sword to the GY after 2000+ damage');assert.match(f.fullExcerpt,/2000 or more battle damage/);
+diff --git a/tools/build-effect-titles.mjs b/tools/build-effect-titles.mjs
+index 54b8ffd..7f19d61 100644
+--- a/tools/build-effect-titles.mjs
++++ b/tools/build-effect-titles.mjs
+@@ -29,6 +29,12 @@ const VARIANT_RULES={
+  '62089826:zero':[null,{loc:[16]}],                          // True Light: the activation does nothing itself; GY trigger destroys
+  '66574418:zero':[{loc:[4]},{loc:[16]}]                      // field / GY ignition
+ };
++// RELAY-036 (ChatGPT, 24 Oct) follow-ups. The source data and its hash stay unchanged; these are applied on top.
++// SKIP: Mikanko Dance - Mayowashidori raw 0 says Equip/protection, but raw 0 is not the Equip activation (that is
++// native:1068); its origin is unverified, so no title is generated for it.
++const SKIP=new Set(['57736667:zero']);
++// TITLE_FIX: ChatGPT's suggested, more precise wording (Droll also stops draws; Ghost Belle negates the activation).
++const TITLE_FIX={'94145021:0':'Send Droll: stop both players drawing/searching','73642296:0':'Discard: negate a GY-related activation'};
+ const out={},report={kept:0,variants:0,dropped:{},bad:[]};
+ const drop=(why,id)=>{(report.dropped[why]||=[]).push(id)};
+ function clauses(code,r){
+@@ -49,10 +55,12 @@ for(const [code,keys] of Object.entries(map)){
+    if(vs.length){(out[code]||={})[key]={variants:vs};report.variants+=vs.length}
+    continue;
+   }
++  if(SKIP.has(id)){drop('RELAY-036 skip',id);continue}
+   if(!KEEP.has(r.kind)){drop(r.kind,id);continue}
+   const c=clauses(code,r);if(!c){report.bad.push(id+': clause not in card text');continue}
+-  if(!r.title||r.title.length>48){report.bad.push(id+': title missing or over 48');continue}
+-  (out[code]||={})[key]={...c,title:r.title};report.kept++;
++  if(!r.title||(r.title.length>48&&!TITLE_FIX[id])){report.bad.push(id+': title missing or over 48');continue}
++  const title=TITLE_FIX[id]||r.title;if(title.length>48){report.bad.push(id+': fixed title over 48');continue}
++  (out[code]||={})[key]={...c,title};report.kept++;
+  }
+ }
+ const summary={kept:report.kept,variants:report.variants,cards:Object.keys(out).length,dropped:Object.fromEntries(Object.entries(report.dropped).map(([k,v])=>[k,v.length])),bad:report.bad};
+diff --git a/tools/r35-pool-leak-probe.mjs b/tools/r35-pool-leak-probe.mjs
+new file mode 100644
+index 0000000..de42ccc
+--- /dev/null
++++ b/tools/r35-pool-leak-probe.mjs
+@@ -0,0 +1,13 @@
++// r35 (Claude, 24 Oct): Seto seed-808 question. Plays seed 808 (Branded v Lunalight, Branded first) twice in one process with one search core, as the gate does, and prints snapshot bytes held on the core before each search: pass 2 starts with pass 1 pools still counted against the 80 MB cap.
++// Does search state survive between two duels in one process? (Seto's seed-808 question)
++import fs from 'node:fs';import path from 'node:path';import zlib from 'node:zlib';import {pathToFileURL} from 'node:url';
++const ROOT=process.argv[2];const imp=p=>import(pathToFileURL(path.resolve(ROOT,p)).href);
++const {Duel}=await imp('dist/duel.mjs'),{createOptimalPilots}=await imp('dist/optimal-pilot.mjs');const ES=await imp('dist/ai/engine-snapshot.mjs');const WP=await imp('dist/ai/world-pool.mjs');
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(ROOT,'dist/cards.json.gz')))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(ROOT,'dist/scripts.json.gz'))));
++const decks=JSON.parse(fs.readFileSync(path.resolve(ROOT,'dist/decks.json'))).decks.filter(d=>['branded','mikanko','sky','luna'].includes(d.id));
++const core=await ES.createSearchCore(db,scripts);
++async function run(tag,n){const d=await Duel.create(db,scripts);d.start([decks[0],decks[3]],{seed:808,first:0});const pilots=createOptimalPilots({seed:808,budget:400,nodeBudget:400,searchCore:core});const out=[];
++ for(let i=0;i<n&&d.prompt&&!d.finished;i++){const before=ES.snapshotBytesHeld(core);const p=pilots[d.prompt.seat],plan=p.plan(d);out.push(JSON.stringify(plan.response));
++  if(i<3||plan.search?.nodes)console.log(tag,'decision',i,'seat',d.prompt.seat,'bytesHeldBefore',before,'pools',WP.poolStats?.()??'');d.respond(plan.response);p.observe?.(plan);if(plan.search?.nodes&&i>8)break}
++ console.log(tag,'end bytesHeld',ES.snapshotBytesHeld(core));d.stop();return out}
++await run('run1',60);await run('run2',60);
