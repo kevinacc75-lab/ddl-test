@@ -1,0 +1,56 @@
+Ban-up>Ban-up          16 named     16 wrong 0 {"pair":"kashtira-luna","seed":500,"first":0,"card":"Scareclaw Kashtira","reason":67110400}
+Ban-up>Deck-            6 named      6 wrong 0 {"pair":"branded-hero","seed":500,"first":0,"card":"Destiny HERO - Malicious","reason":262216}
+Ban-up>Ex-down          2 named      2 wrong 0 {"pair":"branded-luna","seed":500,"first":0,"card":"Granguignol the Dusk Dragon","reason":262216}
+Ban-up>GY-             11 named     11 wrong 0 {"pair":"sky-kashtira","seed":500,"first":0,"card":"Scareclaw Kashtira","reason":1536}
+Ban-up>Hand-            6 named      6 wrong 0 {"pair":"sky-kashtira","seed":500,"first":0,"card":"Kashtira Ogre","reason":64}
+Ban-up>M-up            28 named     28 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Kashtira Ogre","reason":2048}
+Deck->Ban-down        271 named      0 wrong 0 {"pair":"branded-sky","seed":500,"first":0,"card":"Upstart Goblin","reason":128}
+Deck->Ban-up           42 named     42 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Kashtira Ogre","reason":128}
+Deck->Deck-            25 named      0 wrong 0 {"pair":"branded-hero","seed":500,"first":0,"reason":262216}
+Deck->GY-             104 named    104 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Fallen of Albaz","reason":262216}
+Deck->Hand-           302 named      0 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Guiding Quem, the Virtuous","reason":64}
+Deck->M-up            189 named    189 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Hu-Li the Jewel Mikanko","reason":2048}
+Deck->S-down           31 named      0 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Mikanko Water Arabesque","reason":0}
+Deck->S-up             11 named     11 wrong 0 {"pair":"branded-blueeyes","seed":500,"first":0,"card":"True Light","reason":0}
+Ex-down>Ban-down        5 named      0 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Lubellion the Searing Dragon","reason":64}
+Ex-down>Ban-up          4 named      4 wrong 0 {"pair":"kashtira-branded","seed":500,"first":0,"card":"Granguignol the Dusk Dragon","reason":67108928}
+Ex-down>GY-            42 named     42 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Titaniklad the Ash Dragon","reason":64}
+Ex-down>M-up          348 named    348 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Lubellion the Searing Dragon","reason":2048}
+Ex-down>S-up            4 named      4 wrong 0 {"pair":"sky-blueeyes","seed":500,"first":0,"card":"Neo Blue-Eyes Ultimate Dragon","reason":0}
+Ex-up>GY-               2 named      2 wrong 0 {"pair":"mikanko-kashtira","seed":500,"first":0,"card":"Sanaki the Mikanko Devotee","reason":1536}
+GY->Ban-down           47 named     47 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Guiding Quem, the Virtuous","reason":64}
+GY->Ban-up            126 named    126 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Tri-Brigade Mercourier","reason":64}
+GY->Deck-              27 named     27 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Fallen of Albaz","reason":262216}
+GY->Ex-down            12 named     12 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Despian Luluwalilith","reason":64}
+GY->GY-                13 named     13 wrong 0 {"pair":"mikanko-branded","seed":500,"first":0,"card":"Ha-Re the Sword Mikanko","reason":1536}
+GY->Hand-              63 named     63 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Blazing Cartesia, the Virtuous","reason":64}
+GY->M-up              159 named    159 wrong 0 {"pair":"branded-luna","seed":500,"first":0,"card":"Lunalight Black Sheep","reason":2048}
+GY->S-down              3 named      3 wrong 0 {"pair":"sky-toon","seed":500,"first":0,"card":"Sky Striker Special Maneuver - Lemnisgate!","reason":1024}
+GY->S-up               22 named     22 wrong 0 {"pair":"mikanko-branded","seed":500,"first":0,"card":"Sanaki the Mikanko Devotee","reason":1536}
+Hand->Ban-down          3 named      0 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Fusion Deployment","reason":64}
+Hand->Ban-up           31 named     31 wrong 0 {"pair":"sky-hero","seed":500,"first":0,"card":"Sky Striker Mecha - Widow Anchor","reason":64}
+Hand->Deck-             9 named      0 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Albion the Shrouded Dragon","reason":64}
+Hand->GY-             229 named    229 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Tri-Brigade Mercourier","reason":16512}
+Hand->M-up            322 named    322 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Blazing Cartesia, the Virtuous","reason":2048}
+Hand->S-down          164 named      0 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Mikanko Spiritwalk","reason":64}
+Hand->S-up            460 named    460 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Branded Fusion","reason":33555456}
+M-up>Ban-down          16 named     16 wrong 0 {"pair":"sky-kashtira","seed":500,"first":0,"card":"Sky Striker Ace - Raye","reason":64}
+M-up>Ban-up           110 named    110 wrong 0 {"pair":"branded-sky","seed":500,"first":0,"card":"Granguignol the Dusk Dragon","reason":128}
+M-up>Deck-             11 named     11 wrong 0 {"pair":"branded-hero","seed":500,"first":0,"card":"Destiny HERO - Malicious","reason":262216}
+M-up>Ex-down           12 named     12 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Lubellion the Searing Dragon","reason":262216}
+M-up>Ex-up            140 named    140 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Kashtira Unicorn","reason":2097160}
+M-up>GY-              550 named    550 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Blazing Cartesia, the Virtuous","reason":262216}
+M-up>Hand-             30 named     30 wrong 0 {"pair":"branded-luna","seed":500,"first":0,"card":"Lunalight Black Sheep","reason":64}
+M-up>M-up              21 named     21 wrong 0 {"pair":"mikanko-sky","seed":500,"first":0,"card":"Sky Striker Ace - Kagari","reason":2048}
+M-up>S-up               5 named      5 wrong 0 {"pair":"mikanko-sky","seed":500,"first":0,"card":"Sky Striker Ace = Zero","reason":2048}
+OVERLAY card           98 named      0 wrong 0 {"pair":"branded-kashtira","seed":500,"first":0,"card":"Kashtira Unicorn","from":{"controller":1,"location":4,"sequence":5,"position":1,"overlay_sequence":0},"to":{"controller":1,"location":16,"sequence":2,"position":5}}
+S-down>Ban-up           6 named      6 wrong 0 {"pair":"sky-mikanko","seed":500,"first":0,"card":"Sky Striker Mecha - Widow Anchor","reason":64}
+S-down>GY-             19 named     19 wrong 0 {"pair":"sky-branded","seed":500,"first":0,"card":"Sky Striker Mecha - Widow Anchor","reason":65}
+S-down>Hand-            1 named      0 wrong 0 {"pair":"sky-toon","seed":500,"first":0,"card":"Sky Striker Mecha - Widow Anchor","reason":64}
+S-up>Ban-down           3 named      3 wrong 0 {"pair":"sky-kashtira","seed":500,"first":0,"card":"Sky Striker Airspace - Area Zero","reason":64}
+S-up>Ban-up            57 named     57 wrong 0 {"pair":"sky-toon","seed":500,"first":0,"card":"Sky Striker Special Maneuver - Lemnisgate!","reason":67109888}
+S-up>Ex-up              1 named      1 wrong 0 {"pair":"blueeyes-luna","seed":500,"first":0,"card":"Lunalight Tiger","reason":65}
+S-up>GY-              423 named    423 wrong 0 {"pair":"branded-mikanko","seed":500,"first":0,"card":"Branded Fusion","reason":1024}
+S-up>Hand-             10 named     10 wrong 0 {"pair":"mikanko-luna","seed":500,"first":0,"card":"Lunalight Wolf","reason":64}
+S-up>M-up               3 named      3 wrong 0 {"pair":"blueeyes-hero","seed":500,"first":0,"card":"Vision HERO Increase","reason":2048}
+TOKEN/none token       11 named      0 wrong 0 {"pair":"mikanko-sky","seed":500,"first":0,"card":"Sky Striker Ace Token","from":{"controller":1,"location":4,"sequence":0,"position":4},"to":{"controller":0,"location":0,"sequence":0,"position":0}}

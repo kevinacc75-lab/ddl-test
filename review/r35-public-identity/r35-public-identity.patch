@@ -1,0 +1,313 @@
+diff --git a/dist/duel.mjs b/dist/duel.mjs
+index eeda22a..a9b71a6 100644
+--- a/dist/duel.mjs
++++ b/dist/duel.mjs
+@@ -3,6 +3,7 @@ import {Knowledge} from './ai/knowledge.mjs';
+ import {hashPublicState} from './ai/guard.mjs';
+ import {decodeEffectId} from './effect-id.mjs';
+ import {shuffleDeck,engineSeeds} from './random.mjs';
++import {publicMove} from './public-identity.mjs'; // r35: who may know a moving card (Alexis ruling, Seto L1)
+ import {overrideScript} from './script-overrides.mjs'; // TASK c: TCG-text script fixes (HERO D1/D2/D4/D5)
+ import createCore,{OcgDuelMode as D,OcgMessageType as M,OcgQueryFlags as Q,OcgResponseType as R,cardMatchesOpcode} from './core/index.js';
+ export const LOC={1:'Deck',2:'Hand',4:'Monster zone',8:'Spell / Trap zone',16:'Graveyard',32:'Banished',64:'Extra Deck',128:'Xyz material'};
+@@ -50,7 +51,7 @@ export class Duel {
+   if(m.type===M.CHAIN_SOLVED){this.event('resolutionReady',{chain:m.chain_size});this.resolvingChain=null;this.chain=this.chain.map(c=>c.chain_size===m.chain_size?{...c,solved:true}:c)}
+   if([M.SUMMONING,M.SPSUMMONING,M.FLIPSUMMONING].includes(m.type)){this.record(((m.position&5)?this.copyName(m.code,m):'Face-down monster')+' · '+(m.type===M.SUMMONING?'Normal Summon':m.type===M.FLIPSUMMONING?'Flip Summon':'Special Summon'),'summon');const logged=this.log.at(-1);if((m.position&5)&&!logged.text.includes(' #')){logged.identityRef={code:m.code,controller:m.controller,location:m.location||4,sequence:m.sequence};this.pendingIdentityEntries?.add(logged)}this.pendingSummons=this.pendingSummons.filter(c=>c.controller!==m.controller||c.sequence!==m.sequence);this.pendingSummons.push(m)}
+   if([M.SUMMONED,M.SPSUMMONED,M.FLIPSUMMONED].includes(m.type)){const before={[M.SUMMONED]:M.SUMMONING,[M.SPSUMMONED]:M.SPSUMMONING,[M.FLIPSUMMONED]:M.FLIPSUMMONING}[m.type];for(const c of this.pendingSummons.filter(c=>c.type===before))if(c.position&5)this.event('summon',{code:c.code,player:this.fromEngine(c.controller),sequence:c.sequence,special:m.type===M.SPSUMMONED,kind:m.type===M.FLIPSUMMONED?'flip':m.type===M.SPSUMMONED?'special':'normal'});this.pendingSummons=this.pendingSummons.filter(c=>c.type!==before)}
+-  if(m.type===M.MOVE){const copy=this.moveIdentity(m);const from=LOC[m.from.location]||'Zone',to=LOC[m.to.location]||'Zone';if(m.to.location!==4)this.pendingSummons=this.pendingSummons.filter(c=>c.code!==m.card||c.controller!==m.from.controller);if(m.card&&m.to.location!==1&&m.from.location!==1){const concealed=([4,8,32,64].includes(m.to.location)&&!(m.to.position&5))||m.to.location===2;this.record((concealed?'A card':copy||this.name(m.card))+' · '+from+' → '+to,'move');if(!concealed&&!copy){const logged=this.log.at(-1);logged.identityRef={code:m.card,...m.to};this.pendingIdentityEntries?.add(logged)}}if(m.from.location&&m.to.location)this.event('move',{reason:m.reason||0,code:([1,2].includes(m.to.location)||([4,8,32,64].includes(m.to.location)&&!(m.to.position&5)))?0:m.card,from:{...m.from,controller:this.fromEngine(m.from.controller)},to:{...m.to,controller:this.fromEngine(m.to.controller)}})}
++  if(m.type===M.MOVE){const copy=this.moveIdentity(m);const from=LOC[m.from.location]||'Zone',to=LOC[m.to.location]||'Zone';if(m.to.location!==4)this.pendingSummons=this.pendingSummons.filter(c=>c.code!==m.card||c.controller!==m.from.controller);if(m.card&&m.to.location!==1&&m.from.location!==1){const concealed=!publicMove(m.from,m.to);/* r35: one rule with the event code (public-identity.mjs, L1) */this.record((concealed?'A card':copy||this.name(m.card))+' · '+from+' → '+to,'move');if(!concealed&&!copy){const logged=this.log.at(-1);logged.identityRef={code:m.card,...m.to};this.pendingIdentityEntries?.add(logged)}}if(m.from.location&&m.to.location)this.event('move',{reason:m.reason||0,code:publicMove(m.from,m.to)?m.card:0,from:{...m.from,controller:this.fromEngine(m.from.controller)},to:{...m.to,controller:this.fromEngine(m.to.controller)}})}
+   if(m.type===M.DRAW){this.record(this.decks[p].name+' draws '+m.drawn.length+' card'+(m.drawn.length===1?'':'s'),'draw');this.event('draw',{player:p,count:m.drawn.length})}
+   if(m.type===M.ATTACK)this.event('attack',{code:this.lastCard,from:{...m.card,controller:this.fromEngine(m.card.controller)},to:m.target?{...m.target,controller:this.fromEngine(m.target.controller)}:null});
+   if([M.DAMAGE,M.PAY_LPCOST].includes(m.type)){
+diff --git a/dist/fusion-materials.mjs b/dist/fusion-materials.mjs
+index cb0bc6a..7baf685 100644
+--- a/dist/fusion-materials.mjs
++++ b/dist/fusion-materials.mjs
+@@ -1,4 +1,5 @@
+ // Presentation-only B1. Input is the worker's public event stream, never duel state.
++import {publicMove} from './public-identity.mjs';
+ const MATERIAL = 8, FUSION = 262144;
+ export const MATERIAL_MS = Object.freeze({learning:4000, duel:2000, broadcast:1200, instant:0});
+ const zone = location => ({1:'Deck',2:'Hand',4:'Field',8:'Field',16:'GY',32:'Banished',64:'Extra Deck'})[location] || 'Unknown zone';
+@@ -6,59 +7,24 @@ const isMaterial = e => e.type === 'move' && (e.reason & MATERIAL) && (e.reason
+ 
+ export function publicMaterial(e) {
+   const from = e.from || {}, to = e.to || {};
+-  // Face-down cards remain anonymous even if the destination event now names them.
+-  const faceDown = [4,8,32,64].includes(from.location) && !(from.position & 5);
+-  // r34: an Xyz Material arrives as location 64 with an overlay_sequence. Xyz Materials are public (they were face-up
+-  // on the field), so they are not treated as an Extra Deck card. Face-down origins stay anonymous.
++  // r34: an Xyz Material arrives as location 64 with an overlay_sequence; it is shown as an Xyz Material, not an Extra Deck card.
+   const overlay = to.overlay_sequence !== undefined && from.location === 4;
+-  // r34 (ChatGPT RELAY-022 #4): a material shuffled into the Deck from a public place (face-up on the field, the GY or
+-  // face-up banished, e.g. Lubellion's Fusion) was already known, so it keeps its name. From the hand it stays anonymous.
+-  // r34.1 (ChatGPT RELAY-030 R34-01): the same holds for a public material returned face-down to the Extra Deck. The
+-  // engine wrapper masks such codes (duel.mjs, by destination), so FusionMaterials restores them from earlier public
+-  // events (PublicTracker below); a card that never was public stays anonymous.
+-  const publicSource = !faceDown && [4,8,16,32].includes(from.location) && (from.location === 16 || (from.position & 5));
+-  const hidden = faceDown || !e.code || (!overlay && !publicSource && [1,2,64].includes(to.location)) || (to.location === 32 && !(to.position & 5));
++  // r35 (Alexis ruling, Seto L1 / P6): the same rule as the engine wrapper's move event (public-identity.mjs): named if
++  // the source was public, or the destination is public. The wrapper already sends code 0 otherwise; a code-0 event
++  // always stays anonymous here, and no name is ever restored from memory (the r34.1 PublicTracker is retired).
++  const hidden = !e.code || !publicMove(from, to);
+   return Object.freeze({code:hidden ? 0 : e.code, hidden, origin:zone(from.location), destination:overlay ? 'Xyz Material' : zone(to.location), controller:from.controller, destinationController:to.controller, destinationLocation:to.location});
+ }
+ 
+ // Match in native public order BEFORE ChainDirector extracts boss cut-ins. This
+ // matters when one resolution confirms more than one Fusion. No choice inference.
+-// r34.1: remembers which card is where, from the public event stream only (moves that named a card, summons). Field
+-// zones by slot; GY and banishment as ordered piles (the engine's sequence is the index; later cards shift down when
+-// one leaves). Face-down cards are stored as unknown. Used only to put back a name the wrapper masked on a material
+-// that left a public place.
+-export class PublicTracker {
+-  constructor() { this.reset(); }
+-  reset() { this.field = new Map(); this.piles = new Map(); }
+-  pile(c, l) { const k = c + ':' + l; if (!this.piles.has(k)) this.piles.set(k, []); return this.piles.get(k); }
+-  take(z) {
+-    if (!z) return 0;
+-    if (z.overlay_sequence !== undefined && (z.location === 4 || z.location === 64)) return 0; // an Xyz Material leaving its monster: not the monster itself
+-    if (z.location === 4 || z.location === 8) { const k = z.controller + ':' + z.location + ':' + z.sequence, c = this.field.get(k) || 0; this.field.delete(k); return c; }
+-    if (z.location === 16 || z.location === 32) { const p = this.pile(z.controller, z.location); return z.sequence >= 0 && z.sequence < p.length ? (p.splice(z.sequence, 1)[0] || 0) : 0; }
+-    return 0;
+-  }
+-  put(z, code) {
+-    if (!z) return;
+-    const up = !!(z.position & 5);
+-    if (z.location === 4 || z.location === 8) { if (z.overlay_sequence === undefined) this.field.set(z.controller + ':' + z.location + ':' + z.sequence, up ? code : 0); return; }
+-    if (z.location === 16 || z.location === 32) { const p = this.pile(z.controller, z.location), c = z.location === 32 && !up ? 0 : code; if (z.sequence >= 0 && z.sequence <= p.length) p.splice(z.sequence, 0, c); else p.push(c); }
+-  }
+-  // returns the public code for a move (the event's own code, or the remembered one if the source was public)
+-  // Only field slots are trusted: on 24 base-AI duels (6 matchups x seeds 121-124) the field memory matched every named move out of the field
+-  // (557 / 557), but GY / banished piles drifted (21 wrong of 184: owner vs controller, simultaneous sends), so a pile
+-  // source is never re-named (it stays "face-down material" rather than risk a wrong name).
+-  move(e) { const was = this.take(e.from), code = e.code || was; this.put(e.to, code); return e.from && (e.from.location === 4 || e.from.location === 8) ? was : 0; }
+-}
+-
+ export class FusionMaterials {
+-  constructor() { this.tracker = new PublicTracker(); this.reset(); }
+-  reset() { this.pending = []; this.confirmed = new Map(); this.tracker?.reset(); }
++  constructor() { this.reset(); }
++  reset() { this.pending = []; this.confirmed = new Map(); }
+   observe(events, db) {
+     for (const e of events) {
+       if (['turn','win','chainEnd','resolve','resolutionReady'].includes(e.type) || e.type === 'activate') this.pending = [];
+-      const was = e.type === 'move' ? this.tracker.move(e) : 0;
+-      if (isMaterial(e)) this.pending.push({id:e.id, value:publicMaterial(e.code || !was ? e : {...e, code:was})});
++      if (isMaterial(e)) this.pending.push({id:e.id, value:publicMaterial(e)});
+       if (e.type === 'summon') {
+         if (e.special && (db[e.code]?.type & 64) && this.pending.length) {
+           this.confirmed.set(e.id, {items:this.pending.map(m=>m.value), moveIds:this.pending.map(m=>m.id)});
+diff --git a/dist/public-identity.mjs b/dist/public-identity.mjs
+new file mode 100644
+index 0000000..c94974a
+--- /dev/null
++++ b/dist/public-identity.mjs
+@@ -0,0 +1,29 @@
++// r35 (Claude, 24 Oct 2026): the ONE rule for "may the opponent know which card moved?" (Alexis Rhodes, rules ruling
++// "r35-public-identity-rulings-alexis-2026-10-23"; Seto L1-L4, 23 Oct 21:40 / 21:45). Used by duel.mjs for the move
++// event's code AND the log's concealed flag (L1), and by the Fusion-materials panel and the summon scene (P6), so there
++// is no second path.
++// Name the card if (a) its SOURCE was public at the moment of the move, or (b) its DESTINATION is public, or
++// (c) it was revealed and the reveal still applies. Otherwise code 0.
++//  - Public: face-up field (Monster Zones, Spell/Trap Zones incl. Pendulum and Field Zone), the GY, face-up banished,
++//    face-up Extra Deck (Pendulums), Xyz Materials (the core reports an overlay source as a face-up Monster Zone card).
++//  - Private: the Deck, the hand, face-down field cards (Set / face-down Defense), face-down banished, face-down Extra Deck.
++//  - L2: (c) is DEFERRED in r35. A revealed hand card moving to a private place stays hidden (under-naming, legal).
++//  - L3 (Seto): a face-up card bounced from the field to the hand is named by (a); a face-down one stays hidden.
++//  - Deck sources are private: a search is made public by the script's ConfirmCards, a mill by its public destination.
++// "Position at the moment of the move" = the position in the engine's MOVE message, never a remembered earlier state.
++const FACE_UP = 5; // POS_FACEUP_ATTACK | POS_FACEUP_DEFENSE
++const PLACES = [4, 8, 32, 64]; // places where face-up / face-down decides
++export function publicSource(from) {
++  const l = from?.location || 0;
++  if (l === 16) return true;
++  if (PLACES.includes(l)) return !!(from.position & FACE_UP);
++  return false; // Deck, hand, or no place
++}
++// Unchanged from r34 (the old destination-only test): private only for the Deck, the hand, or a face-down place.
++export function publicDestination(to) {
++  const l = to?.location || 0;
++  if (l === 1 || l === 2) return false;
++  if (PLACES.includes(l)) return !!(to.position & FACE_UP);
++  return true; // GY, leaving play (Tokens), overlay
++}
++export function publicMove(from, to) { return publicSource(from) || publicDestination(to); }
+diff --git a/tests/r34-book-additions.test.mjs b/tests/r34-book-additions.test.mjs
+index a9032be..19fd076 100644
+--- a/tests/r34-book-additions.test.mjs
++++ b/tests/r34-book-additions.test.mjs
+@@ -56,17 +56,21 @@ assert.doesNotMatch(css,/url\(/,'no external images');
+ // 4
+ const xyzMat=publicMaterial({type:'move',code:94392192,reason:2097160,from:{controller:0,location:4,sequence:0,position:1},to:{controller:0,location:64,sequence:0,position:1,overlay_sequence:0}});
+ assert.equal(xyzMat.hidden,false);assert.equal(xyzMat.code,94392192);assert.equal(xyzMat.destination,'Xyz Material');
+-assert.equal(publicMaterial({type:'move',code:94392192,reason:2097160,from:{controller:0,location:4,sequence:0,position:8},to:{controller:0,location:64,sequence:0,position:1,overlay_sequence:0}}).hidden,true,'face-down origin stays hidden');
++// r35 (Alexis ruling): an attached Xyz Material is face-up and public, so a face-down card attached as material is named (destination public).
++assert.equal(publicMaterial({type:'move',code:94392192,reason:2097160,from:{controller:0,location:4,sequence:0,position:8},to:{controller:0,location:64,sequence:0,position:1,overlay_sequence:0}}).hidden,false,'attached as a face-up Xyz Material: public');
+ assert.equal(publicMaterial({type:'move',code:94392192,reason:8,from:{controller:0,location:2,sequence:0,position:10},to:{controller:0,location:64,sequence:0,position:10}}).hidden,true,'a card from the hand to the Extra Deck stays hidden');
+ {const {FusionMaterials}=await import('../dist/fusion-materials.mjs'),fm=new FusionMaterials(),FUS=262144|8,mirror=code('Mirrorjade the Iceblade Dragon'),albaz=code('Fallen of Albaz'),gran=code('Granguignol the Dusk Dragon');
+- // r34.1 (ChatGPT RELAY-030 R34-01): the wrapper masks the code of a material going face-down into the Extra Deck / Deck;
+- // a card seen face-up on the field keeps its name, a GY source stays anonymous (pile memory is not trusted).
++ // r35 (Alexis ruling, Seto L1): the engine wrapper now names a material whose source was public (public-identity.mjs),
++ // so the panel shows the event's own code; a code-0 event stays anonymous and no name is restored from memory
++ // (the r34.1 PublicTracker is retired).
+  fm.observe([{id:1,type:'move',code:albaz,reason:0,from:{controller:0,location:2,sequence:0,position:10},to:{controller:0,location:4,sequence:2,position:1}},
+   {id:2,type:'move',code:gran,reason:0,from:{controller:0,location:64,sequence:0,position:10},to:{controller:0,location:4,sequence:5,position:1}},
+-  {id:3,type:'move',code:0,reason:FUS,from:{controller:0,location:4,sequence:5,position:1},to:{controller:0,location:64,sequence:0,position:10}},
+-  {id:4,type:'move',code:0,reason:FUS,from:{controller:0,location:16,sequence:0,position:1},to:{controller:0,location:1,sequence:0,position:10}},
+-  {id:5,type:'summon',code:mirror,player:0,sequence:6,special:true}],db);
+- const g=[...fm.confirmed.values()][0];assert.equal(g.items[0].code,gran,'field material named again (Field -> Extra Deck)');assert.equal(g.items[0].hidden,false);assert.equal(g.items[1].hidden,true,'GY source stays anonymous')}
++  {id:3,type:'move',code:gran,reason:FUS,from:{controller:0,location:4,sequence:5,position:1},to:{controller:0,location:64,sequence:0,position:10}},
++  {id:4,type:'move',code:albaz,reason:FUS,from:{controller:0,location:16,sequence:0,position:1},to:{controller:0,location:1,sequence:0,position:10}},
++  {id:5,type:'move',code:0,reason:FUS,from:{controller:0,location:4,sequence:2,position:1},to:{controller:0,location:64,sequence:0,position:10}},
++  {id:6,type:'summon',code:mirror,player:0,sequence:6,special:true}],db);
++ const g=[...fm.confirmed.values()][0];assert.equal(g.items[0].code,gran,'Field -> Extra Deck material named');assert.equal(g.items[1].code,albaz,'GY -> Deck material named');
++ assert.equal(g.items[2].hidden,true,'a code-0 event stays anonymous (no memory restore)')}
+ {const toDeck=(loc,pos)=>publicMaterial({type:'move',code:94392192,reason:2097160,from:{controller:0,location:loc,sequence:0,position:pos},to:{controller:0,location:1,sequence:0,position:1}});
+  assert.equal(toDeck(16,1).hidden,false,'GY material shuffled into the Deck keeps its name (Lubellion)');assert.equal(toDeck(4,1).hidden,false,'face-up field material keeps its name');
+  assert.equal(toDeck(2,1).hidden,true,'hand material stays anonymous');assert.equal(toDeck(4,8).hidden,true,'face-down material stays anonymous');assert.equal(toDeck(16,1).destination,'Deck')}
+diff --git a/tests/r35-public-identity.test.mjs b/tests/r35-public-identity.test.mjs
+new file mode 100644
+index 0000000..4786711
+--- /dev/null
++++ b/tests/r35-public-identity.test.mjs
+@@ -0,0 +1,103 @@
++// r35 (Claude, 24 Oct): public-identity fix (R34-01) on the REAL event stream, to Alexis's ruling
++// ("r35-public-identity-rulings-alexis-2026-10-23") and Seto's limits L1-L4 (23 Oct 21:40 / 21:45, 24 Oct 00:10).
++// Rule (dist/public-identity.mjs): name the moving card if its SOURCE was public at the moment of the move, OR its
++// DESTINATION is public; otherwise code 0. (c) "active reveal" is DEFERRED (L2): a revealed hand card stays hidden.
++// The spec below is written separately from Alexis's table (not imported from the helper), then checked against every
++// engine MOVE in the duels played here: event code, log text (L1) and the Fusion panel / summon summary (P6).
++//  P1  Super Polymerization reproducer (exact board dealt, real engine): face-up field -> Extra Deck material named
++//  P2  GY -> Deck Fusion material named (Branded v Mikanko seed 121, Mikanko first: Fallen of Albaz)
++//  P3  seed 121 Lubellion -> Mirrorjade: both materials named in the event stream and the Fusion panel
++//  P4  face-up Pendulum Zone -> face-up Extra Deck named; the opponent's snapshot shows it
++//  P5  face-up banished -> Deck named
++//  P6  seed 121 Mirrorjade summon summary names both public materials (same helper)
++//  C1  hand -> Deck stays code 0          C2  Set card -> hand stays code 0
++//  C3  private at both ends stays code 0: face-down Extra Deck -> face-down banished, Deck -> face-down banished.
++//      (Face-down banished -> Deck never occurs with the 8 preset decks; the rule test below covers it.)
++//  C4  face-down Extra Deck: opponent snapshot hidden, owner sees the code
++//  R1  Set card destroyed -> GY named     R2  Xyz Material detached -> GY named, parsed with no error
++//  R3  a Token leaving the field: no move event, no material entry, no error
++//  R5  (L3) face-up field -> hand named; face-down field -> hand code 0
++//  R4  (responsesHash) is tools/r35-identity-hash.mjs, run before/after; not repeated here (too slow for a test).
++import assert from 'node:assert/strict';import fs from 'node:fs';import zlib from 'node:zlib';
++import {Duel,M} from '../dist/duel.mjs';import {createOptimalPilots} from '../dist/optimal-pilot.mjs';import {safeView} from '../dist/ai/knowledge.mjs';
++import {FusionMaterials} from '../dist/fusion-materials.mjs';import {SummonCutscenes,summonLine} from '../dist/summon-cutscenes.mjs';
++import {publicMove} from '../dist/public-identity.mjs';
++import {loadBuild,scenario,LOC,POS,deck,code,toIdle} from './lib/engine-scenario.mjs';
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
++const all=JSON.parse(fs.readFileSync('dist/decks.json')).decks.map(d=>d.banlistVariants?.['tcg-2026-10-19']?{...d,...d.banlistVariants['tcg-2026-10-19']}:d);
++const pick=id=>all.find(d=>d.id===id);
++// Alexis's table, written out independently: is this place/position public to the opponent?
++const isPublic=z=>{const l=z?.location||0,up=!!(z?.position&5);return l===16||([4,8,32,64].includes(l)&&up)};
++const destPublic=z=>{const l=z?.location||0;if(l===1||l===2)return false;if([4,8,32,64].includes(l))return !!(z.position&5);return true};
++const spec=(from,to)=>isPublic(from)||destPublic(to);
++const L=l=>({1:'Deck',2:'Hand',4:'M',8:'S',16:'GY',32:'Ban',64:'Ex'})[l]??String(l);
++const key=m=>L(m.from.location)+([4,8,32,64].includes(m.from.location)?((m.from.position&5)?'-up':'-down'):'')+'>'+L(m.to.location)+([4,8,32,64].includes(m.to.location)?((m.to.position&5)?'-up':'-down'):'');
++const seen={};let moves=0,logChecks=0;
++// Hook one Duel: pair every engine MOVE with the event and log line the wrapper made from it.
++function watch(d){const evs=[],oe=d.event.bind(d);d.event=(t,x)=>{oe(t,x);evs.push(d.events.at(-1))};
++ const hm=d.handleMessage.bind(d);d.handleMessage=m=>{if(m.type!==M.MOVE)return hm(m);const e0=evs.length,l0=d.log.length;const r=hm(m);
++  const ev=evs.slice(e0).find(e=>e.type==='move'),logged=d.log.slice(l0).find(e=>e.kind==='move'),k=key(m);
++  if(!m.to.location){(seen.TOKEN??=[]).push(k);assert.equal(ev,undefined,'R3: leaving play (Token) makes no move event');return r}
++  if(m.from.overlay_sequence!==undefined)(seen.OVERLAY??=[]).push([k,ev?.code===m.card]);
++  if(ev){moves++;const want=spec(m.from,m.to)?m.card:0;assert.equal(ev.code,want,k+' '+db[m.card]?.name+': event code follows the rule');(seen[k]??=[]).push(ev.code);
++   if(logged){const text=logged.text??logged.message??String(logged.line??'');if(text){logChecks++;assert.equal(/^A card /.test(text),!want,'L1: log concealed flag = event code ('+k+')')}}}
++  return r};return evs}
++function play(a,b,seed,first){const live=play.live;const d=new Duel(live.core,db,scripts),pilots=createOptimalPilots({seed,searchEnabled:false});const evs=watch(d);
++ d.start([pick(a),pick(b)],{seed,first});let k=0;while(d.prompt&&!d.finished&&k++<1500){const p=pilots[d.prompt.seat],plan=p.base(safeView(d,d.prompt.seat));if(!plan?.response)break;d.respond(plan.response);p.observe(plan)}
++ return {d,evs}}
++play.live=await Duel.create(db,scripts);
++// --- P2 / P3 / P6: Branded v Mikanko seed 121, Mikanko (seat B) first
++{const {d,evs}=play('branded','mikanko',121,1);const fm=new FusionMaterials(),sc=new SummonCutscenes();fm.observe(evs,db);sc.observe(evs,db);
++ const mirror=code('Mirrorjade the Iceblade Dragon'),lub=code('Lubellion the Searing Dragon'),albaz=code('Fallen of Albaz');
++ const g=[...fm.confirmed].find(([id])=>evs.find(e=>e.id===id)?.code===mirror)?.[1];assert.ok(g,'P3: Mirrorjade Fusion seen');
++ assert.deepEqual(g.items.map(i=>[i.code,i.origin,i.destination]),[[lub,'Field','Extra Deck'],[albaz,'GY','Deck']],'P3: both public materials named (Field -> Extra Deck, GY -> Deck)');
++ const info=[...sc.confirmed].find(([id])=>evs.find(e=>e.id===id)?.code===mirror)?.[1];const line=summonLine({code:mirror,b2Summon:info},db);
++ assert.match(line,/Public materials: Lubellion the Searing Dragon; Fallen of Albaz$/,'P6: summon summary names both');assert.doesNotMatch(line,/Face-down material/);d.stop?.()}
++// --- natural duels for the other cases (base AI, 19 Oct lists, seed 500)
++const snap={};
++for(const [a,b] of [['blueeyes','luna'],['branded','hero'],['branded','kashtira'],['sky','toon'],['sky','branded'],['branded','luna'],['mikanko','sky']]){const {d}=play(a,b,500,0);
++ if(a==='blueeyes'){// P4: Lunalight Tiger left the Pendulum Zone face-up to the Extra Deck; the opponent sees it there
++  const tiger=code('Lunalight Tiger'),seat=1,opp=d.snapshot(0).players[seat].zones[64].filter(Boolean);snap.p4=opp.some(c=>c.code===tiger&&!c.hidden)}
++ if(a==='branded'&&b==='kashtira'){// C4: face-down Extra Deck cards: hidden to the opponent, known to the owner
++  const own=d.snapshot(0).players[0].zones[64].filter(Boolean),opp=d.snapshot(1).players[0].zones[64].filter(Boolean);
++  snap.c4=own.some(c=>!((c.position||0)&5))&&own.filter(c=>!((c.position||0)&5)).every(c=>c.code&&!c.hidden)&&opp.filter(c=>!((c.position||0)&5)).every(c=>c.hidden)}
++ d.stop?.()}
++// --- P1: Super Polymerization reproducer (board dealt exactly; every step is the real engine and wrapper)
++{const b=await loadBuild(true),C=n=>code(n);
++ const d=scenario(b,{decks:[deck('branded'),deck('mikanko')],first:0,seed:7,place:[{code:C('Super Polymerization'),p:0,location:LOC.HAND},{code:C('Branded Fusion'),p:0,location:LOC.HAND},{code:C('Branded Opening'),p:0,location:LOC.HAND},
++  {code:C('Fallen of Albaz'),p:0,location:LOC.MZONE,sequence:2,position:POS.ATK},{code:C('Ohime the Manifested Mikanko'),p:1,location:LOC.MZONE,sequence:2,position:POS.ATK}]});
++ toIdle(b,d,0);const evs=watch(d),want=['Lubellion the Searing Dragon','Mirrorjade the Iceblade Dragon','Fallen of Albaz','Ohime the Manifested Mikanko','Branded Opening'];
++ const rank=s=>{const i=want.findIndex(w=>s.includes(w));return i<0?99:i};
++ const step=()=>{const m=d.prompt,ch=d.choices(),s=m.seat??m.player;
++  if(m.type===M.SELECT_UNSELECT_CARD){const fin=ch.find(o=>/finish|done|confirm/i.test(o.label));if(fin)return fin.response;return ch.filter(o=>/^Use/.test(o.label)).sort((x,y)=>rank(x.label)-rank(y.label))[0].response}
++  if(m.type===M.SELECT_CARD||m.type===M.SELECT_TRIBUTE){const cards=m.selects||m.select_cards||m.cards||[];const order=[...cards.keys()].sort((x,y)=>rank(d.name(cards[x].code))-rank(d.name(cards[y].code)));return {type:b.R.SELECT_CARD,indicies:order.slice(0,Math.max(m.min||1,1))}}
++  if(m.type===M.SELECT_EFFECTYN||m.type===M.SELECT_YESNO)return ch.find(o=>o.label===(s===0?'Yes':'No')).response;
++  if(m.type===M.SELECT_CHAIN)return (m.forced?ch[0]:ch.find(o=>o.response.index===null)).response;
++  return ch[0].response};
++ const run=label=>{d.respond(d.choices().find(o=>o.label===label).response);for(let i=0;i<80&&d.prompt&&!(d.prompt.type===M.SELECT_IDLECMD&&(d.prompt.seat??d.prompt.player)===0);i++)d.respond(step())};
++ run('Activate · Super Polymerization'); // Albion (Albaz + their Ohime), then its Fusion (Lubellion), then Lubellion's (Mirrorjade)
++ const mats=evs.filter(e=>e.type==='move'&&(e.reason&8)&&(e.reason&262144));
++ const f2x=mats.find(e=>e.from.location===4&&(e.from.position&5)&&e.to.location===64);assert.ok(f2x,'P1: a face-up field -> Extra Deck material move happened');assert.equal(f2x.code,code('Lubellion the Searing Dragon'),'P1: named');
++ const b2d=mats.find(e=>e.from.location===32&&(e.from.position&5)&&e.to.location===1);assert.ok(b2d,'P5 (reproducer): face-up banished -> Deck move happened');assert.equal(b2d.code,code('Fallen of Albaz'),'P5: named');
++ const fm=new FusionMaterials();fm.observe(evs,db);const last=[...fm.confirmed.values()].at(-1);assert.ok(last.items.every(i=>!i.hidden),'P1: Mirrorjade panel names every material');d.stop?.()}
++// --- every case seen, with the expected outcome
++const has=(k,named)=>(seen[k]||[]).length>0&&(seen[k]||[]).every(c=>named?c!==0:c===0);
++assert.ok(has('M-up>Ex-down',true),'P1 natural: face-up field -> Extra Deck named');
++assert.ok(has('GY>Deck',true),'P2: GY -> Deck named');
++assert.ok(has('S-up>Ex-up',true)&&snap.p4,'P4: face-up Pendulum -> face-up Extra Deck named, opponent sees it');
++assert.ok(has('Ban-up>Deck',true),'P5: face-up banished -> Deck named');
++assert.ok(has('Hand>Deck',false),'C1: hand -> Deck stays code 0');
++assert.ok(has('S-down>Hand',false),'C2: Set card -> hand stays code 0');
++assert.ok(has('Ex-down>Ban-down',false)&&has('Deck>Ban-down',false),'C3: private at both ends stays code 0');
++assert.ok(snap.c4,'C4: face-down Extra Deck hidden to the opponent, known to the owner');
++assert.ok(has('S-down>GY',true),'R1: Set card -> GY named');
++assert.ok((seen.OVERLAY||[]).length>0&&seen.OVERLAY.every(([,named])=>named),'R2: Xyz Material detached and named');
++assert.ok((seen.TOKEN||[]).length>0,'R3: a Token left the field with no move event');
++assert.ok(has('M-up>Hand',true)&&has('S-down>Hand',false),'R5 (L3): face-up bounce named, face-down bounce hidden');
++// rule cases that never occur with the preset decks (helper = spec)
++for(const [f,t,named] of [[{location:32,position:10},{location:1,position:10},false],[{location:4,position:10},{location:1,position:10},false],[{location:4,position:8},{location:2,position:10},false],
++ [{location:2,position:10},{location:64,position:10},false],[{location:64,position:5},{location:2,position:10},true],[{location:8,position:10},{location:32,position:5},true]])
++ assert.equal(publicMove(f,t),named,JSON.stringify([f,t]));
++for(const [f,t] of [[{location:16,position:5},{location:1}],[{location:4,position:1},{location:2}],[{location:32,position:8},{location:1}],[{location:2},{location:16}]])assert.equal(publicMove(f,t),spec(f,t));
++assert.ok(logChecks>100,'L1 checked on logged moves ('+logChecks+')');
++console.log(JSON.stringify({test:'r35-public-identity',pass:true,moves,logChecks,categories:Object.keys(seen).length,node:process.version,selfVerified:true}));
+diff --git a/tools/r35-identity-hash.mjs b/tools/r35-identity-hash.mjs
+new file mode 100644
+index 0000000..120f41b
+--- /dev/null
++++ b/tools/r35-identity-hash.mjs
+@@ -0,0 +1,31 @@
++// r35 (Claude, 24 Oct): Seto L4 identity check for the public-identity fix. Plays the S2b acceptance seeds
++// (2026, 12345, 808, 777, 4242, 555, 31337, 99; pairings exactly as tests/ai-gate.mjs S2b: decks branded/mikanko/sky/luna
++// in decks.json order, a=0, b=[1,2,3,0][i%4], first=i%2) and the smoke set (8 decks x 7 opponents, seeds 9100+k, as
++// tools/taskc-smoke.mjs), and hashes every AI response (sha1 of the JSON response list), so a build before and after
++// the change can be compared. Mode "base": base AI, full duels. Mode "search": optimal-pilot search (nodeBudget 400),
++// first N decisions per S2b seed. Also hashes the move events, which are EXPECTED to change.
++//   node tools/r35-identity-hash.mjs <root> base|search [maxDecisions]
++import fs from 'node:fs';import path from 'node:path';import zlib from 'node:zlib';import crypto from 'node:crypto';import {pathToFileURL} from 'node:url';
++const [ROOT,MODE='base',MAX='1500']=process.argv.slice(2);const imp=p=>import(pathToFileURL(path.resolve(ROOT,p)).href);
++const {Duel}=await imp('dist/duel.mjs'),{createOptimalPilots}=await imp('dist/optimal-pilot.mjs'),{safeView}=await imp('dist/ai/knowledge.mjs');
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(ROOT,'dist/cards.json.gz')))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(ROOT,'dist/scripts.json.gz'))));
++const all=JSON.parse(fs.readFileSync(path.resolve(ROOT,'dist/decks.json'))).decks;
++const v19=d=>d.banlistVariants?.['tcg-2026-10-19']?{...d,...d.banlistVariants['tcg-2026-10-19']}:d;
++const gate=all.filter(d=>['branded','mikanko','sky','luna'].includes(d.id)),smoke=all.map(v19);
++const sha=s=>crypto.createHash('sha1').update(s).digest('hex');
++const searchCore=MODE==='search'?await (await imp('dist/ai/engine-snapshot.mjs')).createSearchCore(db,scripts):null;
++const live=await Duel.create(db,scripts);const rows=[];
++async function play(tag,decks,seed,first){
++ const d=MODE==='search'?await Duel.create(db,scripts):new Duel(live.core,db,scripts);
++ const pilots=MODE==='search'?createOptimalPilots({seed,budget:400,nodeBudget:400,searchCore}):createOptimalPilots({seed,searchEnabled:false});
++ const responses=[];let err=null;
++ try{d.start(decks,{seed,first});while(d.prompt&&!d.finished&&responses.length<+MAX){const p=pilots[d.prompt.seat],plan=MODE==='search'?p.plan(d):p.base(safeView(d,d.prompt.seat));if(!plan?.response){err='no response';break}
++  responses.push(JSON.stringify(plan.response));d.respond(plan.response);if(MODE==='search')p.observe?.(plan);else p.observe(plan)}}catch(e){err=e.message}
++ const moves=d.events.filter(e=>e.type==='move').map(e=>e.code+':'+e.from?.location+'>'+e.to?.location).join(',');
++ const row={tag,seed,first,decks:decks.map(x=>x.id).join('-'),decisions:responses.length,finished:!!d.finished,winner:d.winner??null,err,responsesHash:sha(responses.join('\n')),moveHash:sha(moves),namedMoves:d.events.filter(e=>e.type==='move'&&e.code).length};
++ try{d.stop?.()}catch{}rows.push(row);console.error(JSON.stringify(row));
++}
++const S2B=[2026,12345,808,777,4242,555,31337,99];
++for(const [i,seed] of S2B.entries())await play('s2b',[gate[0],gate[[1,2,3,0][i%4]]],seed,i%2);
++if(MODE==='base')for(const me of smoke)for(let k=0;k<smoke.length-1;k++){const opp=smoke.filter(d=>d.id!==me.id)[k];await play('smoke',[me,opp],9100+k,k%2)}
++console.log(JSON.stringify({root:ROOT,mode:MODE,max:+MAX,node:process.version,duels:rows.length,all:sha(rows.map(r=>r.responsesHash).join(',')),rows}));
