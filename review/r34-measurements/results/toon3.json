@@ -1,0 +1,2640 @@
+{
+ "deck": "toon",
+ "list": "tcg-2026-10-19",
+ "search": false,
+ "order": "first",
+ "node": "v22.22.0",
+ "rows": [
+  {
+   "deck": "toon",
+   "opp": "branded",
+   "seed": 101,
+   "first": true,
+   "hand": [
+    "Toon Black Luster Soldier",
+    "Ash Blossom & Joyous Spring",
+    "Toon Cyber Dragon",
+    "Raigeki",
+    "Infinite Impermanence"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Black Luster Soldier",
+      "Ash Blossom & Joyous Spring",
+      "Toon Cyber Dragon",
+      "Raigeki",
+      "Infinite Impermanence"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Branded in High Spirits",
+       "Fallen of the White Dragon",
+       "Aluber the Jester of Despia",
+       "Springans Kitt",
+       "Bystial Magnamhut"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Toon Black Luster Soldier",
+       "Ash Blossom & Joyous Spring",
+       "Toon Cyber Dragon",
+       "Raigeki"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Branded in High Spirits",
+       "Fallen of the White Dragon",
+       "Aluber the Jester of Despia",
+       "Springans Kitt",
+       "Bystial Magnamhut",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "mikanko",
+   "seed": 102,
+   "first": true,
+   "hand": [
+    "Toon Table of Contents",
+    "Toon Terror",
+    "Triple Tactics Thrust",
+    "Toon Cyber Dragon",
+    "Mulcharmy Purulia"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Table of Contents",
+      "Toon Terror",
+      "Triple Tactics Thrust",
+      "Toon Cyber Dragon",
+      "Mulcharmy Purulia"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Sanaki the Mikanko Devotee",
+       "Preparation of Rites",
+       "Forbidden Droplet"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Table of Contents   [Opening book TO-01]",
+      "  pick [Toon Table of Contents h506]: Toon Kingdom   [Opening book pick (Toon Table of Contents)]",
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "set S/T: Toon Terror",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Toon Terror"
+      ],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Toon Cyber Dragon",
+       "Triple Tactics Thrust",
+       "Mulcharmy Purulia"
+      ],
+      "gy": [
+       "Toon Table of Contents"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Sanaki the Mikanko Devotee",
+       "Preparation of Rites",
+       "Forbidden Droplet",
+       "Mikanko Shinbu - Noble Twins"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "sky",
+   "seed": 103,
+   "first": true,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Infinite Impermanence",
+    "Toon Dark Magician",
+    "Mulcharmy Purulia",
+    "Toon Black Luster Soldier"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Fuwalos",
+      "Infinite Impermanence",
+      "Toon Dark Magician",
+      "Mulcharmy Purulia",
+      "Toon Black Luster Soldier"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mobilize - Linkage!",
+       "Droll & Lock Bird",
+       "Infinite Impermanence",
+       "Sky Striker Mecha - Widow Anchor"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "→ End Phase   [Hold]"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Infinite Impermanence",
+       "Toon Dark Magician",
+       "Mulcharmy Purulia",
+       "Toon Black Luster Soldier"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mobilize - Linkage!",
+       "Droll & Lock Bird",
+       "Infinite Impermanence",
+       "Sky Striker Mecha - Widow Anchor",
+       "Sky Striker Mobilize - Engage!"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "luna",
+   "seed": 104,
+   "first": true,
+   "hand": [
+    "Comic Hand",
+    "Toon Harpie Lady",
+    "Mulcharmy Fuwalos",
+    "Toon World",
+    "Toon Cyber Dragon"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Comic Hand",
+      "Toon Harpie Lady",
+      "Mulcharmy Fuwalos",
+      "Toon World",
+      "Toon Cyber Dragon"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Super Duper Polymerization",
+       "Infinite Impermanence",
+       "Lunalight Gold Leo",
+       "Polymerization"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon World   [Opening book TO-01]",
+      "activate: Toon Harpie Lady   [Opening book TO-01]",
+      "summon: Toon Cyber Dragon",
+      "  pick [Card details unavailable h500]: Toon Harpie Lady",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Cyber Dragon"
+      ],
+      "backrow": [
+       "Toon World"
+      ],
+      "field": [],
+      "hand": [
+       "Comic Hand",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Toon Harpie Lady"
+      ],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Super Duper Polymerization",
+       "Infinite Impermanence",
+       "Lunalight Gold Leo",
+       "Polymerization",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "blueeyes",
+   "seed": 105,
+   "first": true,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Red-Eyes Toon Dragon",
+    "Shadow Toon",
+    "Toon Black Luster Soldier",
+    "Toon Goblin Attack Force"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Fuwalos",
+      "Red-Eyes Toon Dragon",
+      "Shadow Toon",
+      "Toon Black Luster Soldier",
+      "Toon Goblin Attack Force"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunar Rabbit Omajinai",
+       "Infinite Impermanence",
+       "Mulcharmy Fuwalos",
+       "Wishes for Eyes of Blue",
+       "Primite Drillbeam"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "special: Toon Black Luster Soldier   [Opening book TO-01]",
+      "  pick [Card details unavailable h500]: Toon Goblin Attack Force",
+      "  pick [Card details unavailable h500]: Red-Eyes Toon Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Black Luster Soldier"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Shadow Toon"
+      ],
+      "gy": [
+       "Red-Eyes Toon Dragon",
+       "Toon Goblin Attack Force"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunar Rabbit Omajinai",
+       "Infinite Impermanence",
+       "Wishes for Eyes of Blue",
+       "Primite Drillbeam",
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "kashtira",
+   "seed": 106,
+   "first": true,
+   "hand": [
+    "Raigeki",
+    "Mulcharmy Fuwalos",
+    "Harpie's Feather Duster",
+    "Toon Harpie Lady",
+    "Toon Kingdom"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Raigeki",
+      "Mulcharmy Fuwalos",
+      "Harpie's Feather Duster",
+      "Toon Harpie Lady",
+      "Toon Kingdom"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Radian, the Multidimensional Kaiju",
+       "Interrupted Kaiju Slumber",
+       "Sacred Sword of Seven Stars",
+       "Scareclaw Kashtira"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "activate: Toon Harpie Lady   [Opening book TO-01]",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Harpie Lady DEF"
+      ],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Raigeki",
+       "Mulcharmy Fuwalos",
+       "Harpie's Feather Duster"
+      ],
+      "gy": [],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Radian, the Multidimensional Kaiju",
+       "Interrupted Kaiju Slumber",
+       "Sacred Sword of Seven Stars",
+       "Scareclaw Kashtira",
+       "Macro Cosmos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "hero",
+   "seed": 107,
+   "first": true,
+   "hand": [
+    "Triple Tactics Thrust",
+    "Mimicat",
+    "Toon Mask",
+    "Toon Goblin Attack Force",
+    "Toon Terror"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Triple Tactics Thrust",
+      "Mimicat",
+      "Toon Mask",
+      "Toon Goblin Attack Force",
+      "Toon Terror"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Vyon",
+       "Ash Blossom & Joyous Spring",
+       "Forbidden Droplet",
+       "E - Emergency Call",
+       "Vision HERO Faris"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Toon Goblin Attack Force",
+      "set S/T: Toon Mask",
+      "set S/T: Toon Terror",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Goblin Attack Force"
+      ],
+      "backrow": [
+       "set:Toon Mask",
+       "set:Toon Terror"
+      ],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Mimicat"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Vyon",
+       "Ash Blossom & Joyous Spring",
+       "Forbidden Droplet",
+       "E - Emergency Call",
+       "Vision HERO Faris",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "branded",
+   "seed": 108,
+   "first": true,
+   "hand": [
+    "Toon World",
+    "Triple Tactics Thrust",
+    "Toon Dark Magician",
+    "Toon Goblin Attack Force",
+    "The Black Stone of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon World",
+      "Triple Tactics Thrust",
+      "Toon Dark Magician",
+      "Toon Goblin Attack Force",
+      "The Black Stone of Legend"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Aluber the Jester of Despia",
+       "Super Polymerization",
+       "Nadir Servant",
+       "Fusion Deployment"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon World   [Opening book TO-01]",
+      "summon: The Black Stone of Legend   [Opening book TO-01]",
+      "activate: The Black Stone of Legend   [Opening book TO-01]",
+      "  pick [The Black Stone of Legend h509]: Red-Eyes Toon Dragon",
+      "activate: Red-Eyes Toon Dragon   [Opening book TO-01]",
+      "  pick [Red-Eyes Toon Dragon h509]: Toon Dark Magician",
+      "activate: Toon Dark Magician   [Opening book TO-01]",
+      "  pick [Toon Dark Magician h501]: Toon Goblin Attack Force",
+      "  option 0 (Toon Dark Magician)",
+      "  pick [Toon Dark Magician h509]: Toon Black Luster Soldier",
+      "special: Black Luster Soldier - Soldier of Chaos",
+      "  pick [Card details unavailable h533]: Red-Eyes Toon Dragon",
+      "  pick [Card details unavailable h533]: Toon Dark Magician",
+      "  pick [Card details unavailable h533]: Toon Black Luster Soldier",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Black Luster Soldier - Soldier of Chaos"
+      ],
+      "backrow": [
+       "Toon World"
+      ],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Toon Goblin Attack Force",
+       "Red-Eyes Toon Dragon",
+       "Toon Dark Magician",
+       "Toon Black Luster Soldier"
+      ],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Aluber the Jester of Despia",
+       "Super Polymerization",
+       "Nadir Servant",
+       "Fusion Deployment",
+       "Aluber the Jester of Despia"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "excluded": [
+    "t1 Toon Black Luster Soldier (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t1: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "mikanko",
+   "seed": 109,
+   "first": true,
+   "hand": [
+    "Toon Kingdom",
+    "Toon Terror",
+    "Toon World",
+    "Triple Tactics Thrust",
+    "Harpie's Feather Duster"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Kingdom",
+      "Toon Terror",
+      "Toon World",
+      "Triple Tactics Thrust",
+      "Harpie's Feather Duster"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Mikanko Fire Dance",
+       "Preparation of Rites",
+       "Mikanko Water Arabesque",
+       "Preparation of Rites"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "set S/T: Toon Terror",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Toon Terror"
+      ],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Toon World",
+       "Triple Tactics Thrust",
+       "Harpie's Feather Duster"
+      ],
+      "gy": [],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Mikanko Fire Dance",
+       "Preparation of Rites",
+       "Mikanko Water Arabesque",
+       "Preparation of Rites",
+       "Ha-Re the Sword Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "sky",
+   "seed": 110,
+   "first": true,
+   "hand": [
+    "Toon Cyber Dragon",
+    "Mimicat",
+    "Mulcharmy Purulia",
+    "Toon World",
+    "Triple Tactics Thrust"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Cyber Dragon",
+      "Mimicat",
+      "Mulcharmy Purulia",
+      "Toon World",
+      "Triple Tactics Thrust"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Ace - Roze",
+       "Droll & Lock Bird",
+       "Sky Striker Mobilize - Linkage!",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon World   [Opening book TO-01]",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "Toon World"
+      ],
+      "field": [],
+      "hand": [
+       "Toon Cyber Dragon",
+       "Mimicat",
+       "Mulcharmy Purulia",
+       "Triple Tactics Thrust"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Ace - Roze",
+       "Droll & Lock Bird",
+       "Sky Striker Mobilize - Linkage!",
+       "Ash Blossom & Joyous Spring",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "luna",
+   "seed": 111,
+   "first": true,
+   "hand": [
+    "Toon World",
+    "Toon Page-Flip",
+    "Toon Table of Contents",
+    "Triple Tactics Thrust",
+    "Red-Eyes Toon Dragon"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon World",
+      "Toon Page-Flip",
+      "Toon Table of Contents",
+      "Triple Tactics Thrust",
+      "Red-Eyes Toon Dragon"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Black Sheep",
+       "Infinite Impermanence",
+       "Luna Light Perfume",
+       "Tri-Brigade Fraktall",
+       "Lunalight Masquerade"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Table of Contents   [Opening book TO-01]",
+      "  pick [Toon Table of Contents h506]: Toon Dark Magician   [Opening book pick (Toon Table of Contents)]",
+      "activate: Toon World   [Opening book TO-01]",
+      "chain: Toon Page-Flip",
+      "  pick [Toon Page-Flip h526]: Toon Dark Magician   [Opening book pick (Toon Page-Flip)]",
+      "  pick [Toon Page-Flip h526]: Red-Eyes Toon Dragon   [Opening book pick (Toon Page-Flip)]",
+      "  pick [Toon Page-Flip h526]: Toon Black Luster Soldier   [Opening book pick (Toon Page-Flip)]",
+      "activate: Toon Dark Magician   [Opening book TO-01]",
+      "  pick [Toon Dark Magician h501]: Red-Eyes Toon Dragon",
+      "  option 0 (Toon Dark Magician)",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Dark Magician"
+      ],
+      "backrow": [
+       "Toon World"
+      ],
+      "field": [],
+      "hand": [
+       "Toon Dark Magician",
+       "Triple Tactics Thrust"
+      ],
+      "gy": [
+       "Toon Table of Contents",
+       "Toon Page-Flip",
+       "Red-Eyes Toon Dragon"
+      ],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Black Sheep",
+       "Luna Light Perfume",
+       "Tri-Brigade Fraktall",
+       "Lunalight Masquerade",
+       "Lunalight Gold Leo"
+      ],
+      "gy": [
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "blueeyes",
+   "seed": 112,
+   "first": true,
+   "hand": [
+    "Harpie's Feather Duster",
+    "Toon Dark Magician",
+    "Comic Hand",
+    "Toon Cyber Dragon",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Harpie's Feather Duster",
+      "Toon Dark Magician",
+      "Comic Hand",
+      "Toon Cyber Dragon",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sage with Eyes of Blue",
+       "Primite Drillbeam",
+       "Primite Lordly Lode",
+       "Blue-Eyes White Dragon",
+       "True Light"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Harpie's Feather Duster",
+       "Toon Dark Magician",
+       "Comic Hand",
+       "Toon Cyber Dragon",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sage with Eyes of Blue",
+       "Primite Drillbeam",
+       "Primite Lordly Lode",
+       "Blue-Eyes White Dragon",
+       "True Light",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "kashtira",
+   "seed": 113,
+   "first": true,
+   "hand": [
+    "Infinite Impermanence",
+    "Toon World",
+    "Mulcharmy Fuwalos",
+    "Toon Cyber Dragon",
+    "Toon Black Luster Soldier"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Infinite Impermanence",
+      "Toon World",
+      "Mulcharmy Fuwalos",
+      "Toon Cyber Dragon",
+      "Toon Black Luster Soldier"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Birth",
+       "Macro Cosmos",
+       "Tearlaments Kashtira",
+       "Kashtiratheosis",
+       "The Ascended of Thunder"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon World   [Opening book TO-01]",
+      "special: Toon Cyber Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Cyber Dragon"
+      ],
+      "backrow": [
+       "Toon World",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Toon Black Luster Soldier"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Tearlaments Kashtira"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Macro Cosmos",
+       "Kashtiratheosis",
+       "The Ascended of Thunder",
+       "Kashtira Ogre"
+      ],
+      "gy": [
+       "Kashtira Preparations",
+       "Kashtira Overlap",
+       "Scareclaw Kashtira"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "hero",
+   "seed": 114,
+   "first": true,
+   "hand": [
+    "Toon Mask",
+    "Toon Dark Magician",
+    "Toon Cyber Dragon",
+    "Mimicat",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Mask",
+      "Toon Dark Magician",
+      "Toon Cyber Dragon",
+      "Mimicat",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Miracle Ejector",
+       "Elemental HERO Shadow Mist",
+       "Vision HERO Increase",
+       "Elemental HERO Stratos",
+       "Vision HERO Faris"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "set S/T: Toon Mask",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Toon Mask"
+      ],
+      "field": [],
+      "hand": [
+       "Toon Dark Magician",
+       "Toon Cyber Dragon",
+       "Mimicat",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Miracle Ejector",
+       "Elemental HERO Shadow Mist",
+       "Vision HERO Increase",
+       "Elemental HERO Stratos",
+       "Vision HERO Faris",
+       "Elemental HERO Neos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "branded",
+   "seed": 115,
+   "first": true,
+   "hand": [
+    "Toon Black Luster Soldier",
+    "Toon Cyber Dragon",
+    "Comic Hand",
+    "Toon Cyber Dragon",
+    "Infinite Impermanence"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Black Luster Soldier",
+      "Toon Cyber Dragon",
+      "Comic Hand",
+      "Toon Cyber Dragon",
+      "Infinite Impermanence"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Polymerization",
+       "Nadir Servant",
+       "Fallen of Albaz",
+       "The Fallen & The Virtuous",
+       "Bystial Magnamhut"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "special: Toon Black Luster Soldier   [Opening book TO-01]",
+      "  pick [Card details unavailable h500]: Toon Cyber Dragon",
+      "  pick [Card details unavailable h500]: Toon Cyber Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Black Luster Soldier"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Comic Hand"
+      ],
+      "gy": [
+       "Toon Cyber Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Bystial Magnamhut"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Fallen of Albaz",
+       "Super Polymerization",
+       "Nadir Servant",
+       "The Fallen & The Virtuous",
+       "Fallen of the White Dragon",
+       "Branded Opening"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "mikanko",
+   "seed": 116,
+   "first": true,
+   "hand": [
+    "The Black Stone of Legend",
+    "Toon Goblin Attack Force",
+    "Toon Harpie Lady",
+    "Infinite Impermanence",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "The Black Stone of Legend",
+      "Toon Goblin Attack Force",
+      "Toon Harpie Lady",
+      "Infinite Impermanence",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lava Golem",
+       "Triple Tactics Thrust",
+       "Lightning Storm",
+       "Mikanko Water Arabesque",
+       "Mikanko Shinbu - Noble Twins"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: The Black Stone of Legend   [Opening book TO-01]",
+      "activate: The Black Stone of Legend   [Opening book TO-01]",
+      "  pick [The Black Stone of Legend h509]: Red-Eyes Toon Dragon",
+      "activate: Red-Eyes Toon Dragon   [Opening book TO-01]",
+      "  pick [Red-Eyes Toon Dragon h509]: Toon Harpie Lady   [Opening book pick (Red-Eyes Toon Dragon)]",
+      "special: Knightmare Phoenix",
+      "  pick [Card details unavailable h533]: Toon Harpie Lady",
+      "  pick [Card details unavailable h533]: Red-Eyes Toon Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Toon Goblin Attack Force",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Red-Eyes Toon Dragon",
+       "Toon Harpie Lady"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lava Golem",
+       "Triple Tactics Thrust",
+       "Lightning Storm",
+       "Mikanko Water Arabesque",
+       "Mikanko Shinbu - Noble Twins",
+       "Sanaki the Mikanko Devotee"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "sky",
+   "seed": 117,
+   "first": true,
+   "hand": [
+    "Harpie's Feather Duster",
+    "Toon Black Luster Soldier",
+    "Red-Eyes Toon Dragon",
+    "Infinite Impermanence",
+    "Mulcharmy Purulia"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Harpie's Feather Duster",
+      "Toon Black Luster Soldier",
+      "Red-Eyes Toon Dragon",
+      "Infinite Impermanence",
+      "Mulcharmy Purulia"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Pot of Desires",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Widow Anchor"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Harpie's Feather Duster",
+       "Toon Black Luster Soldier",
+       "Red-Eyes Toon Dragon",
+       "Mulcharmy Purulia"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Pot of Desires",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Widow Anchor",
+       "Sky Striker Ace - Raye"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "luna",
+   "seed": 118,
+   "first": true,
+   "hand": [
+    "Toon Kingdom",
+    "Terraforming",
+    "Triple Tactics Thrust",
+    "Toon Harpie Lady",
+    "The Black Stone of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Kingdom",
+      "Terraforming",
+      "Triple Tactics Thrust",
+      "Toon Harpie Lady",
+      "The Black Stone of Legend"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization",
+       "Lunalight Black Sheep",
+       "Lunalight Gold Leo",
+       "Lunalight Gold Leo",
+       "Foolish Burial Goods"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "activate: Toon Harpie Lady   [Opening book TO-01]",
+      "summon: The Black Stone of Legend   [Opening book TO-01]",
+      "activate: The Black Stone of Legend   [Opening book TO-01]",
+      "  pick [The Black Stone of Legend h509]: Red-Eyes Toon Dragon",
+      "special: Knightmare Phoenix",
+      "  pick [Card details unavailable h533]: Toon Harpie Lady",
+      "  pick [Card details unavailable h533]: Red-Eyes Toon Dragon",
+      "activate: Terraforming",
+      "  pick [Terraforming h506]: Toon Kingdom",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Toon Kingdom"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Toon Harpie Lady",
+       "Red-Eyes Toon Dragon",
+       "Terraforming"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization",
+       "Lunalight Black Sheep",
+       "Lunalight Gold Leo",
+       "Lunalight Gold Leo",
+       "Foolish Burial Goods",
+       "Lunalight Fusion"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (toon): r34: a Toon Kingdom is already in the Field Zone; a second one only replaces it and banishes 3 more cards (ChatGPT RELAY-020: Continuous Toon World does not block Kingdom)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "blueeyes",
+   "seed": 119,
+   "first": true,
+   "hand": [
+    "Comic Hand",
+    "Mulcharmy Fuwalos",
+    "Toon Kingdom",
+    "Terraforming",
+    "Comic Hand"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Comic Hand",
+      "Mulcharmy Fuwalos",
+      "Toon Kingdom",
+      "Terraforming",
+      "Comic Hand"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Maiden of White",
+       "Primite Lordly Lode",
+       "Primite Dragon Ether Beryl",
+       "Effect Veiler"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "activate: Terraforming",
+      "  pick [Terraforming h506]: Toon Kingdom",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Comic Hand",
+       "Toon Kingdom",
+       "Mulcharmy Fuwalos",
+       "Comic Hand"
+      ],
+      "gy": [
+       "Terraforming"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Maiden of White",
+       "Primite Lordly Lode",
+       "Primite Dragon Ether Beryl",
+       "Effect Veiler",
+       "Dominus Purge"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Book hold (toon): r34: a Toon Kingdom is already in the Field Zone; a second one only replaces it and banishes 3 more cards (ChatGPT RELAY-020: Continuous Toon World does not block Kingdom)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "kashtira",
+   "seed": 120,
+   "first": true,
+   "hand": [
+    "Mimicat",
+    "Mulcharmy Purulia",
+    "Toon Harpie Lady",
+    "Toon World",
+    "Toon Kingdom"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mimicat",
+      "Mulcharmy Purulia",
+      "Toon Harpie Lady",
+      "Toon World",
+      "Toon Kingdom"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Overlap",
+       "Macro Cosmos",
+       "Kashtira Riseheart",
+       "Waking the Dragon",
+       "Interrupted Kaiju Slumber"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "activate: Toon Harpie Lady   [Opening book TO-01]",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Harpie Lady DEF"
+      ],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Mimicat",
+       "Mulcharmy Purulia",
+       "Toon World"
+      ],
+      "gy": [],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Overlap",
+       "Macro Cosmos",
+       "Kashtira Riseheart",
+       "Waking the Dragon",
+       "Interrupted Kaiju Slumber",
+       "Kashtira Fenrir"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "hero",
+   "seed": 121,
+   "first": true,
+   "hand": [
+    "Mimicat",
+    "Toon Cyber Dragon",
+    "Ash Blossom & Joyous Spring",
+    "Toon Harpie Lady",
+    "Toon Page-Flip"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mimicat",
+      "Toon Cyber Dragon",
+      "Ash Blossom & Joyous Spring",
+      "Toon Harpie Lady",
+      "Toon Page-Flip"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Destiny HERO - Malicious",
+       "Ash Blossom & Joyous Spring",
+       "Miracle Fusion",
+       "Mask Change",
+       "Elemental HERO Stratos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Toon Harpie Lady",
+      "set S/T: Toon Page-Flip",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Toon Harpie Lady"
+      ],
+      "backrow": [
+       "set:Toon Page-Flip"
+      ],
+      "field": [],
+      "hand": [
+       "Mimicat",
+       "Toon Cyber Dragon",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Destiny HERO - Malicious",
+       "Ash Blossom & Joyous Spring",
+       "Miracle Fusion",
+       "Mask Change",
+       "Elemental HERO Stratos",
+       "Vision HERO Faris"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "branded",
+   "seed": 122,
+   "first": true,
+   "hand": [
+    "Infinite Impermanence",
+    "Infinite Impermanence",
+    "Toon World",
+    "Toon Kingdom",
+    "Toon Kingdom"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Infinite Impermanence",
+      "Infinite Impermanence",
+      "Toon World",
+      "Toon Kingdom",
+      "Toon Kingdom"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "The Fallen & The Virtuous",
+       "Tri-Brigade Mercourier",
+       "Super Polymerization",
+       "Ash Blossom & Joyous Spring",
+       "Fallen of Albaz"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "set S/T: Infinite Impermanence",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence",
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Toon World",
+       "Toon Kingdom"
+      ],
+      "gy": [],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "The Fallen & The Virtuous",
+       "Tri-Brigade Mercourier",
+       "Super Polymerization",
+       "Ash Blossom & Joyous Spring",
+       "Fallen of Albaz",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Book hold (toon): r34: a Toon Kingdom is already in the Field Zone; a second one only replaces it and banishes 3 more cards (ChatGPT RELAY-020: Continuous Toon World does not block Kingdom)",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Book hold (toon): r34: a Toon Kingdom is already in the Field Zone; a second one only replaces it and banishes 3 more cards (ChatGPT RELAY-020: Continuous Toon World does not block Kingdom)",
+    "t1: Book hold (toon): Toon Kingdom already is Toon World (free, and it protects the Toons); a second one only costs 1000 LP",
+    "t1: Book hold (toon): r34: a Toon Kingdom is already in the Field Zone; a second one only replaces it and banishes 3 more cards (ChatGPT RELAY-020: Continuous Toon World does not block Kingdom)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "mikanko",
+   "seed": 123,
+   "first": true,
+   "hand": [
+    "Raigeki",
+    "Toon Harpie Lady",
+    "Toon Kingdom",
+    "Harpie's Feather Duster",
+    "Toon Page-Flip"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Raigeki",
+      "Toon Harpie Lady",
+      "Toon Kingdom",
+      "Harpie's Feather Duster",
+      "Toon Page-Flip"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Preparation of Rites",
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Mikanko Spiritwalk"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "chain: Toon Page-Flip",
+      "  pick [Toon Page-Flip h526]: Toon Dark Magician   [Opening book pick (Toon Page-Flip)]",
+      "  pick [Toon Page-Flip h526]: Red-Eyes Toon Dragon   [Opening book pick (Toon Page-Flip)]",
+      "  pick [Toon Page-Flip h526]: Toon Black Luster Soldier   [Opening book pick (Toon Page-Flip)]",
+      "activate: Toon Harpie Lady   [Opening book TO-01]",
+      "special: Knightmare Phoenix",
+      "  pick [Card details unavailable h533]: Toon Harpie Lady",
+      "  pick [Card details unavailable h533]: Toon Dark Magician",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Raigeki",
+       "Harpie's Feather Duster"
+      ],
+      "gy": [
+       "Toon Page-Flip",
+       "Toon Dark Magician",
+       "Toon Harpie Lady"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Preparation of Rites",
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Mikanko Spiritwalk",
+       "Hu-Li the Jewel Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "sky",
+   "seed": 124,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Toon Kingdom",
+    "Toon Cyber Dragon",
+    "Toon Kingdom",
+    "Infinite Impermanence"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Toon Kingdom",
+      "Toon Cyber Dragon",
+      "Toon Kingdom",
+      "Infinite Impermanence"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Ace - Raye",
+       "Ash Blossom & Joyous Spring",
+       "Ash Blossom & Joyous Spring",
+       "Infinite Impermanence"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Kingdom   [Opening book TO-01]",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Toon Cyber Dragon",
+       "Toon Kingdom"
+      ],
+      "gy": [],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Ace - Raye",
+       "Ash Blossom & Joyous Spring",
+       "Ash Blossom & Joyous Spring",
+       "Infinite Impermanence",
+       "Upstart Goblin"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (toon): r34: a Toon Kingdom is already in the Field Zone; a second one only replaces it and banishes 3 more cards (ChatGPT RELAY-020: Continuous Toon World does not block Kingdom)",
+    "t1: Book hold (toon): r34: a Toon Kingdom is already in the Field Zone; a second one only replaces it and banishes 3 more cards (ChatGPT RELAY-020: Continuous Toon World does not block Kingdom)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "luna",
+   "seed": 125,
+   "first": true,
+   "hand": [
+    "The Black Stone of Legend",
+    "One for One",
+    "Comic Hand",
+    "Toon Harpie Lady",
+    "Toon World"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "The Black Stone of Legend",
+      "One for One",
+      "Comic Hand",
+      "Toon Harpie Lady",
+      "Toon World"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Silver Hound",
+       "Infinite Impermanence",
+       "Lunalight Scarlet Tiger",
+       "Lunalight Gold Leo",
+       "Lunalight Black Sheep"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon World   [Opening book TO-01]",
+      "activate: Toon Harpie Lady   [Opening book TO-01]",
+      "summon: The Black Stone of Legend   [Opening book TO-01]",
+      "activate: The Black Stone of Legend   [Opening book TO-01]",
+      "  pick [The Black Stone of Legend h509]: Red-Eyes Toon Dragon",
+      "special: Knightmare Phoenix",
+      "  pick [Card details unavailable h533]: Toon Harpie Lady",
+      "  pick [Card details unavailable h533]: Red-Eyes Toon Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [
+       "Toon World"
+      ],
+      "field": [],
+      "hand": [
+       "One for One",
+       "Comic Hand"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Toon Harpie Lady",
+       "Red-Eyes Toon Dragon"
+      ],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Silver Hound",
+       "Infinite Impermanence",
+       "Lunalight Scarlet Tiger",
+       "Lunalight Gold Leo",
+       "Lunalight Black Sheep",
+       "Super Duper Polymerization"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "blueeyes",
+   "seed": 126,
+   "first": true,
+   "hand": [
+    "Toon Goblin Attack Force",
+    "Toon Harpie Lady",
+    "Comic Hand",
+    "Shadow Toon",
+    "The Black Stone of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Toon Goblin Attack Force",
+      "Toon Harpie Lady",
+      "Comic Hand",
+      "Shadow Toon",
+      "The Black Stone of Legend"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Blue-Eyes White Dragon",
+       "Mausoleum of White",
+       "Primite Dragon Ether Beryl",
+       "Primite Lordly Lode"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: The Black Stone of Legend   [Opening book TO-01]",
+      "activate: The Black Stone of Legend   [Opening book TO-01]",
+      "  pick [The Black Stone of Legend h509]: Red-Eyes Toon Dragon",
+      "activate: Red-Eyes Toon Dragon   [Opening book TO-01]",
+      "  pick [Red-Eyes Toon Dragon h509]: Toon Harpie Lady   [Opening book pick (Red-Eyes Toon Dragon)]",
+      "special: Knightmare Phoenix",
+      "  pick [Card details unavailable h533]: Toon Harpie Lady",
+      "  pick [Card details unavailable h533]: Red-Eyes Toon Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon Goblin Attack Force",
+       "Comic Hand",
+       "Shadow Toon"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Red-Eyes Toon Dragon",
+       "Toon Harpie Lady"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Blue-Eyes White Dragon",
+       "Mausoleum of White",
+       "Primite Dragon Ether Beryl",
+       "Primite Lordly Lode",
+       "True Light"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "kashtira",
+   "seed": 127,
+   "first": true,
+   "hand": [
+    "Mulcharmy Purulia",
+    "One for One",
+    "Comic Hand",
+    "Toon World",
+    "Red-Eyes Toon Dragon"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Purulia",
+      "One for One",
+      "Comic Hand",
+      "Toon World",
+      "Red-Eyes Toon Dragon"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Riseheart",
+       "Macro Cosmos",
+       "Scareclaw Kashtira",
+       "Scareclaw Kashtira",
+       "Kashtira Birth"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon World   [Opening book TO-01]",
+      "activate: One for One",
+      "  pick [One for One h504]: Red-Eyes Toon Dragon",
+      "  pick [One for One h509]: The Black Stone of Legend",
+      "activate: The Black Stone of Legend   [Opening book TO-01]",
+      "  pick [The Black Stone of Legend h509]: Red-Eyes Toon Dragon",
+      "activate: Comic Hand",
+      "  pick [Comic Hand h518]: Scareclaw Kashtira",
+      "special: Knightmare Phoenix",
+      "  pick [Card details unavailable h533]: Scareclaw Kashtira",
+      "  pick [Card details unavailable h533]: Red-Eyes Toon Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [
+       "Toon World"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Purulia"
+      ],
+      "gy": [
+       "Red-Eyes Toon Dragon",
+       "One for One",
+       "The Black Stone of Legend",
+       "Red-Eyes Toon Dragon",
+       "Comic Hand"
+      ],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Riseheart",
+       "Macro Cosmos",
+       "Kashtira Birth",
+       "Kashtira Big Bang"
+      ],
+      "gy": [
+       "Scareclaw Kashtira"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "hero",
+   "seed": 128,
+   "first": true,
+   "hand": [
+    "Mulcharmy Purulia",
+    "Mulcharmy Purulia",
+    "Toon Black Luster Soldier",
+    "Ash Blossom & Joyous Spring",
+    "Toon World"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Purulia",
+      "Mulcharmy Purulia",
+      "Toon Black Luster Soldier",
+      "Ash Blossom & Joyous Spring",
+      "Toon World"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Polymerization",
+       "EN Shuffle",
+       "E - Emergency Call",
+       "Vision HERO Vyon"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon World   [Opening book TO-01]",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "Toon World"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Purulia",
+       "Mulcharmy Purulia",
+       "Toon Black Luster Soldier",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 7000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Polymerization",
+       "EN Shuffle",
+       "E - Emergency Call",
+       "Vision HERO Vyon",
+       "Elemental HERO Stratos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "branded",
+   "seed": 129,
+   "first": true,
+   "hand": [
+    "The Black Stone of Legend",
+    "Infinite Impermanence",
+    "Mulcharmy Fuwalos",
+    "Toon Harpie Lady",
+    "Toon Table of Contents"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "The Black Stone of Legend",
+      "Infinite Impermanence",
+      "Mulcharmy Fuwalos",
+      "Toon Harpie Lady",
+      "Toon Table of Contents"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Fusion Deployment",
+       "Ash Blossom & Joyous Spring",
+       "Fusion Deployment",
+       "Super Polymerization",
+       "Nadir Servant"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Toon Table of Contents   [Opening book TO-01]",
+      "summon: The Black Stone of Legend   [Opening book TO-01]",
+      "activate: The Black Stone of Legend   [Opening book TO-01]",
+      "  pick [The Black Stone of Legend h509]: Red-Eyes Toon Dragon",
+      "activate: Red-Eyes Toon Dragon   [Opening book TO-01]",
+      "  pick [Red-Eyes Toon Dragon h509]: Toon Harpie Lady",
+      "special: Knightmare Phoenix",
+      "  pick [Card details unavailable h533]: Toon Harpie Lady",
+      "  pick [Card details unavailable h533]: Red-Eyes Toon Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Toon Table of Contents",
+       "The Black Stone of Legend",
+       "Red-Eyes Toon Dragon",
+       "Toon Harpie Lady"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Fusion Deployment",
+       "Fusion Deployment",
+       "Super Polymerization",
+       "Nadir Servant",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "toon",
+   "opp": "mikanko",
+   "seed": 130,
+   "first": true,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Toon Page-Flip",
+    "Toon Cyber Dragon",
+    "Mimicat",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Fuwalos",
+      "Toon Page-Flip",
+      "Toon Cyber Dragon",
+      "Mimicat",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Double-Edged Sword",
+       "Triple Tactics Thrust",
+       "Mikanko Shinbu - Noble Twins",
+       "Sanaki the Mikanko Devotee",
+       "Ohime the Manifested Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "set S/T: Toon Page-Flip",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Toon Page-Flip"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Toon Cyber Dragon",
+       "Mimicat",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Double-Edged Sword",
+       "Triple Tactics Thrust",
+       "Mikanko Shinbu - Noble Twins",
+       "Sanaki the Mikanko Devotee",
+       "Ohime the Manifested Mikanko",
+       "Lightning Storm"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  }
+ ]
+}

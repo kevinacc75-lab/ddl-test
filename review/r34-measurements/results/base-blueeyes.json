@@ -1,0 +1,3282 @@
+{
+ "deck": "blueeyes",
+ "list": "tcg-2026-10-19",
+ "search": false,
+ "order": "first",
+ "node": "v22.22.0",
+ "rows": [
+  {
+   "deck": "blueeyes",
+   "opp": "branded",
+   "seed": 101,
+   "first": true,
+   "hand": [
+    "Lunar Rabbit Omajinai",
+    "True Light",
+    "Roar of the Blue-Eyed Dragons",
+    "Infinite Impermanence",
+    "Sage with Eyes of Blue"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Lunar Rabbit Omajinai",
+      "True Light",
+      "Roar of the Blue-Eyed Dragons",
+      "Infinite Impermanence",
+      "Sage with Eyes of Blue"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Branded in High Spirits",
+       "Fallen of the White Dragon",
+       "Aluber the Jester of Despia",
+       "Springans Kitt",
+       "Bystial Magnamhut"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "summon: Sage with Eyes of Blue   [Never pass with a live hand]",
+      "  pick [Sage with Eyes of Blue h506]: Maiden of White",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h510]: Wishes for Eyes of Blue",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Lunar Rabbit Omajinai",
+      "  pick [Wishes for Eyes of Blue h506]: Maiden of White   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Majesty of the White Dragons",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Sage with Eyes of Blue",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "set S/T: Majesty of the White Dragons",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase",
+      "chain: Blue-Eyes Spirit Dragon",
+      "  pick [Blue-Eyes Spirit Dragon h509]: Blue-Eyes Ultimate Spirit Dragon",
+      "  pick [Blue-Eyes Ultimate Spirit Dragon h509]: Blue-Eyes White Dragon"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes White Dragon"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Majesty of the White Dragons",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Maiden of White"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Lunar Rabbit Omajinai",
+       "Sage with Eyes of Blue",
+       "Neo Blue-Eyes Ultimate Dragon",
+       "Blue-Eyes Spirit Dragon",
+       "Blue-Eyes Ultimate Spirit Dragon"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Bystial Magnamhut"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Aluber the Jester of Despia",
+       "Springans Kitt",
+       "Fallen of the White Dragon",
+       "Bystial Saronir",
+       "Branded in High Spirits",
+       "Albion the Shrouded Dragon"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: passivePass prevented: Normal Summoned Lunar Rabbit Omajinai with Sage with Eyes of Blue live",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "mikanko",
+   "seed": 102,
+   "first": true,
+   "hand": [
+    "Primite Dragon Ether Beryl",
+    "Dominus Purge",
+    "Mausoleum of White",
+    "Wishes for Eyes of Blue",
+    "Ghost Belle & Haunted Mansion"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Primite Dragon Ether Beryl",
+      "Dominus Purge",
+      "Mausoleum of White",
+      "Wishes for Eyes of Blue",
+      "Ghost Belle & Haunted Mansion"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Sanaki the Mikanko Devotee",
+       "Preparation of Rites",
+       "Forbidden Droplet"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Ghost Belle & Haunted Mansion",
+      "  pick [Wishes for Eyes of Blue h506]: Maiden of White   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Roar of the Blue-Eyed Dragons   [Opening book pick (Wishes for Eyes of Blue)]",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon   [Opening book pick (*)]",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Lunar Rabbit Omajinai",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "activate: Mausoleum of White",
+      "set S/T: Dominus Purge",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes Spirit Dragon",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light",
+       "set:Dominus Purge"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Ghost Belle & Haunted Mansion",
+       "Primite Dragon Ether Beryl",
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Neo Blue-Eyes Ultimate Dragon",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Sanaki the Mikanko Devotee",
+       "Preparation of Rites",
+       "Forbidden Droplet",
+       "Mikanko Shinbu - Noble Twins"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "sky",
+   "seed": 103,
+   "first": true,
+   "hand": [
+    "Ghost Mourner & Moonlit Chill",
+    "Ghost Belle & Haunted Mansion",
+    "Ash Blossom & Joyous Spring",
+    "Ash Blossom & Joyous Spring",
+    "Sage with Eyes of Blue"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ghost Mourner & Moonlit Chill",
+      "Ghost Belle & Haunted Mansion",
+      "Ash Blossom & Joyous Spring",
+      "Ash Blossom & Joyous Spring",
+      "Sage with Eyes of Blue"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mobilize - Linkage!",
+       "Droll & Lock Bird",
+       "Infinite Impermanence",
+       "Sky Striker Mecha - Widow Anchor"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Sage with Eyes of Blue   [Never pass with a live hand]",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Sage with Eyes of Blue",
+      "  pick [Spirit with Eyes of Blue h44142602223618]: Mausoleum of White",
+      "  option 0 (Spirit with Eyes of Blue)",
+      "activate: Mausoleum of White",
+      "activate: Mausoleum of White",
+      "  pick [Mausoleum of White h576]: Spirit with Eyes of Blue",
+      "  pick [Mausoleum of White h504]: Blue-Eyes White Dragon",
+      "activate: Spirit with Eyes of Blue",
+      "  pick [Spirit with Eyes of Blue h509]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes White Dragon"
+      ],
+      "backrow": [],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Ghost Mourner & Moonlit Chill",
+       "Ash Blossom & Joyous Spring",
+       "Ghost Belle & Haunted Mansion",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Sage with Eyes of Blue",
+       "Spirit with Eyes of Blue"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Widow Anchor",
+       "Sky Striker Mobilize - Engage!"
+      ],
+      "gy": [
+       "Infinite Impermanence",
+       "Droll & Lock Bird"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: passivePass prevented: Normal Summoned Ghost Mourner & Moonlit Chill with Sage with Eyes of Blue live",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "luna",
+   "seed": 104,
+   "first": true,
+   "hand": [
+    "Maiden of White",
+    "Primite Dragon Ether Beryl",
+    "Ghost Belle & Haunted Mansion",
+    "Mulcharmy Fuwalos",
+    "Dominus Purge"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Maiden of White",
+      "Primite Dragon Ether Beryl",
+      "Ghost Belle & Haunted Mansion",
+      "Mulcharmy Fuwalos",
+      "Dominus Purge"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Super Duper Polymerization",
+       "Infinite Impermanence",
+       "Lunalight Gold Leo",
+       "Polymerization"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h510]: Roar of the Blue-Eyed Dragons",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "set S/T: Dominus Purge",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "True Light",
+       "set:Dominus Purge"
+      ],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Maiden of White",
+       "Roar of the Blue-Eyed Dragons"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization",
+       "Lunalight Gold Leo",
+       "Polymerization",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Infinite Impermanence",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "kashtira",
+   "seed": 105,
+   "first": true,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Infinite Impermanence",
+    "Primite Lordly Lode",
+    "Maiden of White",
+    "Mausoleum of White"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Fuwalos",
+      "Infinite Impermanence",
+      "Primite Lordly Lode",
+      "Maiden of White",
+      "Mausoleum of White"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Fenrir",
+       "Macro Cosmos",
+       "Scareclaw Kashtira",
+       "Kashtiratheosis",
+       "Sacred Sword of Seven Stars"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "activate: Mausoleum of White",
+      "activate: Mausoleum of White",
+      "  pick [Mausoleum of White h576]: Blue-Eyes Spirit Dragon",
+      "  pick [Mausoleum of White h504]: Blue-Eyes White Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Lunar Rabbit Omajinai DEF",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode",
+       "True Light",
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Scareclaw Kashtira DEF"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Fenrir",
+       "Macro Cosmos",
+       "Sacred Sword of Seven Stars",
+       "Radian, the Multidimensional Kaiju"
+      ],
+      "gy": [],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "toon",
+   "seed": 106,
+   "first": true,
+   "hand": [
+    "Wishes for Eyes of Blue",
+    "Ghost Belle & Haunted Mansion",
+    "Blue-Eyes White Dragon",
+    "Ash Blossom & Joyous Spring",
+    "Sage with Eyes of Blue"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Wishes for Eyes of Blue",
+      "Ghost Belle & Haunted Mansion",
+      "Blue-Eyes White Dragon",
+      "Ash Blossom & Joyous Spring",
+      "Sage with Eyes of Blue"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Comic Hand",
+       "Terraforming",
+       "Infinite Impermanence",
+       "The Black Stone of Legend"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Blue-Eyes White Dragon   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Maiden of White   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Roar of the Blue-Eyed Dragons   [Opening book pick (Wishes for Eyes of Blue)]",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon   [Opening book pick (*)]",
+      "summon: Sage with Eyes of Blue",
+      "chain: Neo Blue-Eyes Ultimate Dragon",
+      "  pick [Sage with Eyes of Blue h506]: Maiden of White   [Opening book pick (Sage with Eyes of Blue)]",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Sage with Eyes of Blue",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes Spirit Dragon",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "True Light"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Ghost Belle & Haunted Mansion",
+       "Maiden of White"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Sage with Eyes of Blue",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Comic Hand",
+       "Terraforming",
+       "The Black Stone of Legend",
+       "Triple Tactics Thrust"
+      ],
+      "gy": [
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "hero",
+   "seed": 107,
+   "first": true,
+   "hand": [
+    "Mausoleum of White",
+    "Dominus Purge",
+    "Ghost Mourner & Moonlit Chill",
+    "Blue-Eyes White Dragon",
+    "Dominus Purge"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mausoleum of White",
+      "Dominus Purge",
+      "Ghost Mourner & Moonlit Chill",
+      "Blue-Eyes White Dragon",
+      "Dominus Purge"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Vyon",
+       "Ash Blossom & Joyous Spring",
+       "Forbidden Droplet",
+       "E - Emergency Call",
+       "Vision HERO Faris"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Mausoleum of White",
+      "summon: Ghost Mourner & Moonlit Chill",
+      "activate: Mausoleum of White",
+      "  pick [Mausoleum of White h576]: Ghost Mourner & Moonlit Chill",
+      "  pick [Mausoleum of White h504]: Blue-Eyes White Dragon",
+      "set S/T: Dominus Purge",
+      "set S/T: Dominus Purge",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "backrow": [
+       "set:Dominus Purge",
+       "set:Dominus Purge"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Blue-Eyes White Dragon"
+      ],
+      "gy": [
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Vyon",
+       "Ash Blossom & Joyous Spring",
+       "Forbidden Droplet",
+       "E - Emergency Call",
+       "Vision HERO Faris",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "branded",
+   "seed": 108,
+   "first": true,
+   "hand": [
+    "Ghost Mourner & Moonlit Chill",
+    "Sage with Eyes of Blue",
+    "Primite Dragon Ether Beryl",
+    "Blue-Eyes White Dragon",
+    "Primite Lordly Lode"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ghost Mourner & Moonlit Chill",
+      "Sage with Eyes of Blue",
+      "Primite Dragon Ether Beryl",
+      "Blue-Eyes White Dragon",
+      "Primite Lordly Lode"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Aluber the Jester of Despia",
+       "Super Polymerization",
+       "Nadir Servant",
+       "Fusion Deployment"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl   [Opening book pick (Primite Lordly Lode)]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode"
+      ],
+      "field": [],
+      "hand": [
+       "Sage with Eyes of Blue",
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Aluber the Jester of Despia",
+       "Super Polymerization",
+       "Nadir Servant",
+       "Fusion Deployment",
+       "Aluber the Jester of Despia"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "mikanko",
+   "seed": 109,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Maiden of White",
+    "Wishes for Eyes of Blue",
+    "Maiden of White",
+    "Dominus Purge"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Maiden of White",
+      "Wishes for Eyes of Blue",
+      "Maiden of White",
+      "Dominus Purge"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Mikanko Fire Dance",
+       "Preparation of Rites",
+       "Mikanko Water Arabesque",
+       "Preparation of Rites"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Dominus Purge",
+      "  pick [Wishes for Eyes of Blue h506]: Roar of the Blue-Eyed Dragons   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Sage with Eyes of Blue   [Opening book pick (Wishes for Eyes of Blue)]",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h510]: Majesty of the White Dragons",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "activate: Sage with Eyes of Blue   [Opening book BE-01]",
+      "  pick [Sage with Eyes of Blue h504]: Blue-Eyes Spirit Dragon",
+      "chain: Neo Blue-Eyes Ultimate Dragon",
+      "summon: Maiden of White",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Maiden of White",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Majesty of the White Dragons"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Dominus Purge",
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Sage with Eyes of Blue"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Mikanko Fire Dance",
+       "Preparation of Rites",
+       "Mikanko Water Arabesque",
+       "Preparation of Rites",
+       "Ha-Re the Sword Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "sky",
+   "seed": 110,
+   "first": true,
+   "hand": [
+    "Maiden of White",
+    "Infinite Impermanence",
+    "Ghost Belle & Haunted Mansion",
+    "Majesty of the White Dragons",
+    "Primite Lordly Lode"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Maiden of White",
+      "Infinite Impermanence",
+      "Ghost Belle & Haunted Mansion",
+      "Majesty of the White Dragons",
+      "Primite Lordly Lode"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Ace - Roze",
+       "Droll & Lock Bird",
+       "Sky Striker Mobilize - Linkage!",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h510]: Roar of the Blue-Eyed Dragons",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "summon: Ghost Belle & Haunted Mansion",
+      "special: Crimson Dragon",
+      "  pick [Card details unavailable h512]: Ghost Belle & Haunted Mansion",
+      "  pick [Card details unavailable h512]: Blue-Eyes Spirit Dragon",
+      "set S/T: Infinite Impermanence",
+      "set S/T: Majesty of the White Dragons",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Lunar Rabbit Omajinai DEF",
+       "Crimson Dragon DEF"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light",
+       "set:Infinite Impermanence",
+       "set:Majesty of the White Dragons"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Ghost Belle & Haunted Mansion",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Ace - Roze",
+       "Droll & Lock Bird",
+       "Sky Striker Mobilize - Linkage!",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "luna",
+   "seed": 111,
+   "first": true,
+   "hand": [
+    "Primite Lordly Lode",
+    "Mulcharmy Fuwalos",
+    "Dominus Purge",
+    "Ash Blossom & Joyous Spring",
+    "Blue-Eyes White Dragon"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Primite Lordly Lode",
+      "Mulcharmy Fuwalos",
+      "Dominus Purge",
+      "Ash Blossom & Joyous Spring",
+      "Blue-Eyes White Dragon"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Black Sheep",
+       "Infinite Impermanence",
+       "Luna Light Perfume",
+       "Tri-Brigade Fraktall",
+       "Lunalight Masquerade"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "set S/T: Dominus Purge",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Dominus Purge"
+      ],
+      "field": [],
+      "hand": [
+       "Blue-Eyes White Dragon",
+       "Mulcharmy Fuwalos",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Lunar Rabbit Omajinai"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Black Sheep",
+       "Luna Light Perfume",
+       "Tri-Brigade Fraktall",
+       "Lunalight Masquerade",
+       "Lunalight Gold Leo"
+      ],
+      "gy": [
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "kashtira",
+   "seed": 112,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Primite Dragon Ether Beryl",
+    "Maiden of White",
+    "Primite Lordly Lode",
+    "Mulcharmy Fuwalos"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Primite Dragon Ether Beryl",
+      "Maiden of White",
+      "Primite Lordly Lode",
+      "Mulcharmy Fuwalos"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Tearlaments Kashtira",
+       "Sacred Sword of Seven Stars",
+       "Sacred Sword of Seven Stars",
+       "Kashtira Riseheart",
+       "Kashtira Preparations"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl   [Opening book pick (Primite Lordly Lode)]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Lunar Rabbit Omajinai DEF",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode",
+       "True Light"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Ash Blossom & Joyous Spring",
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Maiden of White"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Tearlaments Kashtira"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sacred Sword of Seven Stars",
+       "Sacred Sword of Seven Stars",
+       "Kashtira Riseheart",
+       "Kashtira Ogre"
+      ],
+      "gy": [
+       "Interrupted Kaiju Slumber",
+       "Waking the Dragon",
+       "Kashtira Ogre"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "toon",
+   "seed": 113,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Mausoleum of White",
+    "Infinite Impermanence",
+    "Primite Dragon Ether Beryl",
+    "Primite Lordly Lode"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Mausoleum of White",
+      "Infinite Impermanence",
+      "Primite Dragon Ether Beryl",
+      "Primite Lordly Lode"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Purulia",
+       "Toon Bookmark",
+       "Toon World",
+       "Mulcharmy Fuwalos",
+       "Terraforming"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Ash Blossom & Joyous Spring",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl   [Opening book pick (Primite Lordly Lode)]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode   [Opening book pick (Primite Dragon Ether Beryl)]",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "activate: Mausoleum of White",
+      "activate: Mausoleum of White",
+      "  pick [Mausoleum of White h576]: Spirit with Eyes of Blue",
+      "  pick [Mausoleum of White h504]: Blue-Eyes White Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode",
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon Bookmark",
+       "Toon World",
+       "Terraforming",
+       "Toon Cyber Dragon",
+       "Toon Mask"
+      ],
+      "gy": [
+       "Mulcharmy Purulia",
+       "Mulcharmy Fuwalos"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "hero",
+   "seed": 114,
+   "first": true,
+   "hand": [
+    "Maiden of White",
+    "Primite Dragon Ether Beryl",
+    "Primite Drillbeam",
+    "Mulcharmy Fuwalos",
+    "Wishes for Eyes of Blue"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Maiden of White",
+      "Primite Dragon Ether Beryl",
+      "Primite Drillbeam",
+      "Mulcharmy Fuwalos",
+      "Wishes for Eyes of Blue"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Miracle Ejector",
+       "Elemental HERO Shadow Mist",
+       "Vision HERO Increase",
+       "Elemental HERO Stratos",
+       "Vision HERO Faris"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Primite Drillbeam",
+      "  pick [Wishes for Eyes of Blue h506]: Roar of the Blue-Eyed Dragons   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Sage with Eyes of Blue   [Opening book pick (Wishes for Eyes of Blue)]",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon   [Opening book pick (*)]",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Lunar Rabbit Omajinai",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes Spirit Dragon",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light"
+      ],
+      "field": [],
+      "hand": [
+       "Primite Dragon Ether Beryl",
+       "Sage with Eyes of Blue",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Primite Drillbeam",
+       "Primite Dragon Ether Beryl",
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Neo Blue-Eyes Ultimate Dragon",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Miracle Ejector",
+       "Elemental HERO Shadow Mist",
+       "Vision HERO Increase",
+       "Elemental HERO Stratos",
+       "Vision HERO Faris",
+       "Elemental HERO Neos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "branded",
+   "seed": 115,
+   "first": true,
+   "hand": [
+    "Primite Dragon Ether Beryl",
+    "Maiden of White",
+    "Mulcharmy Fuwalos",
+    "Infinite Impermanence",
+    "Ghost Belle & Haunted Mansion"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Primite Dragon Ether Beryl",
+      "Maiden of White",
+      "Mulcharmy Fuwalos",
+      "Infinite Impermanence",
+      "Ghost Belle & Haunted Mansion"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Polymerization",
+       "Nadir Servant",
+       "Fallen of Albaz",
+       "The Fallen & The Virtuous",
+       "Bystial Magnamhut"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "chain: Ghost Belle & Haunted Mansion",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Lunar Rabbit Omajinai DEF",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Ghost Belle & Haunted Mansion",
+       "Blue-Eyes White Dragon",
+       "Maiden of White"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Polymerization",
+       "Fallen of Albaz",
+       "Bystial Magnamhut",
+       "Nadir Servant",
+       "The Fallen & The Virtuous",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "mikanko",
+   "seed": 116,
+   "first": true,
+   "hand": [
+    "Blue-Eyes White Dragon",
+    "True Light",
+    "Effect Veiler",
+    "Wishes for Eyes of Blue",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Blue-Eyes White Dragon",
+      "True Light",
+      "Effect Veiler",
+      "Wishes for Eyes of Blue",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lava Golem",
+       "Triple Tactics Thrust",
+       "Lightning Storm",
+       "Mikanko Water Arabesque",
+       "Mikanko Shinbu - Noble Twins"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Blue-Eyes White Dragon   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Maiden of White   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Roar of the Blue-Eyed Dragons",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon   [Opening book pick (*)]",
+      "summon: Effect Veiler",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Effect Veiler",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes Spirit Dragon",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "True Light"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Neo Blue-Eyes Ultimate Dragon",
+       "Effect Veiler",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lava Golem",
+       "Triple Tactics Thrust",
+       "Lightning Storm",
+       "Mikanko Water Arabesque",
+       "Mikanko Shinbu - Noble Twins",
+       "Sanaki the Mikanko Devotee"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "sky",
+   "seed": 117,
+   "first": true,
+   "hand": [
+    "Maiden of White",
+    "Blue-Eyes White Dragon",
+    "Primite Dragon Ether Beryl",
+    "Ash Blossom & Joyous Spring",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Maiden of White",
+      "Blue-Eyes White Dragon",
+      "Primite Dragon Ether Beryl",
+      "Ash Blossom & Joyous Spring",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Pot of Desires",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Widow Anchor"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Lunar Rabbit Omajinai DEF",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Blue-Eyes White Dragon",
+       "Maiden of White"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Pot of Desires",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Widow Anchor",
+       "Sky Striker Ace - Raye"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "luna",
+   "seed": 118,
+   "first": true,
+   "hand": [
+    "Dominus Purge",
+    "Ghost Mourner & Moonlit Chill",
+    "Lunar Rabbit Omajinai",
+    "Ghost Belle & Haunted Mansion",
+    "Effect Veiler"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Dominus Purge",
+      "Ghost Mourner & Moonlit Chill",
+      "Lunar Rabbit Omajinai",
+      "Ghost Belle & Haunted Mansion",
+      "Effect Veiler"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization",
+       "Lunalight Black Sheep",
+       "Lunalight Gold Leo",
+       "Lunalight Gold Leo",
+       "Foolish Burial Goods"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Ghost Mourner & Moonlit Chill",
+      "set S/T: Dominus Purge",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "backrow": [
+       "set:Dominus Purge"
+      ],
+      "field": [],
+      "hand": [
+       "Lunar Rabbit Omajinai",
+       "Ghost Belle & Haunted Mansion",
+       "Effect Veiler"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization",
+       "Lunalight Black Sheep",
+       "Lunalight Gold Leo",
+       "Lunalight Gold Leo",
+       "Foolish Burial Goods",
+       "Lunalight Fusion"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "kashtira",
+   "seed": 119,
+   "first": true,
+   "hand": [
+    "Infinite Impermanence",
+    "Sage with Eyes of Blue",
+    "Mulcharmy Fuwalos",
+    "Sage with Eyes of Blue",
+    "Primite Lordly Lode"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Infinite Impermanence",
+      "Sage with Eyes of Blue",
+      "Mulcharmy Fuwalos",
+      "Sage with Eyes of Blue",
+      "Primite Lordly Lode"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Scareclaw Kashtira",
+       "Kashtira Ogre",
+       "Kashtira Birth",
+       "Tearlaments Kashtira",
+       "Radian, the Multidimensional Kaiju"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "activate: Sage with Eyes of Blue   [Opening book BE-01]",
+      "  pick [Sage with Eyes of Blue h504]: Spirit with Eyes of Blue",
+      "  pick [Sage with Eyes of Blue h509]: Blue-Eyes White Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes White Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Sage with Eyes of Blue",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai",
+       "Sage with Eyes of Blue",
+       "Spirit with Eyes of Blue"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Tearlaments Kashtira"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kashtira Ogre",
+       "Kashtira Birth",
+       "Radian, the Multidimensional Kaiju",
+       "The Ascended of Thunder"
+      ],
+      "gy": [
+       "Waking the Dragon",
+       "Interrupted Kaiju Slumber",
+       "Tearlaments Kashtira",
+       "Kashtira Riseheart",
+       "Sacred Sword of Seven Stars"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "toon",
+   "seed": 120,
+   "first": true,
+   "hand": [
+    "Primite Lordly Lode",
+    "Sage with Eyes of Blue",
+    "Effect Veiler",
+    "Blue-Eyes White Dragon",
+    "Blue-Eyes White Dragon"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Primite Lordly Lode",
+      "Sage with Eyes of Blue",
+      "Effect Veiler",
+      "Blue-Eyes White Dragon",
+      "Blue-Eyes White Dragon"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon World",
+       "Harpie's Feather Duster",
+       "Red-Eyes Toon Dragon",
+       "Toon Page-Flip",
+       "Mulcharmy Purulia"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Primite Dragon Ether Beryl",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Spirit with Eyes of Blue",
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "Primite Lordly Lode"
+      ],
+      "field": [],
+      "hand": [
+       "Effect Veiler",
+       "Sage with Eyes of Blue",
+       "Blue-Eyes White Dragon",
+       "Blue-Eyes White Dragon"
+      ],
+      "gy": [
+       "Lunar Rabbit Omajinai",
+       "Primite Dragon Ether Beryl"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon World",
+       "Harpie's Feather Duster",
+       "Red-Eyes Toon Dragon",
+       "Toon Page-Flip",
+       "Triple Tactics Thrust"
+      ],
+      "gy": [
+       "Mulcharmy Purulia",
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "hero",
+   "seed": 121,
+   "first": true,
+   "hand": [
+    "Ghost Mourner & Moonlit Chill",
+    "Ash Blossom & Joyous Spring",
+    "Primite Lordly Lode",
+    "Dominus Purge",
+    "Primite Dragon Ether Beryl"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ghost Mourner & Moonlit Chill",
+      "Ash Blossom & Joyous Spring",
+      "Primite Lordly Lode",
+      "Dominus Purge",
+      "Primite Dragon Ether Beryl"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Destiny HERO - Malicious",
+       "Ash Blossom & Joyous Spring",
+       "Miracle Fusion",
+       "Mask Change",
+       "Elemental HERO Stratos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode   [Opening book pick (Primite Dragon Ether Beryl)]",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "set S/T: Dominus Purge",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode",
+       "set:Dominus Purge"
+      ],
+      "field": [],
+      "hand": [
+       "Ghost Mourner & Moonlit Chill",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Destiny HERO - Malicious",
+       "Miracle Fusion",
+       "Mask Change",
+       "Elemental HERO Stratos",
+       "Vision HERO Faris"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "branded",
+   "seed": 122,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Primite Dragon Ether Beryl",
+    "Primite Lordly Lode",
+    "Wishes for Eyes of Blue",
+    "Primite Lordly Lode"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Primite Dragon Ether Beryl",
+      "Primite Lordly Lode",
+      "Wishes for Eyes of Blue",
+      "Primite Lordly Lode"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "The Fallen & The Virtuous",
+       "Tri-Brigade Mercourier",
+       "Super Polymerization",
+       "Ash Blossom & Joyous Spring",
+       "Fallen of Albaz"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Primite Lordly Lode",
+      "  pick [Wishes for Eyes of Blue h506]: Maiden of White   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Roar of the Blue-Eyed Dragons   [Opening book pick (Wishes for Eyes of Blue)]",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode   [Opening book pick (Primite Dragon Ether Beryl)]",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon   [Opening book pick (*)]",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Lunar Rabbit Omajinai",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes Spirit Dragon",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode",
+       "True Light"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Primite Lordly Lode",
+       "Primite Dragon Ether Beryl",
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Neo Blue-Eyes Ultimate Dragon",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "The Fallen & The Virtuous",
+       "Tri-Brigade Mercourier",
+       "Super Polymerization",
+       "Fallen of Albaz",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Hieratic Seal would use up the Synchro bosses as Link material",
+    "t1: Keep Blue-Eyes Spirit Dragon: Hieratic Seal of the Heavenly Spheres would need it as Link Material"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "mikanko",
+   "seed": 123,
+   "first": true,
+   "hand": [
+    "Infinite Impermanence",
+    "Sage with Eyes of Blue",
+    "Dominus Purge",
+    "Blue-Eyes White Dragon",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Infinite Impermanence",
+      "Sage with Eyes of Blue",
+      "Dominus Purge",
+      "Blue-Eyes White Dragon",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Preparation of Rites",
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Mikanko Spiritwalk"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Sage with Eyes of Blue",
+      "  pick [Sage with Eyes of Blue h506]: Maiden of White",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "set S/T: Dominus Purge",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Sage with Eyes of Blue",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Dominus Purge",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Blue-Eyes White Dragon",
+       "Maiden of White"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Preparation of Rites",
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Mikanko Spiritwalk",
+       "Hu-Li the Jewel Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "sky",
+   "seed": 124,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Effect Veiler",
+    "Infinite Impermanence",
+    "Maiden of White",
+    "Infinite Impermanence"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Effect Veiler",
+      "Infinite Impermanence",
+      "Maiden of White",
+      "Infinite Impermanence"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Ace - Raye",
+       "Ash Blossom & Joyous Spring",
+       "Ash Blossom & Joyous Spring",
+       "Infinite Impermanence"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h510]: Roar of the Blue-Eyed Dragons   [Opening book pick (True Light)]",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "summon: Effect Veiler",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Effect Veiler",
+      "set S/T: Infinite Impermanence",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Infinite Impermanence",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Maiden of White",
+       "Roar of the Blue-Eyed Dragons",
+       "Effect Veiler"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Ace - Raye",
+       "Ash Blossom & Joyous Spring",
+       "Upstart Goblin"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "luna",
+   "seed": 125,
+   "first": true,
+   "hand": [
+    "Primite Drillbeam",
+    "Infinite Impermanence",
+    "Maiden of White",
+    "Blue-Eyes White Dragon",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Primite Drillbeam",
+      "Infinite Impermanence",
+      "Maiden of White",
+      "Blue-Eyes White Dragon",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Silver Hound",
+       "Infinite Impermanence",
+       "Lunalight Scarlet Tiger",
+       "Lunalight Gold Leo",
+       "Lunalight Black Sheep"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "set S/T: Primite Drillbeam",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Primite Drillbeam",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Blue-Eyes White Dragon",
+       "Maiden of White"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Silver Hound",
+       "Infinite Impermanence",
+       "Lunalight Scarlet Tiger",
+       "Lunalight Gold Leo",
+       "Lunalight Black Sheep",
+       "Super Duper Polymerization"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "excluded": [
+    "t1 Primite Drillbeam (selects): Sampled target preflight: no approved complete target set",
+    "t1 Primite Drillbeam (selects): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "kashtira",
+   "seed": 126,
+   "first": true,
+   "hand": [
+    "Mausoleum of White",
+    "Mulcharmy Fuwalos",
+    "Ash Blossom & Joyous Spring",
+    "Ghost Mourner & Moonlit Chill",
+    "Primite Dragon Ether Beryl"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mausoleum of White",
+      "Mulcharmy Fuwalos",
+      "Ash Blossom & Joyous Spring",
+      "Ghost Mourner & Moonlit Chill",
+      "Primite Dragon Ether Beryl"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Interrupted Kaiju Slumber",
+       "Kashtira Unicorn",
+       "Kashtira Birth",
+       "Tearlaments Kashtira",
+       "Kashtira Birth"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode   [Opening book pick (Primite Dragon Ether Beryl)]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "activate: Mausoleum of White",
+      "activate: Mausoleum of White",
+      "  pick [Mausoleum of White h576]: Spirit with Eyes of Blue",
+      "  pick [Mausoleum of White h504]: Blue-Eyes White Dragon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "Primite Lordly Lode"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Ash Blossom & Joyous Spring",
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Ghost Mourner & Moonlit Chill",
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Tearlaments Kashtira"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Interrupted Kaiju Slumber",
+       "Kashtira Unicorn",
+       "Kashtira Birth",
+       "Kashtira Ogre"
+      ],
+      "gy": [
+       "Kashtira Preparations",
+       "Tearlaments Kashtira",
+       "Scareclaw Kashtira",
+       "Interrupted Kaiju Slumber",
+       "Kashtiratheosis"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "toon",
+   "seed": 127,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Dominus Purge",
+    "Sage with Eyes of Blue",
+    "Primite Lordly Lode",
+    "Ghost Belle & Haunted Mansion"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Dominus Purge",
+      "Sage with Eyes of Blue",
+      "Primite Lordly Lode",
+      "Ghost Belle & Haunted Mansion"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon Bookmark",
+       "Toon World",
+       "Toon Goblin Attack Force",
+       "Toon Mask",
+       "Toon Page-Flip"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  pick [Primite Lordly Lode h506]: Primite Dragon Ether Beryl",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "summon: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h510]: Primite Lordly Lode",
+      "activate: Primite Dragon Ether Beryl   [Opening book BE-01]",
+      "  pick [Primite Dragon Ether Beryl h504]: Blue-Eyes White Dragon",
+      "special: Spirit with Eyes of Blue",
+      "  pick [Card details unavailable h533]: Lunar Rabbit Omajinai",
+      "activate: Sage with Eyes of Blue   [Opening book BE-01]",
+      "  pick [Sage with Eyes of Blue h504]: Spirit with Eyes of Blue",
+      "  pick [Sage with Eyes of Blue h509]: Blue-Eyes White Dragon",
+      "set S/T: Dominus Purge",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Blue-Eyes White Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode",
+       "set:Dominus Purge"
+      ],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai",
+       "Sage with Eyes of Blue",
+       "Spirit with Eyes of Blue"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon Bookmark",
+       "Toon World",
+       "Toon Goblin Attack Force",
+       "Toon Mask",
+       "Toon Page-Flip",
+       "Toon Cyber Dragon"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "hero",
+   "seed": 128,
+   "first": true,
+   "hand": [
+    "Sage with Eyes of Blue",
+    "Ash Blossom & Joyous Spring",
+    "Infinite Impermanence",
+    "Ghost Mourner & Moonlit Chill",
+    "Mulcharmy Fuwalos"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Sage with Eyes of Blue",
+      "Ash Blossom & Joyous Spring",
+      "Infinite Impermanence",
+      "Ghost Mourner & Moonlit Chill",
+      "Mulcharmy Fuwalos"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Polymerization",
+       "EN Shuffle",
+       "E - Emergency Call",
+       "Vision HERO Vyon"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Sage with Eyes of Blue",
+      "  pick [Sage with Eyes of Blue h506]: Maiden of White   [Opening book pick (Sage with Eyes of Blue)]",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h510]: Roar of the Blue-Eyed Dragons   [Opening book pick (True Light)]",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Sage with Eyes of Blue",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Ghost Mourner & Moonlit Chill",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Polymerization",
+       "EN Shuffle",
+       "E - Emergency Call",
+       "Vision HERO Vyon",
+       "Elemental HERO Stratos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "branded",
+   "seed": 129,
+   "first": true,
+   "hand": [
+    "Primite Lordly Lode",
+    "True Light",
+    "Wishes for Eyes of Blue",
+    "Majesty of the White Dragons",
+    "Sage with Eyes of Blue"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Primite Lordly Lode",
+      "True Light",
+      "Wishes for Eyes of Blue",
+      "Majesty of the White Dragons",
+      "Sage with Eyes of Blue"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Fusion Deployment",
+       "Ash Blossom & Joyous Spring",
+       "Fusion Deployment",
+       "Super Polymerization",
+       "Nadir Servant"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "activate: Primite Lordly Lode   [Opening book BE-01]",
+      "  ANNOUNCE_CARD {\"type\":18,\"card\":47643326}",
+      "  pick [Primite Lordly Lode h509]: Lunar Rabbit Omajinai",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h501]: Sage with Eyes of Blue",
+      "  pick [Wishes for Eyes of Blue h506]: Maiden of White   [Opening book pick (Wishes for Eyes of Blue)]",
+      "  pick [Wishes for Eyes of Blue h506]: Roar of the Blue-Eyed Dragons",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "activate: Wishes for Eyes of Blue   [Opening book BE-01]",
+      "  pick [Wishes for Eyes of Blue h551]: Blue-Eyes White Dragon",
+      "chain: True Light",
+      "  pick [True Light h510]: Wishes for Eyes of Blue",
+      "  pick [Wishes for Eyes of Blue h518]: Neo Blue-Eyes Ultimate Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "set S/T: Majesty of the White Dragons",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Lunar Rabbit Omajinai DEF",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light",
+       "set:Wishes for Eyes of Blue",
+       "set:Majesty of the White Dragons"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Sage with Eyes of Blue",
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Neo Blue-Eyes Ultimate Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Fusion Deployment",
+       "Fusion Deployment",
+       "Super Polymerization",
+       "Nadir Servant",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "blueeyes",
+   "opp": "mikanko",
+   "seed": 130,
+   "first": true,
+   "hand": [
+    "Ghost Belle & Haunted Mansion",
+    "Infinite Impermanence",
+    "Infinite Impermanence",
+    "Sage with Eyes of Blue",
+    "Mausoleum of White"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ghost Belle & Haunted Mansion",
+      "Infinite Impermanence",
+      "Infinite Impermanence",
+      "Sage with Eyes of Blue",
+      "Mausoleum of White"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Double-Edged Sword",
+       "Triple Tactics Thrust",
+       "Mikanko Shinbu - Noble Twins",
+       "Sanaki the Mikanko Devotee",
+       "Ohime the Manifested Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Mausoleum of White",
+      "summon: Sage with Eyes of Blue   [Never pass with a live hand]",
+      "  option 1 (Card details unavailable)",
+      "  pick [Sage with Eyes of Blue h506]: Maiden of White   [Opening book pick (Sage with Eyes of Blue)]",
+      "activate: Maiden of White   [Opening book BE-01]",
+      "  pick [Maiden of White h527]: True Light",
+      "chain: True Light",
+      "  pick [True Light h510]: Roar of the Blue-Eyed Dragons   [Opening book pick (True Light)]",
+      "activate: Roar of the Blue-Eyed Dragons   [Opening book BE-01]",
+      "  pick [Roar of the Blue-Eyed Dragons h509]: Blue-Eyes White Dragon",
+      "special: Blue-Eyes Spirit Dragon   [Opening book BE-01]",
+      "  pick [Card details unavailable h512]: Maiden of White",
+      "  pick [Card details unavailable h512]: Blue-Eyes White Dragon",
+      "activate: Mausoleum of White",
+      "  pick [Mausoleum of White h576]: Blue-Eyes Spirit Dragon",
+      "  pick [Mausoleum of White h504]: Blue-Eyes White Dragon",
+      "summon: Ghost Belle & Haunted Mansion",
+      "special: Crimson Dragon",
+      "  pick [Card details unavailable h512]: Ghost Belle & Haunted Mansion",
+      "  pick [Card details unavailable h512]: Blue-Eyes Spirit Dragon",
+      "set S/T: Infinite Impermanence",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Sage with Eyes of Blue",
+       "Crimson Dragon DEF"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Infinite Impermanence",
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Blue-Eyes White Dragon",
+       "Ghost Belle & Haunted Mansion",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Double-Edged Sword",
+       "Triple Tactics Thrust",
+       "Mikanko Shinbu - Noble Twins",
+       "Sanaki the Mikanko Devotee",
+       "Ohime the Manifested Mikanko",
+       "Lightning Storm"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: passivePass prevented: Normal Summoned Ghost Belle & Haunted Mansion with Sage with Eyes of Blue live",
+    "t1: Book hold (blueeyes): Lightstorm Dragon's Summon effect destroys Spells/Traps and there are no opposing ones; Blue-Eyes Spirit Dragon is the Level 9 to make",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn",
+    "t1: Book hold (blueeyes): Spirit Dragon's Tribute summon is destroyed in the End Phase: use it on the opponent's turn"
+   ],
+   "finished": false,
+   "winner": null
+  }
+ ]
+}

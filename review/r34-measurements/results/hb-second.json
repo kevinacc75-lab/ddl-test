@@ -1,0 +1,1566 @@
+{
+ "deck": "hero",
+ "list": "tcg-2026-10-19",
+ "search": false,
+ "order": "second",
+ "node": "v22.22.0",
+ "rows": [
+  {
+   "deck": "hero",
+   "opp": "branded",
+   "seed": 201,
+   "first": false,
+   "hand": [
+    "Vision HERO Faris",
+    "Masked HERO Furnace",
+    "Mask Change",
+    "Destiny HERO - Malicious",
+    "Vision HERO Increase"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Vision HERO Faris",
+      "Masked HERO Furnace",
+      "Mask Change",
+      "Destiny HERO - Malicious",
+      "Vision HERO Increase",
+      "Droll & Lock Bird"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Guiding Quem, the Virtuous",
+       "Fallen of Albaz"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Tri-Brigade Mercourier",
+       "Dogmatika Fleurdelis, the Knighted",
+       "Guiding Quem, the Virtuous",
+       "Incredible Ecclesia, the Virtuous",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Nadir Servant"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Masked HERO Furnace   [Opening book HE-FURN]",
+      "  pick [Masked HERO Furnace h506]: Polymerization",
+      "  pick [Masked HERO Furnace h501]: Destiny HERO - Malicious   [Opening book pick (Masked HERO Furnace)]",
+      "activate: Vision HERO Faris   [Opening book HE-FARIS]",
+      "  pick [Vision HERO Faris h501]: Vision HERO Increase",
+      "  pick [Vision HERO Faris h527]: Vision HERO Vyon",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "activate: Polymerization",
+      "  pick [Polymerization h509]: Vision HERO Trinity",
+      "  pick [Polymerization h511]: Destiny HERO - Malicious",
+      "  pick [Polymerization h511]: Vision HERO Faris",
+      "  pick [Polymerization h511]: Masked HERO Furnace",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "  pick [Card details unavailable h533]: Vision HERO Trinity",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Masked HERO Furnace",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "attack with Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h549]: Guiding Quem, the Virtuous",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "Vision HERO Vyon",
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Droll & Lock Bird",
+       "Elemental HERO Neos"
+      ],
+      "gy": [
+       "Vision HERO Increase",
+       "Vision HERO Faris",
+       "Polymerization",
+       "Destiny HERO - Malicious",
+       "Vision HERO Trinity",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Fallen of Albaz",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Tri-Brigade Mercourier",
+       "Guiding Quem, the Virtuous",
+       "Incredible Ecclesia, the Virtuous",
+       "Mulcharmy Fuwalos",
+       "Blazing Cartesia, the Virtuous"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Nadir Servant",
+       "Guiding Quem, the Virtuous"
+      ],
+      "banished": 0,
+      "lp": 7800
+     }
+    }
+   ],
+   "guards": [
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "mikanko",
+   "seed": 202,
+   "first": false,
+   "hand": [
+    "Favorite Contact",
+    "Masked HERO Furnace",
+    "Miracle Fusion",
+    "Ash Blossom & Joyous Spring",
+    "Vision HERO Increase"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Favorite Contact",
+      "Masked HERO Furnace",
+      "Miracle Fusion",
+      "Vision HERO Increase",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [
+       "set:Forbidden Droplet",
+       "set:Mikanko Water Arabesque",
+       "set:Preparation of Rites"
+      ],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins",
+       "Preparation of Rites",
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Masked HERO Furnace   [Opening book HE-FURN]",
+      "  pick [Masked HERO Furnace h506]: Mask Change   [Opening book pick (Masked HERO Furnace)]",
+      "  pick [Masked HERO Furnace h501]: Favorite Contact",
+      "summon: Vision HERO Increase",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "attack with Vision HERO Increase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Vision HERO Increase"
+      ],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Miracle Fusion",
+       "Ash Blossom & Joyous Spring",
+       "Masked HERO Furnace"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Favorite Contact"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Forbidden Droplet",
+       "set:Mikanko Water Arabesque",
+       "set:Preparation of Rites"
+      ],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko",
+       "The Great Mikanko Ceremony"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins",
+       "Preparation of Rites",
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 7100
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "sky",
+   "seed": 203,
+   "first": false,
+   "hand": [
+    "Vision HERO Vyon",
+    "Elemental HERO Stratos",
+    "Favorite Contact",
+    "Mulcharmy Fuwalos",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Vision HERO Vyon",
+      "Elemental HERO Stratos",
+      "Favorite Contact",
+      "Miracle Ejector",
+      "Ash Blossom & Joyous Spring",
+      "Miracle Fusion"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Sky Striker Ace - Kagari"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Sky Striker Maneuver - Afterburners!"
+      ],
+      "gy": [
+       "Sky Striker Ace = Zero",
+       "Sky Striker Special Maneuver - Lemnisgate!"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Elemental HERO Stratos   [Opening book HE-STRAT]",
+      "  option 0 (Elemental HERO Stratos)",
+      "  pick [Elemental HERO Stratos h506]: Destiny HERO - Malicious   [Opening book pick (Elemental HERO Stratos)]",
+      "activate: Miracle Ejector",
+      "  pick [Miracle Ejector h504]: Neo-Spacian Aqua Dolphin",
+      "  pick [Miracle Ejector h506]: EN Shuffle",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Elemental HERO Stratos   [Opening book pick (*)]",
+      "  pick [Card details unavailable h533]: Miracle Ejector",
+      "  pick [Miracle Ejector h503]: Sky Striker Ace = Zero",
+      "activate: Miracle Fusion",
+      "  pick [Miracle Fusion h509]: Elemental HERO Sunrise",
+      "  pick [Miracle Fusion h511]: Miracle Ejector",
+      "  pick [Miracle Fusion h511]: Elemental HERO Stratos",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Elemental HERO Sunrise",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "set S/T: Favorite Contact",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "set:Favorite Contact"
+      ],
+      "field": [],
+      "hand": [
+       "Destiny HERO - Malicious",
+       "EN Shuffle",
+       "Ash Blossom & Joyous Spring",
+       "Elemental HERO Neos",
+       "Vision HERO Vyon"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Ash Blossom & Joyous Spring",
+       "Neo-Spacian Aqua Dolphin",
+       "Miracle Fusion",
+       "Elemental HERO Sunrise",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Sky Striker Ace - Kagari"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Mecha - Shark Cannon"
+      ],
+      "gy": [
+       "Sky Striker Special Maneuver - Lemnisgate!"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos",
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "luna",
+   "seed": 204,
+   "first": false,
+   "hand": [
+    "Masked HERO Furnace",
+    "Mulcharmy Fuwalos",
+    "Vision HERO Faris",
+    "Neo-Spacian Aqua Dolphin",
+    "Vision HERO Faris"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Masked HERO Furnace",
+      "Vision HERO Faris",
+      "Neo-Spacian Aqua Dolphin",
+      "Vision HERO Faris",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Brotherhood of the Fire Fist - Tiger King"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki"
+      ],
+      "field": [],
+      "hand": [
+       "Lunalight Black Sheep",
+       "Foolish Burial Goods"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Lunalight Black Sheep",
+       "Lunalight Leo Dancer",
+       "Foolish Burial Goods",
+       "Polymerization",
+       "Lunalight Leo Dancer"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Masked HERO Furnace   [Opening book HE-FURN]",
+      "  pick [Masked HERO Furnace h506]: Mask Change   [Opening book pick (Masked HERO Furnace)]",
+      "  pick [Masked HERO Furnace h501]: Neo-Spacian Aqua Dolphin   [Opening book pick (Masked HERO Furnace)]",
+      "activate: Vision HERO Faris   [Opening book HE-FARIS]",
+      "  pick [Vision HERO Faris h501]: Vision HERO Faris",
+      "  pick [Vision HERO Faris h527]: Vision HERO Increase   [Opening book pick (Vision HERO Faris)]",
+      "chain: Vision HERO Increase",
+      "  pick [Vision HERO Increase h500]: Vision HERO Faris",
+      "  pick [Vision HERO Increase h509]: Vision HERO Vyon",
+      "  pick [Vision HERO Vyon h504]: Destiny HERO - Malicious   [Opening book pick (Vision HERO Vyon)]",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "summon: Masked HERO Furnace",
+      "  pick [Card details unavailable h500]: Destiny HERO - Malicious, Vision HERO Increase",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Vision HERO Vyon   [Opening book pick (*)]",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Masked HERO Furnace",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Elemental HERO Neos"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Neo-Spacian Aqua Dolphin",
+       "Vision HERO Faris",
+       "Vision HERO Faris",
+       "Vision HERO Increase",
+       "Vision HERO Vyon",
+       "Destiny HERO - Malicious",
+       "Masked HERO Furnace",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Brotherhood of the Fire Fist - Tiger King"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki"
+      ],
+      "field": [],
+      "hand": [
+       "Lunalight Black Sheep",
+       "Foolish Burial Goods",
+       "Lunalight Silver Hound"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Lunalight Black Sheep",
+       "Lunalight Leo Dancer",
+       "Foolish Burial Goods",
+       "Polymerization",
+       "Lunalight Leo Dancer"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos"
+   ],
+   "guards": [
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "blueeyes",
+   "seed": 205,
+   "first": false,
+   "hand": [
+    "Destiny HERO - Malicious",
+    "Polymerization",
+    "Masked HERO Furnace",
+    "Mulcharmy Fuwalos",
+    "Elemental HERO Stratos"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Destiny HERO - Malicious",
+      "Polymerization",
+      "Masked HERO Furnace",
+      "Elemental HERO Stratos",
+      "Fusion Destiny"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Effect Veiler",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Primite Dragon Ether Beryl",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Primite Dragon Ether Beryl",
+       "Spirit with Eyes of Blue",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Fusion Destiny   [Opening book HE-FD]",
+      "activate: Masked HERO Furnace   [Opening book HE-FURN]",
+      "  pick [Masked HERO Furnace h506]: Mask Change",
+      "  pick [Masked HERO Furnace h501]: Destiny HERO - Malicious   [Opening book pick (Masked HERO Furnace)]",
+      "summon: Elemental HERO Stratos   [Opening book HE-STRAT]",
+      "  option 0 (Elemental HERO Stratos)",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "activate: Polymerization",
+      "  pick [Polymerization h509]: Vision HERO Trinity",
+      "  pick [Polymerization h511]: Destiny HERO - Malicious",
+      "  pick [Polymerization h511]: Elemental HERO Stratos",
+      "  pick [Polymerization h511]: Masked HERO Furnace",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "  pick [Card details unavailable h533]: Vision HERO Trinity",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Masked HERO Furnace",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "attack with Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h549]: Effect Veiler",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Elemental HERO Neos"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Fusion Destiny",
+       "Elemental HERO Stratos",
+       "Polymerization",
+       "Destiny HERO - Malicious",
+       "Vision HERO Trinity",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Blue-Eyes White Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Primite Lordly Lode"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Primite Dragon Ether Beryl",
+       "True Light"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Primite Dragon Ether Beryl",
+       "Spirit with Eyes of Blue",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes Spirit Dragon",
+       "Ash Blossom & Joyous Spring",
+       "Effect Veiler",
+       "Blue-Eyes Ultimate Spirit Dragon"
+      ],
+      "banished": 0,
+      "lp": 6300
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos"
+   ],
+   "guards": [
+    "t2: Book hold (hero): Fusion Destiny makes Destroyer Phoenix Enforcer from the Deck; Polymerization from hand spends the cards Fusion Destiny needs",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "kashtira",
+   "seed": 206,
+   "first": false,
+   "hand": [
+    "EN Shuffle",
+    "Elemental HERO Stratos",
+    "Vision HERO Faris",
+    "Destiny HERO - Malicious",
+    "Mulcharmy Fuwalos"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "EN Shuffle",
+      "Elemental HERO Stratos",
+      "Vision HERO Faris",
+      "Destiny HERO - Malicious",
+      "Masked HERO Dusk Crow",
+      "Mask Change"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Kashtira Shangri-Ira DEF"
+      ],
+      "backrow": [
+       "set:Macro Cosmos"
+      ],
+      "field": [],
+      "hand": [
+       "Tearlaments Kashtira",
+       "The Ascended of Thunder"
+      ],
+      "gy": [],
+      "banished": 1,
+      "lp": 5000
+     },
+     "moves": [
+      "activate: Vision HERO Faris   [Opening book HE-FARIS]",
+      "  pick [Vision HERO Faris h501]: Destiny HERO - Malicious",
+      "  pick [Vision HERO Faris h527]: Vision HERO Increase   [Opening book pick (Vision HERO Faris)]",
+      "chain: Vision HERO Increase",
+      "  pick [Vision HERO Increase h500]: Vision HERO Faris",
+      "  pick [Vision HERO Increase h509]: Vision HERO Vyon",
+      "  pick [Vision HERO Vyon h504]: Destiny HERO - Malicious   [Opening book pick (Vision HERO Vyon)]",
+      "summon: Elemental HERO Stratos   [Opening book HE-STRAT]",
+      "  option 1 (Elemental HERO Stratos)",
+      "  pick [Elemental HERO Stratos h506]: Destiny HERO - Malicious   [Opening book pick (Elemental HERO Stratos)]",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Vision HERO Vyon   [Opening book pick (*)]",
+      "  pick [Card details unavailable h533]: Vision HERO Increase",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Elemental HERO Stratos",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "EN Shuffle",
+       "Masked HERO Dusk Crow",
+       "Elemental HERO Neos",
+       "Destiny HERO - Malicious"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos"
+      ],
+      "banished": 11,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Kashtira Ogre",
+       "Kashtira Shangri-Ira DEF"
+      ],
+      "backrow": [
+       "Macro Cosmos"
+      ],
+      "field": [],
+      "hand": [
+       "Tearlaments Kashtira",
+       "The Ascended of Thunder",
+       "Kashtiratheosis"
+      ],
+      "gy": [],
+      "banished": 1,
+      "lp": 5000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos"
+   ],
+   "guards": [
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "toon",
+   "seed": 207,
+   "first": false,
+   "hand": [
+    "A Hero Lives",
+    "Destiny HERO - Malicious",
+    "Mulcharmy Fuwalos",
+    "Neo-Spacian Aqua Dolphin",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "A Hero Lives",
+      "Destiny HERO - Malicious",
+      "Neo-Spacian Aqua Dolphin",
+      "Ash Blossom & Joyous Spring",
+      "Miracle Ejector"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence",
+       "set:Raigeki"
+      ],
+      "field": [],
+      "hand": [
+       "Comic Hand",
+       "Toon Cyber Dragon",
+       "Shadow Toon"
+      ],
+      "gy": [
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: A Hero Lives   [Opening book HE-AHL]",
+      "  pick [A Hero Lives h509]: Elemental HERO Shadow Mist   [Opening book pick (A Hero Lives)]",
+      "  pick [Elemental HERO Shadow Mist h506]: Mask Change",
+      "summon: Miracle Ejector   [Opening book HE-EJ]",
+      "  pick [Miracle Ejector h506]: EN Shuffle",
+      "activate: EN Shuffle   [Opening book HE-EJ]",
+      "  pick [EN Shuffle h507]: Elemental HERO Shadow Mist",
+      "  pick [EN Shuffle h509]: Elemental HERO Stratos   [Opening book pick (EN Shuffle)]",
+      "  option 1 (Elemental HERO Stratos)",
+      "  pick [Elemental HERO Stratos h506]: Destiny HERO - Malicious   [Opening book pick (Elemental HERO Stratos)]",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Elemental HERO Stratos   [Opening book pick (*)]",
+      "  pick [Card details unavailable h533]: Miracle Ejector",
+      "  pick [Miracle Ejector h503]: Triple Tactics Thrust",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "attack with Xtra HERO Wonder Driver",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Wonder Driver"
+      ],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Neo-Spacian Aqua Dolphin",
+       "Destiny HERO - Malicious",
+       "Destiny HERO - Malicious",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "A Hero Lives",
+       "EN Shuffle",
+       "Elemental HERO Stratos",
+       "Miracle Ejector"
+      ],
+      "banished": 0,
+      "lp": 4000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence",
+       "set:Raigeki"
+      ],
+      "field": [],
+      "hand": [
+       "Comic Hand",
+       "Toon Cyber Dragon",
+       "Shadow Toon",
+       "Mulcharmy Purulia"
+      ],
+      "gy": [],
+      "banished": 1,
+      "lp": 6100
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos"
+   ],
+   "guards": [
+    "t1: Hand trap held: Triple Tactics Thrust is not one of their key cards (save Ash Blossom & Joyous Spring for a starter)",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "branded",
+   "seed": 208,
+   "first": false,
+   "hand": [
+    "Fusion Destiny",
+    "Fusion Destiny",
+    "Ash Blossom & Joyous Spring",
+    "Vision HERO Increase",
+    "Miracle Fusion"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Fusion Destiny",
+      "Fusion Destiny",
+      "Vision HERO Increase",
+      "Miracle Fusion",
+      "Fusion Destiny"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Aluber the Jester of Despia"
+      ],
+      "backrow": [
+       "set:The Fallen & The Virtuous",
+       "set:Super Polymerization"
+      ],
+      "field": [],
+      "hand": [
+       "Fallen of Albaz",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Fusion Destiny   [Opening book HE-FD]",
+      "  pick [Fusion Destiny h509]: Destiny HERO - Destroyer Phoenix Enforcer",
+      "  pick [Fusion Destiny h511]: Destiny HERO - Malicious   [Opening book pick (Fusion Destiny)]",
+      "  pick [Fusion Destiny h511]: Destiny HERO - Malicious   [Opening book pick (Fusion Destiny)]",
+      "chain: Destiny HERO - Destroyer Phoenix Enforcer",
+      "activate: Destiny HERO - Malicious   [Opening book HE-FD]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "summon: Vision HERO Increase",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Vision HERO Increase   [Opening book pick (*)]",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Elemental HERO Neos",
+       "Fusion Destiny",
+       "Fusion Destiny",
+       "Miracle Fusion"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Fusion Destiny",
+       "Destiny HERO - Malicious",
+       "Destiny HERO - Destroyer Phoenix Enforcer",
+       "Destiny HERO - Malicious",
+       "Vision HERO Increase"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Dogmatika Fleurdelis, the Knighted",
+       "Predaplant Dragostapelia"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Fallen of Albaz",
+       "Branded in Red"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "The Fallen & The Virtuous",
+       "Fallen of Albaz",
+       "Aluber the Jester of Despia",
+       "Super Polymerization"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "mikanko",
+   "seed": 209,
+   "first": false,
+   "hand": [
+    "E - Emergency Call",
+    "Mulcharmy Fuwalos",
+    "Mulcharmy Fuwalos",
+    "Elemental HERO Neos",
+    "Vision HERO Vyon"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "E - Emergency Call",
+      "Elemental HERO Neos",
+      "Vision HERO Vyon",
+      "Polymerization"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [
+       "set:Mikanko Spiritwalk",
+       "set:Mikanko Water Arabesque",
+       "set:Preparation of Rites"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Double-Edged Sword"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins",
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: E - Emergency Call   [Opening book HE-CALL]",
+      "  pick [E - Emergency Call h506]: Elemental HERO Stratos",
+      "summon: Elemental HERO Stratos   [Opening book HE-STRAT]",
+      "  option 0 (Elemental HERO Stratos)",
+      "  pick [Elemental HERO Stratos h506]: Destiny HERO - Malicious   [Opening book pick (Elemental HERO Stratos)]",
+      "activate: Polymerization",
+      "  pick [Polymerization h509]: Vision HERO Trinity",
+      "  pick [Polymerization h511]: Destiny HERO - Malicious",
+      "  pick [Polymerization h511]: Vision HERO Vyon",
+      "  pick [Polymerization h511]: Elemental HERO Stratos",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "  pick [Card details unavailable h533]: Vision HERO Trinity",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "→ Battle Phase",
+      "attack with Xtra HERO Infernal Devicer",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Elemental HERO Neos"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Mulcharmy Fuwalos",
+       "E - Emergency Call",
+       "Vision HERO Vyon",
+       "Elemental HERO Stratos",
+       "Polymerization",
+       "Vision HERO Trinity",
+       "Destiny HERO - Malicious",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Mikanko Spiritwalk",
+       "set:Mikanko Water Arabesque",
+       "set:Preparation of Rites"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Double-Edged Sword",
+       "Harpie's Feather Duster"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins",
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 6300
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos",
+    "t1 chain: Mulcharmy Fuwalos",
+    "t1 chain: Mulcharmy Fuwalos"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "sky",
+   "seed": 210,
+   "first": false,
+   "hand": [
+    "Vision HERO Vyon",
+    "Miracle Ejector",
+    "Polymerization",
+    "Miracle Fusion",
+    "Favorite Contact"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Vision HERO Vyon",
+      "Miracle Ejector",
+      "Polymerization",
+      "Miracle Fusion",
+      "Favorite Contact",
+      "Neo-Spacian Aqua Dolphin"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Sky Striker Ace - Shizuku"
+      ],
+      "backrow": [
+       "Sky Striker Mecha Modules - Multirole",
+       "set:Sky Striker Mecha - Shark Cannon",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Maneuver - Afterburners!",
+       "Ghost Belle & Haunted Mansion",
+       "Sky Striker Mobilize - Engage!"
+      ],
+      "gy": [
+       "Pot of Desires",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Sky Striker Ace = Zero"
+      ],
+      "banished": 10,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Vision HERO Vyon   [Opening book HE-VYON]",
+      "  pick [Vision HERO Vyon h504]: Destiny HERO - Malicious   [Opening book pick (Vision HERO Vyon)]",
+      "activate: Destiny HERO - Malicious   [Opening book HE-VYON]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "activate: Polymerization",
+      "  pick [Polymerization h509]: Vision HERO Trinity",
+      "  pick [Polymerization h511]: Miracle Ejector",
+      "  pick [Polymerization h511]: Destiny HERO - Malicious",
+      "  pick [Polymerization h511]: Vision HERO Vyon",
+      "  pick [Miracle Ejector h503]: Sky Striker Ace = Zero",
+      "activate: Destiny HERO - Malicious   [Opening book HE-VYON]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "  pick [Card details unavailable h533]: Vision HERO Trinity",
+      "activate: Miracle Fusion",
+      "  pick [Miracle Fusion h509]: Elemental HERO Sunrise",
+      "  pick [Miracle Fusion h511]: Miracle Ejector",
+      "  pick [Miracle Fusion h511]: Destiny HERO - Malicious",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Elemental HERO Sunrise",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "set S/T: Favorite Contact",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "set:Favorite Contact"
+      ],
+      "field": [],
+      "hand": [
+       "Elemental HERO Neos",
+       "Neo-Spacian Aqua Dolphin"
+      ],
+      "gy": [
+       "Vision HERO Vyon",
+       "Polymerization",
+       "Vision HERO Trinity",
+       "Miracle Fusion",
+       "Elemental HERO Sunrise",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 4,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Sky Striker Ace - Shizuku"
+      ],
+      "backrow": [
+       "Sky Striker Mecha Modules - Multirole",
+       "set:Sky Striker Mecha - Shark Cannon",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Ace - Roze"
+      ],
+      "gy": [
+       "Pot of Desires",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Sky Striker Ace = Zero",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "banished": 10,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "luna",
+   "seed": 211,
+   "first": false,
+   "hand": [
+    "Destiny HERO - Malicious",
+    "Mask Change",
+    "Miracle Fusion",
+    "Vision HERO Faris",
+    "A Hero Lives"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Destiny HERO - Malicious",
+      "Mask Change",
+      "Miracle Fusion",
+      "Vision HERO Faris",
+      "A Hero Lives",
+      "Vision HERO Increase"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Lunalight Liger Dancer",
+       "Lunalight Perfume Dancer"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki",
+       "Lunalight Wolf"
+      ],
+      "field": [],
+      "hand": [
+       "Lunalight Kaleido Chick"
+      ],
+      "gy": [
+       "Polymerization",
+       "Ghost Belle & Haunted Mansion",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 7,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Vision HERO Faris   [Opening book HE-FARIS]",
+      "  pick [Vision HERO Faris h501]: Destiny HERO - Malicious",
+      "  pick [Vision HERO Faris h527]: Vision HERO Vyon",
+      "activate: A Hero Lives   [Opening book HE-AHL]",
+      "  pick [A Hero Lives h509]: Elemental HERO Stratos",
+      "  option 0 (Elemental HERO Stratos)",
+      "  pick [Elemental HERO Stratos h506]: Destiny HERO - Malicious   [Opening book pick (Elemental HERO Stratos)]",
+      "activate: Destiny HERO - Malicious   [Opening book HE-MAL]",
+      "  pick [Destiny HERO - Malicious h509]: Destiny HERO - Malicious",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Elemental HERO Stratos   [Opening book pick (*)]",
+      "  pick [Card details unavailable h533]: Destiny HERO - Malicious",
+      "summon: Vision HERO Increase",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Vision HERO Increase",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "activate: Miracle Fusion",
+      "  pick [Miracle Fusion h509]: Elemental HERO Sunrise",
+      "  pick [Miracle Fusion h511]: Destiny HERO - Malicious",
+      "  pick [Miracle Fusion h511]: Elemental HERO Stratos",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "attack with Elemental HERO Sunrise",
+      "  pick [Card details unavailable h549]: Lunalight Perfume Dancer",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Elemental HERO Sunrise",
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "Vision HERO Vyon",
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Elemental HERO Neos",
+       "Destiny HERO - Malicious"
+      ],
+      "gy": [
+       "Vision HERO Faris",
+       "A Hero Lives",
+       "Vision HERO Increase",
+       "Xtra HERO Wonder Driver",
+       "Miracle Fusion"
+      ],
+      "banished": 3,
+      "lp": 4000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Lunalight Liger Dancer"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki",
+       "Lunalight Wolf"
+      ],
+      "field": [],
+      "hand": [
+       "Lunalight Kaleido Chick",
+       "Super Duper Polymerization"
+      ],
+      "gy": [
+       "Polymerization",
+       "Ghost Belle & Haunted Mansion",
+       "Ash Blossom & Joyous Spring",
+       "Lunalight Liger Dancer",
+       "Lunalight Perfume Dancer"
+      ],
+      "banished": 7,
+      "lp": 7200
+     }
+    }
+   ],
+   "guards": [
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Keep Xtra HERO Wonder Driver: no Tribute Summon of Destiny HERO - Malicious that tributes an Extra Deck monster",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "hero",
+   "opp": "blueeyes",
+   "seed": 212,
+   "first": false,
+   "hand": [
+    "Miracle Ejector",
+    "Neo-Spacian Aqua Dolphin",
+    "Ash Blossom & Joyous Spring",
+    "Miracle Fusion",
+    "A Hero Lives"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Miracle Ejector",
+      "Neo-Spacian Aqua Dolphin",
+      "Miracle Fusion",
+      "A Hero Lives",
+      "Mask Change"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Blue-Eyes White Dragon"
+      ],
+      "backrow": [
+       "set:Dominus Purge"
+      ],
+      "field": [],
+      "hand": [
+       "Lunar Rabbit Omajinai",
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "gy": [
+       "Sage with Eyes of Blue",
+       "Sage with Eyes of Blue"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: A Hero Lives   [Opening book HE-AHL]",
+      "  pick [A Hero Lives h509]: Elemental HERO Stratos",
+      "  option 0 (Elemental HERO Stratos)",
+      "summon: Miracle Ejector   [Opening book HE-EJ]",
+      "special: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Elemental HERO Stratos   [Opening book pick (*)]",
+      "  pick [Card details unavailable h533]: Miracle Ejector",
+      "  pick [Miracle Ejector h503]: Dominus Purge",
+      "activate: Miracle Fusion",
+      "  pick [Miracle Fusion h509]: Elemental HERO Sunrise",
+      "  pick [Miracle Fusion h511]: Miracle Ejector",
+      "  pick [Miracle Fusion h511]: Elemental HERO Stratos",
+      "special: Xtra HERO Infernal Devicer",
+      "  pick [Card details unavailable h533]: Xtra HERO Wonder Driver",
+      "  pick [Card details unavailable h533]: Elemental HERO Sunrise",
+      "  pick [Xtra HERO Infernal Devicer h526]: Elemental HERO Shining Neos Wingman",
+      "  pick [Xtra HERO Infernal Devicer h506]: Elemental HERO Neos",
+      "set S/T: Mask Change",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Elemental HERO Neos",
+       "Neo-Spacian Aqua Dolphin"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "A Hero Lives",
+       "Miracle Fusion",
+       "Elemental HERO Sunrise",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 2,
+      "lp": 2200
+     },
+     "oppEnd": {
+      "monsters": [
+       "Blue-Eyes White Dragon"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunar Rabbit Omajinai",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Sage with Eyes of Blue",
+       "Sage with Eyes of Blue",
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away",
+    "t2: Book hold (hero): set it and use it on the opponent's turn (Malicious -> Masked HERO Dark Law); on our turn it sent our own Destroyer Phoenix Enforcer away"
+   ],
+   "finished": false,
+   "winner": null
+  }
+ ]
+}

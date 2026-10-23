@@ -1,0 +1,1354 @@
+{
+ "deck": "sky",
+ "list": "tcg-2026-10-19",
+ "search": false,
+ "order": "second",
+ "node": "v22.22.0",
+ "rows": [
+  {
+   "deck": "sky",
+   "opp": "branded",
+   "seed": 201,
+   "first": false,
+   "hand": [
+    "Ghost Belle & Haunted Mansion",
+    "Ash Blossom & Joyous Spring",
+    "Sky Striker Maneuver - Afterburners!",
+    "Sky Striker Mobilize - Linkage!",
+    "Sky Striker Maneuver - Jamming Waves!"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Ghost Belle & Haunted Mansion",
+      "Sky Striker Maneuver - Afterburners!",
+      "Sky Striker Mobilize - Linkage!",
+      "Sky Striker Maneuver - Jamming Waves!",
+      "Upstart Goblin"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Guiding Quem, the Virtuous"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Tri-Brigade Mercourier",
+       "Mulcharmy Fuwalos",
+       "Incredible Ecclesia, the Virtuous",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Nadir Servant"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Upstart Goblin",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Upstart Goblin",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace = Zero",
+      "activate: Sky Striker Maneuver - Afterburners!",
+      "  pick [Sky Striker Maneuver - Afterburners! h502]: Guiding Quem, the Virtuous",
+      "summon: Sky Striker Ace - Raye",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Raye",
+      "→ Battle Phase",
+      "attack with Sky Striker Ace - Hayate",
+      "  pick [Sky Striker Ace - Hayate h504]: Sky Striker Mobilize - Engage!",
+      "→ Main Phase 2",
+      "special: Sky Striker Ace - Kagari",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Hayate",
+      "  pick [Sky Striker Ace - Kagari h506]: Sky Striker Mobilize - Engage!",
+      "special: Sky Striker Ace - Shizuku",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Kagari",
+      "→ End Phase",
+      "  pick [Sky Striker Ace - Shizuku h506]: Sky Striker Mecha - Widow Anchor"
+     ],
+     "end": {
+      "monsters": [
+       "Sky Striker Ace - Shizuku",
+       "Sky Striker Ace = Zero"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Sky Striker Mobilize - Engage!",
+       "Ghost Belle & Haunted Mansion",
+       "Sky Striker Mecha - Widow Anchor"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Upstart Goblin",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Ace - Raye",
+       "Sky Striker Ace - Hayate",
+       "Sky Striker Ace - Kagari"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Tri-Brigade Mercourier",
+       "Mulcharmy Fuwalos",
+       "Incredible Ecclesia, the Virtuous",
+       "Fallen of Albaz"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Nadir Servant",
+       "Guiding Quem, the Virtuous"
+      ],
+      "banished": 0,
+      "lp": 7500
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [
+    "t1: Hand trap held: Nadir Servant is not one of their key cards (save Ghost Belle & Haunted Mansion for a starter)",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Book hold (sky): an Ace Link already holds the Extra Monster Zone, so Raye would be stuck in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "mikanko",
+   "seed": 202,
+   "first": false,
+   "hand": [
+    "Infinite Impermanence",
+    "Ash Blossom & Joyous Spring",
+    "Sky Striker Maneuver - Afterburners!",
+    "Sky Striker Mecha - Hornet Drones",
+    "Sky Striker Maneuver - Jamming Waves!"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Infinite Impermanence",
+      "Sky Striker Maneuver - Afterburners!",
+      "Sky Striker Mecha - Hornet Drones",
+      "Sky Striker Maneuver - Jamming Waves!",
+      "Sky Striker Special Maneuver - Lemnisgate!"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [
+       "set:Forbidden Droplet",
+       "set:Mikanko Water Arabesque",
+       "set:Preparation of Rites"
+      ],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins",
+       "Preparation of Rites",
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sky Striker Mecha - Hornet Drones",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace Token",
+      "activate: Sky Striker Maneuver - Jamming Waves!",
+      "  pick [Sky Striker Maneuver - Jamming Waves! h502]: Forbidden Droplet",
+      "set S/T: Infinite Impermanence",
+      "set S/T: Sky Striker Special Maneuver - Lemnisgate!",
+      "→ Battle Phase",
+      "attack with Sky Striker Ace - Hayate",
+      "  pick [Sky Striker Ace - Hayate h504]: Sky Striker Mobilize - Engage!",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Sky Striker Ace - Hayate"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence",
+       "set:Sky Striker Special Maneuver - Lemnisgate!"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Afterburners!"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Sky Striker Mobilize - Engage!"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Mikanko Water Arabesque",
+       "set:Preparation of Rites"
+      ],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko",
+       "The Great Mikanko Ceremony"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins",
+       "Preparation of Rites",
+       "Triple Tactics Thrust",
+       "Forbidden Droplet"
+      ],
+      "banished": 0,
+      "lp": 6500
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [
+    "t2: Sky Striker Maneuver - Afterburners! has no opposing face-up target",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Sky Striker Maneuver - Afterburners! has no opposing face-up target",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Sky Striker Maneuver - Afterburners! has no opposing face-up target",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Sky Striker Maneuver - Afterburners! has no opposing face-up target",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Sky Striker Maneuver - Afterburners! has no opposing face-up target",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "luna",
+   "seed": 203,
+   "first": false,
+   "hand": [
+    "Sky Striker Mobilize - Engage!",
+    "Sky Striker Ace - Raye",
+    "Infinite Impermanence",
+    "Upstart Goblin",
+    "Reinforcement of the Army"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sky Striker Mobilize - Engage!",
+      "Sky Striker Ace - Raye",
+      "Upstart Goblin",
+      "Reinforcement of the Army",
+      "Sky Striker Mecha - Widow Anchor"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Lunalight Gold Leo",
+       "Lunalight Kaleido Chick DEF"
+      ],
+      "backrow": [
+       "Lunalight Masquerade"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Lunalight Silver Hound",
+       "Lunalight Silver Hound",
+       "Foolish Burial",
+       "Tri-Brigade Fraktall",
+       "Lunalight Black Sheep",
+       "Lunalight Leo Dancer",
+       "Lunalight Serenade Dance",
+       "Foolish Burial Goods"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Sky Striker Ace - Raye",
+      "chain: Sky Striker Ace - Raye",
+      "  pick [Sky Striker Ace - Raye h509]: Sky Striker Ace = Zero",
+      "  pick [Sky Striker Ace = Zero h506]: Sky Striker Mobilize - Engage!",
+      "activate: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Mobilize - Engage! h506]: Sky Striker Mecha - Hornet Drones",
+      "chain: Sky Striker Mecha - Hornet Drones",
+      "special: Sky Striker Ace - Kagari",
+      "  pick [Card details unavailable h533]: Sky Striker Ace Token",
+      "  pick [Sky Striker Ace - Kagari h506]: Sky Striker Mobilize - Engage!",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Kagari",
+      "activate: Reinforcement of the Army",
+      "  pick [Reinforcement of the Army h506]: Sky Striker Ace - Raye",
+      "activate: Upstart Goblin",
+      "set S/T: Sky Striker Mecha - Widow Anchor",
+      "→ Battle Phase",
+      "attack with Sky Striker Ace - Hayate",
+      "  pick [Sky Striker Ace - Hayate h504]: Sky Striker Ace - Raye",
+      "attack with Sky Striker Ace = Zero",
+      "  pick [Card details unavailable h549]: Lunalight Gold Leo",
+      "→ Main Phase 2",
+      "special: Sky Striker Ace - Shizuku",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Hayate",
+      "→ End Phase",
+      "  pick [Sky Striker Ace - Shizuku h506]: Sky Striker Mecha - Widow Anchor"
+     ],
+     "end": {
+      "monsters": [
+       "Sky Striker Ace - Shizuku",
+       "Sky Striker Ace = Zero"
+      ],
+      "backrow": [
+       "set:Sky Striker Mecha - Widow Anchor"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mecha - Widow Anchor",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Ace - Raye"
+      ],
+      "gy": [
+       "Infinite Impermanence",
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Reinforcement of the Army",
+       "Upstart Goblin",
+       "Sky Striker Ace - Raye",
+       "Sky Striker Ace - Hayate"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Lunalight Kaleido Chick DEF"
+      ],
+      "backrow": [
+       "Lunalight Masquerade"
+      ],
+      "field": [],
+      "hand": [
+       "Foolish Burial Goods"
+      ],
+      "gy": [
+       "Lunalight Silver Hound",
+       "Lunalight Silver Hound",
+       "Foolish Burial",
+       "Tri-Brigade Fraktall",
+       "Lunalight Black Sheep",
+       "Lunalight Leo Dancer",
+       "Lunalight Serenade Dance",
+       "Foolish Burial Goods",
+       "Lunalight Gold Leo"
+      ],
+      "banished": 0,
+      "lp": 6100
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Infinite Impermanence"
+   ],
+   "guards": [
+    "t2: Own-turn hand trap has no opposing effect to stop"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "blueeyes",
+   "seed": 204,
+   "first": false,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Sky Striker Mecha Modules - Multirole",
+    "Ghost Belle & Haunted Mansion",
+    "Sky Striker Mecha - Shark Cannon",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sky Striker Mecha Modules - Multirole",
+      "Sky Striker Mecha - Shark Cannon",
+      "Ash Blossom & Joyous Spring",
+      "Sky Striker Mecha - Hornet Drones"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Sage with Eyes of Blue",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light",
+       "set:Primite Drillbeam"
+      ],
+      "field": [],
+      "hand": [
+       "Maiden of White",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Blue-Eyes White Dragon",
+       "Maiden of White"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sky Striker Mecha - Hornet Drones",
+      "chain: Sky Striker Mecha - Shark Cannon",
+      "  pick [Sky Striker Mecha - Shark Cannon h503]: Blue-Eyes White Dragon",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace Token",
+      "activate: Sky Striker Mecha Modules - Multirole",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Ghost Belle & Haunted Mansion",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Mecha - Shark Cannon",
+       "Sky Striker Mecha Modules - Multirole"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Sage with Eyes of Blue",
+       "Blue-Eyes White Dragon",
+       "Maiden of White DEF",
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "True Light"
+      ],
+      "field": [],
+      "hand": [
+       "Maiden of White",
+       "Ash Blossom & Joyous Spring",
+       "Dominus Purge"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Primite Drillbeam",
+       "Blue-Eyes Ultimate Spirit Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring",
+    "t1 chain: Ghost Belle & Haunted Mansion"
+   ],
+   "guards": [
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "kashtira",
+   "seed": 205,
+   "first": false,
+   "hand": [
+    "Sky Striker Mobilize - Linkage!",
+    "Forbidden Droplet",
+    "Ash Blossom & Joyous Spring",
+    "Upstart Goblin",
+    "Sky Striker Ace - Raye"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sky Striker Mobilize - Linkage!",
+      "Forbidden Droplet",
+      "Ash Blossom & Joyous Spring",
+      "Upstart Goblin",
+      "Sky Striker Ace - Raye",
+      "Forbidden Droplet"
+     ],
+     "oppStart": {
+      "monsters": [
+       "The Ascended of Thunder"
+      ],
+      "backrow": [
+       "Kashtira Birth"
+      ],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Tearlaments Kashtira",
+       "Kumongous, the Sticky String Kaiju"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Sky Striker Ace - Raye",
+      "chain: Sky Striker Ace - Raye",
+      "  pick [Sky Striker Ace - Raye h509]: Sky Striker Ace = Zero",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Ace = Zero",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace - Kagari",
+      "  pick [Sky Striker Ace = Zero h506]: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Ace - Kagari h506]: Sky Striker Mobilize - Linkage!",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Ace - Kagari",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace - Hayate",
+      "activate: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Mobilize - Engage! h506]: Sky Striker Mecha - Widow Anchor",
+      "activate: Upstart Goblin",
+      "activate: Pot of Desires",
+      "activate: Forbidden Droplet",
+      "  pick [Forbidden Droplet h504]: Sky Striker Ace - Hayate",
+      "  pick [Forbidden Droplet h575]: The Ascended of Thunder",
+      "set S/T: Forbidden Droplet",
+      "set S/T: Sky Striker Mecha - Widow Anchor",
+      "set S/T: Sky Striker Mecha - Widow Anchor",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Forbidden Droplet",
+       "set:Sky Striker Mecha - Widow Anchor",
+       "set:Sky Striker Mecha - Widow Anchor"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "gy": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Ace = Zero",
+       "Sky Striker Ace - Kagari",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mobilize - Engage!",
+       "Upstart Goblin",
+       "Pot of Desires",
+       "Sky Striker Ace - Hayate",
+       "Forbidden Droplet"
+      ],
+      "banished": 10,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "The Ascended of Thunder"
+      ],
+      "backrow": [
+       "Kashtira Birth"
+      ],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Tearlaments Kashtira",
+       "Kumongous, the Sticky String Kaiju",
+       "Sacred Sword of Seven Stars"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 9000
+     }
+    }
+   ],
+   "guards": [
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Own-turn hand trap has no opposing effect to stop",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "toon",
+   "seed": 206,
+   "first": false,
+   "hand": [
+    "Infinite Impermanence",
+    "Sky Striker Ace - Raye",
+    "Ash Blossom & Joyous Spring",
+    "Sky Striker Mobilize - Linkage!",
+    "Upstart Goblin"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Infinite Impermanence",
+      "Sky Striker Ace - Raye",
+      "Sky Striker Mobilize - Linkage!",
+      "Upstart Goblin",
+      "Sky Striker Mecha - Shark Cannon"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Toon Kingdom",
+       "Toon Cyber Dragon"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Terraforming"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sky Striker Mecha - Shark Cannon",
+      "  pick [Sky Striker Mecha - Shark Cannon h503]: The Black Stone of Legend",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Mecha - Shark Cannon",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace = Zero",
+      "summon: Sky Striker Ace - Raye",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Raye",
+      "activate: Upstart Goblin",
+      "set S/T: Infinite Impermanence",
+      "activate: Upstart Goblin",
+      "activate: Sky Striker Airspace - Area Zero",
+      "activate: Sky Striker Airspace - Area Zero",
+      "  pick [Sky Striker Airspace - Area Zero h504]: Sky Striker Ace = Zero",
+      "  pick [Sky Striker Airspace - Area Zero h506]: Sky Striker Ace - Roze",
+      "→ Battle Phase",
+      "attack with Sky Striker Ace - Hayate",
+      "  pick [Sky Striker Ace - Hayate h504]: Sky Striker Mobilize - Engage!",
+      "→ Main Phase 2",
+      "special: Sky Striker Ace - Kagari",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Hayate",
+      "chain: Sky Striker Ace - Kagari",
+      "  pick [Sky Striker Ace - Kagari h506]: Sky Striker Mobilize - Engage!",
+      "chain: Sky Striker Ace - Roze",
+      "special: Sky Striker Ace - Shizuku",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Kagari",
+      "→ End Phase",
+      "  pick [Sky Striker Ace - Shizuku h506]: Sky Striker Mobilize - Engage!"
+     ],
+     "end": {
+      "monsters": [
+       "Sky Striker Ace - Roze",
+       "Sky Striker Ace - Shizuku"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Sky Striker Airspace - Area Zero"
+      ],
+      "hand": [
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mobilize - Engage!"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Mecha - Shark Cannon",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Ace - Raye",
+       "Upstart Goblin",
+       "Upstart Goblin",
+       "Sky Striker Ace = Zero",
+       "Sky Striker Ace - Hayate",
+       "Sky Striker Ace - Kagari"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "Toon Kingdom",
+       "Toon Cyber Dragon",
+       "Shadow Toon"
+      ],
+      "gy": [
+       "Terraforming",
+       "Infinite Impermanence"
+      ],
+      "banished": 4,
+      "lp": 8500
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "hero",
+   "seed": 207,
+   "first": false,
+   "hand": [
+    "Sky Striker Mecha - Eagle Booster",
+    "Sky Striker Mobilize - Linkage!",
+    "Sky Striker Mecha Modules - Multirole",
+    "Sky Striker Mecha - Shark Cannon",
+    "Sky Striker Special Maneuver - Lemnisgate!"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sky Striker Mecha - Eagle Booster",
+      "Sky Striker Mobilize - Linkage!",
+      "Sky Striker Mecha Modules - Multirole",
+      "Sky Striker Mecha - Shark Cannon",
+      "Sky Striker Special Maneuver - Lemnisgate!",
+      "Sky Striker Mecha - Widow Anchor"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Ash Blossom & Joyous Spring",
+       "Droll & Lock Bird",
+       "Vision HERO Increase",
+       "Elemental HERO Neos"
+      ],
+      "gy": [
+       "Vision HERO Vyon",
+       "Destiny HERO - Malicious",
+       "Xtra HERO Wonder Driver"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sky Striker Mecha - Eagle Booster",
+      "  pick [Sky Striker Mecha - Eagle Booster h514]: Xtra HERO Infernal Devicer",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "chain: Sky Striker Mecha - Shark Cannon",
+      "  pick [Sky Striker Mecha - Shark Cannon h503]: Xtra HERO Wonder Driver",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Mecha - Eagle Booster",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace = Zero",
+      "activate: Sky Striker Mecha Modules - Multirole",
+      "activate: Sky Striker Mecha - Widow Anchor",
+      "  pick [Sky Striker Mecha - Widow Anchor h551]: Xtra HERO Infernal Devicer",
+      "activate: Sky Striker Mecha Modules - Multirole",
+      "  pick [Sky Striker Mecha Modules - Multirole h504]: Sky Striker Ace = Zero",
+      "chain: Sky Striker Special Maneuver - Lemnisgate!",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Mecha - Eagle Booster",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Ace = Zero",
+      "→ End Phase",
+      "  pick [Sky Striker Mecha Modules - Multirole h510]: Sky Striker Mecha - Shark Cannon"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "Sky Striker Mecha Modules - Multirole",
+       "set:Sky Striker Mecha - Shark Cannon"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Widow Anchor",
+       "Sky Striker Special Maneuver - Lemnisgate!"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Xtra HERO Infernal Devicer"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Droll & Lock Bird",
+       "Vision HERO Increase",
+       "Elemental HERO Neos",
+       "Masked HERO Fountain"
+      ],
+      "gy": [
+       "Vision HERO Vyon",
+       "Destiny HERO - Malicious",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 3,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "branded",
+   "seed": 208,
+   "first": false,
+   "hand": [
+    "Forbidden Droplet",
+    "Forbidden Droplet",
+    "Sky Striker Mecha - Hornet Drones",
+    "Sky Striker Maneuver - Jamming Waves!",
+    "Sky Striker Maneuver - Afterburners!"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Forbidden Droplet",
+      "Forbidden Droplet",
+      "Sky Striker Mecha - Hornet Drones",
+      "Sky Striker Maneuver - Jamming Waves!",
+      "Sky Striker Maneuver - Afterburners!",
+      "Mulcharmy Fuwalos"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Aluber the Jester of Despia",
+       "Dogmatika Fleurdelis, the Knighted",
+       "Mirrorjade the Iceblade Dragon"
+      ],
+      "backrow": [
+       "set:The Fallen & The Virtuous"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Fallen of Albaz",
+       "Branded Fusion",
+       "Super Polymerization"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sky Striker Mecha - Hornet Drones",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace Token",
+      "activate: Sky Striker Maneuver - Afterburners!",
+      "  pick [Sky Striker Maneuver - Afterburners! h502]: Mirrorjade the Iceblade Dragon",
+      "activate: Forbidden Droplet",
+      "  pick [Forbidden Droplet h504]: Mulcharmy Fuwalos",
+      "  pick [Forbidden Droplet h575]: Aluber the Jester of Despia",
+      "set S/T: Forbidden Droplet",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Forbidden Droplet"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!"
+      ],
+      "gy": [
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Maneuver - Afterburners!",
+       "Mulcharmy Fuwalos",
+       "Forbidden Droplet"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Aluber the Jester of Despia",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Fallen of Albaz",
+       "Bystial Magnamhut"
+      ],
+      "gy": [
+       "Fallen of Albaz",
+       "Branded Fusion",
+       "Super Polymerization",
+       "Titaniklad the Ash Dragon",
+       "The Fallen & The Virtuous",
+       "Mirrorjade the Iceblade Dragon",
+       "Mirrorjade the Iceblade Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "excluded": [
+    "t2 Sky Striker Maneuver - Jamming Waves! (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t2: Preserve Mulcharmy for the opposing turn",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Preserve Mulcharmy for the opposing turn",
+    "t2: Preserve Mulcharmy for the opposing turn",
+    "t2: Preserve Mulcharmy for the opposing turn",
+    "t2: Deck brain (sky): a hand trap Normal Summoned sits in a Main Monster Zone and switches off every Sky Striker Spell (seen: Ghost Belle, 3 of 30 hands)",
+    "t2: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "mikanko",
+   "seed": 209,
+   "first": false,
+   "hand": [
+    "Sky Striker Airspace - Area Zero",
+    "Sky Striker Mecha Modules - Multirole",
+    "Upstart Goblin",
+    "Sky Striker Ace - Raye",
+    "Sky Striker Mobilize - Engage!"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sky Striker Airspace - Area Zero",
+      "Sky Striker Mecha Modules - Multirole",
+      "Upstart Goblin",
+      "Sky Striker Ace - Raye",
+      "Sky Striker Mobilize - Engage!",
+      "Forbidden Droplet"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [
+       "set:Mikanko Spiritwalk",
+       "set:Mikanko Water Arabesque"
+      ],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Mulcharmy Fuwalos",
+       "Double-Edged Sword"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Sky Striker Ace - Raye",
+      "chain: Sky Striker Ace - Raye",
+      "  pick [Sky Striker Ace - Raye h509]: Sky Striker Ace = Zero",
+      "  pick [Sky Striker Ace = Zero h506]: Sky Striker Mobilize - Engage!",
+      "activate: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Mobilize - Engage! h506]: Sky Striker Mecha - Hornet Drones",
+      "chain: Sky Striker Mecha - Hornet Drones",
+      "special: Sky Striker Ace - Kagari",
+      "  pick [Card details unavailable h533]: Sky Striker Ace Token",
+      "  pick [Sky Striker Ace - Kagari h506]: Sky Striker Mobilize - Engage!",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Kagari",
+      "activate: Upstart Goblin",
+      "activate: Sky Striker Airspace - Area Zero",
+      "activate: Sky Striker Mecha Modules - Multirole",
+      "activate: Sky Striker Airspace - Area Zero",
+      "  pick [Sky Striker Airspace - Area Zero h504]: Sky Striker Ace = Zero",
+      "  pick [Sky Striker Airspace - Area Zero h506]: Sky Striker Ace - Raye",
+      "activate: Sky Striker Mecha Modules - Multirole",
+      "  pick [Sky Striker Mecha Modules - Multirole h504]: Sky Striker Ace - Hayate",
+      "activate: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Mobilize - Engage! h506]: Sky Striker Mobilize - Linkage!",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Mecha Modules - Multirole",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace - Shizuku",
+      "set S/T: Forbidden Droplet",
+      "activate: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Mobilize - Engage! h506]: Sky Striker Mobilize - Linkage!",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Ace - Shizuku",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Combined Maneuver - Engage Zero!",
+      "declined optional effect (Card details unavailable)",
+      "set S/T: Infinite Impermanence",
+      "set S/T: Forbidden Droplet",
+      "→ Battle Phase",
+      "attack with Combined Maneuver - Engage Zero!",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Combined Maneuver - Engage Zero!"
+      ],
+      "backrow": [
+       "set:Forbidden Droplet",
+       "set:Infinite Impermanence",
+       "set:Forbidden Droplet"
+      ],
+      "field": [
+       "Sky Striker Airspace - Area Zero"
+      ],
+      "hand": [
+       "Sky Striker Ace - Raye"
+      ],
+      "gy": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Upstart Goblin",
+       "Sky Striker Ace = Zero",
+       "Sky Striker Ace - Hayate",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mecha Modules - Multirole",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Ace - Shizuku",
+       "Sky Striker Mobilize - Linkage!"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Mikanko Spiritwalk",
+       "set:Mikanko Water Arabesque"
+      ],
+      "field": [],
+      "hand": [
+       "Triple Tactics Thrust",
+       "Mulcharmy Fuwalos",
+       "Double-Edged Sword",
+       "Triple Tactics Thrust"
+      ],
+      "gy": [
+       "Mikanko Dance - Mayowashidori",
+       "Mikanko Shinbu - Noble Twins"
+      ],
+      "banished": 0,
+      "lp": 6500
+     }
+    }
+   ],
+   "guards": [
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Book hold (sky): a second Link would sit in a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first",
+    "t2: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "luna",
+   "seed": 210,
+   "first": false,
+   "hand": [
+    "Sky Striker Mobilize - Engage!",
+    "Sky Striker Mecha - Widow Anchor",
+    "Forbidden Droplet",
+    "Sky Striker Maneuver - Afterburners!",
+    "Infinite Impermanence"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sky Striker Mobilize - Engage!",
+      "Sky Striker Mecha - Widow Anchor",
+      "Forbidden Droplet",
+      "Sky Striker Maneuver - Afterburners!",
+      "Sky Striker Mecha - Shark Cannon"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Lunalight Liger Dancer"
+      ],
+      "backrow": [
+       "Lunalight Masquerade",
+       "set:Infinite Impermanence",
+       "Lunalight Wolf"
+      ],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization"
+      ],
+      "gy": [],
+      "banished": 4,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Mobilize - Engage! h506]: Sky Striker Mobilize - Linkage!",
+      "activate: Sky Striker Maneuver - Afterburners!",
+      "  pick [Sky Striker Maneuver - Afterburners! h502]: Lunalight Liger Dancer",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Maneuver - Afterburners!",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace - Kagari",
+      "  pick [Sky Striker Ace - Kagari h506]: Sky Striker Mobilize - Engage!",
+      "chain: Sky Striker Mecha - Shark Cannon",
+      "  pick [Sky Striker Mecha - Shark Cannon h503]: Lunalight Liger Dancer",
+      "activate: Sky Striker Mobilize - Engage!",
+      "  pick [Sky Striker Mobilize - Engage! h506]: Sky Striker Mobilize - Linkage!",
+      "activate: Sky Striker Mecha - Widow Anchor",
+      "  pick [Sky Striker Mecha - Widow Anchor h551]: Lunalight Liger Dancer",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Mecha - Widow Anchor",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace = Zero",
+      "chain: Sky Striker Ace = Zero",
+      "chain: Sky Striker Ace - Roze",
+      "  pick [Sky Striker Ace = Zero h506]: Sky Striker Mobilize - Engage!",
+      "special: Sky Striker Ace - Hayate",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Roze",
+      "activate: Forbidden Droplet",
+      "  pick [Forbidden Droplet h504]: Sky Striker Mobilize - Engage!",
+      "  pick [Forbidden Droplet h575]: Lunalight Liger Dancer",
+      "→ Battle Phase",
+      "attack with Sky Striker Ace - Hayate",
+      "  pick [Sky Striker Ace - Hayate h504]: Sky Striker Mecha - Hornet Drones",
+      "→ Main Phase 2",
+      "special: Sky Striker Ace - Shizuku",
+      "  pick [Card details unavailable h533]: Sky Striker Ace - Hayate",
+      "→ End Phase",
+      "  pick [Sky Striker Ace - Shizuku h506]: Sky Striker Special Maneuver - Lemnisgate!",
+      "chain: Sky Striker Special Maneuver - Lemnisgate!",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Maneuver - Afterburners!",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Mecha - Shark Cannon",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Mecha - Widow Anchor",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Ace - Roze",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Ace - Hayate",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h507]: Sky Striker Ace - Kagari",
+      "  pick [Sky Striker Special Maneuver - Lemnisgate! h505]: Lunalight Liger Dancer"
+     ],
+     "end": {
+      "monsters": [
+       "Sky Striker Ace - Shizuku",
+       "Sky Striker Ace = Zero"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Infinite Impermanence",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mobilize - Engage!",
+       "Forbidden Droplet",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Special Maneuver - Lemnisgate!"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Lunalight Liger Dancer"
+      ],
+      "backrow": [
+       "Lunalight Masquerade",
+       "set:Infinite Impermanence",
+       "Lunalight Wolf"
+      ],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [],
+      "banished": 5,
+      "lp": 6500
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Infinite Impermanence"
+   ],
+   "guards": [
+    "t2: Book hold (sky): Roze would take a Main Monster Zone and switch off the Sky Striker Spells still in hand: play them first"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "sky",
+   "opp": "blueeyes",
+   "seed": 211,
+   "first": false,
+   "hand": [
+    "Sky Striker Mobilize - Linkage!",
+    "Sky Striker Maneuver - Afterburners!",
+    "Sky Striker Maneuver - Afterburners!",
+    "Ghost Belle & Haunted Mansion",
+    "Sky Striker Mecha - Eagle Booster"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sky Striker Mobilize - Linkage!",
+      "Sky Striker Maneuver - Afterburners!",
+      "Sky Striker Maneuver - Afterburners!",
+      "Sky Striker Mecha - Eagle Booster",
+      "Sky Striker Maneuver - Jamming Waves!"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "backrow": [
+       "set:Dominus Purge",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sky Striker Mecha - Eagle Booster",
+      "  pick [Sky Striker Mecha - Eagle Booster h514]: Ghost Mourner & Moonlit Chill",
+      "chain: Sky Striker Mobilize - Linkage!",
+      "  pick [Sky Striker Mobilize - Linkage! h504]: Sky Striker Mecha - Eagle Booster",
+      "  pick [Sky Striker Mobilize - Linkage! h509]: Sky Striker Ace = Zero",
+      "activate: Sky Striker Maneuver - Afterburners!",
+      "  pick [Sky Striker Maneuver - Afterburners! h502]: Ghost Mourner & Moonlit Chill",
+      "activate: Sky Striker Maneuver - Jamming Waves!",
+      "  pick [Sky Striker Maneuver - Jamming Waves! h502]: Dominus Purge",
+      "  pick [Sky Striker Maneuver - Jamming Waves! h502]: Ghost Mourner & Moonlit Chill",
+      "→ Battle Phase",
+      "attack with Sky Striker Ace = Zero",
+      "  pick [Card details unavailable h549]: Ghost Mourner & Moonlit Chill",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Sky Striker Ace = Zero"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Afterburners!"
+      ],
+      "gy": [
+       "Ghost Belle & Haunted Mansion",
+       "Sky Striker Mecha - Eagle Booster",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Maneuver - Afterburners!",
+       "Sky Striker Maneuver - Jamming Waves!"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Infinite Impermanence"
+      ],
+      "gy": [
+       "Roar of the Blue-Eyed Dragons",
+       "Ash Blossom & Joyous Spring",
+       "Dominus Purge",
+       "Ghost Mourner & Moonlit Chill"
+      ],
+      "banished": 0,
+      "lp": 6000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ghost Belle & Haunted Mansion"
+   ],
+   "guards": [
+    "t2: guard:replaced own destroy with a legal opposing/approved target",
+    "t2: Sky Striker Maneuver - Afterburners! has no opposing face-up target"
+   ],
+   "finished": false,
+   "winner": null
+  }
+ ]
+}
