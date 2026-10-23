@@ -49,7 +49,7 @@ index a98ed7e..dc628f1 100644
    'Lubellion the Searing Dragon': {role: 'payoff', does: 'The bridge to Mirrorjade: on Fusion Summon, discard 1 to Fusion Summon a Level 8 or lower Fusion (not Lubellion) by shuffling its materials (Albaz and Lubellion itself) back from the field, GY or face-up banishment. For the rest of that turn Lubellion cannot attack and only Fusion Monsters come out of the Extra Deck.', links: {fusion: ['Mirrorjade the Iceblade Dragon']}},
    'Granguignol the Dusk Dragon': {role: 'payoff', does: 'Cartesia + a LIGHT or DARK monster. On Fusion Summon it sends a Level 6+ LIGHT or DARK monster from the Deck or Extra Deck to the GY (Titaniklad). When the opponent Special Summons with an activated monster effect: banish it from the field or GY to bring out a Dogmatika from the Deck or a Despia Fusion from the Extra Deck. It does not mention Albaz, so it is never a Mirrorjade or Fallen & Virtuous cost.'},
 diff --git a/dist/ai/brain/hero-brain.mjs b/dist/ai/brain/hero-brain.mjs
-index 5f50d6c..688f5f0 100644
+index 5f50d6c..3c21894 100644
 --- a/dist/ai/brain/hero-brain.mjs
 +++ b/dist/ai/brain/hero-brain.mjs
 @@ -20,7 +20,7 @@ export default {
@@ -61,6 +61,15 @@ index 5f50d6c..688f5f0 100644
    'Droll & Lock Bird': {role: 'handtrap', does: 'After the opponent adds a card from the Main Deck to the hand outside the Draw Phase: send it from the hand to the GY; neither player can add cards from the Main Deck to the hand for the rest of that turn.'},
    'Forbidden Droplet': {role: 'interruption', does: 'Quick-Play Spell (a board breaker): send any number of other cards from our hand or field to the GY to negate that many of their Effect Monsters and halve their ATK until the end of the turn; they cannot respond with cards of the sent card types. Once per turn. Played from the hand on our turn, or Set first to use on theirs.'},
    'A Hero Lives': {role: 'starter', does: 'With no face-up monsters: pay half your LP to Special Summon a Level 4 or lower Elemental HERO from the Deck (Shadow Mist for Mask Change, else Stratos).', links: {summon: ['Elemental HERO Shadow Mist', 'Elemental HERO Stratos']}},
+@@ -30,7 +30,7 @@ export default {
+   'Mask Change': {role: 'interruption', does: 'Quick-Play: send your HERO to the GY and Special Summon a Masked HERO of its Attribute from the Extra Deck (DARK: Dark Law). Usable on their turn.', links: {summon: ['Masked HERO Dark Law']}},
+   'E - Emergency Call': {role: 'starter', does: 'Add an Elemental HERO from the Deck (Stratos).', links: {search: ['Elemental HERO Stratos', 'Elemental HERO Shadow Mist']}},
+   'EN Shuffle': {role: 'extender', does: 'Shuffle an Elemental HERO / Neo-Spacian you control into the Deck to Special Summon a different one (Ejector into Shadow Mist or Stratos).', links: {summon: ['Elemental HERO Shadow Mist', 'Elemental HERO Stratos']}},
+-  'Favorite Contact': {role: 'extender', does: 'Trap: Special Summon a HERO Fusion that mentions a HERO as material by putting its listed materials from our hand, field, GY or face-up banishment on the bottom of the Deck (a Special Summon, not a Fusion Summon).'},
++  'Favorite Contact': {role: 'extender', does: 'Trap: Special Summon a HERO Fusion that mentions a HERO as material by putting its listed materials from our hand, field, GY or our banished cards (face-up or face-down) on the bottom of the Deck (a Special Summon, not a Fusion Summon).'},
+   'Foolish Burial': {role: 'starter', does: 'Send Malicious (or Shadow Mist) from the Deck to the GY.', links: {send: ['Destiny HERO - Malicious', 'Elemental HERO Shadow Mist']}},
+   'Destiny HERO - Destroyer Phoenix Enforcer': {role: 'payoff', does: 'Their monsters lose 200 ATK per HERO card in your GY. Quick Effect: destroy one of your cards and one card on the field. If destroyed, a Destiny HERO returns next Standby.'},
+   'Elemental HERO Flame Wingman - Infernal Rage': {role: 'utility', does: 'Fusion: adds a "Favorite" card on summon.'},
 @@ -38,7 +38,7 @@ export default {
    'Elemental HERO Thunder Giant - Voltic Thunder': {role: 'utility', does: 'Fusion: if they have more cards, destroys everything else on summon.'},
    'Elemental HERO Shining Neos Wingman': {role: 'payoff', does: 'Neos + a Wingman Fusion: destroys cards on summon; cannot be destroyed by effects.'},
