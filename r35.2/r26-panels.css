@@ -1,0 +1,121 @@
+/* r26 (Claude, 21 Oct 2026; Kevy 23:01-23:05: longer, more polished cutscenes; "persona inspired" bold borders for text
+   boxes and chain boxes; readable on tablet). Original design for Duel Doctrine Lab: angled black / white / red slash
+   panels, thick outlines, hard offset shadows and heavy italic captions. No third-party UI, fonts or artwork are copied;
+   card images are the approved YGOPRODeck art already used across the app. Loaded last. */
+:root{--p26-ink:#0b0b10;--p26-white:#fff;--p26-red:#e01b24;--p26-gold:#ffd21a;--p26-violet:#8b5cf6;--p26-head:Inter,'Duel UI',system-ui,sans-serif}
+
+/* ───────────── 1. Cutscenes: banish, cost, LP cost, Special Summon ───────────── */
+.fx26-cut{position:fixed!important;inset:0!important;left:0!important;top:0!important;translate:none!important;transform:none!important;padding:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;z-index:46;pointer-events:none;display:block!important;overflow:hidden;font-family:var(--p26-head);--c:var(--fx23-color,#e11d48);animation:none!important}
+.fx26-cut .fx26-veil{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(5,5,12,.62),rgba(5,5,12,.82));animation:p26-veil var(--fx23-ms) linear both}
+.fx26-cut .fx26-dots{position:absolute;inset:-10%;background:radial-gradient(circle,rgba(255,255,255,.16) 1.6px,transparent 2.2px) 0 0/16px 16px;-webkit-mask:linear-gradient(-9deg,transparent 28%,#000 40%,#000 60%,transparent 72%);mask:linear-gradient(-9deg,transparent 28%,#000 40%,#000 60%,transparent 72%);animation:p26-veil var(--fx23-ms) linear both}
+.fx26-cut .fx26-slash{position:absolute;left:-30vw;right:-30vw;top:50%;height:0;rotate:-9deg;animation:p26-slash-out var(--fx23-ms) linear both}
+.fx26-cut .fx26-slash i{position:absolute;left:0;right:0;width:auto;border-radius:0;rotate:none;box-shadow:none;display:block;transform-origin:left center}
+.fx26-cut .fx26-slash i:nth-child(1){top:calc(clamp(170px,36vh,320px)/-2);height:clamp(170px,36vh,320px);background:var(--p26-ink);border-block:7px solid var(--p26-white);box-shadow:0 14px 0 var(--p26-red),0 -14px 0 var(--c);animation:p26-band-l var(--fx23-ms) linear both}
+.fx26-cut .fx26-slash i:nth-child(2){top:calc(clamp(170px,36vh,320px)/-2 - 46px);height:16px;background:var(--p26-red);transform-origin:right center;animation:p26-band-r var(--fx23-ms) linear both}
+.fx26-cut .fx26-slash i:nth-child(3){top:calc(clamp(170px,36vh,320px)/2 + 36px);height:10px;background:var(--c);animation:p26-band-l2 var(--fx23-ms) linear both}
+.fx26-cut .fx26-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:clamp(18px,4vw,56px);padding:0 4vw}
+.fx26-cut .fx26-card{position:relative;flex:none;height:clamp(190px,44vh,380px);aspect-ratio:.686;background:var(--p26-ink);border:6px solid var(--p26-white);box-shadow:12px 12px 0 var(--p26-ink),0 0 0 11px var(--c);rotate:-7deg;animation:p26-card-in var(--fx23-ms) linear both}
+.fx26-cut .fx26-card::before{content:'';position:absolute;inset:-7% -16%;z-index:-1;background:var(--p26-red);clip-path:polygon(8% 0,100% 6%,92% 100%,0 92%);rotate:9deg}
+.fx26-cut .fx26-card img{display:block;width:100%;height:100%;object-fit:cover}
+.fx26-cut .fx26-back{display:block;width:100%;height:100%;background:repeating-linear-gradient(45deg,#2a1450 0 12px,#170a30 12px 24px)}
+.fx26-cut .fx26-gleam{position:absolute;inset:0;overflow:hidden;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.85) 48%,transparent 58%) no-repeat;background-size:300% 100%;animation:p26-gleam var(--fx23-ms) linear both}
+.fx26-cut .fx26-stamp{position:absolute;left:50%;top:50%;translate:-50% -50%;padding:.18em .5em;font:italic 900 clamp(30px,5.4vw,64px)/1 var(--p26-head);letter-spacing:.02em;color:var(--p26-white);background:var(--p26-red);border:5px solid var(--p26-white);box-shadow:8px 8px 0 var(--p26-ink);white-space:nowrap;animation:p26-stamp var(--fx23-ms) linear both}
+.fx26-cut .fx26-copy{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0;max-width:min(56vw,640px);animation:p26-copy-in var(--fx23-ms) linear both}
+.fx26-cut .fx26-label{display:block;font:italic 900 clamp(38px,7.6vw,100px)/.92 var(--p26-head);letter-spacing:-.01em;color:var(--p26-white);-webkit-text-stroke:3px var(--p26-ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--p26-red),11px 11px 0 var(--p26-ink);transform:skewX(-10deg);white-space:normal;overflow-wrap:anywhere}
+.fx26-cut .fx26-name{display:inline-block;max-width:100%;padding:8px 18px 9px;font:italic 900 clamp(17px,2.5vw,30px)/1.1 var(--p26-head);color:var(--p26-ink);background:var(--p26-white);border:4px solid var(--p26-ink);box-shadow:7px 7px 0 var(--c);transform:skewX(-12deg) rotate(-2deg);overflow-wrap:anywhere;animation:p26-name-in var(--fx23-ms) linear both}
+.fx26-cut .fx26-count:not(:empty){display:inline-block;padding:4px 14px;font:italic 900 clamp(18px,2.4vw,28px)/1 var(--p26-head);color:var(--p26-ink);background:var(--p26-gold);border:3px solid var(--p26-ink);transform:skewX(-12deg)}
+.fx26-cut .fx26-shards{position:absolute;left:50%;top:50%;width:0;height:0;z-index:2}
+.fx26-cut .fx26-shards i{position:absolute;width:clamp(10px,1.4vw,18px);height:clamp(16px,2.2vw,28px);background:var(--p26-white);border:2px solid var(--p26-ink);clip-path:polygon(50% 0,100% 40%,70% 100%,0 70%);opacity:0;rotate:calc(var(--i)*20deg);animation:p26-shard var(--fx23-ms) linear both}
+.fx26-cut .fx26-shards i:nth-child(3n){background:var(--c)}.fx26-cut .fx26-shards i:nth-child(4n){background:var(--p26-red)}
+/* Per action: banish shatters into a void; cost cards sink under the stamp; LP cost is the number itself; summon rises. */
+.fx26-cut[data-cut=banish] .fx26-card{animation:p26-card-in var(--fx23-ms) linear both,p26-frame-out var(--fx23-ms) linear both}
+.fx26-cut[data-cut=banish] .fx26-card>:is(img,.fx26-back){animation:p26-banish-out var(--fx23-ms) linear both}
+.fx26-cut[data-cut=banish] .fx26-card::before{animation:p26-slab-out var(--fx23-ms) linear both}
+.fx26-cut[data-cut=banish] .fx26-card::after{content:'';position:absolute;left:50%;top:50%;z-index:-1;width:170%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(circle,#000 0 36%,var(--p26-violet) 45%,rgba(139,92,246,.35) 56%,transparent 68%);opacity:0;animation:p26-void var(--fx23-ms) linear both}
+.fx26-cut:is([data-cut=cost]) .fx26-card{animation:p26-card-in var(--fx23-ms) linear both,p26-cost-out var(--fx23-ms) linear both}
+.fx26-cut[data-cut=cost] .fx26-shards,.fx26-cut[data-cut=summon] .fx26-shards i:nth-child(n+10),.fx26-cut[data-cut=lp] .fx26-shards i:nth-child(n+11){display:none}
+.fx26-cut[data-cut=lp] .fx26-card{height:auto;aspect-ratio:auto;border:0;box-shadow:none;background:none;rotate:-6deg}
+.fx26-cut[data-cut=lp] .fx26-card::before,.fx26-cut[data-cut=lp] .fx26-back,.fx26-cut[data-cut=lp] .fx26-gleam{display:none}
+.fx26-cut[data-cut=lp] .fx26-stamp{position:static;translate:none;display:block;font-size:clamp(44px,8vw,110px);animation-name:p26-stamp-early}
+.fx26-cut[data-cut=lp] .fx26-name{display:none}
+.fx26-cut[data-cut=summon] .fx26-card::after{content:'';position:absolute;left:50%;top:-120vh;bottom:-120vh;z-index:-2;width:150%;translate:-50% 0;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c) 70%,#fff) 45%,#fff 50%,color-mix(in srgb,var(--c) 70%,#fff) 55%,transparent);opacity:0;animation:p26-pillar var(--fx23-ms) linear both}
+.fx26-cut[data-cut=summon] .fx26-card{animation:p26-card-in var(--fx23-ms) linear both,p26-summon-glow var(--fx23-ms) linear both}
+.fx26-cut[data-cut=summon] .fx26-slash i:nth-child(1){box-shadow:0 14px 0 var(--c),0 -14px 0 var(--p26-white)}
+@keyframes p26-veil{0%{opacity:0}8%{opacity:1}86%{opacity:1}100%{opacity:0}}
+@keyframes p26-slash-out{0%,84%{translate:0 0;opacity:1}100%{translate:45vw 0;opacity:0}}
+@keyframes p26-band-l{0%{transform:scaleX(0)}13%{transform:scaleX(1);animation-timing-function:linear}100%{transform:scaleX(1)}}
+@keyframes p26-band-r{0%,3%{transform:scaleX(0)}15%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+@keyframes p26-band-l2{0%,6%{transform:scaleX(0)}18%{transform:scaleX(1)}100%{transform:scaleX(1)}}
+@keyframes p26-card-in{0%,5%{opacity:0;translate:-75vw 6vh;rotate:-26deg;scale:1.25}17%{opacity:1;translate:1.5vw 0;rotate:-5deg;scale:1.02;animation-timing-function:ease-out}22%{translate:0 0;rotate:-7deg;scale:1}84%{opacity:1;translate:0 0}100%{opacity:0;translate:0 0}}
+@keyframes p26-copy-in{0%,9%{opacity:0;translate:60vw 0}20%{opacity:1;translate:-1vw 0;animation-timing-function:ease-out}25%{translate:0 0}84%{opacity:1;translate:0 0}100%{opacity:0;translate:-30vw 0}}
+@keyframes p26-name-in{0%,18%{opacity:0;translate:0 24px}28%{opacity:1;translate:0 0}100%{opacity:1}}
+@keyframes p26-gleam{0%,24%{background-position:120% 0}44%{background-position:-20% 0}100%{background-position:-20% 0}}
+@keyframes p26-stamp{0%,28%{opacity:0;scale:2.6;rotate:-4deg}36%{opacity:1;scale:.92;rotate:12deg}40%{scale:1;rotate:10deg}88%{opacity:1;scale:1}100%{opacity:0;scale:1.08}}
+@keyframes p26-banish-out{0%,66%{filter:none;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 50%)}74%{filter:brightness(2.4) saturate(.2);clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 50%)}86%{filter:brightness(3) blur(2px);clip-path:polygon(50% 0,100% 30%,80% 100%,20% 100%,0 30%);scale:.45;rotate:28deg}100%{filter:brightness(3) blur(6px);clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%,50% 50%);scale:.1;rotate:60deg}}
+@keyframes p26-frame-out{0%,66%{border-color:var(--p26-white);background-color:var(--p26-ink)}74%,100%{border-color:transparent;background-color:transparent;box-shadow:0 0 0 0 transparent}}
+@keyframes p26-slab-out{0%,64%{opacity:1}74%,100%{opacity:0}}
+@keyframes p26-void{0%,64%{opacity:0;scale:.2}76%{opacity:1;scale:1.05}92%{opacity:.8;scale:.9}100%{opacity:0;scale:.2}}
+@keyframes p26-shard{0%,72%{opacity:0;transform:translate(0,0) scale(.4)}76%{opacity:1}100%{opacity:0;transform:rotate(calc(var(--i)*20deg)) translateY(calc(-26vh - var(--i)*.8vh)) scale(1.1)}}
+@keyframes p26-stamp-early{0%,8%{opacity:0;scale:2.6;rotate:-4deg}17%{opacity:1;scale:.92;rotate:-8deg}21%{scale:1;rotate:-6deg}88%{opacity:1;scale:1}100%{opacity:0;scale:1.08}}
+@keyframes p26-cost-out{0%,70%{filter:none;translate:0 0}100%{filter:grayscale(1) brightness(.5);translate:0 18vh}}
+@keyframes p26-pillar{0%,14%{opacity:0;scale:.2 1}30%{opacity:.9;scale:1 1}70%{opacity:.6}100%{opacity:0;scale:1.4 1}}
+@keyframes p26-summon-glow{0%,26%{filter:none}36%{filter:brightness(1.8)}50%{filter:none}100%{filter:none}}
+@media(max-width:760px),(max-aspect-ratio:4/5){.fx26-cut .fx26-stage{flex-direction:column;gap:16px}.fx26-cut .fx26-card{height:clamp(170px,34vh,300px)}.fx26-cut .fx26-copy{align-items:center;max-width:92vw;text-align:center}.fx26-cut .fx26-slash{rotate:-6deg}.fx26-cut .fx26-slash i:nth-child(1){top:-30vh;height:60vh}.fx26-cut .fx26-slash i:nth-child(2){top:calc(-30vh - 40px)}.fx26-cut .fx26-slash i:nth-child(3){top:calc(30vh + 30px)}}
+body.quiet-motion .fx26-cut,body:is([data-graphics=smooth],[data-theme=contrast]) .fx26-cut{display:none!important}
+@media(prefers-reduced-motion:reduce){.fx26-cut{display:none!important}}
+
+/* ───────────── 2. Activation call-out (compact event stage) ───────────── */
+/* Kevy's tablet recording: the stage's 10px left border ran the full screen height as a stray yellow line. */
+body[data-theme=showtime] #event-stage[data-compact=true]{border:0!important;background:transparent!important;box-shadow:none!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] .event-copy{position:relative;background:var(--p26-ink)!important;border:5px solid var(--p26-white)!important;border-radius:0!important;box-shadow:10px 10px 0 var(--p26-red),17px 17px 0 var(--p26-ink)!important;transform:skewX(-7deg);padding:16px 28px 18px!important;clip-path:none!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] .event-copy>*{transform:skewX(7deg)}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-seal{color:var(--p26-gold)!important;-webkit-text-stroke:3px var(--p26-ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--p26-red)!important;font-style:italic!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-kicker{display:inline-block;padding:4px 14px!important;background:var(--p26-red)!important;color:var(--p26-white)!important;border:3px solid var(--p26-white);font:italic 900 14px/1.1 var(--p26-head)!important;letter-spacing:.08em}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-title{font:italic 900 clamp(24px,2.6vw,34px)/1.05 var(--p26-head)!important;color:var(--p26-white)!important;text-transform:uppercase}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-line{font:800 clamp(17px,1.7vw,22px)/1.25 var(--p26-head)!important;color:var(--p26-white)!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-type-line{font:700 15px/1.3 var(--p26-head)!important;color:#d6d9e3!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-art{border:4px solid var(--p26-white)!important;box-shadow:8px 8px 0 var(--p26-ink)!important;border-radius:0!important}
+/* The chain column beside the call-out overflowed off the right edge on tablets; the Live Chain Stack on the left already
+   lists every link, so on screens up to 1400px wide the call-out stands alone. Wider screens keep it, inside its column. */
+@media(max-width:1400px){#event-stage[data-compact=true] #event-chain-strip{display:none!important}}
+#event-stage[data-compact=true] #event-chain-strip{flex:0 0 clamp(190px,22vw,290px)!important;width:clamp(190px,22vw,290px)!important;max-width:clamp(190px,22vw,290px)!important;min-width:0!important}
+#event-stage[data-compact=true] #event-chain-strip .chain-thumb{min-width:0!important;max-width:100%!important;width:100%!important;box-sizing:border-box!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-chain-strip .chain-thumb{border:3px solid var(--p26-white)!important;border-radius:0!important;background:var(--p26-ink)!important;box-shadow:6px 6px 0 var(--p26-red)!important;transform:skewX(-6deg)}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-chain-strip .chain-thumb>*{transform:skewX(6deg)}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-chain-strip .chain-thumb.current{border-color:var(--p26-gold)!important;box-shadow:6px 6px 0 var(--p26-gold)!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-chain-strip .chain-thumb :is(b,span){font-size:13px!important;line-height:1.25!important;color:var(--p26-white)!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-chain-strip .chain-thumb small{font-size:12.5px!important;line-height:1.3!important;color:#d6d9e3!important}
+
+/* ───────────── 3. Resolving text box (tablet readability) ───────────── */
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect{background:var(--p26-ink)!important;border:4px solid var(--p26-white)!important;border-radius:0!important;box-shadow:10px 10px 0 var(--p26-red)!important;clip-path:polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-caption{display:inline-block;width:auto!important;padding:4px 12px!important;font:italic 900 13px/1.2 var(--p26-head)!important;letter-spacing:.06em;color:var(--p26-ink)!important;background:var(--p26-gold)!important;transform:skewX(-10deg)}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-label{font:italic 900 clamp(16px,1.6vw,20px)/1.2 var(--p26-head)!important;color:var(--p26-white)!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text{font-size:clamp(17px,1.55vw,21px)!important;line-height:1.5!important;color:#e9ebf2!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text .effect-context{font-size:.9em!important;color:#c3c7d4!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text mark,body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text mark[data-active-clause]{background:var(--p26-white)!important;color:var(--p26-ink)!important;box-shadow:-6px 0 0 var(--p26-red),4px 4px 0 var(--p26-red)!important;border:0!important;padding:4px 8px!important;border-radius:0!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text mark strong,body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text mark[data-active-clause] strong{color:var(--p26-ink)!important;font-weight:800}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip .chain-thumb{border-radius:0!important;border:3px solid var(--p26-white)!important;box-shadow:5px 5px 0 var(--p26-ink)!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip .chain-thumb>span{font-size:15px!important}
+body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip .chain-thumb b{font-size:12px!important}
+
+/* ───────────── 4. Live chain stack (left column) ───────────── */
+body[data-theme=showtime].in-duel #chain .chain-thumb{border:2px solid var(--p26-white)!important;border-left:7px solid var(--st-pending,#7a3fd1)!important;border-radius:0!important;box-shadow:4px 4px 0 var(--p26-ink)}
+body[data-theme=showtime].in-duel #chain .chain-thumb.resolving{border-color:var(--p26-ink)!important;box-shadow:4px 4px 0 var(--p26-red)}
+body[data-theme=showtime].in-duel #chain .chain-thumb b{font-size:12px!important}
+body[data-theme=showtime].in-duel #chain .chain-thumb>span{font-size:12.5px;line-height:1.3}
+
+/* ───────────── 5. Summon cutscene (B2) frame ───────────── */
+#summon-scene.b2-active .b2-hazard{background:var(--p26-ink)!important;color:var(--p26-white)!important;border:5px solid var(--p26-white)!important;box-shadow:9px 9px 0 var(--p26-red)!important;transform:skewX(-10deg);font-style:italic!important;letter-spacing:.04em}
+#summon-scene.b2-active .b2-name{font:italic 900 clamp(26px,3.4vw,44px)/1.05 var(--p26-head)!important;color:var(--p26-white);-webkit-text-stroke:2px var(--p26-ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--p26-red),9px 9px 0 var(--p26-ink)}
+#summon-scene.b2-active .b2-stats{display:inline-block;padding:4px 14px;background:var(--p26-white);color:var(--p26-ink)!important;font:italic 900 15px/1.2 var(--p26-head)!important;transform:skewX(-10deg)}
+#summon-scene.b2-active .b2-material{border:4px solid var(--p26-white)!important;border-radius:0!important;box-shadow:7px 7px 0 var(--p26-ink)!important;background:var(--p26-ink)!important}
+#summon-scene.b2-active .b2-material-name{font:italic 900 14px/1.2 var(--p26-head)!important;color:var(--p26-white)!important}
+#summon-scene.b2-active .b2-art{border:5px solid var(--p26-white)!important;box-shadow:10px 10px 0 var(--p26-ink),0 0 0 10px var(--scene-accent,var(--p26-red))!important;border-radius:0!important}
+#summon-scene.b2-active .b2-caption{font:italic 800 15px/1.3 var(--p26-head)!important;color:#e9ebf2!important}
+
+/* ───────────── 6. MATERIALS panel (only when the summon cutscene cannot play) ───────────── */
+.fusion-materials-scene{inset:auto 4vw!important;top:50%!important;translate:0 -50%;max-height:80vh;border:5px solid var(--p26-white)!important;box-shadow:12px 12px 0 var(--p26-red),20px 20px 0 var(--p26-ink)!important;transform:skewX(-4deg)}
+.fusion-materials-scene>*{transform:skewX(4deg)}
+.fusion-materials-scene .materials-hazard{background:var(--p26-red)!important;color:var(--p26-white)!important;border:4px solid var(--p26-white)!important;font-style:italic!important}
+.fusion-materials-scene .materials-art{display:block;width:150px;aspect-ratio:.686;object-fit:cover;border:4px solid var(--p26-white);box-shadow:7px 7px 0 var(--p26-ink);align-self:center}
+.fusion-materials-scene .materials-item{flex-basis:170px!important}
