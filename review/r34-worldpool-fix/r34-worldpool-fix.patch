@@ -1,0 +1,84 @@
+diff --git a/dist/ai/world-pool.mjs b/dist/ai/world-pool.mjs
+index a6b9f63..458bfe7 100644
+--- a/dist/ai/world-pool.mjs
++++ b/dist/ai/world-pool.mjs
+@@ -69,6 +69,11 @@ export function pastStillConsistent(last, ctx) {
+ 
+ export class WorldPool {
+   constructor(key, size = POOL_SIZE) {
++    // r35 world-pool fix (Claude, 24 Oct; Seto S2b FAIL on seeds 808 and 4242): headless keys start with the process-wide duel
++    // counter ("duel17|0|16"), and the pool's own random streams (identity swap, sibling repair, advance replay) were
++    // seeded from that key, so replaying the same seed later in the same process drew different random numbers.
++    // seedKey drops the counter; the map key stays unique per duel. Live ("live:<n>") and tool keys are unchanged.
++    this.seedKey = String(key).replace(/^duel\d+\|/, 'duel|');
+     this.key = key; this.size = size; this.slots = Array(size).fill(null); this.last = null; this.cutAt = null;
+     // Lineage (Seto amendments 1-2). sync[s]: slot s holds exactly what the headless pool holds (same world, or both
+     // empty). lastRoot[s]: the last search root whose maintenance step slot s completed. records: the contexts of the
+@@ -116,7 +121,7 @@ export class WorldPool {
+     const firstId = Math.min(...cards.map(c => c.id)), offset = p === 0 ? 0 : w.orders[0].main.length + w.orders[0].extra.length, main = w.orders[p].main;
+     const same = (a, b) => a === b || live.db?.[a]?.alias === b || live.db?.[b]?.alias === a, index = c => c.id - firstId - offset;
+     const mine = cards.filter(c => c.player === p && index(c) >= 0 && index(c) < main.length && same(main[index(c)], c.code));
+-    const rng = randomStream(seedHash(this.key + ':swap:' + w.id + ':' + e.code)), known = q => sim.knowledge?.[seat]?.reference(p, 2, q)?.code || 0;
++    const rng = randomStream(seedHash(this.seedKey + ':swap:' + w.id + ':' + e.code)), known = q => sim.knowledge?.[seat]?.reference(p, 2, q)?.code || 0;
+     // Hidden to the seat: the opponent's hand cards and face-down cards (field, banished) it has never seen (its own cards
+     // are all known to it).
+     // Codes of this player that the seat has seen in any public event (searched, revealed, moved face-up): a hand card of
+@@ -160,7 +165,7 @@ export class WorldPool {
+   siblingFrom(slot, rec, live) {
+     const donors = this.slots.filter((w, s) => w && w.orders && this.lastRoot[s] === rec.r);
+     if (!donors.length) return null;
+-    const rng = randomStream(seedHash(this.key + ':sibling:' + rec.n + ':' + slot)), donor = donors[rng() % donors.length], seat = rec.ctx.seat, opp = 1 - seat;
++    const rng = randomStream(seedHash(this.seedKey + ':sibling:' + rec.n + ':' + slot)), donor = donors[rng() % donors.length], seat = rec.ctx.seat, opp = 1 - seat;
+     let cards = [];
+     try {
+       const sim = restoreWorld(donor.snap), before = sim.core.duelGetMessage(sim.handle).length;
+@@ -197,7 +202,7 @@ export class WorldPool {
+     else if (w && w.cursor.historyStep < rec.ctx.history.length) {
+       const sim = restoreWorld(w.snap, {verify}); sim.nativeByStep = w.native ? [...w.native] : [];
+       try {
+-        const cursor = sampler.replayWorld(sim, w.cursor, {rngSeed: this.key + ':advance:' + w.id, shouldStop});
++        const cursor = sampler.replayWorld(sim, w.cursor, {rngSeed: this.seedKey + ':advance:' + w.id, shouldStop});
+         next = {...w, snap: saveWorld(sim, rootKey), cursor, native: sim.nativeByStep}; retireOld = w.snap; kind = 'advanced';
+       } catch (e) {
+         if (shouldStop()) return 'cut';
+@@ -365,7 +370,13 @@ export const duelIdentity = d => { let id = duelIds.get(d); if (id === undefined
+ export const MAX_POOLS = 2; // one per seat; older duels' pools are dropped to free engine memory
+ export function poolFor(key, size = POOL_SIZE) {
+   let p = pools.get(key);
+-  if (!p) { while (pools.size >= MAX_POOLS) dropPool(pools.keys().next().value); pools.set(key, p = new WorldPool(key, size)); }
++  if (!p) {
++    // r35 (Claude, 24 Oct): a new duel's first pool frees every pool left by an earlier duel at once (both seats), instead
++    // of one per new pool, so a finished duel's snapshots never sit beside the next duel's (S2a seed 808 heap growth).
++    const duel = String(key).split('|')[0];
++    for (const k of [...pools.keys()]) if (String(k).split('|')[0] !== duel) dropPool(k);
++    while (pools.size >= MAX_POOLS) dropPool(pools.keys().next().value); pools.set(key, p = new WorldPool(key, size));
++  }
+   return p;
+ }
+ export function dropPool(key) { const p = pools.get(key); if (p) { p.release(); pools.delete(key); } }
+diff --git a/tests/r35-world-pool-fix.test.mjs b/tests/r35-world-pool-fix.test.mjs
+new file mode 100644
+index 0000000..98532cb
+--- /dev/null
++++ b/tests/r35-world-pool-fix.test.mjs
+@@ -0,0 +1,20 @@
++// r35 world-pool fix (TEST branch from r34). SELF-VERIFIED (builder); the S2b determinism run is Seto's independent check.
++// 1. The pool's random streams no longer depend on the process-wide duel counter: pools for the same seed and seat in
++//    duel17 and duel18 get the same seedKey; live and tool keys keep their own key.
++// 2. A new duel's first pool drops every pool left by an earlier duel (both seats) at once.
++import assert from 'node:assert/strict';
++import {WorldPool, poolFor, dropAllPools, duelIdentity} from '../dist/ai/world-pool.mjs';
++assert.equal(new WorldPool('duel17|0|16').seedKey, new WorldPool('duel18|0|16').seedKey);
++assert.equal(new WorldPool('duel17|1|16').seedKey, 'duel|1|16');
++assert.notEqual(new WorldPool('duel17|0|16').seedKey, new WorldPool('duel17|1|16').seedKey, 'seats still differ');
++assert.equal(new WorldPool('live:3|0|10').seedKey, 'live:3|0|10', 'live keys unchanged');
++assert.equal(new WorldPool('audit:mikanko:201|0|10').seedKey, 'audit:mikanko:201|0|10', 'tool keys unchanged');
++dropAllPools();
++const a = duelIdentity({}), b = duelIdentity({});
++const a0 = poolFor(a + '|0|16'), a1 = poolFor(a + '|1|16');
++let released = 0; for (const p of [a0, a1]) { const r = p.release.bind(p); p.release = () => { released++; r(); }; }
++const b0 = poolFor(b + '|0|16');
++assert.equal(released, 2, 'both pools of the earlier duel are released when the next duel makes its first pool');
++assert.equal(poolFor(b + '|0|16'), b0, 'same duel and seat: same pool');
++dropAllPools();
++console.log(JSON.stringify({test: 'r35-world-pool-fix', pass: true, node: process.version, selfVerified: true}));

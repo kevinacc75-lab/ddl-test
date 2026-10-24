@@ -1,0 +1,220 @@
+diff --git a/dist/ai/book/mikanko-plan.mjs b/dist/ai/book/mikanko-plan.mjs
+index 0aefc61..92f5bf4 100644
+--- a/dist/ai/book/mikanko-plan.mjs
++++ b/dist/ai/book/mikanko-plan.mjs
+@@ -43,7 +43,7 @@ export function mikankoActivationBlock(d,seat,c){
+  if(!isMikanko(d,seat)||!ourMain1(d,seat)||c.location===16)return null;
+  const n=d.name(c.code),ready=reflectors(d,seat).length>0,mons=d.zone(1-seat,4).filter(Boolean);
+  if(n==='Raigeki'&&mons.length){
+-  if(onlySpent(d,seat))return 'Mikanko damage plan: their monsters are ones we gave them (or negated); keep them as targets, not removal targets (hold Raigeki)';
++  if(ready&&onlySpent(d,seat))return 'Mikanko damage plan: their monsters are ones we gave them (or negated) and '+d.name(reflectors(d,seat)[0].code)+' can hit them; keep them as targets (hold Raigeki)';/* RELAY-043 R43-01: no hold without a working reflector */
+   const val=x=>(x.position&5)?((x.position&1)?(x.attack||0):(x.defense||0)):0;/* seed 202: holding Raigeki for a 0-DEF token cost a 3300 direct attack */
+   if(ready&&!mons.some(x=>threat(d,seat,x))&&mons.some(x=>val(x)>=1500))return 'Mikanko damage plan: nothing of theirs stops '+d.name(reflectors(d,seat)[0].code)+'; their monsters are damage targets (hold Raigeki)';
+  }
+@@ -68,16 +68,33 @@ export function mikankoSpecialBlock(d,seat,c){
+  const others=d.zone(seat,4).filter(x=>faceUp(x)&&!refl.some(y=>y.sequence===x.sequence));/* zone() returns new objects each call */
+  const need=card.type&67108864?Math.max(1,(card.level||0)&255):/TY-PHON/.test(d.name(c.code))?1:2;
+  const topAtk=Math.max(0,...d.zone(seat,4).filter(faceUp).map(x=>x.attack||0));
+- const usesReflector=others.length<need||(/TY-PHON/.test(d.name(c.code))&&!others.some(x=>(x.attack||0)===topAtk));
++ const supply=others.reduce((t,x)=>t+((d.db[x.code]?.type&67108864)&&(card.type&67108864)?Math.max(1,(d.db[x.code]?.level||0)&255):1),0);/* R43-04: a Link material counts its Link Rating */
++ const usesReflector=supply<need||(/TY-PHON/.test(d.name(c.code))&&!others.some(x=>(x.attack||0)===topAtk));
+  return usesReflector?'Mikanko damage plan: '+d.name(c.code)+' would use '+d.name(refl[0].code)+' as material before it attacks their '+d.name(damageTargets(d,seat)[0].code):null;
+ }
+ // H4 (battle nudge) was dropped in r35.2b: never exercised on the tuning hands, and optimal-pilot.mjs is pinned.
+ // r35.2b Akiza E1 (Ohime -> Sanaki -> Fire Dance -> Ha-Re -> Uzuhime) and Fire Dance rules (3.2).
+ const FD='Mikanko Fire Dance';
++// RELAY-043: Fire Dance's once per turn is tracked from this turn's activations (the duel's per-turn ledger), not from a
++// face-up copy, which may have been equipped on an earlier turn.
++export function fireDanceUsed(d){for(const k of d.attempts?.keys?.()||[])if(d.name(+String(k).split(':')[0])===FD)return true;return false}
+ function fireDanceReady(d,seat){
+- if(d.zone(seat,8).some(c=>faceUp(c)&&d.name(c.code)===FD))return false;/* one already resolved and is equipped: once per turn */
++ if(fireDanceUsed(d))return false;
+  return [...d.zone(seat,2),...d.zone(seat,8)].some(c=>c&&d.name(c.code)===FD);
+ }
++// RELAY-043 R43-02: a reflector exists, or a legal line makes one this turn: Uzuhime in the Extra Deck with two
++// Level 3 Mikanko available (field, or Sanaki on the field with Ha-Re / Hu-Li still in our Deck). Our own Deck is ours to see.
++const L3=/^(Sanaki the Mikanko Devotee|Ha-Re the Sword Mikanko|Hu-Li the Jewel Mikanko)$/;
++export function reflectorLine(d,seat){
++ if(reflectors(d,seat).length)return 'reflector on the field';
++ if(!d.zone(seat,64).some(c=>c&&d.name(c.code)==='Uzuhime the Manifested Mikanko'))return null;
++ const l3=d.zone(seat,4).filter(c=>faceUp(c)&&L3.test(d.name(c.code)));
++ if(l3.length>=2)return 'Uzuhime from two Level 3 Mikanko';
++ if(l3.some(c=>d.name(c.code)==='Sanaki the Mikanko Devotee')&&d.zone(seat,1).some(c=>c&&/^(Ha-Re|Hu-Li)/.test(d.name(c.code))))return 'Sanaki summons Ha-Re/Hu-Li, then Uzuhime';
++ return null;
++}
++// Damage a 0-ATK reflector gets from a monster: ATK in Attack Position, DEF in Defense Position (Seto 21:07: real).
++export const targetValue=c=>c&&(c.position&5)?((c.position&1)?(c.attack||0):(c.defense||0)):0;
+ // Yes/no prompts on our own turn. Returns {yes, reason} or null.
+ export function mikankoYesNo(d,seat,m){
+  if(!isMikanko(d,seat)||d.active!==seat||![M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m?.type))return null;
+@@ -86,9 +103,11 @@ export function mikankoYesNo(d,seat,m){
+  if(m.type===M.SELECT_YESNO&&d.name(d.currentEffect?.code||0)===FD){
+   // Akiza 3.2(3): revive only when a reflector will hit it this turn (Battle Phase ahead; the E1 line makes Uzuhime) and
+   // they have no equal or better target already; we then pick their highest-ATK monster.
+-  const best=Math.max(0,...d.zone(1-seat,4).filter(c=>c&&(c.position&1)).map(c=>c.attack||0));
+-  const yes=ourMain1(d,seat)&&best<2000;
+-  return {yes,reason:yes?'Revive their strongest monster as a damage target: a reflector attacks it this turn (Akiza 3.2)':'Decline the opposing revival: it would be a gift with no reflector attack, or they already have a target (Akiza 3.2)'};
++  const best=Math.max(0,...d.zone(1-seat,4).map(targetValue)),line=reflectorLine(d,seat);
++  if(!ourMain1(d,seat))return {yes:false,reason:'Decline the opposing revival: no Battle Phase left this turn'};
++  if(!line)return {yes:false,reason:'Decline the opposing revival: no reflector now and no legal line to make one this turn (RELAY-043 R43-02)'};
++  if(best>=2000)return {yes:false,reason:'Decline the opposing revival: they already have a '+best+' target'};
++  return {yes:true,reason:'Revive their best damage target: '+line+' (Akiza 3.2)'};
+  }
+  return null;
+ }
+@@ -96,7 +115,7 @@ export function mikankoYesNo(d,seat,m){
+ export function mikankoPick(d,seat,m,r){
+  if(!isMikanko(d,seat)||![M.SELECT_CARD].includes(m?.type)||d.name(d.currentEffect?.code||0)!==FD)return null;
+  const cards=m.selects||[];if(!cards.length||cards.some(c=>(d.fromEngine?d.fromEngine(c.controller):c.controller)===seat))return null;
+- const atk=c=>d.db[c.code]?.attack||0;let bi=0;cards.forEach((c,i)=>{if(atk(c)>atk(cards[bi]))bi=i});
++ const atk=c=>Math.max(d.db[c.code]?.attack||0,d.db[c.code]?.defense||0);/* R43-03: the damage it supplies (position picks the higher) */let bi=0;cards.forEach((c,i)=>{if(atk(c)>atk(cards[bi]))bi=i});
+  const picks=r?.indicies||[];if(picks.length===1&&picks[0]===bi)return null;return {type:r?.type??5,indicies:[bi]};
+ }
+ // Battle position (Alexis MK-Q1: we choose): Lava Golem and every Mikanko in Attack Position; the Fire Dance revival in
+diff --git a/dist/app-shell.mjs b/dist/app-shell.mjs
+index f101d2b..fa8cec9 100644
+--- a/dist/app-shell.mjs
++++ b/dist/app-shell.mjs
+@@ -1,7 +1,7 @@
+-import {installPlayFlow} from './play-flow.mjs';import {createLearningCaptions} from './learning-captions.mjs';import {installDeckList} from './deck-list.mjs';import {installChainGlow} from './chain-glow.mjs';import {installDuelQuickbar} from './duel-quickbar.mjs';import {installPileGlow} from './pile-glow.mjs';
++import {installPlayFlow} from './play-flow.mjs';import {installHudFit} from './hud-fit.mjs';import {createLearningCaptions} from './learning-captions.mjs';import {installDeckList} from './deck-list.mjs';import {installChainGlow} from './chain-glow.mjs';import {installDuelQuickbar} from './duel-quickbar.mjs';import {installPileGlow} from './pile-glow.mjs';
+ const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ export function installShell({preferences,applyPreferences,sound,presentation,getState,getMatch,getDecks,getWorker,notify,openModal,beforeRewind=()=>{},getDecision=()=>null,submit=()=>{},navigate=()=>{},inspect=()=>{}}){
+- const play=installPlayFlow({preferences,save:applyPreferences,getDecision,submit,navigate,inspect,notify});const chainGlow=installChainGlow({navigate});const pileGlow=installPileGlow({navigate});/* r35.2: effects ready in the GY / banished / Extra Deck */installDuelQuickbar();/* r34 */const captions=createLearningCaptions({getDecks,on:()=>(preferences.preset||'learning')==='learning'});/* r32: Learning-mode combo captions */
++ const play=installPlayFlow({preferences,save:applyPreferences,getDecision,submit,navigate,inspect,notify});const chainGlow=installChainGlow({navigate});const pileGlow=installPileGlow({navigate});const hudFit=installHudFit();/* r35.2: effects ready in the GY / banished / Extra Deck */installDuelQuickbar();/* r34 */const captions=createLearningCaptions({getDecks,on:()=>(preferences.preset||'learning')==='learning'});/* r32: Learning-mode combo captions */
+  const $=s=>document.querySelector(s);document.body.append($('#rotate-hint'));let portraitOverride=false,gesture=null,pressTimer,bookmarks=[],lastSummary=-1;try{bookmarks=JSON.parse(localStorage.getItem('lab-bookmarks-v2')||'[]')}catch{}
+  // r35.1 (Kevy 24 Oct 15:26: "music and sound by default set to 80"): new default 80% for the sound effects (master) and the
+  // music. app.mjs (pinned) still holds the old 50/20 defaults, so this applies once per browser (audioDefaults flag), also
+@@ -36,7 +36,7 @@ export function installShell({preferences,applyPreferences,sound,presentation,ge
+  function cutin(player,text){const n=$('#duelist-cutin'),art=document.querySelector('.player-bar[data-seat=\"'+player+'\"] .player-avatar')||$('#my-avatar');n.querySelector('img').src=art.src;n.querySelector('b').textContent=text;n.hidden=false;n.classList.remove('cutin-live');void n.offsetWidth;n.classList.add('cutin-live');setTimeout(()=>n.hidden=true,1000)}
+  function summary(x){if(!x.state.finished||lastSummary===x.match?.seed)return;lastSummary=x.match?.seed;const turns=x.state.turn,history=x.coach?.history||[],key=history.filter(t=>['summon','chain','attack'].includes(t.kind)).slice(-5);let target=$('#duel-summary');if(!target){target=document.createElement('section');target.id='duel-summary';$('.journal-pane').prepend(target)}target.hidden=false;target.innerHTML='<h3>Duel review · '+turns+' turns</h3><p>Final LP '+x.state.players.map(p=>p.lp).join(' / ')+'</p><ol>'+key.map(t=>'<li>'+escape(t.title)+' — '+escape(t.reason)+'</li>').join('')+'</ol>';}
+  document.addEventListener('duel-presentation-event',({detail:e})=>{if(e.type==='attack'&&e.lethal)cutin(e.from?.controller,'One decisive strike.');if(e.type==='summon'&&e.special&&flavourOk()){cutin(e.player,'The next chapter begins.');reaction('Let’s see you answer this.')}/* r34 (ChatGPT RELAY-022 #8): at most one flavour line every 12 s, never over a resolving effect bubble */if((e.type==='negate'||e.negated)&&flavourOk())reaction('You’ll need another line.');if(e.type==='damage'&&e.amount>=2000){if(flavourOk())reaction('Still in this duel.');sound.duck()}if(e.type==='win')reaction('That was the turning point.')});
+- const api={play,sync(){play.sync();for(const [id,key] of [['lab-tap','tapToContinue'],['lab-chain-flow','chainFlow'],['lab-stage','tabletStage'],['lab-voice','voice']])$('#'+id).checked=!!preferences[key];{const el=$('#lab-auto-skip-chain');if(el)el.checked=preferences.autoSkipEmptyChain!==false}document.body.dataset.chainFlow=String(preferences.chainFlow!==false);document.body.dataset.pace=preferences.preset||'learning';/* r34 arena: pace-aware presentation (r34-arena.css) */$('#lab-pace').value=preferences.preset||'learning';for(const id of ['lab-chain-view','setup-chain-view'])$('#'+id).value=preferences.chainView||'auto';for(const b of ['master','music','sfx','ui','voice'])$('#bus-'+b).value=100*(b==='master'?preferences.volume:preferences.buses?.[b]??sound.levels[b]);resize()},state(x){play.state(x);chainGlow.state(x);pileGlow.state(x);summary(x);captions.state(x);resize()},rewound(){lastSummary=-1;captions.reset()},rewind};api.sync();
++ const api={play,sync(){play.sync();for(const [id,key] of [['lab-tap','tapToContinue'],['lab-chain-flow','chainFlow'],['lab-stage','tabletStage'],['lab-voice','voice']])$('#'+id).checked=!!preferences[key];{const el=$('#lab-auto-skip-chain');if(el)el.checked=preferences.autoSkipEmptyChain!==false}document.body.dataset.chainFlow=String(preferences.chainFlow!==false);document.body.dataset.pace=preferences.preset||'learning';/* r34 arena: pace-aware presentation (r34-arena.css) */$('#lab-pace').value=preferences.preset||'learning';for(const id of ['lab-chain-view','setup-chain-view'])$('#'+id).value=preferences.chainView||'auto';for(const b of ['master','music','sfx','ui','voice'])$('#bus-'+b).value=100*(b==='master'?preferences.volume:preferences.buses?.[b]??sound.levels[b]);resize()},state(x){play.state(x);chainGlow.state(x);pileGlow.state(x);hudFit.state(x);summary(x);captions.state(x);resize()},rewound(){lastSummary=-1;captions.reset()},rewind};api.sync();
+  if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').then(async registration=>{await navigator.serviceWorker.ready;if(registration.active)notify('Offline duel files are ready. You can install the lab from your browser menu.');}).catch(()=>notify('Offline installation is unavailable in this browser. Online duels still work.'));
+  return api;
+ }
+diff --git a/dist/hud-fit.mjs b/dist/hud-fit.mjs
+new file mode 100644
+index 0000000..dc6eb00
+--- /dev/null
++++ b/dist/hud-fit.mjs
+@@ -0,0 +1,20 @@
++// r35.3 (Claude, 24 Oct 2026; Kevy's play-test recordings on a 16:10 screen): the Duel controls gear (fixed, top-right)
++// covered the last digit of the opponent's LP ("800" for 8000, "650" for 6500) when the table fills the screen width.
++// After each layout change this measures both boxes and, only if they overlap, moves the opponent's player bar left just
++// enough to clear the gear (8px gap). Presentation only; nothing else moves, and other screen shapes are unchanged.
++export function installHudFit(){
++ let shift=0;
++ function fit(){
++  const gear=document.querySelector('.duel-controls-fab'),bar=document.querySelector('#duel .player-bar.opponent');
++  if(!gear||!bar||!document.body.classList.contains('in-duel'))return;
++  const g=gear.getBoundingClientRect();if(!g.width)return;
++  bar.style.removeProperty('right');shift=0;
++  // The table can be scaled, so a CSS-pixel move is not a screen-pixel move: step until clear (at most 6 tries).
++  for(let i=0;i<6;i++){const b=bar.getBoundingClientRect();if(!b.width)return;
++   const over=b.right+8-g.left;if(!(over>0&&b.top<g.bottom&&b.bottom>g.top&&b.left<g.left))return;
++   const cur=parseFloat(getComputedStyle(bar).right)||0;shift+=Math.ceil(over);bar.style.setProperty('right',(cur+Math.ceil(over))+'px','important')}
++ }
++ let raf=0;const later=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(fit)};
++ addEventListener('resize',later);addEventListener('orientationchange',later);setInterval(()=>{if(document.body.classList.contains('in-duel'))later()},1500);/* layout code can rewrite the bar; re-check */
++ return {state:later,fit};
++}
+diff --git a/dist/offline-assets.json b/dist/offline-assets.json
+index 783a629..a3068c3 100644
+--- a/dist/offline-assets.json
++++ b/dist/offline-assets.json
+@@ -383,6 +383,7 @@
+   "./plans/sky.mjs",
+   "./play-flow.css",
+   "./pile-glow.mjs",
++  "./hud-fit.mjs",
+   "./play-flow.mjs",
+   "./presentation.mjs",
+   "./random.mjs",
+diff --git a/tests/r35-hud-fit.test.mjs b/tests/r35-hud-fit.test.mjs
+new file mode 100644
+index 0000000..0a2f58d
+--- /dev/null
++++ b/tests/r35-hud-fit.test.mjs
+@@ -0,0 +1,15 @@
++// r35.3 HUD fit (Kevy's 24 Oct recordings: the gear covered the opponent's last LP digit on a 16:10 screen).
++// SELF-VERIFIED (builder). jsdom has no layout, so the boxes are stubbed: an overlapping bar is moved left until it
++// clears the gear by 8px; a bar that already clears it is left alone.
++import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';import fs from 'node:fs';
++const dom=new JSDOM('<body class="in-duel"><button class="duel-controls-fab"></button><div id="duel"><div class="player-bar opponent"></div></div></body>');
++globalThis.document=dom.window.document;globalThis.getComputedStyle=e=>({right:e.style.getPropertyValue('right')||'20px'});
++globalThis.addEventListener=()=>{};globalThis.requestAnimationFrame=f=>f();globalThis.cancelAnimationFrame=()=>{};globalThis.setInterval=()=>0;
++const gear=document.querySelector('.duel-controls-fab'),bar=document.querySelector('.player-bar');
++gear.getBoundingClientRect=()=>({left:1085,right:1137,top:16,bottom:64,width:52});
++let base=1127;bar.getBoundingClientRect=()=>{const r=parseFloat(bar.style.getPropertyValue('right')||'20');const right=base-(r-20)*0.7;return {left:right-260,right,top:15,bottom:67,width:260}};/* scaled table: 1 CSS px = 0.7 screen px */
++const {installHudFit}=await import('../dist/hud-fit.mjs');const fit=installHudFit();fit.fit();
++const b=bar.getBoundingClientRect();assert.ok(b.right+8<=1085.5,'bar clears the gear: '+b.right);
++base=990;fit.fit();assert.equal(bar.style.getPropertyValue('right'),'','already clear: no override');
++assert.ok(JSON.parse(fs.readFileSync('dist/offline-assets.json')).includes('./hud-fit.mjs'),'cached offline');
++console.log(JSON.stringify({test:'r35-hud-fit',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tests/r35-mikanko-plan.test.mjs b/tests/r35-mikanko-plan.test.mjs
+index d9bcba6..4169e31 100644
+--- a/tests/r35-mikanko-plan.test.mjs
++++ b/tests/r35-mikanko-plan.test.mjs
+@@ -6,9 +6,9 @@ import {M,R} from '../dist/duel.mjs';
+ import {reflectors,mikankoActivationBlock,mikankoOption,mikankoSpecialBlock} from '../dist/ai/book/mikanko-plan.mjs';
+ const NAMES={1:'Uzuhime the Manifested Mikanko',2:'Hu-Li the Jewel Mikanko',3:'Thunder King, the Lightningstrike Kaiju',4:'Blue-Eyes White Dragon',5:'Raigeki',6:'Lightning Storm',7:'Super Starslayer TY-PHON - Sky Crisis',8:'Mikanko Fire Dance',9:'Set card',10:'Lava Golem',11:'Omni Negate Boss',12:'Sanaki the Mikanko Devotee',13:'Forbidden Droplet'};
+ const DB={1:{type:1|32|8388608},2:{type:33},3:{type:33},4:{type:17,attack:3000},5:{type:2},6:{type:2},7:{type:1|32|8388608,level:12},8:{type:2},9:{type:4},10:{type:33},11:{type:33|64,desc:'(Quick Effect): You can negate the activation of a card or effect.'},12:{type:33},13:{type:2}};
+-function duel({mine=[],theirs=[],mySpells=[],theirSpells=[],deck='mikanko',phase=4,turn=2,active=0,effect=0}={}){
+- const z={'0:4':mine,'1:4':theirs,'0:8':mySpells,'1:8':theirSpells};
+- return {decks:[{id:deck},{id:'blueeyes'}],phase,turn,active,db:DB,name:c=>NAMES[c]||'?',fromEngine:p=>p,currentEffect:{code:effect},
++function duel({mine=[],theirs=[],mySpells=[],theirSpells=[],deckCards=[],extra=[],attempts=[],deck='mikanko',phase=4,turn=2,active=0,effect=0}={}){
++ const z={'0:4':mine,'1:4':theirs,'0:8':mySpells,'1:8':theirSpells,'0:1':deckCards,'0:64':extra};
++ return {decks:[{id:deck},{id:'blueeyes'}],phase,turn,active,db:DB,name:c=>NAMES[c]||'?',fromEngine:p=>p,currentEffect:{code:effect},attempts:new Map(attempts.map(k=>[k,1])),
+   zone:(p,l)=>(z[p+':'+l]||[]).map((c,i)=>c&&{controller:p,location:l,sequence:c.sequence??i,...c})};
+ }
+ const uzu={code:1,position:1,attack:0},tk={code:3,position:1,attack:3300,owner:0},bewd={code:4,position:1,attack:3000,owner:1};
+@@ -24,7 +24,8 @@ assert.match(mikankoActivationBlock(duel({mine:[uzu],theirs:[tk,bewd]}),0,raigek
+ const omni={code:11,position:1,attack:3000,owner:1};
+ assert.equal(mikankoActivationBlock(duel({mine:[uzu],theirs:[tk,omni]}),0,raigeki),null,'a live negate of theirs: Raigeki allowed');
+ assert.equal(mikankoActivationBlock(duel({mine:[uzu],theirs:[{code:4,position:10,attack:0}]}),0,raigeki),null,'a face-down monster counts as a threat');
+-assert.match(mikankoActivationBlock(duel({theirs:[{code:10,position:1,attack:3000,owner:0}]}),0,raigeki)||'',/ones we gave them/,'Akiza 3.4 / F-4: never Raigeki our own Lava Golem');
++assert.match(mikankoActivationBlock(duel({mine:[uzu],theirs:[{code:10,position:1,attack:3000,owner:0}]}),0,raigeki)||'',/ones we gave them/,'Akiza 3.4 / F-4: keep our Lava Golem as the target when a reflector can hit it');
++assert.equal(mikankoActivationBlock(duel({theirs:[{code:10,position:1,attack:3000,owner:0}]}),0,raigeki),null,'RELAY-043 R43-01 negative: no reflector, no hold');
+ assert.equal(mikankoActivationBlock(duel({theirs:[bewd]}),0,raigeki),null,'their own monster and no reflector: allowed');
+ assert.equal(mikankoActivationBlock(duel({mine:[uzu],theirs:[tk],deck:'sky'}),0,raigeki),null,'Mikanko only');
+ assert.equal(mikankoActivationBlock(duel({mine:[uzu],theirs:[tk],phase:256}),0,raigeki),null,'Main Phase 1 only');
+@@ -47,7 +48,10 @@ assert.equal(mikankoOption(duel({theirs:[omni],theirSpells:[{code:9,position:10}
+ const {mikankoYesNo,mikankoPick,mikankoPosition}=await import('../dist/ai/book/mikanko-plan.mjs');
+ const fdHand=duel({theirs:[]});fdHand.zone=((z)=>(p,l)=>p===0&&l===2?[{code:8,controller:0,location:2,sequence:0}]:z(p,l))(fdHand.zone);
+ assert.equal(mikankoYesNo(fdHand,0,{type:M.SELECT_EFFECTYN,code:12,location:16}).yes,false,'decline Sanaki GY equip');
+-assert.equal(mikankoYesNo(duel({theirs:[],effect:8}),0,{type:M.SELECT_YESNO}).yes,true,'empty board: revive a target');
++assert.equal(mikankoYesNo(duel({theirs:[],effect:8}),0,{type:M.SELECT_YESNO}).yes,false,'R43-02: empty board but no reflector and no line: decline');
++assert.equal(mikankoYesNo(duel({mine:[uzu],theirs:[],effect:8}),0,{type:M.SELECT_YESNO}).yes,true,'reflector on the field, no target: revive');
++assert.equal(mikankoYesNo(duel({mine:[{code:12,position:1,attack:0}],extra:[{code:1}],deckCards:[{code:2}],theirs:[],effect:8}),0,{type:M.SELECT_YESNO}).yes,true,'R43-02 line: Sanaki + Hu-Li in Deck + Uzuhime in Extra');
++assert.equal(mikankoYesNo(duel({mine:[uzu],theirs:[{code:4,position:4,attack:3000,defense:2500}],effect:8}),0,{type:M.SELECT_YESNO}).yes,false,'an existing 2500 Defense target counts');
+ assert.equal(mikankoYesNo(duel({theirs:[bewd],effect:8}),0,{type:M.SELECT_YESNO}).yes,false,'they already have a 3000 target: decline');
+ assert.equal(mikankoYesNo(duel({theirs:[],effect:8,phase:256}),0,{type:M.SELECT_YESNO}).yes,false,'Main Phase 2: decline (no battle left)');
+ const pick=mikankoPick(duel({effect:8}),0,{type:M.SELECT_CARD,selects:[{code:12,controller:1},{code:4,controller:1}]},{type:5,indicies:[0]});
+@@ -57,11 +61,24 @@ assert.match(mikankoActivationBlock(duel({mine:[uzu],theirs:[bewd]}),0,{code:13,
+ assert.equal(mikankoActivationBlock(duel({mine:[uzu],theirs:[omni]}),0,{code:13,location:2}),null,'Droplet on a live negate');
+ // r35.2b: the hooks reach the pilot through bookPick (optimal-pilot.mjs is pinned)
+ const {bookPick}=await import('../dist/ai/book/book.mjs');
+-const viaBook=duel({theirs:[],effect:8});
++const viaBook=duel({mine:[uzu],theirs:[],effect:8});
+ assert.equal(bookPick(viaBook,0,{type:M.SELECT_YESNO},{type:R.SELECT_YESNO,yes:false})?.response?.yes,true,'bookPick carries the Fire Dance revival decision');
+ assert.equal(bookPick(duel({deck:'sky',effect:8}),0,{type:M.SELECT_YESNO},{type:R.SELECT_YESNO,yes:false}),null,'other decks untouched');
+ assert.deepEqual(mikankoPosition(duel({effect:8}),0,{type:M.SELECT_POSITION,code:10,positions:5}),{type:R.SELECT_POSITION,position:1},'Lava Golem 3000/2500: Attack');
+ DB[14]={type:33,attack:1000,defense:2400};NAMES[14]='Wall';
+ assert.deepEqual(mikankoPosition(duel({effect:8}),0,{type:M.SELECT_POSITION,code:14,positions:5}),{type:R.SELECT_POSITION,position:4},'revival with higher DEF: Defense (Akiza Rev 2)');
+ assert.equal(mikankoActivationBlock(duel({mine:[uzu],theirs:[{code:3,position:10,attack:0,defense:0,owner:1}].map(x=>({...x,position:5}))}),0,raigeki),null,'a 0-value body is not worth holding Raigeki for (seed 202)');
++// R43-03: pick by the damage supplied (higher of ATK / DEF)
++DB[15]={type:33,attack:1200,defense:2700};NAMES[15]='Defender';
++assert.deepEqual(mikankoPick(duel({effect:8}),0,{type:M.SELECT_CARD,selects:[{code:4,controller:1},{code:15,controller:1}]},{type:5,indicies:[0]})?.indicies??[0],[0],'3000 ATK beats 2700 DEF');
++DB[4]={type:17,attack:2500,defense:2100};
++assert.deepEqual(mikankoPick(duel({effect:8}),0,{type:M.SELECT_CARD,selects:[{code:4,controller:1},{code:15,controller:1}]},{type:5,indicies:[0]}).indicies,[1],'2700 DEF beats 2500 ATK (R43-03)');
++DB[4]={type:17,attack:3000};
++// R43-04: a Link-3 material covers Accesscode-style Link-4 needs with one more body
++DB[16]={type:33|67108864,level:3};NAMES[16]='Unicorn';DB[17]={type:33|67108864,level:4};NAMES[17]='Accesscode';
++assert.equal(mikankoSpecialBlock(duel({mine:[{...huli[0],sequence:0},{code:16,position:1,attack:2200,sequence:1},{code:12,position:1,attack:0,sequence:2}],mySpells:equip,theirs:[bewd]}),0,{code:17}),null,'Link-3 + another body covers Link-4 without the reflector');
++// Fire Dance ledger: equipped from an earlier turn still allows this turn's activation; used this turn blocks it
++const {fireDanceUsed}=await import('../dist/ai/book/mikanko-plan.mjs');
++assert.equal(fireDanceUsed(duel({mySpells:[{code:8,position:1}]})),false,'face-up Fire Dance from an earlier turn: not used this turn');
++assert.equal(fireDanceUsed(duel({attempts:['8:0:2:0:0']})),true,'activated this turn (now gone): used');
+ console.log(JSON.stringify({test:'r35-mikanko-plan',pass:true,node:process.version,selfVerified:true}));
