@@ -1,0 +1,61 @@
+IDENTITY {"frozen":{"tests/ai-gate.mjs":"1c380d58afc51f07ce76615d4b5cd8f185e7675de19b3fea72e1950088a14dee","tests/self-target-whitelist.json":"9f1fb5f5487ea60ea7afdc3aac624c269608510e4cdab598878c2ec86bae0ee3","dist/ai/world-pool.mjs":"807133d3049dc7af690042b258d7bba8f7e2672c8e908af27605ed1bb4b000b8"},"engineSha1":{"dist/ai/engine-snapshot.mjs":"64a4b25ad85697c1601fd651405adbcb1380a344","dist/ai/info-set.mjs":"9337e197e3bfde42414ca642bdc932efd2a85fc4","dist/ai/determinize.mjs":"f81fee91541813ffad79642d319c7bdfae527598"},"node":"v22.22.2","budget":400,"randomSeeds":0,"engine":"snapshot","stage":"S2a","version":"2.2.0-rc"}
+2026-10-27T11:43:51.144Z shard r0 start; prefixSha256 eed7e402ce0fa82cec8bb89aead8e7c8392ffca98cb6b5169542982b0da500fa; jobs 4 (S2b repro)
+2026-10-27T11:43:51.145Z job s2b-0 seed 2026 a0 b1 f0 start
+progress S2a seed 2026 turn 1 decision 25 search 0 heapMB 95
+progress S2a seed 2026 turn 2 decision 50 search 12 heapMB 96
+progress S2a seed 2026 turn 2 decision 75 search 19 heapMB 92
+progress S2a seed 2026 turn 2 decision 100 search 27 heapMB 108
+progress S2a seed 2026 turn 2 decision 125 search 39 heapMB 99
+progress S2a seed 2026 turn 3 decision 150 search 46 heapMB 112
+progress S2a seed 2026 turn 3 decision 175 search 49 heapMB 104
+progress S2a seed 2026 turn 4 decision 200 search 57 heapMB 108
+progress S2a seed 2026 turn 4 decision 225 search 66 heapMB 115
+progress S2a seed 2026 turn 5 decision 250 search 74 heapMB 107
+2026-10-27T11:46:46.859Z seed 2026 branded-mikanko f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=a291fb15 decisions=253 roots=74
+2026-10-27T11:46:46.859Z job s2b-2 seed 808 a0 b3 f0 start
+progress S2a seed 808 turn 2 decision 25 search 8 heapMB 96
+progress S2a seed 808 turn 2 decision 50 search 8 heapMB 110
+progress S2a seed 808 turn 2 decision 75 search 9 heapMB 94
+progress S2a seed 808 turn 2 decision 100 search 10 heapMB 105
+progress S2a seed 808 turn 2 decision 125 search 13 heapMB 112
+progress S2a seed 808 turn 2 decision 150 search 14 heapMB 114
+progress S2a seed 808 turn 2 decision 175 search 18 heapMB 111
+progress S2a seed 808 turn 3 decision 200 search 29 heapMB 128
+progress S2a seed 808 turn 3 decision 225 search 32 heapMB 118
+progress S2a seed 808 turn 4 decision 250 search 33 heapMB 126
+progress S2a seed 808 turn 4 decision 275 search 36 heapMB 120
+progress S2a seed 808 turn 4 decision 300 search 37 heapMB 136
+progress S2a seed 808 turn 4 decision 325 search 40 heapMB 129
+progress S2a seed 808 turn 5 decision 350 search 42 heapMB 117
+progress S2a seed 808 turn 5 decision 375 search 46 heapMB 135
+progress S2a seed 808 turn 6 decision 400 search 49 heapMB 126
+progress S2a seed 808 turn 6 decision 425 search 51 heapMB 121
+progress S2a seed 808 turn 6 decision 450 search 55 heapMB 146
+progress S2a seed 808 turn 7 decision 475 search 60 heapMB 139
+progress S2a seed 808 turn 7 decision 500 search 67 heapMB 354
+2026-10-27T12:19:55.690Z seed 808 branded-luna f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=c3c28f6d decisions=505 roots=67
+2026-10-27T12:19:55.690Z job s2b-4 seed 4242 a0 b1 f0 start
+progress S2a seed 4242 turn 2 decision 25 search 12 heapMB 105
+progress S2a seed 4242 turn 2 decision 50 search 15 heapMB 101
+progress S2a seed 4242 turn 3 decision 75 search 20 heapMB 110
+progress S2a seed 4242 turn 3 decision 100 search 20 heapMB 103
+progress S2a seed 4242 turn 3 decision 125 search 23 heapMB 112
+progress S2a seed 4242 turn 4 decision 150 search 25 heapMB 107
+progress S2a seed 4242 turn 4 decision 175 search 32 heapMB 127
+progress S2a seed 4242 turn 5 decision 200 search 38 heapMB 110
+progress S2a seed 4242 turn 5 decision 225 search 41 heapMB 116
+progress S2a seed 4242 turn 6 decision 250 search 44 heapMB 195
+progress S2a seed 4242 turn 7 decision 275 search 49 heapMB 112
+progress S2a seed 4242 turn 7 decision 300 search 50 heapMB 127
+progress S2a seed 4242 turn 7 decision 325 search 54 heapMB 131
+2026-10-27T12:26:41.504Z seed 4242 branded-mikanko f0: own=1 harmOpp=0 cut=0 throw=0 stall=0 hash=8c3cfa62 decisions=347 roots=55
+2026-10-27T12:26:41.504Z job s2b-6 seed 31337 a0 b3 f0 start
+progress S2a seed 31337 turn 1 decision 25 search 1 heapMB 96
+progress S2a seed 31337 turn 2 decision 50 search 4 heapMB 104
+progress S2a seed 31337 turn 2 decision 75 search 4 heapMB 125
+progress S2a seed 31337 turn 2 decision 100 search 7 heapMB 114
+progress S2a seed 31337 turn 2 decision 125 search 11 heapMB 108
+progress S2a seed 31337 turn 2 decision 150 search 12 heapMB 107
+2026-10-27T12:27:38.598Z seed 31337 branded-luna f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=b7843ea1 decisions=165 roots=13
+2026-10-27T12:27:38.602Z S2B-REPRO 2026 branded-mikanko f0 a291fb15 253 | 808 branded-luna f0 c3c28f6d 505 | 4242 branded-mikanko f0 8c3cfa62 347 | 31337 branded-luna f0 b7843ea1 165 | 12345 branded-sky f1 1b7a3afa 246 | 777 branded-branded f1 ef23e940 484 | 555 branded-sky f1 be7b4e24 170 | 99 branded-branded f1 e734916f 267 || roots 428 full16 421 fallback 0 unlogged 0
+2026-10-27T12:27:38.603Z shard r0 end

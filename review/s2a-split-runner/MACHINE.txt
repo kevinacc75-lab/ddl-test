@@ -1,0 +1,4 @@
+node: v22.22.2
+cpu: Model name: Intel(R) Xeon(R) Processor @ 2.10GHz x 2 cores
+ram: 7 GB
+tree: dist 33c8d1bdb204adb2 (r34 6eb0672a + world-pool 807133d3)
