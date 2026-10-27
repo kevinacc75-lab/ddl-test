@@ -1,0 +1,8 @@
+ dist/ai/book/book.mjs                 | 11 +++-
+ tests/r35-s3-kashtira-native.test.mjs | 57 ++++++++++++++++++++
+ tests/r35-s3-kitt-guard.test.mjs      | 35 +++++++++++++
+ tests/r35-s3-kitt-native.test.mjs     | 97 +++++++++++++++++++++++++++++++++++
+ tests/r35-s3-sdp-native.test.mjs      | 49 ++++++++++++++++++
+ tools/s3-explore.mjs                  | 26 ++++++++++
+ tools/s3-harness.mjs                  | 38 ++++++++++++++
+ 7 files changed, 312 insertions(+), 1 deletion(-)
