@@ -70,8 +70,8 @@ const writeLine=o=>{const fd=fs.openSync(linesFile,'a');fs.writeSync(fd,JSON.str
 const iso=()=>{const d=new Date(),o=-d.getTimezoneOffset(),p=n=>String(Math.floor(Math.abs(n))).padStart(2,'0');return new Date(d.getTime()+o*60000).toISOString().slice(0,19)+(o>=0?'+':'-')+p(o/60)+':'+p(o%60)};
 // --- job list
 let jobs,repro=has('s2b-repro');
-if(repro)jobs=init.ACCEPT_SEEDS.map((seed,i)=>({index:'s2b-'+i,job:{seed,a:0,b:[1,2,3,0][i%4],first:i%2}}));/* S2b's own job definitions (ai-gate.mjs, S2b branch) */
-if(repro&&has('repro-part')){const [k,n]=a('repro-part').split('/').map(Number);jobs=jobs.filter((_,i)=>i%n===k)}/* split the 8 S2b jobs across processes for speed; each job is still one fresh duel */
+if(repro){jobs=init.ACCEPT_SEEDS.map((seed,i)=>({index:'s2b-'+i,job:{seed,a:0,b:[1,2,3,0][i%4],first:i%2}}));/* S2b's own job definitions (ai-gate.mjs, S2b branch) */
+ if(has('repro-part')){const [k,n]=a('repro-part').split('/').map(Number);jobs=jobs.filter((_,i)=>i%n===k)}}/* split the 8 S2b jobs across processes for speed; each job is still one fresh duel */
 else{const sched=G.__schedule(200);
  const A=[0,20,1,21, 2,22,3,23, 8,28,9,29, 4,24,5,25, 10,30,11,31, 14,34,15,35, 16,36,17,37, 6,26,7,27, 12,32,13,33, 18,38,19,39];
  const firstCells=[0,1,2,3,8,9],B=[];for(let k=2;k<10;k++)for(const c of firstCells)B.push(c+20*k);for(let k=2;k<10;k++)for(let c=0;c<20;c++)if(!firstCells.includes(c))B.push(c+20*k);
