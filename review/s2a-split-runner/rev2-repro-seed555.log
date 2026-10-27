@@ -1,0 +1,5 @@
+2026-10-27T12:58:52.423Z shard r5 start; run null; prefixSha256 eed7e402ce0fa82cec8bb89aead8e7c8392ffca98cb6b5169542982b0da500fa; jobs 1 (S2b repro)
+2026-10-27T12:58:52.703Z job s2b-5 seed 555 a0 b2 f1 start
+2026-10-27T12:59:22.178Z seed 555 branded-sky f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=be7b4e24 decisions=170 roots=15
+2026-10-27T12:59:22.179Z S2B-REPRO 555 branded-sky f1 be7b4e24 170 || roots 15 full16 15 fallback 0 unlogged 0
+2026-10-27T12:59:22.179Z shard r5 end

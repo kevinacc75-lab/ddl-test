@@ -1,17 +1,21 @@
 #!/usr/bin/env node
-// S2a recombine (Claude, 27 Oct 2026). Re-scores split-runner job lines EXACTLY as the frozen tests/ai-gate.mjs scores
+// S2a recombine, revision 2 (Claude, 28 Oct 2026; RELAY-047 F3/F4). Re-scores split-runner job lines EXACTLY as the frozen tests/ai-gate.mjs scores
 // S2a: the same 9 S2a check ids, operators and limits, plus the 3 root-quality checks pooled over the raw root entries of
 // every duel (never averaged per shard). The schedule used for validation is the gate's own schedule(200), taken from the
 // verbatim frozen prefix (same cut as the runner). The check code below mirrors ai-gate.mjs lines 98-115 and 183-191;
 // the reviewer should diff it against those lines.
 //
-// Refuses to score (exit 2) unless: one line per job index (no duplicates; a re-run needs a logged reason in
-// --rerun-reasons, and the FIRST result is kept); every line carries the frozen hashes, Node v22.22.2, budget 400, the
-// same prefix hash; seed/pair/first match schedule(200); no non-counting or S2b-repro lines.
+// Refuses to score (exit 2) unless EVERY line (all attempts) passes full validation first (F3/F4): complete schema with
+// types (40-hex result hash, integer counts, all six blunder arrays, forcedOwnPicks, every root entry's status/logged/
+// matchedWorlds), the pinned identity (frozen sha256s, full engine sha1s, gate prefix sha256, Node v22.22.2, budget 400,
+// randomSeeds 0, engine snapshot, version 2.2.0-rc), seed/pair/first matching schedule(200), and no non-counting or
+// S2b-repro lines. A job with more than one line is refused, whatever the reason: a conflicting or repeated attempt fails
+// closed for review (the runner gives an interrupted job no line, so a clean replay never duplicates). Any errors/
+// record is refused too. A STOP file is copied into the output.
 // Interim mode (--interim): scores the jobs present and is labelled "CANDIDATE (interim, n/200), not a PASS"; it can
 // never print PASS. Final mode needs all 200.
 //   node tools/s2a-recombine.mjs --in-dir runs/s2a [--interim] --out runs/s2a/recombined.json
-import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import os from 'node:os';import {pathToFileURL} from 'node:url';
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import os from 'node:os';import {pathToFileURL} from 'node:url';import {PIN,BLUNDERS} from './s2a-common.mjs';
 const ROOT=process.cwd();const a=(k,d)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:d};const has=k=>process.argv.includes('--'+k);
 const FROZEN={'tests/ai-gate.mjs':'1c380d58afc51f07ce76615d4b5cd8f185e7675de19b3fea72e1950088a14dee','tests/self-target-whitelist.json':'9f1fb5f5487ea60ea7afdc3aac624c269608510e4cdab598878c2ec86bae0ee3','dist/ai/world-pool.mjs':'807133d3049dc7af690042b258d7bba8f7e2672c8e908af27605ed1bb4b000b8'};
 const sha256b=b=>crypto.createHash('sha256').update(b).digest('hex'),sha1=s=>crypto.createHash('sha1').update(s).digest('hex');
@@ -23,24 +27,34 @@ const decks=JSON.parse(fs.readFileSync(path.resolve(ROOT,'dist/decks.json'))).de
 const sched=__schedule(200);
 const inDir=path.resolve(ROOT,a('in-dir','runs/s2a')),interim=has('interim');
 const files=fs.readdirSync(inDir).filter(f=>/^jobs-shard.*\.jsonl$/.test(f)).sort();
-const reasons=a('rerun-reasons')?JSON.parse(fs.readFileSync(a('rerun-reasons'),'utf8')):{};
-const errs=[],byJob=new Map(),inputs=[];
+const errs=[],attempts=new Map(),inputs=[];
+function validate(r){const e=[],int=x=>Number.isInteger(x)&&x>=0;
+ if(typeof r.hash!=='string'||!/^[0-9a-f]{40}$/.test(r.hash))e.push('result hash missing/invalid');
+ for(const k of ['decisions','searched','turns','retries'])if(!int(r[k]))e.push(k+' missing/invalid');
+ if(typeof r.finished!=='boolean')e.push('finished missing');
+ for(const k of [...BLUNDERS,'forcedOwnPicks'])if(!Array.isArray(r[k]))e.push(k+' array missing');
+ if(!Array.isArray(r.rootQuality))e.push('rootQuality missing');else r.rootQuality.forEach((q,i)=>{if(!q||typeof q.status!=='string'||!q.status||typeof q.logged!=='boolean'||!(q.matchedWorlds===null||Number.isFinite(q.matchedWorlds)))e.push('root '+i+' malformed')});
+ const s=sched[r.job],pair=s&&[decks[s.a],decks[s.b]];
+ if(!s||r.seed!==s.seed||r.first!==s.first||r.a!==s.a||r.b!==s.b||JSON.stringify(r.pair)!==JSON.stringify(pair))e.push('does not match schedule(200): '+JSON.stringify({seed:r.seed,pair:r.pair,first:r.first}));
+ for(const [f,h] of Object.entries(PIN.frozen))if(r.frozen?.[f]!==h)e.push('frozen hash differs: '+f);
+ for(const [f,h] of Object.entries(PIN.engineSha1))if(r.engineSha1?.[f]!==h)e.push('engine sha1 differs: '+f);
+ if(r.prefixSha256!==PIN.prefixSha256||r.prefixSha256!==prefixSha)e.push('gate prefix differs');
+ for(const k of ['node','budget','randomSeeds','engine','version'])if(r[k]!==PIN[k])e.push(k+' '+JSON.stringify(r[k]));
+ return e}
+const byJob=new Map();
 for(const f of files){const raw=fs.readFileSync(path.join(inDir,f));inputs.push({file:f,sha256:sha256b(raw)});
- raw.toString('utf8').split('\n').filter(Boolean).forEach((t,n)=>{let r;try{r=JSON.parse(t)}catch{errs.push(f+':'+(n+1)+' unparseable');return}
-  if(r.nonCounting||r.s2bRepro){errs.push(f+':'+(n+1)+' non-counting/repro line');return}
-  if(!Number.isInteger(r.job)||r.job<0||r.job>199){errs.push(f+':'+(n+1)+' bad job index '+r.job);return}
-  if(byJob.has(r.job)){if(!reasons[r.job])errs.push('duplicate job '+r.job+' without a logged re-run reason');return}/* first result kept */
-  byJob.set(r.job,r)})}
-for(const [j,r] of byJob){const s=sched[j],pair=[decks[s.a],decks[s.b]];
- if(r.seed!==s.seed||r.first!==s.first||r.a!==s.a||r.b!==s.b||JSON.stringify(r.pair)!==JSON.stringify(pair))errs.push('job '+j+' does not match schedule(200): '+JSON.stringify({seed:r.seed,pair:r.pair,first:r.first})+' vs '+JSON.stringify({seed:s.seed,pair,first:s.first}));
- for(const [f,h] of Object.entries(FROZEN))if(r.frozen?.[f]!==h)errs.push('job '+j+' frozen hash differs: '+f);
- if(r.node!=='v22.22.2')errs.push('job '+j+' node '+r.node);if(r.budget!==400)errs.push('job '+j+' budget '+r.budget);if(r.prefixSha256!==prefixSha)errs.push('job '+j+' ran a different gate prefix');
- if(!Array.isArray(r.rootQuality))errs.push('job '+j+' has no rootQuality entries')}
+ raw.toString('utf8').split('\n').filter(Boolean).forEach((t,n)=>{const where=f+':'+(n+1);let r;try{r=JSON.parse(t)}catch{errs.push(where+' unparseable');return}
+  if(r.nonCounting||r.s2bRepro){errs.push(where+' non-counting/repro line');return}
+  if(!Number.isInteger(r.job)||r.job<0||r.job>199){errs.push(where+' bad job index '+r.job);return}
+  const v=validate(r);if(v.length)errs.push(where+' job '+r.job+': '+v.join('; '));
+  if(!attempts.has(r.job))attempts.set(r.job,[]);attempts.get(r.job).push(where);byJob.set(r.job,r)})}
+for(const [j,w] of attempts)if(w.length>1)errs.push('job '+j+' has '+w.length+' lines ('+w.join(', ')+'): duplicates fail closed for review');
+const errRecords=fs.existsSync(path.join(inDir,'errors'))?fs.readdirSync(path.join(inDir,'errors')):[];if(errRecords.length)errs.push('failure records present in errors/: '+errRecords.join(', '));
 const present=[...byJob.keys()].sort((x,y)=>x-y);
 if(!interim){const missing=[];for(let j=0;j<200;j++)if(!byJob.has(j))missing.push(j);if(missing.length)errs.push('missing jobs: '+missing.join(','))}
 if(errs.length){console.error('REFUSED:\n '+errs.join('\n '));process.exit(2)}
 // ---- scoring: mirrors ai-gate.mjs S2a branch + root-quality block
-const result={tool:'ai-gate (recombined by tools/s2a-recombine.mjs)',stage:'S2a',budget:400,duelsRequested:200,node:'v22.22.2',engine:{mode:'snapshot'},checks:[],metrics:{},samples:{},inputs,prefixSha256:prefixSha,mode:interim?'interim':'final'};
+const result={tool:'ai-gate (recombined by tools/s2a-recombine.mjs rev 2)',identity:PIN,stopFile:fs.existsSync(path.join(inDir,'STOP'))?fs.readFileSync(path.join(inDir,'STOP'),'utf8'):null,stage:'S2a',budget:400,duelsRequested:200,node:'v22.22.2',engine:{mode:'snapshot'},checks:[],metrics:{},samples:{},inputs,prefixSha256:prefixSha,mode:interim?'interim':'final'};
 const check=(id,value,op,limit,note='')=>{const pass=op==='=='?value===limit:op==='<='?value<=limit:op==='>='?value>=limit:false;result.checks.push({id,value,op,limit,pass,note});return pass};
 const wlRaw=fs.readFileSync(path.resolve(ROOT,'tests/self-target-whitelist.json'),'utf8'),WL=JSON.parse(wlRaw);
 result.whitelist={path:'tests/self-target-whitelist.json',sha1:sha1(wlRaw),entries:Object.values(WL).flat().length,missingReason:Object.entries(WL).flatMap(([k,v])=>v.filter(w=>!w.why||w.why.length<20).map(w=>k))};

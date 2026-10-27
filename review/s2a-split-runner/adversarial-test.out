@@ -1,0 +1,18 @@
+PASS T1 failed line without STOP: refuse, restore STOP, play nothing
+PASS T2 crash between failure record and line: durable, restart refused
+PASS T3 execution error: error record + STOP, exit 3
+PASS T4 blunder: record + STOP, line kept, shard stops
+PASS T5 concurrent shards: each job exactly once
+PASS T6a dead same-host claim released before workers start
+PASS T6b malformed / other-host claims: refuse for review
+PASS T6c live owner (pid running a split runner with that run id): refuse for review
+PASS T7 supervisor kills running shards on STOP
+PASS T8a Stage-A barrier holds job 40 until STOP
+PASS T8b barrier opens once 0-39 are clean
+PASS T9 --jobs must be unique integers 0-199
+PASS T10 recombine: 200 valid rows -> PASS
+PASS T11 recombine: any duplicate fails closed (even identical, even a conflicting failed one)
+PASS T12 recombine: missing hash/decisions refused
+PASS T13 recombine: mixed engine identity refused
+PASS T14 recombine interim never prints PASS below 200
+{"test":"s2a-adversarial","pass":true,"cases":17,"node":"v22.22.0"}
