@@ -1,0 +1,7 @@
+ dist/ai/book/mikanko-plan.mjs       | 50 ++++++++++++++++++++++++++++++++-----
+ dist/hud-fit.mjs                    |  3 ++-
+ tests/r35-firedance-native.test.mjs | 29 +++++++++++++++++++++
+ tests/r35-hud-fit.test.mjs          |  6 ++++-
+ tests/r35-mikanko-plan.test.mjs     | 33 +++++++++++++++++++++---
+ tools/s3-harness.mjs                | 38 ++++++++++++++++++++++++++++
+ 6 files changed, 148 insertions(+), 11 deletions(-)

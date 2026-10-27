@@ -1,0 +1,258 @@
+diff --git a/dist/ai/book/mikanko-plan.mjs b/dist/ai/book/mikanko-plan.mjs
+index 92f5bf4..524ec87 100644
+--- a/dist/ai/book/mikanko-plan.mjs
++++ b/dist/ai/book/mikanko-plan.mjs
+@@ -60,6 +60,23 @@ export function mikankoOption(d,seat,m,text){
+  if(!(onlySpent(d,seat,{attackOnly:true})||(!atkThreat&&(mons.length||st>=2))))return null;
+  const i=text.findIndex(t=>/spell/i.test(t)&&/trap/i.test(t));return i>=0?{type:R.SELECT_OPTION,index:i}:null;
+ }
++// RELAY-044 R44-02 (Claude, 28 Oct): can a Link Monster be summoned WITHOUT the reflector? Enumerate subsets of our other
++// face-up monsters: each Link material counts as 1 or as its Link Rating, the total must equal the target's rating exactly,
++// and the target's printed material line must be met (count, "N+", Effect / non-Link, different names, including a
++// LIGHT/DARK monster). A material line this parser doesn't know proves nothing, so H3 keeps blocking (conservative).
++const LINK=67108864,EFFECT_T=32,ATTR={LIGHT:16,DARK:32};
++export function linkMaterialRule(card){const m=(card?.desc||'').split(/\r?\n/)[0].trim().match(/^(\d+)(\+)?\s+(.*)$/);if(!m)return null;
++ const r={min:+m[1],max:m[2]?99:+m[1],filter:()=>true,distinct:false,including:null},rest=m[3];
++ if(/^Effect Monsters?$/i.test(rest))r.filter=x=>x.type&EFFECT_T;else if(/^non-Link Monsters?$/i.test(rest))r.filter=x=>!(x.type&LINK);
++ else if(/^monsters? with different names$/i.test(rest))r.distinct=true;else if(/^monsters?, including an? (LIGHT|DARK) monster$/i.test(rest))r.including=ATTR[rest.match(/(LIGHT|DARK)/)[1]];
++ else if(!/^monsters?$/i.test(rest))return null;return r}
++export function linkSetExists(d,others,card,need){const rule=linkMaterialRule(card);if(!rule)return false;
++ const c=others.map(x=>({x,db:d.db[x.code]||{}})).filter(o=>rule.filter(o.db));
++ const rec=(i,count,sum,codes,inc)=>{if(count>=rule.min&&count<=rule.max&&sum===need&&(!rule.including||inc))return true;if(i>=c.length||count>=rule.max||sum>=need)return false;
++  const o=c[i],vals=o.db.type&LINK?[...new Set([1,Math.max(1,(o.db.level||0)&255)])]:[1];
++  if(!(rule.distinct&&codes.has(o.x.code)))for(const v of vals)if(rec(i+1,count+1,sum+v,new Set([...codes,o.x.code]),inc||o.db.attribute===rule.including))return true;
++  return rec(i+1,count,sum,codes,inc)};
++ return rec(0,0,0,new Set(),false)}
+ // H3.
+ export function mikankoSpecialBlock(d,seat,c){
+  if(!isMikanko(d,seat)||!ourMain1(d,seat))return null;
+@@ -68,8 +85,9 @@ export function mikankoSpecialBlock(d,seat,c){
+  const others=d.zone(seat,4).filter(x=>faceUp(x)&&!refl.some(y=>y.sequence===x.sequence));/* zone() returns new objects each call */
+  const need=card.type&67108864?Math.max(1,(card.level||0)&255):/TY-PHON/.test(d.name(c.code))?1:2;
+  const topAtk=Math.max(0,...d.zone(seat,4).filter(faceUp).map(x=>x.attack||0));
+- const supply=others.reduce((t,x)=>t+((d.db[x.code]?.type&67108864)&&(card.type&67108864)?Math.max(1,(d.db[x.code]?.level||0)&255):1),0);/* R43-04: a Link material counts its Link Rating */
+- const usesReflector=supply<need||(/TY-PHON/.test(d.name(c.code))&&!others.some(x=>(x.attack||0)===topAtk));
++ let usesReflector;
++ if(card.type&LINK)usesReflector=!linkSetExists(d,others,card,need);/* RELAY-044 R44-02: a real reflector-free material set, not a rating sum */
++ else{const supply=others.length;usesReflector=supply<need||(/TY-PHON/.test(d.name(c.code))&&!others.some(x=>(x.attack||0)===topAtk))}
+  return usesReflector?'Mikanko damage plan: '+d.name(c.code)+' would use '+d.name(refl[0].code)+' as material before it attacks their '+d.name(damageTargets(d,seat)[0].code):null;
+ }
+ // H4 (battle nudge) was dropped in r35.2b: never exercised on the tuning hands, and optimal-pilot.mjs is pinned.
+@@ -77,22 +95,42 @@ export function mikankoSpecialBlock(d,seat,c){
+ const FD='Mikanko Fire Dance';
+ // RELAY-043: Fire Dance's once per turn is tracked from this turn's activations (the duel's per-turn ledger), not from a
+ // face-up copy, which may have been equipped on an earlier turn.
+-export function fireDanceUsed(d){for(const k of d.attempts?.keys?.()||[])if(d.name(+String(k).split(':')[0])===FD)return true;return false}
++// RELAY-044 (Claude, 28 Oct): "activate 1 per turn" counts every activation that reached the chain this turn (the duel's
++// 'activate' events, written on CHAINING), whether its activation or effect was later negated, and only OUR seat's. A
++// selection the core rejected never reaches the chain, so it does not count. Views without events (unit mocks) fall back
++// to the per-turn attempt ledger, filtered by controller.
++export function fireDanceUsed(d,seat){
++ if(Array.isArray(d.events)&&d.events.length){let start=0;for(let i=d.events.length-1;i>=0;i--)if(d.events[i].type==='turn'){start=i;break}
++  return d.events.slice(start).some(e=>e.type==='activate'&&(seat===undefined||e.player===seat)&&d.name(e.code)===FD)}
++ for(const k of d.attempts?.keys?.()||[]){const [code,ctl]=String(k).split(':');if(d.name(+code)===FD&&(seat===undefined||+ctl===seat))return true}return false}
+ function fireDanceReady(d,seat){
+- if(fireDanceUsed(d))return false;
++ if(fireDanceUsed(d,seat))return false;
+  return [...d.zone(seat,2),...d.zone(seat,8)].some(c=>c&&d.name(c.code)===FD);
+ }
+ // RELAY-043 R43-02: a reflector exists, or a legal line makes one this turn: Uzuhime in the Extra Deck with two
+ // Level 3 Mikanko available (field, or Sanaki on the field with Ha-Re / Hu-Li still in our Deck). Our own Deck is ours to see.
+ const L3=/^(Sanaki the Mikanko Devotee|Ha-Re the Sword Mikanko|Hu-Li the Jewel Mikanko)$/;
+ export function reflectorLine(d,seat){
+- if(reflectors(d,seat).length)return 'reflector on the field';
++ // RELAY-044 R44-01 (Claude, 28 Oct): a reflector on the field counts only if it can attack this turn: Attack Position, or
++ // Defense Position and free to change position (not summoned this turn, position not already changed).
++ if(reflectors(d,seat).some(canAttackPosition))return 'reflector on the field';
+  if(!d.zone(seat,64).some(c=>c&&d.name(c.code)==='Uzuhime the Manifested Mikanko'))return null;
+  const l3=d.zone(seat,4).filter(c=>faceUp(c)&&L3.test(d.name(c.code)));
+  if(l3.length>=2)return 'Uzuhime from two Level 3 Mikanko';
+- if(l3.some(c=>d.name(c.code)==='Sanaki the Mikanko Devotee')&&d.zone(seat,1).some(c=>c&&/^(Ha-Re|Hu-Li)/.test(d.name(c.code))))return 'Sanaki summons Ha-Re/Hu-Li, then Uzuhime';
++ // Sanaki's route needs its own effect: Sanaki face-up, NOT negated, and its equip trigger (Special Summon from the Deck,
++ // once per turn) not yet used this turn, with Ha-Re / Hu-Li (non-Illusion) still in our Deck.
++ const sanaki=l3.find(c=>d.name(c.code)==='Sanaki the Mikanko Devotee');
++ if(sanaki&&!(sanaki.status&1)&&!sanakiSummonUsed(d,seat)&&d.zone(seat,1).some(c=>c&&/^(Ha-Re|Hu-Li)/.test(d.name(c.code))))return 'Sanaki summons Ha-Re/Hu-Li, then Uzuhime';
+  return null;
+ }
++const SUMMONED_OR_MOVED=0x100|0x800|0x20000000|0x40000000;/* STATUS_FORM_CHANGED, SUMMON_TURN, FLIP_SUMMON_TURN, SPSUMMON_TURN */
++export const canAttackPosition=c=>!!c&&((c.position&1)||!((c.status||0)&SUMMONED_OR_MOVED));
++// Sanaki's "If an Equip Card becomes equipped to this card" Special Summon is its effect 1 (aux.Stringid(id,1) =
++// id<<20 | 1). Activations are 'activate' events since this turn's 'turn' event (the buffer keeps 120 events; with no
++// 'turn' event left in it, every buffered event counts as this turn, the conservative side).
++export function sanakiSummonUsed(d,seat){const ev=d.events||[];let start=0;for(let i=ev.length-1;i>=0;i--)if(ev[i].type==='turn'){start=i;break}
++ for(const e of ev.slice(start))if(e.type==='activate'&&e.player===seat&&d.name(e.code)==='Sanaki the Mikanko Devotee'){try{if(BigInt(e.description||0)===(BigInt(e.code)<<20n|1n))return true}catch{}}
++ return false}
+ // Damage a 0-ATK reflector gets from a monster: ATK in Attack Position, DEF in Defense Position (Seto 21:07: real).
+ export const targetValue=c=>c&&(c.position&5)?((c.position&1)?(c.attack||0):(c.defense||0)):0;
+ // Yes/no prompts on our own turn. Returns {yes, reason} or null.
+diff --git a/dist/hud-fit.mjs b/dist/hud-fit.mjs
+index dc6eb00..1f3b268 100644
+--- a/dist/hud-fit.mjs
++++ b/dist/hud-fit.mjs
+@@ -11,7 +11,8 @@ export function installHudFit(){
+   bar.style.removeProperty('right');shift=0;
+   // The table can be scaled, so a CSS-pixel move is not a screen-pixel move: step until clear (at most 6 tries).
+   for(let i=0;i<6;i++){const b=bar.getBoundingClientRect();if(!b.width)return;
+-   const over=b.right+8-g.left;if(!(over>0&&b.top<g.bottom&&b.bottom>g.top&&b.left<g.left))return;
++   // RELAY-044 R44-03: full rectangle-overlap test (with the 8px gap), so a bar that starts inside the gear's span is moved too.
++   const over=b.right+8-g.left;if(!(over>0&&b.left<g.right+8&&b.top<g.bottom&&b.bottom>g.top))return;
+    const cur=parseFloat(getComputedStyle(bar).right)||0;shift+=Math.ceil(over);bar.style.setProperty('right',(cur+Math.ceil(over))+'px','important')}
+  }
+  let raf=0;const later=()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(fit)};
+diff --git a/tests/r35-firedance-native.test.mjs b/tests/r35-firedance-native.test.mjs
+new file mode 100644
+index 0000000..5c032a8
+--- /dev/null
++++ b/tests/r35-firedance-native.test.mjs
+@@ -0,0 +1,29 @@
++// RELAY-044 Fire Dance ledger, NATIVE half (Claude, 28 Oct 2026). SELF-VERIFIED (builder = verifier), NOT independent.
++// Mikanko (seat 0) holds two Mikanko Fire Dance with Sanaki in the GY; Blue-Eyes (seat 1) may hold Ghost Belle.
++//  N1: Fire Dance activated and Belle negates its effect: fireDanceUsed(d,0) is true (the activation reached the chain),
++//      false for the opponent's seat.
++//  N2 (control, no Belle): after Fire Dance resolves, the engine does not offer the second copy this turn (once per turn).
++//  Recorded, not asserted: after Belle negates the EFFECT, the engine offers the second Fire Dance again (its script's
++//  EFFECT_COUNT_CODE_OATH count is refunded). TCG reading (Alexis to confirm): the card was still activated, so a second
++//  copy cannot be activated that turn. The AI's ledger counts it as used either way.
++import assert from 'node:assert/strict';
++import {engine,stopEngine,scenario,drive,seatOf,labels,M,R} from '../tools/s3-harness.mjs';
++import {fireDanceUsed} from '../dist/ai/book/mikanko-plan.mjs';
++await engine();
++const FD='Mikanko Fire Dance',results={};
++function run(belle){const d=scenario(['mikanko','blueeyes'],[{name:FD,location:2,owner:0},{name:FD,location:2,owner:0},{name:'Sanaki the Mikanko Devotee',location:16,owner:0},{name:'Ha-Re the Sword Mikanko',location:16,owner:0},{name:'Ghost Belle & Haunted Mansion',location:2,owner:1}]);
++ let second=null;
++ const r=drive(d,{steps:{0:['Activate · '+FD],1:belle?['@'+FD+'>Chain · Ghost Belle']:[]},
++  onPrompt:dd=>{const m=dd.prompt;if(seatOf(m)!==0)return false;
++   if(m.type===M.SELECT_CARD&&dd.name(dd.currentEffect?.code||0)===FD){dd.respond({type:R.SELECT_CARD,indicies:[0]});return true}
++   if([M.SELECT_PLACE,M.SELECT_POSITION].includes(m.type)){dd.respond(dd.choices()[0].response);return true}
++   if([M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)){dd.respond(dd.choices().find(c=>c.label==='No').response);return true}return false},
++  until:dd=>{const m=dd.prompt;if(seatOf(m)===0&&m.type===M.SELECT_IDLECMD&&[...dd.zone(0,16),...dd.zone(0,8)].some(c=>c&&dd.name(c.code)===FD)){second=labels(dd).filter(l=>l==='Activate · '+FD).length;return true}return false},max:150});
++ assert.ok(r.stopped,'reached the idle prompt after Fire Dance (belle '+belle+'): '+JSON.stringify(r.stuck||r.unused));
++ const out={belle,usedSeat0:fireDanceUsed(d,0),usedSeat1:fireDanceUsed(d,1),secondOffered:second};d.stop();return out}
++const neg=run(true),ctl=run(false);
++assert.equal(neg.usedSeat0,true,'N1: Fire Dance whose effect Belle negated counts as used this turn');assert.equal(neg.usedSeat1,false,'N1: not for the other seat');
++assert.equal(ctl.usedSeat0,true,'N2: resolved Fire Dance counts as used');assert.equal(ctl.secondOffered,0,'N2: the engine does not offer the second copy after a resolved Fire Dance');
++results.N1=neg;results.N2=ctl;results.divergence=neg.secondOffered>0?'engine offers the second Fire Dance after its effect was negated (OATH refund); TCG reading: not allowed':'none';
++stopEngine();
++console.log(JSON.stringify({test:'r35-firedance-native',pass:true,node:process.version,results}));
+diff --git a/tests/r35-hud-fit.test.mjs b/tests/r35-hud-fit.test.mjs
+index 0a2f58d..7c9a23e 100644
+--- a/tests/r35-hud-fit.test.mjs
++++ b/tests/r35-hud-fit.test.mjs
+@@ -1,6 +1,6 @@
+ // r35.3 HUD fit (Kevy's 24 Oct recordings: the gear covered the opponent's last LP digit on a 16:10 screen).
+ // SELF-VERIFIED (builder). jsdom has no layout, so the boxes are stubbed: an overlapping bar is moved left until it
+-// clears the gear by 8px; a bar that already clears it is left alone.
++// clears the gear by 8px; a bar that already clears it is left alone. Stub geometry only, NOT a browser pass.
+ import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';import fs from 'node:fs';
+ const dom=new JSDOM('<body class="in-duel"><button class="duel-controls-fab"></button><div id="duel"><div class="player-bar opponent"></div></div></body>');
+ globalThis.document=dom.window.document;globalThis.getComputedStyle=e=>({right:e.style.getPropertyValue('right')||'20px'});
+@@ -11,5 +11,9 @@ let base=1127;bar.getBoundingClientRect=()=>{const r=parseFloat(bar.style.getPro
+ const {installHudFit}=await import('../dist/hud-fit.mjs');const fit=installHudFit();fit.fit();
+ const b=bar.getBoundingClientRect();assert.ok(b.right+8<=1085.5,'bar clears the gear: '+b.right);
+ base=990;fit.fit();assert.equal(bar.style.getPropertyValue('right'),'','already clear: no override');
++// RELAY-044 R44-03: a bar that starts INSIDE the gear's horizontal span (x=1100..1360 vs gear 1085..1137) is moved too.
++base=1360;fit.fit();{const r=bar.getBoundingClientRect();assert.ok(r.right+8<=1085.5,'R44-03: bar starting inside the gear span clears it: '+r.right)}
++// A bar entirely to the right of the gear (plus the gap) is not touched.
++base=1410+260;fit.fit();assert.equal(bar.style.getPropertyValue('right'),'','bar right of the gear: no override');
+ assert.ok(JSON.parse(fs.readFileSync('dist/offline-assets.json')).includes('./hud-fit.mjs'),'cached offline');
+ console.log(JSON.stringify({test:'r35-hud-fit',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tests/r35-mikanko-plan.test.mjs b/tests/r35-mikanko-plan.test.mjs
+index 4169e31..94698d8 100644
+--- a/tests/r35-mikanko-plan.test.mjs
++++ b/tests/r35-mikanko-plan.test.mjs
+@@ -6,10 +6,10 @@ import {M,R} from '../dist/duel.mjs';
+ import {reflectors,mikankoActivationBlock,mikankoOption,mikankoSpecialBlock} from '../dist/ai/book/mikanko-plan.mjs';
+ const NAMES={1:'Uzuhime the Manifested Mikanko',2:'Hu-Li the Jewel Mikanko',3:'Thunder King, the Lightningstrike Kaiju',4:'Blue-Eyes White Dragon',5:'Raigeki',6:'Lightning Storm',7:'Super Starslayer TY-PHON - Sky Crisis',8:'Mikanko Fire Dance',9:'Set card',10:'Lava Golem',11:'Omni Negate Boss',12:'Sanaki the Mikanko Devotee',13:'Forbidden Droplet'};
+ const DB={1:{type:1|32|8388608},2:{type:33},3:{type:33},4:{type:17,attack:3000},5:{type:2},6:{type:2},7:{type:1|32|8388608,level:12},8:{type:2},9:{type:4},10:{type:33},11:{type:33|64,desc:'(Quick Effect): You can negate the activation of a card or effect.'},12:{type:33},13:{type:2}};
+-function duel({mine=[],theirs=[],mySpells=[],theirSpells=[],deckCards=[],extra=[],attempts=[],deck='mikanko',phase=4,turn=2,active=0,effect=0}={}){
++function duel({mine=[],theirs=[],mySpells=[],theirSpells=[],deckCards=[],extra=[],attempts=[],events=[],deck='mikanko',phase=4,turn=2,active=0,effect=0}={}){
+  const z={'0:4':mine,'1:4':theirs,'0:8':mySpells,'1:8':theirSpells,'0:1':deckCards,'0:64':extra};
+  return {decks:[{id:deck},{id:'blueeyes'}],phase,turn,active,db:DB,name:c=>NAMES[c]||'?',fromEngine:p=>p,currentEffect:{code:effect},attempts:new Map(attempts.map(k=>[k,1])),
+-  zone:(p,l)=>(z[p+':'+l]||[]).map((c,i)=>c&&{controller:p,location:l,sequence:c.sequence??i,...c})};
++  events,zone:(p,l)=>(z[p+':'+l]||[]).map((c,i)=>c&&{controller:p,location:l,sequence:c.sequence??i,...c})};
+ }
+ const uzu={code:1,position:1,attack:0},tk={code:3,position:1,attack:3300,owner:0},bewd={code:4,position:1,attack:3000,owner:1};
+ // reflectors: Uzuhime always; Hu-Li only while equipped; a negated one never
+@@ -75,10 +75,37 @@ DB[4]={type:17,attack:2500,defense:2100};
+ assert.deepEqual(mikankoPick(duel({effect:8}),0,{type:M.SELECT_CARD,selects:[{code:4,controller:1},{code:15,controller:1}]},{type:5,indicies:[0]}).indicies,[1],'2700 DEF beats 2500 ATK (R43-03)');
+ DB[4]={type:17,attack:3000};
+ // R43-04: a Link-3 material covers Accesscode-style Link-4 needs with one more body
+-DB[16]={type:33|67108864,level:3};NAMES[16]='Unicorn';DB[17]={type:33|67108864,level:4};NAMES[17]='Accesscode';
++DB[16]={type:33|67108864,level:3,desc:'2+ monsters with different names'};NAMES[16]='Unicorn';DB[17]={type:33|67108864,level:4,desc:'2+ Effect Monsters'};NAMES[17]='Accesscode';/* R44-02: printed material lines */
+ assert.equal(mikankoSpecialBlock(duel({mine:[{...huli[0],sequence:0},{code:16,position:1,attack:2200,sequence:1},{code:12,position:1,attack:0,sequence:2}],mySpells:equip,theirs:[bewd]}),0,{code:17}),null,'Link-3 + another body covers Link-4 without the reflector');
+ // Fire Dance ledger: equipped from an earlier turn still allows this turn's activation; used this turn blocks it
+ const {fireDanceUsed}=await import('../dist/ai/book/mikanko-plan.mjs');
+ assert.equal(fireDanceUsed(duel({mySpells:[{code:8,position:1}]})),false,'face-up Fire Dance from an earlier turn: not used this turn');
+ assert.equal(fireDanceUsed(duel({attempts:['8:0:2:0:0']})),true,'activated this turn (now gone): used');
++// RELAY-044 R44-02: a Link material counts 1 OR its rating and the total must be exact. ChatGPT's counterexample: Uzuhime +
++// I:P Masquerena (Link-2) + Underworld Goddess (Link-5) cannot make Accesscode (Link-4) without Uzuhime (2, 3, 6 or 7 only).
++DB[18]={type:33|67108864,level:2,desc:'2 non-Link Monsters'};NAMES[18]='I:P Masquerena';DB[19]={type:33|67108864,level:5,desc:'4+ Effect Monsters'};NAMES[19]='Underworld Goddess';
++assert.match(mikankoSpecialBlock(duel({mine:[{...uzu,sequence:0},{code:18,position:1,attack:800,sequence:1},{code:19,position:1,attack:3000,sequence:2}],theirs:[bewd]}),0,{code:17})||'',/Accesscode would use Uzuhime/,'R44-02: I:P + Goddess cannot total 4 without Uzuhime: blocked');
++assert.equal(mikankoSpecialBlock(duel({mine:[{...uzu,sequence:0},{code:18,position:1,attack:800,sequence:1},{code:12,position:1,attack:0,sequence:2},{code:16,position:1,attack:2200,sequence:3}],theirs:[bewd]}),0,{code:17}),null,'R44-02: I:P as 2 + Sanaki + Unicorn as 1 (or Unicorn 3 + Sanaki) makes 4 without Uzuhime');
++{const {linkMaterialRule}=await import('../dist/ai/book/mikanko-plan.mjs');assert.equal(linkMaterialRule({desc:'1 Normal Summoned monster with 1000 or less ATK'}),null,'unknown material line: no proof (H3 keeps blocking)');}
++// RELAY-044 R44-01: Sanaki's route needs a usable Sanaki; a reflector must be able to attack.
++{const {reflectorLine}=await import('../dist/ai/book/mikanko-plan.mjs');NAMES[20]='Ha-Re the Sword Mikanko';DB[20]={type:33};
++ const sanaki={code:12,position:1,attack:0},base={deckCards:[{code:20}],extra:[{code:1}]};
++ const SANAKI_SS=String((12n<<20n)|1n);
++ assert.match(reflectorLine(duel({...base,mine:[sanaki]}),0)||'',/Sanaki summons/,'E1 positive: Sanaki + Ha-Re in Deck + Uzuhime in Extra');
++ assert.equal(reflectorLine(duel({...base,mine:[{...sanaki,status:1}]}),0),null,'R44-01: a negated Sanaki gives no line');
++ assert.equal(reflectorLine(duel({...base,mine:[sanaki],events:[{type:'turn'},{type:'activate',player:0,code:12,description:SANAKI_SS}]}),0),null,'R44-01: Sanaki\'s Special Summon already used this turn: no line');
++ assert.match(reflectorLine(duel({...base,mine:[sanaki],events:[{type:'activate',player:0,code:12,description:SANAKI_SS},{type:'turn'}]}),0)||'',/Sanaki summons/,'used on an earlier turn: the line stands');
++ assert.match(reflectorLine(duel({...base,mine:[sanaki],events:[{type:'turn'},{type:'activate',player:0,code:12,description:String(12n<<20n)}]}),0)||'',/Sanaki summons/,'Sanaki\'s OTHER effect used this turn: the line stands');
++ assert.equal(reflectorLine(duel({...base,mine:[sanaki],events:[{type:'turn'},{type:'activate',player:1,code:12,description:SANAKI_SS}]}),0)!==null,true,'the opponent\'s Sanaki activation does not count (seat attribution)');
++ assert.equal(reflectorLine(duel({mine:[{...uzu,position:4,status:0x40000000}]}),0),null,'R44-01: a Defense-Position Uzuhime Special Summoned this turn cannot attack: not a reflector line');
++ assert.equal(reflectorLine(duel({mine:[{...uzu,position:4,status:0}]}),0),'reflector on the field','a Defense-Position reflector free to change position counts');
++ assert.equal(reflectorLine(duel({mine:[{...uzu,position:4,status:0x100}]}),0),null,'position already changed this turn: does not count')}
++// RELAY-044 Fire Dance ledger: activations that reached the chain this turn, our seat only.
++{const T={type:'turn'},act=(player,extra={})=>({type:'activate',player,code:8,...extra});
++ assert.equal(fireDanceUsed(duel({events:[T,act(0)]}),0),true,'activated this turn (even if later negated: the activation reached the chain)');
++ assert.equal(fireDanceUsed(duel({events:[act(0),T]}),0),false,'activated on an earlier turn: this turn\'s copy is usable');
++ assert.equal(fireDanceUsed(duel({events:[T,act(1)]}),0),false,'the opponent\'s Fire Dance does not count for us (seat attribution)');
++ assert.equal(fireDanceUsed(duel({events:[T,{type:'chainEnd'}],attempts:['8:0:2:0:0']}),0),false,'a selection the core rejected (no activation on the chain) does not count');
++ assert.equal(fireDanceUsed(duel({events:[T,act(0),{type:'chainEnd'}],mySpells:[]}),0),true,'activated, resolved and the Equip has left the field: still used');
++ assert.equal(fireDanceUsed(duel({attempts:['8:1:2:0:0']}),0),false,'mock without events: attempt ledger, filtered by controller')}
+ console.log(JSON.stringify({test:'r35-mikanko-plan',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tools/s3-harness.mjs b/tools/s3-harness.mjs
+new file mode 100644
+index 0000000..03551cd
+--- /dev/null
++++ b/tools/s3-harness.mjs
+@@ -0,0 +1,38 @@
++// S3 native-fixture harness (Claude, 28 Oct 2026). Used by tests/r35-s3-*.test.mjs and tools/s3-explore.mjs.
++// scenario(): starts a real duel on the 19 Oct lists with named cards dealt to chosen zones at creation (the same engine
++// call that fills the decks; any printing of the name; owner = seat). drive(): plays scripted steps for each seat by the
++// engine's own choice labels ('pick:Name' for card prompts), passes every other window, and calls hooks so a test can
++// stop at an exact window and let the real AI answer it.
++import assert from 'node:assert/strict';import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++import {Duel,M} from '../dist/duel.mjs';import {OcgResponseType as R} from '../dist/core/index.js';
++export const db=JSON.parse(gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
++const decks=JSON.parse(fs.readFileSync('dist/decks.json')).decks;
++export const v19=id=>{const x=decks.find(y=>y.id===id);return {...x,...(x.banlistVariants?.['tcg-2026-10-19']||{})}};
++export const code=n=>+Object.keys(db).find(k=>db[k].name===n);
++let live=null;export async function engine(){return live||(live=await Duel.create(db,scripts))}
++export function stopEngine(){live?.stop();live=null}
++export function scenario(deckIds,placements,{first=0,seed=7}={}){assert.ok(live,'call engine() first');const core=live.core,orig=core.duelNewCard;
++ const left=placements.map(p=>({...p,codes:new Set(Object.keys(db).filter(k=>db[k].name===p.name).map(Number))}));let d;
++ core.duelNewCard=(h,info)=>{const p=left.find(x=>!x.used&&x.codes.has(info.code)&&d.toEngine(x.owner)===info.team);if(p){p.used=true;info={...info,location:p.location,sequence:p.sequence??0,position:p.position??1}}return orig.call(core,h,info)};
++ d=new Duel(core,db,scripts);try{d.start(deckIds.map(v19),{seed,first})}finally{core.duelNewCard=orig}
++ assert.ok(left.every(p=>p.used),'not placed: '+left.filter(p=>!p.used).map(p=>p.name));assert.deepEqual(d.errors,[],'script errors');return d}
++export const seatOf=m=>m.seat??m.player;
++export const labels=d=>d.choices().map(c=>c.label);
++const PASS=['Do not chain','No'];
++function tryStep(d,w){const m=d.prompt,sel=m.selects||m.select_cards||[];
++ const at=w.match(/^@([^>]+)>(.*)$/);if(at){const top=d.chain?.at?.(-1);if(!top||d.name(top.code)!==at[1])return false;w=at[2]}/* '@Card>step': only while Card is on top of the chain */
++ if(w.startsWith('pick:')){if(!sel.length||![M.SELECT_CARD,M.SELECT_UNSELECT_CARD].includes(m.type))return false;const j=sel.findIndex(c=>d.name(c.code)===w.slice(5));if(j<0)return false;
++  d.respond(m.type===M.SELECT_UNSELECT_CARD?{type:R.SELECT_UNSELECT_CARD,index:j}:{type:R.SELECT_CARD,indicies:[j]});return true}
++ const c=d.choices().find(o=>o.label===w||o.label.includes(w));if(!c)return false;d.respond(c.response);return true}
++// steps: {0:[...],1:[...]} consumed in order per seat; a seat's next step is tried at each of its prompts, else the prompt
++// is passed (SELECT_CHAIN / yes-no). A step written '@Card>label' is taken only while Card's link is on top of the chain. until(d) stops before answering; onPrompt(d) may answer and return true. Returns
++// {stopped, unused} where unused lists steps never taken.
++export function drive(d,{steps={},until=null,onPrompt=null,max=200,log=null}={}){const k={0:0,1:0};
++ for(let i=0;i<max&&d.prompt;i++){const m=d.prompt,s=seatOf(m);if(until&&until(d))return {stopped:true,unused:{0:(steps[0]||[]).slice(k[0]),1:(steps[1]||[]).slice(k[1])}};
++  if(onPrompt&&onPrompt(d))continue;const w=(steps[s]||[])[k[s]];log?.(s,m.type,labels(d),w);
++  if(w&&tryStep(d,w)){k[s]++;continue}
++  const p=d.choices().find(o=>PASS.includes(o.label));if(p&&(m.type===M.SELECT_CHAIN||m.type===M.SELECT_EFFECTYN||m.type===M.SELECT_YESNO)){d.respond(p.response);continue}
++  return {stopped:false,stuck:{seat:s,type:m.type,labels:labels(d),next:w},unused:{0:(steps[0]||[]).slice(k[0]),1:(steps[1]||[]).slice(k[1])}}}
++ return {stopped:false,unused:{0:(steps[0]||[]).slice(k[0]),1:(steps[1]||[]).slice(k[1])}}}
++export const hand=(d,s)=>d.zone(s,2).filter(Boolean),field=(d,s)=>d.zone(s,4).filter(Boolean),gy=(d,s)=>d.zone(s,16).filter(Boolean);
++export {M,R};
