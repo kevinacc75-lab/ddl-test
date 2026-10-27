@@ -34,11 +34,11 @@ For the same headless gate job, fixed build/settings and deterministic execution
 
 **Not covered: live keys.** Live keys still carry a counter. worker.mjs bumps `duelSerial` on start and import, and the duel reaches `poolFor` as `live:<duelId>`. This was true before the fix too, so it isn't a regression. But don't describe the fix as making every mode independent of the counter. Any change to live keys is a separate candidate with its own review.
 
-**Not proof that the memory problem is cured.** Dropping an earlier duel's pools in one go (60a152e) is memory hygiene. Only a clean, complete 200-duel S2a run is evidence about memory over a long run. A 200-duel gate completed across restarted shards does not demonstrate 200-duel continuous-process memory stability. Any memory claim must state per-process lifetime, restarts and the memory measurements actually collected.
+**Not proof that the memory problem is cured.** Dropping an earlier duel's pools in one go (60a152e) is memory hygiene. A 200-duel gate completed across restarted shards does not demonstrate 200-duel continuous-process memory stability. Any memory claim must state per-process lifetime, restarts and the memory measurements actually collected.
 
 ## Rules for future changes
 
-1. **Never seed a pool random stream from `key`; always use `seedKey`.** A test is needed: the same seed must give the same hash when played as duel 1 and as duel N in one process (see `tools/r35-determinism-probe.mjs`).
+1. **Never seed a pool random stream from `key`; always use `seedKey`.** A test is needed: the same headless gate job (same seed, pairing, first seat and settings) must give the same hash when played as duel 1 and as duel N in one process (see `tools/r35-determinism-probe.mjs`).
 2. **To run several duels at once, give each its own worker or process,** each with its own module instance. Don't share pools across duels.
 3. **Changing the key format** (`duelIdentity`, the live `poolKey`, or the `|` separator) changes both eviction and seeding. It needs a determinism probe and its own independent review.
 4. **Any edit to `dist/ai/world-pool.mjs` changes the gated hash.** It must go through a new gate run. It can't be dropped into the build being gated.
