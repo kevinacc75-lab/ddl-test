@@ -6,6 +6,14 @@ PASS T5 concurrent shards: each job exactly once
 PASS T6a dead same-host claim released before workers start
 PASS T6b malformed / other-host claims: refuse for review
 PASS T6c live owner (pid running a split runner with that run id): refuse for review
+PASS T6d live owner, /proc cmdline unreadable (ENOENT): unknown -> refuse
+PASS T6d live owner, /proc cmdline unreadable (EACCES): unknown -> refuse
+PASS T6e kill(pid,0) EPERM: unknown -> refuse
+PASS T6f pid alive but provably another program (readable cmdline): released
+PASS T15 five supervisors started together: exactly one runs
+PASS T16 orphan shards keep the lock after the supervisor is killed; released when they die
+PASS T17 bypassing the wrapper (S2A_SUP_LOCKED set by hand, no lock held) is refused
+PASS T17b bypass while another supervisor holds the lock is refused too (this process holds no lock fd)
 PASS T7 supervisor kills running shards on STOP
 PASS T8a Stage-A barrier holds job 40 until STOP
 PASS T8b barrier opens once 0-39 are clean
@@ -15,4 +23,7 @@ PASS T11 recombine: any duplicate fails closed (even identical, even a conflicti
 PASS T12 recombine: missing hash/decisions refused
 PASS T13 recombine: mixed engine identity refused
 PASS T14 recombine interim never prints PASS below 200
-{"test":"s2a-adversarial","pass":true,"cases":17,"node":"v22.22.0"}
+PASS T18 final recombine with STOP (no errors/ record): refused, STOP contents reported
+PASS T18b interim recombine with STOP: BLOCKED, exit 3, never CANDIDATE/PASS
+PASS T19 root records missing worlds/aggregatedWorlds, or with an unknown status, are refused
+{"test":"s2a-adversarial","pass":true,"cases":28,"node":"v22.22.2"}

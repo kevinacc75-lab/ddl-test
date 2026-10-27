@@ -1,4 +1,4 @@
-// Adversarial tests for the S2a split runner rev 2, supervisor and recombine rev 2 (RELAY-047). Uses the test stub (no
+// Adversarial tests for the S2a split runner rev 2, supervisor rev 3 and recombine rev 3 (RELAY-047, RELAY-049). Uses the test stub (no
 // real duels; stub lines are non-counting by construction). Run from the gate tree root:  node tools/s2a-adversarial-test.mjs
 import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import crypto from 'node:crypto';import {spawnSync,spawn} from 'node:child_process';import assert from 'node:assert/strict';
 import {PIN,BLUNDERS,STAGE_A} from './s2a-common.mjs';
@@ -38,6 +38,31 @@ await ok('T6b malformed / other-host claims: refuse for review',()=>{for(const c
 await ok('T6c live owner (pid running a split runner with that run id): refuse for review',async()=>{const d=tmp();fs.mkdirSync(path.join(d,'claims'),{recursive:true});const fake=spawn(NODE,['-e','setTimeout(()=>{},60000)','s2a-split-runner.mjs','liverun'],{stdio:'ignore'});await new Promise(r=>setTimeout(r,300));
  fs.writeFileSync(path.join(d,'claims','0'),JSON.stringify({job:0,pid:fake.pid,host:os.hostname(),runId:'liverun',token:'t'}));
  const r=sup(['--out-dir',d,'--shards','1','--node',NODE]);fake.kill();assert.equal(r.status,5);assert.ok(fs.existsSync(path.join(d,'claims','0')))});
+// R2-02: owner state must be positively observed; unknown is refused, provably reused pid is released.
+const liveFake=async()=>{const f=spawn(NODE,['-e','setTimeout(()=>{},60000)','s2a-split-runner.mjs','liverun'],{stdio:'ignore'});await new Promise(r=>setTimeout(r,300));return f};
+const claimDir=(pid,runId='liverun')=>{const d=tmp();fs.mkdirSync(path.join(d,'claims'),{recursive:true});fs.writeFileSync(path.join(d,'claims','0'),JSON.stringify({job:0,pid,host:os.hostname(),runId,token:'t'}));return d};
+for(const code of ['ENOENT','EACCES'])await ok('T6d live owner, /proc cmdline unreadable ('+code+'): unknown -> refuse',async()=>{const f=await liveFake();const d=claimDir(f.pid);
+ const r=sup(['--out-dir',d,'--shards','1','--node',NODE],{S2A_TEST_PROC_ERROR:code});f.kill();assert.equal(r.status,5,r.stdout);assert.match(fs.readFileSync(path.join(d,'supervisor.log'),'utf8'),/owner unknown/);assert.ok(fs.existsSync(path.join(d,'claims','0')))});
+await ok('T6e kill(pid,0) EPERM: unknown -> refuse',()=>{const d=claimDir(process.pid);const r=sup(['--out-dir',d,'--shards','1','--node',NODE],{S2A_TEST_KILL_ERROR:'EPERM'});assert.equal(r.status,5);assert.ok(fs.existsSync(path.join(d,'claims','0')))});
+await ok('T6f pid alive but provably another program (readable cmdline): released',async()=>{const f=spawn('sleep',['60'],{stdio:'ignore'});await new Promise(r=>setTimeout(r,200));const d=claimDir(f.pid,'deadrun');
+ const r=sup(['--out-dir',d,'--shards','2','--node',NODE],{S2A_BARRIER_POLL_MS:'100'});f.kill();assert.equal(r.status,0,r.stdout+r.stderr);assert.match(fs.readFileSync(path.join(d,'reclaims.log'),'utf8'),/released job 0 .* reused/);assert.equal(new Set(lines(d).map(x=>x.job)).size,200)});
+// R2-01: exclusive supervisor ownership (kernel flock)
+await ok('T15 five supervisors started together: exactly one runs',async()=>{const d=tmp();
+ const ps=Array.from({length:5},()=>spawn(NODE,['tools/s2a-supervisor.mjs','--out-dir',d,'--shards','1','--node',NODE],{cwd:ROOT,env:{...process.env,S2A_TEST_STUB:STUB,S2A_STUB_MODE:'slow:4000',S2A_SUPERVISOR_POLL_MS:'200'},stdio:'ignore'}));
+ await new Promise(r=>setTimeout(r,2000));fs.writeFileSync(path.join(d,'STOP'),'{"test":"end T15"}');const codes=await Promise.all(ps.map(p=>p.exitCode!==null?p.exitCode:new Promise(r=>p.on('exit',c=>r(c)))));
+ assert.equal(codes.filter(c=>c===6).length,4,'four refused: '+codes);assert.equal((fs.readFileSync(path.join(d,'supervisor.log'),'utf8').match(/ starting /g)||[]).length,1)});
+await ok('T16 orphan shards keep the lock after the supervisor is killed; released when they die',async()=>{const d=tmp();
+ const p=spawn(NODE,['tools/s2a-supervisor.mjs','--out-dir',d,'--shards','2','--node',NODE],{cwd:ROOT,env:{...process.env,S2A_TEST_STUB:STUB,S2A_STUB_MODE:'slow:60000'},stdio:'ignore'});
+ await new Promise(r=>setTimeout(r,2500));const inner=JSON.parse(fs.readFileSync(path.join(d,'supervisor.owner'),'utf8')).pid;
+ const shardPids=fs.readdirSync(path.join(d,'claims')).filter(c=>!c.startsWith('.')).map(c=>JSON.parse(fs.readFileSync(path.join(d,'claims',c),'utf8')).pid);assert.equal(shardPids.length,2);
+ process.kill(inner,'SIGKILL');try{process.kill(p.pid,'SIGKILL')}catch{}spawnSync('pkill',['-KILL','-f','flock -n -E 75 '+path.join(d,'supervisor.flock')]);await new Promise(r=>setTimeout(r,500));
+ assert.equal(sup(['--out-dir',d,'--shards','1','--node',NODE]).status,6,'refused while orphan shards hold the lock');
+ for(const pid of shardPids)process.kill(pid,'SIGKILL');await new Promise(r=>setTimeout(r,500));
+ const r=sup(['--out-dir',d,'--shards','2','--node',NODE],{S2A_BARRIER_POLL_MS:'100'});assert.equal(r.status,0,r.stdout);assert.equal(fs.readFileSync(path.join(d,'reclaims.log'),'utf8').split('\n').filter(l=>/released job/.test(l)).length,2);assert.equal(new Set(lines(d).map(x=>x.job)).size,200)});
+await ok('T17 bypassing the wrapper (S2A_SUP_LOCKED set by hand, no lock held) is refused',()=>{const d=tmp();const r=sup(['--out-dir',d,'--shards','1','--node',NODE],{S2A_SUP_LOCKED:path.join(d,'supervisor.flock')});assert.equal(r.status,6);assert.equal(lines(d).length,0)});
+await ok('T17b bypass while another supervisor holds the lock is refused too (this process holds no lock fd)',async()=>{const d=tmp();
+ const p=spawn(NODE,['tools/s2a-supervisor.mjs','--out-dir',d,'--shards','1','--node',NODE],{cwd:ROOT,env:{...process.env,S2A_TEST_STUB:STUB,S2A_STUB_MODE:'slow:4000',S2A_SUPERVISOR_POLL_MS:'200'},stdio:'ignore'});await new Promise(r=>setTimeout(r,1500));
+ const r=sup(['--out-dir',d,'--shards','1','--node',NODE],{S2A_SUP_LOCKED:path.join(d,'supervisor.flock')});fs.writeFileSync(path.join(d,'STOP'),'x');await new Promise(r=>p.exitCode!==null?r():p.on('exit',r));assert.equal(r.status,6)});
 // T7 (F1): STOP during running duels: the supervisor kills every shard; no further jobs.
 await ok('T7 supervisor kills running shards on STOP',async()=>{const d=tmp();const p=spawn(NODE,['tools/s2a-supervisor.mjs','--out-dir',d,'--shards','2','--node',NODE],{cwd:ROOT,env:{...process.env,S2A_TEST_STUB:STUB,S2A_STUB_MODE:'slow:30000',S2A_SUPERVISOR_POLL_MS:'300'},stdio:'ignore'});
  await new Promise(r=>setTimeout(r,2500));fs.writeFileSync(path.join(d,'STOP'),'{"test":"stop"}');const t0=Date.now();await new Promise(r=>p.on('exit',r));
@@ -54,7 +79,7 @@ await ok('T9 --jobs must be unique integers 0-199',()=>{for(const j of ['0,0','2
 // T10-T13 recombine rev 2 (F3/F4) on synthetic rows with the full pinned identity
 const sched=(await import('./s2a-test-stub.mjs')).__schedule(200),ids=['branded','mikanko','sky','luna'];
 const row=(j,over={})=>({job:j,seed:sched[j].seed,a:sched[j].a,b:sched[j].b,first:sched[j].first,pair:[ids[sched[j].a],ids[sched[j].b]],hash:crypto.createHash('sha1').update('r'+j).digest('hex'),decisions:100,searched:20,finished:true,winner:0,turns:5,retries:0,
- ...Object.fromEntries(BLUNDERS.map(k=>[k,[]])),forcedOwnPicks:[],rootQuality:[{status:'full',logged:true,matchedWorlds:16}],frozen:PIN.frozen,engineSha1:PIN.engineSha1,prefixSha256:PIN.prefixSha256,node:PIN.node,budget:400,randomSeeds:0,engine:'snapshot',version:PIN.version,...over});
+ ...Object.fromEntries(BLUNDERS.map(k=>[k,[]])),forcedOwnPicks:[],rootQuality:[{seed:sched[j].seed,pair:[ids[sched[j].a],ids[sched[j].b]],first:sched[j].first,decision:0,seat:1,status:'full',worlds:16,aggregatedWorlds:16,logged:true,matchedWorlds:16,engine:'snapshot',firstMisaligned:null}],frozen:PIN.frozen,engineSha1:PIN.engineSha1,prefixSha256:PIN.prefixSha256,node:PIN.node,budget:400,randomSeeds:0,engine:'snapshot',version:PIN.version,...over});
 const rec=(rows,extra=[])=>{const d=tmp();fs.writeFileSync(path.join(d,'jobs-shardA.jsonl'),rows.map(r=>JSON.stringify(r)).join('\n')+'\n');return spawnSync(NODE,['tools/s2a-recombine.mjs','--in-dir',d,'--out',path.join(d,'o.json'),...extra],{cwd:ROOT,encoding:'utf8'})};
 const all=Array.from({length:200},(_,j)=>row(j));
 await ok('T10 recombine: 200 valid rows -> PASS',()=>{const r=rec(all);assert.equal(r.status,0,r.stderr);assert.match(r.stdout,/VERDICT PASS/)});
@@ -62,4 +87,13 @@ await ok('T11 recombine: any duplicate fails closed (even identical, even a conf
 await ok('T12 recombine: missing hash/decisions refused',()=>{assert.equal(rec(all.map(r=>({...r,hash:undefined}))).status,2);assert.equal(rec(all.map(r=>({...r,decisions:undefined}))).status,2)});
 await ok('T13 recombine: mixed engine identity refused',()=>{for(const over of [{engine:'wrong'},{randomSeeds:999},{version:'wrong'},{engineSha1:{...PIN.engineSha1,'dist/ai/info-set.mjs':'0'.repeat(40)}}])assert.equal(rec(all.map(r=>({...r,...over}))).status,2)});
 await ok('T14 recombine interim never prints PASS below 200',()=>{const r=rec(all.slice(0,40),['--interim']);assert.equal(r.status,0);assert.doesNotMatch(r.stdout,/VERDICT PASS/);assert.match(r.stdout,/CANDIDATE \(interim, 40\/200\), not a PASS/)});
+// R2-03: STOP blocks certification
+const recStop=(rows,stop,extra=[])=>{const d=tmp();fs.writeFileSync(path.join(d,'jobs-shardA.jsonl'),rows.map(r=>JSON.stringify(r)).join('\n')+'\n');fs.writeFileSync(path.join(d,'STOP'),stop);return spawnSync(NODE,['tools/s2a-recombine.mjs','--in-dir',d,'--out',path.join(d,'o.json'),...extra],{cwd:ROOT,encoding:'utf8'})};
+await ok('T18 final recombine with STOP (no errors/ record): refused, STOP contents reported',()=>{const r=recStop(all,'{"kind":"failure","reason":"review required"}');assert.equal(r.status,2);assert.doesNotMatch(r.stdout,/VERDICT PASS/);assert.match(r.stderr,/STOP present.*review required/)});
+await ok('T18b interim recombine with STOP: BLOCKED, exit 3, never CANDIDATE/PASS',()=>{const r=recStop(all.slice(0,40),'{"test":"stop"}',['--interim']);assert.equal(r.status,3);assert.match(r.stdout,/VERDICT BLOCKED/);assert.doesNotMatch(r.stdout,/VERDICT (PASS|CANDIDATE)/)});
+// RELAY-049 note: full root record
+await ok('T19 root records missing worlds/aggregatedWorlds, or with an unknown status, are refused',()=>{const drop=k=>all.map(r=>({...r,rootQuality:r.rootQuality.map(q=>{const c={...q};delete c[k];return c})}));
+ for(const k of ['worlds','aggregatedWorlds','decision','seat','engine','firstMisaligned'])assert.equal(rec(drop(k)).status,2,k);
+ assert.equal(rec(all.map(r=>({...r,rootQuality:r.rootQuality.map(q=>({...q,status:'weird'}))}))).status,2);
+ assert.equal(rec(all.map(r=>({...r,rootQuality:r.rootQuality.map(q=>({...q,seed:1}))}))).status,2)});
 console.log(JSON.stringify({test:'s2a-adversarial',pass:true,cases:results.length,node:process.version}));

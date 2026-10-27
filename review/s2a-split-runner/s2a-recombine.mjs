@@ -1,17 +1,18 @@
 #!/usr/bin/env node
-// S2a recombine, revision 2 (Claude, 28 Oct 2026; RELAY-047 F3/F4). Re-scores split-runner job lines EXACTLY as the frozen tests/ai-gate.mjs scores
+// S2a recombine, revision 3 (Claude, 28 Oct 2026; RELAY-047 F3/F4, RELAY-049 R2-03 + root-record note). Re-scores split-runner job lines EXACTLY as the frozen tests/ai-gate.mjs scores
 // S2a: the same 9 S2a check ids, operators and limits, plus the 3 root-quality checks pooled over the raw root entries of
 // every duel (never averaged per shard). The schedule used for validation is the gate's own schedule(200), taken from the
 // verbatim frozen prefix (same cut as the runner). The check code below mirrors ai-gate.mjs lines 98-115 and 183-191;
 // the reviewer should diff it against those lines.
 //
 // Refuses to score (exit 2) unless EVERY line (all attempts) passes full validation first (F3/F4): complete schema with
-// types (40-hex result hash, integer counts, all six blunder arrays, forcedOwnPicks, every root entry's status/logged/
-// matchedWorlds), the pinned identity (frozen sha256s, full engine sha1s, gate prefix sha256, Node v22.22.2, budget 400,
+// types (40-hex result hash, integer counts, all six blunder arrays, forcedOwnPicks, every root entry's full record as
+// pushed by the gate, status in full/reduced/fallback), the pinned identity (frozen sha256s, full engine sha1s, gate prefix sha256, Node v22.22.2, budget 400,
 // randomSeeds 0, engine snapshot, version 2.2.0-rc), seed/pair/first matching schedule(200), and no non-counting or
 // S2b-repro lines. A job with more than one line is refused, whatever the reason: a conflicting or repeated attempt fails
 // closed for review (the runner gives an interrupted job no line, so a clean replay never duplicates). Any errors/
-// record is refused too. A STOP file is copied into the output.
+// record is refused too. A STOP file blocks certification: final mode refuses (exit 2, STOP contents printed); interim
+// mode is labelled BLOCKED, exits 3, and is never eligible for PASS or the 40-clean sign-off (RELAY-049 R2-03).
 // Interim mode (--interim): scores the jobs present and is labelled "CANDIDATE (interim, n/200), not a PASS"; it can
 // never print PASS. Final mode needs all 200.
 //   node tools/s2a-recombine.mjs --in-dir runs/s2a [--interim] --out runs/s2a/recombined.json
@@ -28,12 +29,22 @@ const sched=__schedule(200);
 const inDir=path.resolve(ROOT,a('in-dir','runs/s2a')),interim=has('interim');
 const files=fs.readdirSync(inDir).filter(f=>/^jobs-shard.*\.jsonl$/.test(f)).sort();
 const errs=[],attempts=new Map(),inputs=[];
+// Root record (RELAY-049 note): every field the frozen gate pushes at ai-gate.mjs line 67, with the status values the engine
+// can produce (dist/ai/info-set.mjs line 25: 'full' | 'reduced' | 'fallback'). No thresholds are added or changed here.
+const ROOT_STATUS=['full','reduced','fallback'];
+function rootProblems(q,r){const e=[],int=x=>Number.isInteger(x)&&x>=0;if(!q||typeof q!=='object')return ['not an object'];
+ if(!ROOT_STATUS.includes(q.status))e.push('status '+JSON.stringify(q.status));
+ for(const k of ['worlds','aggregatedWorlds','decision'])if(!int(q[k]))e.push(k+' '+JSON.stringify(q[k]));
+ if(typeof q.logged!=='boolean')e.push('logged');if(!(q.matchedWorlds===null||int(q.matchedWorlds)))e.push('matchedWorlds '+JSON.stringify(q.matchedWorlds));
+ if(q.seat!==0&&q.seat!==1)e.push('seat');if(q.seed!==r.seed||q.first!==r.first||JSON.stringify(q.pair)!==JSON.stringify(r.pair))e.push('seed/pair/first differ from the row');
+ if(q.engine!=='snapshot')e.push('engine '+JSON.stringify(q.engine));if(!('firstMisaligned' in q))e.push('firstMisaligned missing');
+ return e}
 function validate(r){const e=[],int=x=>Number.isInteger(x)&&x>=0;
  if(typeof r.hash!=='string'||!/^[0-9a-f]{40}$/.test(r.hash))e.push('result hash missing/invalid');
  for(const k of ['decisions','searched','turns','retries'])if(!int(r[k]))e.push(k+' missing/invalid');
  if(typeof r.finished!=='boolean')e.push('finished missing');
  for(const k of [...BLUNDERS,'forcedOwnPicks'])if(!Array.isArray(r[k]))e.push(k+' array missing');
- if(!Array.isArray(r.rootQuality))e.push('rootQuality missing');else r.rootQuality.forEach((q,i)=>{if(!q||typeof q.status!=='string'||!q.status||typeof q.logged!=='boolean'||!(q.matchedWorlds===null||Number.isFinite(q.matchedWorlds)))e.push('root '+i+' malformed')});
+ if(!Array.isArray(r.rootQuality))e.push('rootQuality missing');else r.rootQuality.forEach((q,i)=>{const p=rootProblems(q,r);if(p.length)e.push('root '+i+': '+p.join(', '))});
  const s=sched[r.job],pair=s&&[decks[s.a],decks[s.b]];
  if(!s||r.seed!==s.seed||r.first!==s.first||r.a!==s.a||r.b!==s.b||JSON.stringify(r.pair)!==JSON.stringify(pair))e.push('does not match schedule(200): '+JSON.stringify({seed:r.seed,pair:r.pair,first:r.first}));
  for(const [f,h] of Object.entries(PIN.frozen))if(r.frozen?.[f]!==h)e.push('frozen hash differs: '+f);
@@ -52,9 +63,13 @@ for(const [j,w] of attempts)if(w.length>1)errs.push('job '+j+' has '+w.length+' 
 const errRecords=fs.existsSync(path.join(inDir,'errors'))?fs.readdirSync(path.join(inDir,'errors')):[];if(errRecords.length)errs.push('failure records present in errors/: '+errRecords.join(', '));
 const present=[...byJob.keys()].sort((x,y)=>x-y);
 if(!interim){const missing=[];for(let j=0;j<200;j++)if(!byJob.has(j))missing.push(j);if(missing.length)errs.push('missing jobs: '+missing.join(','))}
+// STOP (RELAY-049 R2-03): a stopped run is never certified. Final mode refuses; interim mode scores for information only,
+// labelled BLOCKED, exit 3, and is never eligible for PASS or the 40-clean sign-off. STOP is never deleted by this tool.
+const stopPath=path.join(inDir,'STOP'),stopText=fs.existsSync(stopPath)?fs.readFileSync(stopPath,'utf8'):null;
+if(stopText!==null&&!interim)errs.push('STOP present (a stopped run cannot be certified; needs an explicit reviewed resolution). STOP contents: '+stopText.trim());
 if(errs.length){console.error('REFUSED:\n '+errs.join('\n '));process.exit(2)}
 // ---- scoring: mirrors ai-gate.mjs S2a branch + root-quality block
-const result={tool:'ai-gate (recombined by tools/s2a-recombine.mjs rev 2)',identity:PIN,stopFile:fs.existsSync(path.join(inDir,'STOP'))?fs.readFileSync(path.join(inDir,'STOP'),'utf8'):null,stage:'S2a',budget:400,duelsRequested:200,node:'v22.22.2',engine:{mode:'snapshot'},checks:[],metrics:{},samples:{},inputs,prefixSha256:prefixSha,mode:interim?'interim':'final'};
+const result={tool:'ai-gate (recombined by tools/s2a-recombine.mjs rev 3)',identity:PIN,stopFile:stopText,stage:'S2a',budget:400,duelsRequested:200,node:'v22.22.2',engine:{mode:'snapshot'},checks:[],metrics:{},samples:{},inputs,prefixSha256:prefixSha,mode:interim?'interim':'final'};
 const check=(id,value,op,limit,note='')=>{const pass=op==='=='?value===limit:op==='<='?value<=limit:op==='>='?value>=limit:false;result.checks.push({id,value,op,limit,pass,note});return pass};
 const wlRaw=fs.readFileSync(path.resolve(ROOT,'tests/self-target-whitelist.json'),'utf8'),WL=JSON.parse(wlRaw);
 result.whitelist={path:'tests/self-target-whitelist.json',sha1:sha1(wlRaw),entries:Object.values(WL).flat().length,missingReason:Object.entries(WL).flatMap(([k,v])=>v.filter(w=>!w.why||w.why.length<20).map(w=>k))};
@@ -79,7 +94,7 @@ check('S2a.rootQuality.full16',total?100*full/total:0,'>=',95,'auditor-approved 
 check('S2a.rootQuality.fallback',total?100*fallback/total:100,'<=',1,'public-information fallback only below eight aggregated worlds');
 check('S2a.rootQuality.logged',unlogged,'==',0,'every reduced/fallback case logged');
 const allPass=result.checks.every(c=>c.pass);
-result.verdict=interim?(present.length===200&&allPass?'CANDIDATE (interim mode used with 200/200; run final mode for a verdict)':'CANDIDATE (interim, '+present.length+'/200), not a PASS'+(result.checks.filter(c=>!c.pass&&!/^S2a\.(duels|coverage\.|rootQuality\.)/.test(c.id)).length?' - BLOCKING FAILURE PRESENT (a per-duel blunder check failed)':'')+'; interim root quality is information only (Seto plan s7)'):(allPass?'PASS':'FAIL');
+result.verdict=stopText!==null?'BLOCKED (STOP present; information only; not eligible for PASS or the 40-clean sign-off). STOP: '+stopText.trim():interim?(present.length===200&&allPass?'CANDIDATE (interim mode used with 200/200; run final mode for a verdict)':'CANDIDATE (interim, '+present.length+'/200), not a PASS'+(result.checks.filter(c=>!c.pass&&!/^S2a\.(duels|coverage\.|rootQuality\.)/.test(c.id)).length?' - BLOCKING FAILURE PRESENT (a per-duel blunder check failed)':'')+'; interim root quality is information only (Seto plan s7)'):(allPass?'PASS':'FAIL');
 const out=path.resolve(ROOT,a('out',path.join(inDir,interim?'recombined-interim.json':'recombined.json')));fs.writeFileSync(out,JSON.stringify(result,(_,v)=>typeof v==='bigint'?String(v):v,2));
 for(const c of result.checks)console.log(`${c.pass?'PASS':'FAIL'}  ${c.id}: ${c.value} (need ${c.op} ${c.limit}) ${c.note}`);
-console.log('VERDICT '+result.verdict+' → '+out);process.exit(interim?0:(allPass?0:1));
+console.log('VERDICT '+result.verdict+' → '+out);process.exit(stopText!==null?3:interim?0:(allPass?0:1));
