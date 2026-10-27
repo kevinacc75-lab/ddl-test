@@ -1,4 +1,14 @@
-db46a6efc0a8dc50e4f5b300771e5c1555258f3f6f2845f00f79e2d56016f481  ./README.md
+0a6e5bbe6296240386f5c760933088b81e6b15612ffd04401feedcb87a239065  ./README.md
+28ba47afcd02252d5d31406a675f667e4f03082daa396eb5010a4483d04f2ddd  ./diffstat-rev2.txt
 a025c474bab74a5127a82644fc836507b935682e9be329cb7d34fb503a596592  ./diffstat.txt
+e68a17a18622a8d5ecf3db07c134a5dd3bc94170659ebb3b791dfd9beeab7533  ./native-outputs-rev2/r35-ohime-revive.test.out
+57a1485695ca67cddeb1c88e975bedd903916bce6f78e8f1fa3805f8178eb951  ./native-outputs-rev2/r35-s3-kashtira-native.test.out
+a326d1c817353272062129985a10a091cdf6ac106f26e4a9c7ef665fe07cdf49  ./native-outputs-rev2/r35-s3-kitt-guard.test.out
+7a4231dd7f6b741109211391dc8da036a7b302ec6e60757a041acadb3533bcf0  ./native-outputs-rev2/r35-s3-kitt-native.test.out
+e8cb2989739a042d4be0cd512ab0e9f9ab0dbf07d648fb30bb880a9c76f16d31  ./native-outputs-rev2/r35-s3-sdp-native.test.out
+d0b06bed016ede20505b9bf83b5ae843ed8b7678160a25c0ac9aed121053f9e6  ./native-outputs-rev2/taskc-hero-scripts.test.out
+ca74426c02e6afa8ce3fc47e6ef0076820cbda4af1c79cfb7972ed3623607ff9  ./s3-fixtures-rev2.diff
 cf33070d6c3848b9309b265a5da1cc8f457a15d2d3bc6c1526206fa2e3e51406  ./s3-fixtures.diff
+0a327c5d706c004d47a1dee8eec7e6245e90dfbf892d72e2ee6304a2615a4e75  ./script-identities-rev2.txt
+e0adb7a6f4b4f19848cda85466447510cb4b3fa3ea2c42bbf94783cb15b4f069  ./test-results-rev2.txt
 42bfdd20b67c5aa5e4457c62f95e76006ff9d8ab83db7b6a67c19ae686eedabc  ./test-results.txt

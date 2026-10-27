@@ -1,5 +1,26 @@
 # S3 Rev 7 hand-trap fixtures (queue item 4): TEST branch, not a build, not published
 
+**Rev 2 (28 Oct, 09:35 AEDT), for RELAY-055 and Seto 08:10.** Head is `0d1ae03`, now stacked on the Kitt branch rev 3 (`09bf121`); it was rebased with no conflicts.
+
+New files:
+- `s3-fixtures-rev2.diff` (09bf121..0d1ae03) and `diffstat-rev2.txt`;
+- `test-results-rev2.txt` (43/43);
+- `native-outputs-rev2/` (each native test's stdout JSON with the observed windows);
+- `script-identities-rev2.txt` (sha256 of the bundled scripts involved, the override file, and the unchanged scripts.json.gz).
+
+Changes:
+- **Script override K1 (TEST only; Seto 08:10; Alexis: Konami DB cid 22128).** `c19304410.lua` effect 2 (the GY revive) changes from `Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)` to `POS_FACEUP_DEFENSE`. That's one line; effect 1 is untouched.
+  - The base script sha256 `14b8186f…690712` is recorded in `dist/script-overrides.mjs` by `tools/build-script-overrides.mjs`.
+  - The header now states that Kitt is a gate-deck card: a gate on a build with this file is a **new** gate, not "same scripts".
+  - `tests/taskc-hero-scripts.test.mjs` knows the K1 key and its `DDL K1` marker.
+  - The frozen gate trees are untouched.
+- **KT-3** now asserts the revive picks from **our GY only**, and the revived Albaz is **face-up Defense** (position 4). With K1, the engine no longer prompts for a position. Mutation check: with K1 disabled, KT-3 fails.
+- **KT-3b (new):** Ghost Mourner is offered on the revived Albaz, and the Kitt guard returns null for it.
+- **Kashtira K3:** relabelled as a rules-correct observation (Alexis: a negated monster may still activate, and its effect resolves with no effect). No engine item is opened.
+- **Ohime:** the header records Alexis's Noble Twins answer (OCG Q&A 23954): such an Ohime is not properly summoned, and Fire Dance can never revive it. No played-line fixture is built.
+- **Still not covered:** the Crow and Nibiru halves (SYNTHETIC per the spec); Granguignol, Waking the Dragon and Roar (provisional); book-off mode (the guard is a book hook only); any strength measurement.
+
+
 - **Branch:** `r35-s3-fixtures`, r18 head `2c79bce`. It's stacked on the Kitt branch `ab4cc3e` (r35-kitt-swap), which is based on r35.2 `812cfca`.
 - **Spec:** Akiza's S3 review Rev 7. The sha256 was checked before building: `537f377647a9622034cc25a38977566dfe1c132402b1583bdd14a9b7674f4660`.
 - **Status:** SELF-VERIFIED (Claude). Needs ChatGPT's code review; Alexis's ruling on the engine divergence (§3); Akiza and Alexis to confirm the strict guard reading.

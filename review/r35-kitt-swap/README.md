@@ -1,5 +1,29 @@
 # Kitt swap + queue item 3: TEST branch, not a build, not published
 
+**Rev 3 (28 Oct, 09:35 AEDT), for RELAY-054.** Head is `09bf121` (item 3 rev 2 on top of `ab4cc3e`). New files: `item3-rev2.diff` (ab4cc3e..09bf121), `kitt-swap-full.diff` (812cfca..09bf121, replaced), `test-results-rev3.txt` (38/38), `identities-rev3.txt` (sha256 of the changed book modules), `native-outputs-rev3/` (per-test output).
+- **K3-01:** the revive pick is now code (`dist/ai/book/kitt-revive.mjs`, called from `bookPick`) and follows Akiza's 07:05 order with its conditions:
+  1. Mirrorjade, only if we control none and an Albaz-mentioning Fusion is left in our Extra Deck.
+  2. Rindbrumm.
+  3. Sanctifire.
+  4. The Main Deck order (Ecclesia and Cartesia move up when going second).
+  5. Titaniklad, Alba-Lenatus and Lubellion, as bodies.
+- **Never-rule:** never Titaniklad, Alba-Lenatus or The Dragon that Devours the Dogma (76666602) when it was sent to the GY this turn and its End Phase search is unused. This reads the duel's move and activate events since this turn's turn event. A base choice that breaks this rule is replaced by any other offered card.
+- **Dogma** is unranked, pending Akiza. The two JSON hint-509 picks are removed from branded-lines.mjs.
+- **K3-02:** Tri-Brigade Springans Kitt is removed from both Branded Fusion material (hint 511) preferences. It wasn't a tie-break, and the book hook has no main-policy scores to make one; Akiza is asked to confirm. A fixture shows a base Ecclesia is kept over Kitt with Albaz in hand. The dead old-Kitt name is removed from the Synchro list.
+- **Fixture:** `tests/r35-kitt-revive.test.mjs` is rewritten. It covers:
+  - the full order going first and second;
+  - both of RELAY-054's counterexamples;
+  - the Mirrorjade conditions;
+  - the never-rules (this turn / used / earlier turn / a forbidden base replaced);
+  - Dogma unranked;
+  - another source untouched;
+  - material preservation.
+
+  Mutation checks were caught: the old order, the never-rule removed, the Mirrorjade conditions removed, and the Kitt preference restored (caught by the list check and by the behavioural check on its own).
+- **Wording:** Kitt's revive is **from our GY, in Defense Position**, never itself, and doesn't target. The **trigger** activates when Kitt is sent to the GY from anywhere, Deck included. (Rev 2's README said "works from the Deck"; that meant the trigger, as the brain entry says.)
+- **Native:** the source zone (GY) and Defense Position are asserted in the S3 branch's KT-3 (`review/r35-s3-fixtures`, rev 2), which carries the TEST-only script override K1.
+
+
 **Rev 2 (28 Oct, 07:15 AEDT):** queue item 3 (Tri-Brigade Kitt revive picks) and the RELAY-053 notes are added. Head is now `ab4cc3e` (item 3 on top of `8c8f523`). New files: `item3.diff` (8c8f523..ab4cc3e), `kitt-swap-full.diff` (812cfca..ab4cc3e), `test-results-rev2.txt`.
 
 - **Branch:** `r35-kitt-swap`, r18 commit `8c8f523`, based on r35.2 (`812cfca`, the live play-test build).
