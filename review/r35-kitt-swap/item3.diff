@@ -1,0 +1,68 @@
+diff --git a/dist/ai/book/branded-lines.mjs b/dist/ai/book/branded-lines.mjs
+index ee4c417..ec43e86 100644
+--- a/dist/ai/book/branded-lines.mjs
++++ b/dist/ai/book/branded-lines.mjs
+@@ -96,7 +96,9 @@ export default {
+   {"source": "Fallen of the White Dragon", "hint": [504], "prefer": ["Titaniklad the Ash Dragon", "The Dragon that Devours the Dogma", "Rindbrumm the Striking Dragon"]},
+   {"source": "Fallen of the White Dragon", "hint": [509], "prefer": ["Incredible Ecclesia, the Virtuous"]},
+   {"source": "Incredible Ecclesia, the Virtuous", "hint": [509], "prefer": ["Fallen of Albaz"]},
+-  {"source": "Springans Kitt", "hint": [506], "prefer": ["Branded Fusion", "Branded in High Spirits", "Branded in Red", "Branded Opening", "Branded Retribution"]},
++  // The DARK Springans Kitt's Branded search pick (hint 506) was removed with the Kitt swap (28 Oct); the card is in no list.
++  {"source": "Tri-Brigade Springans Kitt", "hint": [509], "ifFirst": false, "prefer": ["Mirrorjade the Iceblade Dragon", "Titaniklad the Ash Dragon", "Albion the Sanctifire Dragon", "The Dragon that Devours the Dogma", "Rindbrumm the Striking Dragon", "Lubellion the Searing Dragon", "Alba-Lenatus the Abyss Dragon", "Fallen of Albaz", "Incredible Ecclesia, the Virtuous", "Blazing Cartesia, the Virtuous", "Guiding Quem, the Virtuous", "Fallen of the White Dragon", "Tri-Brigade Mercourier", "Albion the Shrouded Dragon"], "why": "Queue item 3 (Claude 28 Oct): Tri-Brigade Springans Kitt sent to the GY revives in Defense Position (no target; picked on resolution; never itself; Alexis 28 Oct). Akiza order: a properly summoned Albaz Fusion worth having back (the engine only offers legal ones), then going second Ecclesia and Cartesia move up (Main Phase Quick Effects)."},
++  {"source": "Tri-Brigade Springans Kitt", "hint": [509], "prefer": ["Mirrorjade the Iceblade Dragon", "Titaniklad the Ash Dragon", "Albion the Sanctifire Dragon", "The Dragon that Devours the Dogma", "Rindbrumm the Striking Dragon", "Lubellion the Searing Dragon", "Alba-Lenatus the Abyss Dragon", "Fallen of Albaz", "Guiding Quem, the Virtuous", "Fallen of the White Dragon", "Incredible Ecclesia, the Virtuous", "Blazing Cartesia, the Virtuous", "Tri-Brigade Mercourier", "Albion the Shrouded Dragon"], "why": "Queue item 3 (Claude 28 Oct): Tri-Brigade Springans Kitt sent to the GY revives in Defense Position (no target; picked on resolution; never itself; Alexis 28 Oct). Akiza order: a properly summoned Albaz Fusion worth having back (the engine only offers legal ones), then Fallen of Albaz, Quem, White Dragon, Ecclesia, Cartesia, Mercourier, Shrouded Dragon. Not encoded yet (no book condition for it): unused-once-per-turn first; Mercourier up only with an Albaz Fusion on the field; opponent's turn = going-second order."},
+   {"source": "*", "hint": [512], "prefer": ["Guiding Quem, the Virtuous", "Incredible Ecclesia, the Virtuous", "Blazing Cartesia, the Virtuous", "Fallen of the White Dragon", "Fallen of Albaz", "Springans Kitt", "Tri-Brigade Mercourier", "Aluber the Jester of Despia"]}
+  ],
+  "setHold": {
+diff --git a/dist/ai/brain/branded-brain.mjs b/dist/ai/brain/branded-brain.mjs
+index 86c77ca..abe7493 100644
+--- a/dist/ai/brain/branded-brain.mjs
++++ b/dist/ai/brain/branded-brain.mjs
+@@ -30,7 +30,7 @@ export default {
+   'Dogmatika Fleurdelis, the Knighted': {role: 'interruption', does: 'During a Main Phase (Quick Effect), while a monster Special Summoned from the Extra Deck is on the field: Special Summon it from the hand; with another Dogmatika on our field, it can then negate a face-up monster until the end of the turn. The AI keeps it in hand for their turn and never Tribute Summons it (our choice, not a rule).'},
+   // Kitt swap (Claude, 28 Oct; Kevy OK 24 Oct): Tri-Brigade Springans Kitt replaces the DARK Springans Kitt. Written from the
+   // printed text below; DRAFT like the rest of this file, Akiza review pending (with Seto queue item 3, the revive line).
+-  'Tri-Brigade Springans Kitt': {role: 'extender', does: 'Special Summons itself from the hand while we control another Tri-Brigade or Springans monster (here: Tri-Brigade Mercourier). When it is sent to the GY (for example as Fusion material) it Special Summons, in Defense Position, a Tri-Brigade or Springans monster, Fallen of Albaz, or a monster that mentions Fallen of Albaz from our GY. It cannot search Branded Fusion. Each effect once per turn.', links: {summon: ['Fallen of Albaz', 'Tri-Brigade Mercourier']}},
++  'Tri-Brigade Springans Kitt': {role: 'extender', does: 'Special Summons itself from the hand while we control a Tri-Brigade or Springans monster, except Tri-Brigade Springans Kitt (here: Tri-Brigade Mercourier). When it is sent to the GY from anywhere, Deck included (for example as Fusion material), it Special Summons from our GY, in Defense Position, a Tri-Brigade or Springans monster, Fallen of Albaz, or a monster that mentions Fallen of Albaz, except Tri-Brigade Springans Kitt; it does not target (Alexis, 28 Oct). It cannot search Branded Fusion. Each effect once per turn.', links: {summon: ['Fallen of Albaz', 'Tri-Brigade Mercourier']}},
+   'Tri-Brigade Mercourier': {role: 'interruption', does: 'While we control an Albaz Fusion: send it from the hand or field to negate a monster effect. If banished (for example as Branded in Red material) it adds an Albaz monster from the Deck.', links: {search: ['Fallen of Albaz']}},
+   'Albion the Shrouded Dragon': {role: 'extender', does: 'Named Fallen of Albaz on the field and in the GY. From the hand or GY: send Albaz or a Branded Spell/Trap from the hand to Special Summon it, or from the Deck to put it on the bottom of the Deck (drawing 1 only if it was in the hand). Once per turn.', links: {send: ['Fallen of Albaz', 'Branded in High Spirits', 'Branded Opening', 'Branded Retribution', 'The Fallen & The Virtuous']}},
+   'Bystial Magnamhut': {role: 'utility', does: 'Banish a LIGHT or DARK monster from either GY to Special Summon it (a Quick Effect if they control a monster). End Phase: add a Dragon from the Deck or GY. A DARK Dragon for Lubellion and a discard for Branded in High Spirits.'},
+diff --git a/tests/r35-kitt-revive.test.mjs b/tests/r35-kitt-revive.test.mjs
+new file mode 100644
+index 0000000..3dab491
+--- /dev/null
++++ b/tests/r35-kitt-revive.test.mjs
+@@ -0,0 +1,34 @@
++// r35 queue item 3 (Claude, 28 Oct 2026). SELF-VERIFIED (builder = verifier), NOT independent; ChatGPT review pending.
++// Tri-Brigade Springans Kitt (19304410) revive pick, per Alexis's rulings and Akiza's order (Seto handover 28 Oct 06:15):
++//  1. Going first: Albaz Fusion > Fallen of Albaz > Guiding Quem > Fallen of the White Dragon > Ecclesia > Cartesia >
++//     Mercourier > Albion the Shrouded Dragon.
++//  2. Going second: Ecclesia and Cartesia move up (Main Phase Quick Effects): Albaz > Ecclesia > Cartesia > Quem > ...
++//  3. A properly summoned Albaz Fusion in the GY comes first when the engine offers it.
++//  4. Kitt never picks itself (the engine never offers it; the book list doesn't name it either).
++//  5. The pick is a book preference only: when none of the offered cards are named, the base choice stands.
++// This is a synthetic-view unit fixture of the book rule. It is NOT a native duel fixture and NOT a strength measurement;
++// the native Branded Fusion -> Kitt-from-Deck fixture and the opponent-side key-card measurement are still to do.
++import assert from 'node:assert/strict';import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++import {M} from '../dist/duel.mjs';import {bookPick,BOOKS} from '../dist/ai/book/book.mjs';
++const db=JSON.parse(gunzipSync(fs.readFileSync('dist/cards.json.gz'))),code=n=>+Object.keys(db).find(k=>db[k].name===n);
++const KITT='Tri-Brigade Springans Kitt';
++const mk=(name,extra={})=>({code:code(name),controller:0,position:1,location:16,sequence:0,...extra});
++const view=({first=true}={})=>({active:0,phase:4,turn:2,order:first?[0,1]:[1,0],decks:[{id:'branded'},{id:'sky'}],db,name:c=>db[c]?.name||'',hint:509,
++ currentEffect:{code:code(KITT)},attempts:new Map(),prompt:null,key:c=>[c.code,c.controller,c.location,c.sequence,'0'].join(':'),zone:()=>[]});
++const pick=(offered,first)=>{const v=view({first});const m={type:M.SELECT_CARD,selects:offered.map((n,i)=>mk(n,{sequence:i}))};
++ const r=bookPick(v,0,m,{indicies:[offered.length-1]});return r?offered[r.response.indicies[0]]:offered.at(-1)};
++const GY=['Albion the Shrouded Dragon','Tri-Brigade Mercourier','Blazing Cartesia, the Virtuous','Incredible Ecclesia, the Virtuous','Fallen of the White Dragon','Guiding Quem, the Virtuous','Fallen of Albaz'];
++// 1 and 2: walk the whole order by removing the pick each time.
++const order=first=>{const left=[...GY],out=[];while(left.length){const p=pick(left,first);out.push(p);left.splice(left.indexOf(p),1)}return out};
++assert.deepEqual(order(true),['Fallen of Albaz','Guiding Quem, the Virtuous','Fallen of the White Dragon','Incredible Ecclesia, the Virtuous','Blazing Cartesia, the Virtuous','Tri-Brigade Mercourier','Albion the Shrouded Dragon'],'going-first order (Akiza)');
++assert.deepEqual(order(false),['Fallen of Albaz','Incredible Ecclesia, the Virtuous','Blazing Cartesia, the Virtuous','Guiding Quem, the Virtuous','Fallen of the White Dragon','Tri-Brigade Mercourier','Albion the Shrouded Dragon'],'going-second order: Ecclesia and Cartesia up');
++// 3: an offered Albaz Fusion comes first, either way.
++for(const first of [true,false])assert.equal(pick(['Fallen of Albaz','Guiding Quem, the Virtuous','Mirrorjade the Iceblade Dragon'],first),'Mirrorjade the Iceblade Dragon','Albaz Fusion first');
++// 4: the rules never name Kitt itself.
++const rules=BOOKS.branded.picks.filter(p=>p.source===KITT);assert.equal(rules.length,2);for(const r of rules){assert.ok(!r.prefer.includes(KITT),'never itself');assert.deepEqual(r.hint,[509])}
++// 5: nothing named offered -> base choice stands (bookPick returns null).
++assert.equal(bookPick(view(),0,{type:M.SELECT_CARD,selects:[mk('Aluber the Jester of Despia')]},{indicies:[0]}),null,'unnamed offer: base choice');
++// The old DARK Kitt search pick is gone; the materials picks already list the new Kitt (unchanged by this item).
++assert.ok(!BOOKS.branded.picks.some(p=>p.source==='Springans Kitt'),'old Kitt search pick removed');
++assert.ok(BOOKS.branded.picks.some(p=>p.source==='Branded Fusion'&&p.hint.includes(511)&&p.prefer.includes(KITT)),'Branded Fusion materials already name the new Kitt');
++console.log(JSON.stringify({test:'r35-kitt-revive',pass:true,node:process.version}));
