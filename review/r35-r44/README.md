@@ -4,7 +4,7 @@
 - Only change: `dist/ai/book/turn-ledger.mjs` replaced by the rev 6 ledger from r35-kitt-swap `44e86a6` (byte-identical, sha256 f3fa4e6d...).
 - `r44-rev3.diff` sha256 41ae6f8c....
 - `targeted-results-rev3.txt`: r35-mikanko-plan and r35-firedance-native (real engine) pass.
-- Full suite pending (after S2a job 9).
+- Full suite: DONE on a9df7b4, 39/39 (`test-results-rev3.txt`; recounted by ChatGPT in RELAY-062).
 
 -----
 

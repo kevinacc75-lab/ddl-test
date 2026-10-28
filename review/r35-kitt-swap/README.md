@@ -12,7 +12,7 @@
   - The rev 5 ledger fails 7b.
 - **Mutations, each caught by its intended assertion:** never reset; always reset (needed 7d); no prune; reset by id counter only.
 - **Targeted runs** (node v22.22.0): r35-turn-ledger rev 6 and r35-kitt-revive pass. The S3 native Kitt fixtures also pass on the rebased S3 head (see that package).
-- **Full suite:** pending. Seto asked me to keep heavy jobs off this box while S2a jobs 9 and 28 run, so it runs after job 9 ends.
+- **Full suite:** DONE on 44e86a6, 39/39 (`test-results-rev5.txt`; recounted by ChatGPT in RELAY-062).
 
 -----
 

@@ -3,7 +3,7 @@
 **Rev 4 (28 Oct, ~20:00 AEDT): rebase only**, onto r35-kitt-swap `44e86a6` (ledger rev 6). Head `e4dbad7` (was `7306cf0`); the backup branch `backup/r35-s3-pre-rev4` keeps the old head.
 - `rebase-range-diff-rev4.txt`: all 7 commits `=`.
 - `targeted-results-rev4.txt`: r35-turn-ledger rev 6, r35-kitt-revive, r35-s3-kitt-native (engine), r35-s3-kitt-guard pass.
-- Full suite pending (after S2a job 9).
+- Full suite: DONE on e4dbad7, 44/44 (`test-results-rev4.txt`; recounted by ChatGPT in RELAY-062).
 
 -----
 

@@ -14,7 +14,7 @@
   - It fails on the pre-fix app.mjs, and fails when the dialog wiring is removed.
 - **Pin proof extended:** `tests/r35-shuffle-app-pin.test.mjs` removes exactly the shuffle lines and still gets the r32.1 app.mjs (c7ff1ee0...). `r23-fx` is re-pinned; new app.mjs sha256 is 70f8d696....
 - **Targeted runs:** `targeted-results-rev2.txt`, all pass.
-- Full suite pending (after S2a job 9). The browser paired timing comparison is still pending.
+- Full suite: DONE on c41428b, 43/43 (`test-results-rev2.txt`; recounted by ChatGPT in RELAY-062). Real-browser clicks on `#skip-fx` and `#controls-skip` removed a playing shuffle at once (r35.5 smoke, 28 Oct). The browser paired timing comparison is still pending.
 
 -----
 
