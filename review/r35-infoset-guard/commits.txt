@@ -1,0 +1,2 @@
+1f29378 r35 info-set guard test: add the real failure case (a sampler that produces a world)
+2464bf3 r35 candidate (NOT merged): ai/info-set.mjs replay-path guard for an empty candidate list

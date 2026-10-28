@@ -1,0 +1,13 @@
+file:///home/claude/r35-infoset2/dist/ai/info-set.mjs:36
+   }catch{stats[a].rejected++;if(rootAccepted)score=evaluate(sim,seat)-100000*(risk+1)}finally{if(!keep)sim.stop()}
+               ^
+
+TypeError: Cannot read properties of undefined (reading 'rejected')
+    at evaluateAction (file:///home/claude/r35-infoset2/dist/ai/info-set.mjs:36:16)
+    at searchInfoSet (file:///home/claude/r35-infoset2/dist/ai/info-set.mjs:50:3)
+    at file:///home/claude/r35-infoset2/tests/r35-infoset-empty-options.test.mjs:17:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.22.0
