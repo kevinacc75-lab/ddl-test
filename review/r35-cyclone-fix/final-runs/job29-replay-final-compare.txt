@@ -1,0 +1,9 @@
+Job 29 replay at the FINAL identity (optimal-pilot ed03a478) vs the first fixed replay (e2d9d01d, job29-replay-fixed-d870-895.json). SELF-VERIFIED (Claude).
+Tool: tools/s2a-diagnose-job.mjs (non-counting; frozen prefix loaded byte for byte, identity-checked) on the gate copy that differs from the frozen tree ONLY in dist/optimal-pilot.mjs.
+Identity: gate 1c380d58... whitelist 9f1fb5f5... prefix eed7e402... Node v22.22.2. Fix-tree dist (method A) fe7e58c6f54272eded46e804b745229747832142ca970d6a0e4883ce83e0aa38. Wall time 5504 s.
+Command: node tools/s2a-diagnose-job.mjs --job 29 --from 870 --to 895 --save job29-replay-final-d870-895.json
+(The 6000 s 'timeout' wrapper was removed mid-run with kill -9 on the wrapper only, because the first fixed replay took 5802 s; the node process itself was not touched.)
+
+Window 870-895: 26 decisions compared on every recorded field (turn, phase, active, seat, promptType, hint, currentEffect, chain, lp, st, monsters, hand, choices, response, picked, pickedLabel, rule, reason, kind, book, search): 0 differences.
+886: passes (Cosmic Cyclone held). 888: passes. 895: Activate - Mikanko Dance - Mayowashidori (Information-set root search).
+Only guardsSoFar text can differ between versions, and in this game the guard reads 'Cosmic Cyclone has no targetable opposing Spell/Trap' (their Spell/Traps exist but are shielded), the same wording in both versions.

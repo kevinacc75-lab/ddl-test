@@ -1,0 +1,2252 @@
+{
+ "job": 29,
+ "def": {
+  "seed": 466300,
+  "a": 1,
+  "b": 1,
+  "first": 1
+ },
+ "window": [
+  {
+   "decision": 870,
+   "turn": 13,
+   "phase": 8,
+   "active": 1,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 549,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": []
+  },
+  {
+   "decision": 871,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 11,
+   "hint": 549,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Fire Dance",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Activate · Mikanko Fire Dance",
+    "Activate · Mikanko Dance - Mayowashidori",
+    "Activate · Mikanko Water Arabesque",
+    "Set · Mikanko Spiritwalk",
+    "Set · Mikanko Fire Dance",
+    "Set · Mikanko Dance - Mayowashidori",
+    "End turn"
+   ],
+   "response": {
+    "type": 1,
+    "action": 5,
+    "index": 0
+   },
+   "picked": [
+    0
+   ],
+   "pickedLabel": [
+    "Activate · Mikanko Fire Dance"
+   ],
+   "rule": "Information-set root search",
+   "reason": "Aggregated 16 observed-history-conditioned worlds per action using 192 nodes. Opposing response windows are played from sampled hands.",
+   "kind": "activate",
+   "book": null,
+   "search": {
+    "status": "full",
+    "nodes": 192,
+    "worlds": 16
+   },
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 872,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 18,
+   "hint": 80044027,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Fire Dance",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Your Spell / Trap zone 1",
+    "Your Spell / Trap zone 3",
+    "Your Spell / Trap zone 4",
+    "Your Spell / Trap zone 5"
+   ],
+   "response": {
+    "type": 10,
+    "places": [
+     {
+      "player": 0,
+      "location": 8,
+      "sequence": 0
+     }
+    ]
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Choose a legal zone",
+   "reason": "The pilot prefers an available Extra Monster Zone, especially for Sky Striker. It then takes the required number of offered zones.",
+   "kind": "selection",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 873,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 80044027,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 874,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 16,
+   "hint": 80044027,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 875,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 15,
+   "hint": 509,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [],
+   "response": {
+    "type": 5,
+    "indicies": [
+     0
+    ]
+   },
+   "picked": [
+    0
+   ],
+   "pickedLabel": null,
+   "rule": "Choose cards for the effect",
+   "reason": "The pilot takes ranked eligible cards until the engine’s selection requirement is met.",
+   "kind": "selection",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 876,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 18,
+   "hint": 6327734,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Your Monster zone 1",
+    "Your Monster zone 3",
+    "Your Monster zone 4",
+    "Your Monster zone 5"
+   ],
+   "response": {
+    "type": 10,
+    "places": [
+     {
+      "player": 0,
+      "location": 4,
+      "sequence": 0
+     }
+    ]
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Choose a legal zone",
+   "reason": "The pilot prefers an available Extra Monster Zone, especially for Sky Striker. It then takes the required number of offered zones.",
+   "kind": "selection",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 877,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 19,
+   "hint": 6327734,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     null,
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Face-up Attack",
+    "Face-up Defence"
+   ],
+   "response": {
+    "type": 11,
+    "position": 1
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Choose battle position",
+   "reason": "The pilot prefers Attack Position for this monster if legal.",
+   "kind": "position",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 878,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 13,
+   "hint": 6327734,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Yes",
+    "No"
+   ],
+   "response": {
+    "type": 3,
+    "yes": true
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Accept the offered effect",
+   "reason": "This pilot accepts available yes/no effects by default. This is a simple rule and can spend resources unnecessarily.",
+   "kind": "effect",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 879,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 15,
+   "hint": 509,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [],
+   "response": {
+    "type": 5,
+    "indicies": [
+     1
+    ]
+   },
+   "picked": [
+    1
+   ],
+   "pickedLabel": null,
+   "rule": "Opening book pick (Mikanko Fire Dance)",
+   "reason": "The book line picks Ha-Re the Sword Mikanko here.",
+   "kind": "selection",
+   "book": {
+    "kind": "pick",
+    "rule": "Opening book pick (Mikanko Fire Dance)",
+    "reason": "The book line picks Ha-Re the Sword Mikanko here."
+   },
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 880,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 18,
+   "hint": 18377261,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Opponent’s Monster zone 2",
+    "Opponent’s Monster zone 3",
+    "Opponent’s Monster zone 5"
+   ],
+   "response": {
+    "type": 10,
+    "places": [
+     {
+      "player": 1,
+      "location": 4,
+      "sequence": 1
+     }
+    ]
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Choose a legal zone",
+   "reason": "The pilot prefers an available Extra Monster Zone, especially for Sky Striker. It then takes the required number of offered zones.",
+   "kind": "selection",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 881,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 19,
+   "hint": 18377261,
+   "currentEffect": "Mikanko Fire Dance",
+   "chain": [
+    "Mikanko Fire Dance (seat 0)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     null,
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Face-up Attack",
+    "Face-up Defence"
+   ],
+   "response": {
+    "type": 11,
+    "position": 1
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Choose battle position",
+   "reason": "The pilot prefers Attack Position for this monster if legal.",
+   "kind": "position",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 882,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 883,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 884,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 1,
+   "promptType": 11,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Activate · Mikanko Dance - Mayowashidori",
+    "Activate · Mikanko Water Arabesque",
+    "Special Summon · Uzuhime the Manifested Mikanko",
+    "Special Summon · Uzuhime the Manifested Mikanko",
+    "Set · Mikanko Spiritwalk",
+    "Set · Mikanko Dance - Mayowashidori",
+    "End turn"
+   ],
+   "response": {
+    "type": 1,
+    "action": 7,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Information-set root search",
+   "reason": "Aggregated 16 observed-history-conditioned worlds per action using 192 nodes. Opposing response windows are played from sampled hands.",
+   "kind": "summon",
+   "book": null,
+   "search": {
+    "status": "full",
+    "nodes": 192,
+    "worlds": 16
+   },
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)",
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 21 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 885,
+   "turn": 13,
+   "phase": 256,
+   "active": 1,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 18 decisions; hard cap 24)",
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 21 decisions; hard cap 24)"
+   ]
+  },
+  {
+   "decision": 886,
+   "turn": 14,
+   "phase": 1,
+   "active": 0,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone",
+    "Thunder King, the Lightningstrike Kaiju"
+   ],
+   "choices": [
+    "Chain · Cosmic Cyclone",
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": {
+    "status": "fallback",
+    "nodes": 21,
+    "worlds": 7
+   },
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 21 decisions; hard cap 24)",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set fallback: 7/16 worlds; 0 aggregated; public-information fallback only below eight completed worlds"
+   ]
+  },
+  {
+   "decision": 887,
+   "turn": 14,
+   "phase": 1,
+   "active": 0,
+   "seat": 1,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "World pool: 1 world(s) kept past the 12-decision renewal (oldest 21 decisions; hard cap 24)",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set fallback: 7/16 worlds; 0 aggregated; public-information fallback only below eight completed worlds"
+   ]
+  },
+  {
+   "decision": 888,
+   "turn": 14,
+   "phase": 1,
+   "active": 0,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone",
+    "Thunder King, the Lightningstrike Kaiju"
+   ],
+   "choices": [
+    "Chain · Cosmic Cyclone",
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": {
+    "status": "reduced",
+    "nodes": 33,
+    "worlds": 11
+   },
+   "guardsSoFar": [
+    "Blunder prevented: info-set fallback: 7/16 worlds; 0 aggregated; public-information fallback only below eight completed worlds",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set reduced: 11/16 worlds; 11 aggregated; public-information fallback only below eight completed worlds"
+   ]
+  },
+  {
+   "decision": 889,
+   "turn": 14,
+   "phase": 2,
+   "active": 0,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone",
+    "Thunder King, the Lightningstrike Kaiju"
+   ],
+   "choices": [
+    "Chain · Lava Golem",
+    "Chain · Cosmic Cyclone"
+   ],
+   "response": {
+    "type": 8,
+    "index": 0
+   },
+   "picked": [
+    0
+   ],
+   "pickedLabel": [
+    "Chain · Lava Golem"
+   ],
+   "rule": "Mandatory chain choice",
+   "reason": "The engine requires a trigger choice. The pilot ranks the offered effects.",
+   "kind": "chain",
+   "book": null,
+   "search": {
+    "status": "reduced",
+    "nodes": 36,
+    "worlds": 12
+   },
+   "guardsSoFar": [
+    "Blunder prevented: info-set reduced: 11/16 worlds; 11 aggregated; public-information fallback only below eight completed worlds",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set reduced: 12/16 worlds; 12 aggregated; public-information fallback only below eight completed worlds"
+   ]
+  },
+  {
+   "decision": 890,
+   "turn": 14,
+   "phase": 2,
+   "active": 0,
+   "seat": 1,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": "Lava Golem",
+   "chain": [
+    "Lava Golem (seat 1)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "Blunder prevented: info-set reduced: 11/16 worlds; 11 aggregated; public-information fallback only below eight completed worlds",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set reduced: 12/16 worlds; 12 aggregated; public-information fallback only below eight completed worlds"
+   ]
+  },
+  {
+   "decision": 891,
+   "turn": 14,
+   "phase": 2,
+   "active": 0,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": "Lava Golem",
+   "chain": [
+    "Lava Golem (seat 1)"
+   ],
+   "lp": [
+    5000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone",
+    "Thunder King, the Lightningstrike Kaiju"
+   ],
+   "choices": [
+    "Chain · Cosmic Cyclone",
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": {
+    "status": "reduced",
+    "nodes": 39,
+    "worlds": 13
+   },
+   "guardsSoFar": [
+    "Blunder prevented: info-set reduced: 12/16 worlds; 12 aggregated; public-information fallback only below eight completed worlds",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set reduced: 13/16 worlds; 13 aggregated; public-information fallback only below eight completed worlds"
+   ]
+  },
+  {
+   "decision": 892,
+   "turn": 14,
+   "phase": 2,
+   "active": 0,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    4000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone",
+    "Thunder King, the Lightningstrike Kaiju"
+   ],
+   "choices": [
+    "Chain · Cosmic Cyclone",
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": {
+    "status": "full",
+    "nodes": 48,
+    "worlds": 16
+   },
+   "guardsSoFar": [
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set reduced: 13/16 worlds; 13 aggregated; public-information fallback only below eight completed worlds",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap"
+   ]
+  },
+  {
+   "decision": 893,
+   "turn": 14,
+   "phase": 2,
+   "active": 0,
+   "seat": 1,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    4000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Mikanko Spiritwalk",
+    "Mikanko Dance - Mayowashidori"
+   ],
+   "choices": [
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": null,
+   "guardsSoFar": [
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: info-set reduced: 13/16 worlds; 13 aggregated; public-information fallback only below eight completed worlds",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap"
+   ]
+  },
+  {
+   "decision": 894,
+   "turn": 14,
+   "phase": 2,
+   "active": 0,
+   "seat": 0,
+   "promptType": 16,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    4000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone",
+    "Thunder King, the Lightningstrike Kaiju"
+   ],
+   "choices": [
+    "Chain · Cosmic Cyclone",
+    "Do not chain"
+   ],
+   "response": {
+    "type": 8,
+    "index": null
+   },
+   "picked": null,
+   "pickedLabel": null,
+   "rule": "Save the interruption",
+   "reason": "No offered response has a useful tactical purpose in this window. The pilot avoids negating its own effect or spending removal on an empty response window.",
+   "kind": "chain",
+   "book": null,
+   "search": {
+    "status": "full",
+    "nodes": 48,
+    "worlds": 16
+   },
+   "guardsSoFar": [
+    "Blunder prevented: info-set reduced: 13/16 worlds; 13 aggregated; public-information fallback only below eight completed worlds",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap"
+   ]
+  },
+  {
+   "decision": 895,
+   "turn": 14,
+   "phase": 4,
+   "active": 0,
+   "seat": 0,
+   "promptType": 11,
+   "hint": 18377261,
+   "currentEffect": null,
+   "chain": [],
+   "lp": [
+    4000,
+    8000
+   ],
+   "st": [
+    [
+     null,
+     "Mikanko Reflection Rondo",
+     null,
+     "face-down Mikanko Fire Dance",
+     null,
+     null,
+     null,
+     null
+    ],
+    [
+     "Mikanko Fire Dance",
+     "Mikanko Water Arabesque",
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "monsters": [
+    [
+     "Lava Golem",
+     "Ha-Re the Sword Mikanko",
+     null,
+     "Sanaki the Mikanko Devotee",
+     null,
+     null,
+     null
+    ],
+    [
+     "Hu-Li the Jewel Mikanko",
+     "Hu-Li the Jewel Mikanko",
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   ],
+   "hand": [
+    "Triple Tactics Thrust",
+    "Jizukiru, the Star Destroying Kaiju",
+    "Mikanko Spiritwalk",
+    "Cosmic Cyclone",
+    "Thunder King, the Lightningstrike Kaiju"
+   ],
+   "choices": [
+    "Activate · Mikanko Fire Dance",
+    "Activate · Mikanko Dance - Mayowashidori",
+    "Activate · Cosmic Cyclone",
+    "Normal Summon · Jizukiru, the Star Destroying Kaiju",
+    "Normal Summon · Thunder King, the Lightningstrike Kaiju",
+    "Special Summon · Uzuhime the Manifested Mikanko",
+    "Special Summon · Uzuhime the Manifested Mikanko",
+    "Special Summon · Number 49: Fortune Tune",
+    "Special Summon · Salamangreat Almiraj",
+    "Special Summon · S:P Little Knight",
+    "Special Summon · Knightmare Phoenix",
+    "Special Summon · I:P Masquerena",
+    "Special Summon · Knightmare Unicorn",
+    "Special Summon · Jizukiru, the Star Destroying Kaiju",
+    "Special Summon · Jizukiru, the Star Destroying Kaiju",
+    "Special Summon · Thunder King, the Lightningstrike Kaiju",
+    "Special Summon · Thunder King, the Lightningstrike Kaiju",
+    "Set monster · Jizukiru, the Star Destroying Kaiju",
+    "Set monster · Thunder King, the Lightningstrike Kaiju",
+    "Set · Triple Tactics Thrust",
+    "Set · Mikanko Spiritwalk",
+    "Set · Cosmic Cyclone",
+    "Change position · Lava Golem",
+    "Change position · Ha-Re the Sword Mikanko",
+    "Change position · Sanaki the Mikanko Devotee",
+    "Enter Battle Phase",
+    "End turn"
+   ],
+   "response": {
+    "type": 1,
+    "action": 5,
+    "index": 1
+   },
+   "picked": [
+    1
+   ],
+   "pickedLabel": [
+    "Activate · Mikanko Dance - Mayowashidori"
+   ],
+   "rule": "Information-set root search",
+   "reason": "Aggregated 16 observed-history-conditioned worlds per action using 192 nodes. Opposing response windows are played from sampled hands.",
+   "kind": "summon",
+   "book": null,
+   "search": {
+    "status": "full",
+    "nodes": 192,
+    "worlds": 16
+   },
+   "guardsSoFar": [
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap",
+    "Blunder prevented: Cosmic Cyclone has no targetable opposing Spell/Trap"
+   ]
+  }
+ ],
+ "turn": 14,
+ "identity": {
+  "gate": "1c380d58afc51f07ce76615d4b5cd8f185e7675de19b3fea72e1950088a14dee",
+  "whitelist": "9f1fb5f5487ea60ea7afdc3aac624c269608510e4cdab598878c2ec86bae0ee3",
+  "prefix": "eed7e402ce0fa82cec8bb89aead8e7c8392ffca98cb6b5169542982b0da500fa",
+  "node": "v22.22.2"
+ },
+ "wallMs": 5504476
+}

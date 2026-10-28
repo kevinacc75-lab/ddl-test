@@ -1,0 +1,29 @@
+Node paired run at the FINAL identity (r35-cyclone-fix 41f3efe, optimal-pilot ed03a478) vs r35.5 (83c5f04). SELF-VERIFIED (Claude).
+Same command and Node v22.22.0 as the first run (probe-dump.mjs, in-process worker, Mikanko mirror, 200-state cap).
+Base rows = the r35.5 rows of paired-node-mikanko-first-run.jsonl (r35.5 is unchanged); fix rows = final-runs/paired-node-mikanko-final-fix.jsonl.
+Compared: responsesSha256, logSha256, decisions, states, finished, winner, lp, turn, errors.
+
+ 2026 0 | IDENTICAL | decisions 75 | finished False | info-set error both sides
+ 2026 1 | IDENTICAL | decisions 8 | finished False | info-set error both sides
+12345 0 | IDENTICAL | decisions 82 | finished False | info-set error both sides
+12345 1 | IDENTICAL | decisions 4 | finished False | info-set error both sides
+  808 0 | IDENTICAL | decisions 38 | finished False | info-set error both sides
+  808 1 | IDENTICAL | decisions 98 | finished False | info-set error both sides
+  777 0 | IDENTICAL | decisions 67 | finished False | info-set error both sides
+  777 1 | IDENTICAL | decisions 199 | finished True | 
+ 4242 0 | IDENTICAL | decisions 199 | finished False | 
+ 4242 1 | IDENTICAL | decisions 163 | finished True | 
+  555 0 | IDENTICAL | decisions 8 | finished False | info-set error both sides
+  555 1 | IDENTICAL | decisions 198 | finished True | 
+31337 0 | IDENTICAL | decisions 170 | finished True | 
+31337 1 | IDENTICAL | decisions 169 | finished True | 
+   99 0 | IDENTICAL | decisions 96 | finished False | info-set error both sides
+   99 1 | IDENTICAL | decisions 90 | finished False | info-set error both sides
+
+Result: 16/16 pairs identical on every compared field. Outcome mix (same both sides): 5 finished, 1 at the 200-state cap (4242/0), 10 stopped by the known info-set error. Not strength proof.
+
+Guard-text check for the FIRST version (e2d9d01d), regenerated from commit 25d93da in a temp worktree; the regenerated rows reproduce the first-run fix digests exactly.
+Raw dumps (responses + full log) in final-runs/raw-dumps/: <pair>-r35.5, <pair>-first-e2d9d01d, <pair>-final-ed03a478.
+  555/0: r35.5 vs first: responses equal True; 4 log lines differ, every one ONLY 'Cosmic Cyclone has no opposing Spell/Trap to remove' -> 'Cosmic Cyclone has no targetable opposing Spell/Trap': True. r35.5 vs final: responses equal True, log identical True.
+  99/0: r35.5 vs first: responses equal True; 12 log lines differ, every one ONLY 'Cosmic Cyclone has no opposing Spell/Trap to remove' -> 'Cosmic Cyclone has no targetable opposing Spell/Trap': True. r35.5 vs final: responses equal True, log identical True.
+  99/1: r35.5 vs first: responses equal True; 20 log lines differ, every one ONLY 'Cosmic Cyclone has no opposing Spell/Trap to remove' -> 'Cosmic Cyclone has no targetable opposing Spell/Trap': True. r35.5 vs final: responses equal True, log identical True.

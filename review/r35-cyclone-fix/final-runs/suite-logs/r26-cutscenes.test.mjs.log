@@ -1,0 +1,10 @@
+[EffectScene] Unmapped clause; highlighting full text { code: 8, description: undefined, location: undefined }
+[summon] scene error; plain summon fusion Error: Original summon frame unavailable
+    at SummonScene.show (file:///home/claude/r35-cyclone/dist/summon-cutscenes.mjs:49:52)
+    at event (file:///home/claude/r35-cyclone/dist/presentation.mjs:235:94)
+    at next (file:///home/claude/r35-cyclone/dist/presentation.mjs:303:7)
+    at complete (file:///home/claude/r35-cyclone/dist/presentation.mjs:304:685)
+    at Timeout.<anonymous> (file:///home/claude/r35-cyclone/dist/presentation.mjs:283:139)
+    at listOnTimeout (node:internal/timers:585:17)
+    at process.processTimers (node:internal/timers:521:7)
+{"test":"r26-cutscenes","pass":true,"node":"v22.22.2","selfVerified":true}

@@ -13,17 +13,24 @@
 |---|---|
 | Seto 1 / ChatGPT 1: stale comment | Fixed in `41f3efe`. New hashes are in `git/IDS.txt`. New combined patch `cyclone-fix.diff` (83c5f04 → 41f3efe), sha256 `d3ee8aa3...`. I checked that it applies cleanly to the published r35.5 `optimal-pilot.mjs` (8b8c03c3) and gives `ed03a478`. The final file is also included here as `optimal-pilot.mjs`. |
 | Seto 2: commits not on GitHub | `git/`: a bundle `83c5f04..41f3efe` (`git bundle verify` OK; it needs base commit `83c5f0446f21...`), a `git format-patch` series 0001-0004 that `git am` applies onto any r35.5 copy, and `IDS.txt` with commit, tree and blob ids. A full bundle with history is 116 MB, over GitHub's 100 MB file limit. I can split it if you need it. |
-| Seto 3 / ChatGPT 2: Node paired run | Done. See evidence 6 and `paired-node-mikanko.txt`. The re-run of all 16 pairs at the final identity is in progress (item "Final-identity runs" below). |
+| Seto 3 / ChatGPT 2: Node paired run | Done. See evidence 6 and `paired-node-mikanko.txt`. All 16 pairs re-run at the final identity: 16/16 identical to r35.5 (see "Final-identity runs" below). |
 | Seto 4: s3-harness, Node version | `tools/s3-harness.mjs` (sha256 `0c8d2108...`) is included. It imports only `../dist/core/index.js` and `../dist/duel.mjs`. The three new tests are in `tests/`. Run them from a tree root containing `dist/`. The native test takes an optional `R35_OLD_PILOT=<path to r35.5 optimal-pilot.mjs>` for the before/after control. The full suite now runs on **Node v22.22.2**, as you prefer. |
 | Seto 5: catch-all count, dist method | `catch-all-regex-hits.txt` corrected: the whole database has 27 hits and 26 unique names (Hu-Li has two codes), and Drytron Meteonis Quadrantids is now listed. The 8-deck pool still matches Hu-Li only. Dist hashes: the frozen tree is `698bc2da...` by my method and `33c8d1bd...` by `cd dist && find .`. You are right, and the hash table below now says which is which. |
 | ChatGPT: "54/54" is composite | Agreed. The final-identity run below is one full suite log on a single head. |
 
-**Final-identity runs (`41f3efe` / `ed03a478`), in progress:**
-- full suite on Node v22.22.2;
-- job 29 replay on the gate copy (Node v22.22.2, frozen prefix);
-- Node paired run, fix side, all 16 pairs, compared with the r35.5 rows.
-
-Results are added here when done.
+**Final-identity runs (`41f3efe` / `ed03a478`), DONE 29 Oct 07:50.** SELF-VERIFIED. Everything is in `final-runs/`.
+- **Full suite, ONE run at head `41f3efe`, Node v22.22.2: 54/54 pass** (`suite-41f3efe-node-v22.22.2.txt`, plus one log per test in `suite-logs/`). This replaces the composite "54/54".
+- **Job 29 replay** (`job29-replay-final-d870-895.json`, `job29-replay-final-compare.txt`).
+  - Setup: gate copy (dist `fe7e58c6...`), frozen prefix, Node v22.22.2.
+  - All 26 decisions 870-895 are identical to the first fixed replay on every recorded field.
+  - 886 passes, 888 passes, 895 plays Mayowashidori.
+- **Node paired run, all 16 pairs** (`paired-node-mikanko-final-fix.jsonl`, `paired-final-compare.txt`).
+  - **16/16 identical to r35.5** on responses, log, decisions, states, outcome and errors.
+  - Outcome mix, the same on both sides: 5 finished, 1 at the cap, 10 stopped by the known info-set error. This is not strength proof.
+- **Raw logs for the guard-text claim** (RELAY-064). The first version `e2d9d01d` was regenerated from `25d93da`, and its rows reproduce the first-run digests exactly.
+  - For 555/0, 99/0 and 99/1, every differing log line (4, 12 and 20) is only "has no opposing Spell/Trap to remove" -> "has no targetable opposing Spell/Trap". Responses are equal.
+  - The final version's logs are identical to r35.5.
+  - Raw dumps for all three versions are in `final-runs/raw-dumps/`. The probe script is `tools/probe-dump.mjs`.
 
 ## The defect (S2a job 29: seed 466300, mikanko-mikanko f1, turn 14)
 - At decision 886 our pilot chained Cosmic Cyclone. Rule: "Disrupt or advance the line"; search was in fallback, 7 worlds.
