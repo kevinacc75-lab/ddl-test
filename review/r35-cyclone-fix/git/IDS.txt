@@ -1,0 +1,17 @@
+Commits on r35-cyclone-fix since r35.5 (r18 repo, not on GitHub):
+41f3efeab8fd33746fe56d3be0edb7b9731fb74f 37f4cfc69c47e56efbf0de9709ddf0f808352ea1 r35 cyclone fix: correct the stale job 29 comment (RELAY-063 note 1, Seto note 1)
+50b719183024d676942dbd6f9314f829b57016a5 3485b3cd3675a5818a2ee31b6acd8776fb095757 r35 cyclone fix: keep r35.5 guard wording when the opponent has no Spell/Trap
+cebebf6ac9231496912c71d740c91e07c04fd4d3 cc32c9b04ba2ba8dc1dc0898bda4bdc9835fdf66 r35 job 29 fix: re-pin dist/optimal-pilot.mjs in tests/r23-fx.test.mjs (it IS a pinned f
+25d93da15fcf1bdb0d4d780d9e83b0c3f213849a ac9ade2f43160012e4c4123153489214e9121ebe r35 job 29 fix (TEST branch, NOT merged): targeting Spell/Trap removal needs a TARGETABL
+
+base 83c5f04 = 83c5f0446f2119769eec1fbe1c3aafc44856bd8b tree 78ca499cc9090efaf3135f50534be3676fa7c861
+
+Blob ids at 41f3efe (git hash-object):
+e9d66ca2cef2ceffa1d305cb31f940d4517d4658 ed03a478d999605e6089898ac5d97cc7c102494e160853776aaa1a3dea490948 dist/optimal-pilot.mjs
+955bb4b1f283e2c0d00bc97147a89f46e8d76a31 9e9c5489a2bcfc9469f00309c0b839955bd4aa34ba48d2680edee70cb8cc248c tests/r35-cyclone-pin.test.mjs
+df1e72cf82274716d116fcf8e8cae2f1bf3de2ea 9525c61dc1366c8855b4b4f055bd143b84eed6b99cb0116b8b328d7218041817 tests/r35-cyclone-targetable.test.mjs
+a7af8f3989a167ac9685bb2997c20358e0c585cc 666f5e9a42574c6db7cd341af48a6cd53761564482c694cd3ea39bac0a2cd5f3 tests/r35-cyclone-hu-li-native.test.mjs
+bc0a77f9edcb65f65258462a98766c31de20e539 28ac46d4ea6fabc71c0ccb510f70c164ed953faf169ec2a5c40afd138e10999d tests/r23-fx.test.mjs
+d82d468c5d0dd052292f10d87d99169126207fce 0c8d2108c14d70af982b0dcaf53be7f69d116b901c4409a7d5161a2e695ff4f6 tools/s3-harness.mjs
+
+blob optimal-pilot.mjs at 83c5f04: e2d6c4c1df4ebef5fda5e81d5fc4887a2db948ef

@@ -1,2 +1,30 @@
 {"pool":267,"hits":["Hu-Li the Jewel Mikanko"]}
-whole db hits 26 Time Pendulumgraph | D - Force | Hu-Li the Jewel Mikanko | Traptrix Rafflesia | Myutant Arsenal | Evil Eye Reemergence | Dark Contract with the Eternal Darkness | Horus' Servant | Mimighoul Cerberus | Amazoness Augusta | The Weather Painter Aurora | Vaalmonica Chosen Melody | Belial - Marquis of Darkness | Revendread Executor | Maiden of the Millennium Moon | Dark Magician the Dragon Knight | Sunvine Maiden | Galaxy Stealth Dragon | SPYRAL Resort | Myutant Mist | Star Pendulumgraph | Witchcrafter Haine | Crystal Master | Max Metalmorph | Simorgh, Lord of the Storm
+CORRECTED 29 Oct 06:30 (Seto note 5): the earlier line said 26 hits but listed 25 names (Drytron Meteonis Quadrantids was missing).
+whole db: 14759 entries, 27 hits, 26 unique names (Hu-Li has two codes). regex: /your opponent cannot target [^.]*(Spells?|Traps?|Spell\/Traps?|cards you control)/i
+1344018	Time Pendulumgraph
+6186304	D - Force
+6327734	Hu-Li the Jewel Mikanko
+6327735	Hu-Li the Jewel Mikanko
+6511113	Traptrix Rafflesia
+7574904	Myutant Arsenal
+7610394	Evil Eye Reemergence
+9030160	Dark Contract with the Eternal Darkness
+9264485	Horus' Servant
+23920796	Mimighoul Cerberus
+23965033	Amazoness Augusta
+27784944	The Weather Painter Aurora
+31971040	Vaalmonica Chosen Melody
+33655493	Belial - Marquis of Darkness
+34093683	Revendread Executor
+37552929	Maiden of the Millennium Moon
+41721210	Dark Magician the Dragon Knight
+53618293	Sunvine Maiden
+54358015	Galaxy Stealth Dragon
+54631665	SPYRAL Resort
+61089209	Myutant Mist
+74850403	Star Pendulumgraph
+84523092	Witchcrafter Haine
+87475570	Crystal Master
+89812483	Max Metalmorph
+95192919	Simorgh, Lord of the Storm
+95209656	Drytron Meteonis Quadrantids

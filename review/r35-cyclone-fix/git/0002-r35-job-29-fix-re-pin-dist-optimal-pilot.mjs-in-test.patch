@@ -1,0 +1,50 @@
+From cebebf6ac9231496912c71d740c91e07c04fd4d3 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 04:26:22 +1100
+Subject: [PATCH 2/4] r35 job 29 fix: re-pin dist/optimal-pilot.mjs in
+ tests/r23-fx.test.mjs (it IS a pinned file - corrects Claude's rev 2 plan,
+ which said it was not) with proof: tests/r35-cyclone-pin.test.mjs swaps back
+ exactly the fix's three blocks and gets the pinned file (8b8c03c3..., also
+ the frozen gate tree's copy) byte for byte. Found by the full suite (52 pass
+ + r23-fx). SELF-VERIFIED.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tests/r23-fx.test.mjs          |  2 +-
+ tests/r35-cyclone-pin.test.mjs | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+ create mode 100644 tests/r35-cyclone-pin.test.mjs
+
+diff --git a/tests/r23-fx.test.mjs b/tests/r23-fx.test.mjs
+index d7f14d5..112a110 100644
+--- a/tests/r23-fx.test.mjs
++++ b/tests/r23-fx.test.mjs
+@@ -11,7 +11,7 @@ import {ChainDirector} from '../dist/event-data.mjs';import {createPresentation}
+ import {fxSpan,stKind,createFx} from '../dist/fx-r23.mjs';import {Soundscape,SOUND_EVENTS} from '../dist/sound-engine.mjs';import {jazzBeat,chordAt,beatSeconds,JAZZ_THEMES,SWING} from '../dist/jazz-score.mjs';
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ // 1. Pace.
+-const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'70f8d6965cf8cb2817d98b3f816814fd19de7bfe370d55775e5f7064f5aa8225'/* r35 item 8 re-pin: shuffle overlay lines only, proven by tests/r35-shuffle-app-pin.test.mjs */,'dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7'/* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
++const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'70f8d6965cf8cb2817d98b3f816814fd19de7bfe370d55775e5f7064f5aa8225'/* r35 item 8 re-pin: shuffle overlay lines only, proven by tests/r35-shuffle-app-pin.test.mjs */,'dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'e2d9d01d7a191e72f0feba50d79508cf5254cb1c5b997b01b4b609e68cb540fa'/* r35 job 29 fix re-pin: three blocks only, proven by tests/r35-cyclone-pin.test.mjs *//* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
+ for(const [f,h] of Object.entries(PINNED))assert.equal(sha(f),h,f+' must be unchanged from r22b (pace, holds, think time)');
+ // r24 restyles the summon scene (card art, materials as cards); its timing table must stay the same.
+ // r26: Kevy approved longer cutscenes (21 Oct 23:05); the B2 summon scene is now the one Fusion/Synchro/Xyz/Link cutscene
+diff --git a/tests/r35-cyclone-pin.test.mjs b/tests/r35-cyclone-pin.test.mjs
+new file mode 100644
+index 0000000..7a02acf
+--- /dev/null
++++ b/tests/r35-cyclone-pin.test.mjs
+@@ -0,0 +1,10 @@
++// r35 job 29 fix (Claude, 29 Oct 2026). SELF-VERIFIED. dist/optimal-pilot.mjs is a PINNED file (tests/r23-fx.test.mjs:
++// pace, holds, think time). The Cosmic Cyclone / Hu-Li fix replaces exactly the three blocks below. Swapping each new block
++// back for its old text must give the previously pinned optimal-pilot.mjs byte for byte (sha256 8b8c03c3..., also the
++// frozen gate tree's copy), so nothing else in the file changed.
++import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
++const BLOCKS=[["// r35 job 29 fix (Claude, 29 Oct 2026; Seto 00:30 / 01:25, Alexis, Akiza): can WE target this OPPOSING card with a card\n// effect? Public information only (a face-down card's identity is never used).\n//  - Hu-Li the Jewel Mikanko (printed): \"While you control an Equip Card, your opponent cannot target 'Mikanko' cards you\n//    control with card effects.\" The shield is up when the opposing side has a FACE-UP, unnegated Hu-Li AND controls ANY\n//    Equip Card (a face-up card in ITS Spell/Trap Zone that is equipped to a monster, on either field). Under the shield\n//    their Mikanko cards are untargetable, and so is any face-down card of theirs (it may be a Mikanko card; we can't know).\n//    (Before: the Equip Card had to be equipped TO Hu-Li, and both players' zones were pooled; Hu-Li's face-up state was\n//    not checked. Job 29: Fire Dance was equipped to a monster on our field, so the old rule missed the shield.)\n//  - Catch-all for cards outside our 8-deck pool: an opposing face-up, unnegated card whose text grants \"your opponent\n//    cannot target ... Spell/Trap / cards you control\" makes their Spell/Trap Zone cards untargetable (conservative: we may\n//    hold a removal we could have used; we never fire one at our own cards). In our pool it matches Hu-Li only (tested).\nexport const HULI='Hu-Li the Jewel Mikanko',GRANTS_ST_SHIELD=/your opponent cannot target [^.]*(Spells?|Traps?|Spell\\/Traps?|cards you control)/i;\nconst faceUp=c=>!!c&&!!(c.position&5);\nexport function huLiShield(d,side){\n return d.zone(side,4).some(x=>faceUp(x)&&!(x.status&1)&&d.name(x.code)===HULI)&&d.zone(side,8).some(s=>faceUp(s)&&!!s.equipCard);\n}\nfunction otherStShield(d,side){\n return [...d.zone(side,4),...d.zone(side,8)].some(x=>faceUp(x)&&!(x.status&1)&&d.name(x.code)!==HULI&&GRANTS_ST_SHIELD.test(d.db[x.code]?.desc||''));\n}\nexport const targetable=(d,seat,c)=>{", "const targetable=(d,seat,c)=>{"], [" const foe=1-seat;\n if(huLiShield(d,foe)&&(!faceUp(c)||/Mikanko/.test(d.name(c.code))))return false;\n if(c.location===8&&otherStShield(d,foe))return false;\n return true;", " const enemy=d.zone(1-seat,4).filter(Boolean),spells=[...d.zone(1-seat,8),...d.zone(seat,8)].filter(Boolean);\n const hu=enemy.find(x=>d.name(x.code)==='Hu-Li the Jewel Mikanko'&&!(x.status&1)&&spells.some(s=>s.equipCard?.controller===1-seat&&s.equipCard?.sequence===x.sequence));\n return !(hu&&/Mikanko/.test(d.name(c.code)));"], [" // r35 job 29 fix: targeting Spell/Trap removal needs a TARGETABLE opposing Spell/Trap (not just one that exists): with\n // none, the engine would offer only our own cards and the effect would banish/destroy one of them. Blocked before\n // activation, so no cost is paid (Twin Twisters' discard, Tornado Dragon's detach). Galaxy Cyclone: the hand / field\n // activation targets a SET Spell/Trap; the GY effect targets a FACE-UP one.\n if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon)$/.test(n)&&!enemy(8).some(s=>targetable(d,seat,s)))return n+' has no targetable opposing Spell/Trap';\n if(n==='Galaxy Cyclone'){const gy=c.location===16;if(!enemy(8).some(s=>(gy?faceUp(s):!faceUp(s))&&targetable(d,seat,s)))return n+' has no targetable opposing '+(gy?'face-up':'Set')+' Spell/Trap'}", " if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon|Galaxy Cyclone)$/.test(n)&&!enemy(8).length)return n+' has no opposing Spell/Trap to remove';"]];
++let s=fs.readFileSync('dist/optimal-pilot.mjs','utf8');
++for(const [now,before] of BLOCKS){assert.equal(s.split(now).length-1,1,'block present exactly once: '+now.slice(0,60));s=s.replace(now,()=>before)}
++assert.equal(crypto.createHash('sha256').update(s).digest('hex'),'8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7','optimal-pilot.mjs minus the fix = the pinned r22b..r35.5 file');
++console.log(JSON.stringify({test:'r35-cyclone-pin',pass:true,blocks:BLOCKS.length,node:process.version}));
+-- 
+2.43.0
+

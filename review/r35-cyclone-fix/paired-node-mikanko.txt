@@ -1,0 +1,35 @@
+Node worker paired run, r35.5 (83c5f04) vs r35-cyclone-fix. SELF-VERIFIED (Claude), NOT independent.
+Command per side: node probe-dump.mjs --worker <tree>/dist/worker.mjs --seed S --first F --decks mikanko,mikanko --max-states 200 (Node v22.22.0)
+worker.mjs itself is unchanged (sha e56d1411... on both sides); only dist/optimal-pilot.mjs differs.
+
+FIRST RUN, fix pilot e2d9d01d (paired-node-mikanko-first-run.jsonl, rows base,fix)
+seed first | decisions base/fix | responses equal | log equal | finished | note
+ 2026 0 | 75/75 | True | True | False | info-set error both sides (known bug)
+ 2026 1 | 8/8 | True | True | False | info-set error both sides (known bug)
+12345 0 | 82/82 | True | True | False | info-set error both sides (known bug)
+12345 1 | 4/4 | True | True | False | info-set error both sides (known bug)
+  808 0 | 38/38 | True | True | False | info-set error both sides (known bug)
+  808 1 | 98/98 | True | True | False | info-set error both sides (known bug)
+  777 0 | 67/67 | True | True | False | info-set error both sides (known bug)
+  777 1 | 199/199 | True | True | True | 
+ 4242 0 | 199/199 | True | True | False | 
+ 4242 1 | 163/163 | True | True | True | 
+  555 0 | 8/8 | True | False | False | info-set error both sides (known bug)
+  555 1 | 198/198 | True | True | True | 
+31337 0 | 170/170 | True | True | True | 
+31337 1 | 169/169 | True | True | True | 
+   99 0 | 96/96 | True | False | False | info-set error both sides (known bug)
+   99 1 | 90/90 | True | False | False | info-set error both sides (known bug)
+
+Log differences in the first run: guard text only, e.g. r35.5 'Cosmic Cyclone has no opposing Spell/Trap to remove'
+vs fix 'Cosmic Cyclone has no targetable opposing Spell/Trap' when the opponent had NO Spell/Trap. Moves identical.
+
+RE-RUN of the 3 differing pairs, final fix pilot 703f42c1 (commit 50b7191), full dumps compared
+seed first | tree | decisions | sha256(JSON responses)[:16] | sha256(log)[:16]
+  555 0 | r35.5       | 8 | 294745017c7d6919 | c0c4c93725ea293e
+  555 0 | r35-cyclone | 8 | 294745017c7d6919 | c0c4c93725ea293e
+   99 0 | r35.5       | 96 | a178f914c41016e8 | be12590da5c02772
+   99 0 | r35-cyclone | 96 | a178f914c41016e8 | be12590da5c02772
+   99 1 | r35.5       | 90 | 306241bfede95f72 | 4dfa67b76ea528dd
+   99 1 | r35-cyclone | 90 | 306241bfede95f72 | 4dfa67b76ea528dd
+Result: all 3 pairs byte-identical (responses and log; unified diff of the logs: 0 lines).

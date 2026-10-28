@@ -1,0 +1,15 @@
+diff --git a/dist/optimal-pilot.mjs b/dist/optimal-pilot.mjs
+index 6863299..bb1bd78 100644
+--- a/dist/optimal-pilot.mjs
++++ b/dist/optimal-pilot.mjs
+@@ -51,8 +51,8 @@ export function activationBlock(d,seat,c){
+  // none, the engine would offer only our own cards and the effect would banish/destroy one of them. Blocked before
+  // activation, so no cost is paid (Twin Twisters' discard, Tornado Dragon's detach). Galaxy Cyclone: the hand / field
+  // activation targets a SET Spell/Trap; the GY effect targets a FACE-UP one.
+- if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon)$/.test(n)&&!enemy(8).some(s=>targetable(d,seat,s)))return n+' has no targetable opposing Spell/Trap';
+- if(n==='Galaxy Cyclone'){const gy=c.location===16;if(!enemy(8).some(s=>(gy?faceUp(s):!faceUp(s))&&targetable(d,seat,s)))return n+' has no targetable opposing '+(gy?'face-up':'Set')+' Spell/Trap'}
++ if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon)$/.test(n)&&!enemy(8).some(s=>targetable(d,seat,s)))return n+(enemy(8).length?' has no targetable opposing Spell/Trap':' has no opposing Spell/Trap to remove')/* r35.5 wording kept when they have none, so logs differ only where the fix acts */;
++ if(n==='Galaxy Cyclone'){const gy=c.location===16;if(!enemy(8).some(s=>(gy?faceUp(s):!faceUp(s))&&targetable(d,seat,s)))return n+(enemy(8).length?' has no targetable opposing '+(gy?'face-up':'Set')+' Spell/Trap':' has no opposing Spell/Trap to remove')}
+  if(n==='Mirrorjade the Iceblade Dragon'&&d.description(c.description).match(/Banish/i)&&!enemy(4).some(c=>c.position&5))return 'Mirrorjade has no opposing face-up monster';
+  if(/Mulcharmy/.test(n)&&d.active===seat)return 'Preserve Mulcharmy for the opposing turn';
+  if(handTrap(n)&&d.active===seat&&(!top||top.controller===seat))return 'Own-turn hand trap has no opposing effect to stop';
