@@ -1,0 +1,72 @@
+diff --git a/dist/ai/book/turn-ledger.mjs b/dist/ai/book/turn-ledger.mjs
+index 118d26e..84aaad1 100644
+--- a/dist/ai/book/turn-ledger.mjs
++++ b/dist/ai/book/turn-ledger.mjs
+@@ -4,9 +4,13 @@
+ // Keyed on the object that OWNS the events (the duel itself): every AI view (safeView, the pilot's shadow) is
+ // Object.create(duel), so walking the prototype chain to the object with an own 'events' property finds the duel from any
+ // view. The duel can replace its events ARRAY:
+-//  - a rejected selection (retry) filters one 'effectChosen' event out into a new array (duel.mjs respond): same history,
+-//    so the ledger carries on and drops any absorbed event that vanished from the window;
+-//  - start() / rewind restart the event ids from 1 (eventSeq goes back): a new history, so the ledger starts again.
++//  - a rejected selection (retry) filters one 'effectChosen' event out into a new array (duel.mjs respond): the new array
++//    holds the SAME event objects, so it is the same history; the ledger carries on and drops any absorbed event that
++//    vanished from the window;
++//  - start() / rewind assign a fresh array of NEW event objects and reuse ids from 1: a new history, so the ledger
++//    starts again. rev 6 (RELAY-058): history identity is decided by event-object identity, never by comparing id
++//    counters, because a restarted duel can reach or pass the old high-water mark before the next read (reused ids
++//    would otherwise keep old events alive and report complete:true).
+ //   events: this turn's events seen so far (from the last 'turn' event).
+ //   complete: true only if no event of this turn can have been missed. It is false when events rolled out of the window
+ //     before the ledger saw them since the last 'turn' event, which includes a ledger that first saw the duel after
+@@ -19,9 +23,12 @@ export function turnLedger(d){
+  const ev=d?.events;if(!Array.isArray(ev))return null;
+  const key=owner(d);let s=LEDGERS.get(key);
+  if(!s){s=fresh(ev);LEDGERS.set(key,s)}
+- else if(s.arr!==ev){const top=Number.isFinite(key.eventSeq)?key.eventSeq:ev.reduce((m,e)=>Math.max(m,e.id||0),0);
+-  if(top<s.seen){s=fresh(ev);LEDGERS.set(key,s)}/* ids went back: a new duel (start / rewind) */
+-  else{const ids=new Set(ev.map(e=>e.id)),lo=ev.length?ev[0].id:Infinity;s.events=s.events.filter(e=>e.id<lo||ids.has(e.id));s.arr=ev}}
++ else if(s.arr!==ev){
++  // Same history only if the new array still holds an event OBJECT this ledger's array held (a retry filter). A restart
++  // makes all-new objects. An empty old array cannot prove continuity, so it also starts again (conservative).
++  const prior=new Set(s.arr);
++  if(!ev.some(e=>prior.has(e))){s=fresh(ev);LEDGERS.set(key,s)}
++  else{const kept=new Set(ev),lo=ev.length?ev[0].id:Infinity;s.events=s.events.filter(e=>kept.has(e)||e.id<lo);s.arr=ev}}
+  // Missed events can only be ones that rolled off the FRONT of the window (a retry removes a rejected selection from the
+  // middle, which is not a real event): if the window now starts past the next id we expected, events were missed. They
+  // precede everything in the window, so a 'turn' event in view still makes the new turn complete.
+diff --git a/tests/r35-turn-ledger.test.mjs b/tests/r35-turn-ledger.test.mjs
+index 4b72772..a07b24c 100644
+--- a/tests/r35-turn-ledger.test.mjs
++++ b/tests/r35-turn-ledger.test.mjs
+@@ -47,6 +47,24 @@ const dogma0=d=>d.event('activate',{player:0,code:DOGMA,description:String(BigIn
+ {const d=duel();d.event('turn',{turn:1});sendTitan(d);filler(d,10);turnLedger(view(d));
+  d.events=[];d.eventSeq=0;d.event('turn',{turn:1});assert.equal(sentToGyThisTurn(view(d),0,TITAN),false,'the old duel\'s send does not leak');assert.equal(turnLedger(view(d)).complete,true);
+  sendTitan(d);assert.equal(sentToGyThisTurn(view(d),0,TITAN),true,'the new duel\'s events (low ids again) are absorbed')}
++// 7b. RELAY-058: a restart on the SAME object whose new counter reaches (equal) or passes (higher) the old high-water mark
++// before the next read. Old: turn 1, Titaniklad to GY 2, its End Phase activation 3, 7 fillers (counter 10). New: turn 1,
++// filler 2, Titaniklad to GY 3, then fillers; NO activation. The old activation (id 3) must not survive by its reused id.
++for(const extra of [0,2]){const d=duel();d.event('turn',{turn:1});sendTitan(d);d.event('activate',{player:0,code:TITAN,description:String(BigInt(TITAN)<<20n)});filler(d,7);
++ assert.equal(epSearchPending(view(d),0,TITAN),false,'old history: search used');assert.equal(d.eventSeq,10);
++ d.events=[];d.eventSeq=0;/* as start() does */d.event('turn',{turn:1});filler(d,1);sendTitan(d);filler(d,7+extra);assert.equal(d.eventSeq,10+extra);
++ assert.equal(activatedThisTurn(view(d),0,TITAN,0),false,'RELAY-058 (counter '+(10+extra)+'): the old activation is gone');
++ assert.equal(epSearchPending(view(d),0,TITAN),true,'RELAY-058 (counter '+(10+extra)+'): search pending again (never revive)');
++ assert.equal(turnLedger(view(d)).complete,true,'the new history was seen from id 1')}
++// 7c. A retry that removes an absorbed event keeps the history (shared event objects) even with a higher counter.
++{const d=duel();d.event('turn',{turn:1});sendTitan(d);d.event('activate',{player:0,code:TITAN,description:String(BigInt(TITAN)<<20n)});turnLedger(view(d));
++ d.event('effectChosen',{code:1});turnLedger(view(d));const bad=d.eventSeq;d.events=d.events.filter(e=>e.id!==bad);filler(d,20);
++ assert.equal(activatedThisTurn(view(d),0,TITAN,0),true,'retry: same history, the activation stays');assert.equal(turnLedger(view(d)).complete,true)}
++// 7d. A retry AFTER the turn's early events rolled out: the history the ledger saw must be kept (resetting on every array
++// swap would forget the send and turn "known" into "unknown").
++{const d=duel();d.event('turn',{turn:1});sendTitan(d);turnLedger(view(d));for(let k=0;k<13;k++){filler(d,10);turnLedger(view(d))}
++ d.event('effectChosen',{code:1});turnLedger(view(d));const bad=d.eventSeq;d.events=d.events.filter(e=>e.id!==bad);filler(d,2);
++ assert.ok(!d.events.some(e=>e.type==='move'),'the send has rolled out');assert.equal(sentToGyThisTurn(view(d),0,TITAN),true,'kept across the retry swap');assert.equal(turnLedger(view(d)).complete,true)}
+ // 8. Views of views (pilot shadow of a safeView) share the duel's ledger; another duel never does.
+ {const d=duel(),e=duel();d.event('turn',{turn:1});sendTitan(d);turnLedger(view(view(d)));filler(d,130);
+  assert.equal(sentToGyThisTurn(view(d),0,TITAN),true,'seen via a view of a view');
+@@ -55,4 +73,4 @@ const dogma0=d=>d.event('activate',{player:0,code:DOGMA,description:String(BigIn
+ assert.equal(turnLedger({}),null);assert.equal(sentToGyThisTurn({name:()=>''},0,TITAN),false);
+ // 10. A fresh ledger on an empty duel, or one whose window still starts at id 1, is complete.
+ {const d=duel();assert.equal(turnLedger(d).complete,true);d.event('hint',{});assert.equal(turnLedger(d).complete,true)}
+-console.log(JSON.stringify({test:'r35-turn-ledger',pass:true,node:process.version}));
++console.log(JSON.stringify({test:'r35-turn-ledger',rev:6,pass:true,node:process.version}));

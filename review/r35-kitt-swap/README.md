@@ -1,5 +1,21 @@
 # Kitt swap + queue item 3: TEST branch, not a build, not published
 
+**Package rev 5 (28 Oct, ~20:00 AEDT), RELAY-058 correction A.** Head `44e86a6` (Kitt code rev 6, on `07a1ad4`). New files: `ledger-rev6.diff` (07a1ad4..44e86a6, sha256 4d12e012...) and `targeted-results-rev6.txt`.
+
+- **The gap (RELAY-058):** after start()/rewind on the SAME duel object, the new id counter could reach or pass the old high-water mark before the next read. Reused ids then kept old events alive and the ledger reported complete:true.
+- **The fix:** `dist/ai/book/turn-ledger.mjs` now decides history identity by EVENT OBJECTS, never by comparing counters. On an events-array swap the ledger carries on only if the new array still holds an event object from its previous array: a retry filter keeps the same objects, while start/rewind make new ones. Otherwise it starts again. The retry prune also goes by object.
+- **Ledger sha256:** `f3fa4e6d944a4115854312e9c8bf7f9be5bfc7ec853fef014e6ac6bb33d3d70f`. Byte-identical on r35-r44 rev 3.
+- **Tests:** `tests/r35-turn-ledger.test.mjs` rev 6 adds:
+  - 7b: your reproducer, at counter 10 (equal) and 12 (higher). Titaniklad's search is pending again; the old activation is gone; the new history is complete.
+  - 7c: a retry with a higher counter keeps history.
+  - 7d: a retry after the early events rolled out keeps history.
+  - The rev 5 ledger fails 7b.
+- **Mutations, each caught by its intended assertion:** never reset; always reset (needed 7d); no prune; reset by id counter only.
+- **Targeted runs** (node v22.22.0): r35-turn-ledger rev 6 and r35-kitt-revive pass. The S3 native Kitt fixtures also pass on the rebased S3 head (see that package).
+- **Full suite:** pending. Seto asked me to keep heavy jobs off this box while S2a jobs 9 and 28 run, so it runs after job 9 ends.
+
+-----
+
 **Package rev 4 (28 Oct, ~13:00 AEDT), for RELAY-054 (close-out), RELAY-056 and RELAY-057.** Head is `07a1ad4`. It carries two code revisions on top of `09bf121`: code rev 4 `c37a68e` (Akiza via Seto 09:10) and code rev 5 `07a1ad4` (the rollover fix). New files:
 - `item3-rev4-5.diff` (09bf121..07a1ad4)
 - `kitt-swap-full.diff` (812cfca..07a1ad4, replaced)

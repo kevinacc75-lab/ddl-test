@@ -1,4 +1,4 @@
-e9691f50618be457a8ae3274cb91827d3e0a0caf1c1e968725c7bc179847d3f6  ./README.md
+60d6d07d4591c4e79b072dcdbf81313b2d7b8c8a30e4f0aea1a7472615c33de2  ./README.md
 cc033c783bdeedea1265113cdb1cf31b77407451204bf88703fbce39d7722938  ./decks-json-diff.json
 a7fe5374e3cc426c9b6a3d850dd9379c70fc315fcb2bdb9f5f52d32b529b5c57  ./identities-rev3.txt
 7323a9196bc10119930d6ad41b85a4a33d047bffd637f55ebfb8cafdcda3c943  ./item3-rev2.diff
@@ -6,8 +6,10 @@ a7fe5374e3cc426c9b6a3d850dd9379c70fc315fcb2bdb9f5f52d32b529b5c57  ./identities-r
 2633b528fe8394cec644f79ada0e052d70ffe20572f79b2f39ccd3bc586b73c5  ./item3.diff
 eaf52c108b1ce6c8dc7268a5787c04462d9cf6a93c89af349a2af5f43df1a150  ./kitt-swap-full.diff
 a315c95d83fa4f8a5d824981e466581d99abcd64265d5374ccc94d3a0b49f6ae  ./kitt-swap.diff
+4d12e012d3bb9666e95f20b328c90e4dacb2de550356f32fc5fb0ce41cf8ad66  ./ledger-rev6.diff
 bbc603150635cd3ebeaaa8d6358c1c128ec72b9aeecbaa01d0912673ce933f2e  ./native-outputs-rev3/r35-kitt-revive.test.out
 57730e97131631a4690771d2b991505e2f78e8d2fb467e44d763259318d38d16  ./native-outputs-rev3/taskc-deck-legality.test.out
+d784561a0c7145816cfdecee02779675ad7625f969b19e26f2c6bf151d78d599  ./targeted-results-rev6.txt
 ad41abf55488f5d3199742c41357f2785dc13b3feee9bacb88e047482d07b3ea  ./test-results-rev2.txt
 5fb987aa096236e4662f1186f212c74dccce41f887167828d33e445525a6ed50  ./test-results-rev3.txt
 f056f7d5a999daca1d0b08c6d41c06edbb0a067ee3f3c6d12540a76e8be10480  ./test-results-rev4.txt

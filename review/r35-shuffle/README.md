@@ -1,5 +1,23 @@
 # r35 item 8: deck-shuffle overlay + riffle (TEST branch; shipped in TEST build r35.4)
 
+**Rev 2 (28 Oct, ~20:00 AEDT), RELAY-059 correction D.** Head `c41428b` (on `a6557cd`). `skip-fix.diff` (a6557cd..c41428b, sha256 745d3ab0...).
+
+- **The gap:** controls-skip and the Step-skips-scene branch did not cancel the overlay.
+- **The fix:** `dist/app.mjs` now cancels the overlay and its owned riffle LOCALLY on every Skip route:
+  - `#controls-skip`; Step while a scene plays; Sound Studio preview during a duel;
+  - the presentation's own `#skip-fx`, `#skip-scene` and `#skip-victory` buttons, and Escape (`cancel`) on `#summon-scene` / `#victory-scene`, via extra listeners added from app.mjs.
+- `presentation.mjs` is byte-identical to 628d40f (sha256 fedba78d...). The cancel posts no worker message, and existing scene-skip behaviour is unchanged.
+- **New test:** `tests/r35-shuffle-skip.test.mjs` (sha256 f6e8967e...). It runs the exact handler and wiring source extracted from app.mjs against the real ShuffleOverlay, with an active effect, a queued shuffle and a riffle already started.
+  - All 8 routes clear the overlay, cancel the riffle and post nothing.
+  - An overlay-only cancel posts nothing.
+  - presentation.mjs identity is checked.
+  - It fails on the pre-fix app.mjs, and fails when the dialog wiring is removed.
+- **Pin proof extended:** `tests/r35-shuffle-app-pin.test.mjs` removes exactly the shuffle lines and still gets the r32.1 app.mjs (c7ff1ee0...). `r23-fx` is re-pinned; new app.mjs sha256 is 70f8d696....
+- **Targeted runs:** `targeted-results-rev2.txt`, all pass.
+- Full suite pending (after S2a job 9). The browser paired timing comparison is still pending.
+
+-----
+
 **Branch** `r35-shuffle` (r18), head `a6557cd` (code head `f4cc335`; `a6557cd` only adds probe progress output), based on r35.3 candidate `628d40f`.
 
 **Design:** RELAY-046 (ChatGPT) Tap B, approved with conditions by Seto (27 Oct 10:10), built to shuffle spec v2 (Seto 26 Oct 09:05).

@@ -1,4 +1,4 @@
-3acc4be64623e18b3961d796def6f9a94b2d72c2df3d3ea2785694466ffc5679  ./README.md
+41575a95e84eb9767ea119cb4ba46d57de2a745eb199a506cc11b256b89dc9a4  ./README.md
 28ba47afcd02252d5d31406a675f667e4f03082daa396eb5010a4483d04f2ddd  ./diffstat-rev2.txt
 28ba47afcd02252d5d31406a675f667e4f03082daa396eb5010a4483d04f2ddd  ./diffstat-rev3.txt
 a025c474bab74a5127a82644fc836507b935682e9be329cb7d34fb503a596592  ./diffstat.txt
@@ -15,10 +15,12 @@ a326d1c817353272062129985a10a091cdf6ac106f26e4a9c7ef665fe07cdf49  ./native-outpu
 7a4231dd7f6b741109211391dc8da036a7b302ec6e60757a041acadb3533bcf0  ./native-outputs-rev3/r35-s3-kitt-native.txt
 e8cb2989739a042d4be0cd512ab0e9f9ab0dbf07d648fb30bb880a9c76f16d31  ./native-outputs-rev3/r35-s3-sdp-native.txt
 d684be1d7ca3030c9c9be7b10870e8f47a49684f82af367eaa907e502b4d133c  ./rebase-range-diff-rev3.txt
+578b729d90e5e96c287e4631d304bae457606cca13d8e005156e0bf3189561b8  ./rebase-range-diff-rev4.txt
 ca74426c02e6afa8ce3fc47e6ef0076820cbda4af1c79cfb7972ed3623607ff9  ./s3-fixtures-rev2.diff
 1c234b7149127664b20a24dd958c67d7ac7fa4b6734144b53ebc10cea136eaa8  ./s3-fixtures-rev3.diff
 cf33070d6c3848b9309b265a5da1cc8f457a15d2d3bc6c1526206fa2e3e51406  ./s3-fixtures.diff
 0a327c5d706c004d47a1dee8eec7e6245e90dfbf892d72e2ee6304a2615a4e75  ./script-identities-rev2.txt
+f9c26d8bfab52937cecfede7af4b740b04fcd72a5345517993d4d430b4ed0c39  ./targeted-results-rev4.txt
 e0adb7a6f4b4f19848cda85466447510cb4b3fa3ea2c42bbf94783cb15b4f069  ./test-results-rev2.txt
 3624f4e6e1defdd0a0e25efb2d27483e6aaf6800125e1be468ea1f008aa52037  ./test-results-rev3.txt
 42bfdd20b67c5aa5e4457c62f95e76006ff9d8ab83db7b6a67c19ae686eedabc  ./test-results.txt

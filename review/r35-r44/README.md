@@ -1,5 +1,13 @@
 # r35.3 RELAY-044 fixes (queue item 6): TEST branch, not a build, not published
 
+**Rev 3 (28 Oct, ~20:00 AEDT), RELAY-058 correction A.** Head `a9df7b4` (on `0084882`).
+- Only change: `dist/ai/book/turn-ledger.mjs` replaced by the rev 6 ledger from r35-kitt-swap `44e86a6` (byte-identical, sha256 f3fa4e6d...).
+- `r44-rev3.diff` sha256 41ae6f8c....
+- `targeted-results-rev3.txt`: r35-mikanko-plan and r35-firedance-native (real engine) pass.
+- Full suite pending (after S2a job 9).
+
+-----
+
 **Rev 2 (28 Oct, ~13:00 AEDT), RELAY-056/057 rollover.** Head is `0084882` (on `b913959`). New files: `r44-rev2.diff` (b913959..0084882) and `test-results-rev2.txt` (full suite: 39 of 39 pass, node v22.22.0, nice 19).
 - `fireDanceUsed` and `sanakiSummonUsed` now read `dist/ai/book/turn-ledger.mjs`. It is byte-identical to the r35-kitt-swap copy (sha256 `bf5f96c0…33cf884`); see that package's README for the ledger design.
 - **Unknown counts as USED:** the AI may under-play, and never plans on a Fire Dance / Sanaki summon the engine will not allow. Mocks with no events keep the attempt-ledger fallback.

@@ -1,5 +1,12 @@
 # S3 Rev 7 hand-trap fixtures (queue item 4): TEST branch, not a build, not published
 
+**Rev 4 (28 Oct, ~20:00 AEDT): rebase only**, onto r35-kitt-swap `44e86a6` (ledger rev 6). Head `e4dbad7` (was `7306cf0`); the backup branch `backup/r35-s3-pre-rev4` keeps the old head.
+- `rebase-range-diff-rev4.txt`: all 7 commits `=`.
+- `targeted-results-rev4.txt`: r35-turn-ledger rev 6, r35-kitt-revive, r35-s3-kitt-native (engine), r35-s3-kitt-guard pass.
+- Full suite pending (after S2a job 9).
+
+-----
+
 **Rev 3 (28 Oct, ~14:10 AEDT): rebase only.** The 7 S3 commits are rebased from `09bf121` onto r35-kitt-swap `07a1ad4` (Kitt code rev 4 `c37a68e` + rev 5 `07a1ad4`, the durable turn ledger; see review/r35-kitt-swap README, package rev 4). Head is `7306cf0` (was `0d1ae03`); a backup branch `backup/r35-s3-pre-rev3` keeps the old head.
 - `rebase-range-diff-rev3.txt`: `git range-diff` shows all 7 commits as `=` (identical patches). The S3 code and tests did not change; only their base did.
 - `s3-fixtures-rev3.diff` / `diffstat-rev3.txt`: 07a1ad4..7306cf0.
