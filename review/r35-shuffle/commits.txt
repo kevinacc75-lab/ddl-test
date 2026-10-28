@@ -1,0 +1,4 @@
+a6557cd r35 item 8: paired probe prints progress to stderr every 25 states (diagnostics only).
+f4cc335 r35 item 8: re-pin dist/app.mjs in tests/r23-fx.test.mjs (pinned file) with proof - tests/r35-shuffle-app-pin.test.mjs removes exactly the shuffle-overlay lines and gets the r32.1 pinned app.mjs back byte for byte (sha256 c7ff1ee0...), so pace, holds and think time are untouched. Found by the r35.4 full suite. SELF-VERIFIED.
+99a2d41 r35 item 8: overlay visual fixes from a headless Chromium frame check - paint containment removed (it clipped the split to the pile box); wider split and arc (0.85 / 0.55 of the pile width). SELF-VERIFIED.
+46c02e5 r35 item 8: deck-shuffle overlay + riffle (RELAY-046 Tap B; spec v2; Seto 27 Oct 10:10 rulings) - TEST branch

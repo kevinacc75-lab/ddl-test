@@ -1,0 +1,14 @@
+ dist/app.mjs                       | 10 +++--
+ dist/offline-assets.json           |  4 +-
+ dist/shuffle-overlay.mjs           | 84 ++++++++++++++++++++++++++++++++++++++
+ dist/shuffle-tap.mjs               | 41 +++++++++++++++++++
+ dist/sound-engine.mjs              | 11 ++++-
+ dist/worker.mjs                    | 22 +++++-----
+ tests/r23-fx.test.mjs              |  2 +-
+ tests/r35-shuffle-app-pin.test.mjs | 17 ++++++++
+ tests/r35-shuffle-native.test.mjs  | 54 ++++++++++++++++++++++++
+ tests/r35-shuffle-overlay.test.mjs | 74 +++++++++++++++++++++++++++++++++
+ tests/r35-shuffle-tap.test.mjs     | 43 +++++++++++++++++++
+ tools/r35-shuffle-paired.mjs       | 34 +++++++++++++++
+ tools/s3-harness.mjs               | 38 +++++++++++++++++
+ 13 files changed, 417 insertions(+), 17 deletions(-)

@@ -1,0 +1,598 @@
+diff --git a/dist/app.mjs b/dist/app.mjs
+index 40920ea..8d31278 100644
+--- a/dist/app.mjs
++++ b/dist/app.mjs
+@@ -1,6 +1,7 @@
+ import {installShell} from './app-shell.mjs';import {validateDeck,describeProblem} from './deck-validator.mjs';
+ import {readCompressed} from './load.mjs';import {expandYdk,PHASE,LOC,M,R} from './duel.mjs';import {Soundscape,createPresentation} from './presentation.mjs';import {effectFocus,effectMarkup} from './effect-focus.mjs';import {MECHANICS,PHASE_CUES} from './event-data.mjs';
+ import {HumanHolds} from './human-holds.mjs';
++import {ShuffleOverlay} from './shuffle-overlay.mjs';// r35 item 8: deck-shuffle overlay (RELAY-046; decorative, never blocks or talks to the worker)
+ import {promptSignature,buildChainPromptModel,canAutoSkipEmptyOptionalChain,shouldAutoOpenDecision,renderChainChoicesHTML,HumanDecisionFlow} from './human-flow.mjs';
+ const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ let importedResponses=null;let db,notes,decks=[],duelDecks,state,worker,choices=[],multi=false,sums=[],view=0,mode='play',selected=new Set(),busy=false,fxBusy=false,isAi=false,disabled=false,noticeTimer,matchInfo,computerPaused=false,cardHeld=false,controlsResume=false,lastStudy=false,lastOpenedSig='',wasAi=false,autoNoteTimer,pendingChainDecision=null;
+@@ -12,6 +13,7 @@ if(!preferences.mdVersion){preferences.effectPace='readable';preferences.mdVersi
+ if(!preferences.labVersion){preferences.preset='duel';preferences.tapToContinue=false;preferences.chainFlow=true;preferences.tabletStage=true;preferences.labVersion=2}
+ preferences.modePaces??={};preferences.chainView??='auto';
+ const sound=new Soundscape({enabled:preferences.sound,volume:preferences.volume});
++const shuffleOverlay=new ShuffleOverlay({sound,view:()=>view,options:()=>({enabled:preferences.shuffleFx!==false&&preferences.preset!=='instant',reduced:!!preferences.motion||!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches})});document.addEventListener('visibilitychange',()=>{if(document.hidden)shuffleOverlay.cancel()});
+ let shell;
+ const presentation=createPresentation({db:()=>db||{},decks:()=>duelDecks||[],view:()=>view,isComputer:player=>mode==='watch'||mode==='play'&&player!==view,duelists:()=>matchInfo?.pilots||[],sound,cardFrame,onSkip:eventId=>worker?.postMessage({type:'skip-scene',eventId}),onBusy:(value,eventId)=>{fxBusy=value;$('#choices').inert=value&&!humanFlow.current;$('#selection-bar').inert=value&&!humanFlow.current;updatePhaseControls();if(!value){worker?.postMessage({type:'presentation-done',eventId});queueMicrotask(finishPendingChainDecision)}}});
+ function savePreferences(){try{localStorage.setItem('doctrine-lab-media-v2',JSON.stringify(preferences))}catch{}}
+@@ -136,8 +138,8 @@ function selectModePace(){const m=$('#mode').value;preferences.preset=preference
+ $('#mode').onchange=()=>{$('#seat').disabled=$('#mode').value!=='play';selectModePace()};selectModePace();
+ $('#import').onclick=()=>$('#file').click();$('#file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>65536)throw Error('Deck file is too large. Choose a .ydk file under 64 KB.');const d=expandYdk(await file.text(),db);d.name=file.name.replace(/\.ydk$/i,'').slice(0,60);decks.push(d);drawDecks();$('#deck-a').value=d.id;syncDeckSelection();saveImports();notify(deckWarning(d)||('Imported '+d.main.length+' Main / '+d.extra.length+' Extra / '+d.side.length+' Side.'),!!deckWarning(d))}catch(e){notify(e.message,true)}finally{$('#file').value=''}};
+ function saveImports(){try{localStorage.setItem('doctrine-lab-decks-v1',JSON.stringify(decks.filter(d=>d.id.startsWith('custom-'))))}catch{notify('Your browser could not save the imported deck. Export it to keep a copy.')}}
+-$('#start').onclick=()=>{sound.unlock();presentation.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=mode!=='watch';$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
+-function receive({data:x}){if(x.type==='human-reply-result'){if(x.clientSession!==humanClientSession)return;if(x.accepted)return;if(humanFlow.reject(x)){busy=false;notify(x.reason||'Choice changed; choose again.');$('#choices').querySelectorAll('button').forEach(n=>n.disabled=false);if(x.current)receive({data:x.current});if(latestDecisionMessage&&!pendingChainDecision)renderDecision(latestDecisionMessage);humanFlow.autoBlocked=true;syncHumanChoiceStatus()}return}if(x.type==='export-replay'){download(JSON.stringify(x.replay,null,2),'doctrine-replay.json');return}if(x.type==='load-progress'){$('#decision-note').textContent=x.message;return}if(x.type==='rewound'){resetHumanInteraction();presentation.reset();shell?.rewound();return}if(x.type==='export'){download('Duel Doctrine Lab\n'+duelDecks.map(d=>d.name).join(' vs ')+'\n\n'+x.text,'doctrine-duel-log.txt');return}if(x.type==='error'){resetHumanInteraction();busy=false;disabled=true;notify(x.message,true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent=x.message;return}if(x.type==='notice'){notify(x.message);return}if(x.type!=='state')return;if(x.human?.protocol===2){if(x.human.clientSession!==humanClientSession||x.human.epoch<expectedHumanEpoch||x.human.stateSeq<=humanStateSeq)return;humanStateSeq=x.human.stateSeq;humanHolds.contextFrom(x.human)}latestDecisionMessage=x;const flowChanged=humanFlow.update(x);const decisionChanged=state?.revision!==x.state.revision,fieldChanged=decisionChanged||view!==x.view||mode!==x.mode||lastStudy!==x.study,decisionUIChanged=decisionChanged||fieldChanged||isAi!==x.ai||disabled!==x.disabled;lastStudy=x.study;computerPaused=x.paused;state=x.state;matchInfo=x.match;choices=x.choices;multi=x.multi;sums=x.sums;view=x.view;mode=x.mode;isAi=x.ai;disabled=x.disabled;busy=humanFlow.inFlight;if(decisionUIChanged)selected.clear();$('#pause').textContent=x.paused?'Resume computer':'Pause computer';$('#pause').disabled=mode==='manual'||disabled;$('#step').disabled=!x.ai||disabled;if(fieldChanged){const oldStats=new Map([...document.querySelectorAll('[data-slot] .card-stats')].map(n=>[n.closest('[data-slot]').dataset.slot,n.textContent]));renderState();if(preferences.cinematics!==false&&!preferences.motion)for(const e of x.events||[])if(e.type==='move'&&e.to&&[4,8].includes(e.to.location))document.querySelector(`[data-slot="${e.to.controller}:${e.to.location}:${e.to.sequence}"]`)?.classList.add('fx-arriving');for(const n of document.querySelectorAll('[data-slot] .card-stats'))if(oldStats.has(n.closest('[data-slot]').dataset.slot)&&oldStats.get(n.closest('[data-slot]').dataset.slot)!==n.textContent)n.classList.add('stat-changed');presentation.refreshField();}syncDuelControls();presentation.syncLifePoints(state.players.map(p=>p.lp),x.events);sound.updateState(state,duelDecks,x.coach?.intent?.battle?.lethal);shell?.state(x);renderCoach(x);renderCue(x);syncWakeLock();renderMatchStudy(x);updatePhaseControls();presentation.play((x.events||[]).map(e=>{const c=state.chain.find(c=>c.chain_size===(e.linkedChain??e.chain));return c?{...e,source:{controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence}}:e}),x.lastEventId);presentDecision(x,decisionUIChanged||flowChanged);wasAi=isAi;syncHumanChoiceStatus();queueMicrotask(()=>{drainHumanChoice();maybeAutoSkipEmptyChain()})}
++$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=mode!=='watch';$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
++function receive({data:x}){if(x.type==='human-reply-result'){if(x.clientSession!==humanClientSession)return;if(x.accepted)return;if(humanFlow.reject(x)){busy=false;notify(x.reason||'Choice changed; choose again.');$('#choices').querySelectorAll('button').forEach(n=>n.disabled=false);if(x.current)receive({data:x.current});if(latestDecisionMessage&&!pendingChainDecision)renderDecision(latestDecisionMessage);humanFlow.autoBlocked=true;syncHumanChoiceStatus()}return}if(x.type==='export-replay'){download(JSON.stringify(x.replay,null,2),'doctrine-replay.json');return}if(x.type==='load-progress'){$('#decision-note').textContent=x.message;return}if(x.type==='rewound'){resetHumanInteraction();presentation.reset();shuffleOverlay.reset();shell?.rewound();return}if(x.type==='export'){download('Duel Doctrine Lab\n'+duelDecks.map(d=>d.name).join(' vs ')+'\n\n'+x.text,'doctrine-duel-log.txt');return}if(x.type==='error'){shuffleOverlay.cancel();resetHumanInteraction();busy=false;disabled=true;notify(x.message,true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent=x.message;return}if(x.type==='notice'){notify(x.message);return}if(x.type!=='state')return;if(x.human?.protocol===2){if(x.human.clientSession!==humanClientSession||x.human.epoch<expectedHumanEpoch||x.human.stateSeq<=humanStateSeq)return;humanStateSeq=x.human.stateSeq;humanHolds.contextFrom(x.human)}latestDecisionMessage=x;const flowChanged=humanFlow.update(x);const decisionChanged=state?.revision!==x.state.revision,fieldChanged=decisionChanged||view!==x.view||mode!==x.mode||lastStudy!==x.study,decisionUIChanged=decisionChanged||fieldChanged||isAi!==x.ai||disabled!==x.disabled;lastStudy=x.study;computerPaused=x.paused;state=x.state;matchInfo=x.match;choices=x.choices;multi=x.multi;sums=x.sums;view=x.view;mode=x.mode;isAi=x.ai;disabled=x.disabled;busy=humanFlow.inFlight;if(decisionUIChanged)selected.clear();$('#pause').textContent=x.paused?'Resume computer':'Pause computer';$('#pause').disabled=mode==='manual'||disabled;$('#step').disabled=!x.ai||disabled;if(fieldChanged){const oldStats=new Map([...document.querySelectorAll('[data-slot] .card-stats')].map(n=>[n.closest('[data-slot]').dataset.slot,n.textContent]));renderState();if(preferences.cinematics!==false&&!preferences.motion)for(const e of x.events||[])if(e.type==='move'&&e.to&&[4,8].includes(e.to.location))document.querySelector(`[data-slot="${e.to.controller}:${e.to.location}:${e.to.sequence}"]`)?.classList.add('fx-arriving');for(const n of document.querySelectorAll('[data-slot] .card-stats'))if(oldStats.has(n.closest('[data-slot]').dataset.slot)&&oldStats.get(n.closest('[data-slot]').dataset.slot)!==n.textContent)n.classList.add('stat-changed');presentation.refreshField();}syncDuelControls();presentation.syncLifePoints(state.players.map(p=>p.lp),x.events);sound.updateState(state,duelDecks,x.coach?.intent?.battle?.lethal);shell?.state(x);renderCoach(x);renderCue(x);syncWakeLock();renderMatchStudy(x);updatePhaseControls();presentation.play((x.events||[]).map(e=>{const c=state.chain.find(c=>c.chain_size===(e.linkedChain??e.chain));return c?{...e,source:{controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence}}:e}),x.lastEventId);shuffleOverlay.viewChanged();shuffleOverlay.accept(x.shuffle);presentDecision(x,decisionUIChanged||flowChanged);wasAi=isAi;syncHumanChoiceStatus();queueMicrotask(()=>{drainHumanChoice();maybeAutoSkipEmptyChain()})}
+ function renderMatchStudy(x){const target=$('#match-study');target.hidden=!x.match||mode==='play';if(!x.match)return;target.innerHTML=`<span class="eyebrow">AI DUEL</span><strong>SEED ${x.match.seed}</strong><span>${x.match.pilots.map(p=>esc(p.name)+' · '+esc(p.label)).join(' / ')}</span><small>Fresh hands + serious pilots · ${'Optimal · bounded search'} · Doctrine ${x.match.doctrine?'on':'off'}</small>`}
+ $('#reuse-seed').onclick=()=>{if(!matchInfo)return;const saved=matchInfo;$('#new').click();$('#game-seed').value=String(saved.seed);$('#first').value=String(saved.first);$('#variation').value=saved.variation;$('#pilot-strategy').value=saved.strategy||'tactical';$('#pilot-strategy').onchange();$('#doctrine-guidance').checked=saved.doctrine!==false;$('#pilot-a').value=saved.styles[0];$('#pilot-b').value=saved.styles[1];notify('Seed '+saved.seed+' restored. Enter the room to study the same duel again. Clear the seed for a fresh game.')};
+ function renderCue(x){$('.field-cue')?.classList.toggle('coach-hidden',mode==='watch'&&!coachOn());const thought=x.coach?.intent;$('#cue-owner').textContent=state.finished?'DUEL COMPLETE':disabled?'DUEL STOPPED':isAi?'COMPUTER CHOICE':'YOUR DECISION';$('#cue-text').textContent=thought?.title||x.title;$('#cue-open').textContent=state.finished?'View journal →':mode==='watch'?'Why this choice? →':'View actions →';$('#field-status').textContent=state.finished?'COMPLETE':x.paused?'PAUSED':isAi?'COMPUTER':'YOUR MOVE';$('#action-count').textContent=!isAi&&!state.finished?(choices.length||'!'):'';document.querySelector('[data-view="play"]').classList.toggle('needs-action',!isAi&&!state.finished&&!disabled)}
+@@ -268,7 +270,7 @@ function syncHumanChoiceStatus(){const pending=humanFlow.pending,flight=humanFlo
+ function humanReadingHeld(){return humanHolds.held||cardHeld||!!document.querySelector('#modal[open],#duel-controls[open]')}
+ function drainHumanChoice(){if(disabled||!state||state.finished||$('#duel').hidden)return;const msg=humanFlow.drain({fxBusy,held:humanReadingHeld()});if(!msg)return;busy=true;syncHumanChoiceStatus();worker?.postMessage(msg)}
+ function reply(response,automatic=false){if(!automatic)shell?.play.manual();if(busy||disabled)return;if(humanFlow.current){if(!humanFlow.choose(response,document.activeElement?.textContent?.trim()||'Your choice'))return;sound.play('tap');syncHumanChoiceStatus();queueMicrotask(drainHumanChoice);return}if(fxBusy)return;sound.play('tap');busy=true;$('#choices').querySelectorAll('button').forEach(n=>n.disabled=true);$('#confirm').disabled=true;worker.postMessage({type:'reply',response,revision:state.revision})}
+-$('#pause').onclick=()=>humanHolds.manual(!computerPaused);$('#step').onclick=()=>{if(presentation.active){presentation.skip();return}worker?.postMessage({type:'step',...invalidateHumanContext()})};$('#take-seat').onclick=()=>{$('#mode').value='play';selectModePace();worker?.postMessage({type:'control',seat:1-view,...invalidateHumanContext()})};$('#study').onchange=e=>worker?.postMessage({type:'study',value:e.target.checked});$('#lab-coach')&&($('#lab-coach').onchange=e=>{preferences.coach=e.target.checked;applyPreferences()});$('#lab-graphics')&&($('#lab-graphics').onchange=e=>{preferences.graphics=e.target.value;applyPreferences()});$('#lab-skip-cutins')&&($('#lab-skip-cutins').onchange=e=>{preferences.skipCutins=e.target.checked;applyPreferences()});{const panel=$('#event-log-panel');if(panel){const saved=preferences.eventLogOpen;if(saved===false||(saved===undefined&&window.innerWidth<900))panel.removeAttribute('open');panel.addEventListener('toggle',()=>{preferences.eventLogOpen=panel.open;savePreferences()})}}$('#speed').onchange=e=>{worker?.postMessage({type:'speed',value:Number(e.target.value)});syncDuelControls()};$('#extra').onclick=()=>state&&pile(view,64);$('#new').onclick=()=>{resetHumanInteraction();humanClientSession='';syncHumanChoiceStatus();if($('#duel-controls').open)$('#duel-controls').close();$('#duel-controls-toggle').hidden=true;cardHeld=false;setArenaFocus(false);if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});presentation.reset();worker?.postMessage({type:'stop'});$('#duel').hidden=true;document.body.classList.remove('in-duel');sound.stopMusic();$('#setup').hidden=false;$('#notice').hidden=true;window.scrollTo({top:0,behavior:'smooth'})};
++$('#pause').onclick=()=>humanHolds.manual(!computerPaused);$('#step').onclick=()=>{if(presentation.active){presentation.skip();return}worker?.postMessage({type:'step',...invalidateHumanContext()})};$('#take-seat').onclick=()=>{$('#mode').value='play';selectModePace();worker?.postMessage({type:'control',seat:1-view,...invalidateHumanContext()})};$('#study').onchange=e=>worker?.postMessage({type:'study',value:e.target.checked});$('#lab-coach')&&($('#lab-coach').onchange=e=>{preferences.coach=e.target.checked;applyPreferences()});$('#lab-graphics')&&($('#lab-graphics').onchange=e=>{preferences.graphics=e.target.value;applyPreferences()});$('#lab-skip-cutins')&&($('#lab-skip-cutins').onchange=e=>{preferences.skipCutins=e.target.checked;applyPreferences()});{const panel=$('#event-log-panel');if(panel){const saved=preferences.eventLogOpen;if(saved===false||(saved===undefined&&window.innerWidth<900))panel.removeAttribute('open');panel.addEventListener('toggle',()=>{preferences.eventLogOpen=panel.open;savePreferences()})}}$('#speed').onchange=e=>{worker?.postMessage({type:'speed',value:Number(e.target.value)});syncDuelControls()};$('#extra').onclick=()=>state&&pile(view,64);$('#new').onclick=()=>{resetHumanInteraction();humanClientSession='';syncHumanChoiceStatus();if($('#duel-controls').open)$('#duel-controls').close();$('#duel-controls-toggle').hidden=true;cardHeld=false;setArenaFocus(false);if(document.fullscreenElement)document.exitFullscreen?.().catch(()=>{});presentation.reset();shuffleOverlay.reset();worker?.postMessage({type:'stop'});$('#duel').hidden=true;document.body.classList.remove('in-duel');sound.stopMusic();$('#setup').hidden=false;$('#notice').hidden=true;window.scrollTo({top:0,behavior:'smooth'})};
+ function download(text,filename){const url=URL.createObjectURL(new Blob([text],{type:'text/plain'})),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+ $('#save-log').onclick=()=>state&&worker.postMessage({type:'export'});const replayButton=document.createElement('button');replayButton.textContent='Save replay';replayButton.onclick=()=>state&&worker.postMessage({type:'export-replay'});$('#save-log').after(replayButton);
+ const replayImport=document.createElement('input');replayImport.type='file';replayImport.accept='.json';replayImport.hidden=true;const importButton=document.createElement('button');importButton.textContent='Open saved replay';importButton.onclick=()=>replayImport.click();$('#game-seed').closest('label').after(importButton,replayImport);
+@@ -279,7 +281,7 @@ replayImport.onchange=async()=>{try{const file=replayImport.files[0];if(!file)re
+ $('#help').onclick=()=>openModal('<p class="eyebrow">DUEL DOCTRINE LAB · 2.2.0-rc</p><h2>Watch. Pause. Understand.</h2><p>Choose your matchup and AI Watch, Deal a Hand, Play vs AI or Replay a Seed. Learning pace gives every resolving link four seconds, with extra time for longer text. Chains build quickly, then resolve from the top down. Tap to continue is optional. Skip FX skips only the current scene.</p><p>Open the gear for pace, five sound buses, spoken callouts, reduced motion and the coach. The coach explains each real decision. In the journal, tap a moment to rewind to that decision; bookmarks are saved on this device. Rewind pauses the duel so you can inspect it before resuming.</p><p>Long-press a field card to read its text; swipe up on your hand to spread it. Portrait offers an overview; landscape is recommended. Use your browser’s Install / Add to home screen for offline play after the offline download completes.</p><p>The Optimal pilot uses bounded engine-replayed search, resource preservation and a blunder guard. It cannot guarantee perfect play against hidden information. The native engine decides legality. Best-of-three siding is a later stage.</p>');
+ $('#preview-fx').onclick=()=>{if(state&&!state.finished){humanHolds.manual(true);presentation.skip()}sound.unlock();openModal('<p class="eyebrow">FUSION ROOM · SOUND STUDIO</p><h2>Hear the duel.</h2><p>Metal chains, heavy impacts and energy swells. Tap a cue to hear it.</p><label class="studio-volume">Volume <input id="studio-volume" type="range" min="0" max="100" value="'+Math.round(preferences.volume*100)+'"></label><div class="sound-board">'+[...Object.entries(PHASE_CUES).map(([id,p])=>[p[1],p[0],p[2],'PHASE']),...Object.entries(MECHANICS).map(([cue,p])=>[cue,p[0],p[1],'MECHANIC']),...['ice','crimson','mikanko','striker','lunar'].map(theme=>['victory:'+theme,theme.toUpperCase()+' VICTORY','var(--palette-434)','DUEL RESULT']),...['ice','crimson','sanctifire','lunar','mikanko','striker'].map(theme=>['boss:'+theme,theme.toUpperCase()+' BOSS','var(--palette-435)','BOSS SUMMON'])].map(([cue,label,color,group])=>`<button class="sound-tile" data-audition="${cue}" style="--tile-color:${color}">${label}<small>${group}</small></button>`).join('')+'</div><p class="muted">Sound on enables previews. Each new audition replaces the previous sound. Opening the studio pauses computer play; resume when you are ready.</p>');$('#studio-volume').oninput=e=>{preferences.volume=Number(e.target.value)/100;applyPreferences()};$('#modal-body').querySelectorAll('[data-audition]').forEach(button=>button.onclick=()=>{sound.stop();sound.unlock();const [cue,theme]=button.dataset.audition.split(':');sound.play(cue,theme);button.classList.remove('audition');void button.offsetWidth;button.classList.add('audition')})};
+ $('#credits').onclick=()=>openModal('<p class="eyebrow">BUILT ON AN OPEN FOUNDATION</p><h2>Engine & source credits</h2><p>Duel Doctrine Lab is an independent personal practice app. It is not affiliated with Konami or YGO Lab.</p><p>The duel engine is <a href="https://github.com/edo9300/ygopro-core" target="_blank" rel="noreferrer">EDOPro / ygopro-core</a>, exposed through <a href="https://github.com/n1xx1/ocgcore-wasm" target="_blank" rel="noreferrer">ocgcore-wasm</a>. Card data and effect scripts come from <a href="https://github.com/ProjectIgnis/BabelCDB" target="_blank" rel="noreferrer">BabelCDB</a> and <a href="https://github.com/ProjectIgnis/CardScripts" target="_blank" rel="noreferrer">Project Ignis CardScripts</a>.</p><p>Artwork comes from the existing Doctrine projects and YGOPRODeck. Yu-Gi-Oh names and card imagery belong to their respective owners.</p><p><a href="source.zip" download>Download the lab source</a> · <a href="engine-source.zip" download>Engine source</a> · <a href="licenses/AGPL-3.0.txt" target="_blank">Engine licence</a> · <a href="licenses/wrapper.txt" target="_blank">Wrapper licence</a></p><p class="muted">This version provides engine-checked duels, sound effects, summon presentation and explanations of independent procedural pilots’ choices. It does not include tournament-strength deck pilots, a complete coaching system, between-game siding. Replay rewind is now available.</p>');
+-shell=installShell({getDecision:()=>latestDecisionMessage,submit:reply,navigate:showScreen,inspect:dossier,preferences,applyPreferences,sound,presentation,getState:()=>state,getMatch:()=>matchInfo,getDecks:()=>duelDecks||[],getWorker:()=>worker,notify,openModal,beforeRewind:invalidateHumanContext});
++shell=installShell({getDecision:()=>latestDecisionMessage,submit:reply,navigate:showScreen,inspect:dossier,preferences,applyPreferences,sound,presentation,getState:()=>state,getMatch:()=>matchInfo,getDecks:()=>duelDecks||[],getWorker:()=>worker,notify,openModal,beforeRewind:()=>{shuffleOverlay.reset();return invalidateHumanContext()}});
+ async function loadCardLibrary(){
+  const w=new Worker('library-worker.mjs',{type:'module'});
+  return await new Promise((resolve,reject)=>{const timer=setTimeout(()=>{w.terminate?.();reject(Error('Card library timed out after 15 seconds. Tap Retry to try again.'))},15000);
+diff --git a/dist/offline-assets.json b/dist/offline-assets.json
+index a3068c3..8776c9c 100644
+--- a/dist/offline-assets.json
++++ b/dist/offline-assets.json
+@@ -443,5 +443,7 @@
+   "./audio/sfx/impact.mp3",
+   "./audio/sfx/cost.mp3",
+   "./audio/sfx/sfx.json",
+-  "./jazz-score.mjs"
++  "./jazz-score.mjs",
++  "./shuffle-overlay.mjs",
++  "./shuffle-tap.mjs"
+ ]
+diff --git a/dist/shuffle-overlay.mjs b/dist/shuffle-overlay.mjs
+new file mode 100644
+index 0000000..43ea1a7
+--- /dev/null
++++ b/dist/shuffle-overlay.mjs
+@@ -0,0 +1,84 @@
++// r35 item 8 (Claude, 28 Oct 2026): deck-shuffle overlay + riffle (Kevy's request 25 Oct; settled spec v2, Seto 26 Oct 09:05;
++// RELAY-046 design, Seto 27 Oct 10:10 rulings). A decorative, NON-BLOCKING layer:
++//  - fed only by the worker's {epoch, shuffles:[{id, seat, afterEventId}]} envelope (one entry per real M.SHUFFLE_DECK);
++//  - never joins the presentation queue, ChainDirector, holds, presentation-done / skip-scene messages or AI timing, and
++//    never sends anything to the worker;
++//  - seat-only with generic card backs and a FIXED sprite count (Alexis via Seto): no card, effect, count or order shown;
++//  - 400 ms total, split at 80 ms (the riffle starts there and ends by ~280 ms), final gleam before 400 ms;
++//  - bounded (Seto's overload ruling): one active + at most 4 waiting, drop the oldest waiting, waiting items expire after
++//    800 ms, max 8 card-back sprites; ids deduped by a per-epoch high-water mark; no catch-up after background, Instant,
++//    teardown or cancel;
++//  - reduced motion (app or OS): a brief static gleam on the deck, no arcs; sound still follows the user's mute setting;
++//  - transforms and opacity only (Web Animations), pointer-events:none, every node removed on finish or cancel;
++//  - the deck pile is found by its canonical seat ([data-deck-pile="0|1"]) at play time, so seat swaps / view changes need
++//    no re-emission; a view change cancels the effect that is playing.
++export const SHUFFLE_MS=400,SPLIT_MS=80,GLEAM_MS=330,MAX_WAITING=4,EXPIRE_MS=800,SPRITES=6;
++export class ShuffleOverlay{
++ constructor({doc=globalThis.document,sound=null,now=()=>Date.now(),setTimer=(f,ms)=>setTimeout(f,ms),clearTimer=t=>clearTimeout(t),options=()=>({enabled:true,reduced:false}),view=()=>0}={}){
++  Object.assign(this,{doc,sound,now,setTimer,clearTimer,options,view});
++  this.epoch=null;this.high=0;this.waiting=[];this.active=null;this.dropped=0;this.played=0;
++ }
++ // Called for each accepted 'state' message (after the app's own session checks).
++ accept(envelope){
++  try{
++   if(!envelope||!Number.isFinite(envelope.epoch))return;
++   if(envelope.epoch!==this.epoch){this.cancel();this.epoch=envelope.epoch;this.high=0}
++   const list=Array.isArray(envelope.shuffles)?envelope.shuffles:[],opts=this.options()||{};
++   const live=opts.enabled!==false&&!this.doc?.hidden;
++   if(!live)this.cancel();
++   for(const s of list){if(!s||!(s.id>this.high)||(s.seat!==0&&s.seat!==1))continue;this.high=s.id;
++    if(!live)continue;/* hidden / Instant / off: remembered as seen, never played later */
++    this.waiting.push({id:s.id,seat:s.seat,at:this.now()});this.pump();/* idle: it starts now, so it is never counted as waiting */
++    if(this.waiting.length>MAX_WAITING){this.waiting.shift();this.dropped++}}
++  }catch{this.cancel()}
++ }
++ pump(){
++  if(this.active)return;const t=this.now();
++  while(this.waiting.length&&t-this.waiting[0].at>EXPIRE_MS){this.waiting.shift();this.dropped++}
++  const next=this.waiting.shift();if(next)this.play(next);
++ }
++ // A view change (seat swap, control, manual mode) cancels the playing effect; nothing is re-emitted.
++ viewChanged(){if(this.active&&this.active.view!==this.view())this.finish(true)}
++ // New duel, rewind, import, stop, error, worker replacement, background: clear everything now.
++ cancel(){this.waiting=[];if(this.active)this.finish(true)}
++ // A new duel / rewind requested by the UI: clear now, and forget the epoch so the next envelope is taken as new.
++ reset(){this.cancel();this.epoch=null;this.high=0}
++ play(item){
++  const opts=this.options()||{},pile=this.doc?.querySelector?.(`[data-deck-pile="${item.seat}"]`),body=this.doc?.body;
++  if(!pile||!body||typeof pile.getBoundingClientRect!=='function'){this.dropped++;return this.pump()}
++  const r=pile.getBoundingClientRect(),view=this.view(),reduced=!!opts.reduced;
++  const layer=this.doc.createElement('div');layer.className='shuffle-overlay';layer.setAttribute('aria-hidden','true');
++  Object.assign(layer.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',pointerEvents:'none',zIndex:'40',contain:'layout'});
++  const anims=[],nodes=[layer],timers=[];const active=this.active={item,view,layer,anims,nodes,timers,riffle:null};
++  const animate=(el,frames,o)=>{try{const a=el.animate?.(frames,o);if(a)anims.push(a)}catch{}};
++  // The gleam: a soft light over the pile (the only visual under reduced motion).
++  const gleam=this.doc.createElement('div');
++  Object.assign(gleam.style,{position:'absolute',inset:'0',borderRadius:'8px',background:'radial-gradient(circle, rgba(255,255,255,.55), rgba(255,255,255,0) 70%)',opacity:'0'});
++  layer.appendChild(gleam);
++  if(reduced)animate(gleam,[{opacity:0},{opacity:.7,offset:.3},{opacity:0}],{duration:SHUFFLE_MS,easing:'ease-out'});
++  else{
++   animate(gleam,[{opacity:0},{opacity:0,offset:GLEAM_MS/SHUFFLE_MS},{opacity:.65,offset:.9},{opacity:0}],{duration:SHUFFLE_MS});
++   const w=Math.max(18,Math.min(r.width*.62,64)),h=w*1.42,dx=Math.max(16,r.width*.85);/* a clear split: each half moves most of a card width */
++   for(let i=0;i<SPRITES;i++){const back=this.doc.createElement('div'),side=i%2?1:-1,lift=(i>>1)*2;
++    Object.assign(back.style,{position:'absolute',left:'50%',top:'50%',width:w+'px',height:h+'px',marginLeft:-w/2+'px',marginTop:-h/2+'px',borderRadius:'4px',border:'1px solid rgba(255,214,140,.75)',background:'linear-gradient(135deg,#3b1c0f,#7a3a14 45%,#2a120a)',boxShadow:'0 2px 6px rgba(0,0,0,.45)',opacity:'0',willChange:'transform, opacity'});
++    layer.appendChild(back);
++    // Split (0-80 ms), riffle the halves back together (80-300 ms), settle and fade (300-400 ms). Fixed offsets, no randomness.
++    animate(back,[{transform:`translate(0px,${-lift}px)`,opacity:0},{transform:`translate(0px,${-lift}px)`,opacity:1,offset:.05},
++     {transform:`translate(${side*dx}px,${-lift-6}px) rotate(${side*8}deg)`,opacity:1,offset:SPLIT_MS/SHUFFLE_MS},
++     {transform:`translate(${side*dx*.55}px,${-16-i*2}px) rotate(${side*5}deg)`,opacity:1,offset:.45},
++     {transform:`translate(0px,${-i}px)`,opacity:1,offset:.75},{transform:'translate(0px,0px)',opacity:0}],{duration:SHUFFLE_MS,easing:'ease-in-out'});
++   }
++  }
++  body.appendChild(layer);this.played++;
++  const own=view===item.seat?0:1;/* sound pan: our deck left, theirs right */
++  timers.push(this.setTimer(()=>{if(this.active!==active)return;try{active.riffle=this.sound?.shuffleRiffle?.({seat:own})||null}catch{}},SPLIT_MS));
++  timers.push(this.setTimer(()=>{if(this.active===active){this.finish(false);this.pump()}},SHUFFLE_MS));
++ }
++ finish(cancelled){
++  const a=this.active;if(!a)return;this.active=null;
++  for(const t of a.timers)try{this.clearTimer(t)}catch{}
++  if(cancelled)try{a.riffle?.cancel()}catch{}
++  for(const x of a.anims)try{x.cancel()}catch{}
++  for(const n of a.nodes)try{n.remove()}catch{}
++ }
++}
+diff --git a/dist/shuffle-tap.mjs b/dist/shuffle-tap.mjs
+new file mode 100644
+index 0000000..481e878
+--- /dev/null
++++ b/dist/shuffle-tap.mjs
+@@ -0,0 +1,41 @@
++// r35 item 8 (Claude, 28 Oct 2026): deck-shuffle capture for the on-screen duel only. Design: RELAY-046 (ChatGPT) "Tap B",
++// approved with conditions by Seto (27 Oct 10:10): an instance-method interposition on the ONE real duel object owned by
++// worker.mjs. duel.mjs, the AI (ai/*), random.mjs and the frozen gate are untouched; the gate never loads worker.mjs.
++// Conditions kept here:
++//  - install once, before the first start; never on a prototype, the core, duelGetMessage, or any clone / AI / pool duel;
++//  - call the original FIRST with the same receiver and message, return its result, let its errors propagate unchanged;
++//  - only after the original returns, and only while armed, capture scalars {id, seat, afterEventId} for M.SHUFFLE_DECK;
++//    never the raw message, never SHUFFLE_HAND; no await, timer, random number, duel.log write, engine call or postMessage;
++//  - the capture itself fails open (a presentation failure can never break the duel);
++//  - start / start-with-responses / import-replay / rewind: disarmed for the whole reconstruction (Seto: startup boundary),
++//    armed only after it returns; each reset starts a new overlay epoch (duelSerial is NOT touched);
++//  - bounded: max 32 pending captures between sends; extra ones are dropped and counted here only (never duel.log);
++//  - drain once per send: a repeated send or a re-sent state never replays a shuffle.
++export const SHUFFLE_MAX_PENDING=32;
++export class ShuffleTap{
++ constructor({shuffleType,max=SHUFFLE_MAX_PENDING}={}){
++  if(!Number.isInteger(shuffleType))throw Error('ShuffleTap needs the engine SHUFFLE_DECK message type');
++  this.type=shuffleType;this.max=max;this.armed=false;this.epoch=0;this.seq=0;this.pending=[];this.dropped=0;this.duel=null;
++ }
++ // Wrap the given duel object's own handleMessage. Idempotent for the same duel; refuses a second duel object.
++ install(duel){
++  if(this.duel===duel)return true;if(this.duel)throw Error('ShuffleTap is bound to one duel object');
++  const original=duel.handleMessage,tap=this;if(typeof original!=='function')throw Error('Duel has no handleMessage');
++  duel.handleMessage=function(m){const result=original.call(this,m);tap.capture(this,m);return result};
++  this.duel=duel;return true;
++ }
++ capture(receiver,m){
++  try{if(!this.armed||receiver!==this.duel||!m||m.type!==this.type)return;
++   const seat=receiver.fromEngine?.(m.player);if(seat!==0&&seat!==1)return;
++   const id=++this.seq;if(this.pending.length>=this.max){this.dropped++;return}
++   this.pending.push({id,seat,afterEventId:Number(receiver.eventSeq)||0});
++  }catch{/* fail open: decoration only */}
++ }
++ // New duel, import, rewind: disarm, clear, new epoch. Arm again only after the reconstruction returns.
++ reset(){this.armed=false;this.pending=[];this.epoch++;this.seq=0}
++ arm(){this.armed=true}
++ // Stop, error, teardown: disarm and clear (same epoch until the next reset).
++ disarm(){this.armed=false;this.pending=[]}
++ // The envelope for one state message. Sent even when empty, so the UI sees an epoch change.
++ drain(){const out={epoch:this.epoch,shuffles:this.pending,dropped:this.dropped};this.pending=[];return out}
++}
+diff --git a/dist/sound-engine.mjs b/dist/sound-engine.mjs
+index 52f72bf..40dae6e 100644
+--- a/dist/sound-engine.mjs
++++ b/dist/sound-engine.mjs
+@@ -25,11 +25,20 @@ export class Soundscape{
+  // tone: one oscillator with a fast-attack envelope. r23 options: attack (s), lowpass (Hz), when (absolute context time).
+  tone(frequency,duration=.2,{at=0,end=frequency,type='sine',gain=.2,bus='sfx',destination,attack=.015,lowpass,when,brassy=false,detune=0}={}){const c=this.context;if(!c||c.state!=='running')return;if(![frequency,duration,at,end,gain,attack].every(Number.isFinite)||lowpass!==undefined&&!Number.isFinite(lowpass)||when!==undefined&&!Number.isFinite(when))return;const t=when??c.currentTime+at,o=c.createOscillator(),g=c.createGain();o.type=type;if(detune&&o.detune)o.detune.value=detune;o.frequency.setValueAtTime(Math.max(20,frequency),t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+duration);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,gain),t+Math.max(.002,Math.min(attack,duration*.5)));g.gain.exponentialRampToValueAtTime(.0001,t+duration);let f=null;if(lowpass){f=c.createBiquadFilter();f.type='lowpass';if(brassy){f.frequency.setValueAtTime(Math.max(40,lowpass*.3),t);f.frequency.exponentialRampToValueAtTime(Math.max(40,lowpass),t+Math.min(.07,duration*.35));f.frequency.exponentialRampToValueAtTime(Math.max(40,lowpass*.45),t+duration)}else f.frequency.setValueAtTime(Math.max(40,lowpass),t);o.connect(f);f.connect(g)}else o.connect(g);if(destination)g.connect(destination);else this.route(g,bus);this.sources.add(o);o.onended=()=>{this.sources.delete(o);g.disconnect();f?.disconnect?.()};o.start(t);o.stop(t+duration+.03)}
+  // noise: band-passed noise sweeping from frequency to end. r23 options: end (Hz), destination, when.
+- noise(duration=.3,{gain=.2,frequency=4000,at=0,end=180,destination,when,attack=.015}={}){const c=this.context;if(!c||c.state!=='running')return;if(![duration,gain,frequency,at,end,attack].every(Number.isFinite)||when!==undefined&&!Number.isFinite(when))return;const t=when??c.currentTime+at,s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=this.noiseBuffer;f.type='bandpass';f.frequency.setValueAtTime(Math.max(40,frequency),t);f.frequency.exponentialRampToValueAtTime(Math.max(40,end),t+duration);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(gain,t+Math.max(.002,Math.min(attack,duration*.5)));g.gain.exponentialRampToValueAtTime(.0001,t+duration);s.connect(f);f.connect(g);if(destination)g.connect(destination);else this.route(g,'sfx');s.start(t);s.stop(t+duration+.02);this.sources.add(s);s.onended=()=>{this.sources.delete(s);f.disconnect();g.disconnect()}}
++ noise(duration=.3,{gain=.2,frequency=4000,at=0,end=180,destination,when,attack=.015}={}){const c=this.context;if(!c||c.state!=='running')return;if(![duration,gain,frequency,at,end,attack].every(Number.isFinite)||when!==undefined&&!Number.isFinite(when))return;const t=when??c.currentTime+at,s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=this.noiseBuffer;f.type='bandpass';f.frequency.setValueAtTime(Math.max(40,frequency),t);f.frequency.exponentialRampToValueAtTime(Math.max(40,end),t+duration);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(gain,t+Math.max(.002,Math.min(attack,duration*.5)));g.gain.exponentialRampToValueAtTime(.0001,t+duration);s.connect(f);f.connect(g);if(destination)g.connect(destination);else this.route(g,'sfx');s.start(t);s.stop(t+duration+.02);this.sources.add(s);s.onended=()=>{this.sources.delete(s);f.disconnect();g.disconnect()};return s/* r35 item 8: the source, for owned cancellation; existing callers ignore it */}
+  // A sharp transient: a very short high noise tick and a pitched blip. Gives every cue a clear front edge.
+  click(at=0,gain=.12,pitch=2400){this.noise(.035,{gain,frequency:9500,end:3500,at,attack:.002});this.tone(pitch,.03,{at,end:pitch*.5,type:'square',gain:gain*.35,attack:.002})}
+  sub(at=0,gain=.3,from=95,to=38,duration=.32){this.tone(from,duration,{at,end:to,gain,attack:.004})}
+  riffle(at=0,count=6,gain=.06,down=false){for(let i=0;i<count;i++)this.noise(.03,{gain:gain*(down?1-i/(count+1):.5+i/(count*2)),frequency:5200+i*300,end:2600,at:at+i*.024,attack:.002})}
++ // r35 item 8 (RELAY-046 / shuffle spec v2 item 6): the deck-shuffle riffle, OWNED. The same generated noise and SFX bus
++ // (mute, master and SFX volume act on it while it plays) as riffle(); no sample, no new random numbers. Plays only if audio
++ // is already unlocked and running (never resumes or unlocks on an engine notification). Returns a handle whose cancel()
++ // stops only these sources (never stop(), which would cut unrelated chain sounds), or null when nothing played.
++ shuffleRiffle({seat=this.seat,count=8,gain=.055}={}){const c=this.context;if(!this._enabled||!c||c.state!=='running'||!this.noiseBuffer)return null;
++  const prior=this.seat,own=[];this.seat=seat===1?1:0;
++  try{for(let i=0;i<count;i++){const s=this.noise(.03,{gain:gain*(.5+i/(count*2)),frequency:5200+i*300,end:2600,at:i*.024,attack:.002});if(s)own.push(s)}}finally{this.seat=prior}
++  if(!own.length)return null;let live=true;
++  return {cancel:()=>{if(!live)return;live=false;for(const s of own){try{s.stop()}catch{}}}}}
+  duck(duration=.8){if(!this.context)return;const t=this.context.currentTime,g=this.duckBus.gain;g.cancelScheduledValues(t);g.setTargetAtTime(.6,t,.035);g.setTargetAtTime(1,t+duration,.2)}
+  setMusic(enabled,volume){this.musicEnabled=!!enabled;if(volume!==undefined)this.setBus('music',volume);if(!enabled)this.stopMusic();else this.startMusic()}
+  updateState(state,decks=[],lethal=false){if(this.lastTurn!==undefined&&state.turn<this.lastTurn)this.newGame();this.lastTurn=state.turn;this.theme=decks[state.active]?.id||'branded';this.intensity=lethal?2:state.players.some(p=>p.lp<=2000)?2:state.players.some(p=>p.lp<4000)||state.chain?.length>=3||state.players.some(p=>p.zones[4]?.some(c=>c&&c.attack>=3000))?1:0;this.applyStems();if(state.players.some(p=>p.lp<2000)&&Date.now()-(this.warningAt||0)>3500){this.warningAt=Date.now();this.play('warning')}}
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index 5f48435..1663fb4 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -6,9 +6,11 @@ import {sumSelections} from './pilot.mjs';
+ import {createOptimalPilots as createPilots} from './optimal-pilot.mjs';
+ import {readCompressed} from './load.mjs';
+ import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
++// r35 item 8 (RELAY-046 Tap B, Seto 27 Oct 10:10): deck-shuffle capture on the one real duel (see shuffle-tap.mjs).
++import {ShuffleTap} from './shuffle-tap.mjs';const shuffleTap=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});
+ const humanBridge=new HumanResponseBridge(),pauseOwners=new WorkerPauseOwners();let interactionProtocol=1,lastHumanState=null;
+ function resetHumanTransport(session=humanBridge.clientSession){humanBridge.reset(session);pauseOwners.reset(humanBridge.epoch,paused);lastHumanState=null}
+-function rejectHumanReply(x,reason){postMessage({type:'human-reply-result',clientSession:humanBridge.clientSession,requestId:x.human?.requestId,accepted:false,reason,current:lastHumanState?{...lastHumanState,events:[],human:{...lastHumanState.human,stateSeq:++humanBridge.stateSeq}}:null})}
++function rejectHumanReply(x,reason){postMessage({type:'human-reply-result',clientSession:humanBridge.clientSession,requestId:x.human?.requestId,accepted:false,reason,current:lastHumanState?{...lastHumanState,events:[],shuffle:lastHumanState.shuffle&&{...lastHumanState.shuffle,shuffles:[]},human:{...lastHumanState.human,stateSeq:++humanBridge.stateSeq}}:null})}
+ const director=new ChainDirector();let preset='learning',tapToContinue=false,chainFlow=true,chainView;let duel,view=0,mode='play',study=false,paused=false,timer,delay=1200,loading,disabled=false,generation=0;
+ let replayHistory=[],dealHand=false;let pilots=[],matchInfo=null,plan,thoughts=[],thoughtSeq=0,deliveredSeq=0,presentationUntil=0,presentationPending=false,cinematics=true,motion=false,pace=1,learnHold=false,effectPace='readable';
+ const aiSeat=p=>mode==='watch'||(mode==='play'&&p!==view);
+@@ -70,7 +72,7 @@ function send(){
+  const multi=m&&[M.SELECT_CARD,M.SELECT_TRIBUTE,M.SELECT_SUM,M.SELECT_COUNTER,M.ANNOUNCE_RACE,M.ANNOUNCE_ATTRIB].includes(m.type);
+  if(!pauseOwners.owners.size)pauseOwners.base=paused;
+  const human=interactionProtocol===2?{...humanBridge.issue({revision:duel.revision,seat:m?.seat,prompt:m,ai:isAi,disabled,finished:duel.finished}),pauseOwners:[...pauseOwners.owners],basePaused:pauseOwners.base}:undefined;
+- const message={type:'state',human,lastEventId:deliveredSeq,state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
++ const message={type:'state',human,lastEventId:deliveredSeq,shuffle:shuffleTap.drain(),state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
+  schedule();
+ }
+ function schedule(){clearTimeout(timer);if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;const stepMs=delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay;timer=setTimeout(step,Math.max(stepMs,presentationUntil-Date.now(),humanWait(),addedWait(stepMs)))}}
+@@ -83,22 +85,22 @@ function step(){
+   if(duel.retries>before){paused=true;postMessage({type:'notice',message:'The computer’s selection was rejected. Take control to choose the required cards.'})}
+   if(mode==='watch'&&learnHold)paused=true;
+   send();
+- }catch(e){disabled=true;paused=true;postMessage({type:'error',message:e.message});send()}
++ }catch(e){disabled=true;paused=true;shuffleTap.disarm();postMessage({type:'error',message:e.message});send()}
+ }
+ onmessage=async ({data:x})=>{try{
+  if(interactionProtocol===2&&['pause','step','control','rewind'].includes(x.type)&&(x.clientSession!==humanBridge.clientSession||x.epoch!==humanBridge.epoch))return;
+  if(x.type==='load-library'){postMessage({type:'load-progress',message:'Decompressing card library…'});postMessage({type:'library',db:await readCompressed('cards.json.gz')});return}
+- if(x.type==='start'){interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
++ if(x.type==='start'){shuffleTap.reset();interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
+   director.reset();preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;const run=++generation;clearTimeout(timer);disabled=false;paused=!!x.dealHand;dealHand=!!x.dealHand;replayHistory=[];view=x.view;mode=x.mode;study=x.study;delay=x.delay||2200;cinematics=x.cinematics!==false;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';learnHold=!!x.learnHold;thoughts=[];thoughtSeq=0;plan=null;deliveredSeq=0;presentationUntil=0;presentationPending=false;
+-  if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}await warmThinkWorker();
+-  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',pilots:pilots.map(p=>p.info())};send();
++  if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}shuffleTap.install(duel);await warmThinkWorker();
++  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',pilots:pilots.map(p=>p.info())};send();
+  }else if(x.type==='reply'){
+   if(interactionProtocol===2){const checked=humanBridge.check(x,{prompt:duel?.prompt,choices:duel?.choices()||[],sums:duel?.prompt?.type===M.SELECT_SUM?sumSelections(duel.prompt):[]});if(!checked.ok){rejectHumanReply(x,checked.reason);return}if(pauseOwners.owners.size){humanBridge.used=null;rejectHumanReply(x,'Close the reading panel before submitting.');return}}
+   cancelThink();if(disabled)throw Error('This duel is stopped. Start a new duel.');const retries=duel.retries;duel.respond(x.response,x.revision);if(interactionProtocol===2)humanBridge.ack={requestId:x.human.requestId,accepted:duel.retries===retries};replayHistory=duel.responseHistory.slice();plan=null;send()
+  }
+  else if(x.type==='human-hold'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||!pauseOwners.change(x))return;paused=pauseOwners.paused;send()}
+  else if(x.type==='human-recover'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||x.epoch!==humanBridge.epoch)return;pauseOwners.releaseAll();paused=pauseOwners.paused;send()}
+- else if(x.type==='rewind'){cancelThink();clearTimeout(timer);const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400});for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
++ else if(x.type==='rewind'){cancelThink();clearTimeout(timer);shuffleTap.reset();const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400});for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}shuffleTap.arm();replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
+  else if(x.type==='pause'){if(interactionProtocol===2){pauseOwners.manual(x.value);paused=pauseOwners.paused}else paused=x.value===undefined?!paused:!!x.value;send()}
+  else if(x.type==='step'){clearTimeout(timer);paused=true;resetHumanTransport();step()}
+  else if(x.type==='control'){clearTimeout(timer);view=x.seat;mode='play';paused=false;resetHumanTransport();send()}
+@@ -108,7 +110,7 @@ onmessage=async ({data:x})=>{try{
+  else if(x.type==='learn'){learnHold=x.value;send()}
+  else if(x.type==='skip-scene'||x.type==='presentation-done'){if(x.eventId>=deliveredSeq){presentationUntil=0;presentationPending=false;presentationDoneAt=Date.now();if(thinking?.fallback&&paceKind()!=='instant'){const due=thinkDeadline(thinking.started);if(due<thinking.deadlineAt){thinking.deadlineAt=due;if(deadlineBox&&Atomics.load(deadlineBox,0)===thinking.id)Atomics.store(deadlineBox,1,due-deadlineBase);clearTimeout(thinkTimeout);thinkTimeout=setTimeout(thinking.fallback,Math.max(0,due-Date.now()))}}schedule()}}
+  else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,responses:duel.responseHistory}})}
+- else if(x.type==='import-replay'){cancelThink();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}replayHistory=duel.responseHistory.slice();matchInfo={...matchInfo,seed:r.seed,first:r.first};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
++ else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();replayHistory=duel.responseHistory.slice();matchInfo={...matchInfo,seed:r.seed,first:r.first};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
+  else if(x.type==='export'){const extra=mode==='watch'?'\n\nINDEPENDENT PROCEDURAL PILOT CHOICES\n'+thoughts.map(t=>'Turn '+t.turn+' · '+duel.decks[t.seat].name+' · '+t.title+'\n'+t.rule+': '+t.reason+(t.doctrine?'\nDOCTRINE: '+t.doctrine.title+' · '+t.doctrine.status:'')).join('\n\n'):'';postMessage({type:'export',text:'GAME SEED '+matchInfo?.seed+' · FIRST SEAT '+matchInfo?.first+' · VARIATION '+matchInfo?.variation+' · PILOT '+matchInfo?.strategy+' · DOCTRINE '+(matchInfo?.doctrine?'ON':'OFF')+'\n'+pilots.map(p=>p.name+': '+p.info().label+' · seed '+p.seed).join('\n')+'\n\n'+(duel?.log.map(e=>e.text).join('\n')||'')+extra})}
+- else if(x.type==='stop'){cancelThink();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
+- }catch(e){disabled=true;paused=true;postMessage({type:'error',message:e.message});resetHumanTransport();if(duel?.handle)send()}};
++ else if(x.type==='stop'){cancelThink();shuffleTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
++ }catch(e){disabled=true;paused=true;shuffleTap.disarm();postMessage({type:'error',message:e.message});resetHumanTransport();if(duel?.handle)send()}};
+diff --git a/tests/r23-fx.test.mjs b/tests/r23-fx.test.mjs
+index 1277cf3..f8ba133 100644
+--- a/tests/r23-fx.test.mjs
++++ b/tests/r23-fx.test.mjs
+@@ -11,7 +11,7 @@ import {ChainDirector} from '../dist/event-data.mjs';import {createPresentation}
+ import {fxSpan,stKind,createFx} from '../dist/fx-r23.mjs';import {Soundscape,SOUND_EVENTS} from '../dist/sound-engine.mjs';import {jazzBeat,chordAt,beatSeconds,JAZZ_THEMES,SWING} from '../dist/jazz-score.mjs';
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ // 1. Pace.
+-const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda','dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7'/* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
++const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'23cb033e6b872336b28cf46f1f291786fcf6265a4fb4c3626cc4ba40b6e71873'/* r35 item 8 re-pin: shuffle overlay lines only, proven by tests/r35-shuffle-app-pin.test.mjs */,'dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7'/* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
+ for(const [f,h] of Object.entries(PINNED))assert.equal(sha(f),h,f+' must be unchanged from r22b (pace, holds, think time)');
+ // r24 restyles the summon scene (card art, materials as cards); its timing table must stay the same.
+ // r26: Kevy approved longer cutscenes (21 Oct 23:05); the B2 summon scene is now the one Fusion/Synchro/Xyz/Link cutscene
+diff --git a/tests/r35-shuffle-app-pin.test.mjs b/tests/r35-shuffle-app-pin.test.mjs
+new file mode 100644
+index 0000000..984db3d
+--- /dev/null
++++ b/tests/r35-shuffle-app-pin.test.mjs
+@@ -0,0 +1,17 @@
++// r35 item 8 (Claude, 28 Oct 2026). SELF-VERIFIED. app.mjs is a PINNED file (tests/r23-fx.test.mjs: pace, holds, think time).
++// The deck-shuffle overlay adds only these lines to it. Taking exactly them out must give back the previously pinned
++// app.mjs byte for byte (sha256 c7ff1ee0..., r32.1), so nothing else in app.mjs changed.
++import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
++let s=fs.readFileSync('dist/app.mjs','utf8');
++const UNDO=[
++ ["\nimport {ShuffleOverlay} from './shuffle-overlay.mjs';// r35 item 8: deck-shuffle overlay (RELAY-046; decorative, never blocks or talks to the worker)",''],
++ ["\nconst shuffleOverlay=new ShuffleOverlay({sound,view:()=>view,options:()=>({enabled:preferences.shuffleFx!==false&&preferences.preset!=='instant',reduced:!!preferences.motion||!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches})});document.addEventListener('visibilitychange',()=>{if(document.hidden)shuffleOverlay.cancel()});",''],
++ ["beforeRewind:()=>{shuffleOverlay.reset();return invalidateHumanContext()}}","beforeRewind:invalidateHumanContext}"],
++ ["presentation.reset();shuffleOverlay.reset();","presentation.reset();",3],
++ ["{shuffleOverlay.cancel();resetHumanInteraction();","{resetHumanInteraction();"],
++ ["worker.onerror=e=>{shuffleOverlay.reset();","worker.onerror=e=>{"],
++ ["shuffleOverlay.viewChanged();shuffleOverlay.accept(x.shuffle);",""]];
++for(const [a,b,n=1] of UNDO){assert.equal(s.split(a).length-1,n,'expected '+n+'x: '+a.slice(0,60));s=s.split(a).join(b)}
++assert.ok(!s.includes('shuffleOverlay')&&!s.includes('ShuffleOverlay'),'no other shuffle change');
++assert.equal(crypto.createHash('sha256').update(s).digest('hex'),'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda','app.mjs minus the shuffle lines = the r32.1 pinned app.mjs');
++console.log(JSON.stringify({test:'r35-shuffle-app-pin',pass:true,node:process.version}));
+diff --git a/tests/r35-shuffle-native.test.mjs b/tests/r35-shuffle-native.test.mjs
+new file mode 100644
+index 0000000..8dfdb2a
+--- /dev/null
++++ b/tests/r35-shuffle-native.test.mjs
+@@ -0,0 +1,54 @@
++// r35 item 8 (Claude, 28 Oct 2026). SELF-VERIFIED (builder = verifier), NOT independent. NATIVE engine detection fixture
++// for the deck-shuffle tap (RELAY-046 "Detection fixture"; Seto 27 Oct 10:10). The real ShuffleTap is installed on a real
++// Duel before its first start (as worker.mjs does), and an INDEPENDENT raw recorder (wrapped outside it) logs every
++// SHUFFLE_DECK / SHUFFLE_HAND the engine sends. The tap must report exactly the armed-time SHUFFLE_DECK messages, by seat.
++//  S1 startup: the engine's start-up shuffles (a SHUFFLE_HAND here) are never captured (disarmed until start returns).
++//  S2 a search (Aluber the Jester of Despia adds a Branded card from the Deck): the engine sends SHUFFLE_HAND then
++//     SHUFFLE_DECK for that seat; the tap captures exactly one entry, seat 0, after the Deck-to-hand move event.
++//  S3 a draw (Deck-to-hand MOVE with no shuffle) captures nothing.
++//  S4 first = 1: the engine numbers players the other way; the tap still reports canonical seat 0.
++//  S5 reconstruction (rewind / start-with-responses / import): replaying the same responses into a fresh duel while the
++//     tap is disarmed captures nothing although the raw recorder sees the same shuffle; arming afterwards works.
++import assert from 'node:assert/strict';
++import {engine,stopEngine,scenario,drive,labels,seatOf,M} from '../tools/s3-harness.mjs';
++import {ShuffleTap} from '../dist/shuffle-tap.mjs';import {OcgResponseType as R} from '../dist/core/index.js';
++// End Phase hand-size discard (going second the search leaves 7 cards): discard the minimum, last cards first.
++const discard=dd=>{const m=dd.prompt;if(seatOf(m)!==0||m.type!==M.SELECT_CARD||labels(dd).length)return false;const n=(m.selects||[]).length,k=Math.max(1,m.min||1);dd.respond({type:R.SELECT_CARD,indicies:Array.from({length:k},(_,i)=>n-1-i)});return true};
++await engine();
++const ALUBER='Aluber the Jester of Despia';
++function make(first){const raw=[],tap=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});
++ const d=scenario(['branded','blueeyes'],[{name:ALUBER,location:2,owner:0}],{first,beforeStart:d=>{tap.install(d);const inner=d.handleMessage;
++  d.handleMessage=function(m){const r=inner.call(this,m);if(m.type===M.SHUFFLE_DECK||m.type===M.SHUFFLE_HAND)raw.push({kind:m.type===M.SHUFFLE_DECK?'deck':'hand',seat:this.fromEngine(m.player),afterEventId:this.eventSeq});return r}}});
++ return {d,tap,raw}}
++const toMain=d=>drive(d,{steps:{1:['End turn']},until:dd=>seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_IDLECMD});/* first = 1: seat 1 ends turn 1 */
++function search(d){const step=labels(d).find(l=>/^Normal Summon · Aluber/.test(l));assert.ok(step,'Aluber can be Normal Summoned: turn '+d.turn+' '+JSON.stringify(labels(d).slice(0,6)));let picked=null;
++ const r=drive(d,{steps:{0:[step,'Your Monster zone 1','Yes']},until:dd=>dd.prompt&&seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_CARD});assert.ok(r.stopped,'reached the search choice');
++ picked=d.name(d.prompt.selects[0].code);const r2=drive(d,{steps:{0:['pick:'+picked]},until:dd=>seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_IDLECMD});assert.ok(r2.stopped);return picked}
++const results={};
++for(const first of [0,1]){
++ const {d,tap,raw}=make(first);
++ // S1: start-up happened while disarmed.
++ assert.ok(raw.length>=0);const startRaw=raw.length;tap.arm();assert.deepEqual(tap.drain().shuffles,[],'S1: no start-up capture');
++ assert.ok(toMain(d).stopped,'seat 0 main phase');assert.deepEqual(tap.drain().shuffles,[],'nothing before the search (incl. seat 0\'s own draw when going second)');
++ const before=raw.length,picked=search(d),fresh=raw.slice(before),decks=fresh.filter(x=>x.kind==='deck');
++ assert.ok(decks.length>=1,'the engine sent a SHUFFLE_DECK for the search: '+JSON.stringify(fresh));
++ const got=tap.drain().shuffles;
++ assert.deepEqual(got.map(s=>[s.seat,s.afterEventId]),decks.map(x=>[x.seat,x.afterEventId]),'S2: exactly the SHUFFLE_DECK messages, seat and position');
++ assert.ok(got.every(s=>s.seat===0),'S2/S4: canonical seat 0 (first='+first+')');
++ const mv=d.events.filter(e=>e.type==='move'&&e.from?.location===1&&e.to?.location===2&&e.id<=got[0].afterEventId);assert.ok(mv.length,'after the Deck-to-hand move event');
++ assert.ok(fresh.some(x=>x.kind==='hand'),'the engine also sent a SHUFFLE_HAND here');assert.equal(got.length,decks.length,'hand shuffles are not reported');
++ // S3: end the turn; the opponent draws (Deck-to-hand MOVE, no shuffle) - nothing new.
++ const drawsBefore=d.events.filter(e=>e.type==='draw').length,rawDeckBefore=raw.filter(x=>x.kind==='deck').length;
++ const searchTurn=d.turn,rEnd=drive(d,{steps:{0:['End turn']},onPrompt:discard,until:dd=>dd.turn>searchTurn&&dd.prompt&&seatOf(dd.prompt)===1&&dd.prompt.type===M.SELECT_IDLECMD});assert.ok(rEnd.stopped,'the opponent\'s next turn: '+JSON.stringify(rEnd).slice(0,400));
++ const newDeck=raw.filter(x=>x.kind==='deck').length-rawDeckBefore,got3=tap.drain().shuffles;
++ assert.ok(d.events.filter(e=>e.type==='draw').length>drawsBefore,'the opponent drew (a Deck-to-hand move)');
++ assert.equal(got3.length,newDeck,'S3: captures equal the raw SHUFFLE_DECK count across the draw ('+newDeck+')');
++ results['first'+first]={startRaw,searchRaw:fresh,captured:got,picked,turn2DeckShuffles:newDeck};
++ // S5: reconstruction into a fresh duel (same seed, same placements) while disarmed: nothing captured.
++ const history=d.responseHistory.slice();d.stop();
++ const b=make(first);for(const r of history){if(b.d.finished)break;b.d.respond(r)}
++ assert.ok(b.raw.some(x=>x.kind==='deck'),'S5: the engine re-sent the shuffle during the replay');assert.deepEqual(b.tap.drain().shuffles,[],'S5: suppressed while disarmed');
++ b.tap.arm();assert.deepEqual(b.tap.drain().shuffles,[],'arming does not replay anything');b.d.stop();
++}
++stopEngine();
++console.log(JSON.stringify({test:'r35-shuffle-native',pass:true,node:process.version,results}));
+diff --git a/tests/r35-shuffle-overlay.test.mjs b/tests/r35-shuffle-overlay.test.mjs
+new file mode 100644
+index 0000000..f18c199
+--- /dev/null
++++ b/tests/r35-shuffle-overlay.test.mjs
+@@ -0,0 +1,74 @@
++// r35 item 8 (Claude, 28 Oct 2026). SELF-VERIFIED (builder = verifier), NOT independent. The deck-shuffle overlay
++// (dist/shuffle-overlay.mjs) and the owned riffle (Soundscape.shuffleRiffle) against shuffle spec v2 items 3-7 and Seto's
++// 27 Oct overload ruling, with a fake DOM, a manual clock and a fake AudioContext. Not a browser or tablet test.
++import assert from 'node:assert/strict';import fs from 'node:fs';
++import {ShuffleOverlay,SHUFFLE_MS,SPLIT_MS,MAX_WAITING,EXPIRE_MS,SPRITES} from '../dist/shuffle-overlay.mjs';
++import {Soundscape} from '../dist/sound-engine.mjs';
++// --- fakes ---
++class El{constructor(tag){this.tag=tag;this.style={};this.children=[];this.attrs={};this.parent=null;this.anims=[]}
++ appendChild(c){c.parent=this;this.children.push(c);return c}remove(){if(this.parent){this.parent.children=this.parent.children.filter(x=>x!==this);this.parent=null}}
++ setAttribute(k,v){this.attrs[k]=v}animate(frames,o){const a={frames,o,cancelled:false,cancel(){this.cancelled=true}};this.anims.push(a);return a}}
++function world(){let t=0,timers=[];const body=new El('body'),piles={0:new El('pile0'),1:new El('pile1')};
++ for(const s of [0,1])piles[s].getBoundingClientRect=()=>({left:s?10:300,top:s?10:400,width:60,height:84});
++ const doc={hidden:false,body,createElement:tag=>new El(tag),querySelector:q=>{const m=/data-deck-pile="(\d)"/.exec(q);return m?piles[m[1]]||null:null}};
++ const riffles=[];const sound={shuffleRiffle:o=>{const h={o,at:t,cancelled:false,cancel(){this.cancelled=true}};riffles.push(h);return h}};
++ const opts={enabled:true,reduced:false};let view=0;
++ const ov=new ShuffleOverlay({doc,sound,now:()=>t,setTimer:(f,ms)=>{const x={f,at:t+ms,done:false};timers.push(x);return x},clearTimer:x=>{if(x)x.done=true},options:()=>opts,view:()=>view});
++ const advance=ms=>{const end=t+ms;for(;;){const next=timers.filter(x=>!x.done&&x.at<=end).sort((a,b)=>a.at-b.at)[0];if(!next)break;t=next.at;next.done=true;next.f()}t=end};
++ const layers=()=>body.children.filter(c=>c.attrs['aria-hidden']==='true');
++ return {ov,doc,body,riffles,opts,advance,layers,setView:v=>{view=v},now:()=>t,timers}}
++const env=(epoch,...items)=>({epoch,shuffles:items.map(([id,seat])=>({id,seat,afterEventId:id})),dropped:0});
++// 1. One shuffle: a pointer-transparent layer at the seat's pile, fixed sprite count (<= 8), riffle at the split, gone at 400 ms.
++{const w=world();w.ov.accept(env(1,[1,0]));const L=w.layers();assert.equal(L.length,1);const layer=L[0];
++ assert.equal(layer.style.pointerEvents,'none');assert.equal(layer.style.position,'fixed');assert.equal(layer.style.left,'300px','seat 0 pile');
++ const backs=layer.children.length-1;assert.equal(backs,SPRITES);assert.ok(layer.children.length<=8,'max 8 sprites incl. the gleam');
++ const frames=layer.children.flatMap(c=>c.anims.flatMap(a=>a.frames));assert.ok(frames.every(f=>Object.keys(f).every(k=>['transform','opacity','offset'].includes(k))),'transforms / opacity only');
++ assert.equal(w.riffles.length,0);w.advance(SPLIT_MS);assert.equal(w.riffles.length,1);assert.equal(w.riffles[0].at,SPLIT_MS,'riffle starts at the split');assert.equal(w.riffles[0].o.seat,0,'our deck pans as ours');
++ w.advance(SHUFFLE_MS-SPLIT_MS);assert.equal(w.layers().length,0,'cleaned up at 400 ms');assert.equal(w.riffles[0].cancelled,false,'a finished riffle is not cut')}
++// 2. Dedupe: the same envelope again, or a lower id, never replays; ids are per epoch.
++{const w=world();w.ov.accept(env(1,[1,1]));w.ov.accept(env(1,[1,1]));w.advance(SHUFFLE_MS);assert.equal(w.ov.played,1);
++ w.ov.accept(env(1,[1,0]));assert.equal(w.ov.played,1,'id 1 already seen in epoch 1');
++ w.ov.accept(env(2,[1,0]));assert.equal(w.ov.played,2,'a new epoch (rewind / new duel) starts its ids again')}
++// 3. A new epoch cancels the playing effect and its riffle at once (no catch-up).
++{const w=world();w.ov.accept(env(1,[1,0]));w.advance(SPLIT_MS+10);w.ov.accept(env(2));assert.equal(w.layers().length,0);assert.equal(w.riffles[0].cancelled,true,'owned riffle cancelled')}
++// 4. Overload: one active + 4 waiting; drop the oldest waiting; order of survivors kept.
++{const w=world();w.ov.accept(env(1,[1,0],[2,1],[3,0],[4,1],[5,0],[6,1],[7,0]));assert.equal(w.ov.waiting.length,MAX_WAITING);assert.equal(w.ov.dropped,2);
++ assert.deepEqual(w.ov.waiting.map(x=>x.id),[4,5,6,7]);const seen=[];for(let i=0;i<6;i++){seen.push(w.ov.active?.item.id);w.advance(SHUFFLE_MS)}
++ assert.deepEqual(seen.filter(Boolean),[1,4,5],'capture order, one at a time; 6 and 7 would start 1.2 s late, so they expire (800 ms rule)');assert.equal(w.ov.dropped,4);assert.ok(w.layers().length<=1)}
++// 5. Waiting items older than 800 ms expire instead of playing late.
++{const w=world();w.ov.accept(env(1,[1,0],[2,0],[3,0]));w.advance(SHUFFLE_MS);/* 2 starts at 400 */w.advance(SHUFFLE_MS);/* 3 waited 800 */
++ assert.equal(w.ov.active?.item.id,3,'800 ms exactly is still in time');const w2=world();w2.ov.accept(env(1,[1,0]));w2.ov.waiting.push({id:9,seat:1,at:w2.now()-EXPIRE_MS-1});w2.advance(SHUFFLE_MS);assert.equal(w2.ov.active,null,'expired');assert.equal(w2.ov.dropped,1)}
++// 6. Instant / feature off / background: nothing plays, nothing queues, ids still marked seen (no late playback).
++{const w=world();w.opts.enabled=false;w.ov.accept(env(1,[1,0],[2,1]));assert.equal(w.ov.played,0);assert.equal(w.ov.waiting.length,0);
++ w.opts.enabled=true;w.ov.accept(env(1,[1,0],[2,1]));assert.equal(w.ov.played,0,'no catch-up after Instant');
++ w.doc.hidden=true;w.ov.accept(env(1,[3,0]));assert.equal(w.ov.played,0,'hidden tab: not played');w.doc.hidden=false;w.ov.accept(env(1,[3,0]));assert.equal(w.ov.played,0,'not later either');
++ w.ov.accept(env(1,[4,0]));assert.equal(w.ov.played,1,'a new shuffle after resume plays')}
++// 7. Turning Instant on mid-effect cancels it at the next envelope.
++{const w=world();w.ov.accept(env(1,[1,0]));w.opts.enabled=false;w.ov.accept(env(1));assert.equal(w.layers().length,0)}
++// 8. Reduced motion (app or OS): a static gleam only, no card backs; the riffle still follows the user's sound setting.
++{const w=world();w.opts.reduced=true;w.ov.accept(env(1,[1,1]));const layer=w.layers()[0];assert.equal(layer.children.length,1,'gleam only');
++ assert.ok(layer.children[0].anims[0].frames.every(f=>!('transform' in f)),'no movement');w.advance(SPLIT_MS);assert.equal(w.riffles.length,1)}
++// 9. A view change (seat swap / control) cancels the playing effect without re-emitting it; the anchor is found by seat.
++{const w=world();w.ov.accept(env(1,[1,1]));assert.equal(w.layers()[0].style.left,'10px','seat 1 pile');w.ov.viewChanged();assert.equal(w.layers().length,1,'same view: kept');
++ w.setView(1);w.ov.viewChanged();assert.equal(w.layers().length,0);w.ov.accept(env(1,[1,1]));assert.equal(w.ov.played,1,'not re-emitted');
++ w.ov.accept(env(1,[2,1]));w.advance(SPLIT_MS);assert.equal(w.riffles.at(-1).o.seat,0,'after the swap seat 1 is ours')}
++// 10. Cancel / reset (new duel, stop, worker error): everything goes now, the pending timers do nothing later.
++{const w=world();w.ov.accept(env(1,[1,0],[2,0]));w.ov.reset();assert.equal(w.layers().length,0);assert.equal(w.ov.waiting.length,0);w.advance(2000);assert.equal(w.riffles.length,0,'no late riffle');assert.equal(w.ov.played,1);
++ w.ov.accept(env(1,[1,0]));assert.equal(w.ov.played,2,'reset forgets the epoch, so the next envelope is fresh')}
++// 11. A missing pile (field not drawn) is skipped, the next one plays; garbage never throws.
++{const w=world();w.doc.querySelector=()=>null;w.ov.accept(env(1,[1,0]));assert.equal(w.ov.played,0);assert.equal(w.ov.dropped,1);
++ for(const bad of [null,{},{epoch:'x'},{epoch:1,shuffles:[null,{id:2,seat:5},{id:'a',seat:0}]}])w.ov.accept(bad)}
++// 12. The overlay module is decorative only: no imports, no worker / presentation / timing hooks.
++{const src=fs.readFileSync('dist/shuffle-overlay.mjs','utf8').split('\n').filter(l=>!l.trim().startsWith('//')).join('\n').replace(/\/\*[\s\S]*?\*\//g,'');/* code only */assert.ok(!/^\s*import\b/m.test(src),'no imports');
++ for(const bad of ['postMessage','presentation-done','skip-scene','presentationUntil','Math.random','duel.log'])assert.ok(!src.includes(bad),bad)}
++// 13. Soundscape.shuffleRiffle: owned sources on the existing SFX path; cancel stops only them; silent when unavailable.
++{class Node{connect(){}disconnect(){}}class Param{setValueAtTime(){}linearRampToValueAtTime(){}exponentialRampToValueAtTime(){}setTargetAtTime(){}cancelScheduledValues(){}}
++ class Src extends Node{constructor(){super();this.stopped=0}start(){}stop(){this.stopped++}}
++ const ctx={state:'running',currentTime:0,createBufferSource:()=>new Src(),createBiquadFilter:()=>Object.assign(new Node(),{frequency:new Param()}),createGain:()=>Object.assign(new Node(),{gain:new Param()}),createStereoPanner:()=>Object.assign(new Node(),{pan:{value:0}})};
++ const s=new Soundscape({enabled:true});s.context=ctx;s.noiseBuffer={};s.buses={sfx:Object.assign(new Node(),{gain:new Param()}),master:Object.assign(new Node(),{gain:new Param()})};
++ const other=s.noise(.3,{});assert.ok(other instanceof Src,'noise() now returns its source');
++ const h=s.shuffleRiffle({seat:1});assert.ok(h&&typeof h.cancel==='function');assert.equal(s.sources.size,9,'8 riffle ticks + the unrelated sound');assert.equal(s.seat,0,'pan seat restored');
++ const mine=[...s.sources].filter(x=>x!==other);h.cancel();assert.ok(mine.every(x=>x.stopped===1+1),'riffle sources stopped (scheduled stop + cancel)');assert.equal(other.stopped,1,'the unrelated sound only has its own scheduled stop');h.cancel();
++ s.enabled=false;assert.equal(s.shuffleRiffle(),null,'muted: nothing');s.enabled=true;ctx.state='suspended';assert.equal(s.shuffleRiffle(),null,'suspended audio: dropped, never resumed');
++ const s2=new Soundscape({});assert.equal(s2.shuffleRiffle(),null,'not unlocked: nothing')}
++console.log(JSON.stringify({test:'r35-shuffle-overlay',pass:true,node:process.version}));
+diff --git a/tests/r35-shuffle-tap.test.mjs b/tests/r35-shuffle-tap.test.mjs
+new file mode 100644
+index 0000000..f7ee7c2
+--- /dev/null
++++ b/tests/r35-shuffle-tap.test.mjs
+@@ -0,0 +1,43 @@
++// r35 item 8 (Claude, 28 Oct 2026). SELF-VERIFIED (builder = verifier), NOT independent. Unit tests of dist/shuffle-tap.mjs
++// against Seto's 27 Oct 10:10 conditions for the RELAY-046 Tap B interposition (synthetic duel objects, no engine).
++import assert from 'node:assert/strict';
++import {ShuffleTap,SHUFFLE_MAX_PENDING} from '../dist/shuffle-tap.mjs';
++import {M} from '../dist/duel.mjs';
++assert.ok(Number.isInteger(M.SHUFFLE_DECK)&&Number.isInteger(M.SHUFFLE_HAND)&&M.SHUFFLE_DECK!==M.SHUFFLE_HAND);
++class FakeDuel{constructor(first=0){this.order=first===0?[0,1]:[1,0];this.fromEngine=p=>this.order[p];this.eventSeq=0;this.seen=[]}
++ handleMessage(m){this.seen.push(m);this.eventSeq++;if(m.boom)throw Error('original failed');return 'r'+this.eventSeq}}
++const SD=p=>({type:M.SHUFFLE_DECK,player:p}),SH=p=>({type:M.SHUFFLE_HAND,player:p});
++// 1. The original runs first, once, with the same receiver and message; its result is returned.
++{const d=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);t.arm();const m=SD(0);
++ assert.equal(d.handleMessage(m),'r1');assert.equal(d.seen.length,1);assert.equal(d.seen[0],m,'same message object');
++ assert.ok(Object.prototype.hasOwnProperty.call(d,'handleMessage'),'own property on the instance');assert.notEqual(FakeDuel.prototype.handleMessage,d.handleMessage,'the prototype is untouched');
++ assert.deepEqual(t.drain(),{epoch:0,shuffles:[{id:1,seat:0,afterEventId:1}],dropped:0},'scalars only, afterEventId copied AFTER the original')}
++// 2. The original's error propagates unchanged and nothing is captured.
++{const d=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);t.arm();
++ assert.throws(()=>d.handleMessage({...SD(0),boom:true}),/original failed/);assert.equal(t.drain().shuffles.length,0)}
++// 3. Not armed (startup, reconstruction): nothing captured. SHUFFLE_HAND and other messages: never.
++{const d=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);d.handleMessage(SD(0));assert.equal(t.drain().shuffles.length,0,'disarmed');
++ t.arm();d.handleMessage(SH(0));d.handleMessage({type:M.MOVE,player:0});assert.equal(t.drain().shuffles.length,0,'hand shuffle / move are not deck shuffles')}
++// 4. Seat mapping through the duel's own fromEngine (first = 1 swaps engine players).
++{const d=new FakeDuel(1),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);t.arm();d.handleMessage(SD(0));d.handleMessage(SD(1));
++ assert.deepEqual(t.drain().shuffles.map(s=>s.seat),[1,0]);d.handleMessage({type:M.SHUFFLE_DECK,player:7});assert.equal(t.drain().shuffles.length,0,'an unmapped player is ignored')}
++// 5. Order and distinct ids for several shuffles in one respond; drain once.
++{const d=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);t.arm();for(const p of [1,0,1])d.handleMessage(SD(p));
++ const e=t.drain();assert.deepEqual(e.shuffles.map(s=>[s.id,s.seat]),[[1,1],[2,0],[3,1]]);assert.deepEqual(t.drain().shuffles,[],'drained once: a repeated send replays nothing')}
++// 6. Bounded: at most 32 pending between sends; extra ones are counted, not kept; ids stay monotone.
++{const d=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);t.arm();for(let i=0;i<SHUFFLE_MAX_PENDING+5;i++)d.handleMessage(SD(0));
++ const e=t.drain();assert.equal(SHUFFLE_MAX_PENDING,32);assert.equal(e.shuffles.length,32);assert.equal(e.dropped,5);d.handleMessage(SD(0));assert.equal(t.drain().shuffles[0].id,38)}
++// 7. Lifecycle: reset = disarm + clear + new epoch + ids from 1; disarm keeps the epoch; arm after reconstruction.
++{const d=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);t.arm();d.handleMessage(SD(0));
++ t.reset();assert.equal(t.armed,false);d.handleMessage(SD(0));/* reconstruction replay */t.arm();d.handleMessage(SD(1));
++ assert.deepEqual(t.drain(),{epoch:1,shuffles:[{id:1,seat:1,afterEventId:3}],dropped:0},'the pre-reset capture is gone; the replayed one was suppressed');
++ d.handleMessage(SD(0));t.disarm();assert.deepEqual(t.drain(),{epoch:1,shuffles:[],dropped:0},'stop / error: cleared, same epoch')}
++// 8. One duel object only: idempotent for the same object, refuses another (never clones / AI duels).
++{const d=new FakeDuel(),e=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);const w=d.handleMessage;t.install(d);assert.equal(d.handleMessage,w,'installed once');
++ assert.throws(()=>t.install(e),/one duel object/);const clone=Object.create(d);t.arm();clone.handleMessage(SD(0));assert.equal(t.drain().shuffles.length,0,'a view / clone receiver is not captured')}
++// 9. The capture fails open: a broken fromEngine never breaks the duel.
++{const d=new FakeDuel(),t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});t.install(d);t.arm();d.fromEngine=()=>{throw Error('x')};assert.equal(d.handleMessage(SD(0)),'r1');assert.equal(t.drain().shuffles.length,0)}
++// 10. The envelope is sent even when empty (epoch visible to the UI) and carries no message fields.
++{const t=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});assert.deepEqual(Object.keys(t.drain()).sort(),['dropped','epoch','shuffles'])}
++assert.throws(()=>new ShuffleTap({}),/SHUFFLE_DECK/);
++console.log(JSON.stringify({test:'r35-shuffle-tap',pass:true,node:process.version}));
+diff --git a/tools/r35-shuffle-paired.mjs b/tools/r35-shuffle-paired.mjs
+new file mode 100644
+index 0000000..fbcd424
+--- /dev/null
++++ b/tools/r35-shuffle-paired.mjs
+@@ -0,0 +1,33 @@
++// r35 item 8 (Claude, 28 Oct 2026): paired tap-OFF / tap-ON probe for the deck-shuffle tap (RELAY-046 section 5, Seto
++// 27 Oct proof scope). Runs ONE worker module in this Node process exactly as the browser would message it (start, then a
++// presentation-done after every state, then export-replay / export), CPU vs CPU ('watch'), and prints a JSON manifest:
++// response bytes sha256, duel log text sha256, final LP / winner / reason, retries / errors, and the shuffle envelopes seen.
++// SCOPE: Node has no Worker, so worker.mjs takes its synchronous AI path (no AI worker, no live deadlines / caps). This is
++// evidence that the data path does not change the duel; it is NOT the live browser deadline/cap comparison, which needs a
++// quiet machine and a real browser (pending).
++//   node tools/r35-shuffle-paired.mjs --worker dist/worker.mjs --seed 2026 --first 0 --decks branded,blueeyes [--max-states 4000]
++import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {pathToFileURL} from 'node:url';
++const arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v};
++const workerPath=path.resolve(arg('worker','dist/worker.mjs')),seed=+arg('seed',2026),first=+arg('first',0),ids=arg('decks','branded,blueeyes').split(','),maxStates=+arg('max-states',4000),preset=arg('preset','instant');
++const dist=path.dirname(workerPath);const sha=s=>crypto.createHash('sha256').update(s).digest('hex');
++globalThis.fetch=async url=>{const f=path.join(dist,String(url));const b=fs.readFileSync(f);return {ok:true,arrayBuffer:async()=>b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength)}};
++const decksAll=JSON.parse(fs.readFileSync(path.join(dist,'decks.json'))).decks,v19=id=>{const x=decksAll.find(y=>y.id===id);return {...x,...(x.banlistVariants?.['tcg-2026-10-19']||{})}};
++const t0=Date.now();let states=0,replay=null,exportText=null,errors=[],notices=[],envelopes=[],last=null,done;const finished=new Promise(r=>done=r);
++globalThis.onmessage=null;
++globalThis.postMessage=x=>{
++ if(x.type==='state'){states++;last=x;if(states%25===0)process.stderr.write(`[paired] ${path.basename(workerPath)} seed ${seed} first ${first}: ${states} states, turn ${x.state.turn}, ${Math.round((Date.now()-t0)/1000)} s\n`);if(x.shuffle)envelopes.push({epoch:x.shuffle.epoch,n:x.shuffle.shuffles.length,dropped:x.shuffle.dropped,items:x.shuffle.shuffles.map(s=>[s.id,s.seat,s.afterEventId])});
++  if(x.state.finished||x.disabled||states>=maxStates){if(!replay)setTimeout(()=>{send({type:'export-replay'});send({type:'export'})},0);return}
++  setTimeout(()=>send({type:'presentation-done',eventId:x.lastEventId}),0)}
++ else if(x.type==='export-replay'){replay=x.replay}
++ else if(x.type==='export'){exportText=x.text;done()}
++ else if(x.type==='error')errors.push(x.message);else if(x.type==='notice')notices.push(x.message)};
++await import(pathToFileURL(workerPath).href);
++const send=data=>globalThis.onmessage({data});
++send({type:'start',decks:ids.map(v19),seed,first,view:0,mode:'watch',study:false,preset,delay:1,cinematics:false,doctrine:true,interactionProtocol:1});
++await finished;
++const responses=JSON.stringify(replay?.responses||[]);
++const out={worker:path.relative(process.cwd(),workerPath),workerSha256:sha(fs.readFileSync(workerPath)),node:process.version,seed,first,decks:ids,preset,
++ decisions:replay?.responses?.length||0,responsesSha256:sha(responses),logSha256:sha(exportText||''),finished:!!last?.state?.finished,winner:last?.state?.winner??null,winReason:last?.state?.winReason??null,
++ lp:last?.state?.players?.map(p=>p.lp),turn:last?.state?.turn,states,errors,notices,
++ shuffleEnvelopes:envelopes.length,shuffleEntries:envelopes.reduce((a,e)=>a+e.n,0),shuffleItems:envelopes.flatMap(e=>e.items),epochs:[...new Set(envelopes.map(e=>e.epoch))],wallMs:Date.now()-t0};
++console.log(JSON.stringify(out));process.exit(0);
+diff --git a/tools/s3-harness.mjs b/tools/s3-harness.mjs
+new file mode 100644
+index 0000000..d82d468
+--- /dev/null
++++ b/tools/s3-harness.mjs
+@@ -0,0 +1,38 @@
++// S3 native-fixture harness (Claude, 28 Oct 2026). Used by tests/r35-s3-*.test.mjs and tools/s3-explore.mjs.
++// scenario(): starts a real duel on the 19 Oct lists with named cards dealt to chosen zones at creation (the same engine
++// call that fills the decks; any printing of the name; owner = seat). drive(): plays scripted steps for each seat by the
++// engine's own choice labels ('pick:Name' for card prompts), passes every other window, and calls hooks so a test can
++// stop at an exact window and let the real AI answer it.
++import assert from 'node:assert/strict';import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++import {Duel,M} from '../dist/duel.mjs';import {OcgResponseType as R} from '../dist/core/index.js';
++export const db=JSON.parse(gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
++const decks=JSON.parse(fs.readFileSync('dist/decks.json')).decks;
++export const v19=id=>{const x=decks.find(y=>y.id===id);return {...x,...(x.banlistVariants?.['tcg-2026-10-19']||{})}};
++export const code=n=>+Object.keys(db).find(k=>db[k].name===n);
++let live=null;export async function engine(){return live||(live=await Duel.create(db,scripts))}
++export function stopEngine(){live?.stop();live=null}
++export function scenario(deckIds,placements,{first=0,seed=7,beforeStart=null}={}){assert.ok(live,'call engine() first');const core=live.core,orig=core.duelNewCard;
++ const left=placements.map(p=>({...p,codes:new Set(Object.keys(db).filter(k=>db[k].name===p.name).map(Number))}));let d;
++ core.duelNewCard=(h,info)=>{const p=left.find(x=>!x.used&&x.codes.has(info.code)&&d.toEngine(x.owner)===info.team);if(p){p.used=true;info={...info,location:p.location,sequence:p.sequence??0,position:p.position??1}}return orig.call(core,h,info)};
++ d=new Duel(core,db,scripts);beforeStart?.(d);/* r35 item 8: e.g. install the shuffle tap before the first start, as worker.mjs does */try{d.start(deckIds.map(v19),{seed,first})}finally{core.duelNewCard=orig}
++ assert.ok(left.every(p=>p.used),'not placed: '+left.filter(p=>!p.used).map(p=>p.name));assert.deepEqual(d.errors,[],'script errors');return d}
++export const seatOf=m=>m.seat??m.player;
++export const labels=d=>d.choices().map(c=>c.label);
++const PASS=['Do not chain','No'];
++function tryStep(d,w){const m=d.prompt,sel=m.selects||m.select_cards||[];
++ const at=w.match(/^@([^>]+)>(.*)$/);if(at){const top=d.chain?.at?.(-1);if(!top||d.name(top.code)!==at[1])return false;w=at[2]}/* '@Card>step': only while Card is on top of the chain */
++ if(w.startsWith('pick:')){if(!sel.length||![M.SELECT_CARD,M.SELECT_UNSELECT_CARD].includes(m.type))return false;const j=sel.findIndex(c=>d.name(c.code)===w.slice(5));if(j<0)return false;
++  d.respond(m.type===M.SELECT_UNSELECT_CARD?{type:R.SELECT_UNSELECT_CARD,index:j}:{type:R.SELECT_CARD,indicies:[j]});return true}
++ const c=d.choices().find(o=>o.label===w||o.label.includes(w));if(!c)return false;d.respond(c.response);return true}
++// steps: {0:[...],1:[...]} consumed in order per seat; a seat's next step is tried at each of its prompts, else the prompt
++// is passed (SELECT_CHAIN / yes-no). A step written '@Card>label' is taken only while Card's link is on top of the chain. until(d) stops before answering; onPrompt(d) may answer and return true. Returns
++// {stopped, unused} where unused lists steps never taken.
++export function drive(d,{steps={},until=null,onPrompt=null,max=200,log=null}={}){const k={0:0,1:0};
++ for(let i=0;i<max&&d.prompt;i++){const m=d.prompt,s=seatOf(m);if(until&&until(d))return {stopped:true,unused:{0:(steps[0]||[]).slice(k[0]),1:(steps[1]||[]).slice(k[1])}};
++  if(onPrompt&&onPrompt(d))continue;const w=(steps[s]||[])[k[s]];log?.(s,m.type,labels(d),w);
++  if(w&&tryStep(d,w)){k[s]++;continue}
++  const p=d.choices().find(o=>PASS.includes(o.label));if(p&&(m.type===M.SELECT_CHAIN||m.type===M.SELECT_EFFECTYN||m.type===M.SELECT_YESNO)){d.respond(p.response);continue}
++  return {stopped:false,stuck:{seat:s,type:m.type,labels:labels(d),next:w},unused:{0:(steps[0]||[]).slice(k[0]),1:(steps[1]||[]).slice(k[1])}}}
++ return {stopped:false,unused:{0:(steps[0]||[]).slice(k[0]),1:(steps[1]||[]).slice(k[1])}}}
++export const hand=(d,s)=>d.zone(s,2).filter(Boolean),field=(d,s)=>d.zone(s,4).filter(Boolean),gy=(d,s)=>d.zone(s,16).filter(Boolean);
++export {M,R};

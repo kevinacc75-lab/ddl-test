@@ -1,0 +1,54 @@
+node v22.22.0
+command: for t in tests/*.test.mjs; do timeout 1500 nice -n 19 node $t; done (cwd = /home/claude/r35.4)
+head 7d71964 (r35.4-test)
+dist tree manifest sha256: 5ca0f830f23ba73d343b3f562b09b19c6af575edb6118b83f5c3e8dd73512b25
+0 4s tests/duplicate-copy-remap.test.mjs
+0 6s tests/known-draw-alignment.test.mjs
+0 89s tests/r18b-combo-book.test.mjs
+0 22s tests/r19-batch-placement.test.mjs
+0 14s tests/r20-repair-refill.test.mjs
+0 200s tests/r21-no-passive-search.test.mjs
+0 0s tests/r22-1-artwork.test.mjs
+0 7s tests/r22-engine-wrapper.test.mjs
+0 21s tests/r22-l5-deck-bottom.test.mjs
+0 24s tests/r22-sort-search.test.mjs
+0 1s tests/r22-tcg-highlights.test.mjs
+0 7s tests/r22b-forced-battle.test.mjs
+1 1s tests/r23-fx.test.mjs
+0 3s tests/r24-soundtrack.test.mjs
+0 16s tests/r26-branded-v53-book.test.mjs
+0 2s tests/r26-cutscenes.test.mjs
+0 1029s tests/r27-deck-books.test.mjs
+0 97s tests/r28-learning-sfx-luna.test.mjs
+0 9s tests/r29-human-pace.test.mjs
+0 0s tests/r30-book-trust.test.mjs
+0 0s tests/r32-books-handtraps.test.mjs
+0 1s tests/r32-learning-captions.test.mjs
+0 59s tests/r32-mirrorjade-float.test.mjs
+0 0s tests/r32-review-fixes.test.mjs
+0 3s tests/r32-soundtrack.test.mjs
+0 1s tests/r33-1-review-fixes.test.mjs
+0 2s tests/r33-deck-brain.test.mjs
+0 2s tests/r33-deck-list.test.mjs
+0 5s tests/r33-polish.test.mjs
+0 0s tests/r34-book-additions.test.mjs
+0 0s tests/r34-play-glow.test.mjs
+0 1s tests/r35-effect-titles.test.mjs
+0 1s tests/r35-firedance-native.test.mjs
+0 2s tests/r35-hud-fit.test.mjs
+0 3s tests/r35-kitt-revive.test.mjs
+0 0s tests/r35-mikanko-plan.test.mjs
+0 1s tests/r35-ohime-revive.test.mjs
+0 1s tests/r35-pile-glow.test.mjs
+0 12s tests/r35-public-identity.test.mjs
+0 3s tests/r35-s3-kashtira-native.test.mjs
+0 0s tests/r35-s3-kitt-guard.test.mjs
+0 3s tests/r35-s3-kitt-native.test.mjs
+0 2s tests/r35-s3-sdp-native.test.mjs
+0 2s tests/r35-shuffle-native.test.mjs
+0 0s tests/r35-shuffle-overlay.test.mjs
+0 0s tests/r35-shuffle-tap.test.mjs
+0 0s tests/r35-turn-ledger.test.mjs
+0 1s tests/taskc-deck-legality.test.mjs
+0 2s tests/taskc-hero-scripts.test.mjs
+DONE
