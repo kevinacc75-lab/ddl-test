@@ -1,0 +1,2 @@
+cebebf6 r35 job 29 fix: re-pin dist/optimal-pilot.mjs in tests/r23-fx.test.mjs (it IS a pinned file - corrects Claude's rev 2 plan, which said it was not) with proof: tests/r35-cyclone-pin.test.mjs swaps back exactly the fix's three blocks and gets the pinned file (8b8c03c3..., also the frozen gate tree's copy) byte for byte. Found by the full suite (52 pass + r23-fx). SELF-VERIFIED.
+25d93da r35 job 29 fix (TEST branch, NOT merged): targeting Spell/Trap removal needs a TARGETABLE opposing Spell/Trap; Hu-Li shield per printed text

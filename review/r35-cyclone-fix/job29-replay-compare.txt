@@ -1,0 +1,14 @@
+Job 29 (seed 466300 mikanko-mikanko f1) replayed with the FIXED pilot (gate-cyclone tree = frozen gate tree + fixed optimal-pilot.mjs only), frozen gate prefix eed7e402 Node v22.22.2
+Decisions 870-885 identical to the original replay (same choices, same responses). From 886 the fix changes the play:
+884 turn 13 seat 1 choices ['Activate · Mikanko Dance - Mayowashidori', 'Activate · Mikanko Water Arabesque', 'Special Summon · Uzuhime the Manifested Mikanko'] -> pick pass | Information-set root search | same as original
+885 turn 13 seat 0 choices ['Do not chain'] -> pick pass | Save the interruption | same as original
+886 turn 14 seat 0 choices ['Chain · Cosmic Cyclone', 'Do not chain'] -> pick pass | Save the interruption | original: ['Chain · Cosmic Cyclone']
+887 turn 14 seat 1 choices ['Do not chain'] -> pick pass | Save the interruption | original: pass
+888 turn 14 seat 0 choices ['Chain · Cosmic Cyclone', 'Do not chain'] -> pick pass | Save the interruption | original: pass
+889 turn 14 seat 0 choices ['Chain · Lava Golem', 'Chain · Cosmic Cyclone'] -> pick ['Chain · Lava Golem'] | Mandatory chain choice | original: pass
+890 turn 14 seat 1 choices ['Do not chain'] -> pick pass | Save the interruption | same as original
+891 turn 14 seat 0 choices ['Chain · Cosmic Cyclone', 'Do not chain'] -> pick pass | Save the interruption | original: None
+892 turn 14 seat 0 choices ['Chain · Cosmic Cyclone', 'Do not chain'] -> pick pass | Save the interruption | original: None
+893 turn 14 seat 1 choices ['Do not chain'] -> pick pass | Save the interruption | original: None
+894 turn 14 seat 0 choices ['Chain · Cosmic Cyclone', 'Do not chain'] -> pick pass | Save the interruption | original: None
+895 turn 14 seat 0 choices ['Activate · Mikanko Fire Dance', 'Activate · Mikanko Dance - Mayowashidori', 'Activate · Cosmic Cyclone'] -> pick ['Activate · Mikanko Dance - Mayowashidori'] | Information-set root search | original: None

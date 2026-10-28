@@ -1,0 +1,222 @@
+diff --git a/dist/optimal-pilot.mjs b/dist/optimal-pilot.mjs
+index e2d6c4c..6863299 100644
+--- a/dist/optimal-pilot.mjs
++++ b/dist/optimal-pilot.mjs
+@@ -14,11 +14,31 @@ import {newBookState,idleStep,passiveCheck,setDecision,holdReason,bookPick,optio
+ export const isPayoff=n=>/Mirrorjade|Dark Dragoon|Uzuhime|Liger Dancer|Leo Dancer|Kashtira Shangri-Ira|Blue-Eyes Spirit Dragon|Blue-Eyes Ultimate Spirit Dragon|Cosmic Blazar Dragon|Masked HERO Dark Law|Destroyer Phoenix Enforcer/.test(n);/* r27 (deck review): each deck's end-board boss is protected as a cost/material/tribute and scored by search */
+ const removal=n=>/Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon|Galaxy Cyclone|Mirrorjade|Dark Dragoon|Afterburners|Widow Anchor|Infinite Impermanence|Forbidden Droplet|Called by the Grave|Shark Cannon|Harpie|S:P Little Knight/.test(n);
+ const handTrap=n=>/Ash Blossom|Droll|Mulcharmy|Infinite Impermanence/.test(n);
+-const targetable=(d,seat,c)=>{
++// r35 job 29 fix (Claude, 29 Oct 2026; Seto 00:30 / 01:25, Alexis, Akiza): can WE target this OPPOSING card with a card
++// effect? Public information only (a face-down card's identity is never used).
++//  - Hu-Li the Jewel Mikanko (printed): "While you control an Equip Card, your opponent cannot target 'Mikanko' cards you
++//    control with card effects." The shield is up when the opposing side has a FACE-UP, unnegated Hu-Li AND controls ANY
++//    Equip Card (a face-up card in ITS Spell/Trap Zone that is equipped to a monster, on either field). Under the shield
++//    their Mikanko cards are untargetable, and so is any face-down card of theirs (it may be a Mikanko card; we can't know).
++//    (Before: the Equip Card had to be equipped TO Hu-Li, and both players' zones were pooled; Hu-Li's face-up state was
++//    not checked. Job 29: Fire Dance was equipped to a monster on our field, so the old rule missed the shield.)
++//  - Catch-all for cards outside our 8-deck pool: an opposing face-up, unnegated card whose text grants "your opponent
++//    cannot target ... Spell/Trap / cards you control" makes their Spell/Trap Zone cards untargetable (conservative: we may
++//    hold a removal we could have used; we never fire one at our own cards). In our pool it matches Hu-Li only (tested).
++export const HULI='Hu-Li the Jewel Mikanko',GRANTS_ST_SHIELD=/your opponent cannot target [^.]*(Spells?|Traps?|Spell\/Traps?|cards you control)/i;
++const faceUp=c=>!!c&&!!(c.position&5);
++export function huLiShield(d,side){
++ return d.zone(side,4).some(x=>faceUp(x)&&!(x.status&1)&&d.name(x.code)===HULI)&&d.zone(side,8).some(s=>faceUp(s)&&!!s.equipCard);
++}
++function otherStShield(d,side){
++ return [...d.zone(side,4),...d.zone(side,8)].some(x=>faceUp(x)&&!(x.status&1)&&d.name(x.code)!==HULI&&GRANTS_ST_SHIELD.test(d.db[x.code]?.desc||''));
++}
++export const targetable=(d,seat,c)=>{
+  const text=d.db[c.code]?.desc||'';if(/cannot be targeted|Neither player can target|cannot target this card/i.test(text))return false;
+- const enemy=d.zone(1-seat,4).filter(Boolean),spells=[...d.zone(1-seat,8),...d.zone(seat,8)].filter(Boolean);
+- const hu=enemy.find(x=>d.name(x.code)==='Hu-Li the Jewel Mikanko'&&!(x.status&1)&&spells.some(s=>s.equipCard?.controller===1-seat&&s.equipCard?.sequence===x.sequence));
+- return !(hu&&/Mikanko/.test(d.name(c.code)));
++ const foe=1-seat;
++ if(huLiShield(d,foe)&&(!faceUp(c)||/Mikanko/.test(d.name(c.code))))return false;
++ if(c.location===8&&otherStShield(d,foe))return false;
++ return true;
+ };
+ export function activationBlock(d,seat,c){
+  if(d.prompt?.type===M.SELECT_CHAIN&&d.prompt.forced&&c.client_mode===1)return null;
+@@ -27,7 +47,12 @@ export function activationBlock(d,seat,c){
+  if(n==='Forbidden Droplet'&&!enemy(4).some(c=>(c.position&5)&&(d.db[c.code]?.type&32)&&!(c.status&1)))return n+' has no opposing Effect Monster to negate';
+  if(/Afterburners/.test(n)&&!enemy(4).some(c=>(c.position&5)&&targetable(d,seat,c)))return n+' has no opposing face-up target';
+  if(/Super Polymerization|Super Duper Polymerization/.test(n)&&d.chain.some(link=>link.controller===seat&&!link.solved&&d.name(link.code)==='Mirrorjade the Iceblade Dragon'))return 'Preserve the pending Mirrorjade banish; hold the follow-up Fusion';
+- if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon|Galaxy Cyclone)$/.test(n)&&!enemy(8).length)return n+' has no opposing Spell/Trap to remove';
++ // r35 job 29 fix: targeting Spell/Trap removal needs a TARGETABLE opposing Spell/Trap (not just one that exists): with
++ // none, the engine would offer only our own cards and the effect would banish/destroy one of them. Blocked before
++ // activation, so no cost is paid (Twin Twisters' discard, Tornado Dragon's detach). Galaxy Cyclone: the hand / field
++ // activation targets a SET Spell/Trap; the GY effect targets a FACE-UP one.
++ if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon)$/.test(n)&&!enemy(8).some(s=>targetable(d,seat,s)))return n+' has no targetable opposing Spell/Trap';
++ if(n==='Galaxy Cyclone'){const gy=c.location===16;if(!enemy(8).some(s=>(gy?faceUp(s):!faceUp(s))&&targetable(d,seat,s)))return n+' has no targetable opposing '+(gy?'face-up':'Set')+' Spell/Trap'}
+  if(n==='Mirrorjade the Iceblade Dragon'&&d.description(c.description).match(/Banish/i)&&!enemy(4).some(c=>c.position&5))return 'Mirrorjade has no opposing face-up monster';
+  if(/Mulcharmy/.test(n)&&d.active===seat)return 'Preserve Mulcharmy for the opposing turn';
+  if(handTrap(n)&&d.active===seat&&(!top||top.controller===seat))return 'Own-turn hand trap has no opposing effect to stop';
+diff --git a/tests/r23-fx.test.mjs b/tests/r23-fx.test.mjs
+index d7f14d5..112a110 100644
+--- a/tests/r23-fx.test.mjs
++++ b/tests/r23-fx.test.mjs
+@@ -11,7 +11,7 @@ import {ChainDirector} from '../dist/event-data.mjs';import {createPresentation}
+ import {fxSpan,stKind,createFx} from '../dist/fx-r23.mjs';import {Soundscape,SOUND_EVENTS} from '../dist/sound-engine.mjs';import {jazzBeat,chordAt,beatSeconds,JAZZ_THEMES,SWING} from '../dist/jazz-score.mjs';
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ // 1. Pace.
+-const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'70f8d6965cf8cb2817d98b3f816814fd19de7bfe370d55775e5f7064f5aa8225'/* r35 item 8 re-pin: shuffle overlay lines only, proven by tests/r35-shuffle-app-pin.test.mjs */,'dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7'/* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
++const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'70f8d6965cf8cb2817d98b3f816814fd19de7bfe370d55775e5f7064f5aa8225'/* r35 item 8 re-pin: shuffle overlay lines only, proven by tests/r35-shuffle-app-pin.test.mjs */,'dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'e2d9d01d7a191e72f0feba50d79508cf5254cb1c5b997b01b4b609e68cb540fa'/* r35 job 29 fix re-pin: three blocks only, proven by tests/r35-cyclone-pin.test.mjs *//* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
+ for(const [f,h] of Object.entries(PINNED))assert.equal(sha(f),h,f+' must be unchanged from r22b (pace, holds, think time)');
+ // r24 restyles the summon scene (card art, materials as cards); its timing table must stay the same.
+ // r26: Kevy approved longer cutscenes (21 Oct 23:05); the B2 summon scene is now the one Fusion/Synchro/Xyz/Link cutscene
+diff --git a/tests/r35-cyclone-hu-li-native.test.mjs b/tests/r35-cyclone-hu-li-native.test.mjs
+new file mode 100644
+index 0000000..a7af8f3
+--- /dev/null
++++ b/tests/r35-cyclone-hu-li-native.test.mjs
+@@ -0,0 +1,76 @@
++// r35 job 29 fix (Claude, 29 Oct 2026; Seto 00:30 + 01:25 conditions; Alexis / Akiza rulings). SELF-VERIFIED (builder =
++// verifier), NOT independent. NATIVE engine fixtures for "targeting Spell/Trap removal needs a TARGETABLE opposing
++// Spell/Trap" with Hu-Li the Jewel Mikanko's shield. The real engine is the referee: in every board the cards the engine
++// offers at Cosmic Cyclone's target prompt are compared with the pilot's targetable() view.
++//  (a) job 29 shape: their face-up Hu-Li + Mikanko Fire Dance equipped to it (an Equip Card they control); our Cosmic
++//      Cyclone in hand, our set Mikanko Spiritwalk. New rule blocks Cosmic Cyclone; the OLD rule (r35.5) did not; the engine
++//      offers only OUR card. The pilot does not activate it.
++//  (b) (a) + their Double-Edged Sword (a non-"Mikanko" Equip Spell) equipped: Cosmic Cyclone allowed; the engine offers
++//      Double-Edged Sword (not Fire Dance); the pilot's target pick is Double-Edged Sword.
++//  (c) their Hu-Li with NO Equip Card on their side, their set Mikanko Spiritwalk: shield off; allowed; the engine offers it.
++//  (d) (a) + our Forbidden Droplet negating Hu-Li: shield off; allowed; the engine offers Fire Dance.
++import assert from 'node:assert/strict';
++import {engine,stopEngine,scenario,drive,labels,seatOf,M} from '../tools/s3-harness.mjs';
++import * as NEW from '../dist/optimal-pilot.mjs';
++import {safeView} from '../dist/ai/knowledge.mjs';
++const OLD_PATH=process.env.R35_OLD_PILOT;/* optional: path to the r35.5 optimal-pilot.mjs for the before/after control */
++const OLD=OLD_PATH?await import(OLD_PATH):null;
++await engine();
++const CC='Cosmic Cyclone',HU='Hu-Li the Jewel Mikanko',FD='Mikanko Fire Dance';
++const toOurMain=d=>drive(d,{until:dd=>dd.turn>=2&&seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_IDLECMD});
++const ccCard=d=>(d.prompt.activates||[]).find(c=>d.name(c.code)===CC);
++// The engine's own target offer for Cosmic Cyclone (activated from our Main Phase), without changing the board under test:
++// done on the SAME duel at the end of each case.
++function engineOffer(d){const r=drive(d,{steps:{0:['Activate · '+CC,'Your Spell / Trap zone 2']},until:dd=>{const m=dd.prompt;return seatOf(m)===0&&m.type===M.SELECT_CARD&&dd.hint===503}});
++ assert.ok(r.stopped,'reached Cosmic Cyclone target prompt: '+JSON.stringify(r).slice(0,300));
++ return (d.prompt.selects||[]).map(c=>({name:d.name(c.code),seat:d.fromEngine(c.controller),c}))}
++const results={};
++function caseRun(label,placements,seat1Steps,check){
++ const d=scenario(['mikanko','mikanko'],placements,{first:1});
++ const r=drive(d,{steps:{1:seat1Steps},until:dd=>dd.turn>=2&&seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_IDLECMD});
++ assert.ok(r.stopped,label+': reached our Main Phase: '+JSON.stringify(r).slice(0,300));
++ const out=check(d);results[label]=out;d.stop();return out}
++const theirST=d=>d.zone(1,8).filter(Boolean),stName=(d,c)=>d.name(c.code);
++// (a)
++caseRun('a',[{name:FD,location:2,owner:1},{name:HU,location:16,owner:1},{name:CC,location:2,owner:0},{name:'Mikanko Spiritwalk',location:8,owner:0,position:10}],
++ ['Activate · '+FD,'Your Spell / Trap zone 1','pick:'+HU,'Your Monster zone 1','Face-up Attack','End turn'],d=>{
++ const v=safeView(d,0),cc=ccCard(d);assert.ok(cc,'(a) Cosmic Cyclone is offered by the engine at our idle');
++ assert.ok(NEW.huLiShield(v,1),'(a) shield up: face-up unnegated Hu-Li and their Equip Card');
++ const fd=theirST(d).find(c=>stName(d,c)===FD);assert.ok(fd?.equipCard,'(a) Fire Dance is an Equip Card');assert.equal(NEW.targetable(v,0,fd),false);
++ const block=NEW.activationBlock(v,0,cc);assert.match(block||'',/no targetable opposing Spell\/Trap/,'(a) new rule blocks Cosmic Cyclone');
++ const oldBlock=OLD?OLD.activationBlock(v,0,cc):'(old not loaded)';if(OLD)assert.equal(oldBlock,null,'(a) control: the r35.5 rule allowed it (job 29)');
++ const pilots=NEW.createOptimalPilots({seed:466300,budget:0,nodeBudget:0,searchEnabled:false}),plan=pilots[0].plan(d);
++ const chose=plan?.response?.action===5&&d.prompt.activates[plan.response.index]&&d.name(d.prompt.activates[plan.response.index].code)===CC;assert.ok(!chose,'(a) the pilot does not activate Cosmic Cyclone');
++ const offer=engineOffer(d);assert.ok(offer.length>0&&offer.every(o=>o.seat===0),'(a) engine referee: only OUR cards are legal targets: '+JSON.stringify(offer.map(o=>o.name+'@'+o.seat)));
++ return {block,oldBlock,pilotRule:plan?.rule||null,offer:offer.map(o=>o.name+'@'+o.seat)}});
++// (b)
++caseRun('b',[{name:FD,location:2,owner:1},{name:HU,location:16,owner:1},{name:'Double-Edged Sword',location:2,owner:1},{name:CC,location:2,owner:0},{name:'Mikanko Spiritwalk',location:8,owner:0,position:10}],
++ ['Activate · '+FD,'Your Spell / Trap zone 1','pick:'+HU,'Your Monster zone 1','Face-up Attack','Activate · Double-Edged Sword','Your Spell / Trap zone 2','pick:'+HU,'End turn'],d=>{
++ const v=safeView(d,0),cc=ccCard(d),des=theirST(d).find(c=>stName(d,c)==='Double-Edged Sword'),fd=theirST(d).find(c=>stName(d,c)===FD);
++ assert.ok(des&&fd,'(b) both their Equip Spells are on the field: '+theirST(d).map(c=>stName(d,c)));
++ assert.equal(NEW.targetable(v,0,des),true,'(b) Double-Edged Sword is not a Mikanko card: targetable');assert.equal(NEW.targetable(v,0,fd),false);
++ assert.equal(NEW.activationBlock(v,0,cc),null,'(b) Cosmic Cyclone allowed');
++ const offer=engineOffer(d),names=offer.filter(o=>o.seat===1).map(o=>o.name);
++ assert.deepEqual(names,['Double-Edged Sword'],'(b) engine referee: of theirs, only Double-Edged Sword is offered');
++ const pilots=NEW.createOptimalPilots({seed:1,budget:0,nodeBudget:0,searchEnabled:false}),plan=pilots[0].plan(d),pick=(plan.response.indicies||[])[0];
++ assert.equal(d.name(d.prompt.selects[pick].code),'Double-Edged Sword','(b) the pilot targets Double-Edged Sword, not our own card');
++ return {offer:offer.map(o=>o.name+'@'+o.seat),pick:d.name(d.prompt.selects[pick].code)}});
++// (c)
++caseRun('c',[{name:HU,location:4,owner:1},{name:'Mikanko Spiritwalk',location:8,owner:1,position:10},{name:CC,location:2,owner:0},{name:'Mikanko Spiritwalk',location:8,owner:0,position:10}],
++ ['End turn'],d=>{
++ const v=safeView(d,0),cc=ccCard(d),promise=theirST(d)[0];assert.ok(promise&&!(promise.position&5),'(c) their set card');
++ assert.equal(NEW.huLiShield(v,1),false,'(c) no Equip Card on their side: shield off');assert.equal(NEW.targetable(v,0,promise),true);
++ assert.equal(NEW.activationBlock(v,0,cc),null,'(c) Cosmic Cyclone allowed');
++ const offer=engineOffer(d);assert.ok(offer.some(o=>o.seat===1),'(c) engine referee: their set card is offered');
++ return {offer:offer.map(o=>(o.seat===1&&!(o.c.position&5)?'set card':o.name)+'@'+o.seat)}});
++// (d)
++caseRun('d',[{name:FD,location:2,owner:1},{name:HU,location:16,owner:1},{name:CC,location:2,owner:0},{name:'Forbidden Droplet',location:2,owner:0},{name:'Raigeki',location:2,owner:0},{name:'Mikanko Spiritwalk',location:8,owner:0,position:10}],
++ ['Activate · '+FD,'Your Spell / Trap zone 1','pick:'+HU,'Your Monster zone 1','Face-up Attack','End turn'],d=>{
++ const before=NEW.activationBlock(safeView(d,0),0,ccCard(d));assert.match(before||'',/no targetable/,'(d) before the negation: blocked');
++ const r=drive(d,{steps:{0:['Activate · Forbidden Droplet','Your Spell / Trap zone 2','pick:Raigeki','pick:'+HU]},until:dd=>{const hu=dd.zone(1,4).find(c=>c&&dd.name(c.code)===HU);return !!(hu&&(hu.status&1))&&seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_IDLECMD}});
++ assert.ok(r.stopped,'(d) Hu-Li negated by Forbidden Droplet and back at our idle: '+JSON.stringify(r).slice(0,400));
++ const v=safeView(d,0);assert.equal(NEW.huLiShield(v,1),false,'(d) negated Hu-Li: shield off');assert.equal(NEW.activationBlock(v,0,ccCard(d)),null,'(d) Cosmic Cyclone allowed');
++ const offer=engineOffer(d);assert.ok(offer.some(o=>o.seat===1&&o.name===FD),'(d) engine referee: Fire Dance is offered once Hu-Li is negated: '+JSON.stringify(offer.map(o=>o.name+'@'+o.seat)));
++ return {before,offer:offer.map(o=>o.name+'@'+o.seat)}});
++stopEngine();
++console.log(JSON.stringify({test:'r35-cyclone-hu-li-native',pass:true,node:process.version,oldControl:!!OLD,results}));
+diff --git a/tests/r35-cyclone-pin.test.mjs b/tests/r35-cyclone-pin.test.mjs
+new file mode 100644
+index 0000000..7a02acf
+--- /dev/null
++++ b/tests/r35-cyclone-pin.test.mjs
+@@ -0,0 +1,10 @@
++// r35 job 29 fix (Claude, 29 Oct 2026). SELF-VERIFIED. dist/optimal-pilot.mjs is a PINNED file (tests/r23-fx.test.mjs:
++// pace, holds, think time). The Cosmic Cyclone / Hu-Li fix replaces exactly the three blocks below. Swapping each new block
++// back for its old text must give the previously pinned optimal-pilot.mjs byte for byte (sha256 8b8c03c3..., also the
++// frozen gate tree's copy), so nothing else in the file changed.
++import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
++const BLOCKS=[["// r35 job 29 fix (Claude, 29 Oct 2026; Seto 00:30 / 01:25, Alexis, Akiza): can WE target this OPPOSING card with a card\n// effect? Public information only (a face-down card's identity is never used).\n//  - Hu-Li the Jewel Mikanko (printed): \"While you control an Equip Card, your opponent cannot target 'Mikanko' cards you\n//    control with card effects.\" The shield is up when the opposing side has a FACE-UP, unnegated Hu-Li AND controls ANY\n//    Equip Card (a face-up card in ITS Spell/Trap Zone that is equipped to a monster, on either field). Under the shield\n//    their Mikanko cards are untargetable, and so is any face-down card of theirs (it may be a Mikanko card; we can't know).\n//    (Before: the Equip Card had to be equipped TO Hu-Li, and both players' zones were pooled; Hu-Li's face-up state was\n//    not checked. Job 29: Fire Dance was equipped to a monster on our field, so the old rule missed the shield.)\n//  - Catch-all for cards outside our 8-deck pool: an opposing face-up, unnegated card whose text grants \"your opponent\n//    cannot target ... Spell/Trap / cards you control\" makes their Spell/Trap Zone cards untargetable (conservative: we may\n//    hold a removal we could have used; we never fire one at our own cards). In our pool it matches Hu-Li only (tested).\nexport const HULI='Hu-Li the Jewel Mikanko',GRANTS_ST_SHIELD=/your opponent cannot target [^.]*(Spells?|Traps?|Spell\\/Traps?|cards you control)/i;\nconst faceUp=c=>!!c&&!!(c.position&5);\nexport function huLiShield(d,side){\n return d.zone(side,4).some(x=>faceUp(x)&&!(x.status&1)&&d.name(x.code)===HULI)&&d.zone(side,8).some(s=>faceUp(s)&&!!s.equipCard);\n}\nfunction otherStShield(d,side){\n return [...d.zone(side,4),...d.zone(side,8)].some(x=>faceUp(x)&&!(x.status&1)&&d.name(x.code)!==HULI&&GRANTS_ST_SHIELD.test(d.db[x.code]?.desc||''));\n}\nexport const targetable=(d,seat,c)=>{", "const targetable=(d,seat,c)=>{"], [" const foe=1-seat;\n if(huLiShield(d,foe)&&(!faceUp(c)||/Mikanko/.test(d.name(c.code))))return false;\n if(c.location===8&&otherStShield(d,foe))return false;\n return true;", " const enemy=d.zone(1-seat,4).filter(Boolean),spells=[...d.zone(1-seat,8),...d.zone(seat,8)].filter(Boolean);\n const hu=enemy.find(x=>d.name(x.code)==='Hu-Li the Jewel Mikanko'&&!(x.status&1)&&spells.some(s=>s.equipCard?.controller===1-seat&&s.equipCard?.sequence===x.sequence));\n return !(hu&&/Mikanko/.test(d.name(c.code)));"], [" // r35 job 29 fix: targeting Spell/Trap removal needs a TARGETABLE opposing Spell/Trap (not just one that exists): with\n // none, the engine would offer only our own cards and the effect would banish/destroy one of them. Blocked before\n // activation, so no cost is paid (Twin Twisters' discard, Tornado Dragon's detach). Galaxy Cyclone: the hand / field\n // activation targets a SET Spell/Trap; the GY effect targets a FACE-UP one.\n if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon)$/.test(n)&&!enemy(8).some(s=>targetable(d,seat,s)))return n+' has no targetable opposing Spell/Trap';\n if(n==='Galaxy Cyclone'){const gy=c.location===16;if(!enemy(8).some(s=>(gy?faceUp(s):!faceUp(s))&&targetable(d,seat,s)))return n+' has no targetable opposing '+(gy?'face-up':'Set')+' Spell/Trap'}", " if(/^(Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon|Galaxy Cyclone)$/.test(n)&&!enemy(8).length)return n+' has no opposing Spell/Trap to remove';"]];
++let s=fs.readFileSync('dist/optimal-pilot.mjs','utf8');
++for(const [now,before] of BLOCKS){assert.equal(s.split(now).length-1,1,'block present exactly once: '+now.slice(0,60));s=s.replace(now,()=>before)}
++assert.equal(crypto.createHash('sha256').update(s).digest('hex'),'8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7','optimal-pilot.mjs minus the fix = the pinned r22b..r35.5 file');
++console.log(JSON.stringify({test:'r35-cyclone-pin',pass:true,blocks:BLOCKS.length,node:process.version}));
+diff --git a/tests/r35-cyclone-targetable.test.mjs b/tests/r35-cyclone-targetable.test.mjs
+new file mode 100644
+index 0000000..c28efe4
+--- /dev/null
++++ b/tests/r35-cyclone-targetable.test.mjs
+@@ -0,0 +1,51 @@
++// r35 job 29 fix (Claude, 29 Oct 2026). SELF-VERIFIED (builder = verifier), NOT independent. Synthetic-view cases for
++// targetable() / huLiShield() / the targeting Spell/Trap removal block (dist/optimal-pilot.mjs), alongside the native
++// fixtures in tests/r35-cyclone-hu-li-native.test.mjs. Card names and texts come from the real card database.
++import assert from 'node:assert/strict';import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++import {activationBlock,targetable,huLiShield,GRANTS_ST_SHIELD} from '../dist/optimal-pilot.mjs';
++const db=JSON.parse(gunzipSync(fs.readFileSync('dist/cards.json.gz'))),code=n=>+Object.keys(db).find(k=>db[k].name===n);
++const HU='Hu-Li the Jewel Mikanko',FD='Mikanko Fire Dance',WA='Mikanko Water Arabesque',DES='Double-Edged Sword';
++// view(z): z[side][loc] = list of {name, pos, status, equip}. Seat 0 is us; seat 1 the opponent.
++function view(z,{chain=[],active=0}={}){const zones={};for(const side of [0,1])for(const [loc,list] of Object.entries(z[side]||{}))zones[side+':'+loc]=list.map((x,i)=>x&&{code:x.name?code(x.name):0,controller:side,location:+loc,sequence:i,position:x.pos??1,status:x.status??0,equipCard:x.equip?{controller:x.equip[0],location:4,sequence:x.equip[1],position:1}:null});
++ return {db,name:c=>db[c]?.name||'',zone:(s,l)=>zones[s+':'+l]||[],prompt:{type:11},chain,active,description:()=>''}}
++const our=(name,loc=2)=>({code:code(name),controller:0,location:loc,sequence:0,position:1});
++const hu=(o={})=>({name:HU,pos:1,...o}),fdEq=(to=[1,0])=>({name:FD,pos:1,equip:to}),set={pos:10};/* set card: identity hidden */
++const block=(v,n,loc)=>activationBlock(v,0,our(n,loc));
++// 1. The job 29 shape: their Hu-Li + their Fire Dance equipped to it: shield up, Mikanko S/T untargetable, Cosmic Cyclone blocked.
++{const v=view({1:{4:[hu()],8:[fdEq(),{name:WA,pos:1,equip:[1,0]}]}});assert.equal(huLiShield(v,1),true);
++ for(const c of v.zone(1,8))assert.equal(targetable(v,0,c),false,v.name(c.code)+' untargetable');assert.match(block(v,'Cosmic Cyclone')||'',/no targetable opposing Spell\/Trap/)}
++// 2. Printed text "you control AN Equip Card": their Fire Dance equipped to a monster on OUR field still raises the shield
++//    (the r35.5 helper needed the Equip Card to be attached to Hu-Li itself).
++{const v=view({0:{4:[{name:'Ha-Re the Sword Mikanko'}]},1:{4:[hu()],8:[fdEq([0,0])]}});assert.equal(huLiShield(v,1),true);assert.match(block(v,'Cosmic Cyclone')||'',/no targetable/)}
++// 3. An Equip Card WE control does not raise THEIR shield (the r35.5 helper pooled both players' zones).
++{const v=view({0:{8:[{name:DES,pos:1,equip:[1,0]}]},1:{4:[hu()],8:[{name:WA,pos:1}]}});assert.equal(huLiShield(v,1),false);assert.equal(block(v,'Cosmic Cyclone'),null)}
++// 4. Hu-Li face-down (Seto point 2) or negated (status bit 1): shield off.
++{const v=view({1:{4:[hu({pos:10})],8:[fdEq()]}});assert.equal(huLiShield(v,1),false,'face-down Hu-Li');assert.equal(block(v,'Cosmic Cyclone'),null)}
++{const v=view({1:{4:[hu({status:1})],8:[fdEq()]}});assert.equal(huLiShield(v,1),false,'negated Hu-Li');assert.equal(block(v,'Cosmic Cyclone'),null)}
++// 5. No Equip Card on their side: shield off. A face-up Equip Spell not attached to anything does not count.
++{const v=view({1:{4:[hu()],8:[{name:WA,pos:1}]}});assert.equal(huLiShield(v,1),false);assert.equal(block(v,'Cosmic Cyclone'),null)}
++// 6. Under the shield a SET card of theirs is untargetable (it may be a Mikanko card; we never read its identity); a
++//    face-up non-Mikanko card stays targetable.
++{const v=view({1:{4:[hu()],8:[fdEq(),set]}});assert.equal(targetable(v,0,v.zone(1,8)[1]),false,'set card under the shield');assert.match(block(v,'Cosmic Cyclone')||'',/no targetable/)}
++{const v=view({1:{4:[hu()],8:[fdEq(),{name:DES,pos:1,equip:[1,0]}]}});assert.equal(targetable(v,0,v.zone(1,8)[1]),true,'Double-Edged Sword');assert.equal(block(v,'Cosmic Cyclone'),null)}
++// 7. The whole family (Seto condition 2): MST, Twin Twisters (cost: discard), Tornado Dragon (cost: detach) are blocked
++//    before activation, so no cost is paid. Without any opposing S/T they are blocked as before.
++{const shield=view({1:{4:[hu()],8:[fdEq()]}}),empty=view({});
++ for(const n of ['Mystical Space Typhoon','Twin Twisters','Tornado Dragon','Cosmic Cyclone']){assert.match(block(shield,n,n==='Tornado Dragon'?4:2)||'',/no targetable/,n+' under the shield');assert.match(block(empty,n,n==='Tornado Dragon'?4:2)||'',/no targetable/,n+' with no S/T')}}
++// 8. Galaxy Cyclone (Seto point 3): hand / field activation targets a SET S/T; the GY effect targets a FACE-UP one.
++{const onlyFaceUp=view({1:{8:[{name:WA,pos:1}]}}),onlySet=view({1:{8:[set]}});
++ assert.match(block(onlyFaceUp,'Galaxy Cyclone',2)||'',/no targetable opposing Set/,'hand effect: their only S/T is face-up');assert.equal(block(onlySet,'Galaxy Cyclone',2),null);
++ assert.equal(block(onlyFaceUp,'Galaxy Cyclone',16),null,'GY effect: face-up target exists');assert.match(block(onlySet,'Galaxy Cyclone',16)||'',/no targetable opposing face-up/)}
++// 9. F3 catch-all (cards outside our pool): an opposing face-up card granting "your opponent cannot target ... cards you
++//    control" makes their S/T untargetable; negated, it does not. A monster-only protection (Toon Kingdom) does not.
++{const grant='Traptrix Rafflesia';assert.ok(GRANTS_ST_SHIELD.test(db[code(grant)].desc));
++ const v=view({1:{4:[{name:grant}],8:[{name:WA,pos:1}]}});assert.equal(targetable(v,0,v.zone(1,8)[0]),false);assert.match(block(v,'Cosmic Cyclone')||'',/no targetable/);
++ const neg=view({1:{4:[{name:grant,status:1}],8:[{name:WA,pos:1}]}});assert.equal(block(neg,'Cosmic Cyclone'),null);
++ assert.ok(!GRANTS_ST_SHIELD.test(db[code('Toon Kingdom')].desc),'Toon Kingdom protects Toon monsters only');
++ const toon=view({1:{8:[{name:'Toon Kingdom',pos:1},{name:WA,pos:1}]}});assert.equal(block(toon,'Cosmic Cyclone'),null)}
++// 10. Monster targeting users of targetable() (Seto point 1): Infinite Impermanence / Widow Anchor / Afterburners now see
++//     the corrected shield: Hu-Li itself (a Mikanko card) is protected while their Equip Card exists, and not when negated.
++{const v=view({1:{4:[hu()],8:[fdEq()]}});assert.match(block(v,'Infinite Impermanence')||'',/no unnegated opposing Effect Monster/);
++ const v2=view({1:{4:[hu()],8:[fdEq([0,0])]}});assert.match(block(v2,'Infinite Impermanence')||'',/no unnegated/,'equip on our field still shields (corrected rule)');
++ const v3=view({1:{4:[hu()],8:[{name:WA,pos:1}]}},{active:1});/* their turn: the own-turn hand-trap hold does not apply */assert.equal(block(v3,'Infinite Impermanence'),null,'no Equip Card: Hu-Li targetable')}
++console.log(JSON.stringify({test:'r35-cyclone-targetable',pass:true,node:process.version}));

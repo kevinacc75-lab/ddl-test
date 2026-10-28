@@ -1,0 +1,19 @@
+S2b acceptance seeds, gate code (split runner --s2b-repro --non-counting), Node v22.22.2, frozen ai-gate 1c380d58 / whitelist 9f1fb5f5 / world-pool 807133d3
+BASE tree gate-r34fix (optimal-pilot 8b8c03c3...):
+seed 2026 branded-mikanko f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=a291fb15 decisions=253 roots=74
+seed 808 branded-luna f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=c3c28f6d decisions=505 roots=67
+seed 4242 branded-mikanko f0: own=1 harmOpp=0 cut=0 throw=0 stall=0 hash=8c3cfa62 decisions=347 roots=55
+seed 31337 branded-luna f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=b7843ea1 decisions=165 roots=13
+seed 12345 branded-sky f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=1b7a3afa decisions=246 roots=67
+seed 777 branded-branded f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=ef23e940 decisions=484 roots=80
+seed 555 branded-sky f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=be7b4e24 decisions=170 roots=15
+seed 99 branded-branded f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=e734916f decisions=267 roots=57
+FIX tree gate-cyclone (only optimal-pilot differs: e2d9d01d...):
+seed 2026 branded-mikanko f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=a291fb15 decisions=253 roots=74
+seed 12345 branded-sky f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=1b7a3afa decisions=246 roots=67
+seed 777 branded-branded f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=ef23e940 decisions=484 roots=80
+seed 555 branded-sky f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=be7b4e24 decisions=170 roots=15
+seed 808 branded-luna f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=c3c28f6d decisions=505 roots=67
+seed 4242 branded-mikanko f0: own=1 harmOpp=0 cut=0 throw=0 stall=0 hash=8c3cfa62 decisions=347 roots=55
+seed 31337 branded-luna f0: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=b7843ea1 decisions=165 roots=13
+seed 99 branded-branded f1: own=0 harmOpp=0 cut=0 throw=0 stall=0 hash=e734916f decisions=267 roots=57

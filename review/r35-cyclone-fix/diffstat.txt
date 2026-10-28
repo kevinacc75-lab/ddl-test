@@ -1,0 +1,6 @@
+ dist/optimal-pilot.mjs                  | 35 ++++++++++++---
+ tests/r23-fx.test.mjs                   |  2 +-
+ tests/r35-cyclone-hu-li-native.test.mjs | 76 +++++++++++++++++++++++++++++++++
+ tests/r35-cyclone-pin.test.mjs          | 10 +++++
+ tests/r35-cyclone-targetable.test.mjs   | 51 ++++++++++++++++++++++
+ 5 files changed, 168 insertions(+), 6 deletions(-)

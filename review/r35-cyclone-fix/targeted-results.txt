@@ -1,0 +1,4 @@
+{"test":"r35-cyclone-pin","pass":true,"blocks":3,"node":"v22.22.0"}
+{"test":"r23-fx","pass":true,"node":"v22.22.0"}
+{"test":"r35-cyclone-targetable","pass":true,"node":"v22.22.0"}
+{"test":"r35-cyclone-hu-li-native","pass":true,"node":"v22.22.0","oldControl":true,"results":{"a":{"block":"Cosmic Cyclone has no targetable opposing Spell/Trap","oldBlock":null,"pilotRule":"Opening book MK-E1","offer":["Mikanko Spiritwalk@0"]},"b":{"offer":["Mikanko Spiritwalk@0","Double-Edged Sword@1"],"pick":"Double-Edged Sword"},"c":{"offer":["Mikanko Spiritwalk@0","set card@1"]},"d":{"before":"Cosmic Cyclone has no targetable opposing Spell/Trap","offer":["Mikanko Spiritwalk@0","Mikanko Fire Dance@1"]}}}
