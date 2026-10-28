@@ -1,0 +1,43 @@
+Box: Claude workspace (vm). Node: v22.22.2
+1c380d58afc51f07ce76615d4b5cd8f185e7675de19b3fea72e1950088a14dee  tests/ai-gate.mjs
+9f1fb5f5487ea60ea7afdc3aac624c269608510e4cdab598878c2ec86bae0ee3  tests/self-target-whitelist.json
+807133d3049dc7af690042b258d7bba8f7e2672c8e908af27605ed1bb4b000b8  dist/ai/world-pool.mjs
+5b379b40aa6ac634840724a6344315d88ab7ef662da271546c818ea7665da201  tools/s2a-common.mjs
+90bff5636fa5ba1879784e8711f1cdb23d937aef6000345bc4938ec3c94e8fc8  tools/s2a-split-runner.mjs
+48998c551d2e9b1c47e70bb6a12b60add062f0d8b4fe47aa67dae6d41b94cadb  tools/s2a-supervisor.mjs
+3eebad3683e52fa8249b7b9a0dc4b6b2d2f14ea9708e85fa8e9b191a8188de54  tools/s2a-recombine.mjs
+dist tree (find . -type f | sort | xargs sha256sum | sha256sum): 33c8d1bdb204adb2fa6a77f7c6a103b741ca63654603adcacdcdb1bc489b3e26
+prefixSha256 (shard log): prefixSha256 eed7e402ce0fa82cec8bb89aead8e7c8392ffca98cb6b5169542982b0da500fa
+archive s2a-run-at-stop-20261028-2156.tgz sha256: 2a2f9276a8fc6cdbd8fbe7863e07412b396057fa9c3df9d33a606b0772714536 size 80291
+archive file list:
+drwxr-xr-x root/root         0 2026-10-28 21:56 s2a/
+-rw-r--r-- root/root         0 2026-10-28 02:29 s2a/supervisor.flock
+-rw-r--r-- root/root      1572 2026-10-28 10:11 s2a/shardB.log
+-rw-r--r-- root/root       569 2026-10-28 10:11 s2a/reclaims.log
+-rw-r--r-- root/root    463892 2026-10-28 09:52 s2a/jobs-shardB.jsonl
+-rw-r--r-- root/root       689 2026-10-28 21:56 s2a/STOP
+-rw-r--r-- root/root       609 2026-10-28 21:56 s2a/supervisor.log
+drwxr-xr-x root/root         0 2026-10-28 10:11 s2a/claims-stale/
+-rw-r--r-- root/root       142 2026-10-28 09:52 s2a/claims-stale/9.1793142706168
+-rw-r--r-- root/root       143 2026-10-28 06:04 s2a/claims-stale/28.1793142706167
+-rw-r--r-- root/root       420 2026-10-28 21:56 s2a/supervisor.stdout
+-rw-r--r-- root/root     15437 2026-10-28 21:56 s2a/shardA.stdout
+drwxr-xr-x root/root         0 2026-10-28 17:59 s2a/claims/
+-rw-r--r-- root/root       142 2026-10-28 03:06 s2a/claims/3
+-rw-r--r-- root/root       143 2026-10-28 04:43 s2a/claims/23
+-rw-r--r-- root/root       142 2026-10-28 04:43 s2a/claims/8
+-rw-r--r-- root/root       143 2026-10-28 02:35 s2a/claims/21
+-rw-r--r-- root/root       142 2026-10-28 10:11 s2a/claims/9
+-rw-r--r-- root/root       142 2026-10-28 02:45 s2a/claims/2
+-rw-r--r-- root/root       143 2026-10-28 17:59 s2a/claims/29
+-rw-r--r-- root/root       142 2026-10-28 02:29 s2a/claims/0
+-rw-r--r-- root/root       143 2026-10-28 02:59 s2a/claims/22
+-rw-r--r-- root/root       143 2026-10-28 02:29 s2a/claims/20
+-rw-r--r-- root/root       142 2026-10-28 02:34 s2a/claims/1
+-rw-r--r-- root/root       143 2026-10-28 10:11 s2a/claims/28
+drwxr-xr-x root/root         0 2026-10-28 21:56 s2a/errors/
+-rw-r--r-- root/root       688 2026-10-28 21:56 s2a/errors/job-29.json
+-rw-r--r-- root/root    660553 2026-10-28 21:56 s2a/jobs-shardA.jsonl
+-rw-r--r-- root/root     14953 2026-10-28 21:09 s2a/shardB.stdout
+-rw-r--r-- root/root       170 2026-10-28 10:11 s2a/supervisor.owner
+-rw-r--r-- root/root      1433 2026-10-28 21:56 s2a/shardA.log

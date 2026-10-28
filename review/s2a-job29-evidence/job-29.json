@@ -1,0 +1,39 @@
+{
+ "job": 29,
+ "seed": 466300,
+ "pair": [
+  "mikanko",
+  "mikanko"
+ ],
+ "first": 1,
+ "shard": "A",
+ "runId": "2026-10-27T231146135Z-1dd135",
+ "at": "2026-10-28T21:56:26+11:00",
+ "kind": "blunder",
+ "counts": {
+  "ownHarmWithOppTarget": 0,
+  "nonWhitelistedOwn": 1,
+  "cutShortTurns": 0,
+  "throws": 0,
+  "stalls": 0,
+  "forcedOwnUnlogged": 0
+ },
+ "sample": [
+  {
+   "kind": "nonWhitelistedOwn",
+   "entry": {
+    "turn": 14,
+    "decision": 888,
+    "effect": "Cosmic Cyclone",
+    "effectCode": 8267140,
+    "card": "Mikanko Reflection Rondo",
+    "code": 79912449,
+    "location": 8,
+    "hint": 503,
+    "kind": "banish",
+    "oppOffered": false,
+    "whitelisted": false
+   }
+  }
+ ]
+}
