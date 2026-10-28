@@ -1,5 +1,15 @@
 # S3 Rev 7 hand-trap fixtures (queue item 4): TEST branch, not a build, not published
 
+**Rev 3 (28 Oct, ~14:10 AEDT): rebase only.** The 7 S3 commits are rebased from `09bf121` onto r35-kitt-swap `07a1ad4` (Kitt code rev 4 `c37a68e` + rev 5 `07a1ad4`, the durable turn ledger; see review/r35-kitt-swap README, package rev 4). Head is `7306cf0` (was `0d1ae03`); a backup branch `backup/r35-s3-pre-rev3` keeps the old head.
+- `rebase-range-diff-rev3.txt`: `git range-diff` shows all 7 commits as `=` (identical patches). The S3 code and tests did not change; only their base did.
+- `s3-fixtures-rev3.diff` / `diffstat-rev3.txt`: 07a1ad4..7306cf0.
+- `test-results-rev3.txt`: the full suite on 7306cf0, **44 of 44 pass** (node v22.22.0, nice 19, sequential, while S2a shards ran). `native-outputs-rev3/`: the last lines of each native S3 fixture.
+- `identities-rev3.txt`: sha256 of script-overrides.mjs (K1 unchanged), turn-ledger.mjs, kitt-revive.mjs, book.mjs at 7306cf0.
+
+SELF-VERIFIED (Claude), NOT independent. These commits are also merged into the r35.4 TEST build (see the r35.4 handover); this package is the review unit.
+
+-----
+
 **Rev 2 (28 Oct, 09:35 AEDT), for RELAY-055 and Seto 08:10.** Head is `0d1ae03`, now stacked on the Kitt branch rev 3 (`09bf121`); it was rebased with no conflicts.
 
 New files:

@@ -1,0 +1,12 @@
+ dist/ai/book/book.mjs                 |  11 +++-
+ dist/script-overrides.mjs             |  16 ++++-
+ tests/r35-ohime-revive.test.mjs       |  23 +++++++
+ tests/r35-s3-kashtira-native.test.mjs |  59 +++++++++++++++++
+ tests/r35-s3-kitt-guard.test.mjs      |  35 +++++++++++
+ tests/r35-s3-kitt-native.test.mjs     | 115 ++++++++++++++++++++++++++++++++++
+ tests/r35-s3-sdp-native.test.mjs      |  49 +++++++++++++++
+ tests/taskc-hero-scripts.test.mjs     |   5 +-
+ tools/build-script-overrides.mjs      |  12 +++-
+ tools/s3-explore.mjs                  |  26 ++++++++
+ tools/s3-harness.mjs                  |  38 +++++++++++
+ 11 files changed, 380 insertions(+), 9 deletions(-)

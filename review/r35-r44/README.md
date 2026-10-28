@@ -1,5 +1,15 @@
 # r35.3 RELAY-044 fixes (queue item 6): TEST branch, not a build, not published
 
+**Rev 2 (28 Oct, ~13:00 AEDT), RELAY-056/057 rollover.** Head is `0084882` (on `b913959`). New files: `r44-rev2.diff` (b913959..0084882) and `test-results-rev2.txt` (full suite: 39 of 39 pass, node v22.22.0, nice 19).
+- `fireDanceUsed` and `sanakiSummonUsed` now read `dist/ai/book/turn-ledger.mjs`. It is byte-identical to the r35-kitt-swap copy (sha256 `bf5f96c0…33cf884`); see that package's README for the ledger design.
+- **Unknown counts as USED:** the AI may under-play, and never plans on a Fire Dance / Sanaki summon the engine will not allow. Mocks with no events keep the attempt-ledger fallback.
+- **Tests:** `r35-mikanko-plan` adds rollover cases (seen, unseen, a long turn with no Fire Dance, and the Sanaki route with a control). Mutations caught: Fire Dance unknown treated as unused; Sanaki unknown treated as unused; the old buffer scan, for each check. `r35-firedance-native` (real engine) is unchanged and passing (N1 Belle re-offers, N2, N3).
+- **Still a KNOWN UNDER-PLAY:** a negated ACTIVATION (Belle, Solemn) still counts as used. Kevy said yes (28 Oct 11:47) to Seto's negate-kind field in duel.mjs, TEST only, after Alexis and an AI-identity proof. That will fix it in a later revision.
+
+SELF-VERIFIED (Claude), NOT independent. Nothing published.
+
+-----
+
 - **Branch:** `r35-r44`, r18 head `f67c457`, based on the r35.3 candidate `628d40f`. It is **not** stacked on the Kitt or S3 branches.
 - **Status:** SELF-VERIFIED (Claude). r35.3 stays experimental and unpublished. Needs ChatGPT's re-check.
 

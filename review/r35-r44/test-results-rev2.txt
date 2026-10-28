@@ -1,0 +1,44 @@
+node v22.22.0
+command: for t in tests/*.test.mjs; do timeout 1500 nice -n 19 node $t; done (cwd = /home/claude/r35-r44)
+head 0084882 (r35-r44)
+dist tree manifest sha256: 9dc6a3d13788ead20955b5efd4f4d05ca990084203fe7ae970abfd90393ccaa6
+0 5s tests/duplicate-copy-remap.test.mjs
+0 4s tests/known-draw-alignment.test.mjs
+0 41s tests/r18b-combo-book.test.mjs
+0 10s tests/r19-batch-placement.test.mjs
+0 6s tests/r20-repair-refill.test.mjs
+0 108s tests/r21-no-passive-search.test.mjs
+0 0s tests/r22-1-artwork.test.mjs
+0 4s tests/r22-engine-wrapper.test.mjs
+0 15s tests/r22-l5-deck-bottom.test.mjs
+0 16s tests/r22-sort-search.test.mjs
+0 1s tests/r22-tcg-highlights.test.mjs
+0 5s tests/r22b-forced-battle.test.mjs
+0 6s tests/r23-fx.test.mjs
+0 2s tests/r24-soundtrack.test.mjs
+0 12s tests/r26-branded-v53-book.test.mjs
+0 1s tests/r26-cutscenes.test.mjs
+0 668s tests/r27-deck-books.test.mjs
+0 63s tests/r28-learning-sfx-luna.test.mjs
+0 6s tests/r29-human-pace.test.mjs
+0 0s tests/r30-book-trust.test.mjs
+0 0s tests/r32-books-handtraps.test.mjs
+0 1s tests/r32-learning-captions.test.mjs
+0 39s tests/r32-mirrorjade-float.test.mjs
+0 0s tests/r32-review-fixes.test.mjs
+0 2s tests/r32-soundtrack.test.mjs
+0 2s tests/r33-1-review-fixes.test.mjs
+0 1s tests/r33-deck-brain.test.mjs
+0 1s tests/r33-deck-list.test.mjs
+0 4s tests/r33-polish.test.mjs
+0 1s tests/r34-book-additions.test.mjs
+0 0s tests/r34-play-glow.test.mjs
+0 1s tests/r35-effect-titles.test.mjs
+0 1s tests/r35-firedance-native.test.mjs
+0 0s tests/r35-hud-fit.test.mjs
+0 0s tests/r35-mikanko-plan.test.mjs
+0 1s tests/r35-pile-glow.test.mjs
+0 9s tests/r35-public-identity.test.mjs
+0 1s tests/taskc-deck-legality.test.mjs
+0 1s tests/taskc-hero-scripts.test.mjs
+DONE

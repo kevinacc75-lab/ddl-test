@@ -1,0 +1,125 @@
+diff --git a/dist/ai/book/mikanko-plan.mjs b/dist/ai/book/mikanko-plan.mjs
+index 8d5ef10..a026e1e 100644
+--- a/dist/ai/book/mikanko-plan.mjs
++++ b/dist/ai/book/mikanko-plan.mjs
+@@ -14,7 +14,7 @@
+ //     while the opponent has a damage target (Attack Position, 1000+ ATK). Main Phase 2 is unaffected.
+ //  (H4 battle nudge: dropped in r35.2b.)
+ // Public information only.
+-import {M,R} from '../../duel.mjs';
++import {M,R} from '../../duel.mjs';import {turnLedger} from './turn-ledger.mjs';
+ const EXTRA_TYPES=64|8192|8388608|67108864,MAIN1=4;
+ const ALWAYS=/^(Uzuhime the Manifested Mikanko|Ohime the Manifested Mikanko)$/,WHEN_EQUIPPED=/^(Hu-Li the Jewel Mikanko|Ha-Re the Sword Mikanko)$/;
+ const isMikanko=(d,seat)=>d.decks?.[seat]?.id==='mikanko';
+@@ -104,8 +104,10 @@ const FD='Mikanko Fire Dance';
+ // Seto). A selection the core rejected never reaches the chain, so it does not count. Views without events (unit mocks)
+ // fall back to the per-turn attempt ledger, filtered by controller.
+ export function fireDanceUsed(d,seat){
+- if(Array.isArray(d.events)&&d.events.length){let start=0;for(let i=d.events.length-1;i>=0;i--)if(d.events[i].type==='turn'){start=i;break}
+-  return d.events.slice(start).some(e=>e.type==='activate'&&(seat===undefined||e.player===seat)&&d.name(e.code)===FD)}
++ // rev 2 (RELAY-056/057): "this turn" comes from the durable turn ledger (turn-ledger.mjs), not the 120-event buffer.
++ // Unknown (events of this turn rolled out unseen) counts as USED: the AI may under-play, never plays illegally.
++ if(Array.isArray(d.events)&&d.events.length){const L=turnLedger(d);
++  return L.events.some(e=>e.type==='activate'&&(seat===undefined||e.player===seat)&&d.name(e.code)===FD)||!L.complete}
+  for(const k of d.attempts?.keys?.()||[]){const [code,ctl]=String(k).split(':');if(d.name(+code)===FD&&(seat===undefined||+ctl===seat))return true}return false}
+ function fireDanceReady(d,seat){
+  if(fireDanceUsed(d,seat))return false;
+@@ -130,11 +132,11 @@ export function reflectorLine(d,seat){
+ const SUMMONED_OR_MOVED=0x100|0x800|0x20000000|0x40000000;/* STATUS_FORM_CHANGED, SUMMON_TURN, FLIP_SUMMON_TURN, SPSUMMON_TURN */
+ export const canAttackPosition=c=>!!c&&((c.position&1)||!((c.status||0)&SUMMONED_OR_MOVED));
+ // Sanaki's "If an Equip Card becomes equipped to this card" Special Summon is its effect 1 (aux.Stringid(id,1) =
+-// id<<20 | 1). Activations are 'activate' events since this turn's 'turn' event (the buffer keeps 120 events; with no
+-// 'turn' event left in it, every buffered event counts as this turn, the conservative side).
+-export function sanakiSummonUsed(d,seat){const ev=d.events||[];let start=0;for(let i=ev.length-1;i>=0;i--)if(ev[i].type==='turn'){start=i;break}
+- for(const e of ev.slice(start))if(e.type==='activate'&&e.player===seat&&d.name(e.code)==='Sanaki the Mikanko Devotee'){try{if(BigInt(e.description||0)===(BigInt(e.code)<<20n|1n))return true}catch{}}
+- return false}
++// id<<20 | 1). rev 2 (RELAY-056/057): this turn's activations come from the durable turn ledger; unknown (events of this
++// turn rolled out unseen) counts as USED, so the Sanaki route is not counted as a reflector line.
++export function sanakiSummonUsed(d,seat){const L=turnLedger(d);if(!L)return false;
++ for(const e of L.events)if(e.type==='activate'&&e.player===seat&&d.name(e.code)==='Sanaki the Mikanko Devotee'){try{if(BigInt(e.description||0)===(BigInt(e.code)<<20n|1n))return true}catch{}}
++ return !L.complete}
+ // Damage a 0-ATK reflector gets from a monster: ATK in Attack Position, DEF in Defense Position (Seto 21:07: real).
+ export const targetValue=c=>c&&(c.position&5)?((c.position&1)?(c.attack||0):(c.defense||0)):0;
+ // Yes/no prompts on our own turn. Returns {yes, reason} or null.
+diff --git a/dist/ai/book/turn-ledger.mjs b/dist/ai/book/turn-ledger.mjs
+new file mode 100644
+index 0000000..118d26e
+--- /dev/null
++++ b/dist/ai/book/turn-ledger.mjs
+@@ -0,0 +1,33 @@
++// r35 durable per-turn event ledger (Claude, 28 Oct 2026; RELAY-056 and RELAY-057). The duel keeps only its last 120
++// presentation events (duel.mjs shifts the oldest), so "did X happen this turn?" cannot be answered from d.events alone in
++// a long turn. This ledger absorbs new events by id each time it is read and never changes the duel.
++// Keyed on the object that OWNS the events (the duel itself): every AI view (safeView, the pilot's shadow) is
++// Object.create(duel), so walking the prototype chain to the object with an own 'events' property finds the duel from any
++// view. The duel can replace its events ARRAY:
++//  - a rejected selection (retry) filters one 'effectChosen' event out into a new array (duel.mjs respond): same history,
++//    so the ledger carries on and drops any absorbed event that vanished from the window;
++//  - start() / rewind restart the event ids from 1 (eventSeq goes back): a new history, so the ledger starts again.
++//   events: this turn's events seen so far (from the last 'turn' event).
++//   complete: true only if no event of this turn can have been missed. It is false when events rolled out of the window
++//     before the ledger saw them since the last 'turn' event, which includes a ledger that first saw the duel after
++//     event 1 had rolled out, without a 'turn' event in view (e.g. a replayed search clone). Callers MUST give a conservative answer when false.
++// Views without an events array (unit mocks) get null: callers keep their own fallback.
++const LEDGERS=new WeakMap();
++function owner(d){let o=d;while(o&&!Object.prototype.hasOwnProperty.call(o,'events'))o=Object.getPrototypeOf(o);return o||d}
++const fresh=arr=>({arr,seen:0,events:[],complete:true});/* the window test below clears it if ids 1.. were missed */
++export function turnLedger(d){
++ const ev=d?.events;if(!Array.isArray(ev))return null;
++ const key=owner(d);let s=LEDGERS.get(key);
++ if(!s){s=fresh(ev);LEDGERS.set(key,s)}
++ else if(s.arr!==ev){const top=Number.isFinite(key.eventSeq)?key.eventSeq:ev.reduce((m,e)=>Math.max(m,e.id||0),0);
++  if(top<s.seen){s=fresh(ev);LEDGERS.set(key,s)}/* ids went back: a new duel (start / rewind) */
++  else{const ids=new Set(ev.map(e=>e.id)),lo=ev.length?ev[0].id:Infinity;s.events=s.events.filter(e=>e.id<lo||ids.has(e.id));s.arr=ev}}
++ // Missed events can only be ones that rolled off the FRONT of the window (a retry removes a rejected selection from the
++ // middle, which is not a real event): if the window now starts past the next id we expected, events were missed. They
++ // precede everything in the window, so a 'turn' event in view still makes the new turn complete.
++ if(ev.length&&ev[0].id>s.seen+1)s.complete=false;
++ for(const e of ev){if(!(e.id>s.seen))continue;
++  if(e.type==='turn'){s.events=[];s.complete=true}else s.events.push(e);
++  s.seen=e.id}
++ return {events:s.events,complete:s.complete};
++}
+diff --git a/tests/r35-mikanko-plan.test.mjs b/tests/r35-mikanko-plan.test.mjs
+index bd63907..abc46c9 100644
+--- a/tests/r35-mikanko-plan.test.mjs
++++ b/tests/r35-mikanko-plan.test.mjs
+@@ -2,14 +2,14 @@
+ // Rule cases on a small fake board (no engine): H1 Raigeki hold, H2 Lightning Storm mode / hold, H3 no Extra Deck
+ // summon that eats the only reflector before battle; r35.2b Akiza rules (threats, Storm mode, Droplet, Fire Dance, Sanaki).
+ import assert from 'node:assert/strict';
+-import {M,R} from '../dist/duel.mjs';
++import {M,R,Duel} from '../dist/duel.mjs';
+ import {reflectors,mikankoActivationBlock,mikankoOption,mikankoSpecialBlock} from '../dist/ai/book/mikanko-plan.mjs';
+ const NAMES={1:'Uzuhime the Manifested Mikanko',2:'Hu-Li the Jewel Mikanko',3:'Thunder King, the Lightningstrike Kaiju',4:'Blue-Eyes White Dragon',5:'Raigeki',6:'Lightning Storm',7:'Super Starslayer TY-PHON - Sky Crisis',8:'Mikanko Fire Dance',9:'Set card',10:'Lava Golem',11:'Omni Negate Boss',12:'Sanaki the Mikanko Devotee',13:'Forbidden Droplet'};
+ const DB={1:{type:1|32|8388608},2:{type:33},3:{type:33},4:{type:17,attack:3000},5:{type:2},6:{type:2},7:{type:1|32|8388608,level:12},8:{type:2},9:{type:4},10:{type:33},11:{type:33|64,desc:'(Quick Effect): You can negate the activation of a card or effect.'},12:{type:33},13:{type:2}};
+ function duel({mine=[],theirs=[],mySpells=[],theirSpells=[],deckCards=[],extra=[],attempts=[],events=[],deck='mikanko',phase=4,turn=2,active=0,effect=0}={}){
+  const z={'0:4':mine,'1:4':theirs,'0:8':mySpells,'1:8':theirSpells,'0:1':deckCards,'0:64':extra};
+  return {decks:[{id:deck},{id:'blueeyes'}],phase,turn,active,db:DB,name:c=>NAMES[c]||'?',fromEngine:p=>p,currentEffect:{code:effect},attempts:new Map(attempts.map(k=>[k,1])),
+-  events,zone:(p,l)=>(z[p+':'+l]||[]).map((c,i)=>c&&{controller:p,location:l,sequence:c.sequence??i,...c})};
++  events:events.map((e,i)=>({id:i+1,...e})),eventSeq:events.length,zone:(p,l)=>(z[p+':'+l]||[]).map((c,i)=>c&&{controller:p,location:l,sequence:c.sequence??i,...c})};
+ }
+ const uzu={code:1,position:1,attack:0},tk={code:3,position:1,attack:3300,owner:0},bewd={code:4,position:1,attack:3000,owner:1};
+ // reflectors: Uzuhime always; Hu-Li only while equipped; a negated one never
+@@ -108,4 +108,21 @@ assert.equal(mikankoSpecialBlock(duel({mine:[{...uzu,sequence:0},{code:18,positi
+  assert.equal(fireDanceUsed(duel({events:[T,{type:'chainEnd'}],attempts:['8:0:2:0:0']}),0),false,'a selection the core rejected (no activation on the chain) does not count');
+  assert.equal(fireDanceUsed(duel({events:[T,act(0),{type:'chainEnd'}],mySpells:[]}),0),true,'activated, resolved and the Equip has left the field: still used');
+  assert.equal(fireDanceUsed(duel({attempts:['8:1:2:0:0']}),0),false,'mock without events: attempt ledger, filtered by controller')}
++// rev 2 (RELAY-056/057): the 120-event buffer rolls over in a long turn; "this turn" comes from the durable turn ledger.
++{const {reflectorLine,sanakiSummonUsed}=await import('../dist/ai/book/mikanko-plan.mjs');const ev=Duel.prototype.event,fill=(d,n)=>{for(let i=0;i<n;i++)ev.call(d,'hint',{text:'filler'})},v=d=>Object.create(d);
++ // Fire Dance activated, seen by the AI, then rolled out of the buffer: still used.
++ {const d=duel();ev.call(d,'turn',{turn:3});ev.call(d,'activate',{player:0,code:8});assert.equal(fireDanceUsed(v(d),0),true);
++  for(let k=0;k<13;k++){fill(d,10);fireDanceUsed(v(d),0)}assert.ok(!d.events.some(e=>e.type==='activate'),'rolled out');
++  assert.equal(fireDanceUsed(v(d),0),true,'still used after rollover (the old buffer scan said unused: the AI planned on a copy the engine will not offer)')}
++ // Never seen before rolling out: unknown counts as used.
++ {const d=duel();ev.call(d,'turn',{turn:3});ev.call(d,'activate',{player:0,code:8});fill(d,130);assert.equal(fireDanceUsed(v(d),0),true,'unknown = used')
++  ;ev.call(d,'turn',{turn:4});assert.equal(fireDanceUsed(v(d),0),false,'a new turn: known again, unused')}
++ // A long turn with no Fire Dance, every event seen: unused (no false "unknown").
++ {const d=duel();ev.call(d,'turn',{turn:3});for(let k=0;k<13;k++){fill(d,10);fireDanceUsed(v(d),0)}assert.equal(fireDanceUsed(v(d),0),false)}
++ // Sanaki's Special Summon: same, and unknown means the Sanaki route is not a reflector line.
++ const SS=String(12n<<20n|1n),base={mine:[{code:12,position:1,attack:0}],extra:[{code:1}],deckCards:[{code:2}]};
++ {const d=duel(base);ev.call(d,'turn',{turn:3});ev.call(d,'activate',{player:0,code:12,description:SS});assert.equal(sanakiSummonUsed(v(d),0),true);
++  for(let k=0;k<13;k++){fill(d,10);sanakiSummonUsed(v(d),0)}assert.equal(sanakiSummonUsed(v(d),0),true,'Sanaki: still used after rollover');assert.equal(reflectorLine(v(d),0),null)}
++ {const d=duel(base);ev.call(d,'turn',{turn:3});fill(d,130);assert.equal(sanakiSummonUsed(v(d),0),true,'Sanaki: unknown = used');assert.equal(reflectorLine(v(d),0),null,'unknown: no Sanaki line')}
++ {const d=duel(base);ev.call(d,'turn',{turn:3});assert.match(reflectorLine(v(d),0)||'',/Sanaki summons/,'control: known unused, the line stands')}}
+ console.log(JSON.stringify({test:'r35-mikanko-plan',pass:true,node:process.version,selfVerified:true}));

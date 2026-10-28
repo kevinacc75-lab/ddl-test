@@ -1,5 +1,50 @@
 # Kitt swap + queue item 3: TEST branch, not a build, not published
 
+**Package rev 4 (28 Oct, ~13:00 AEDT), for RELAY-054 (close-out), RELAY-056 and RELAY-057.** Head is `07a1ad4`. It carries two code revisions on top of `09bf121`: code rev 4 `c37a68e` (Akiza via Seto 09:10) and code rev 5 `07a1ad4` (the rollover fix). New files:
+- `item3-rev4-5.diff` (09bf121..07a1ad4)
+- `kitt-swap-full.diff` (812cfca..07a1ad4, replaced)
+- `test-results-rev4.txt` (full suite: 39 of 39 pass, node v22.22.0, nice 19, run sequentially while S2a shards ran)
+
+**Code rev 4 (`c37a68e`):**
+- **Dogma (76666602) slot 4:** it ranks after Sanctifire, before the Main Deck picks, only if its on-Special-Summon shuffle (effect 0) is unused this turn AND any GY or banishment (either player's) has a card. Otherwise it is a body: first among the bodies if an "Ecclesia" monster is on the field or in either GY, else after Lubellion (Seto confirmed).
+- **Never-rule refined:** it uses the card's OWN End Phase effect index (Titaniklad 0, Alba-Lenatus 0, Dogma 1), and it applies only while a legal search target is still in our Deck (Titaniklad: a Dogmatika monster or Fallen of Albaz; Alba-Lenatus: a Polymerization / Fusion Normal Spell, not Super Polymerization; Dogma: a Dogmatika / Tri-Brigade card).
+- **K3-02 mirror:** a new pick-rule field `keep`, so a base pick of Tri-Brigade Springans Kitt is never replaced by the two Branded Fusion material rules.
+
+**Code rev 5 (`07a1ad4`), RELAY-056/057 rollover:** the duel keeps only its last 120 events (`duel.mjs` line 37 shifts the oldest), so in a long turn "sent to the GY this turn" / "activated this turn" could read a partial record.
+- `dist/ai/book/turn-ledger.mjs` (sha256 `bf5f96c0…33cf884`, byte-identical on r35-r44): a per-duel ledger that absorbs events by id each time it is read and never changes the duel.
+  - **Keyed on the object that owns `events`.** Every AI view (`safeView`, the pilot shadow) is `Object.create(duel)`, so the prototype walk finds the duel from any view.
+  - **Array swaps:** a retry filters the rejected `effectChosen` into a NEW array (duel.mjs respond), and the ledger carries its history across (dropping any absorbed event that vanished). `start()` / rewind reset the ids (`eventSeq` goes back), and the ledger restarts.
+  - **complete = false** only when the window now starts past the next id the ledger expected (events rolled off the FRONT unseen). A removed retry event in the middle is not a missed event. A later `'turn'` event in view makes the record complete again.
+- `kitt-revive.mjs`: `sentToGyThisTurn` / `activatedThisTurn` answer true / false / null (unknown).
+  - Unknown = the End Phase search is **pending** (never revive that card).
+  - Unknown = Dogma's shuffle is **used** (no slot 4).
+- **Tests:** `tests/r35-turn-ledger.test.mjs` runs on the REAL `Duel.prototype.event`. It covers:
+  - rollover after being seen (remembered);
+  - rollover never seen (unknown, conservative), then the next turn (complete again);
+  - rollover of an observed activation;
+  - two effects of one card (Dogma 0 vs 1);
+  - retry (no false gap; a removed absorbed event is dropped);
+  - rewind / new duel (no leak; new low ids absorbed);
+  - views of views;
+  - mocks without events;
+  - an empty or from-1 window is complete.
+- `r35-kitt-revive` test rev 5: views now give events ids.
+- **Mutation checks**, each caught by its intended assertion:
+  1. no prototype walk (key = view)
+  2. old per-event gap check
+  3. no reset on ids going back
+  4. no retry prune
+  5. fresh ledger incomplete
+  6. unknown treated as false
+  7. Dogma unknown allowed
+  8. End Phase unknown treated as not pending
+  9. the old 120-event buffer scan
+- **Known limit:** a search clone replayed from the start has its early events rolled out, so its ledger is incomplete until the next turn, and the book answers conservatively there. Unchanged from rev 3 otherwise.
+
+SELF-VERIFIED (Claude, builder = verifier), NOT independent. Needs ChatGPT (code) to close RELAY-054/056/057. Nothing published; RC1 untouched; any gate on this branch is a NEW gate (Branded is a gate deck).
+
+-----
+
 **Rev 3 (28 Oct, 09:35 AEDT), for RELAY-054.** Head is `09bf121` (item 3 rev 2 on top of `ab4cc3e`). New files: `item3-rev2.diff` (ab4cc3e..09bf121), `kitt-swap-full.diff` (812cfca..09bf121, replaced), `test-results-rev3.txt` (38/38), `identities-rev3.txt` (sha256 of the changed book modules), `native-outputs-rev3/` (per-test output).
 - **K3-01:** the revive pick is now code (`dist/ai/book/kitt-revive.mjs`, called from `bookPick`) and follows Akiza's 07:05 order with its conditions:
   1. Mirrorjade, only if we control none and an Albaz-mentioning Fusion is left in our Extra Deck.

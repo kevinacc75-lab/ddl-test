@@ -1,0 +1,4 @@
+cf9d85c287642ac589d77d163d9c12903899961fba6416225c5227336a10277c  dist/script-overrides.mjs
+bf5f96c0274d94904d3745e103f79c4c7e4e82e87cad80aa731ea620f33cf884  dist/ai/book/turn-ledger.mjs
+82ace93c1c8da89defbffff3b055b35123098027a2cf4a6e45b1f73da0b54fdb  dist/ai/book/kitt-revive.mjs
+fce559a0b2b0d8a3dc5c8bbf98ed1365e1125ccc5d1114d2e513e2076d1819c8  dist/ai/book/book.mjs
