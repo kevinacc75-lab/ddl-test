@@ -1,0 +1,118 @@
+{
+ "version": "r34.1",
+ "note": "Original rendered SFX (tools/r28-render-sfx.py; chain-1..4, chain-lock, chain-resolve re-rendered as card-slap by tools/r34-render-wood-sfx.py). Chain rattle layer uses the CC0 BigSoundBank 0359 recording.",
+ "sounds": {
+  "chain-1": {
+   "file": "chain-1.mp3",
+   "seconds": 1.04
+  },
+  "chain-2": {
+   "file": "chain-2.mp3",
+   "seconds": 1.12
+  },
+  "chain-3": {
+   "file": "chain-3.mp3",
+   "seconds": 1.09
+  },
+  "chain-4": {
+   "file": "chain-4.mp3",
+   "seconds": 1.16
+  },
+  "chain-lock": {
+   "file": "chain-lock.mp3",
+   "seconds": 1.92
+  },
+  "chain-resolve": {
+   "file": "chain-resolve.mp3",
+   "seconds": 0.95
+  },
+  "activate-spell": {
+   "file": "activate-spell.mp3",
+   "seconds": 2.45
+  },
+  "activate-trap": {
+   "file": "activate-trap.mp3",
+   "seconds": 2.23
+  },
+  "activate-monster": {
+   "file": "activate-monster.mp3",
+   "seconds": 2.07
+  },
+  "activate-field": {
+   "file": "activate-field.mp3",
+   "seconds": 4.57
+  },
+  "equip": {
+   "file": "equip.mp3",
+   "seconds": 1.44
+  },
+  "summon-normal": {
+   "file": "summon-normal.mp3",
+   "seconds": 1.44
+  },
+  "summon-special": {
+   "file": "summon-special.mp3",
+   "seconds": 3.46
+  },
+  "summon-fusion": {
+   "file": "summon-fusion.mp3",
+   "seconds": 4.5
+  },
+  "summon-synchro": {
+   "file": "summon-synchro.mp3",
+   "seconds": 3.65
+  },
+  "summon-xyz": {
+   "file": "summon-xyz.mp3",
+   "seconds": 4.04
+  },
+  "summon-link": {
+   "file": "summon-link.mp3",
+   "seconds": 3.22
+  },
+  "boss": {
+   "file": "boss.mp3",
+   "seconds": 6.08
+  },
+  "whoosh": {
+   "file": "whoosh.mp3",
+   "seconds": 0.99
+  },
+  "to-hand": {
+   "file": "to-hand.mp3",
+   "seconds": 0.95
+  },
+  "to-gy": {
+   "file": "to-gy.mp3",
+   "seconds": 1.32
+  },
+  "banish": {
+   "file": "banish.mp3",
+   "seconds": 3.11
+  },
+  "destroy": {
+   "file": "destroy.mp3",
+   "seconds": 1.97
+  },
+  "material": {
+   "file": "material.mp3",
+   "seconds": 1.94
+  },
+  "negate": {
+   "file": "negate.mp3",
+   "seconds": 2.55
+  },
+  "attack": {
+   "file": "attack.mp3",
+   "seconds": 1.4
+  },
+  "impact": {
+   "file": "impact.mp3",
+   "seconds": 2.41
+  },
+  "cost": {
+   "file": "cost.mp3",
+   "seconds": 1.08
+  }
+ }
+}
