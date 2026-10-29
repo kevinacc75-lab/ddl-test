@@ -1,0 +1,116 @@
+From 69572cb4aa547a38501787e2e274658dea9c36ff Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 22:56:10 +1100
+Subject: [PATCH] Seto 21:20 notes: book-disabled control in r36-dtw-position
+ (note a); drop the committed .pyc and ignore __pycache__ (note c)
+
+- tests/r36-dtw-position.test.mjs: (4) the Time Typhoon seat with the book switched off puts printed-0 Barian in
+  Defence, so the Attack answer comes from P5 alone; another deck's answer is identical with the book on and off, and
+  the book pick hook returns nothing there (replaces the loose "other decks untouched" check as the strict one).
+- tools/__pycache__/cdb-to-card.cpython-313.pyc removed from the index; .gitignore gains __pycache__/.
+No dist/ change.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ .gitignore                                    |   1 +
+ tests/r36-dtw-position.test.mjs               |   9 +++++++++
+ tools/__pycache__/cdb-to-card.cpython-313.pyc | Bin 3741 -> 0 bytes
+ 3 files changed, 10 insertions(+)
+ create mode 100644 .gitignore
+ delete mode 100644 tools/__pycache__/cdb-to-card.cpython-313.pyc
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..c18dd8d
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1 @@
++__pycache__/
+diff --git a/tests/r36-dtw-position.test.mjs b/tests/r36-dtw-position.test.mjs
+index 9e0cca9..5e4dc4f 100644
+--- a/tests/r36-dtw-position.test.mjs
++++ b/tests/r36-dtw-position.test.mjs
+@@ -4,6 +4,8 @@
+ //  1 Control: for a deck without this rule (Mikanko's seat), the pilot still picks Defence for printed-0 Barian.
+ //  2 For Time Typhoon the pilot (base + book) now picks Attack Position for Barian (it gains 1000 ATK per material); the
+ //    book pick hook overrides a Defence answer.
++//  4 (r35.12) Book-disabled control on the Time Typhoon seat itself, plus a strict check that another deck's answer is
++//    identical with the book on and off and that the hook returns nothing there.
+ //  3 Nothing else changes: a low-ATK monster that does not gain ATK per material (Scapegoat Token, K9-ØØ Lupis is 2300 so
+ //    not low) keeps the base choice, and another deck's Barian-like card is untouched.
+ import assert from 'node:assert/strict';
+@@ -24,5 +26,12 @@ const r=bookPick(d,0,d.prompt,{type:R.SELECT_POSITION,position:4});assert.ok(r,'
+ d.prompt=prompt(3129528);const baseTok=p.base(safeView(d,0)).response;assert.equal(bookPick(d,0,d.prompt,baseTok)?.response?.position??baseTok.position,baseTok.position,'(3) Scapegoat Token: base choice kept');
+ // seat 1 (Mikanko) is not Time Typhoon: no override even for Barian
+ d.prompt={...prompt(79791695),seat:1,player:1};const r1=bookPick(d,1,d.prompt,{type:R.SELECT_POSITION,position:4});assert.ok(!r1||r1.response.position===4||!/P5/.test(r1.rule||''),'(3) other decks untouched');
++// r35.12 (Seto 21:20 note a): a book-disabled control on the SAME Time Typhoon seat, and a strict "other decks untouched"
++// check: with the book switched off, seat 0 goes back to the base Defence choice (so the Attack answer above comes from
++// P5 alone), and seat 1's full pilot answer is identical with the book on and off.
++const off=createOptimalPilots({seed:1,searchEnabled:false,book:false});
++d.prompt=prompt(79791695);const offTT=off[0].base(safeView(d,0)).response;assert.equal(offTT.position,4,'(4) book-disabled control: Time Typhoon seat without the book puts printed-0 Barian in Defence');
++d.prompt={...prompt(79791695),seat:1,player:1};const offMk=off[1].base(safeView(d,1)).response;assert.deepEqual(ctl,offMk,'(4) other deck: identical answer with the book on and off');
++assert.equal(r1,null,'(4) other deck: the book pick hook returns nothing for its Barian position prompt');
+ d.prompt=real;d.stop();stopEngine();
+ console.log(JSON.stringify({test:'r36-dtw-position',pass:true,node:process.version,base:base.position,book:r.response.position}));
+diff --git a/tools/__pycache__/cdb-to-card.cpython-313.pyc b/tools/__pycache__/cdb-to-card.cpython-313.pyc
+deleted file mode 100644
+index 19255fa3a035f876785dc020b387c8b8602a1764..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 3741
+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
+
+-- 
+2.43.0
+

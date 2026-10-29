@@ -1,0 +1,1 @@
+{"test":"r36-coin-pin","pass":true,"node":"v22.22.2","files":["app.mjs","presentation.mjs","worker.mjs"]}
