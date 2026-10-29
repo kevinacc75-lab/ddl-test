@@ -1,0 +1,822 @@
+{
+ "seed": 515,
+ "first": 0,
+ "decks": [
+  "kashtira",
+  "branded"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 4,
+ "lp": [
+  0,
+  8000
+ ],
+ "wallSec": 60,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    1000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    1000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Kashtira Riseheart",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Kashtira Riseheart",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Kumongous, the Sticky String Kaiju",
+   "rule": "Clear a body first",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 3
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 8
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Kashtira Riseheart",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Kashtira Riseheart",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Guiding Quem, the Virtuous",
+   "rule": "Opening book V53-QC",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position Lubellion the Searing Dragon",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 8
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position Dogmatika Fleurdelis, the Knighted",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 9
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position Kumongous, the Sticky String Kaiju",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position Mirrorjade the Iceblade Dragon",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    1000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kumongous, the Sticky String Kaiju",
+     "atk": 2400,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Guiding Quem, the Virtuous",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 9
+   }
+  }
+ ]
+}

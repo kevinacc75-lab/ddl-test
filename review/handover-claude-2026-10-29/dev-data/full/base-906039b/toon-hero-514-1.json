@@ -1,0 +1,1656 @@
+{
+ "seed": 514,
+ "first": 1,
+ "decks": [
+  "toon",
+  "hero"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 9,
+ "lp": [
+  0,
+  800
+ ],
+ "wallSec": 117,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    7000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    7000,
+    7600
+   ],
+   "ownMons": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 1,
+   "lp": [
+    7000,
+    5300
+   ],
+   "ownMons": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 0,
+   "lp": [
+    7000,
+    5300
+   ],
+   "ownMons": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "active": 1,
+   "lp": [
+    7000,
+    3300
+   ],
+   "ownMons": [
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Black Luster Soldier - Soldier of Chaos",
+     "atk": 4500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 8,
+   "active": 0,
+   "lp": [
+    4500,
+    3300
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 9,
+   "active": 1,
+   "lp": [
+    4500,
+    800
+   ],
+   "ownMons": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Vision HERO Vyon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Vision HERO Vyon",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    7000,
+    7600
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    7600
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    7600
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Mimicat",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    7600
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    7000,
+    7600
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Toon Goblin Attack Force",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Toon Goblin Attack Force",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Vision HERO Vyon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Vision HERO Vyon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon The Black Stone of Legend",
+   "rule": "Opening book TO-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "The Black Stone of Legend",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate The Black Stone of Legend",
+   "rule": "Opening book TO-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Droll & Lock Bird",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Black Luster Soldier - Soldier of Chaos",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 3
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Black Luster Soldier - Soldier of Chaos",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    7000,
+    5300
+   ],
+   "own": [
+    {
+     "name": "Black Luster Soldier - Soldier of Chaos",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Black Luster Soldier - Soldier of Chaos",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Black Luster Soldier - Soldier of Chaos",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 7
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Black Luster Soldier - Soldier of Chaos",
+     "atk": 4500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Black Luster Soldier - Soldier of Chaos",
+     "atk": 4500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 8
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Black Luster Soldier - Soldier of Chaos",
+     "atk": 4500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Fusion Destiny",
+   "rule": "Opening book HE-FD",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Destiny HERO - Denier",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Destiny HERO - Malicious",
+   "rule": "Opening book HE-FD",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Mask Change",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Forbidden Droplet",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    7000,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Destiny HERO - Destroyer Phoenix Enforcer",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 6
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    4500,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 6
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    4500,
+    3300
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 7
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    4500,
+    3300
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Shadow Toon",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    4500,
+    800
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    4500,
+    800
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    4500,
+    800
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Masked HERO Dark Law",
+     "direct": true
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Masked HERO Dark Law",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    2100,
+    800
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Destiny HERO - Destroyer Phoenix Enforcer",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Destiny HERO - Destroyer Phoenix Enforcer",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  }
+ ]
+}

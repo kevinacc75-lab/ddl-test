@@ -1,0 +1,2261 @@
+{
+ "seed": 14,
+ "first": 0,
+ "decks": [
+  "branded",
+  "dtw"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 7,
+ "lp": [
+  4350,
+  0
+ ],
+ "wallSec": 223,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    7050,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    7050,
+    6800
+   ],
+   "ownMons": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 0,
+   "lp": [
+    4950,
+    6800
+   ],
+   "ownMons": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 1,
+   "lp": [
+    4950,
+    1200
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "active": 0,
+   "lp": [
+    4350,
+    1200
+   ],
+   "ownMons": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7050,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Fallen of the White Dragon",
+   "rule": "Opening book V53-WD",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7050,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Blazing Cartesia, the Virtuous",
+   "rule": "Opening book V53-WD",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7050,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    7050,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Alba-Lenatus the Abyss Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    7050,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7050,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7050,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sleepy Scapegoats",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7050,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7050,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    6150,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Dogmatika Fleurdelis, the Knighted",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    4950,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 7
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4950,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 9
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4950,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Guiding Quem, the Virtuous",
+   "rule": "Opening book V53-QC",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4950,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Despian Luluwalilith",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Blazing Cartesia, the Virtuous",
+   "rule": "Opening book V53-QC",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4950,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Mixousia the Confounder",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4950,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4950,
+    6800
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Guiding Quem, the Virtuous",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4950,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Alba-Lenatus the Abyss Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4950,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Albion the Sanctifire Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4950,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": true
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Blazing Cartesia, the Virtuous",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4950,
+    3900
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Mixousia the Confounder",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Mixousia the Confounder",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4950,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4950,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4950,
+    1200
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mixousia the Confounder",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon K9-17 Izuna",
+   "rule": "Opening book DT-K9",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4950,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Reversal Box",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4950,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    4950,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 Izuna",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with K9-17 Izuna",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    4350,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    4350,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mulcharmy Fuwalos",
+     "atk": 100,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Tri-Brigade Mercourier",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4350,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mulcharmy Fuwalos",
+     "atk": 100,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Tri-Brigade Mercourier",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "special summon S:P Little Knight",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4350,
+    1200
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Tri-Brigade Mercourier",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4350,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Garura, Wings of Resonant Life",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Blazing Cartesia, the Virtuous",
+   "rule": "Never pass with a live hand",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4350,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Garura, Wings of Resonant Life",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4350,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Garura, Wings of Resonant Life",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Garura, Wings of Resonant Life",
+     "direct": false
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": false
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Alba-Lenatus the Abyss Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4350,
+    500
+   ],
+   "own": [
+    {
+     "name": "Garura, Wings of Resonant Life",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Garura, Wings of Resonant Life",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "direct": true
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Albion the Sanctifire Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

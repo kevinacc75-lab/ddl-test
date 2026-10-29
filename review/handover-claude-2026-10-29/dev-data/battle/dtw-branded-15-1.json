@@ -1,0 +1,1339 @@
+{
+ "seed": 15,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 8,
+ "lp": [
+  8000,
+  0
+ ],
+ "wallSec": 171,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Incredible Ecclesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 5,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 7,
+   "active": 1,
+   "lp": [
+    8000,
+    3400
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 8,
+   "active": 0,
+   "lp": [
+    8000,
+    3400
+   ],
+   "ownMons": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Dark Time Wizard",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Alligator's Dragon Knight",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon K9-66a Jokul",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66a Jokul",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-66a Jokul",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66a Jokul",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon N.As.H. Knight",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "N.As.H. Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon CXyz N.As.Ch. Knight",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "CXyz N.As.Ch. Knight",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate CXyz N.As.Ch. Knight",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon CXyz Hope Chaos Barian Dragon",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate CXyz Hope Chaos Barian Dragon",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sleepy Scapegoats",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Alligator's Dragon Knight",
+   "rule": "Opening book DT-ALLI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon K9-17 \"Ripper\"",
+   "rule": "Opening book DT-ALLI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-17 \"Ripper\"",
+   "rule": "Opening book DT-ALLI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate CXyz Hope Chaos Barian Dragon",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set K9-X Forced Release",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "direct": true
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-17 \"Ripper\"",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    5700
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-ØØ Lupis",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-ØØ Lupis",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Aluber the Jester of Despia",
+   "rule": "Opening book L-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-PANTHER",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "direct": true
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-X \"Werewolf\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    100
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 6000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "direct": true
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-X \"Werewolf\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

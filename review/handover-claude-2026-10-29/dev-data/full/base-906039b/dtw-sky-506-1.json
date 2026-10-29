@@ -1,0 +1,41 @@
+{
+ "seed": 506,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "sky"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 2,
+ "lp": [
+  9000,
+  0
+ ],
+ "wallSec": 20,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    9000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  }
+ ],
+ "rows": []
+}

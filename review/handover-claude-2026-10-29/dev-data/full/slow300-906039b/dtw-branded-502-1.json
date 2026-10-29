@@ -1,0 +1,709 @@
+{
+ "seed": 502,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 4,
+ "lp": [
+  5550,
+  0
+ ],
+ "wallSec": 27,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    7500,
+    5400
+   ],
+   "ownMons": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    5550,
+    5400
+   ],
+   "ownMons": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7500,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Aluber the Jester of Despia",
+   "rule": "Opening book L-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7500,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Branded Retribution",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7500,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    7500,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "direct": false
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Rindbrumm the Striking Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    6700,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Dogmatika Fleurdelis, the Knighted",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    5550,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    5550,
+    5400
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    5550,
+    2900
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-PANTHER",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    5550,
+    2900
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Red-Eyes Black Dragon Exceed",
+   "rule": "Opening book DT-PANTHER",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    5550,
+    2900
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    5550,
+    2900
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Mirrorjade the Iceblade Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    5550,
+    1700
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

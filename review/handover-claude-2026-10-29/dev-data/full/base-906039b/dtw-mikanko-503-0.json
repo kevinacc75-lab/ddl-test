@@ -1,0 +1,1132 @@
+{
+ "seed": 503,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "mikanko"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 5,
+ "lp": [
+  8000,
+  0
+ ],
+ "wallSec": 289,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    8000,
+    3800
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 0,
+   "lp": [
+    8000,
+    3800
+   ],
+   "ownMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Hu-Li the Jewel Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Fire Formation - Tenki",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon S:P Little Knight",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": true
+    },
+    {
+     "name": "S:P Little Knight",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-66X \"Jacks\"",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    5400
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "S:P Little Knight",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with S:P Little Knight",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Mikanko Dance - Mayowashidori",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "Sanaki the Mikanko Devotee",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ha-Re the Sword Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fisherman of Legend",
+     "atk": 3050,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Uzuhime the Manifested Mikanko",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Fisherman of Legend",
+     "atk": 3050,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Forbidden Droplet",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Fisherman of Legend",
+     "atk": 3050,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 1650,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Hu-Li the Jewel Mikanko",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "Hu-Li the Jewel Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fisherman of Legend",
+     "atk": 3050,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 1650,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Forbidden Droplet",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "Hu-Li the Jewel Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fisherman of Legend",
+     "atk": 3050,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 1650,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "battle",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "Hu-Li the Jewel Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fisherman of Legend",
+     "atk": 3050,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 1650,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Hu-Li the Jewel Mikanko",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "Hu-Li the Jewel Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fisherman of Legend",
+     "atk": 3050,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 1650,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Fire Formation - Tenki",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Red-Eyes Black Dragon Exceed",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon K9-17 \"Ripper\"",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-17 \"Ripper\"",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Swen",
+   "rule": "Opening book DT-SWEN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Eldam",
+   "rule": "Opening book DT-SWEN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    3800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": true
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "direct": true
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "direct": true
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-X \"Werewolf\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    300
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": true
+    },
+    {
+     "name": "K9-X \"Werewolf\"",
+     "direct": true
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "direct": true
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-X \"Werewolf\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

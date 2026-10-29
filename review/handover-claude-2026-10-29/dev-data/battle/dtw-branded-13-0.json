@@ -1,0 +1,697 @@
+{
+ "seed": 13,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 4,
+ "lp": [
+  0,
+  8000
+ ],
+ "wallSec": 104,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    700,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    700,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Reversal Box",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Foolish Graverobber",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sleepy Scapegoats",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set K9-X Forced Release",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Aluber the Jester of Despia",
+   "rule": "Opening book L-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Blazing Cartesia, the Virtuous",
+   "rule": "Never pass with a live hand",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Branded Retribution",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    700,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "direct": false
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Aluber the Jester of Despia",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "direct": false
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Rindbrumm the Striking Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    100,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "direct": false
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Mirrorjade the Iceblade Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

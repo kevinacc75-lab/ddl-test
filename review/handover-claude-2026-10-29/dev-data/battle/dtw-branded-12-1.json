@@ -1,0 +1,565 @@
+{
+ "seed": 12,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 3,
+ "lp": [
+  0,
+  8000
+ ],
+ "wallSec": 111,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Guiding Quem, the Virtuous",
+   "rule": "Opening book V53-QC",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Blazing Cartesia, the Virtuous",
+   "rule": "Opening book V53-QC",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set The Fallen & The Virtuous",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "direct": true
+    },
+    {
+     "name": "Bystial Saronir",
+     "direct": true
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "direct": true
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Granguignol the Dusk Dragon",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 9
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    5500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "direct": true
+    },
+    {
+     "name": "Bystial Saronir",
+     "direct": true
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Guiding Quem, the Virtuous",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 8
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "direct": true
+    },
+    {
+     "name": "Bystial Saronir",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Rindbrumm the Striking Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 6
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    1500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Saronir",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Bystial Saronir",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Mirrorjade the Iceblade Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

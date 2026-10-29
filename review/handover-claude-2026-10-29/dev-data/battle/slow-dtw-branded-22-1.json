@@ -1,0 +1,1104 @@
+{
+ "seed": 22,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 400,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 7,
+ "lp": [
+  0,
+  3400
+ ],
+ "wallSec": 65,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Guiding Quem, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    8000,
+    5200
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    7600,
+    5200
+   ],
+   "ownMons": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 1,
+   "lp": [
+    7600,
+    3400
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 0,
+   "lp": [
+    4600,
+    3400
+   ],
+   "ownMons": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "active": 1,
+   "lp": [
+    4600,
+    3400
+   ],
+   "ownMons": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    5200
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Fallen of Albaz",
+   "rule": "Opening book G-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Alba-Lenatus the Abyss Dragon",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    8000,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Alba-Lenatus the Abyss Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    7600,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7600,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-PANTHER",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon S:P Little Knight",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Reversal Box",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7600,
+    5200
+   ],
+   "own": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "direct": false
+    },
+    {
+     "name": "S:P Little Knight",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Predaplant Dragostapelia",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7600,
+    5000
+   ],
+   "own": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "S:P Little Knight",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with S:P Little Knight",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7600,
+    3400
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Predaplant Dragostapelia",
+     "atk": 2700,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Branded Fusion",
+   "rule": "Opening book L-02",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    7600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Mirrorjade the Iceblade Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "S:P Little Knight",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Aluber the Jester of Despia",
+   "rule": "Opening book L-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Branded Retribution",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Branded Fusion",
+   "rule": "Opening book L-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    4600,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "direct": true
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Aluber the Jester of Despia",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    2800,
+    3400
+   ],
+   "own": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Albion the Sanctifire Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

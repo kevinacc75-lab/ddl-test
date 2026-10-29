@@ -1,0 +1,787 @@
+{
+ "seed": 503,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "mikanko"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 5,
+ "lp": [
+  8000,
+  0
+ ],
+ "wallSec": 54,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    8000,
+    3100
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 0,
+   "lp": [
+    8000,
+    3100
+   ],
+   "ownMons": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Dark Time Wizard",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Alligator's Dragon Knight",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon K9-17 \"Ripper\"",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-17 \"Ripper\"",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sleepy Scapegoats",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": true
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-66X \"Jacks\"",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    5400
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-17 \"Ripper\"",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Jizukiru, the Star Destroying Kaiju",
+   "rule": "Clear a body first",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Dark Time Wizard",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon K9-17 Izuna",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    3100
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 Izuna",
+     "direct": true
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": true
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-66X \"Jacks\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    500
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "atk": 3300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 Izuna",
+     "direct": true
+    },
+    {
+     "name": "Jizukiru, the Star Destroying Kaiju",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Jizukiru, the Star Destroying Kaiju",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

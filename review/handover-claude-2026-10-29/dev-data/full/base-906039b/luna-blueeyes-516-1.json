@@ -1,0 +1,47 @@
+{
+ "seed": 516,
+ "first": 1,
+ "decks": [
+  "luna",
+  "blueeyes"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 2,
+ "lp": [
+  6600,
+  0
+ ],
+ "wallSec": 47,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Spirit with Eyes of Blue",
+     "atk": 300,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": []
+}

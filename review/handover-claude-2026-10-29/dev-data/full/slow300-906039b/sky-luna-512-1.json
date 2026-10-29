@@ -1,0 +1,1539 @@
+{
+ "seed": 512,
+ "first": 1,
+ "decks": [
+  "sky",
+  "luna"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 5,
+ "lp": [
+  0,
+  7500
+ ],
+ "wallSec": 34,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Tiger",
+     "atk": 1300,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    8000,
+    7500
+   ],
+   "ownMons": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    2400,
+    7500
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 1,
+   "lp": [
+    2400,
+    7500
+   ],
+   "ownMons": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Perfume Dancer",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Black Sheep",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Scarlet Tiger",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Luna Light Perfume",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Scarlet Tiger",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1500,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Kaleido Chick",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Scarlet Tiger",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1500,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Luna Light Perfume",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Scarlet Tiger",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1500,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Wolf",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Scarlet Tiger",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1500,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Wolf",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    8000,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Lunalight Liger Dancer",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Lunalight Liger Dancer",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    6200,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Lunalight Liger Dancer",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Lunalight Liger Dancer",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Mobilize - Engage!",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Maneuver - Jamming Waves!",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Mobilize - Engage!",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Mecha - Widow Anchor",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Forbidden Droplet",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Maneuver - Afterburners!",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Masquerade",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Masquerade",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Perfume Dancer",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Wolf",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Masquerade",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Luna Light Perfume",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Black Sheep",
+     "atk": 200,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Luna Light Perfume",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Black Sheep",
+     "atk": 200,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    2400,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Black Sheep",
+     "atk": 200,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "direct": true
+    },
+    {
+     "name": "Lunalight Perfume Dancer",
+     "direct": true
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Lunalight Perfume Dancer",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    300,
+    7500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 700,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Lunalight Black Sheep",
+     "atk": 200,
+     "pos": "DEF"
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "atk": 3800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "direct": true
+    },
+    {
+     "name": "Lunalight Liger Dancer",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Lunalight Liger Dancer",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

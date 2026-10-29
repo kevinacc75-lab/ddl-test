@@ -1,0 +1,891 @@
+{
+ "seed": 502,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 4,
+ "lp": [
+  7600,
+  0
+ ],
+ "wallSec": 152,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Blazing Cartesia, the Virtuous",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    7600,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    7600,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Blazing Cartesia, the Virtuous",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "direct": false
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Eldam",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Swen",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon M-X-Saber Invoker",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    8000
+   ],
+   "own": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate M-X-Saber Invoker",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2100,
+     "pos": "DEF"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Red-Eyes Black Dragon Exceed",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon N.As.H. Knight",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "N.As.H. Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon CXyz N.As.Ch. Knight",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz N.As.Ch. Knight",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate CXyz N.As.Ch. Knight",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon CXyz Hope Chaos Barian Dragon",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-PANTHER",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Foolish Graverobber",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position K9-66X \"Jacks\"",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7600,
+    5500
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "direct": true
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7600,
+    2100
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "direct": true
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Swiftwind Panther Warrior",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 7
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7600,
+    100
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with CXyz Hope Chaos Barian Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  }
+ ]
+}
