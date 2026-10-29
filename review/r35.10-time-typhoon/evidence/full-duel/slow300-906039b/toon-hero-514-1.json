@@ -1,0 +1,3825 @@
+{
+ "seed": 514,
+ "first": 1,
+ "decks": [
+  "toon",
+  "hero"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": false,
+ "winner": null,
+ "turn": 21,
+ "lp": [
+  1750,
+  500
+ ],
+ "wallSec": 46,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    7000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    6450,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 1,
+   "lp": [
+    6450,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 0,
+   "lp": [
+    6450,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "active": 1,
+   "lp": [
+    6450,
+    5600
+   ],
+   "ownMons": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 8,
+   "active": 0,
+   "lp": [
+    6450,
+    5600
+   ],
+   "ownMons": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 9,
+   "active": 1,
+   "lp": [
+    6450,
+    4700
+   ],
+   "ownMons": [
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 10,
+   "active": 0,
+   "lp": [
+    6450,
+    4700
+   ],
+   "ownMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 11,
+   "active": 1,
+   "lp": [
+    6450,
+    2800
+   ],
+   "ownMons": [
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 12,
+   "active": 0,
+   "lp": [
+    6450,
+    2800
+   ],
+   "ownMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 13,
+   "active": 1,
+   "lp": [
+    6450,
+    1500
+   ],
+   "ownMons": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 14,
+   "active": 0,
+   "lp": [
+    6450,
+    1500
+   ],
+   "ownMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 15,
+   "active": 1,
+   "lp": [
+    6450,
+    500
+   ],
+   "ownMons": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 16,
+   "active": 0,
+   "lp": [
+    6150,
+    500
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 17,
+   "active": 1,
+   "lp": [
+    6150,
+    500
+   ],
+   "ownMons": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 18,
+   "active": 0,
+   "lp": [
+    3950,
+    500
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 19,
+   "active": 1,
+   "lp": [
+    3950,
+    500
+   ],
+   "ownMons": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 20,
+   "active": 0,
+   "lp": [
+    1750,
+    500
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Fountain",
+     "atk": 1000,
+     "pos": "DEF"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Xtra HERO Wonder Driver",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Wonder Driver",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Destiny HERO - Malicious",
+   "rule": "Opening book HE-MAL",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Malicious",
+     "atk": 800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Xtra HERO Wonder Driver",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Xtra HERO Infernal Devicer",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Forbidden Droplet",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 3
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 1150,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Mask Change",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 6
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 1150,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 7
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    7000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 1150,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Xtra HERO Infernal Devicer",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 8
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 1150,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 8
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 1150,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "set EN Shuffle",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 9
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Infernal Devicer",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 1150,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Toon Harpie Lady",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Toon Goblin Attack Force",
+     "atk": 2300,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Red-Eyes Toon Dragon",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Neo-Spacian Aqua Dolphin",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Neo-Spacian Aqua Dolphin",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate EN Shuffle",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate EN Shuffle",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Masked HERO Dark Law",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 2
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Toon Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Elemental HERO Stratos",
+   "rule": "Opening book HE-STRAT",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position Elemental HERO Shadow Mist",
+   "rule": "Prepare an attacker",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 3
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 3
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "direct": false
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "direct": false
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Red-Eyes Toon Dragon",
+   "rule": "Opening book TO-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Toon Black Luster Soldier",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dark Law",
+     "atk": 2400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Toon Black Luster Soldier",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Toon Dragon",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Toon Black Luster Soldier",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Knightmare Phoenix",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    5600
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Shadow Mist",
+     "atk": 1000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Knightmare Phoenix",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Knightmare Phoenix",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 8,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Vision HERO Faris",
+   "rule": "Opening book HE-FARIS",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Elemental HERO Stratos",
+   "rule": "Opening book HE-STRAT",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Vyon",
+     "atk": 1000,
+     "pos": "DEF"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Xtra HERO Cross Crusader",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Destiny HERO - Denier",
+     "atk": 1100,
+     "pos": "DEF"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Xtra HERO Cross Crusader",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Elemental HERO Stratos",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Xtra HERO Cross Crusader",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "direct": false
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 9,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 10,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    4700
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Shadow Toon",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 10,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    3100
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 10,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    3100
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Xtra HERO Cross Crusader",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Knightmare Phoenix",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Knightmare Phoenix",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 10,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 10,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 11,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Vision HERO Faris",
+   "rule": "Opening book HE-FARIS",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 11,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Neo-Spacian Aqua Dolphin",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 11,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Neo-Spacian Aqua Dolphin",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 11,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "DEF"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position Vision HERO Increase",
+   "rule": "Prepare an attacker",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 11,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 11,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Vision HERO Faris",
+     "direct": false
+    },
+    {
+     "name": "Vision HERO Increase",
+     "direct": false
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 11,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 12,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 12,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    2800
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Neo-Spacian Aqua Dolphin",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Knightmare Phoenix",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Knightmare Phoenix",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 12,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 12,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 13,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Foolish Burial",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 13,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 13,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Vision HERO Faris",
+     "direct": false
+    },
+    {
+     "name": "Vision HERO Increase",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 13,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 14,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 14,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    1500
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Vision HERO Increase",
+     "atk": 900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Knightmare Phoenix",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Knightmare Phoenix",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 14,
+   "seat": 0,
+   "deck": "toon",
+   "type": "battle",
+   "lp": [
+    6450,
+    500
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 14,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6450,
+    500
+   ],
+   "own": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 15,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    500
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Masked HERO Dusk Crow",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 15,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    500
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dusk Crow",
+     "atk": 1200,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Masked HERO Furnace",
+   "rule": "Opening book HE-FURN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 15,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    500
+   ],
+   "own": [
+    {
+     "name": "Vision HERO Faris",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Dusk Crow",
+     "atk": 1200,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Masked HERO Furnace",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 15,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6450,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 15,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6450,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Masked HERO Furnace",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Masked HERO Furnace",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 15,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6150,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 15,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6150,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 16,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    6150,
+    500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 17,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    6150,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 17,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    6150,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Masked HERO Furnace",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Masked HERO Furnace",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 17,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    3950,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 17,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    3950,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 18,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    3950,
+    500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Infinite Impermanence",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 18,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    3950,
+    500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 19,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    3950,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Masked HERO Fountain",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 19,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    3950,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Fountain",
+     "atk": 1000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 19,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    3950,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Fountain",
+     "atk": 1000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Masked HERO Furnace",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Masked HERO Furnace",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 19,
+   "seat": 1,
+   "deck": "hero",
+   "type": "battle",
+   "lp": [
+    1750,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Fountain",
+     "atk": 1000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 19,
+   "seat": 1,
+   "deck": "hero",
+   "type": "main",
+   "lp": [
+    1750,
+    500
+   ],
+   "own": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Fountain",
+     "atk": 1000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 20,
+   "seat": 0,
+   "deck": "toon",
+   "type": "main",
+   "lp": [
+    1750,
+    500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Masked HERO Furnace",
+     "atk": 2200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Masked HERO Fountain",
+     "atk": 1000,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

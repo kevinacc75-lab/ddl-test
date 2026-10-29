@@ -1,0 +1,1975 @@
+{
+ "seed": 505,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "kashtira"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 7,
+ "lp": [
+  8000,
+  0
+ ],
+ "wallSec": 43,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    8000,
+    5000
+   ],
+   "ownMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    8000,
+    4800
+   ],
+   "ownMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 0,
+   "lp": [
+    8000,
+    1800
+   ],
+   "ownMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 1,
+   "lp": [
+    8000,
+    1200
+   ],
+   "ownMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Totem Bird",
+     "atk": 1900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "active": 0,
+   "lp": [
+    8000,
+    1200
+   ],
+   "ownMons": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    5000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sleepy Scapegoats",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    5000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    5000
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": false
+    },
+    {
+     "name": "Fisherman of Legend",
+     "direct": false
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Number C104: Umbral Horror Masquerade",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    4800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": false
+    },
+    {
+     "name": "Fisherman of Legend",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    4800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "direct": false
+    },
+    {
+     "name": "Fisherman of Legend",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4800
+   ],
+   "own": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    4800
+   ],
+   "own": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Scapegoat Token",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Kashtira Ogre",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    4800
+   ],
+   "own": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon The Ascended of Thunder",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Kashtira Shangri-Ira",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Kashtira Big Bang",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fisherman of Legend",
+     "atk": 1850,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Eldam",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Swen",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Totem Bird",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Totem Bird",
+     "atk": 1900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Reversal Box",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Totem Bird",
+     "atk": 1900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    1800
+   ],
+   "own": [
+    {
+     "name": "Totem Bird",
+     "atk": 1900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Totem Bird",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Totem Bird",
+     "atk": 1900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Totem Bird",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Totem Bird",
+     "atk": 1900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Totem Bird",
+     "atk": 1900,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Kashtira Unicorn",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Tearlaments Kashtira",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Kashtira Shangri-Ira",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Fire Formation - Tenki",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Red-Eyes Black Dragon Exceed",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Tearlaments Kashtira",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon K9-17 \"Ripper\"",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Tearlaments Kashtira",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-17 \"Ripper\"",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Swen",
+   "rule": "Opening book DT-SWEN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "direct": false
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with K9-X \"Werewolf\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    1200
+   ],
+   "own": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Radiant Typhoon Swen",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

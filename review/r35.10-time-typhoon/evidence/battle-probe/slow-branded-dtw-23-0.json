@@ -1,0 +1,47 @@
+{
+ "seed": 23,
+ "first": 0,
+ "decks": [
+  "branded",
+  "dtw"
+ ],
+ "deadlineMs": 400,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 2,
+ "lp": [
+  0,
+  8000
+ ],
+ "wallSec": 18,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": []
+}

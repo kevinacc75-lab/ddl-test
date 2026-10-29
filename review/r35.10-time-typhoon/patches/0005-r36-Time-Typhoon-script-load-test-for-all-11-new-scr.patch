@@ -1,0 +1,49 @@
+From d7f881012b23a5ab286f3b7c486e0d0e77e21fe1 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 13:20:08 +1100
+Subject: [PATCH 05/14] r36 Time Typhoon: script-load test for all 11 new
+ scripts (incl. side-only Jinzo) with a broken-script control; Scapegoat Token
+ row
+
+SELF-VERIFIED (builder = verifier), NOT independent.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tests/r36-dtw-load.test.mjs | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 tests/r36-dtw-load.test.mjs
+
+diff --git a/tests/r36-dtw-load.test.mjs b/tests/r36-dtw-load.test.mjs
+new file mode 100644
+index 0000000..c191e25
+--- /dev/null
++++ b/tests/r36-dtw-load.test.mjs
+@@ -0,0 +1,24 @@
++// r36 Time Typhoon script-load test (Claude, 29 Oct 2026; Seto 11:24 verification plan item 2). SELF-VERIFIED.
++// Every one of the 11 new scripts (Jinzo - Energy Shocker included: it is in the Side Deck, which the simulator never
++// loads into a duel, so this is its only engine check) is loaded by the real engine in a duel built from a test deck
++// holding all of them, with 0 script errors; the Scapegoat Token row (3129528) exists with its printed stats.
++import assert from 'node:assert/strict';import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++import {Duel} from '../dist/duel.mjs';
++const db=JSON.parse(gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
++const NEW=[40235813,77482666,4881365,3129527,76630812,65118318,2606417,76660178,17242022,79791695,40275470];
++const EXTRA=new Set([17242022,79791695]);
++const main=[];for(const id of NEW.filter(i=>!EXTRA.has(i)))main.push(id,id,id);while(main.length<40)main.push(40235813);
++const deck={id:'r36-load',name:'r36 load test',main:main.slice(0,40),extra:[...EXTRA],side:[]};
++const live=await Duel.create(db,scripts);
++for(const first of [0,1]){const d=new Duel(live.core,db,scripts);d.start([deck,deck],{seed:7,first});
++ assert.deepEqual(d.errors,[],'script errors (first '+first+'): '+JSON.stringify(d.errors).slice(0,500));
++ assert.ok(d.prompt,'the duel is waiting for a decision');d.stop()}
++// control: the same load with a deliberately broken Jinzo (a call to Chain.IsTriggeringLocation, which our engine lacks)
++// must stop the duel, so a passing load above means the scripts really ran.
++{const bad={...scripts,'c40275470.lua':scripts['c40275470.lua'].replace('function s.initial_effect(c)','function s.initial_effect(c) Chain.IsTriggeringLocation(1)')};
++ assert.notEqual(bad['c40275470.lua'],scripts['c40275470.lua'],'control script changed');
++ const d=new Duel(live.core,db,bad);assert.throws(()=>d.start([deck,deck],{seed:7,first:0}),/IsTriggeringLocation/,'control: a broken script is caught');try{d.stop()}catch{}}
++const tok=db[3129528];assert.ok(tok,'Scapegoat Token row');assert.equal(tok.name,'Scapegoat Token');assert.deepEqual([tok.level,tok.attack,tok.defense],[1,0,0],'Token Lv1 0/0');
++for(const id of NEW)assert.ok(scripts['c'+id+'.lua'],'script present '+db[id].name);
++live.stop?.();
++console.log(JSON.stringify({test:'r36-dtw-load',pass:true,node:process.version,scripts:NEW.length,mainDeck:deck.main.length,extra:deck.extra.length}));
+-- 
+2.43.0
+

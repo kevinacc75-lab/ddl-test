@@ -1,0 +1,3 @@
+{"test":"r33-deck-brain","pass":true,"brains":["branded","luna","mikanko","sky","blueeyes","kashtira","toon","hero","dtw"],"node":"v22.22.2","selfVerified":true}
+{"test":"r33-deck-brain","part":"r34 Mikanko","pass":true}
+{"test":"r33-deck-brain","part":"r34 Mikanko gating, Sky Striker","pass":true}

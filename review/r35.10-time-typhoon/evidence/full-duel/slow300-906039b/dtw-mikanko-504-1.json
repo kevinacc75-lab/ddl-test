@@ -1,0 +1,302 @@
+{
+ "seed": 504,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "mikanko"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 3,
+ "lp": [
+  0,
+  2000
+ ],
+ "wallSec": 12,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    8000,
+    2000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    2000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Mikanko Water Arabesque",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    2000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Mikanko Water Arabesque",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Sanaki the Mikanko Devotee",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Hu-Li the Jewel Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Uzuhime the Manifested Mikanko",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Uzuhime the Manifested Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Harpie's Feather Duster",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "main",
+   "lp": [
+    8000,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Uzuhime the Manifested Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "battle",
+   "lp": [
+    8000,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Uzuhime the Manifested Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Uzuhime the Manifested Mikanko",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Uzuhime the Manifested Mikanko",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "mikanko",
+   "type": "battle",
+   "lp": [
+    3000,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Uzuhime the Manifested Mikanko",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Uzuhime the Manifested Mikanko",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Uzuhime the Manifested Mikanko",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

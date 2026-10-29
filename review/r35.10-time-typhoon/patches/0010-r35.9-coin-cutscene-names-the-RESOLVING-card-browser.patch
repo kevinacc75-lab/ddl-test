@@ -1,0 +1,260 @@
+From b75253039f814f8be0196ae2bc2740c0346e976b Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 16:56:24 +1100
+Subject: [PATCH 10/14] r35.9: coin cutscene names the RESOLVING card (browser
+ run showed Ash Blossom, a resolved later link); re-pin app.mjs with proof
+ (tests/r36-coin-pin.test.mjs: minus the coin lines = r35.8 bytes for
+ app/presentation/worker); r35-shuffle pin tests strip the coin lines first;
+ labels r35.9
+
+SELF-VERIFIED (builder = verifier), NOT independent.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/coin-tap.mjs                  |   4 +-
+ dist/index.html                    |   4 +-
+ dist/sw.js                         |   4 +-
+ tests/r23-fx.test.mjs              |   2 +-
+ tests/r35-shuffle-app-pin.test.mjs |   2 +
+ tests/r35-shuffle-skip.test.mjs    |   4 +-
+ tests/r36-coin-pin.test.mjs        | 120 +++++++++++++++++++++++++++++
+ tests/r36-coin.test.mjs            |   5 ++
+ 8 files changed, 136 insertions(+), 9 deletions(-)
+ create mode 100644 tests/r36-coin-pin.test.mjs
+
+diff --git a/dist/coin-tap.mjs b/dist/coin-tap.mjs
+index 7865e5d..ef6f04f 100644
+--- a/dist/coin-tap.mjs
++++ b/dist/coin-tap.mjs
+@@ -15,7 +15,7 @@
+ //    (SELECT_OPTION whose two options are the system strings 60 Heads / 61 Tails) immediately before the toss. The duel
+ //    records a response only after the engine accepts it (Duel.respond pushes it after advance), so the tap notes the
+ //    history position of that prompt and reads the response at drain time, when the worker sends the state.
+-//    'code' is the card whose chain link is resolving (public). Never the raw message; no await, timer, random number,
++//    'code' is the card whose chain link is resolving (public; found by the duel's resolvingChain, not the top link). Never the raw message; no await, timer, random number,
+ //    duel.log write, engine call or postMessage;
+ //  - fails open (a presentation failure can never break the duel); bounded (max 16 pending, extra dropped and counted);
+ //  - reset / arm / disarm / drain exactly as ShuffleTap (startup, rewind, import: disarmed during reconstruction).
+@@ -40,7 +40,7 @@ export class CoinTap{
+    const coin=m.type===this.coinType,results=(Array.isArray(m.results)?m.results:[]).slice(0,8).map(v=>coin?!!v:Number(v)).filter(v=>coin||(Number.isInteger(v)&&v>=1&&v<=6));
+    if(!results.length)return;
+    const p=coin?this.callPrompt:null;this.callPrompt=null;
+-   const top=receiver.chain?.at?.(-1),code=Number(top?.code)||0;
++   const chain=Array.isArray(receiver.chain)?receiver.chain:[],link=chain.find(c=>c.chain_size===receiver.resolvingChain)||[...chain].reverse().find(c=>!c.solved),code=Number(link?.code)||0;/* the RESOLVING link (a later link that already resolved, e.g. Ash Blossom, stays in the chain list) */
+    const id=++this.seq;if(this.pending.length>=this.max){this.dropped++;return}
+    this.pending.push({id,kind:coin?'coin':'dice',seat,results,call:null,code,afterEventId:Number(receiver.eventSeq)||0,callAt:p?p.at:null,callOptions:p?p.options:null});
+   }catch{/* fail open: decoration only */}
+diff --git a/dist/index.html b/dist/index.html
+index 6665d5c..571e0d8 100644
+--- a/dist/index.html
++++ b/dist/index.html
+@@ -1,9 +1,9 @@
+-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r35.8</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r35.9</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
+ <link rel="stylesheet" href="arenas.css">
+ <link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="coin-cutscene.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
+ <link rel="stylesheet" href="./fx-r23.css"><link rel="stylesheet" href="./r26-panels.css"><link rel="stylesheet" href="./learning-routes.css"><link rel="stylesheet" href="./deck-list.css"><link rel="stylesheet" href="./r33-polish.css"><link rel="stylesheet" href="./r34-arena.css"><link rel="stylesheet" href="./r34-persona.css">
+ </head><body data-theme="vibrant">
+-<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r35.8</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
++<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r35.9</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
+ <main id="setup"><section class="intro"><div><p class="eyebrow"><span class="live-dot"></span> YOUR DUEL ROOM</p><h1>Your decks.<br><em>Either side</em> of the table.</h1><p class="lead">Learn the line. Face the interruption. Play it again.<br>Choose your deck, choose your rival, and take the seat you want.</p></div><div class="hero-art"><img src="art/44146295.jpg" alt="Mirrorjade the Iceblade Dragon"><span class="art-stamp">CRIMSON ABYSS<br><b>THE ICEBLADE DRAGON</b></span></div></section>
+ <div class="section-head"><div><p class="eyebrow">01 / CHOOSE YOUR DECKS</p><h2>Set the matchup</h2></div><button id="import" class="quiet">＋ Import .ydk</button><input id="file" type="file" accept=".ydk" hidden></div>
+ <div id="deck-grid" class="deck-grid" aria-label="Your deck collection"></div>
+diff --git a/dist/sw.js b/dist/sw.js
+index 8314f4f..a80d591 100644
+--- a/dist/sw.js
++++ b/dist/sw.js
+@@ -1,6 +1,6 @@
+-// r35.8 (r35.7 + art for the 21 Time Typhoon cards that had none, and the deck-list viewer data rebuilt to include Time Typhoon; Kevy 14:29 screenshots): cache 2026-10-29-r35.8. // r35.7 (r35.6 + new deck Time Typhoon: K9 Radiant Typhoon Dark Time Wizard, Kevy's list 29 Oct; 11 cards from ProjectIgnis BabelCDB/CardScripts with pinned sources; AI brain + combo book): cache 2026-10-29-r35.7. // r35.6 (r35.5 + job 29 fix: Cosmic Cyclone / MST / Twin Twisters / Tornado Dragon / Galaxy Cyclone need a TARGETABLE opposing Spell/Trap; Hu-Li shield per printed text; RELAY-063/064/065, Seto 05:25 + 07:20): cache 2026-10-29-r35.6. // r35.5 (r35.4 + RELAY-058 ledger restart fix + RELAY-059 Skip cancels the shuffle overlay): cache 2026-10-28-r35.5. // r35.2 (effect-ready pile glow, Mikanko damage plan + Akiza E1): cache 2026-10-24-r35.2. r35.1 (Kevy's soundtrack update, 80% audio defaults): cache 2026-10-24-r35.1. r35 (effect titles, public card names): cache 2026-10-24-r35. r34.1 (card-slap chain sounds, tablet smoothness): cache 2026-10-23-r34.1. r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31, r32 (captions, hand traps, going-second holds, new soundtrack): 2026-10-22-r32, r32.1 (Link boss hold, draw spells, Mirrorjade wipe, music picker): 2026-10-22-r32-1, r33 (deck lists, tablet smoothness, Branded deck brain): 2026-10-23-r33, r34 (deck brains, Mikanko/Sky/Branded book updates, ChatGPT N3-N5 fixes): 2026-10-23-r34, r33.1 (ChatGPT review fixes: Imperm/Veiler targets, caption reset): 2026-10-23-r33-1): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
++// r35.9 (r35.8 + coin toss / dice roll cutscene with sound and heads/tails call buttons; Kevy 29 Oct 14:29): cache 2026-10-29-r35.9. // r35.8 (r35.7 + art for the 21 Time Typhoon cards that had none, and the deck-list viewer data rebuilt to include Time Typhoon; Kevy 14:29 screenshots): cache 2026-10-29-r35.8. // r35.7 (r35.6 + new deck Time Typhoon: K9 Radiant Typhoon Dark Time Wizard, Kevy's list 29 Oct; 11 cards from ProjectIgnis BabelCDB/CardScripts with pinned sources; AI brain + combo book): cache 2026-10-29-r35.7. // r35.6 (r35.5 + job 29 fix: Cosmic Cyclone / MST / Twin Twisters / Tornado Dragon / Galaxy Cyclone need a TARGETABLE opposing Spell/Trap; Hu-Li shield per printed text; RELAY-063/064/065, Seto 05:25 + 07:20): cache 2026-10-29-r35.6. // r35.5 (r35.4 + RELAY-058 ledger restart fix + RELAY-059 Skip cancels the shuffle overlay): cache 2026-10-28-r35.5. // r35.2 (effect-ready pile glow, Mikanko damage plan + Akiza E1): cache 2026-10-24-r35.2. r35.1 (Kevy's soundtrack update, 80% audio defaults): cache 2026-10-24-r35.1. r35 (effect titles, public card names): cache 2026-10-24-r35. r34.1 (card-slap chain sounds, tablet smoothness): cache 2026-10-23-r34.1. r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31, r32 (captions, hand traps, going-second holds, new soundtrack): 2026-10-22-r32, r32.1 (Link boss hold, draw spells, Mirrorjade wipe, music picker): 2026-10-22-r32-1, r33 (deck lists, tablet smoothness, Branded deck brain): 2026-10-23-r33, r34 (deck brains, Mikanko/Sky/Branded book updates, ChatGPT N3-N5 fixes): 2026-10-23-r34, r33.1 (ChatGPT review fixes: Imperm/Veiler targets, caption reset): 2026-10-23-r33-1): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
+ // duel-lab-* cache (r17 and earlier), so devices that update don't keep stale copies; unrelated caches are left alone.
+-const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-29-r35.8',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
++const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-29-r35.9',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
+ self.addEventListener('install',event=>event.waitUntil((async()=>{const manifest=await fetch('./offline-assets.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Offline manifest unavailable');return r.json()});const cache=await caches.open(CACHE);for(let i=0;i<manifest.length;i+=12)await cache.addAll(manifest.slice(i,i+12));await self.skipWaiting()})()));
+ self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&OLD_PREFIXES.some(prefix=>key.startsWith(prefix)))await caches.delete(key);await self.clients.claim()})()));
+ self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==self.location.origin)return;event.respondWith((async()=>{const cache=await caches.open(CACHE);if(event.request.mode==='navigate'){try{const response=await fetch(event.request);if(response.ok){await cache.put('./',response.clone());return response}}catch{}return await cache.match('./')||await cache.match('./index.html')||Response.error()}return await cache.match(event.request)||await fetch(event.request)})())});
+diff --git a/tests/r23-fx.test.mjs b/tests/r23-fx.test.mjs
+index bc0a77f..0275520 100644
+--- a/tests/r23-fx.test.mjs
++++ b/tests/r23-fx.test.mjs
+@@ -11,7 +11,7 @@ import {ChainDirector} from '../dist/event-data.mjs';import {createPresentation}
+ import {fxSpan,stKind,createFx} from '../dist/fx-r23.mjs';import {Soundscape,SOUND_EVENTS} from '../dist/sound-engine.mjs';import {jazzBeat,chordAt,beatSeconds,JAZZ_THEMES,SWING} from '../dist/jazz-score.mjs';
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ // 1. Pace.
+-const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'70f8d6965cf8cb2817d98b3f816814fd19de7bfe370d55775e5f7064f5aa8225'/* r35 item 8 re-pin: shuffle overlay lines only, proven by tests/r35-shuffle-app-pin.test.mjs */,'dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'ed03a478d999605e6089898ac5d97cc7c102494e160853776aaa1a3dea490948'/* r35 job 29 fix re-pin: three blocks only, proven by tests/r35-cyclone-pin.test.mjs *//* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
++const PINNED={'dist/event-data.mjs':'a30d6e25bf63fd77a9219cb4bb548d019488eac2056f0ab40efc5392a27c3c8e','dist/human-holds.mjs':'6ead92b79cbc81931ea417e810e3c3217e2670683d3aa9d8ad986f6bed5cfda7','dist/app.mjs':'831386c3c97f4ded44b0dc483f47decde970f9dd6bf519ae87b9dc9958c64212'/* r36 re-pin (coin cutscene lines only, proven by tests/r36-coin-pin.test.mjs; before them 70f8d696 = the r35 item 8 re-pin, shuffle overlay lines only, proven by tests/r35-shuffle-app-pin.test.mjs) */,'dist/play-flow.mjs':'dccc07f05a4c06b9d4c1c1a090dc297ba43d82fde185bacfa7988aa30c757511','dist/lp-fx.mjs':'2757637194cfc1bae4afc93d3bc4075309b399b2e2df0f84188dba29bb9a6f4e','dist/optimal-pilot.mjs':'ed03a478d999605e6089898ac5d97cc7c102494e160853776aaa1a3dea490948'/* r35 job 29 fix re-pin: three blocks only, proven by tests/r35-cyclone-pin.test.mjs *//* r32.1 (22 Oct, Claude): Special Summon holds receive isPayoff (no non-boss Link that would eat a boss). r32: hand traps used on the opponent's key cards (trusted, every deck); createOptimalPilots forwards bookTrust (ChatGPT F5); trusted book steps say "Played as written" (F6). No pace, hold or think-time change. r31: one-at-a-time boss preservation; book trust off for books marked trust:false. r30 (22 Oct, measured on 30 hands per deck): bookTrust on by default (a book step and our own-turn trigger activations are played without search override); no timing code. r28 Lunalight review: boss preservation applies only to a boss in hand / on the field (not Deck, Extra Deck, GY, banished) and also to return-to-hand/Deck picks; no timing code. r27 deck review: AI decision rules changed (book holds on Special Summons, never tribute an Extra Deck monster, more bosses protected); no timing, hold or think-time code touched */};
+ for(const [f,h] of Object.entries(PINNED))assert.equal(sha(f),h,f+' must be unchanged from r22b (pace, holds, think time)');
+ // r24 restyles the summon scene (card art, materials as cards); its timing table must stay the same.
+ // r26: Kevy approved longer cutscenes (21 Oct 23:05); the B2 summon scene is now the one Fusion/Synchro/Xyz/Link cutscene
+diff --git a/tests/r35-shuffle-app-pin.test.mjs b/tests/r35-shuffle-app-pin.test.mjs
+index 3810136..cfd29d2 100644
+--- a/tests/r35-shuffle-app-pin.test.mjs
++++ b/tests/r35-shuffle-app-pin.test.mjs
+@@ -3,6 +3,8 @@
+ // app.mjs byte for byte (sha256 c7ff1ee0..., r32.1), so nothing else in app.mjs changed.
+ import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
+ let s=fs.readFileSync('dist/app.mjs','utf8');
++// r36: first take out the coin cutscene lines (their own proof: tests/r36-coin-pin.test.mjs), then the shuffle lines as before.
++{const {R36_COIN_UNDO}=await import('./r36-coin-pin.test.mjs');for(const [a,b,n] of R36_COIN_UNDO['app.mjs']){assert.equal(s.split(a).length-1,n,'r36 coin line: '+a.slice(0,60));s=s.split(a).join(b)}}
+ const UNDO=[
+  ["\nimport {ShuffleOverlay} from './shuffle-overlay.mjs';// r35 item 8: deck-shuffle overlay (RELAY-046; decorative, never blocks or talks to the worker)",''],
+  ["\nconst shuffleOverlay=new ShuffleOverlay({sound,view:()=>view,options:()=>({enabled:preferences.shuffleFx!==false&&preferences.preset!=='instant',reduced:!!preferences.motion||!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches})});document.addEventListener('visibilitychange',()=>{if(document.hidden)shuffleOverlay.cancel()});",''],
+diff --git a/tests/r35-shuffle-skip.test.mjs b/tests/r35-shuffle-skip.test.mjs
+index a5a93a2..e57d2a1 100644
+--- a/tests/r35-shuffle-skip.test.mjs
++++ b/tests/r35-shuffle-skip.test.mjs
+@@ -37,6 +37,6 @@ for(const [id,type] of [['skip-fx','click'],['skip-scene','click'],['skip-victor
+ // 5. Overlay-only cancel (no scene active): nothing but the local cancel happens; no message to the worker, no timers left.
+ {const w=world();w.ov.cancel();cleared(w,'overlay-only');assert.deepEqual(w.posted,[])}
+ // 6. presentation.mjs is not modified by this correction (its sha256 is the 628d40f one).
+-{const crypto=await import('node:crypto');const h=crypto.createHash('sha256').update(fs.readFileSync('dist/presentation.mjs')).digest('hex');
+- assert.equal(h,'fedba78dba0b527cda3001bf0207df5a0e3426e58259d43151b7719b7d20b3f7','presentation.mjs is byte-identical to 628d40f')}
++{const crypto=await import('node:crypto');let src=fs.readFileSync('dist/presentation.mjs','utf8');/* r36: minus the coin cutscene lines (proof: tests/r36-coin-pin.test.mjs) */const {R36_COIN_UNDO}=await import('./r36-coin-pin.test.mjs');for(const [a,b,n] of R36_COIN_UNDO['presentation.mjs']){assert.equal(src.split(a).length-1,n);src=src.split(a).join(b)}const h=crypto.createHash('sha256').update(src).digest('hex');
++ assert.equal(h,'fedba78dba0b527cda3001bf0207df5a0e3426e58259d43151b7719b7d20b3f7','presentation.mjs minus the r36 coin lines is byte-identical to 628d40f')}
+ console.log(JSON.stringify({test:'r35-shuffle-skip',pass:true,node:process.version}));
+diff --git a/tests/r36-coin-pin.test.mjs b/tests/r36-coin-pin.test.mjs
+new file mode 100644
+index 0000000..e6ba857
+--- /dev/null
++++ b/tests/r36-coin-pin.test.mjs
+@@ -0,0 +1,120 @@
++// r36 coin cutscene re-pin proof (Claude, 29 Oct 2026; Kevy 14:29). SELF-VERIFIED. Same method as tests/r35-shuffle-app-pin.test.mjs:
++// taking EXACTLY the coin-cutscene additions out of each file gives back the file before them (r36-dtw 0d30c2b, the r35.8
++// published build) byte for byte, so nothing else in these files changed. app.mjs is pinned by tests/r23-fx.test.mjs and
++// presentation.mjs by tests/r35-shuffle-skip.test.mjs; both now pin the r36 bytes and point here for the proof.
++import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
++const sha=s=>crypto.createHash('sha256').update(s).digest('hex');
++export const R36_COIN_UNDO={
++ "app.mjs": [
++  [
++   "// r36 (Kevy 29 Oct 14:29, coin flip cutscene): the worker's coin envelope (coin-tap.mjs) is shown once per toss; ids are\n// deduped per epoch like the shuffle overlay, so a re-sent state never replays a toss.\nlet coinSeen={epoch:null,high:0};function coinEpochOk(c){try{if(!c||!Number.isFinite(c.epoch)||!Array.isArray(c.tosses))return false;if(c.epoch!==coinSeen.epoch)coinSeen={epoch:c.epoch,high:0};const fresh=c.tosses.filter(t=>t&&Number(t.id)>coinSeen.high);for(const t of fresh)coinSeen.high=Math.max(coinSeen.high,Number(t.id));c.tosses=fresh;return fresh.length>0}catch{return false}}\n// The engine's \"call it\" prompt (SELECT_OPTION with the system strings 60 Heads / 61 Tails): shown as a coin, not a list.\nconst COIN_CALL={60:'heads',61:'tails'};function isCoinCall(m){const o=(m?.options||[]).map(Number);return o.length===2&&o.every(v=>COIN_CALL[v])&&o[0]!==o[1]}\n",
++   "",
++   1
++  ],
++  [
++   ",coinEpochOk(x.coin)?x.coin.tosses:[]);",
++   ");",
++   1
++  ],
++  [
++   " if(m.type===M.SELECT_OPTION&&isCoinCall(m)&&choices.length===2){renderCoinCall(m);return}\n",
++   "",
++   1
++  ],
++  [
++   "function renderCoinCall(m){const card=db?.[state.chain?.at?.(-1)?.code]?.name;$('#decision-title').textContent='Call it: heads or tails?';$('#decision-note').textContent=(card?card+' tosses a coin. ':'')+'The duel engine tosses the coin after you call it.';\n $('#choices').innerHTML='<div class=\"coin-call-row\">'+m.options.map((v,i)=>{const side=COIN_CALL[Number(v)];return `<button class=\"choice coin-call-btn\" data-choice=\"${i}\" data-side=\"${side}\" aria-label=\"Call ${side}\"><i class=\"coin-call-face\" aria-hidden=\"true\"></i><span class=\"choice-text\">${side==='heads'?'HEADS':'TAILS'}</span></button>`}).join('')+'</div>';\n $('#choices').onclick=e=>{const n=e.target.closest('[data-choice]');if(n){sound.play?.('confirm');reply(choices[Number(n.dataset.choice)].response)}}}\n",
++   "",
++   1
++  ]
++ ],
++ "presentation.mjs": [
++  [
++   "\nimport {CoinScene,coinBatches,COIN_MS} from './coin-cutscene.mjs';// r36 (Kevy 29 Oct 14:29): coin toss / dice roll cutscenes",
++   "",
++   1
++  ],
++  [
++   " const coinScene=new CoinScene({document,db,decks,sound,animate});/* r36: results come from the engine via the worker's coin envelope; this only shows them */\n const coinVisual=()=>enabled&&!skipCutins&&!!COIN_MS[preset],coinStill=()=>reduced||document.body.classList.contains('quiet-motion')||!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;\n",
++   "",
++   1
++  ],
++  [
++   "  if(batch[0].type==='coinToss'){const e=batch[0];coinScene.log(e.toss);if(duration>0&&coinVisual()){coinScene.show(e,duration*timingScale,{reduced:coinStill(),deck:decks()[e.player],ownSeat:e.player===view()});stage.hidden=true}return}/* r36: coin / dice cutscene */\n",
++   "",
++   1
++  ],
++  [
++   "\n  if(batch.events[0].type==='coinToss')batch.duration=coinVisual()?(COIN_MS[preset]??COIN_MS.learning):0;",
++   "",
++   1
++  ],
++  [
++   "routes.clear();summonScene.clear();coinScene.clear();",
++   "routes.clear();summonScene.clear();",
++   1
++  ],
++  [
++   "summonScene.reset();coinScene.reset();",
++   "summonScene.reset();",
++   1
++  ],
++  [
++   "play(events,ackId,tosses){",
++   "play(events,ackId){",
++   1
++  ],
++  [
++   "queue.push(...coinBatches(summonCutscenes.decorate(fusionMaterials.decorate(batches,preset),preset),tosses,preset))",
++   "queue.push(...summonCutscenes.decorate(fusionMaterials.decorate(batches,preset),preset))",
++   1
++  ]
++ ],
++ "worker.mjs": [
++  [
++   "\n// r36 (Kevy 29 Oct 14:29, coin flip cutscene): coin-toss / dice-roll capture on the same one real duel, same conditions (see coin-tap.mjs).\nimport {CoinTap} from './coin-tap.mjs';const coinTap=new CoinTap({coinType:M.TOSS_COIN,diceType:M.TOSS_DICE,optionType:M.SELECT_OPTION});",
++   "",
++   1
++  ],
++  [
++   "shuffleTap.arm();coinTap.arm()",
++   "shuffleTap.arm()",
++   3
++  ],
++  [
++   "shuffleTap.disarm();coinTap.disarm()",
++   "shuffleTap.disarm()",
++   3
++  ],
++  [
++   "shuffleTap.reset();coinTap.reset()",
++   "shuffleTap.reset()",
++   3
++  ],
++  [
++   "shuffleTap.install(duel);coinTap.install(duel)",
++   "shuffleTap.install(duel)",
++   1
++  ],
++  [
++   "shuffle:shuffleTap.drain(),coin:coinTap.drain()",
++   "shuffle:shuffleTap.drain()",
++   1
++  ],
++  [
++   ",coin:lastHumanState.coin&&{...lastHumanState.coin,tosses:[]}",
++   "",
++   1
++  ]
++ ]
++};
++export const BEFORE={
++ "app.mjs": "70f8d6965cf8cb2817d98b3f816814fd19de7bfe370d55775e5f7064f5aa8225",
++ "presentation.mjs": "fedba78dba0b527cda3001bf0207df5a0e3426e58259d43151b7719b7d20b3f7",
++ "worker.mjs": "e56d14113b9117c23648763fc8dbb471d22e3ed8f8f194e658031f32358c01b4"
++};
++if(import.meta.url===`file://${process.argv[1]}`){
++ for(const [f,undo] of Object.entries(R36_COIN_UNDO)){let s=fs.readFileSync('dist/'+f,'utf8');
++  for(const [a,b,n] of undo){assert.equal(s.split(a).length-1,n,f+': expected '+n+'x: '+a.slice(0,60));s=s.split(a).join(b)}
++  assert.ok(!/coinTap|CoinTap|coinScene|CoinScene|coinBatches|isCoinCall|renderCoinCall|coinEpochOk/.test(s),f+': no other coin change');
++  assert.equal(sha(s),BEFORE[f],f+' minus the coin additions = r35.8 (0d30c2b) byte for byte')}
++ console.log(JSON.stringify({test:'r36-coin-pin',pass:true,node:process.version,files:Object.keys(R36_COIN_UNDO)}))}
+diff --git a/tests/r36-coin.test.mjs b/tests/r36-coin.test.mjs
+index 71b7c80..6bb5909 100644
+--- a/tests/r36-coin.test.mjs
++++ b/tests/r36-coin.test.mjs
+@@ -50,6 +50,11 @@ assert.notEqual(results['16/0'].toss.results[0],results['11/0'].toss.results[0],
+  drive(d,{steps:{0:['Activate · '+DTW,'Toss a coin','Choose an available effect']},onPrompt:auto,until:dd=>dd.prompt.type===M.SELECT_IDLECMD&&gy(dd,0).some(c=>dd.name(c.code)===DTW)});
+  assert.equal(tap.drain().tosses.length,0,'a disarmed tap captures nothing');assert.throws(()=>tap.install({handleMessage(){}}),/one duel/,'bound to one duel');
+  tap.arm();tap.reset();assert.equal(tap.armed,false,'reset disarms');assert.equal(tap.drain().epoch,1,'reset starts a new epoch');d.stop()}
++// 4b the card shown is the RESOLVING link, not the top of the chain list (browser run 29 Oct: Ash Blossom CL3 had already
++//    resolved while Dark Time Wizard CL2 tossed the coin, and the scene named Ash Blossom)
++{const tap=newTap(),fake={responseHistory:[],eventSeq:9,resolvingChain:2,fromEngine:p=>p,chain:[{chain_size:1,code:77482666},{chain_size:2,code:40235813},{chain_size:3,code:14558127,solved:true}],handleMessage(){}};
++ tap.install(fake);tap.arm();fake.handleMessage({type:M.TOSS_COIN,player:0,results:[true]});
++ assert.equal(tap.drain().tosses[0].code,40235813,'the resolving link (Dark Time Wizard), not the resolved Ash Blossom on top')}
+ // 5
+ {const ev=(id,type='move')=>({id,type});
+  const batches=[{events:[ev(5,'activate')]},{events:[ev(6,'resolve'),ev(7,'move')]},{events:[ev(8,'move')]}];
+-- 
+2.43.0
+

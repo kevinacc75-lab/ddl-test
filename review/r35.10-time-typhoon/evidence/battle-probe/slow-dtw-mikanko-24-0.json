@@ -1,0 +1,47 @@
+{
+ "seed": 24,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "mikanko"
+ ],
+ "deadlineMs": 400,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 2,
+ "lp": [
+  0,
+  7000
+ ],
+ "wallSec": 17,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": []
+}

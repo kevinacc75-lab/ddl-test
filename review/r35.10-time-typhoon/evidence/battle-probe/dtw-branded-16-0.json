@@ -1,0 +1,533 @@
+{
+ "seed": 16,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 3,
+ "lp": [
+  7500,
+  0
+ ],
+ "wallSec": 125,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    7500,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "K9-66X \"Jacks\"",
+     "atk": 2600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 1800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Swen",
+   "rule": "Opening book DT-SWEN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 3200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Red-Eyes Black Dragon Exceed",
+   "rule": "Opening book DT-SWEN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 2900,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon K9-17 \"Ripper\"",
+   "rule": "Opening book DT-SWEN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-17 \"Ripper\"",
+   "rule": "Opening book DT-SWEN",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Mystical Space Typhoon",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sleepy Scapegoats",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7500,
+    8000
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Fallen of the White Dragon",
+     "atk": 600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "direct": false
+    },
+    {
+     "name": "K9-17 Izuna",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with K9-17 \"Ripper\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7500,
+    5400
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "atk": 1300,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 Izuna",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with K9-17 Izuna",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    7500,
+    3700
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 3200,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 4600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

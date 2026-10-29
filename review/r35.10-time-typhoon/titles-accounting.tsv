@@ -1,0 +1,36 @@
+code	key	kind	result	title
+2606417	0	activated	KEPT	Roll to place counters
+2606417	1	activated	KEPT	Spend a counter; call a coin
+2606417	2	prompt	DROPPED (prompt: not a chain effect, RELAY-067 rules 1-5)	Choose how many counters to place
+2606417	3	prompt	DROPPED (prompt: not a chain effect, RELAY-067 rules 1-5)	Summon; set target’s ATK to 0 and negate
+2606417	zero	activation-only	DROPPED (activation-only: not a chain effect, RELAY-067 rules 1-5)	Activate Reversal Box
+3129527	0	activated	KEPT	Summon Tokens; maybe summon Panther
+3129527	1	prompt	DROPPED (prompt: not a chain effect, RELAY-067 rules 1-5)	Summon Swiftwind Panther Warrior
+3129527	2	status	DROPPED (status: not a chain effect, RELAY-067 rules 1-5)	Extra Deck: Fusion Monsters only
+3129527	3	replacement	DROPPED (replacement: not a chain effect, RELAY-067 rules 1-5)	Destroy a Token instead
+3129527	native:3304	status	DROPPED (status: not a chain effect, RELAY-067 rules 1-5)	Tokens cannot pay a Tribute Summon
+4881365	0	activated	KEPT	Reveal to summon Alligator
+4881365	1	activated	KEPT	Search up to 2 Spells/Traps; discard 1
+17242022	0	procedure	DROPPED (procedure: not a chain effect, RELAY-067 rules 1-5)	Tribute to Special Summon Exceed
+17242022	1	activated	KEPT	Summon a Level 8 or lower monster
+40235813	0	activation-choice	KEPT	Choose search or coin-toss effect
+40235813	1	menu	DROPPED (menu: not a chain effect, RELAY-067 rules 1-5)	Search; recover Dark Time Wizard later
+40235813	2	menu	DROPPED (menu: not a chain effect, RELAY-067 rules 1-5)	Call a coin: destroy monsters
+40235813	3	status	DROPPED (status: not a chain effect, RELAY-067 rules 1-5)	Recover Dark Time Wizard in End Phase
+40275470	0	activated	KEPT	Destroy opposing Traps; gain ATK
+65118318	0	activated	KEPT	Send a card; maybe summon from either GY
+65118318	1	activated	KEPT	Banish to Set a Spell/Trap from a GY
+65118318	2	prompt	DROPPED (prompt: not a chain effect, RELAY-067 rules 1-5)	Summon a monster from either GY
+76630812	0	activated	KEPT	Roll twice: shift both sides’ ATK/DEF
+76630812	1	activated	KEPT	Banish; roll twice to destroy a summon
+76630812	2	status	DROPPED (status: not a chain effect, RELAY-067 rules 1-5)	Dark Time Wizard monsters gain ATK/DEF
+76630812	3	status	DROPPED (status: not a chain effect, RELAY-067 rules 1-5)	Opposing monsters lose ATK/DEF
+76660178	0	activated	KEPT	Summon Fisherman from hand
+76660178	1	activated	KEPT	Destroy a monster; return in End Phase
+76660178	2	delayed-operation	KEPT	Return Fisherman to hand
+77482666	0	activation-choice	KEPT	Tribute: summon or send to GY
+77482666	1	menu	DROPPED (menu: not a chain effect, RELAY-067 rules 1-5)	Summon a Dark Time Wizard monster
+77482666	2	menu	DROPPED (menu: not a chain effect, RELAY-067 rules 1-5)	Send a Dark Time Wizard Spell/Trap to GY
+79791695	0	procedure	DROPPED (procedure: not a chain effect, RELAY-067 rules 1-5)	Xyz Summon using a Number C monster
+79791695	1	activated	KEPT	Detach 1; attach opponent’s top 2 cards
+records: 34; kept 17; Scapegoat Token 3129528: empty map (no records)

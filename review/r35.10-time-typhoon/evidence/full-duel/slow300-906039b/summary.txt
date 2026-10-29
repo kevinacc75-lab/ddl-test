@@ -1,0 +1,13 @@
+{"seed":501,"turn":3,"lp":[7200,0],"finished":true,"winner":0,"battleRows":3,"mainEndWithAttackers":0,"wallSec":16}
+{"seed":511,"turn":4,"lp":[0,8000],"finished":true,"winner":1,"battleRows":4,"mainEndWithAttackers":0,"wallSec":31}
+{"seed":502,"turn":4,"lp":[5550,0],"finished":true,"winner":0,"battleRows":5,"mainEndWithAttackers":0,"wallSec":27}
+{"seed":512,"turn":5,"lp":[0,7500],"finished":true,"winner":1,"battleRows":5,"mainEndWithAttackers":0,"wallSec":34}
+{"seed":503,"turn":5,"lp":[8000,0],"finished":true,"winner":0,"battleRows":5,"mainEndWithAttackers":0,"wallSec":54}
+{"seed":504,"turn":3,"lp":[0,2000],"finished":true,"winner":1,"battleRows":2,"mainEndWithAttackers":0,"wallSec":12}
+{"seed":505,"turn":7,"lp":[8000,0],"finished":true,"winner":0,"battleRows":9,"mainEndWithAttackers":0,"wallSec":43}
+{"seed":506,"turn":4,"lp":[9000,0],"finished":true,"winner":0,"battleRows":1,"mainEndWithAttackers":0,"wallSec":32}
+{"seed":513,"turn":7,"lp":[7100,2000],"finished":false,"winner":null,"battleRows":6,"mainEndWithAttackers":0,"wallSec":805}
+{"seed":514,"turn":21,"lp":[1750,500],"finished":false,"winner":null,"battleRows":24,"mainEndWithAttackers":0,"wallSec":46}
+{"seed":515,"turn":2,"lp":[0,8000],"finished":true,"winner":1,"battleRows":0,"mainEndWithAttackers":0,"wallSec":6}
+{"seed":516,"turn":7,"lp":[0,6500],"finished":true,"winner":1,"battleRows":8,"mainEndWithAttackers":0,"wallSec":33}
+FULL-DONE

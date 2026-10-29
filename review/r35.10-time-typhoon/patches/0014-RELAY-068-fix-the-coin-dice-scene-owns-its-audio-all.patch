@@ -1,0 +1,143 @@
+From d645c140fefb1218a780ecb79b4eb78c8341181b Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 20:43:42 +1100
+Subject: [PATCH 14/14] RELAY-068 fix: the coin / dice scene owns its audio
+ (all tones and noise through a scene gain node; clear() cuts it at once), so
+ Skip / next scene / reset silence sounds already scheduled for later and
+ nothing else; whoosh sample replaced by a routed noise sweep
+
+tests/r36-coin-audio.test.mjs: real Soundscape tone/noise on a recording fake AudioContext; 51 sources (2 starting >1 s
+later) all go through the scene node; after clear() none reaches the bus; an unrelated tone keeps playing. SELF-VERIFIED.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/coin-cutscene.mjs        | 37 +++++++++++++++++++++--------------
+ tests/r36-coin-audio.test.mjs | 37 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 15 deletions(-)
+ create mode 100644 tests/r36-coin-audio.test.mjs
+
+diff --git a/dist/coin-cutscene.mjs b/dist/coin-cutscene.mjs
+index 9962500..a81645d 100644
+--- a/dist/coin-cutscene.mjs
++++ b/dist/coin-cutscene.mjs
+@@ -38,27 +38,34 @@ export const tossLine=(t,name='')=>{if(!t)return '';const who=name?name+' · ':'
+  const faces=t.results.map(v=>v?'Heads':'Tails').join(', '),won=tossWon(t);return who+'Coin: '+faces+(t.call?' (called '+(t.call==='heads'?'Heads':'Tails')+' · '+(won?'right call':'wrong call')+')':'')};
+ 
+ // Original coin / dice sounds, built on the app's Soundscape helpers (tone, noise, sample). Best effort, never throws.
+-export function coinSound(sound,kind,step,{won=null,ms=3400}={}){
++// RELAY-068 (ChatGPT): every coin / dice sound goes through the scene's own gain node ('dest'), so clearing the scene
++// (Skip, next scene, reset) silences the sources it already scheduled for later, and nothing else.
++export function coinSound(sound,kind,step,{won=null,ms=3400,dest}={}){
+  try{if(!sound?.tone)return;const s=ms/3400;/* the cues stretch a little with the scene pace */
+-  const ping=(f,at,d=.35,g=.06)=>sound.tone(f,d,{at,end:f*.995,type:'sine',gain:g,attack:.004});
++  const T=(f,d,o)=>sound.tone(f,d,{...o,destination:dest}),N=(d,o)=>sound.noise(d,{...o,destination:dest});
++  const whoosh=(at=0,g=.12)=>N(.35,{gain:g,frequency:900,end:3200,at,attack:.12});/* was the 'whoosh' sample, which cannot be routed to the scene */
++  const ping=(f,at,d=.35,g=.06)=>T(f,d,{at,end:f*.995,type:'sine',gain:g,attack:.004});
+   const ring=(at,g=.07)=>{ping(2093,at,.55,g);ping(3135,at,.45,g*.7);ping(4699,at,.3,g*.45);ping(6272,at,.18,g*.3)};
+   if(kind==='dice'){
+-   if(step==='throw'){sound.sample?.('whoosh',{gain:.5,rate:1.25});for(const [i,at] of [.05,.16,.24,.37,.46,.6,.7,.83].entries())sound.noise(.05,{gain:.12-i*.008,frequency:2600-i*120,end:900,at:at*s,attack:.002})}
+-   else if(step==='land'){sound.noise(.09,{gain:.2,frequency:1800,end:300,attack:.002});sound.tone(140,.18,{end:70,type:'triangle',gain:.18})}
+-   else if(step==='reveal'){for(const [i,f] of [784,988,1175].entries())sound.tone(f,.22,{at:i*.07,type:'triangle',gain:.08})}
++   if(step==='throw'){whoosh(0,.1);for(const [i,at] of [.05,.16,.24,.37,.46,.6,.7,.83].entries())N(.05,{gain:.12-i*.008,frequency:2600-i*120,end:900,at:at*s,attack:.002})}
++   else if(step==='land'){N(.09,{gain:.2,frequency:1800,end:300,attack:.002});T(140,.18,{end:70,type:'triangle',gain:.18})}
++   else if(step==='reveal'){for(const [i,f] of [784,988,1175].entries())T(f,.22,{at:i*.07,type:'triangle',gain:.08})}
+    return}
+-  if(step==='flick'){sound.noise(.03,{gain:.18,frequency:6000,end:2500,attack:.001});ring(.01,.08);sound.sample?.('whoosh',{gain:.55,rate:1.1})}
++  if(step==='flick'){N(.03,{gain:.18,frequency:6000,end:2500,attack:.001});ring(.01,.08);whoosh(0,.11)}
+   else if(step==='spin'){/* the shimmer of a spinning coin: pings that slow down as it falls */let at=.05;for(let i=0;i<11;i++){ping(i%2?2637:3520,at*s,.12,.035-i*.002);at+=.07+i*.012}}
+-  else if(step==='land'){ring(0,.09);sound.noise(.04,{gain:.16,frequency:5200,end:1800,attack:.001});ring(.16*s,.04);sound.noise(.03,{gain:.08,frequency:4200,end:1600,at:.16*s,attack:.001});ring(.26*s,.02)}
++  else if(step==='land'){ring(0,.09);N(.04,{gain:.16,frequency:5200,end:1800,attack:.001});ring(.16*s,.04);N(.03,{gain:.08,frequency:4200,end:1600,at:.16*s,attack:.001});ring(.26*s,.02)}
+   else if(step==='reveal'){
+-   if(won===true){for(const [i,f] of [1047,1319,1568,2093].entries())sound.tone(f,.32,{at:i*.075,type:'triangle',gain:.09});sound.tone(523,.6,{at:.3,type:'sawtooth',gain:.035,lowpass:1800});for(let i=0;i<6;i++)ping(3000+i*420,.32+i*.05,.16,.03)}
+-   else if(won===false){sound.tone(392,.4,{end:277,type:'sawtooth',gain:.06,lowpass:1200});sound.tone(311,.55,{at:.18,end:196,type:'sawtooth',gain:.06,lowpass:900});sound.tone(70,.45,{at:.1,end:40,type:'sine',gain:.22});sound.noise(.25,{gain:.1,frequency:400,end:90,at:.1})}
+-   else{for(const [i,f] of [880,1175].entries())sound.tone(f,.25,{at:i*.08,type:'triangle',gain:.08})}}
++   if(won===true){for(const [i,f] of [1047,1319,1568,2093].entries())T(f,.32,{at:i*.075,type:'triangle',gain:.09});T(523,.6,{at:.3,type:'sawtooth',gain:.035,lowpass:1800});for(let i=0;i<6;i++)ping(3000+i*420,.32+i*.05,.16,.03)}
++   else if(won===false){T(392,.4,{end:277,type:'sawtooth',gain:.06,lowpass:1200});T(311,.55,{at:.18,end:196,type:'sawtooth',gain:.06,lowpass:900});T(70,.45,{at:.1,end:40,type:'sine',gain:.22});N(.25,{gain:.1,frequency:400,end:90,at:.1})}
++   else{for(const [i,f] of [880,1175].entries())T(f,.25,{at:i*.08,type:'triangle',gain:.08})}}
+  }catch{/* sound is best effort */}}
+ 
+ export class CoinScene{
+  constructor({document,db,decks=()=>[],sound=null,animate,setTimer=(f,ms)=>setTimeout(f,ms),clearTimer=t=>clearTimeout(t)}){Object.assign(this,{document,db,decks,sound,animate,setTimer,clearTimer});this.animations=[];this.timers=[];this.node=null}
+- clear(){for(const a of this.animations)try{a?.cancel()}catch{}this.animations=[];for(const t of this.timers)try{this.clearTimer(t)}catch{}this.timers=[];this.node?.remove();this.node=null;this.document.getElementById('summon-scene')?.classList.remove('coin-active')}
++ // the scene's own audio route: a gain node into the sfx bus; cut at once on clear (RELAY-068)
++ audioOut(){try{const c=this.sound?.context;if(!c||!this.sound.route)return undefined;if(!this.out){this.out=c.createGain();this.sound.route(this.out,'sfx')}return this.out}catch{return undefined}}
++ silence(){const o=this.out;this.out=null;if(!o)return;try{o.gain.cancelScheduledValues?.(0);o.gain.setValueAtTime?.(0,this.sound.context.currentTime);o.gain.value=0}catch{}try{o.disconnect()}catch{}}
++ clear(){this.silence();for(const a of this.animations)try{a?.cancel()}catch{}this.animations=[];for(const t of this.timers)try{this.clearTimer(t)}catch{}this.timers=[];this.node?.remove();this.node=null;this.document.getElementById('summon-scene')?.classList.remove('coin-active')}
+  reset(){this.clear();this.logNode?.remove();this.logNode=null}
+  el(tag,cls,text){const n=this.document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
+  motion(node,frames,options){try{const a=this.animate?this.animate(node,frames,options):node.animate?.(frames,options);if(a)this.animations.push(a)}catch{}}
+@@ -95,8 +102,8 @@ export class CoinScene{
+     this.motion(body,[{transform:'rotateX(0deg) rotateY(0deg)'},{transform:`rotateX(${end*.55}deg) rotateY(18deg)`,offset:.3},{transform:`rotateX(${end*.93}deg) rotateY(-10deg)`,offset:.5},{transform:`rotateX(${end}deg) rotateY(0deg)`,offset:.62},{transform:`rotateX(${end}deg) rotateY(0deg)`}],{duration:ms,easing:'cubic-bezier(.25,.6,.35,1)',fill:'both'});
+     this.motion(shadow,[{transform:'scale(.4)',opacity:.1},{transform:'scale(.25)',opacity:.08,offset:.28},{transform:'scale(1)',opacity:.55,offset:.52},{transform:'scale(.8)',opacity:.4,offset:.57},{transform:'scale(1)',opacity:.55,offset:.62},{transform:'scale(1)',opacity:.55}],{duration:ms,fill:'both'});
+    }
+-   coinSound(this.sound,'coin','flick',{ms});if(!reduced)this.later(ms*.08,()=>coinSound(this.sound,'coin','spin',{ms}));
+-   this.later(reduced?ms*.1:land,()=>coinSound(this.sound,'coin','land',{ms}));
++   coinSound(this.sound,'coin','flick',{ms,dest:this.audioOut()});if(!reduced)this.later(ms*.08,()=>coinSound(this.sound,'coin','spin',{ms,dest:this.audioOut()}));
++   this.later(reduced?ms*.1:land,()=>coinSound(this.sound,'coin','land',{ms,dest:this.audioOut()}));
+   }else{
+    const total=t.results.reduce((a,b)=>a+b,0);word.textContent=t.results.join(' + ')+(t.results.length>1?' = '+total:'');verdict.textContent='';
+    const tray=this.el('div','dice-tray');arena.append(tray);
+@@ -109,7 +116,7 @@ export class CoinScene{
+      this.motion(wrap,[{transform:`translate(${-60*dir}vw,-12vh) rotate(${-40*dir}deg)`,opacity:0},{transform:`translate(${-30*dir}vw,-16vh) rotate(${-20*dir}deg)`,opacity:1,offset:.12},{transform:`translate(${6*dir}vw,0) rotate(${8*dir}deg)`,offset:.34,easing:'ease-in'},{transform:`translate(${2*dir}vw,-5vh) rotate(${3*dir}deg)`,offset:.42,easing:'ease-out'},{transform:'translate(0,0) rotate(0deg)',offset:.52},{transform:'translate(0,-1vh)',offset:.55},{transform:'translate(0,0)',offset:.58},{transform:'translate(0,0) scale(1.08)',offset:.7},{transform:'translate(0,0) scale(1)'}],{duration:ms,easing:'ease-out',fill:'both'});
+      this.motion(cube,[{transform:'rotateX(0deg) rotateY(0deg)'},{transform:`rotateX(${spinX}deg) rotateY(${spinY}deg)`,offset:.45},{transform:final,offset:.56},{transform:final}],{duration:ms,easing:'cubic-bezier(.3,.55,.4,1)',fill:'both'})}
+    }
+-   coinSound(this.sound,'dice','throw',{ms});this.later(reduced?ms*.1:land*.95,()=>coinSound(this.sound,'dice','land',{ms}));
++   coinSound(this.sound,'dice','throw',{ms,dest:this.audioOut()});this.later(reduced?ms*.1:land*.95,()=>coinSound(this.sound,'dice','land',{ms,dest:this.audioOut()}));
+   }
+   this.motion(banner,[{opacity:0,transform:'translateY(-24px)'},{opacity:1,transform:'translateY(0)'}],{duration:Math.min(420,ms*.14),easing:'ease-out',fill:'both'});
+   this.motion(callChip,[{opacity:0,transform:'scale(.8)'},{opacity:1,transform:'scale(1)'}],{delay:ms*.05,duration:Math.min(360,ms*.12),easing:'ease-out',fill:'both'});
+@@ -117,6 +124,6 @@ export class CoinScene{
+   this.motion(glow,[{opacity:0},{opacity:0,offset:land/ms},{opacity:.9,offset:Math.min(.95,land/ms+.05)},{opacity:.45}],{duration:ms,fill:'both'});
+   if(!reduced&&won!==false){for(let i=0;i<14;i++){const sp=this.el('i','coin-spark'),a=i/14*Math.PI*2,d=22+(i%3)*9;sparks.append(sp);this.motion(sp,[{transform:'translate(0,0) scale(0)',opacity:0},{transform:'translate(0,0) scale(0)',opacity:0,offset:reveal/ms},{transform:`translate(${Math.cos(a)*d}vmin,${Math.sin(a)*d}vmin) scale(1)`,opacity:1,offset:Math.min(.97,reveal/ms+.12)},{transform:`translate(${Math.cos(a)*d*1.2}vmin,${Math.sin(a)*d*1.2+6}vmin) scale(.4)`,opacity:0}],{duration:ms,easing:'ease-out',fill:'both'})}}
+   if(!reduced&&won===false)this.motion(root,[{transform:'translate(0,0)'},{transform:'translate(0,0)',offset:reveal/ms},{transform:'translate(-10px,4px)',offset:Math.min(.96,reveal/ms+.02)},{transform:'translate(9px,-3px)',offset:Math.min(.97,reveal/ms+.04)},{transform:'translate(-5px,2px)',offset:Math.min(.98,reveal/ms+.06)},{transform:'translate(0,0)',offset:Math.min(.99,reveal/ms+.08)},{transform:'translate(0,0)'}],{duration:ms,fill:'both'});
+-  this.later(reveal,()=>{root.dataset.revealed='true';coinSound(this.sound,t.kind,'reveal',{won,ms})});
++  this.later(reveal,()=>{root.dataset.revealed='true';coinSound(this.sound,t.kind,'reveal',{won,ms,dest:this.audioOut()})});
+  }
+ }
+diff --git a/tests/r36-coin-audio.test.mjs b/tests/r36-coin-audio.test.mjs
+new file mode 100644
+index 0000000..7600cd0
+--- /dev/null
++++ b/tests/r36-coin-audio.test.mjs
+@@ -0,0 +1,37 @@
++// r36 RELAY-068 (ChatGPT): coin / dice scene owns its audio. SELF-VERIFIED.
++// With the REAL Soundscape tone/noise code on a recording fake AudioContext:
++//  1 every source the coin spin / land / reveal and the dice throw schedule (including ones starting >1 s later) is
++//    connected through the scene's own gain node, never straight to the bus;
++//  2 scene.clear() (what Skip / the next scene / reset call) cuts that node: gain 0 at once and disconnected;
++//  3 an unrelated sound (music / UI / shuffle riffle path: a plain tone) is untouched by the clear;
++//  4 a new scene after a clear gets a fresh node (the old one stays cut).
++import assert from 'node:assert/strict';
++import {Soundscape} from '../dist/sound-engine.mjs';
++import {CoinScene,coinSound} from '../dist/coin-cutscene.mjs';
++let id=0;const nodes=[];
++function node(kind){const n={id:++id,kind,out:[],disconnected:false,started:null,stopped:null,connect(t){this.out.push(t);return t},disconnect(){this.disconnected=true;this.out=[]},
++ gain:{value:1,setValueAtTime(v){this.value=v},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){},setTargetAtTime(){},cancelScheduledValues(){}},
++ frequency:{setValueAtTime(){},exponentialRampToValueAtTime(){},linearRampToValueAtTime(){},value:0},detune:{value:0},pan:{value:0},Q:{value:0},type:'',buffer:null,playbackRate:{value:1},
++ start(t){this.started=t},stop(t){this.stopped=t},onended:null};nodes.push(n);return n}
++const ctx={state:'running',currentTime:10,createOscillator:()=>node('osc'),createGain:()=>node('gain'),createBiquadFilter:()=>node('filter'),createBufferSource:()=>node('buffer'),createStereoPanner:()=>node('panner')};
++const s=new Soundscape({enabled:true});s.context=ctx;s.buses={sfx:node('bus-sfx'),music:node('bus-music'),ui:node('bus-ui'),master:node('bus-master')};s.noiseBuffer={};
++const reaches=(n,target,seen=new Set())=>{if(n===target)return true;if(seen.has(n))return false;seen.add(n);return n.out.some(x=>reaches(x,target,seen))};
++const doc={getElementById:()=>null};
++const scene=new CoinScene({document:doc,db:()=>({}),sound:s,animate:()=>null,setTimer:()=>0,clearTimer:()=>{}});
++const out=scene.audioOut();assert.ok(out&&out.kind==='gain','scene gain node');assert.ok(reaches(out,s.buses.sfx),'scene node feeds the sfx bus');
++const before=nodes.length;
++for(const step of ['flick','spin','land','reveal'])coinSound(s,'coin',step,{ms:3400,won:step==='reveal'?true:null,dest:out});
++coinSound(s,'dice','throw',{ms:3400,dest:out});
++const sources=nodes.slice(before).filter(n=>['osc','buffer'].includes(n.kind));
++assert.ok(sources.length>=20,'sources scheduled: '+sources.length);
++const late=sources.filter(n=>n.started>ctx.currentTime+1);assert.ok(late.length>=2,'some start more than 1 s later ('+late.length+')');
++for(const src of sources)assert.ok(reaches(src,out),'every scene source goes through the scene node');
++// an unrelated sound
++const u0=nodes.length;s.tone(440,2,{at:1.5});const unrelated=nodes.slice(u0).find(n=>n.kind==='osc');assert.ok(!reaches(unrelated,out)&&reaches(unrelated,s.buses.sfx),'unrelated tone goes to the bus directly');
++scene.clear();
++assert.equal(out.gain.value,0,'cut: gain 0');assert.equal(out.disconnected,true,'cut: disconnected');
++for(const src of sources)assert.ok(!reaches(src,s.buses.sfx),'no scene source reaches the bus after clear');
++assert.ok(reaches(unrelated,s.buses.sfx),'unrelated sound still plays');
++const out2=scene.audioOut();assert.notEqual(out2,out,'a new scene gets a fresh node');assert.ok(reaches(out2,s.buses.sfx));
++scene.clear();
++console.log(JSON.stringify({test:'r36-coin-audio',pass:true,node:process.version,sources:sources.length,late:late.length}));
+-- 
+2.43.0
+

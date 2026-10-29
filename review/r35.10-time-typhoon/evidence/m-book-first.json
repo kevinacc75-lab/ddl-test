@@ -1,0 +1,3067 @@
+{
+ "deck": "dtw",
+ "list": "tcg-2026-10-19",
+ "search": false,
+ "order": "first",
+ "node": "v22.22.0",
+ "rows": [
+  {
+   "deck": "dtw",
+   "opp": "branded",
+   "seed": 101,
+   "first": true,
+   "hand": [
+    "Swiftwind Panther Warrior",
+    "Infinite Impermanence",
+    "Graceful & Skull Dice",
+    "\"A Case for K9\"",
+    "Fisherman of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Swiftwind Panther Warrior",
+      "Infinite Impermanence",
+      "Graceful & Skull Dice",
+      "\"A Case for K9\"",
+      "Fisherman of Legend"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Branded in High Spirits",
+       "Fallen of the White Dragon",
+       "Aluber the Jester of Despia",
+       "Tri-Brigade Springans Kitt",
+       "Bystial Magnamhut"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Fisherman of Legend",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Graceful & Skull Dice",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Reversal Box)]",
+      "activate: \"A Case for K9\"   [Opening book DT-K9]",
+      "  pick [\"A Case for K9\" h506]: K9-17 Izuna   [Opening book pick (\"A Case for K9\")]",
+      "special: I:P Masquerena",
+      "  pick [Card details unavailable h533]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "set S/T: Reversal Box",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "I:P Masquerena"
+      ],
+      "backrow": [
+       "\"A Case for K9\"",
+       "set:Reversal Box",
+       "set:Foolish Graverobber",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard",
+       "K9-17 Izuna"
+      ],
+      "gy": [
+       "Fisherman of Legend",
+       "Graceful & Skull Dice",
+       "Swiftwind Panther Warrior",
+       "Alligator's Dragon Knight"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Branded in High Spirits",
+       "Fallen of the White Dragon",
+       "Aluber the Jester of Despia",
+       "Tri-Brigade Springans Kitt",
+       "Bystial Magnamhut",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "mikanko",
+   "seed": 102,
+   "first": true,
+   "hand": [
+    "Radiant Typhoon Eldam",
+    "Chaotic Elements",
+    "Sleepy Scapegoats",
+    "Dark Time Wizard",
+    "Dark Time Wizard"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Radiant Typhoon Eldam",
+      "Chaotic Elements",
+      "Sleepy Scapegoats",
+      "Dark Time Wizard",
+      "Dark Time Wizard"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Sanaki the Mikanko Devotee",
+       "Preparation of Rites",
+       "Forbidden Droplet"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "special: Radiant Typhoon Eldam   [Opening book DT-ELDAM]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Alligator's Dragon Knight)]",
+      "  pick [Radiant Typhoon Eldam h506]: Radiant Typhoon Swen",
+      "special: Radiant Typhoon Swen   [Opening book DT-ELDAM]",
+      "  pick [Radiant Typhoon Swen h506]: Mystical Space Typhoon",
+      "special: M-X-Saber Invoker   [Opening book DT-ELDAM]",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Swen",
+      "activate: M-X-Saber Invoker   [Opening book DT-ELDAM]",
+      "  pick [M-X-Saber Invoker h519]: Radiant Typhoon Swen",
+      "  pick [M-X-Saber Invoker h509]: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: M-X-Saber Invoker",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Mystical Space Typhoon   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "activate: Chaotic Elements   [Opening book DT-K9]",
+      "  pick [Chaotic Elements h506]: K9-66a Jokul",
+      "activate: K9-66a Jokul   [Opening book DT-K9]",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "activate: K9-66a Jokul   [Opening book DT-K9]",
+      "  pick [K9-66a Jokul h506]: K9-17 Izuna   [Opening book pick (K9-66a Jokul)]",
+      "summon: K9-17 Izuna   [Opening book DT-K9]",
+      "  option 1 (Card details unavailable)",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "special: N.As.H. Knight   [Opening book DT-K9]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-K9]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-K9]",
+      "  pick [CXyz N.As.Ch. Knight h519]: Alligator's Dragon Knight",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-K9]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "special: K9-17 \"Ripper\"   [Opening book DT-K9]",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "activate: K9-17 \"Ripper\"   [Opening book DT-K9]",
+      "  pick [K9-17 \"Ripper\" h519]: K9-17 Izuna",
+      "  pick [K9-17 \"Ripper\" h506]: K9-X Forced Release   [Opening book pick (K9-17 \"Ripper\")]",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Foolish Graverobber",
+      "set S/T: K9-X Forced Release",
+      "set S/T: Reversal Box",
+      "set S/T: Sleepy Scapegoats",
+      "set S/T: Dark Time Wizard",
+      "→ End Phase",
+      "chain: M-X-Saber Invoker",
+      "  pick [M-X-Saber Invoker h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "K9-17 \"Ripper\"",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:K9-X Forced Release",
+       "set:Reversal Box",
+       "set:Sleepy Scapegoats",
+       "set:Dark Time Wizard"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Radiant Typhoon Swen",
+       "M-X-Saber Invoker",
+       "Radiant Typhoon Eldam",
+       "Mystical Space Typhoon",
+       "Chaotic Elements",
+       "K9-ØØ Lupis",
+       "Alligator's Dragon Knight",
+       "K9-17 Izuna",
+       "Number C104: Umbral Horror Masquerade",
+       "Swiftwind Panther Warrior"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Thunder King, the Lightningstrike Kaiju",
+       "Mikanko Water Arabesque",
+       "Sanaki the Mikanko Devotee",
+       "Preparation of Rites",
+       "Forbidden Droplet",
+       "Ohime the Manifested Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Keep M-X-Saber Invoker: no Tribute Summon of Alligator's Dragon Knight that tributes an Extra Deck monster",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "sky",
+   "seed": 103,
+   "first": true,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Dark Time Wizard",
+    "K9-66a Jokul",
+    "Ash Blossom & Joyous Spring",
+    "Fisherman of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Fuwalos",
+      "Dark Time Wizard",
+      "K9-66a Jokul",
+      "Ash Blossom & Joyous Spring",
+      "Fisherman of Legend"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mobilize - Linkage!",
+       "Droll & Lock Bird",
+       "Infinite Impermanence",
+       "Sky Striker Mecha - Widow Anchor"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Dark Time Wizard   [Opening book DT-DTW]",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Alligator's Dragon Knight)]",
+      "activate: K9-66a Jokul   [Opening book DT-DTW]",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "special: N.As.H. Knight   [Opening book DT-DTW]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-DTW]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-DTW]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-66a Jokul",
+      "summon: Fisherman of Legend",
+      "special: I:P Masquerena",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "  pick [Card details unavailable h533]: CXyz N.As.Ch. Knight",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "I:P Masquerena"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Dark Time Wizard",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "K9-66a Jokul",
+       "Fisherman of Legend",
+       "CXyz N.As.Ch. Knight",
+       "Alligator's Dragon Knight",
+       "N.As.H. Knight"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Ace - Raye",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Widow Anchor",
+       "Sky Striker Mobilize - Engage!"
+      ],
+      "gy": [
+       "Droll & Lock Bird",
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "luna",
+   "seed": 104,
+   "first": true,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Radiant Typhoon Eldam",
+    "Dark Time Wizard",
+    "K9-17 Izuna",
+    "Pot of Prosperity"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Radiant Typhoon Eldam",
+      "Dark Time Wizard",
+      "K9-17 Izuna",
+      "Pot of Prosperity"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ghost Belle & Haunted Mansion",
+       "Super Duper Polymerization",
+       "Infinite Impermanence",
+       "Lunalight Gold Leo",
+       "Polymerization"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "special: Radiant Typhoon Eldam   [Opening book DT-ELDAM]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "chain: K9-17 Izuna",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "chain: K9-ØØ Lupis",
+      "special: N.As.H. Knight   [Opening book DT-ELDAM]",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-ELDAM]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-ELDAM]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-ØØ Lupis",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-ELDAM]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "summon: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h500]: CXyz Chaos Barian Hope Dragon",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Pot of Prosperity   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "special: I:P Masquerena",
+      "  pick [Card details unavailable h533]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h533]: Alligator's Dragon Knight",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Dark Time Wizard",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "I:P Masquerena"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:Dark Time Wizard"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Dark Time Wizard",
+       "K9-ØØ Lupis",
+       "CXyz Chaos Barian Hope Dragon",
+       "K9-17 Izuna",
+       "N.As.H. Knight",
+       "CXyz N.As.Ch. Knight",
+       "Number C104: Umbral Horror Masquerade",
+       "Pot of Prosperity",
+       "Radiant Typhoon Eldam",
+       "Alligator's Dragon Knight"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Super Duper Polymerization",
+       "Lunalight Gold Leo",
+       "Polymerization",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Ghost Belle & Haunted Mansion",
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "excluded": [
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "blueeyes",
+   "seed": 105,
+   "first": true,
+   "hand": [
+    "K9-17 Izuna",
+    "\"A Case for K9\"",
+    "Mystical Space Typhoon",
+    "Alligator's Dragon Knight",
+    "Sleepy Scapegoats"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "K9-17 Izuna",
+      "\"A Case for K9\"",
+      "Mystical Space Typhoon",
+      "Alligator's Dragon Knight",
+      "Sleepy Scapegoats"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunar Rabbit Omajinai",
+       "Infinite Impermanence",
+       "Mulcharmy Fuwalos",
+       "Wishes for Eyes of Blue",
+       "Primite Drillbeam"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: K9-17 Izuna   [Opening book DT-ALLI]",
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Infinite Impermanence",
+      "activate: \"A Case for K9\"   [Opening book DT-K9]",
+      "  pick [\"A Case for K9\" h506]: K9-17 Izuna   [Opening book pick (\"A Case for K9\")]",
+      "chain: K9-17 Izuna",
+      "special: N.As.H. Knight   [Opening book DT-K9]",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-K9]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-K9]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-17 Izuna",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "declined optional effect (Card details unavailable)",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-K9]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Sleepy Scapegoats",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Sleepy Scapegoats",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Alligator's Dragon Knight",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "\"A Case for K9\"",
+       "set:Sleepy Scapegoats"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Mystical Space Typhoon",
+       "K9-17 Izuna",
+       "Number C104: Umbral Horror Masquerade"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunar Rabbit Omajinai",
+       "Wishes for Eyes of Blue",
+       "Primite Drillbeam",
+       "Majesty of the White Dragons",
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Infinite Impermanence",
+       "Ghost Mourner & Moonlit Chill",
+       "Effect Veiler",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "kashtira",
+   "seed": 106,
+   "first": true,
+   "hand": [
+    "Dark Time Wizard",
+    "Dark Time Wizard",
+    "Swiftwind Panther Warrior",
+    "K9-ØØ Lupis",
+    "Fisherman of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Dark Time Wizard",
+      "Dark Time Wizard",
+      "Swiftwind Panther Warrior",
+      "K9-ØØ Lupis",
+      "Fisherman of Legend"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Radian, the Multidimensional Kaiju",
+       "Interrupted Kaiju Slumber",
+       "Sacred Sword of Seven Stars",
+       "Scareclaw Kashtira"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Fisherman of Legend",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Alligator's Dragon Knight)]",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: K9-ØØ Lupis   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Dark Time Wizard",
+      "special: N.As.H. Knight   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-PANTHER]",
+      "  pick [CXyz N.As.Ch. Knight h519]: Alligator's Dragon Knight",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Reversal Box",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Dark Time Wizard",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "set:Reversal Box",
+       "set:Foolish Graverobber",
+       "set:Dark Time Wizard"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Fisherman of Legend",
+       "K9-ØØ Lupis",
+       "Alligator's Dragon Knight",
+       "Number C104: Umbral Horror Masquerade"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Radian, the Multidimensional Kaiju",
+       "Interrupted Kaiju Slumber",
+       "Sacred Sword of Seven Stars",
+       "Scareclaw Kashtira",
+       "Kashtira Big Bang"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "toon",
+   "seed": 107,
+   "first": true,
+   "hand": [
+    "Sleepy Scapegoats",
+    "Foolish Graverobber",
+    "Mulcharmy Fuwalos",
+    "Swiftwind Panther Warrior",
+    "Pot of Prosperity"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Sleepy Scapegoats",
+      "Foolish Graverobber",
+      "Mulcharmy Fuwalos",
+      "Swiftwind Panther Warrior",
+      "Pot of Prosperity"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon Dark Magician",
+       "Toon Black Luster Soldier",
+       "Triple Tactics Thrust",
+       "Mimicat",
+       "Infinite Impermanence"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Mulcharmy Fuwalos",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "set S/T: Sleepy Scapegoats",
+      "set S/T: Foolish Graverobber",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior"
+      ],
+      "backrow": [
+       "set:Sleepy Scapegoats",
+       "set:Foolish Graverobber"
+      ],
+      "field": [],
+      "hand": [
+       "Pot of Prosperity"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Toon Dark Magician",
+       "Toon Black Luster Soldier",
+       "Triple Tactics Thrust",
+       "Mimicat",
+       "Toon Terror"
+      ],
+      "gy": [
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "excluded": [
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "hero",
+   "seed": 108,
+   "first": true,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Radiant Typhoon Swen",
+    "Radiant Typhoon Swen",
+    "Swiftwind Panther Warrior",
+    "Radiant Typhoon Chant"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mulcharmy Fuwalos",
+      "Radiant Typhoon Swen",
+      "Radiant Typhoon Swen",
+      "Swiftwind Panther Warrior",
+      "Radiant Typhoon Chant"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Destiny HERO - Malicious",
+       "Elemental HERO Stratos",
+       "Fusion Destiny",
+       "Forbidden Droplet",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Eldam",
+      "special: Radiant Typhoon Eldam   [Opening book DT-RT2]",
+      "  pick [Radiant Typhoon Eldam h506]: Mystical Space Typhoon",
+      "special: Radiant Typhoon Swen   [Opening book DT-RT2]",
+      "  pick [Radiant Typhoon Swen h506]: Mystical Space Typhoon",
+      "special: M-X-Saber Invoker   [Opening book DT-RT2]",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Swen",
+      "activate: M-X-Saber Invoker   [Opening book DT-RT2]",
+      "  pick [M-X-Saber Invoker h519]: Radiant Typhoon Swen",
+      "  pick [M-X-Saber Invoker h509]: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: M-X-Saber Invoker   [Opening book pick (Time Typhoon P3: Panther Tributes a spent body or a dead hand monster)]",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Mulcharmy Fuwalos   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Reversal Box)]",
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "special: I:P Masquerena",
+      "  pick [Card details unavailable h533]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Reversal Box",
+      "set S/T: Mystical Space Typhoon",
+      "set S/T: Mystical Space Typhoon",
+      "→ End Phase",
+      "chain: M-X-Saber Invoker",
+      "  pick [M-X-Saber Invoker h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "I:P Masquerena"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:Reversal Box",
+       "set:Mystical Space Typhoon",
+       "set:Mystical Space Typhoon"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard",
+       "Radiant Typhoon Swen"
+      ],
+      "gy": [
+       "Radiant Typhoon Chant",
+       "Radiant Typhoon Swen",
+       "M-X-Saber Invoker",
+       "Radiant Typhoon Eldam",
+       "Mulcharmy Fuwalos",
+       "Alligator's Dragon Knight",
+       "Swiftwind Panther Warrior",
+       "Swiftwind Panther Warrior"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Destiny HERO - Malicious",
+       "Elemental HERO Stratos",
+       "Fusion Destiny",
+       "Forbidden Droplet",
+       "Elemental HERO Stratos",
+       "Destiny HERO - Malicious",
+       "Neo-Spacian Aqua Dolphin",
+       "Vision HERO Faris",
+       "Vision HERO Increase"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "branded",
+   "seed": 109,
+   "first": true,
+   "hand": [
+    "K9-66a Jokul",
+    "Alligator's Dragon Knight",
+    "Graceful & Skull Dice",
+    "Alligator's Dragon Knight",
+    "Chaotic Elements"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "K9-66a Jokul",
+      "Alligator's Dragon Knight",
+      "Graceful & Skull Dice",
+      "Alligator's Dragon Knight",
+      "Chaotic Elements"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Aluber the Jester of Despia",
+       "Bystial Saronir",
+       "Blazing Cartesia, the Virtuous",
+       "Bystial Magnamhut",
+       "Blazing Cartesia, the Virtuous"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: K9-66a Jokul   [Opening book DT-ALLI]",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Graceful & Skull Dice   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Reversal Box)]",
+      "activate: K9-66a Jokul   [Opening book DT-ALLI]",
+      "  pick [K9-66a Jokul h506]: K9-17 Izuna   [Opening book pick (K9-66a Jokul)]",
+      "summon: K9-17 Izuna   [Opening book DT-ALLI]",
+      "  option 1 (Card details unavailable)",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "special: N.As.H. Knight   [Opening book DT-ALLI]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-ALLI]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-ALLI]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-66a Jokul",
+      "chain: K9-ØØ Lupis",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-ALLI]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "special: K9-17 \"Ripper\"   [Opening book DT-ALLI]",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "activate: K9-17 \"Ripper\"   [Opening book DT-ALLI]",
+      "  pick [K9-17 \"Ripper\" h519]: K9-ØØ Lupis",
+      "  pick [K9-17 \"Ripper\" h506]: K9-X Forced Release   [Opening book pick (K9-17 \"Ripper\")]",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Reversal Box",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Foolish Graverobber",
+      "set S/T: K9-X Forced Release",
+      "set S/T: Reversal Box",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "K9-17 \"Ripper\"",
+       "Alligator's Dragon Knight",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:K9-X Forced Release",
+       "set:Reversal Box"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard",
+       "Chaotic Elements"
+      ],
+      "gy": [
+       "K9-ØØ Lupis",
+       "Number C104: Umbral Horror Masquerade"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Aluber the Jester of Despia",
+       "Blazing Cartesia, the Virtuous",
+       "Fallen of the White Dragon",
+       "Blazing Cartesia, the Virtuous",
+       "Bystial Saronir",
+       "Tri-Brigade Mercourier"
+      ],
+      "gy": [
+       "Bystial Magnamhut"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Time Typhoon P2: Graceful & Skull Dice only shrinks their monsters (none face-up); keep it for the GY pop",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "mikanko",
+   "seed": 110,
+   "first": true,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Fire Formation - Tenki",
+    "Dark Time Wizard",
+    "Reversal Box",
+    "Mystical Space Typhoon"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Fire Formation - Tenki",
+      "Dark Time Wizard",
+      "Reversal Box",
+      "Mystical Space Typhoon"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Preparation of Rites",
+       "Hu-Li the Jewel Mikanko",
+       "Lava Golem",
+       "Preparation of Rites",
+       "Hu-Li the Jewel Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "activate: Dark Time Wizard   [Opening book DT-ALLI]",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "summon: Swiftwind Panther Warrior   [Opening book DT-ALLI]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Alligator's Dragon Knight",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Fire Formation - Tenki   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "special: I:P Masquerena",
+      "  pick [Card details unavailable h533]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Mystical Space Typhoon",
+      "set S/T: Dark Time Wizard",
+      "set S/T: Reversal Box",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "I:P Masquerena"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:Mystical Space Typhoon",
+       "set:Dark Time Wizard",
+       "set:Reversal Box"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Alligator's Dragon Knight",
+       "Fire Formation - Tenki",
+       "Swiftwind Panther Warrior",
+       "Alligator's Dragon Knight"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Preparation of Rites",
+       "Hu-Li the Jewel Mikanko",
+       "Lava Golem",
+       "Preparation of Rites",
+       "Hu-Li the Jewel Mikanko",
+       "Lava Golem"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "sky",
+   "seed": 111,
+   "first": true,
+   "hand": [
+    "Mystical Space Typhoon",
+    "K9-17 Izuna",
+    "Chaotic Elements",
+    "K9-ØØ Lupis",
+    "Swiftwind Panther Warrior"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mystical Space Typhoon",
+      "K9-17 Izuna",
+      "Chaotic Elements",
+      "K9-ØØ Lupis",
+      "Swiftwind Panther Warrior"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Infinite Impermanence",
+       "Upstart Goblin",
+       "Sky Striker Mobilize - Linkage!",
+       "Upstart Goblin"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: K9-ØØ Lupis   [Opening book pick (Time Typhoon P3: Panther Tributes a spent body or a dead hand monster)]",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "chain: K9-ØØ Lupis",
+      "chain: K9-17 Izuna",
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Infinite Impermanence",
+      "  pick [K9-17 Izuna h504]: K9-X Forced Release   [Opening book pick (K9-17 Izuna)]",
+      "special: N.As.H. Knight   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-PANTHER]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-ØØ Lupis",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "activate: Chaotic Elements   [Opening book DT-K9]",
+      "  pick [Chaotic Elements h506]: K9-66a Jokul",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "K9-66a Jokul"
+      ],
+      "gy": [
+       "K9-X Forced Release",
+       "Mystical Space Typhoon",
+       "K9-ØØ Lupis",
+       "Chaotic Elements",
+       "Number C104: Umbral Horror Masquerade"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Upstart Goblin",
+       "Sky Striker Mobilize - Linkage!",
+       "Upstart Goblin",
+       "Sky Striker Mecha - Shark Cannon"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "luna",
+   "seed": 112,
+   "first": true,
+   "hand": [
+    "K9-66a Jokul",
+    "Radiant Typhoon Swen",
+    "Alligator's Dragon Knight",
+    "Mystical Space Typhoon",
+    "K9-17 Izuna"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "K9-66a Jokul",
+      "Radiant Typhoon Swen",
+      "Alligator's Dragon Knight",
+      "Mystical Space Typhoon",
+      "K9-17 Izuna"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Silver Hound",
+       "Foolish Burial Goods",
+       "Foolish Burial Goods",
+       "Lunalight Gold Leo",
+       "Lunalight Serenade Dance"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "special: Radiant Typhoon Swen   [Opening book DT-SWEN]",
+      "  pick [Radiant Typhoon Swen h506]: Radiant Typhoon Chant",
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Eldam   [Opening book pick (Time Typhoon P3: Chant adds the missing Level 3 (Eldam first: it then adds Swen))]",
+      "special: Radiant Typhoon Eldam   [Opening book DT-SWEN]",
+      "  pick [Radiant Typhoon Eldam h506]: Mystical Space Typhoon   [Opening book pick (Time Typhoon P3: Eldam adds the missing Level 3)]",
+      "special: M-X-Saber Invoker   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Swen",
+      "activate: M-X-Saber Invoker   [Opening book DT-SWEN]",
+      "  pick [M-X-Saber Invoker h519]: Radiant Typhoon Swen",
+      "  pick [M-X-Saber Invoker h509]: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: M-X-Saber Invoker",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Mystical Space Typhoon   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Reversal Box)]",
+      "summon: K9-17 Izuna   [Opening book DT-SWEN]",
+      "  option 1 (Card details unavailable)",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "activate: K9-66a Jokul   [Opening book DT-SWEN]",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "activate: K9-66a Jokul   [Opening book DT-SWEN]",
+      "  pick [K9-66a Jokul h506]: K9-17 Izuna",
+      "special: N.As.H. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [CXyz N.As.Ch. Knight h519]: Alligator's Dragon Knight",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "special: K9-17 \"Ripper\"   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "activate: K9-17 \"Ripper\"   [Opening book DT-SWEN]",
+      "  pick [K9-17 \"Ripper\" h519]: K9-17 Izuna",
+      "  pick [K9-17 \"Ripper\" h506]: K9-X Forced Release",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Mystical Space Typhoon",
+      "set S/T: K9-X Forced Release",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Reversal Box",
+      "→ End Phase",
+      "chain: M-X-Saber Invoker",
+      "  pick [M-X-Saber Invoker h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "K9-17 \"Ripper\"",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "set:Mystical Space Typhoon",
+       "set:K9-X Forced Release",
+       "set:Foolish Graverobber",
+       "set:Reversal Box"
+      ],
+      "field": [],
+      "hand": [
+       "K9-17 Izuna",
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Radiant Typhoon Chant",
+       "Radiant Typhoon Swen",
+       "M-X-Saber Invoker",
+       "Radiant Typhoon Eldam",
+       "Mystical Space Typhoon",
+       "K9-ØØ Lupis",
+       "Alligator's Dragon Knight",
+       "K9-17 Izuna",
+       "Number C104: Umbral Horror Masquerade",
+       "Swiftwind Panther Warrior"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Silver Hound",
+       "Foolish Burial Goods",
+       "Foolish Burial Goods",
+       "Lunalight Gold Leo",
+       "Lunalight Serenade Dance",
+       "Lunalight Black Sheep"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Keep M-X-Saber Invoker: no Tribute Summon of K9-17 Izuna that tributes an Extra Deck monster",
+    "t1: Keep M-X-Saber Invoker: no Tribute Summon of K9-66a Jokul that tributes an Extra Deck monster",
+    "t1: Keep M-X-Saber Invoker: no Tribute Summon of Alligator's Dragon Knight that tributes an Extra Deck monster",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "blueeyes",
+   "seed": 113,
+   "first": true,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Sleepy Scapegoats",
+    "Fire Formation - Tenki",
+    "Radiant Typhoon Eldam",
+    "Radiant Typhoon Chant"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Ash Blossom & Joyous Spring",
+      "Sleepy Scapegoats",
+      "Fire Formation - Tenki",
+      "Radiant Typhoon Eldam",
+      "Radiant Typhoon Chant"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mausoleum of White",
+       "Infinite Impermanence",
+       "Primite Dragon Ether Beryl",
+       "Wishes for Eyes of Blue",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "chain: Ash Blossom & Joyous Spring",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Swen",
+      "special: Radiant Typhoon Eldam   [Opening book DT-RT2]",
+      "special: Radiant Typhoon Swen   [Opening book DT-RT2]",
+      "  pick [Radiant Typhoon Swen h506]: Mystical Space Typhoon",
+      "special: M-X-Saber Invoker   [Opening book DT-RT2]",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Swen",
+      "activate: M-X-Saber Invoker   [Opening book DT-RT2]",
+      "  pick [M-X-Saber Invoker h519]: Radiant Typhoon Swen",
+      "  pick [M-X-Saber Invoker h509]: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: M-X-Saber Invoker",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Fire Formation - Tenki   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Reversal Box)]",
+      "special: I:P Masquerena",
+      "  pick [Card details unavailable h533]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Mystical Space Typhoon",
+      "set S/T: Sleepy Scapegoats",
+      "set S/T: Reversal Box",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "I:P Masquerena"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:Mystical Space Typhoon",
+       "set:Sleepy Scapegoats",
+       "set:Reversal Box"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Radiant Typhoon Chant",
+       "Radiant Typhoon Swen",
+       "M-X-Saber Invoker",
+       "Radiant Typhoon Eldam",
+       "Fire Formation - Tenki",
+       "Swiftwind Panther Warrior",
+       "Alligator's Dragon Knight"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mausoleum of White",
+       "Primite Dragon Ether Beryl",
+       "Wishes for Eyes of Blue",
+       "True Light"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Sleepy Scapegoats locks us to Fusion Monsters for the rest of the turn; use it on their turn",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "kashtira",
+   "seed": 114,
+   "first": true,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Radiant Typhoon Swen",
+    "Fire Formation - Tenki",
+    "K9-17 Izuna",
+    "Dark Time Wizard"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Radiant Typhoon Swen",
+      "Fire Formation - Tenki",
+      "K9-17 Izuna",
+      "Dark Time Wizard"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Kashtira Riseheart",
+       "Scareclaw Kashtira",
+       "Kashtira Riseheart",
+       "Tearlaments Kashtira"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "special: Radiant Typhoon Swen   [Opening book DT-SWEN]",
+      "chain: K9-17 Izuna",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "  pick [Radiant Typhoon Swen h506]: Radiant Typhoon Chant   [Opening book pick (Time Typhoon P3: Swen adds Chant when Eldam is missing)]",
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Eldam   [Opening book pick (Time Typhoon P3: Chant adds the missing Level 3 (Eldam first: it then adds Swen))]",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "chain: K9-ØØ Lupis",
+      "special: Radiant Typhoon Eldam   [Opening book DT-SWEN]",
+      "  pick [Radiant Typhoon Eldam h506]: Mystical Space Typhoon   [Opening book pick (Time Typhoon P3: Eldam adds the missing Level 3)]",
+      "special: M-X-Saber Invoker   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Swen",
+      "activate: M-X-Saber Invoker   [Opening book DT-SWEN]",
+      "  pick [M-X-Saber Invoker h519]: Radiant Typhoon Swen",
+      "  pick [M-X-Saber Invoker h509]: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: M-X-Saber Invoker",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Fire Formation - Tenki   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)",
+      "special: Red-Eyes Black Dragon Exceed   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h500]: Alligator's Dragon Knight",
+      "  pick [Red-Eyes Black Dragon Exceed h509]: Swiftwind Panther Warrior",
+      "special: N.As.H. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-ØØ Lupis",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Foolish Graverobber",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Mystical Space Typhoon",
+      "→ End Phase",
+      "chain: M-X-Saber Invoker",
+      "  pick [M-X-Saber Invoker h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "CXyz Chaos Barian Hope Dragon DEF",
+       "Alligator's Dragon Knight",
+       "Swiftwind Panther Warrior",
+       "Red-Eyes Black Dragon Exceed"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:Mystical Space Typhoon"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Dark Time Wizard",
+       "Radiant Typhoon Chant",
+       "Radiant Typhoon Swen",
+       "M-X-Saber Invoker",
+       "Radiant Typhoon Eldam",
+       "Fire Formation - Tenki",
+       "Alligator's Dragon Knight",
+       "K9-ØØ Lupis",
+       "Number C104: Umbral Horror Masquerade",
+       "Swiftwind Panther Warrior"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Kumongous, the Sticky String Kaiju",
+       "Waking the Dragon"
+      ],
+      "gy": [
+       "Kashtira Fenrir",
+       "Kashtira Birth",
+       "Scareclaw Kashtira",
+       "Scareclaw Kashtira",
+       "Tearlaments Kashtira",
+       "Kashtira Riseheart",
+       "Kashtira Ogre"
+      ],
+      "banished": 2,
+      "lp": 6850
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "toon",
+   "seed": 115,
+   "first": true,
+   "hand": [
+    "Radiant Typhoon Eldam",
+    "Alligator's Dragon Knight",
+    "K9-17 Izuna",
+    "\"A Case for K9\"",
+    "Dark Time Wizard"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Radiant Typhoon Eldam",
+      "Alligator's Dragon Knight",
+      "K9-17 Izuna",
+      "\"A Case for K9\"",
+      "Dark Time Wizard"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "The Black Stone of Legend",
+       "Toon Goblin Attack Force",
+       "The Black Stone of Legend",
+       "Ash Blossom & Joyous Spring",
+       "Toon Kingdom"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "special: Radiant Typhoon Eldam   [Opening book DT-ELDAM]",
+      "chain: K9-17 Izuna",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "chain: K9-ØØ Lupis",
+      "special: N.As.H. Knight   [Opening book DT-ELDAM]",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-ELDAM]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-ELDAM]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-ØØ Lupis",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-ELDAM]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "summon: Swiftwind Panther Warrior   [Opening book DT-ALLI]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Eldam   [Opening book pick (Time Typhoon P3: Panther Tributes a spent body or a dead hand monster)]",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: \"A Case for K9\"   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Foolish Graverobber",
+      "special: K9-17 \"Ripper\"   [Opening book DT-ALLI]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "activate: K9-17 \"Ripper\"   [Opening book DT-ALLI]",
+      "  pick [K9-17 \"Ripper\" h519]: Alligator's Dragon Knight",
+      "  pick [K9-17 \"Ripper\" h506]: K9-X Forced Release   [Opening book pick (K9-17 \"Ripper\")]",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Foolish Graverobber",
+      "set S/T: K9-X Forced Release",
+      "set S/T: Dark Time Wizard",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "K9-17 \"Ripper\"",
+       "Swiftwind Panther Warrior",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber",
+       "set:K9-X Forced Release",
+       "set:Dark Time Wizard"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "K9-ØØ Lupis",
+       "Radiant Typhoon Eldam",
+       "\"A Case for K9\"",
+       "Alligator's Dragon Knight",
+       "Number C104: Umbral Horror Masquerade"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "The Black Stone of Legend",
+       "Toon Goblin Attack Force",
+       "The Black Stone of Legend",
+       "Toon Kingdom",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "hero",
+   "seed": 116,
+   "first": true,
+   "hand": [
+    "Swiftwind Panther Warrior",
+    "Infinite Impermanence",
+    "Ash Blossom & Joyous Spring",
+    "Dark Time Wizard",
+    "K9-ØØ Lupis"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Swiftwind Panther Warrior",
+      "Infinite Impermanence",
+      "Ash Blossom & Joyous Spring",
+      "Dark Time Wizard",
+      "K9-ØØ Lupis"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Fusion Destiny",
+       "Mask Change",
+       "Ash Blossom & Joyous Spring",
+       "Miracle Ejector"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: K9-ØØ Lupis",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "chain: K9-ØØ Lupis",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Swiftwind Panther Warrior)]",
+      "special: I:P Masquerena",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "  pick [Card details unavailable h533]: K9-ØØ Lupis",
+      "set S/T: Infinite Impermanence",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "I:P Masquerena"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Alligator's Dragon Knight",
+       "Ash Blossom & Joyous Spring",
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Swiftwind Panther Warrior"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Fusion Destiny",
+       "Mask Change",
+       "Miracle Ejector",
+       "Elemental HERO Shadow Mist"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "branded",
+   "seed": 117,
+   "first": true,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Swiftwind Panther Warrior",
+    "Radiant Typhoon Swen",
+    "K9-66a Jokul",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Swiftwind Panther Warrior",
+      "Radiant Typhoon Swen",
+      "K9-66a Jokul",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Nadir Servant",
+       "Mulcharmy Fuwalos",
+       "Blazing Cartesia, the Virtuous",
+       "Incredible Ecclesia, the Virtuous"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Ash Blossom & Joyous Spring",
+      "special: Radiant Typhoon Swen   [Opening book DT-SWEN]",
+      "  pick [Radiant Typhoon Swen h506]: Radiant Typhoon Chant",
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Eldam   [Opening book pick (Time Typhoon P3: Chant adds the missing Level 3 (Eldam first: it then adds Swen))]",
+      "special: Radiant Typhoon Eldam   [Opening book DT-SWEN]",
+      "  pick [Radiant Typhoon Eldam h506]: Mystical Space Typhoon   [Opening book pick (Time Typhoon P3: Eldam adds the missing Level 3)]",
+      "special: M-X-Saber Invoker   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h513]: Radiant Typhoon Swen",
+      "activate: M-X-Saber Invoker   [Opening book DT-SWEN]",
+      "  pick [M-X-Saber Invoker h519]: Radiant Typhoon Swen",
+      "  pick [M-X-Saber Invoker h509]: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: M-X-Saber Invoker",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Mystical Space Typhoon   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Reversal Box   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Reversal Box)]",
+      "activate: K9-66a Jokul   [Opening book DT-SWEN]",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "activate: K9-66a Jokul   [Opening book DT-SWEN]",
+      "  pick [K9-66a Jokul h506]: K9-17 Izuna   [Opening book pick (K9-66a Jokul)]",
+      "chain: K9-17 Izuna",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "special: N.As.H. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "chain: K9-ØØ Lupis",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [CXyz N.As.Ch. Knight h519]: Alligator's Dragon Knight",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "special: K9-17 \"Ripper\"   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "activate: K9-17 \"Ripper\"   [Opening book DT-SWEN]",
+      "  pick [K9-17 \"Ripper\" h519]: K9-17 Izuna",
+      "  pick [K9-17 \"Ripper\" h506]: K9-X Forced Release   [Opening book pick (K9-17 \"Ripper\")]",
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: K9-X Forced Release",
+      "set S/T: Foolish Graverobber",
+      "set S/T: Reversal Box",
+      "→ End Phase",
+      "chain: M-X-Saber Invoker",
+      "  pick [M-X-Saber Invoker h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "K9-ØØ Lupis",
+       "K9-17 \"Ripper\"",
+       "Swiftwind Panther Warrior",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "set:K9-X Forced Release",
+       "set:Foolish Graverobber",
+       "set:Reversal Box"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Radiant Typhoon Chant",
+       "Radiant Typhoon Swen",
+       "M-X-Saber Invoker",
+       "Radiant Typhoon Eldam",
+       "Mystical Space Typhoon",
+       "Alligator's Dragon Knight",
+       "K9-17 Izuna",
+       "Number C104: Umbral Horror Masquerade",
+       "Swiftwind Panther Warrior"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Nadir Servant",
+       "Blazing Cartesia, the Virtuous",
+       "Incredible Ecclesia, the Virtuous",
+       "Aluber the Jester of Despia"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Keep M-X-Saber Invoker: no Tribute Summon of K9-66a Jokul that tributes an Extra Deck monster",
+    "t1: Keep M-X-Saber Invoker: no Tribute Summon of Alligator's Dragon Knight that tributes an Extra Deck monster",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): Set it for their turn: its rank-up then also destroys one of their cards (seen in fixture F: used on our turn 1 with nothing of theirs to destroy)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "mikanko",
+   "seed": 118,
+   "first": true,
+   "hand": [
+    "Pot of Prosperity",
+    "Mulcharmy Fuwalos",
+    "Swiftwind Panther Warrior",
+    "Dark Time Wizard",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Pot of Prosperity",
+      "Mulcharmy Fuwalos",
+      "Swiftwind Panther Warrior",
+      "Dark Time Wizard",
+      "Ash Blossom & Joyous Spring"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Forbidden Droplet",
+       "Ha-Re the Sword Mikanko",
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko",
+       "Forbidden Droplet"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Mulcharmy Fuwalos",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Dark Time Wizard searches Swiftwind Panther Warrior)]",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight   [Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)]",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h506]: Foolish Graverobber   [Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)]",
+      "  pick [Alligator's Dragon Knight h501]: Pot of Prosperity   [Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)]",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Foolish Graverobber",
+      "special: N.As.H. Knight   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-PANTHER]",
+      "  pick [CXyz N.As.Ch. Knight h519]: Alligator's Dragon Knight",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-PANTHER]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Dark Time Wizard",
+      "set S/T: Foolish Graverobber",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "set:Dark Time Wizard",
+       "set:Foolish Graverobber"
+      ],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Pot of Prosperity",
+       "Alligator's Dragon Knight",
+       "Number C104: Umbral Horror Masquerade"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Forbidden Droplet",
+       "Ha-Re the Sword Mikanko",
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko",
+       "Forbidden Droplet",
+       "Mikanko Water Arabesque"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "excluded": [
+    "t1 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Preserve Mulcharmy for the opposing turn",
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Own-turn hand trap has no opposing effect to stop",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Time Typhoon P2: Dark Time Wizard's search is used this turn and the coin is not worth it",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)",
+    "t1: Time Typhoon P2: Dark Time Wizard waits for the Main Phase (its search starts the combo there)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "sky",
+   "seed": 119,
+   "first": true,
+   "hand": [
+    "\"A Case for K9\"",
+    "Fisherman of Legend",
+    "K9-17 Izuna",
+    "Radiant Typhoon Swen",
+    "Radiant Typhoon Chant"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "\"A Case for K9\"",
+      "Fisherman of Legend",
+      "K9-17 Izuna",
+      "Radiant Typhoon Swen",
+      "Radiant Typhoon Chant"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Ash Blossom & Joyous Spring",
+       "Pot of Desires",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mecha - Shark Cannon"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "special: Radiant Typhoon Swen   [Opening book DT-SWEN]",
+      "chain: K9-17 Izuna",
+      "  pick [Radiant Typhoon Swen h506]: Mystical Space Typhoon",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "chain: K9-ØØ Lupis",
+      "special: N.As.H. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "special: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: N.As.H. Knight",
+      "activate: CXyz N.As.Ch. Knight   [Opening book DT-SWEN]",
+      "  pick [CXyz N.As.Ch. Knight h519]: K9-ØØ Lupis",
+      "  pick [CXyz N.As.Ch. Knight h509]: Number C104: Umbral Horror Masquerade",
+      "special: CXyz Chaos Barian Hope Dragon   [Opening book DT-SWEN]",
+      "  pick [Card details unavailable h513]: Number C104: Umbral Horror Masquerade",
+      "activate: \"A Case for K9\"   [Opening book DT-K9]",
+      "  pick [\"A Case for K9\" h506]: K9-17 Izuna",
+      "summon: K9-17 Izuna   [Opening book DT-K9]",
+      "  option 1 (Card details unavailable)",
+      "activate: CXyz Chaos Barian Hope Dragon",
+      "  pick [CXyz Chaos Barian Hope Dragon h519]: Number C104: Umbral Horror Masquerade",
+      "set S/T: Mystical Space Typhoon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Radiant Typhoon Swen",
+       "K9-17 Izuna",
+       "CXyz Chaos Barian Hope Dragon DEF"
+      ],
+      "backrow": [
+       "\"A Case for K9\"",
+       "set:Mystical Space Typhoon"
+      ],
+      "field": [],
+      "hand": [
+       "Fisherman of Legend"
+      ],
+      "gy": [
+       "Radiant Typhoon Chant",
+       "K9-ØØ Lupis",
+       "Number C104: Umbral Horror Masquerade"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Pot of Desires",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mecha - Shark Cannon",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t1: Book hold (dtw): its Xyz Summon trigger destroys a monster: with none of theirs it would hit ours",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its attach would put Number C104 (needed for CXyz N.As.Ch. Knight -> Chaos Barian Hope Dragon) into its materials",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)",
+    "t1: Book hold (dtw): its banish needs a target: with nothing of theirs on the field it would banish our own card",
+    "t1: Book hold (dtw): keep the boss: this Link could use Chaos Barian Hope Dragon / Exceed / a K9 Xyz as material (seen in fixture F: Barian was linked away into Masquerena)"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "luna",
+   "seed": 120,
+   "first": true,
+   "hand": [
+    "Mystical Space Typhoon",
+    "Fisherman of Legend",
+    "Ash Blossom & Joyous Spring",
+    "Swiftwind Panther Warrior",
+    "Swiftwind Panther Warrior"
+   ],
+   "turns": [
+    {
+     "turn": 1,
+     "startHand": [
+      "Mystical Space Typhoon",
+      "Fisherman of Legend",
+      "Ash Blossom & Joyous Spring",
+      "Swiftwind Panther Warrior",
+      "Swiftwind Panther Warrior"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Foolish Burial Goods",
+       "Polymerization",
+       "Lunalight Kaleido Chick",
+       "Infinite Impermanence",
+       "Fire Formation - Tenki"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: Swiftwind Panther Warrior   [Opening book DT-PANTHER]",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Fisherman of Legend",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Infinite Impermanence",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Swiftwind Panther Warrior"
+      ],
+      "gy": [
+       "Fisherman of Legend",
+       "Mystical Space Typhoon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Foolish Burial Goods",
+       "Polymerization",
+       "Lunalight Kaleido Chick",
+       "Fire Formation - Tenki",
+       "Lunalight Gold Leo"
+      ],
+      "gy": [
+       "Infinite Impermanence"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  }
+ ]
+}

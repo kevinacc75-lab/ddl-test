@@ -1,0 +1,684 @@
+{
+ "seed": 505,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "kashtira"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 5,
+ "lp": [
+  8000,
+  0
+ ],
+ "wallSec": 85,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    7425
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    8000,
+    4425
+   ],
+   "ownMons": [
+    {
+     "name": "Radian, the Multidimensional Kaiju",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    8000,
+    1725
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 0,
+   "lp": [
+    8000,
+    1725
+   ],
+   "ownMons": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [
+    {
+     "name": "Radian, the Multidimensional Kaiju",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Eldam",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Radian, the Multidimensional Kaiju",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Radiant Typhoon Swen",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [
+    {
+     "name": "Radiant Typhoon Eldam",
+     "atk": 1300,
+     "pos": "DEF"
+    },
+    {
+     "name": "Radian, the Multidimensional Kaiju",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radiant Typhoon Swen",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon M-X-Saber Invoker",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "Radian, the Multidimensional Kaiju",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate M-X-Saber Invoker",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Red-Eyes Black Dragon Exceed",
+   "rule": "Opening book DT-ELDAM",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Foolish Graverobber",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    4425
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 Izuna",
+     "direct": false
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    3825
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 Izuna",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-17 Izuna",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    1725
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1725
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    8000,
+    1725
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    1725
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    1725
+   ],
+   "own": [
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 Izuna",
+     "direct": true
+    },
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "direct": true
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

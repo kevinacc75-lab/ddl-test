@@ -1,0 +1,201 @@
+{
+ "note": "r36 (Claude, 29 Oct 2026): the 34 RELAY-067 records (ChatGPT, Drive 1P3o2_WgFU8XuiJdRugSa6CvBvloyP1nj, Time-Typhoon-new-card-effect-titles-ChatGPT.json, sha256 9707b41df5b6e9c4a6346374a831e358e7d0d9b46987748790b83715d6259889, 28548 bytes) re-keyed by Claude: kind and title as RELAY-067 gives them; each clause cut from the card text between the record's own first and last words (so it is an exact substring by construction). Scapegoat Token 3129528 keeps an empty map. For ChatGPT to check record by record against the original.",
+ "source": {
+  "relay": "RELAY-067",
+  "sha256": "9707b41df5b6e9c4a6346374a831e358e7d0d9b46987748790b83715d6259889"
+ },
+ "records": {
+  "77482666": {
+   "0": {
+    "kind": "activation-choice",
+    "title": "Tribute: summon or send to GY",
+    "clause": "During the Main Phase (Quick Effect): You can Tribute 1 other monster from your hand or field, then activate 1 of these effects;\r\n● Special Summon 1 monster that mentions \"Dark Time Wizard\" from your hand or Deck, except \"Swiftwind Panther Warrior\".\r\n● Send 1 Spell/Trap that mentions \"Dark Time Wizard\" from your Deck to the GY.\r\n"
+   },
+   "1": {
+    "kind": "menu",
+    "title": "Summon a Dark Time Wizard monster",
+    "clause": "Special Summon 1 monster that mentions \"Dark Time Wizard\" from your hand or Deck, except \"Swiftwind Panther Warrior\"."
+   },
+   "2": {
+    "kind": "menu",
+    "title": "Send a Dark Time Wizard Spell/Trap to GY",
+    "clause": "Send 1 Spell/Trap that mentions \"Dark Time Wizard\" from your Deck to the GY."
+   }
+  },
+  "4881365": {
+   "0": {
+    "kind": "activated",
+    "title": "Reveal to summon Alligator",
+    "clause": "If this card is in your hand: You can reveal 1 other card in your hand that mentions \"Dark Time Wizard\"; Special Summon this card."
+   },
+   "1": {
+    "kind": "activated",
+    "title": "Search up to 2 Spells/Traps; discard 1",
+    "clause": "If this card is Normal or Special Summoned: You can add up to 2 Spells/Traps with different names from each other that mention \"Dark Time Wizard\" from your Deck to your hand, then discard 1 card."
+   }
+  },
+  "76660178": {
+   "0": {
+    "kind": "activated",
+    "title": "Summon Fisherman from hand",
+    "clause": "If your opponent activates a monster effect on the field (except during the Damage Step), or when their monster declares an attack, and \"Umi\" or a card that mentions \"Dark Time Wizard\" other than \"Fisherman of Legend\" is on the field: You can Special Summon this card from your hand."
+   },
+   "1": {
+    "kind": "activated",
+    "title": "Destroy a monster; return in End Phase",
+    "clause": "If this card is Special Summoned: You can target 1 monster your opponent controls; destroy it, also return this card from the field to the hand during the End Phase of this turn."
+   },
+   "2": {
+    "kind": "delayed-operation",
+    "title": "Return Fisherman to hand",
+    "clause": "return this card from the field to the hand during the End Phase of this turn."
+   }
+  },
+  "40235813": {
+   "0": {
+    "kind": "activation-choice",
+    "title": "Choose search or coin-toss effect",
+    "clause": "Activate 1 of these effects (but you can only use each effect of \"Dark Time Wizard\" once per turn);\r\n● Add 1 card that mentions \"Dark Time Wizard\" from your Deck to your hand, except \"Dark Time Wizard\", also add 1 \"Dark Time Wizard\" from your GY to your hand during the End Phase of this turn.\r\n● Toss a coin and call it. If you call it right, destroy as many monsters your opponent controls as possible, and if you do, inflict damage to your opponent equal to half the total original ATK of those monsters. If you call it wrong, destroy all monsters you control."
+   },
+   "1": {
+    "kind": "menu",
+    "title": "Search; recover Dark Time Wizard later",
+    "clause": "Add 1 card that mentions \"Dark Time Wizard\" from your Deck to your hand, except \"Dark Time Wizard\", also add 1 \"Dark Time Wizard\" from your GY to your hand during the End Phase of this turn."
+   },
+   "2": {
+    "kind": "menu",
+    "title": "Call a coin: destroy monsters",
+    "clause": "Toss a coin and call it. If you call it right, destroy as many monsters your opponent controls as possible, and if you do, inflict damage to your opponent equal to half the total original ATK of those monsters. If you call it wrong, destroy all monsters you control."
+   },
+   "3": {
+    "kind": "status",
+    "title": "Recover Dark Time Wizard in End Phase",
+    "clause": "add 1 \"Dark Time Wizard\" from your GY to your hand during the End Phase of this turn."
+   }
+  },
+  "76630812": {
+   "0": {
+    "kind": "activated",
+    "title": "Roll twice: shift both sides’ ATK/DEF",
+    "clause": "Roll a six-sided die twice and apply these effects for the rest of this turn.\r\n● Monsters you control that mention \"Dark Time Wizard\" gain ATK/DEF equal to the total x 200.\r\n● Monsters your opponent controls lose ATK/DEF equal to the total x 200."
+   },
+   "1": {
+    "kind": "activated",
+    "title": "Banish; roll twice to destroy a summon",
+    "clause": "If your opponent Normal or Special Summons a monster(s) while this card is in your GY (except during the Damage Step): You can banish this card, then target 1 of those monsters; roll a six-sided die twice, and if the total is 6 or more, destroy that monster."
+   },
+   "2": {
+    "kind": "status",
+    "title": "Dark Time Wizard monsters gain ATK/DEF",
+    "clause": "Monsters you control that mention \"Dark Time Wizard\" gain ATK/DEF equal to the total x 200."
+   },
+   "3": {
+    "kind": "status",
+    "title": "Opposing monsters lose ATK/DEF",
+    "clause": "Monsters your opponent controls lose ATK/DEF equal to the total x 200."
+   }
+  },
+  "3129527": {
+   "0": {
+    "kind": "activated",
+    "title": "Summon Tokens; maybe summon Panther",
+    "clause": "Special Summon up to 4 \"Scapegoat Tokens\" (Beast/EARTH/Level 1/ATK 0/DEF 0) in Defense Position, then if your opponent controls a monster, you can Special Summon 1 \"Swiftwind Panther Warrior\" from your Deck, also for the rest of this turn, these Tokens cannot be Tributed for a Tribute Summon, also you cannot Special Summon from the Extra Deck, except Fusion Monsters."
+   },
+   "1": {
+    "kind": "prompt",
+    "title": "Summon Swiftwind Panther Warrior",
+    "clause": "then if your opponent controls a monster, you can Special Summon 1 \"Swiftwind Panther Warrior\" from your Deck,"
+   },
+   "2": {
+    "kind": "status",
+    "title": "Extra Deck: Fusion Monsters only",
+    "clause": "also you cannot Special Summon from the Extra Deck, except Fusion Monsters."
+   },
+   "3": {
+    "kind": "replacement",
+    "title": "Destroy a Token instead",
+    "clause": "If a card(s) you control that mentions \"Dark Time Wizard\" would be destroyed by battle or card effect, you can destroy 1 Token you control that was Special Summoned by this effect instead."
+   },
+   "native:3304": {
+    "kind": "status",
+    "title": "Tokens cannot pay a Tribute Summon",
+    "clause": "these Tokens cannot be Tributed for a Tribute Summon,"
+   }
+  },
+  "17242022": {
+   "0": {
+    "kind": "procedure",
+    "title": "Tribute to Special Summon Exceed",
+    "clause": "Must be either Fusion Summoned, or Special Summoned (from your Extra Deck) by Tributing 1 face-up monster on either field during the turn a monster(s) was destroyed by the effect of \"Dark Time Wizard\". You can only Special Summon \"Red-Eyes Black Dragon Exceed\" once per turn this way, no matter which method you use."
+   },
+   "1": {
+    "kind": "activated",
+    "title": "Summon a Level 8 or lower monster",
+    "clause": "If this card is Special Summoned: You can Special Summon 1 Level 8 or lower monster from your hand or GY."
+   }
+  },
+  "65118318": {
+   "0": {
+    "kind": "activated",
+    "title": "Send a card; maybe summon from either GY",
+    "clause": "Send 1 card that mentions \"Dark Time Wizard\" from your Deck to the GY, except \"Foolish Graverobber\", then you can Special Summon 1 monster from either GY to your field."
+   },
+   "1": {
+    "kind": "activated",
+    "title": "Banish to Set a Spell/Trap from a GY",
+    "clause": "You can banish this card from your GY; Set to your field, 1 Spell/Trap that mentions \"Dark Time Wizard\" from your GY, except \"Foolish Graverobber\", or 1 Spell/Trap from your opponent's GY."
+   },
+   "2": {
+    "kind": "prompt",
+    "title": "Summon a monster from either GY",
+    "clause": "then you can Special Summon 1 monster from either GY to your field."
+   }
+  },
+  "2606417": {
+   "0": {
+    "kind": "activated",
+    "title": "Roll to place counters",
+    "clause": "Once per turn, during the Standby Phase: Roll a six-sided die and place counters on this card up to the result (max. 6)."
+   },
+   "1": {
+    "kind": "activated",
+    "title": "Spend a counter; call a coin",
+    "clause": "When a monster effect is activated on your opponent's field, or once per battle, during damage calculation, if an opponent's monster attacks: You can remove 1 counter from this card, then target 1 of those monsters; toss a coin and call it. If you call it right, you can Special Summon 1 monster that mentions \"Dark Time Wizard\" from your Deck, and if you do, until the end of this turn, change the targeted monster's ATK to 0, also its effects are negated."
+   },
+   "2": {
+    "kind": "prompt",
+    "title": "Choose how many counters to place",
+    "clause": "Once per turn, during the Standby Phase: Roll a six-sided die and place counters on this card up to the result (max. 6)."
+   },
+   "3": {
+    "kind": "prompt",
+    "title": "Summon; set target’s ATK to 0 and negate",
+    "clause": "If you call it right, you can Special Summon 1 monster that mentions \"Dark Time Wizard\" from your Deck, and if you do, until the end of this turn, change the targeted monster's ATK to 0, also its effects are negated."
+   },
+   "zero": {
+    "kind": "activation-only",
+    "title": "Activate Reversal Box",
+    "clause": "Once per turn, during the Standby Phase: Roll a six-sided die and place counters on this card up to the result (max. 6)."
+   }
+  },
+  "79791695": {
+   "0": {
+    "kind": "procedure",
+    "title": "Xyz Summon using a Number C monster",
+    "clause": "You can also Xyz Summon this card by using 1 \"Number C\" monster you control with a number between \"101\" and \"107\" in its name (transfer its materials)."
+   },
+   "1": {
+    "kind": "activated",
+    "title": "Detach 1; attach opponent’s top 2 cards",
+    "clause": "Once per turn: You can detach 1 material from this card; attach the top 2 cards of your opponent's Deck to this card."
+   }
+  },
+  "40275470": {
+   "0": {
+    "kind": "activated",
+    "title": "Destroy opposing Traps; gain ATK",
+    "clause": "If this card is Normal or Special Summoned: You can destroy as many Traps your opponent controls as possible (if a card is Set, reveal it), then this card gains 300 ATK for each card destroyed this way."
+   }
+  }
+ }
+}

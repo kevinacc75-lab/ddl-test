@@ -1,0 +1,402 @@
+{
+ "seed": 11,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 3,
+ "lp": [
+  6850,
+  0
+ ],
+ "wallSec": 58,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    6850,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 4000,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Alligator's Dragon Knight",
+   "rule": "Opening book DT-ALLI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Red-Eyes Black Dragon Exceed",
+   "rule": "Opening book DT-ALLI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon K9-17 \"Ripper\"",
+   "rule": "Opening book DT-ALLI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-17 \"Ripper\"",
+   "rule": "Opening book DT-ALLI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set K9-X Forced Release",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Reversal Box",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    6850,
+    4350
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "direct": true
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with K9-17 \"Ripper\"",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 7
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    6850,
+    2050
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Red-Eyes Black Dragon Exceed",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Red-Eyes Black Dragon Exceed",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  }
+ ]
+}

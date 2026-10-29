@@ -1,0 +1,116 @@
+From c97356649ed4ffd2de12a23e4b5b180ba38bbd5b Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 18:50:37 +1100
+Subject: [PATCH 12/14] r36 Time Typhoon P5: Barian (and any of our monsters
+ that gains ATK per material) is summoned in Attack Position
+
+Kevy 29 Oct 18:35 play-test: 'a full board but doesn't attack'. tools/r36-battle-probe.mjs (Watch-like pilots, logs
+every Main/Battle choice from turn 3) seed 15: CXyz Hope Chaos Barian Dragon (printed ATK 0, gains 1000 per material)
+was put in Defence by the base pilot's 'printed ATK < 1500' rule and sat there on an empty board. Deck-local fix via the
+book pick hook (optimal-pilot.mjs stays pinned); other decks unchanged (test control). SELF-VERIFIED.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/ai/book/dtw-plan.mjs       | 10 ++++++++++
+ tests/r36-dtw-position.test.mjs | 28 ++++++++++++++++++++++++++++
+ tools/r36-battle-probe.mjs      | 30 ++++++++++++++++++++++++++++++
+ 3 files changed, 68 insertions(+)
+ create mode 100644 tests/r36-dtw-position.test.mjs
+ create mode 100644 tools/r36-battle-probe.mjs
+
+diff --git a/dist/ai/book/dtw-plan.mjs b/dist/ai/book/dtw-plan.mjs
+index f7b2cb1..b1654fb 100644
+--- a/dist/ai/book/dtw-plan.mjs
++++ b/dist/ai/book/dtw-plan.mjs
+@@ -87,7 +87,17 @@ function choose(d,m,response,rank,rule,{distinct=false,count=null}={}){
+ }
+ // rank by name: higher is better; cards not in the list get no preference.
+ const ORDER=list=>(c,i,d)=>{const n=typeof c==='string'?c:d.name(c.code);const k=list.indexOf(n);return k<0?null:list.length-k};
++// P5 (Kevy 29 Oct 18:35 play-test: "a full board but doesn't attack"): the base pilot puts a monster with printed ATK
++// under 1500 into Defence Position. CXyz Hope Chaos Barian Dragon is printed 0 ATK but gains 1000 ATK per material (4000
++// with C104's line), so it sat in Defence and never attacked, and the base pilot only changes printed-ATK monsters to
++// Attack later. Any of our monsters whose text gains ATK per material is summoned in Attack Position when we choose.
++export const GAINS_PER_MATERIAL=/[Gg]ains \d+ ATK for each material/;
++export function dtwPosition(d,seat,m,response){
++ if(!isDtw(d,seat)||m?.type!==M.SELECT_POSITION||!response||!(m.positions&1)||response.position===1)return null;
++ const card=d.db[m.code];if(!card||!GAINS_PER_MATERIAL.test(card.desc||''))return null;
++ return {response:{type:R.SELECT_POSITION,position:1},rule:'Time Typhoon P5: '+card.name+' gains ATK per material, so Attack Position',card:card.name}}
+ export function dtwPick(d,seat,m,response){
++ {const ps=dtwPosition(d,seat,m,response);if(ps)return ps}
+  if(!isDtw(d,seat)||![M.SELECT_CARD,M.SELECT_UNSELECT_CARD].includes(m?.type)||!response)return null;
+  const source=d.name(d.currentEffect?.code||0),h=d.hint,hand=names(d,d.zone(seat,2)),field=names(d,d.zone(seat,4).filter(faceUp)),inHand=n=>hand.includes(n),onField=n=>field.includes(n);
+  const handOrField=n=>inHand(n)||onField(n),alliDone=alliSearched(d,seat)===true;
+diff --git a/tests/r36-dtw-position.test.mjs b/tests/r36-dtw-position.test.mjs
+new file mode 100644
+index 0000000..9e0cca9
+--- /dev/null
++++ b/tests/r36-dtw-position.test.mjs
+@@ -0,0 +1,28 @@
++// r36 Time Typhoon P5 (Claude, 29 Oct 2026; Kevy 18:35 play-test: "a full board but doesn't attack"). SELF-VERIFIED.
++// A battle probe (tools/r36-battle-probe.mjs, seed 15) showed CXyz Hope Chaos Barian Dragon summoned in Defence Position
++// (printed ATK 0, so the base pilot's "printed ATK < 1500 -> Defence" rule) and never attacking on an empty board.
++//  1 Control: for a deck without this rule (Mikanko's seat), the pilot still picks Defence for printed-0 Barian.
++//  2 For Time Typhoon the pilot (base + book) now picks Attack Position for Barian (it gains 1000 ATK per material); the
++//    book pick hook overrides a Defence answer.
++//  3 Nothing else changes: a low-ATK monster that does not gain ATK per material (Scapegoat Token, K9-ØØ Lupis is 2300 so
++//    not low) keeps the base choice, and another deck's Barian-like card is untouched.
++import assert from 'node:assert/strict';
++import {engine,stopEngine,scenario,M,R} from '../tools/s3-harness.mjs';
++import {bookPick} from '../dist/ai/book/book.mjs';
++import {createOptimalPilots} from '../dist/optimal-pilot.mjs';
++import {safeView} from '../dist/ai/knowledge.mjs';
++await engine();
++const d=scenario(['dtw','mikanko'],[],{first:0,seed:11});
++const prompt=code=>({type:M.SELECT_POSITION,code,positions:1|4,seat:0,player:0});
++const ps=createOptimalPilots({seed:1,searchEnabled:false}),p=ps[0];
++const real=d.prompt;
++// base choice for Barian
++d.prompt={...prompt(79791695),seat:1,player:1};const ctl=ps[1].base(safeView(d,1)).response;assert.equal(ctl.position,4,'(1) control: another deck still puts printed-0 Barian in Defence');
++d.prompt=prompt(79791695);const base=p.base(safeView(d,0)).response;assert.equal(base.position,1,'(2) Time Typhoon pilot: Attack Position');
++const r=bookPick(d,0,d.prompt,{type:R.SELECT_POSITION,position:4});assert.ok(r,'(2) book overrides');assert.equal(r.response.position,1,'(2) Attack Position');assert.match(r.rule,/P5/);
++// a low-ATK card without the per-material clause is untouched
++d.prompt=prompt(3129528);const baseTok=p.base(safeView(d,0)).response;assert.equal(bookPick(d,0,d.prompt,baseTok)?.response?.position??baseTok.position,baseTok.position,'(3) Scapegoat Token: base choice kept');
++// seat 1 (Mikanko) is not Time Typhoon: no override even for Barian
++d.prompt={...prompt(79791695),seat:1,player:1};const r1=bookPick(d,1,d.prompt,{type:R.SELECT_POSITION,position:4});assert.ok(!r1||r1.response.position===4||!/P5/.test(r1.rule||''),'(3) other decks untouched');
++d.prompt=real;d.stop();stopEngine();
++console.log(JSON.stringify({test:'r36-dtw-position',pass:true,node:process.version,base:base.position,book:r.response.position}));
+diff --git a/tools/r36-battle-probe.mjs b/tools/r36-battle-probe.mjs
+new file mode 100644
+index 0000000..505d95a
+--- /dev/null
++++ b/tools/r36-battle-probe.mjs
+@@ -0,0 +1,30 @@
++// r36 (Claude, 29 Oct 2026; Kevy 18:35: "After turn 3 the AI plays so poorly. Having a full board but doesn't attack
++// directly?"). A CPU-v-CPU duel with the browser's Watch-mode pilots (search on, per-decision deadline, world pool), that
++// records every Main Phase and Battle Phase decision from turn 3 on: what attacks were possible, what was chosen and
++// which rule / search chose it. Usage:
++//   node tools/r36-battle-probe.mjs --a dtw --b branded --seed 7 --first 0 --deadline-ms 1500 --max-turn 8 [--out f.json]
++import fs from 'node:fs';import zlib from 'node:zlib';
++import {Duel,M} from '../dist/duel.mjs';import {createOptimalPilots} from '../dist/optimal-pilot.mjs';import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';import {dropAllPools} from '../dist/ai/world-pool.mjs';
++const arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v};
++const seed=+arg('seed',7),first=+arg('first',0),deadlineMs=+arg('deadline-ms',1500),maxTurn=+arg('max-turn',8),A=arg('a','dtw'),B=arg('b','branded');
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync('dist/scripts.json.gz')));
++const all=JSON.parse(fs.readFileSync('dist/decks.json')).decks.map(d=>d.banlistVariants?.['tcg-2026-10-19']?{...d,...d.banlistVariants['tcg-2026-10-19']}:d);
++const d=await Duel.create(db,scripts),searchCore=await createSearchCore(db,scripts);let deadline=Infinity;const shouldStop=()=>performance.now()>=deadline;
++const pilots=createOptimalPilots({seed,nodeBudget:400,searchCore,worldPool:true,poolKey:'battle:'+seed,poolSize:10,seatCapBytes:40*1048576,shouldStop});
++const rows=[],turns=[];let n=0;const t0=Date.now();
++const mons=s=>d.zone(s,4).filter(Boolean).map(c=>({name:d.name(c.code),atk:c.attack,pos:c.position&1?'ATK':(c.position&4?'DEF':'set')}));
++try{d.start([all.find(x=>x.id===A),all.find(x=>x.id===B)],{seed,first});let lastTurn=0;
++ while(d.prompt&&!d.finished&&d.turn<=maxTurn&&n<3000){const m=d.prompt,s=m.seat;
++  if(d.turn!==lastTurn){turns.push({turn:d.turn,active:d.active,lp:[...d.lp],ownMons:mons(d.active),oppMons:mons(1-d.active)});lastTurn=d.turn}
++  deadline=performance.now()+deadlineMs;const plan=pilots[s].plan(d);deadline=Infinity;if(!plan?.response)break;
++  if(d.turn>=3&&s===d.active&&(m.type===M.SELECT_IDLECMD||m.type===M.SELECT_BATTLECMD)){const r=plan.response;
++   const row={turn:d.turn,seat:s,deck:s===0?A:B,type:m.type===M.SELECT_IDLECMD?'main':'battle',lp:[...d.lp],own:mons(s),opp:mons(1-s),
++    canBattle:!!m.to_bp,attacks:(m.attacks||[]).map(c=>({name:d.name(c.code),direct:!!(c.direct_attackable??c.can_direct)})),
++    chose:m.type===M.SELECT_IDLECMD?({0:'normal summon',1:'special summon',2:'position',4:'set',5:'activate',6:'BATTLE',7:'END TURN',3:'set monster'})[r.action]+(r.index!=null?' '+d.name((r.action===5?m.activates:r.action===0?m.summons:r.action===1?m.special_summons:r.action===4?m.spell_sets:r.action===3?m.monster_sets:m.pos_changes)?.[r.index]?.code||0):''):({0:'activate',1:'ATTACK',2:'to Main 2',3:'END TURN'})[r.action]+(r.action===1?' with '+d.name(m.attacks[r.index]?.code||0):''),
++    rule:plan.rule||plan.book?.rule||null,why:(plan.reasons||plan.why||[]).slice?.(0,2),search:plan.search?{status:plan.search.status,worlds:plan.search.determinizations}:null};
++   rows.push(row)}
++  d.respond(plan.response);for(const x of pilots)x.observe?.(plan);n++}
++}finally{d.stop();dropAllPools()}
++const out={seed,first,decks:[A,B],deadlineMs,node:process.version,finished:d.finished,winner:d.finished?d.winner:null,turn:d.turn,lp:[...d.lp],wallSec:Math.round((Date.now()-t0)/1000),turns,rows};
++const f=arg('out',null);if(f)fs.writeFileSync(f,JSON.stringify(out,null,1));
++console.log(JSON.stringify({seed,turn:d.turn,lp:d.lp,finished:d.finished,winner:out.winner,battleRows:rows.filter(r=>r.type==='battle').length,mainEndWithAttackers:rows.filter(r=>r.type==='main'&&/END TURN/.test(r.chose)&&r.canBattle&&r.own.some(c=>c.pos==='ATK'&&c.atk>0)).length,wallSec:out.wallSec}));
+-- 
+2.43.0
+

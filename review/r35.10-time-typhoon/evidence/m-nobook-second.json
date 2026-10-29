@@ -1,0 +1,2525 @@
+{
+ "deck": "dtw",
+ "list": "tcg-2026-10-19",
+ "search": false,
+ "order": "second",
+ "node": "v22.22.0",
+ "rows": [
+  {
+   "deck": "dtw",
+   "opp": "branded",
+   "seed": 101,
+   "first": false,
+   "hand": [
+    "Swiftwind Panther Warrior",
+    "Infinite Impermanence",
+    "Graceful & Skull Dice",
+    "\"A Case for K9\"",
+    "Fisherman of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Swiftwind Panther Warrior",
+      "Graceful & Skull Dice",
+      "\"A Case for K9\"",
+      "Fisherman of Legend",
+      "Reversal Box"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Aluber the Jester of Despia",
+       "Alba-Lenatus the Abyss Dragon"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Incredible Ecclesia, the Virtuous",
+       "Guiding Quem, the Virtuous",
+       "Dogmatika Fleurdelis, the Knighted",
+       "Tri-Brigade Springans Kitt",
+       "Fallen of Albaz"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Bystial Magnamhut",
+       "Branded in High Spirits",
+       "The Dragon that Devours the Dogma",
+       "Fallen of the White Dragon",
+       "Fallen of Albaz"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Graceful & Skull Dice",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Fisherman of Legend",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight",
+      "chain: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Graceful & Skull Dice",
+      "  pick [Alligator's Dragon Knight h501]: \"A Case for K9\"",
+      "chain: Graceful & Skull Dice",
+      "set S/T: Reversal Box   [Set before leaving the Main Phase]",
+      "→ Battle Phase",
+      "attack with Swiftwind Panther Warrior",
+      "  pick [Card details unavailable h549]: Aluber the Jester of Despia",
+      "attack with Alligator's Dragon Knight"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior",
+       "Alligator's Dragon Knight"
+      ],
+      "backrow": [
+       "set:Reversal Box"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Infinite Impermanence",
+       "Fisherman of Legend",
+       "\"A Case for K9\"",
+       "Graceful & Skull Dice"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Alba-Lenatus the Abyss Dragon"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Incredible Ecclesia, the Virtuous",
+       "Guiding Quem, the Virtuous",
+       "Tri-Brigade Springans Kitt",
+       "Fallen of Albaz"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Bystial Magnamhut",
+       "Branded in High Spirits",
+       "The Dragon that Devours the Dogma",
+       "Fallen of the White Dragon",
+       "Fallen of Albaz",
+       "Dogmatika Fleurdelis, the Knighted",
+       "Aluber the Jester of Despia"
+      ],
+      "banished": 0,
+      "lp": 0
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Infinite Impermanence"
+   ],
+   "guards": [],
+   "finished": true,
+   "winner": 0
+  },
+  {
+   "deck": "dtw",
+   "opp": "mikanko",
+   "seed": 102,
+   "first": false,
+   "hand": [
+    "Radiant Typhoon Eldam",
+    "Chaotic Elements",
+    "Sleepy Scapegoats",
+    "Dark Time Wizard",
+    "Dark Time Wizard"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Radiant Typhoon Eldam",
+      "Chaotic Elements",
+      "Sleepy Scapegoats",
+      "Dark Time Wizard",
+      "Dark Time Wizard",
+      "Swiftwind Panther Warrior"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Ha-Re the Sword Mikanko",
+       "Uzuhime the Manifested Mikanko"
+      ],
+      "backrow": [
+       "Mikanko Fire Dance",
+       "set:Mikanko Spiritwalk",
+       "set:Forbidden Droplet"
+      ],
+      "field": [],
+      "hand": [
+       "Thunder King, the Lightningstrike Kaiju"
+      ],
+      "gy": [
+       "Preparation of Rites",
+       "Ohime the Manifested Mikanko",
+       "Mikanko Water Arabesque",
+       "Mikanko Water Arabesque"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sleepy Scapegoats",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Fisherman of Legend",
+      "  ANNOUNCE_NUMBER {\"type\":19,\"value\":0}",
+      "  pick [Sleepy Scapegoats h509]: Swiftwind Panther Warrior",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Scapegoat Token",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Uzuhime the Manifested Mikanko",
+      "activate: Chaotic Elements",
+      "  pick [Chaotic Elements h506]: K9-66a Jokul",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase",
+      "chain: Fisherman of Legend",
+      "  pick [Fisherman of Legend h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard",
+       "K9-66a Jokul",
+       "Radiant Typhoon Eldam",
+       "Fisherman of Legend"
+      ],
+      "gy": [
+       "Sleepy Scapegoats",
+       "Dark Time Wizard",
+       "Swiftwind Panther Warrior",
+       "Chaotic Elements"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Ha-Re the Sword Mikanko"
+      ],
+      "backrow": [
+       "Mikanko Fire Dance",
+       "Sanaki the Mikanko Devotee",
+       "set:Forbidden Droplet"
+      ],
+      "field": [],
+      "hand": [
+       "Mikanko Water Arabesque",
+       "Thunder King, the Lightningstrike Kaiju",
+       "Lava Golem"
+      ],
+      "gy": [
+       "Preparation of Rites",
+       "Ohime the Manifested Mikanko",
+       "Mikanko Water Arabesque",
+       "Mikanko Water Arabesque",
+       "Mikanko Spiritwalk",
+       "Uzuhime the Manifested Mikanko",
+       "Hu-Li the Jewel Mikanko"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "sky",
+   "seed": 103,
+   "first": false,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Dark Time Wizard",
+    "K9-66a Jokul",
+    "Ash Blossom & Joyous Spring",
+    "Fisherman of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Dark Time Wizard",
+      "K9-66a Jokul",
+      "Fisherman of Legend",
+      "Alligator's Dragon Knight",
+      "Mystical Space Typhoon",
+      "Radiant Typhoon Eldam"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Sky Striker Ace - Hayate"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence",
+       "set:Sky Striker Mecha - Widow Anchor"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Sky Striker Ace - Raye",
+       "Droll & Lock Bird",
+       "Sky Striker Ace = Zero",
+       "Sky Striker Ace - Kagari",
+       "Sky Striker Mobilize - Linkage!"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Infinite Impermanence",
+      "activate: K9-66a Jokul",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Graceful & Skull Dice",
+      "  pick [Alligator's Dragon Knight h501]: Graceful & Skull Dice",
+      "special: K9-66X \"Jacks\"",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "  pick [K9-66X \"Jacks\" h519]: K9-66a Jokul",
+      "  pick [K9-66X \"Jacks\" h502]: Sky Striker Ace - Hayate",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Eldam",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Sky Striker Ace = Zero",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "  pick [Card details unavailable h533]: K9-66X \"Jacks\"",
+      "  pick [S:P Little Knight h503]: Sky Striker Ace = Zero",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior",
+       "S:P Little Knight"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Ash Blossom & Joyous Spring",
+       "Mystical Space Typhoon",
+       "K9-66a Jokul",
+       "Radiant Typhoon Eldam",
+       "Fisherman of Legend",
+       "K9-66X \"Jacks\"",
+       "Alligator's Dragon Knight",
+       "Dark Time Wizard"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Sky Striker Mecha - Widow Anchor"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Engage!",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Droll & Lock Bird",
+       "Sky Striker Ace = Zero",
+       "Sky Striker Ace - Kagari",
+       "Sky Striker Mobilize - Linkage!",
+       "Infinite Impermanence",
+       "Sky Striker Ace - Hayate",
+       "Sky Striker Ace - Raye"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos",
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "luna",
+   "seed": 104,
+   "first": false,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Radiant Typhoon Eldam",
+    "Dark Time Wizard",
+    "K9-17 Izuna",
+    "Pot of Prosperity"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Radiant Typhoon Eldam",
+      "Dark Time Wizard",
+      "Pot of Prosperity",
+      "Mystical Space Typhoon"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Lunalight Liger Dancer",
+       "Lunalight Perfume Dancer"
+      ],
+      "backrow": [
+       "Lunalight Wolf",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Ghost Belle & Haunted Mansion",
+       "Super Duper Polymerization",
+       "Polymerization",
+       "Lunalight Liger Dancer"
+      ],
+      "banished": 6,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Lunalight Wolf",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Eldam",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Lunalight Liger Dancer",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Alligator's Dragon Knight",
+       "Pot of Prosperity"
+      ],
+      "gy": [
+       "K9-ØØ Lupis",
+       "K9-17 Izuna",
+       "Mystical Space Typhoon",
+       "Radiant Typhoon Eldam",
+       "Fisherman of Legend",
+       "Swiftwind Panther Warrior",
+       "Dark Time Wizard"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Lunalight Liger Dancer",
+       "Lunalight Perfume Dancer"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Lunalight Fusion"
+      ],
+      "gy": [
+       "Ghost Belle & Haunted Mansion",
+       "Super Duper Polymerization",
+       "Polymerization",
+       "Lunalight Liger Dancer",
+       "Lunalight Leo Dancer"
+      ],
+      "banished": 6,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: K9-17 Izuna",
+    "t1 chain: K9-ØØ Lupis"
+   ],
+   "excluded": [
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t2: passivePass prevented: Normal Summoned Swiftwind Panther Warrior with Pot of Prosperity live",
+    "t2: Sampled target preflight: no approved complete target set",
+    "t2: Sampled target preflight: no approved complete target set",
+    "t2: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "blueeyes",
+   "seed": 105,
+   "first": false,
+   "hand": [
+    "K9-17 Izuna",
+    "\"A Case for K9\"",
+    "Mystical Space Typhoon",
+    "Alligator's Dragon Knight",
+    "Sleepy Scapegoats"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "\"A Case for K9\"",
+      "Mystical Space Typhoon",
+      "Alligator's Dragon Knight",
+      "Sleepy Scapegoats",
+      "Pot of Prosperity"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Blue-Eyes Spirit Dragon"
+      ],
+      "backrow": [
+       "True Light",
+       "set:Majesty of the White Dragons",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Lunar Rabbit Omajinai",
+       "Roar of the Blue-Eyed Dragons",
+       "Primite Drillbeam",
+       "Blue-Eyes White Dragon",
+       "Maiden of White",
+       "Neo Blue-Eyes Ultimate Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: True Light",
+      "chain: Sleepy Scapegoats",
+      "  ANNOUNCE_NUMBER {\"type\":19,\"value\":0}",
+      "  pick [Sleepy Scapegoats h509]: Swiftwind Panther Warrior",
+      "  pick [Sleepy Scapegoats h521]: Scapegoat Token",
+      "activate: K9-ØØ Lupis",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Alligator's Dragon Knight",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Blue-Eyes White Dragon",
+      "activate: \"A Case for K9\"",
+      "  pick [\"A Case for K9\" h506]: K9-17 Izuna",
+      "chain: K9-17 Izuna",
+      "  pick [K9-17 Izuna h504]: K9-66a Jokul",
+      "→ Battle Phase",
+      "attack with K9-ØØ Lupis",
+      "  pick [Card details unavailable h549]: Blue-Eyes White Dragon",
+      "attack with K9-17 Izuna",
+      "attack with Swiftwind Panther Warrior",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "K9-17 Izuna",
+       "Swiftwind Panther Warrior",
+       "K9-ØØ Lupis"
+      ],
+      "backrow": [
+       "\"A Case for K9\""
+      ],
+      "field": [],
+      "hand": [
+       "Pot of Prosperity"
+      ],
+      "gy": [
+       "K9-17 Izuna",
+       "Mystical Space Typhoon",
+       "Sleepy Scapegoats",
+       "Alligator's Dragon Knight",
+       "Fisherman of Legend",
+       "K9-66a Jokul"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Blue-Eyes White Dragon"
+      ],
+      "gy": [
+       "Lunar Rabbit Omajinai",
+       "Roar of the Blue-Eyed Dragons",
+       "Primite Drillbeam",
+       "Blue-Eyes Spirit Dragon",
+       "True Light",
+       "Majesty of the White Dragons",
+       "Maiden of White",
+       "Blue-Eyes Ultimate Spirit Dragon",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 2,
+      "lp": 2800
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: K9-17 Izuna",
+    "t1 chain: K9-ØØ Lupis",
+    "t1 chain: K9-ØØ Lupis"
+   ],
+   "excluded": [
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t1: Sampled target preflight: no approved complete target set",
+    "t1: guard:replaced own destroy with a legal opposing/approved target",
+    "t2: Sampled target preflight: no approved complete target set",
+    "t2: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "kashtira",
+   "seed": 106,
+   "first": false,
+   "hand": [
+    "Dark Time Wizard",
+    "Dark Time Wizard",
+    "Swiftwind Panther Warrior",
+    "K9-ØØ Lupis",
+    "Fisherman of Legend"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Dark Time Wizard",
+      "Dark Time Wizard",
+      "Swiftwind Panther Warrior",
+      "Fisherman of Legend",
+      "K9-17 Izuna"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Radian, the Multidimensional Kaiju"
+      ],
+      "backrow": [
+       "set:Macro Cosmos"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Sacred Sword of Seven Stars",
+       "Scareclaw Kashtira",
+       "Kumongous, the Sticky String Kaiju",
+       "Interrupted Kaiju Slumber"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Alligator's Dragon Knight",
+      "special: Red-Eyes Black Dragon Exceed",
+      "  pick [Card details unavailable h500]: Radian, the Multidimensional Kaiju",
+      "  pick [Red-Eyes Black Dragon Exceed h509]: K9-17 Izuna",
+      "  pick [K9-17 Izuna h504]: K9-66a Jokul",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Alligator's Dragon Knight",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "→ Battle Phase",
+      "attack with K9-17 Izuna",
+      "attack with Swiftwind Panther Warrior",
+      "attack with Fisherman of Legend",
+      "attack with Red-Eyes Black Dragon Exceed"
+     ],
+     "end": {
+      "monsters": [
+       "K9-17 Izuna",
+       "Swiftwind Panther Warrior",
+       "Fisherman of Legend",
+       "Red-Eyes Black Dragon Exceed"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [],
+      "gy": [],
+      "banished": 5,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "Macro Cosmos"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Sacred Sword of Seven Stars",
+       "Scareclaw Kashtira",
+       "Kumongous, the Sticky String Kaiju",
+       "Interrupted Kaiju Slumber",
+       "Kumongous, the Sticky String Kaiju"
+      ],
+      "banished": 3,
+      "lp": 0
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: K9-ØØ Lupis"
+   ],
+   "guards": [],
+   "finished": true,
+   "winner": 0
+  },
+  {
+   "deck": "dtw",
+   "opp": "toon",
+   "seed": 107,
+   "first": false,
+   "hand": [
+    "Sleepy Scapegoats",
+    "Foolish Graverobber",
+    "Mulcharmy Fuwalos",
+    "Swiftwind Panther Warrior",
+    "Pot of Prosperity"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sleepy Scapegoats",
+      "Foolish Graverobber",
+      "Swiftwind Panther Warrior",
+      "Pot of Prosperity",
+      "Swiftwind Panther Warrior"
+     ],
+     "oppStart": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Toon Dark Magician",
+       "Toon Black Luster Soldier",
+       "Mimicat"
+      ],
+      "gy": [
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sleepy Scapegoats",
+      "  ANNOUNCE_NUMBER {\"type\":19,\"value\":0}",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Scapegoat Token",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "set S/T: Foolish Graverobber",
+      "→ Battle Phase",
+      "attack with Fisherman of Legend",
+      "attack with Swiftwind Panther Warrior",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Fisherman of Legend",
+       "Swiftwind Panther Warrior"
+      ],
+      "backrow": [
+       "set:Foolish Graverobber"
+      ],
+      "field": [],
+      "hand": [
+       "Pot of Prosperity",
+       "Swiftwind Panther Warrior"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Sleepy Scapegoats"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Toon Dark Magician",
+       "Toon Black Luster Soldier",
+       "Mimicat",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Triple Tactics Thrust"
+      ],
+      "banished": 0,
+      "lp": 4150
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos"
+   ],
+   "excluded": [
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set",
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t2: passivePass prevented: Normal Summoned Swiftwind Panther Warrior with Pot of Prosperity live",
+    "t2: Sampled target preflight: no approved complete target set",
+    "t2: Sampled target preflight: no approved complete target set",
+    "t2: Sampled target preflight: no approved complete target set",
+    "t2: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "hero",
+   "seed": 108,
+   "first": false,
+   "hand": [
+    "Mulcharmy Fuwalos",
+    "Radiant Typhoon Swen",
+    "Radiant Typhoon Swen",
+    "Swiftwind Panther Warrior",
+    "Radiant Typhoon Chant"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Radiant Typhoon Swen",
+      "Radiant Typhoon Swen",
+      "Swiftwind Panther Warrior",
+      "Radiant Typhoon Chant",
+      "Swiftwind Panther Warrior",
+      "K9-66a Jokul",
+      "Fisherman of Legend"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Elemental HERO Stratos",
+       "Vision HERO Increase DEF",
+       "Vision HERO Vyon DEF",
+       "Destiny HERO - Destroyer Phoenix Enforcer"
+      ],
+      "backrow": [
+       "set:Forbidden Droplet"
+      ],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Elemental HERO Stratos"
+      ],
+      "gy": [
+       "Destiny HERO - Malicious",
+       "Destiny HERO - Malicious",
+       "Fusion Destiny",
+       "Destiny HERO - Malicious",
+       "Vision HERO Faris",
+       "Elemental HERO Shadow Mist"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Eldam",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Eldam",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Destiny HERO - Destroyer Phoenix Enforcer",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "special: Radiant Typhoon Swen",
+      "  pick [Radiant Typhoon Swen h506]: Mystical Space Typhoon",
+      "set S/T: Mystical Space Typhoon",
+      "→ Battle Phase",
+      "attack with Radiant Typhoon Swen",
+      "  pick [Card details unavailable h549]: Vision HERO Increase",
+      "attack with S:P Little Knight",
+      "  pick [Card details unavailable h549]: Vision HERO Vyon",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Radiant Typhoon Swen",
+       "S:P Little Knight"
+      ],
+      "backrow": [
+       "set:Mystical Space Typhoon"
+      ],
+      "field": [],
+      "hand": [
+       "Swiftwind Panther Warrior",
+       "K9-66a Jokul",
+       "Radiant Typhoon Swen"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Radiant Typhoon Chant",
+       "Radiant Typhoon Eldam",
+       "Swiftwind Panther Warrior",
+       "Fisherman of Legend"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Elemental HERO Stratos"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Mulcharmy Fuwalos",
+       "Elemental HERO Stratos",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Destiny HERO - Malicious",
+       "Destiny HERO - Malicious",
+       "Fusion Destiny",
+       "Destiny HERO - Malicious",
+       "Vision HERO Faris",
+       "Elemental HERO Shadow Mist",
+       "Forbidden Droplet",
+       "Destiny HERO - Destroyer Phoenix Enforcer",
+       "Vision HERO Increase",
+       "Vision HERO Vyon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "branded",
+   "seed": 109,
+   "first": false,
+   "hand": [
+    "K9-66a Jokul",
+    "Alligator's Dragon Knight",
+    "Graceful & Skull Dice",
+    "Alligator's Dragon Knight",
+    "Chaotic Elements"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "K9-66a Jokul",
+      "Alligator's Dragon Knight",
+      "Graceful & Skull Dice",
+      "Alligator's Dragon Knight",
+      "Chaotic Elements",
+      "Radiant Typhoon Swen"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Aluber the Jester of Despia",
+       "Granguignol the Dusk Dragon",
+       "Mirrorjade the Iceblade Dragon"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Blazing Cartesia, the Virtuous",
+       "Blazing Cartesia, the Virtuous",
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "gy": [
+       "Fallen of Albaz",
+       "Branded Fusion",
+       "Bystial Magnamhut",
+       "Bystial Saronir",
+       "Titaniklad the Ash Dragon",
+       "Branded Opening"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Graceful & Skull Dice",
+      "activate: K9-66a Jokul",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "chain: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Sleepy Scapegoats",
+      "  pick [Alligator's Dragon Knight h501]: Sleepy Scapegoats",
+      "special: K9-66X \"Jacks\"",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "  pick [K9-66X \"Jacks\" h519]: K9-66a Jokul",
+      "  pick [K9-66X \"Jacks\" h502]: Mirrorjade the Iceblade Dragon",
+      "summon: Radiant Typhoon Swen",
+      "  pick [Radiant Typhoon Swen h506]: Mystical Space Typhoon",
+      "activate: Chaotic Elements",
+      "  pick [Chaotic Elements h506]: K9-66a Jokul",
+      "set S/T: Mystical Space Typhoon",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "set:Mystical Space Typhoon"
+      ],
+      "field": [],
+      "hand": [
+       "Alligator's Dragon Knight",
+       "K9-66a Jokul"
+      ],
+      "gy": [
+       "Sleepy Scapegoats",
+       "K9-66X \"Jacks\"",
+       "Alligator's Dragon Knight",
+       "Chaotic Elements"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Aluber the Jester of Despia",
+       "Guiding Quem, the Virtuous",
+       "Dogmatika Fleurdelis, the Knighted",
+       "Lubellion the Searing Dragon",
+       "Albion the Sanctifire Dragon",
+       "Mirrorjade the Iceblade Dragon"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Blazing Cartesia, the Virtuous",
+       "Mulcharmy Fuwalos"
+      ],
+      "gy": [
+       "Branded Fusion",
+       "Bystial Magnamhut",
+       "Bystial Saronir",
+       "Titaniklad the Ash Dragon",
+       "Fallen of Albaz",
+       "Blazing Cartesia, the Virtuous",
+       "Mirrorjade the Iceblade Dragon"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "mikanko",
+   "seed": 110,
+   "first": false,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Fire Formation - Tenki",
+    "Dark Time Wizard",
+    "Reversal Box",
+    "Mystical Space Typhoon"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Fire Formation - Tenki",
+      "Dark Time Wizard",
+      "Reversal Box",
+      "Mystical Space Typhoon",
+      "K9-X Forced Release"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Hu-Li the Jewel Mikanko",
+       "Uzuhime the Manifested Mikanko"
+      ],
+      "backrow": [
+       "Mikanko Fire Dance",
+       "set:Mikanko Spiritwalk"
+      ],
+      "field": [],
+      "hand": [
+       "Preparation of Rites",
+       "Lava Golem",
+       "Hu-Li the Jewel Mikanko"
+      ],
+      "gy": [
+       "Preparation of Rites",
+       "Ohime the Manifested Mikanko",
+       "Mikanko Water Arabesque"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "activate: Fire Formation - Tenki",
+      "  pick [Fire Formation - Tenki h506]: Radiant Typhoon Swen",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Swen",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Swiftwind Panther Warrior",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Reversal Box",
+      "  pick [Alligator's Dragon Knight h506]: Graceful & Skull Dice",
+      "  pick [Alligator's Dragon Knight h501]: Graceful & Skull Dice",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "set S/T: Reversal Box",
+      "set S/T: K9-X Forced Release",
+      "→ Battle Phase",
+      "attack with S:P Little Knight",
+      "  pick [Card details unavailable h549]: Hu-Li the Jewel Mikanko",
+      "→ Main Phase 2",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)"
+     ],
+     "end": {
+      "monsters": [
+       "S:P Little Knight"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki",
+       "set:Reversal Box",
+       "set:K9-X Forced Release"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Radiant Typhoon Swen",
+       "Swiftwind Panther Warrior",
+       "Mystical Space Typhoon",
+       "Graceful & Skull Dice",
+       "Fisherman of Legend",
+       "Alligator's Dragon Knight",
+       "Dark Time Wizard"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Hu-Li the Jewel Mikanko"
+      ],
+      "backrow": [
+       "Mikanko Fire Dance",
+       "Sanaki the Mikanko Devotee"
+      ],
+      "field": [],
+      "hand": [
+       "Preparation of Rites",
+       "Lava Golem",
+       "Mikanko Shinbu - Noble Twins"
+      ],
+      "gy": [
+       "Preparation of Rites",
+       "Ohime the Manifested Mikanko",
+       "Mikanko Water Arabesque",
+       "Hu-Li the Jewel Mikanko",
+       "Uzuhime the Manifested Mikanko",
+       "Ha-Re the Sword Mikanko"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: Mystical Space Typhoon has no targetable opposing Spell/Trap",
+    "t2: guard:replaced own destroy with a legal opposing/approved target"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "sky",
+   "seed": 111,
+   "first": false,
+   "hand": [
+    "Mystical Space Typhoon",
+    "K9-17 Izuna",
+    "Chaotic Elements",
+    "K9-ØØ Lupis",
+    "Swiftwind Panther Warrior"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Mystical Space Typhoon",
+      "K9-17 Izuna",
+      "Chaotic Elements",
+      "K9-ØØ Lupis",
+      "Swiftwind Panther Warrior",
+      "Radiant Typhoon Eldam"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Sky Striker Ace - Shizuku",
+       "Sky Striker Ace - Raye",
+       "Sky Striker Ace = Zero"
+      ],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Ash Blossom & Joyous Spring",
+       "Ghost Belle & Haunted Mansion",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mobilize - Engage!"
+      ],
+      "gy": [
+       "Upstart Goblin",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Upstart Goblin"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Infinite Impermanence",
+      "summon: K9-17 Izuna",
+      "chain: K9-ØØ Lupis",
+      "special: K9-66X \"Jacks\"",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "  pick [K9-66X \"Jacks\" h519]: K9-ØØ Lupis",
+      "  pick [K9-66X \"Jacks\" h502]: Sky Striker Ace - Raye",
+      "special: Radiant Typhoon Eldam",
+      "  pick [Radiant Typhoon Eldam h506]: Radiant Typhoon Swen",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h533]: K9-66X \"Jacks\"",
+      "  pick [S:P Little Knight h503]: Sky Striker Ace = Zero",
+      "special: Radiant Typhoon Swen",
+      "  pick [Radiant Typhoon Swen h506]: Radiant Typhoon Chant",
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Swen",
+      "activate: Chaotic Elements",
+      "  pick [Chaotic Elements h506]: K9-66a Jokul",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Radiant Typhoon Swen",
+       "S:P Little Knight"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Radiant Typhoon Swen",
+       "Swiftwind Panther Warrior",
+       "K9-66a Jokul"
+      ],
+      "gy": [
+       "Mystical Space Typhoon",
+       "K9-ØØ Lupis",
+       "Radiant Typhoon Eldam",
+       "K9-66X \"Jacks\"",
+       "K9-17 Izuna",
+       "Radiant Typhoon Chant",
+       "Chaotic Elements"
+      ],
+      "banished": 0,
+      "lp": 10000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Sky Striker Ace - Shizuku",
+       "Sky Striker Ace - Roze",
+       "Sky Striker Ace - Raye"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mobilize - Linkage!"
+      ],
+      "gy": [
+       "Upstart Goblin",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Upstart Goblin",
+       "Sky Striker Ace = Zero",
+       "Infinite Impermanence",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Ace - Raye",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "banished": 0,
+      "lp": 8000
+     }
+    }
+   ],
+   "excluded": [
+    "t2 S:P Little Knight (selects): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t2: Sampled target preflight: no approved complete target set"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "luna",
+   "seed": 112,
+   "first": false,
+   "hand": [
+    "K9-66a Jokul",
+    "Radiant Typhoon Swen",
+    "Alligator's Dragon Knight",
+    "Mystical Space Typhoon",
+    "K9-17 Izuna"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "K9-66a Jokul",
+      "Radiant Typhoon Swen",
+      "Alligator's Dragon Knight",
+      "Mystical Space Typhoon",
+      "Chaotic Elements"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Lunalight Liger Dancer",
+       "Lunalight Perfume Dancer"
+      ],
+      "backrow": [
+       "Lunalight Wolf"
+      ],
+      "field": [],
+      "hand": [
+       "Lunalight Gold Leo"
+      ],
+      "gy": [
+       "Lunalight Gold Leo",
+       "Lunalight Silver Hound",
+       "Lunalight Leo Dancer",
+       "Polymerization",
+       "Lunalight Liger Dancer",
+       "Foolish Burial Goods",
+       "Foolish Burial Goods"
+      ],
+      "banished": 7,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Lunalight Wolf",
+      "activate: K9-66a Jokul",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard",
+      "  pick [Alligator's Dragon Knight h501]: Chaotic Elements",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Swen",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Lunalight Liger Dancer",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)"
+     ],
+     "end": {
+      "monsters": [
+       "S:P Little Knight"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "K9-ØØ Lupis",
+       "K9-66X \"Jacks\"",
+       "K9-17 Izuna",
+       "Mystical Space Typhoon",
+       "Alligator's Dragon Knight",
+       "K9-66a Jokul",
+       "Chaotic Elements",
+       "Radiant Typhoon Swen",
+       "Swiftwind Panther Warrior",
+       "Fisherman of Legend",
+       "Dark Time Wizard"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Lunalight Liger Dancer"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Lunalight Gold Leo",
+       "Ghost Belle & Haunted Mansion"
+      ],
+      "gy": [
+       "Lunalight Gold Leo",
+       "Lunalight Silver Hound",
+       "Lunalight Leo Dancer",
+       "Polymerization",
+       "Lunalight Liger Dancer",
+       "Foolish Burial Goods",
+       "Foolish Burial Goods",
+       "Lunalight Perfume Dancer",
+       "Lunalight Perfume Dancer"
+      ],
+      "banished": 7,
+      "lp": 7000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: K9-17 Izuna",
+    "t1 chain: K9-ØØ Lupis",
+    "t1 chain: K9-ØØ Lupis"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "blueeyes",
+   "seed": 113,
+   "first": false,
+   "hand": [
+    "Ash Blossom & Joyous Spring",
+    "Sleepy Scapegoats",
+    "Fire Formation - Tenki",
+    "Radiant Typhoon Eldam",
+    "Radiant Typhoon Chant"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Sleepy Scapegoats",
+      "Fire Formation - Tenki",
+      "Radiant Typhoon Eldam",
+      "Radiant Typhoon Chant",
+      "Graceful & Skull Dice"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Spirit with Eyes of Blue"
+      ],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Wishes for Eyes of Blue",
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes White Dragon"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Sleepy Scapegoats",
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "chain: Graceful & Skull Dice",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Swen",
+      "  ANNOUNCE_NUMBER {\"type\":19,\"value\":0}",
+      "  pick [Sleepy Scapegoats h509]: Swiftwind Panther Warrior",
+      "activate: Fire Formation - Tenki",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Scapegoat Token",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fire Formation - Tenki h506]: Swiftwind Panther Warrior",
+      "  pick [Fisherman of Legend h502]: Spirit with Eyes of Blue",
+      "summon: Swiftwind Panther Warrior",
+      "→ Battle Phase",
+      "attack with Fisherman of Legend",
+      "attack with Swiftwind Panther Warrior",
+      "attack with Swiftwind Panther Warrior"
+     ],
+     "end": {
+      "monsters": [
+       "Fisherman of Legend",
+       "Swiftwind Panther Warrior",
+       "Swiftwind Panther Warrior"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki"
+      ],
+      "field": [],
+      "hand": [
+       "Radiant Typhoon Swen",
+       "Radiant Typhoon Eldam"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Sleepy Scapegoats",
+       "Radiant Typhoon Chant",
+       "Graceful & Skull Dice"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "Primite Lordly Lode",
+       "set:Infinite Impermanence"
+      ],
+      "field": [
+       "Mausoleum of White"
+      ],
+      "hand": [
+       "Primite Dragon Ether Beryl"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Wishes for Eyes of Blue",
+       "Primite Dragon Ether Beryl",
+       "Blue-Eyes White Dragon",
+       "Lunar Rabbit Omajinai",
+       "Blue-Eyes White Dragon",
+       "Spirit with Eyes of Blue"
+      ],
+      "banished": 0,
+      "lp": 0
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [],
+   "finished": true,
+   "winner": 0
+  },
+  {
+   "deck": "dtw",
+   "opp": "kashtira",
+   "seed": 114,
+   "first": false,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Radiant Typhoon Swen",
+    "Fire Formation - Tenki",
+    "K9-17 Izuna",
+    "Dark Time Wizard"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Radiant Typhoon Swen",
+      "Fire Formation - Tenki",
+      "Dark Time Wizard",
+      "Mystical Space Typhoon"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Kashtira Shangri-Ira DEF"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Kashtira Fenrir",
+       "Kashtira Birth",
+       "Scareclaw Kashtira",
+       "Tearlaments Kashtira",
+       "Kashtira Riseheart",
+       "Kashtira Ogre"
+      ],
+      "banished": 2,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Swiftwind Panther Warrior",
+      "activate: Fire Formation - Tenki",
+      "  pick [Fire Formation - Tenki h506]: Swiftwind Panther Warrior",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Swen",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Kashtira Ogre",
+      "activate: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h526]: Swiftwind Panther Warrior",
+      "  pick [Alligator's Dragon Knight h506]: Reversal Box",
+      "  pick [Alligator's Dragon Knight h501]: Mystical Space Typhoon",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "set S/T: Reversal Box",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)"
+     ],
+     "end": {
+      "monsters": [],
+      "backrow": [
+       "Fire Formation - Tenki",
+       "set:Reversal Box"
+      ],
+      "field": [],
+      "hand": [
+       "Swiftwind Panther Warrior"
+      ],
+      "gy": [
+       "K9-ØØ Lupis",
+       "K9-66X \"Jacks\"",
+       "K9-17 Izuna",
+       "Radiant Typhoon Swen",
+       "Mystical Space Typhoon",
+       "Fisherman of Legend",
+       "Alligator's Dragon Knight",
+       "Swiftwind Panther Warrior",
+       "S:P Little Knight",
+       "Dark Time Wizard"
+      ],
+      "banished": 4,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Kashtira Shangri-Ira DEF"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Sacred Sword of Seven Stars"
+      ],
+      "gy": [
+       "Kashtira Fenrir",
+       "Kashtira Birth",
+       "Scareclaw Kashtira",
+       "Tearlaments Kashtira",
+       "Kashtira Riseheart",
+       "Kashtira Ogre",
+       "Kashtira Ogre",
+       "Kumongous, the Sticky String Kaiju"
+      ],
+      "banished": 2,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: K9-17 Izuna",
+    "t1 chain: K9-17 Izuna",
+    "t1 chain: K9-ØØ Lupis",
+    "t1 chain: K9-ØØ Lupis"
+   ],
+   "guards": [
+    "t1: guard:replaced own destroy with a legal opposing/approved target",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "toon",
+   "seed": 115,
+   "first": false,
+   "hand": [
+    "Radiant Typhoon Eldam",
+    "Alligator's Dragon Knight",
+    "K9-17 Izuna",
+    "\"A Case for K9\"",
+    "Dark Time Wizard"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Radiant Typhoon Eldam",
+      "Alligator's Dragon Knight",
+      "K9-17 Izuna",
+      "\"A Case for K9\"",
+      "Dark Time Wizard",
+      "Dark Time Wizard"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Knightmare Phoenix"
+      ],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "The Black Stone of Legend",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Red-Eyes Toon Dragon",
+       "Toon Goblin Attack Force"
+      ],
+      "banished": 3,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)",
+      "activate: K9-17 Izuna",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "chain: K9-ØØ Lupis",
+      "special: K9-66X \"Jacks\"",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "  pick [K9-66X \"Jacks\" h519]: K9-ØØ Lupis",
+      "  pick [K9-66X \"Jacks\" h502]: Knightmare Phoenix",
+      "summon: Radiant Typhoon Eldam",
+      "  pick [Radiant Typhoon Eldam h506]: Radiant Typhoon Swen",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Radiant Typhoon Eldam",
+      "  pick [Card details unavailable h533]: K9-66X \"Jacks\"",
+      "  pick [S:P Little Knight h503]: Red-Eyes Toon Dragon",
+      "activate: \"A Case for K9\"",
+      "  pick [\"A Case for K9\" h506]: K9-17 Izuna",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "S:P Little Knight"
+      ],
+      "backrow": [
+       "\"A Case for K9\""
+      ],
+      "field": [],
+      "hand": [
+       "Radiant Typhoon Swen",
+       "K9-17 Izuna",
+       "Alligator's Dragon Knight"
+      ],
+      "gy": [
+       "Dark Time Wizard",
+       "Dark Time Wizard",
+       "K9-ØØ Lupis",
+       "Radiant Typhoon Eldam",
+       "K9-66X \"Jacks\"",
+       "K9-17 Izuna"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [],
+      "field": [
+       "Toon Kingdom"
+      ],
+      "hand": [
+       "The Black Stone of Legend",
+       "Comic Hand"
+      ],
+      "gy": [
+       "The Black Stone of Legend",
+       "Toon Goblin Attack Force",
+       "Ash Blossom & Joyous Spring",
+       "Knightmare Phoenix"
+      ],
+      "banished": 4,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t2: guard:replaced own destroy with a legal opposing/approved target",
+    "t2: Keep K9-66X \"Jacks\": no Tribute Summon of Alligator's Dragon Knight that tributes an Extra Deck monster",
+    "t2: guard:replaced own banish with a legal opposing/approved target"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "hero",
+   "seed": 116,
+   "first": false,
+   "hand": [
+    "Swiftwind Panther Warrior",
+    "Infinite Impermanence",
+    "Ash Blossom & Joyous Spring",
+    "Dark Time Wizard",
+    "K9-ØØ Lupis"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Swiftwind Panther Warrior",
+      "Dark Time Wizard",
+      "K9-ØØ Lupis",
+      "Radiant Typhoon Chant"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Miracle Ejector"
+      ],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Fusion Destiny"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "  pick [Radiant Typhoon Chant h506]: Radiant Typhoon Swen",
+      "activate: K9-ØØ Lupis",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Swen",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Miracle Ejector",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "→ Battle Phase",
+      "attack with K9-ØØ Lupis",
+      "attack with S:P Little Knight",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "K9-ØØ Lupis",
+       "S:P Little Knight"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Infinite Impermanence",
+       "Dark Time Wizard",
+       "Radiant Typhoon Chant",
+       "Swiftwind Panther Warrior",
+       "Fisherman of Legend"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Mask Change"
+      ],
+      "field": [],
+      "hand": [
+       "Vision HERO Faris",
+       "Elemental HERO Shadow Mist"
+      ],
+      "gy": [
+       "Fusion Destiny",
+       "Ash Blossom & Joyous Spring",
+       "Miracle Ejector"
+      ],
+      "banished": 0,
+      "lp": 4100
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring",
+    "t1 chain: Infinite Impermanence"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "branded",
+   "seed": 117,
+   "first": false,
+   "hand": [
+    "Alligator's Dragon Knight",
+    "Swiftwind Panther Warrior",
+    "Radiant Typhoon Swen",
+    "K9-66a Jokul",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Alligator's Dragon Knight",
+      "Swiftwind Panther Warrior",
+      "Radiant Typhoon Swen",
+      "K9-66a Jokul",
+      "K9-17 Izuna"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Guiding Quem, the Virtuous"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Mulcharmy Fuwalos",
+       "Blazing Cartesia, the Virtuous",
+       "Dogmatika Fleurdelis, the Knighted",
+       "Incredible Ecclesia, the Virtuous"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Nadir Servant"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "summon: K9-17 Izuna",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "activate: K9-66a Jokul",
+      "  pick [K9-66a Jokul h526]: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard",
+      "  pick [Alligator's Dragon Knight h501]: Dark Time Wizard",
+      "special: K9-66X \"Jacks\"",
+      "  pick [Card details unavailable h513]: Alligator's Dragon Knight",
+      "  pick [Card details unavailable h513]: K9-66a Jokul",
+      "  pick [K9-66X \"Jacks\" h519]: K9-66a Jokul",
+      "  pick [K9-66X \"Jacks\" h502]: Guiding Quem, the Virtuous",
+      "chain: K9-ØØ Lupis",
+      "special: K9-17 \"Ripper\"",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "activate: K9-17 \"Ripper\"",
+      "  pick [K9-17 \"Ripper\" h519]: K9-ØØ Lupis",
+      "  pick [K9-17 \"Ripper\" h506]: K9-17 Izuna",
+      "  pick [K9-17 \"Ripper\" h510]: K9-X Forced Release",
+      "chain: K9-17 Izuna",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: K9-17 Izuna",
+      "  pick [Card details unavailable h533]: K9-66X \"Jacks\"",
+      "  pick [S:P Little Knight h503]: Guiding Quem, the Virtuous",
+      "special: Radiant Typhoon Swen",
+      "  pick [Radiant Typhoon Swen h506]: Mystical Space Typhoon",
+      "set S/T: Mystical Space Typhoon",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "K9-17 \"Ripper\"",
+       "Radiant Typhoon Swen",
+       "S:P Little Knight"
+      ],
+      "backrow": [
+       "set:K9-X Forced Release",
+       "set:Mystical Space Typhoon"
+      ],
+      "field": [],
+      "hand": [
+       "Swiftwind Panther Warrior"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Dark Time Wizard",
+       "K9-66a Jokul",
+       "K9-ØØ Lupis",
+       "K9-17 Izuna",
+       "K9-66X \"Jacks\"",
+       "Alligator's Dragon Knight"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [
+       "Dogmatika Fleurdelis, the Knighted"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Guiding Quem, the Virtuous",
+       "Mulcharmy Fuwalos",
+       "Blazing Cartesia, the Virtuous",
+       "Incredible Ecclesia, the Virtuous",
+       "Super Polymerization"
+      ],
+      "gy": [
+       "Titaniklad the Ash Dragon",
+       "Nadir Servant"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove",
+    "t2: Mystical Space Typhoon has no opposing Spell/Trap to remove"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "mikanko",
+   "seed": 118,
+   "first": false,
+   "hand": [
+    "Pot of Prosperity",
+    "Mulcharmy Fuwalos",
+    "Swiftwind Panther Warrior",
+    "Dark Time Wizard",
+    "Ash Blossom & Joyous Spring"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Pot of Prosperity",
+      "Swiftwind Panther Warrior",
+      "Dark Time Wizard",
+      "Chaotic Elements"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Ha-Re the Sword Mikanko"
+      ],
+      "backrow": [
+       "set:Forbidden Droplet",
+       "set:Forbidden Droplet"
+      ],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko"
+      ],
+      "gy": [],
+      "banished": 0,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  pick [Dark Time Wizard h506]: Fisherman of Legend",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Fisherman of Legend",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Alligator's Dragon Knight",
+      "  pick [Alligator's Dragon Knight h506]: Dark Time Wizard",
+      "  pick [Alligator's Dragon Knight h501]: Pot of Prosperity",
+      "chain: Dark Time Wizard",
+      "  option 0 (Dark Time Wizard)",
+      "  option 0 (Dark Time Wizard)",
+      "special: Red-Eyes Black Dragon Exceed",
+      "  pick [Card details unavailable h500]: Ha-Re the Sword Mikanko",
+      "  pick [Red-Eyes Black Dragon Exceed h509]: Swiftwind Panther Warrior",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "  pick [Card details unavailable h533]: Red-Eyes Black Dragon Exceed",
+      "  pick [S:P Little Knight h503]: Forbidden Droplet",
+      "activate: Chaotic Elements",
+      "  pick [Chaotic Elements h506]: K9-66a Jokul",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase",
+      "  pick [Card details unavailable h506]: Dark Time Wizard"
+     ],
+     "end": {
+      "monsters": [
+       "S:P Little Knight"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Dark Time Wizard",
+       "K9-66a Jokul"
+      ],
+      "gy": [
+       "Mulcharmy Fuwalos",
+       "Ash Blossom & Joyous Spring",
+       "Dark Time Wizard",
+       "Fisherman of Legend",
+       "Pot of Prosperity",
+       "Alligator's Dragon Knight",
+       "Swiftwind Panther Warrior",
+       "Red-Eyes Black Dragon Exceed",
+       "Chaotic Elements"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Forbidden Droplet"
+      ],
+      "field": [],
+      "hand": [
+       "Ohime the Manifested Mikanko",
+       "Ohime the Manifested Mikanko",
+       "Triple Tactics Thrust"
+      ],
+      "gy": [
+       "Ha-Re the Sword Mikanko"
+      ],
+      "banished": 1,
+      "lp": 8000
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Mulcharmy Fuwalos",
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "excluded": [
+    "t2 Pot of Prosperity (activates): Sampled target preflight: no approved complete target set"
+   ],
+   "guards": [
+    "t2: passivePass prevented: Normal Summoned Swiftwind Panther Warrior with Pot of Prosperity live",
+    "t2: Sampled target preflight: no approved complete target set",
+    "t2: guard:replaced own banish with a legal opposing/approved target"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "sky",
+   "seed": 119,
+   "first": false,
+   "hand": [
+    "\"A Case for K9\"",
+    "Fisherman of Legend",
+    "K9-17 Izuna",
+    "Radiant Typhoon Swen",
+    "Radiant Typhoon Chant"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "\"A Case for K9\"",
+      "Fisherman of Legend",
+      "K9-17 Izuna",
+      "Radiant Typhoon Swen",
+      "Radiant Typhoon Chant",
+      "Fire Formation - Tenki"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Sky Striker Ace Token DEF",
+       "Sky Striker Ace - Shizuku"
+      ],
+      "backrow": [
+       "set:Sky Striker Mecha - Shark Cannon",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Mecha - Widow Anchor",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Ash Blossom & Joyous Spring"
+      ],
+      "gy": [
+       "Pot of Desires",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Upstart Goblin"
+      ],
+      "banished": 10,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Radiant Typhoon Chant",
+      "  option 0 (Radiant Typhoon Chant)",
+      "activate: Fire Formation - Tenki",
+      "chain: K9-17 Izuna",
+      "  pick [Fire Formation - Tenki h506]: Swiftwind Panther Warrior",
+      "  pick [K9-17 Izuna h504]: K9-ØØ Lupis",
+      "chain: K9-ØØ Lupis",
+      "special: K9-66X \"Jacks\"",
+      "  pick [Card details unavailable h513]: K9-17 Izuna",
+      "  pick [Card details unavailable h513]: K9-ØØ Lupis",
+      "  pick [K9-66X \"Jacks\" h519]: K9-ØØ Lupis",
+      "  pick [K9-66X \"Jacks\" h502]: Sky Striker Ace - Shizuku",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Swen",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Sky Striker Ace Token",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "  pick [Card details unavailable h533]: K9-66X \"Jacks\"",
+      "  pick [S:P Little Knight h503]: K9-ØØ Lupis",
+      "activate: \"A Case for K9\"",
+      "  pick [\"A Case for K9\" h506]: K9-17 Izuna",
+      "→ Battle Phase",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "Swiftwind Panther Warrior",
+       "S:P Little Knight"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki",
+       "\"A Case for K9\""
+      ],
+      "field": [],
+      "hand": [
+       "K9-17 Izuna"
+      ],
+      "gy": [
+       "Radiant Typhoon Chant",
+       "Radiant Typhoon Swen",
+       "Fisherman of Legend",
+       "K9-66X \"Jacks\"",
+       "K9-17 Izuna"
+      ],
+      "banished": 1,
+      "lp": 9000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Sky Striker Mecha - Widow Anchor",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Maneuver - Jamming Waves!",
+       "Infinite Impermanence"
+      ],
+      "gy": [
+       "Pot of Desires",
+       "Sky Striker Mobilize - Linkage!",
+       "Sky Striker Mobilize - Engage!",
+       "Sky Striker Mecha - Hornet Drones",
+       "Sky Striker Ace - Kagari",
+       "Upstart Goblin",
+       "Ash Blossom & Joyous Spring",
+       "Sky Striker Ace - Shizuku",
+       "Sky Striker Mecha - Shark Cannon"
+      ],
+      "banished": 10,
+      "lp": 8000
+     }
+    }
+   ],
+   "guards": [
+    "t2: guard:replaced own banish with a legal opposing/approved target"
+   ],
+   "finished": false,
+   "winner": null
+  },
+  {
+   "deck": "dtw",
+   "opp": "luna",
+   "seed": 120,
+   "first": false,
+   "hand": [
+    "Mystical Space Typhoon",
+    "Fisherman of Legend",
+    "Ash Blossom & Joyous Spring",
+    "Swiftwind Panther Warrior",
+    "Swiftwind Panther Warrior"
+   ],
+   "turns": [
+    {
+     "turn": 2,
+     "startHand": [
+      "Mystical Space Typhoon",
+      "Fisherman of Legend",
+      "Swiftwind Panther Warrior",
+      "Swiftwind Panther Warrior",
+      "Radiant Typhoon Swen"
+     ],
+     "oppStart": {
+      "monsters": [
+       "Brotherhood of the Fire Fist - Tiger King"
+      ],
+      "backrow": [
+       "Fire Formation - Tenki",
+       "set:Fire Formation - Tenki",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [],
+      "gy": [
+       "Lunalight Leo Dancer",
+       "Foolish Burial Goods",
+       "Polymerization",
+       "Lunalight Leo Dancer"
+      ],
+      "banished": 1,
+      "lp": 8000
+     },
+     "moves": [
+      "chain: Mystical Space Typhoon",
+      "  pick [Mystical Space Typhoon h502]: Fire Formation - Tenki",
+      "summon: Swiftwind Panther Warrior",
+      "chain: Swiftwind Panther Warrior",
+      "  pick [Swiftwind Panther Warrior h500]: Radiant Typhoon Swen",
+      "  option 0 (Swiftwind Panther Warrior)",
+      "  pick [Swiftwind Panther Warrior h509]: Fisherman of Legend",
+      "  pick [Fisherman of Legend h502]: Brotherhood of the Fire Fist - Tiger King",
+      "special: S:P Little Knight",
+      "  pick [Card details unavailable h533]: Fisherman of Legend",
+      "  pick [Card details unavailable h533]: Swiftwind Panther Warrior",
+      "→ Battle Phase",
+      "attack with S:P Little Knight",
+      "→ Main Phase 2",
+      "→ End Phase"
+     ],
+     "end": {
+      "monsters": [
+       "S:P Little Knight"
+      ],
+      "backrow": [],
+      "field": [],
+      "hand": [
+       "Swiftwind Panther Warrior"
+      ],
+      "gy": [
+       "Ash Blossom & Joyous Spring",
+       "Mystical Space Typhoon",
+       "Radiant Typhoon Swen",
+       "Swiftwind Panther Warrior",
+       "Fisherman of Legend"
+      ],
+      "banished": 0,
+      "lp": 8000
+     },
+     "oppEnd": {
+      "monsters": [],
+      "backrow": [
+       "set:Fire Formation - Tenki",
+       "set:Infinite Impermanence"
+      ],
+      "field": [],
+      "hand": [
+       "Lunalight Wolf"
+      ],
+      "gy": [
+       "Lunalight Leo Dancer",
+       "Foolish Burial Goods",
+       "Polymerization",
+       "Lunalight Leo Dancer",
+       "Fire Formation - Tenki",
+       "Brotherhood of the Fire Fist - Tiger King",
+       "Lunalight Kaleido Chick",
+       "Lunalight Kaleido Chick"
+      ],
+      "banished": 1,
+      "lp": 6400
+     }
+    }
+   ],
+   "oppTurnResponses": [
+    "t1 chain: Ash Blossom & Joyous Spring"
+   ],
+   "guards": [],
+   "finished": false,
+   "winner": null
+  }
+ ]
+}

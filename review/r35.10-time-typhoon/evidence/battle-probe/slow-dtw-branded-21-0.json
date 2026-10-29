@@ -1,0 +1,1192 @@
+{
+ "seed": 21,
+ "first": 0,
+ "decks": [
+  "dtw",
+  "branded"
+ ],
+ "deadlineMs": 400,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 6,
+ "lp": [
+  0,
+  8000
+ ],
+ "wallSec": 48,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-PANTHER",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon S:P Little Knight",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Foolish Graverobber",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "S:P Little Knight",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with S:P Little Knight",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Aluber the Jester of Despia",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "position Fallen of Albaz",
+   "rule": "Prepare an attacker",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": false
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": false
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Number C104: Umbral Horror Masquerade",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Fire Formation - Tenki",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-TENKI",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Bystial Magnamhut",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "branded",
+   "type": "main",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Magnamhut",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    8000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Magnamhut",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "direct": true
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": true
+    },
+    {
+     "name": "Bystial Magnamhut",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Mirrorjade the Iceblade Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    5000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Magnamhut",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "direct": true
+    },
+    {
+     "name": "Bystial Magnamhut",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Dogmatika Fleurdelis, the Knighted",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    2000,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Magnamhut",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Bystial Magnamhut",
+     "direct": true
+    },
+    {
+     "name": "Fallen of Albaz",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Fallen of Albaz",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "branded",
+   "type": "battle",
+   "lp": [
+    200,
+    8000
+   ],
+   "own": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Bystial Magnamhut",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Fallen of Albaz",
+     "atk": 1800,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Bystial Magnamhut",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Bystial Magnamhut",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

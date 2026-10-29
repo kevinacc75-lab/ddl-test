@@ -1,0 +1,1389 @@
+{
+ "seed": 516,
+ "first": 1,
+ "decks": [
+  "luna",
+  "blueeyes"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 7,
+ "lp": [
+  0,
+  6500
+ ],
+ "wallSec": 33,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    6600,
+    6600
+   ],
+   "ownMons": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    6000,
+    6600
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 1,
+   "lp": [
+    6000,
+    6500
+   ],
+   "ownMons": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 0,
+   "lp": [
+    3200,
+    6500
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "active": 1,
+   "lp": [
+    3200,
+    6500
+   ],
+   "ownMons": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Wishes for Eyes of Blue",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Wishes for Eyes of Blue",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Blue-Eyes Spirit Dragon",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Mausoleum of White",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Maiden of White",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Spirit with Eyes of Blue",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Spirit with Eyes of Blue",
+     "atk": 300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Spirit with Eyes of Blue",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Roar of the Blue-Eyed Dragons",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Blue-Eyes Spirit Dragon",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Majesty of the White Dragons",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    6600,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Knightmare Phoenix",
+     "atk": 1900,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Blue-Eyes Spirit Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    6000,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6000,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    6000,
+    6600
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 3500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Lunalight Gold Leo",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    6000,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 4500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Perfume Dancer",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    6000,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    6000,
+    6600
+   ],
+   "own": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Lunalight Gold Leo",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Lunalight Gold Leo",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    6000,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    6000,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6000,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Lightstorm Dragon",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6000,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Ghost Mourner & Moonlit Chill",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6000,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Infinite Impermanence",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    6000,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    6000,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Lunalight Gold Leo",
+     "atk": 600,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "direct": false
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Blue-Eyes Tyrant Dragon",
+   "rule": "Plan the battle sequence",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    3200,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "direct": true
+    }
+   ],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    3200,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    3200,
+    6500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Foolish Burial Goods",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    3200,
+    6500
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    3200,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sage with Eyes of Blue",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    3200,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    3200,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "direct": true
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "direct": true
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Blue-Eyes White Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 7,
+   "seat": 1,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    200,
+    6500
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "atk": 3400,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "ATK"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Blue-Eyes Tyrant Dragon",
+     "direct": true
+    },
+    {
+     "name": "Blue-Eyes White Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Blue-Eyes Tyrant Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

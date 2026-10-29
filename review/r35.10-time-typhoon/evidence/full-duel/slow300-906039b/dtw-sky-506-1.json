@@ -1,0 +1,501 @@
+{
+ "seed": 506,
+ "first": 1,
+ "decks": [
+  "dtw",
+  "sky"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 4,
+ "lp": [
+  9000,
+  0
+ ],
+ "wallSec": 32,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    9000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    9000,
+    700
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    9000,
+    700
+   ],
+   "ownMons": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Pot of Desires",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "K9-X \"Werewolf\"",
+     "atk": 3300,
+     "pos": "ATK"
+    },
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Maneuver - Jamming Waves!",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sky Striker Special Maneuver - Lemnisgate!",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Pot of Prosperity",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "M-X-Saber Invoker",
+     "atk": 1600,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Swiftwind Panther Warrior",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [
+    {
+     "name": "K9-ØØ Lupis",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Alligator's Dragon Knight",
+     "atk": 1700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon K9-17 \"Ripper\"",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate K9-17 \"Ripper\"",
+   "rule": "Opening book DT-DTW",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dark Time Wizard",
+   "rule": "Set before leaving the Main Phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "main",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "dtw",
+   "type": "battle",
+   "lp": [
+    9000,
+    700
+   ],
+   "own": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "K9-17 Izuna",
+     "atk": 2100,
+     "pos": "ATK"
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "atk": 2000,
+     "pos": "ATK"
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "atk": 5000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "K9-17 \"Ripper\"",
+     "direct": true
+    },
+    {
+     "name": "K9-17 Izuna",
+     "direct": true
+    },
+    {
+     "name": "Swiftwind Panther Warrior",
+     "direct": true
+    },
+    {
+     "name": "CXyz Hope Chaos Barian Dragon",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with CXyz Hope Chaos Barian Dragon",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

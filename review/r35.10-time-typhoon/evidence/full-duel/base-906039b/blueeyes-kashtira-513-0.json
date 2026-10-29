@@ -1,0 +1,1324 @@
+{
+ "seed": 513,
+ "first": 0,
+ "decks": [
+  "blueeyes",
+  "kashtira"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 6,
+ "lp": [
+  0,
+  2000
+ ],
+ "wallSec": 140,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Ghost Mourner & Moonlit Chill",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 0,
+   "lp": [
+    5300,
+    2000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 1,
+   "lp": [
+    4800,
+    2000
+   ],
+   "ownMons": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "active": 0,
+   "lp": [
+    4800,
+    2000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 1,
+   "lp": [
+    4800,
+    2000
+   ],
+   "ownMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "oppMons": []
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Wishes for Eyes of Blue",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Roar of the Blue-Eyed Dragons",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3000,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Wishes for Eyes of Blue",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3400,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Majesty of the White Dragons",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 8
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3400,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Maiden of White",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes White Dragon",
+     "atk": 3400,
+     "pos": "DEF"
+    },
+    {
+     "name": "Maiden of White",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Blue-Eyes Spirit Dragon",
+   "rule": "Opening book BE-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    5300,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "direct": false
+    }
+   ],
+   "chose": "ATTACK with Blue-Eyes Spirit Dragon",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "battle",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 3,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes Spirit Dragon",
+     "atk": 2500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Kashtira Ogre",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "The Ascended of Thunder",
+     "atk": 2700,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Tearlaments Kashtira",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Scareclaw Kashtira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 4500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Kashtira Shangri-Ira",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Tearlaments Kashtira",
+     "atk": 2300,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 4500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Kashtira Shangri-Ira",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 4500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sacred Sword of Seven Stars",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 4500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 4500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Blue-Eyes Ultimate Spirit Dragon",
+     "atk": 4500,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Infinite Impermanence",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Dominus Purge",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 0,
+   "deck": "blueeyes",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Kashtira Unicorn",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Kashtira Riseheart",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Kashtira Riseheart",
+   "rule": "Opening book K-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "main",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    4800,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Kashtira Ogre",
+     "direct": true
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "direct": true
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Kashtira Ogre",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    2000,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Kashtira Unicorn",
+     "direct": true
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Kashtira Riseheart",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 1,
+   "deck": "kashtira",
+   "type": "battle",
+   "lp": [
+    500,
+    2000
+   ],
+   "own": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    },
+    {
+     "name": "Kashtira Ogre",
+     "atk": 2800,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Unicorn",
+     "atk": 2500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Riseheart",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Kashtira Unicorn",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Kashtira Unicorn",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  }
+ ]
+}

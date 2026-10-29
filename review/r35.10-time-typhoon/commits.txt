@@ -1,0 +1,14 @@
+d645c14 RELAY-068 fix: the coin / dice scene owns its audio (all tones and noise through a scene gain node; clear() cuts it at once), so Skip / next scene / reset silence sounds already scheduled for later and nothing else; whoosh sample replaced by a routed noise sweep
+906039b r35.10: suite fixes (two Time Typhoon captions over 64 chars; DT-ALLI brain route named a non-card) + labels r35.10
+c973566 r36 Time Typhoon P5: Barian (and any of our monsters that gains ATK per material) is summoned in Attack Position
+3af9401 r36: effect titles for the 11 Time Typhoon cards (ChatGPT RELAY-067, sha256 9707b41d)
+b752530 r35.9: coin cutscene names the RESOLVING card (browser run showed Ash Blossom, a resolved later link); re-pin app.mjs with proof (tests/r36-coin-pin.test.mjs: minus the coin lines = r35.8 bytes for app/presentation/worker); r35-shuffle pin tests strip the coin lines first; labels r35.9
+92ece9a r36 WIP: coin toss / dice roll cutscene (Kevy 29 Oct 14:29)
+0d30c2b r35.8: art for the 21 Time Typhoon cards that had none (MST, A Case for K9, K9/Radiant Typhoon/Rank 5 Extra Deck...; Kevy 14:29 screenshots) + deck-cards.json rebuilt (was out of date: Time Typhoon missing from the deck-list viewer); identity test now also checks art + viewer data; labels r35.8
+e439da5 r36 Time Typhoon: native fixtures AA-AC (Exceed allowed under the Sleepy lock, Fisherman attack window, Alligator search once per turn with a control)
+428424d r27 audit tool: write <out>.partial after every seed so a timeout keeps finished seeds (tooling only)
+d7f8810 r36 Time Typhoon: script-load test for all 11 new scripts (incl. side-only Jinzo) with a broken-script control; Scapegoat Token row
+0eaab58 r35.7 TEST labels: TEST PHASE C r35.7, sw cache 2026-10-29-r35.7 (r35.6 + Time Typhoon)
+5056b37 r36 Time Typhoon: native fixtures V-Z (Sleepy substitution, Exceed vs Trap, Graverobber GY Set, Fisherman End Phase return, Panther attack after Tribute)
+4bc942a r36 WIP: native fixture P (Reversal Box: Standby counters 1..roll, coin on their monster effect; wrong call nothing, right call Panther from the Deck and their monster 0 ATK + negated). SELF-VERIFIED.
+575fe64 r36 WIP (TEST branch, NOT merged): new deck Time Typhoon (K9 Radiant Typhoon Dark Time Wizard, Kevy's list 29 Oct)

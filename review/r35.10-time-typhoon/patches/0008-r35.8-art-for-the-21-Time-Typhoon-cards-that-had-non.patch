@@ -1,0 +1,536 @@
+From 0d30c2be4d801871b624e7c11e5a7124c8957222 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 14:31:12 +1100
+Subject: [PATCH 08/14] r35.8: art for the 21 Time Typhoon cards that had none
+ (MST, A Case for K9, K9/Radiant Typhoon/Rank 5 Extra Deck...; Kevy 14:29
+ screenshots) + deck-cards.json rebuilt (was out of date: Time Typhoon missing
+ from the deck-list viewer); identity test now also checks art + viewer data;
+ labels r35.8
+
+The 'art' key is display-only; removing it from the 21 entries gives r35.6 cards.json byte for byte (identity test).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/deck-cards.json             |   2 +-
+ dist/index.html                  |   4 +-
+ dist/offline-assets.json         |  43 +++++--
+ dist/sw.js                       |   4 +-
+ tests/r36-dtw-identity.test.mjs  |  12 +-
+ tools/data/r36-betb-sources.json | 191 +++++++++++++++++++++++++++++++
+ tools/r36-add-dtw-art.py         |  43 +++++++
+ 7 files changed, 281 insertions(+), 18 deletions(-)
+ create mode 100644 tools/r36-add-dtw-art.py
+
+diff --git a/dist/deck-cards.json b/dist/deck-cards.json
+index b2b2c7d..5266c88 100644
+--- a/dist/deck-cards.json
++++ b/dist/deck-cards.json
+@@ -1 +1 @@
+-{"_meta":{"by":"tools/r33-deck-cards.mjs","cards":267},"cards":{"102380":{"name":"Lava Golem","type":33554465,"level":8,"attribute":4,"atk":3000,"def":2500,"art":"art/102380.jpg"},"213326":{"name":"E - Emergency Call","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/213326.jpg"},"1948619":{"name":"Xtra HERO Wonder Driver","type":67108897,"level":2,"attribute":16,"atk":1900,"def":0,"art":"art/1948619.jpg"},"1984618":{"name":"Nadir Servant","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/1984618.jpg"},"2295440":{"name":"One for One","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/2295440.jpg"},"2344618":{"name":"Lunalight Masquerade","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/2344618.webp"},"2857636":{"name":"Knightmare Phoenix","type":67108897,"level":2,"attribute":4,"atk":1900,"def":0,"art":"art/2857636.webp"},"3410461":{"name":"Alba-Lenatus the Abyss Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2500,"art":"art/3410461.jpg"},"4928565":{"name":"Tearlaments Kashtira","type":33,"level":7,"attribute":2,"atk":2300,"def":1200,"art":"art/4928565.jpg"},"6327734":{"name":"Hu-Li the Jewel Mikanko","type":33,"level":3,"attribute":8,"atk":0,"def":0,"art":"art/6327734.jpg"},"6498706":{"name":"Fusion Deployment","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/6498706.jpg"},"6637331":{"name":"Bystial Druiswurm","type":33,"level":6,"attribute":32,"atk":2500,"def":2000,"art":"art/6637331.jpg"},"6958551":{"name":"Shadow Toon","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/6958551.jpg"},"8240199":{"name":"Sage with Eyes of Blue","type":4129,"level":1,"attribute":16,"atk":0,"def":1500,"art":"art/8240199.jpg"},"8264361":{"name":"Dharc the Dark Charmer, Gloomy","type":67108897,"level":2,"attribute":32,"atk":1850,"def":0,"art":"art/8264361.jpg"},"8267140":{"name":"Cosmic Cyclone","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/8267140.webp"},"8379983":{"name":"Lunalight Gold Leo","type":33,"level":4,"attribute":32,"atk":600,"def":1600,"art":"art/8379983.webp"},"8491308":{"name":"Sky Striker Ace - Hayate","type":67108897,"level":1,"attribute":8,"atk":1500,"def":0,"art":"art/8491308.jpg"},"8949584":{"name":"A Hero Lives","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/8949584.jpg"},"8953369":{"name":"Kashtira Overlap","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/8953369.jpg"},"9411399":{"name":"Destiny HERO - Malicious","type":33,"level":6,"attribute":32,"atk":800,"def":800,"art":"art/9411399.jpg"},"9726840":{"name":"Sky Striker Mobilize - Linkage!","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/9726840.jpg"},"9839945":{"name":"Lyna the Light Charmer, Lustrous","type":67108897,"level":2,"attribute":16,"atk":1850,"def":0,"art":"art/9839945.jpg"},"10045474":{"name":"Infinite Impermanence","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/10045474.webp"},"10186633":{"name":"EN Shuffle","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/10186633.jpg"},"10443957":{"name":"Cyber Dragon Infinity","type":8388641,"level":6,"attribute":16,"atk":2100,"def":1600,"art":"art/10443957.jpg"},"10515412":{"name":"Lightstorm Dragon","type":8225,"level":9,"attribute":16,"atk":2700,"def":3000,"art":"art/10515412.jpg"},"10808715":{"name":"Masked HERO Dusk Crow","type":33,"level":4,"attribute":32,"atk":1200,"def":1000,"art":"art/10808715.jpg"},"10813327":{"name":"Waking the Dragon","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/10813327.jpg"},"11161666":{"name":"Sanaki the Mikanko Devotee","type":33,"level":3,"attribute":1,"atk":0,"def":0,"art":"art/11161666.jpg"},"11317977":{"name":"Lunalight Black Sheep","type":33,"level":2,"attribute":32,"atk":100,"def":600,"art":"art/11317977.webp"},"11321089":{"name":"Guardian Chimera","type":97,"level":9,"attribute":32,"atk":3300,"def":3300,"art":"art/11321089.webp"},"11443677":{"name":"Blue-Eyes Tyrant Dragon","type":97,"level":8,"attribute":16,"atk":3400,"def":2900,"art":"art/11443677.jpg"},"11765832":{"name":"Garura, Wings of Resonant Life","type":97,"level":6,"attribute":32,"atk":1500,"def":2400,"art":"art/11765832.jpg"},"11876803":{"name":"Lunalight Scarlet Tiger","type":33,"level":5,"attribute":32,"atk":1900,"def":1500,"art":"art/11876803.webp"},"12067160":{"name":"Gorgon of Zilofthonia","type":67108897,"level":3,"attribute":32,"atk":100,"def":0,"art":"art/12067160.jpg"},"12421694":{"name":"Sky Striker Ace - Kaina","type":67108897,"level":1,"attribute":1,"atk":1500,"def":0,"art":"art/12421694.jpg"},"12580477":{"name":"Raigeki","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/12580477.jpg"},"13935001":{"name":"Lunalight Serenade Dance","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/13935001.webp"},"14152693":{"name":"Lunalight Emerald Bird","type":33,"level":4,"attribute":32,"atk":1200,"def":1000,"art":"art/14152693.webp"},"14532163":{"name":"Lightning Storm","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/14532163.jpg"},"14558127":{"name":"Ash Blossom & Joyous Spring","type":4129,"level":3,"attribute":4,"atk":0,"def":1800,"art":"art/14558127.webp"},"15259703":{"name":"Toon World","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/15259703.jpg"},"15270885":{"name":"Toon Goblin Attack Force","type":4194337,"level":4,"attribute":1,"atk":2300,"def":0,"art":"art/15270885.jpg"},"15693423":{"name":"Evenly Matched","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/15693423.webp"},"16259549":{"name":"Number 49: Fortune Tune","type":8388641,"level":3,"attribute":16,"atk":400,"def":900,"art":"art/16259549.jpg"},"16605586":{"name":"Destiny HERO - Denier","type":33,"level":3,"attribute":32,"atk":1100,"def":600,"art":"art/16605586.jpg"},"17217034":{"name":"Combined Maneuver - Engage Zero!","type":67108897,"level":2,"attribute":16,"atk":1500,"def":0,"art":"art/17217034.jpg"},"17725109":{"name":"Roar of the Blue-Eyed Dragons","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/17725109.jpg"},"17751597":{"name":"Branded Retribution","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/17751597.jpg"},"17947697":{"name":"Maiden of White","type":4129,"level":1,"attribute":16,"atk":0,"def":0,"art":"art/17947697.jpg"},"17955766":{"name":"Neo-Spacian Aqua Dolphin","type":33,"level":3,"attribute":2,"atk":600,"def":800,"art":"art/17955766.jpg"},"18094166":{"name":"Vision HERO Faris","type":33,"level":5,"attribute":32,"atk":1600,"def":1800,"art":"art/18094166.jpg"},"18144506":{"name":"Harpie's Feather Duster","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/18144506.jpg"},"18144507":{"name":"Harpie's Feather Duster","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/18144507.jpg"},"18377261":{"name":"Ha-Re the Sword Mikanko","type":33,"level":3,"attribute":4,"atk":0,"def":0,"art":"art/18377261.jpg"},"19096726":{"name":"Tri-Brigade Mercourier","type":33,"level":4,"attribute":32,"atk":800,"def":0,"art":"art/19096726.jpg"},"19222426":{"name":"Elemental HERO Thunder Giant - Voltic Thunder","type":97,"level":6,"attribute":16,"atk":2400,"def":1500,"art":"art/19222426.jpg"},"19304410":{"name":"Tri-Brigade Springans Kitt","type":33,"level":4,"attribute":16,"atk":1700,"def":1000,"art":"art/19304410.jpg"},"19324993":{"name":"Xtra HERO Infernal Devicer","type":67108897,"level":2,"attribute":32,"atk":1700,"def":0,"art":"art/19324993.jpg"},"21123811":{"name":"Cosmic Blazar Dragon","type":8225,"level":12,"attribute":8,"atk":4000,"def":4000,"art":"art/21123811.jpg"},"21143940":{"name":"Mask Change","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/21143940.jpg"},"21296502":{"name":"Toon Dark Magician","type":4194337,"level":7,"attribute":32,"atk":2500,"def":2100,"art":"art/21296502.jpg"},"21639276":{"name":"Kashtira Preparations","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/21639276.jpg"},"22865492":{"name":"Vision HERO Increase","type":33,"level":3,"attribute":32,"atk":900,"def":1100,"art":"art/22865492.jpg"},"22908820":{"name":"Elemental HERO Sunrise","type":97,"level":7,"attribute":16,"atk":2500,"def":1200,"art":"art/22908820.jpg"},"23204029":{"name":"Contrast HERO Chaos","type":97,"level":9,"attribute":32,"atk":3000,"def":2600,"art":"art/23204029.jpg"},"23656668":{"name":"Gravity Controller","type":67108897,"level":1,"attribute":32,"atk":1000,"def":0,"art":"art/23656668.jpg"},"24010609":{"name":"Sky Striker Mecha Modules - Multirole","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24010609.jpg"},"24094653":{"name":"Polymerization","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24094653.webp"},"24224830":{"name":"Called by the Grave","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24224830.webp"},"24299458":{"name":"Forbidden Droplet","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24299458.jpg"},"24361622":{"name":"Hieratic Seal of the Heavenly Spheres","type":67108897,"level":2,"attribute":16,"atk":0,"def":0,"art":"art/24361622.jpg"},"24382602":{"name":"Mausoleum of White","type":524290,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24382602.jpg"},"24508238":{"name":"D.D. Crow","type":33,"level":1,"attribute":32,"atk":100,"def":100,"art":"art/24508238.webp"},"24550676":{"name":"Lunalight Leo Dancer","type":97,"level":10,"attribute":32,"atk":3500,"def":3000,"art":"art/24550676.webp"},"24915933":{"name":"Granguignol the Dusk Dragon","type":97,"level":8,"attribute":16,"atk":2500,"def":2500,"art":"art/24915933.jpg"},"25072579":{"name":"Prototype Sky Striker Ace - Amatsu","type":67108897,"level":1,"attribute":32,"atk":1500,"def":0,"art":"art/25072579.jpg"},"25311006":{"name":"Triple Tactics Talent","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/25311006.jpg"},"25451383":{"name":"Albion the Shrouded Dragon","type":33,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/25451383.jpg"},"25733157":{"name":"Sky Striker Mecha - Eagle Booster","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/25733157.jpg"},"25955749":{"name":"Sky Striker Maneuver - Jamming Waves!","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/25955749.jpg"},"26077387":{"name":"Sky Striker Ace - Raye","type":33,"level":4,"attribute":32,"atk":1500,"def":1500,"art":"art/26077387.jpg"},"26847978":{"name":"Tri-Brigade Ferrijit the Barren Blossom","type":67108897,"level":2,"attribute":1,"atk":1600,"def":0,"art":"art/26847978.jpg"},"27204311":{"name":"Nibiru, the Primal Being","type":33,"level":11,"attribute":16,"atk":3000,"def":600,"art":"art/27204311.webp"},"27699122":{"name":"Toon Page-Flip","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/27699122.jpg"},"27780618":{"name":"Vision HERO Vyon","type":33,"level":4,"attribute":32,"atk":1000,"def":1200,"art":"art/27780618.jpg"},"28674152":{"name":"Radian, the Multidimensional Kaiju","type":33,"level":7,"attribute":32,"atk":2800,"def":2500,"art":"art/28674152.jpg"},"28711704":{"name":"Toon Black Luster Soldier","type":37748769,"level":8,"attribute":1,"atk":3000,"def":2500,"art":"art/28711704.jpg"},"29095457":{"name":"Primite Drillbeam","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/29095457.jpg"},"29301450":{"name":"S:P Little Knight","type":67108897,"level":2,"attribute":32,"atk":1600,"def":0,"art":"art/29301450.jpg"},"29726552":{"name":"Kumongous, the Sticky String Kaiju","type":33,"level":7,"attribute":1,"atk":2400,"def":2500,"art":"art/29726552.jpg"},"29948294":{"name":"Branded in High Spirits","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/29948294.jpg"},"30241314":{"name":"Macro Cosmos","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/30241314.jpg"},"30271097":{"name":"The Fallen & The Virtuous","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/30271097.jpg"},"30875635":{"name":"Miracle Ejector","type":33,"level":3,"attribute":1,"atk":400,"def":400,"art":"art/30875635.jpg"},"31149212":{"name":"Kashtira Riseheart","type":33,"level":4,"attribute":4,"atk":1500,"def":2100,"art":"art/31149212.jpg"},"31733941":{"name":"Red-Eyes Toon Dragon","type":4194337,"level":7,"attribute":32,"atk":2400,"def":2000,"art":"art/31733941.jpg"},"32807846":{"name":"Reinforcement of the Army","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/32807846.jpg"},"32828466":{"name":"Wake Up Your Elemental HERO","type":97,"level":10,"attribute":16,"atk":2500,"def":2100,"art":"art/32828466.jpg"},"32909498":{"name":"Kashtira Fenrir","type":33,"level":7,"attribute":1,"atk":2400,"def":2400,"art":"art/32909498.jpg"},"33453260":{"name":"Comic Hand","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/33453260.jpg"},"33698022":{"name":"Black Rose Moonlight Dragon","type":8225,"level":7,"attribute":16,"atk":2400,"def":1800,"art":"art/33698022.jpg"},"33854624":{"name":"Bystial Magnamhut","type":33,"level":6,"attribute":32,"atk":2500,"def":2000,"art":"art/33854624.jpg"},"33925864":{"name":"Kashtira Big Bang","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/33925864.jpg"},"34267821":{"name":"Artifact Lancea","type":33,"level":5,"attribute":16,"atk":1700,"def":2300,"art":"art/34267821.jpg"},"34433770":{"name":"Sky Striker Special Maneuver - Lemnisgate!","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/34433770.jpg"},"34447918":{"name":"Kashtiratheosis","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/34447918.jpg"},"35261759":{"name":"Pot of Desires","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/35261759.jpg"},"35269904":{"name":"Triple Tactics Thrust","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/35269904.jpg"},"35618217":{"name":"Lunalight Kaleido Chick","type":33,"level":4,"attribute":32,"atk":1400,"def":800,"art":"art/35618217.webp"},"35726888":{"name":"Foolish Burial Goods","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/35726888.webp"},"35763582":{"name":"Lunalight Silver Hound","type":33,"level":3,"attribute":32,"atk":1400,"def":400,"art":"art/35763582.webp"},"36637374":{"name":"Branded Opening","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/36637374.jpg"},"37351133":{"name":"Sky Striker Ace - Roze","type":33,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/37351133.jpg"},"37818794":{"name":"Red-Eyes Dark Dragoon","type":97,"level":8,"attribute":32,"atk":3000,"def":2500,"art":"art/37818794.jpg"},"38342335":{"name":"Knightmare Unicorn","type":67108897,"level":3,"attribute":32,"atk":2200,"def":0,"art":"art/38342335.jpg"},"38811586":{"name":"Albion the Sanctifire Dragon","type":97,"level":8,"attribute":16,"atk":3000,"def":2500,"art":"art/38811586.jpg"},"40044918":{"name":"Elemental HERO Stratos","type":33,"level":4,"attribute":8,"atk":1800,"def":300,"art":"art/40044918.jpg"},"41373230":{"name":"Titaniklad the Ash Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/41373230.jpg"},"41420027":{"name":"Solemn Judgment","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/41420027.jpg"},"41927278":{"name":"Double-Edged Sword","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/41927278.jpg"},"42097666":{"name":"Spirit with Eyes of Blue","type":67108897,"level":1,"attribute":16,"atk":300,"def":0,"art":"art/42097666.jpg"},"42141493":{"name":"Mulcharmy Fuwalos","type":33,"level":4,"attribute":8,"atk":100,"def":600,"art":"art/42141493.jpg"},"42705243":{"name":"Mikanko Promise","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/42705243.jpg"},"43175858":{"name":"Toon Kingdom","type":524290,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/43175858.jpg"},"43219114":{"name":"Majesty of the White Dragons","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/43219114.jpg"},"43321985":{"name":"Ancient Fairy Life Dragon","type":8225,"level":8,"attribute":16,"atk":2500,"def":3300,"art":"art/43321985.jpg"},"43527730":{"name":"Mikanko Water Arabesque","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/43527730.jpg"},"44146295":{"name":"Mirrorjade the Iceblade Dragon","type":97,"level":8,"attribute":32,"atk":3000,"def":2500,"art":"art/44146295.jpg"},"44362883":{"name":"Branded Fusion","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/44362883.jpg"},"44649322":{"name":"The Great Mikanko Ceremony","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/44649322.jpg"},"44886582":{"name":"Super Duper Polymerization","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/44886582.webp"},"45725480":{"name":"Sacred Sword of Seven Stars","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/45725480.jpg"},"45883110":{"name":"Guiding Quem, the Virtuous","type":4129,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/45883110.jpg"},"45906428":{"name":"Miracle Fusion","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/45906428.jpg"},"46759931":{"name":"Vision HERO Trinity","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/46759931.jpg"},"46986414":{"name":"Dark Magician","type":17,"level":7,"attribute":32,"atk":2500,"def":2100,"art":"art/46986414.jpg"},"47643326":{"name":"Lunar Rabbit Omajinai","type":4113,"level":1,"attribute":16,"atk":0,"def":1500,"art":"art/47643326.jpg"},"47705572":{"name":"Lunalight Wolf","type":16777249,"level":6,"attribute":16,"atk":2000,"def":1800,"art":"art/47705572.webp"},"48130397":{"name":"Super Polymerization","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/48130397.jpg"},"48444114":{"name":"Luna Light Perfume","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/48444114.webp"},"48770333":{"name":"Thunder King, the Lightningstrike Kaiju","type":33,"level":9,"attribute":16,"atk":3300,"def":2100,"art":"art/48770333.jpg"},"49202162":{"name":"Black Luster Soldier - Soldier of Chaos","type":67108897,"level":3,"attribute":1,"atk":3000,"def":0,"art":"art/49202162.jpg"},"50005218":{"name":"Sky Striker Airspace - Area Zero","type":524290,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/50005218.jpg"},"50277355":{"name":"Cross-Sheep","type":67108897,"level":2,"attribute":1,"atk":700,"def":0,"art":"art/50277355.webp"},"50546208":{"name":"Lunalight Yellow Marten","type":33,"level":4,"attribute":32,"atk":800,"def":2000,"art":"art/50546208.webp"},"50720316":{"name":"Elemental HERO Shadow Mist","type":33,"level":4,"attribute":32,"atk":1000,"def":1500,"art":"art/50720316.jpg"},"51227866":{"name":"Sky Striker Mecha - Shark Cannon","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/51227866.jpg"},"51409648":{"name":"Rindbrumm the Striking Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/51409648.jpg"},"51777272":{"name":"Lunalight Cat Dancer","type":97,"level":7,"attribute":32,"atk":2400,"def":2000,"art":"art/51777272.webp"},"52038441":{"name":"Ghost Mourner & Moonlit Chill","type":4129,"level":3,"attribute":8,"atk":0,"def":1800,"art":"art/52038441.jpg"},"52340444":{"name":"Sky Striker Mecha - Hornet Drones","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/52340444.jpg"},"52947044":{"name":"Fusion Destiny","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/52947044.jpg"},"53094821":{"name":"Toon Terror","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/53094821.jpg"},"53174748":{"name":"Mikanko Spiritwalk","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/53174748.jpg"},"53701457":{"name":"Number 28: Titanic Moth","type":8388641,"level":7,"attribute":4,"atk":2400,"def":2200,"art":"art/53701457.jpg"},"53971455":{"name":"Despian Luluwalilith","type":8225,"level":12,"attribute":16,"atk":2500,"def":2500,"art":"art/53971455.jpg"},"54701958":{"name":"Lunalight Liger Dancer","type":97,"level":12,"attribute":32,"atk":3800,"def":3500,"art":"art/54701958.webp"},"54862960":{"name":"Ni-Ni the Mirror Mikanko","type":33,"level":3,"attribute":2,"atk":0,"def":0,"art":"art/54862960.jpg"},"55273560":{"name":"Incredible Ecclesia, the Virtuous","type":4129,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/55273560.jpg"},"56506740":{"name":"Primite Lordly Lode","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/56506740.jpg"},"56532353":{"name":"Neo Blue-Eyes Ultimate Dragon","type":97,"level":12,"attribute":16,"atk":4500,"def":3800,"art":"art/56532353.jpg"},"56733747":{"name":"Elemental HERO Shining Neos Wingman","type":97,"level":8,"attribute":16,"atk":3100,"def":2500,"art":"art/56733747.jpg"},"57103969":{"name":"Fire Formation - Tenki","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/57103969.webp"},"57566760":{"name":"Uzuhime the Manifested Mikanko","type":8388641,"level":3,"attribute":16,"atk":0,"def":0,"art":"art/57566760.jpg"},"57736667":{"name":"Mikanko Dance - Mayowashidori","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/57736667.jpg"},"58004362":{"name":"Xtra HERO Cross Crusader","type":67108897,"level":2,"attribute":32,"atk":1600,"def":0,"art":"art/58004362.jpg"},"58069384":{"name":"Cyber Dragon Nova","type":8388641,"level":5,"attribute":16,"atk":2100,"def":1600,"art":"art/58069384.jpg"},"58288218":{"name":"Masked HERO Furnace","type":33,"level":7,"attribute":4,"atk":2200,"def":1000,"art":"art/58288218.jpg"},"58481572":{"name":"Masked HERO Dark Law","type":97,"level":6,"attribute":32,"atk":2400,"def":1800,"art":"art/58481572.jpg"},"58570206":{"name":"Heavy Polymerization","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/58570206.webp"},"59822133":{"name":"Blue-Eyes Spirit Dragon","type":8225,"level":9,"attribute":16,"atk":2500,"def":3000,"art":"art/59822133.jpg"},"60195675":{"name":"Infinitrack Mountain Smasher","type":8388641,"level":7,"attribute":1,"atk":2100,"def":3100,"art":"art/60195675.jpg"},"60242223":{"name":"Bystial Saronir","type":33,"level":6,"attribute":32,"atk":2500,"def":2000,"art":"art/60242223.jpg"},"60303245":{"name":"Salamangreat Almiraj","type":67108897,"level":1,"attribute":4,"atk":0,"def":0,"art":"art/60303245.jpg"},"60461804":{"name":"Destiny HERO - Destroyer Phoenix Enforcer","type":97,"level":8,"attribute":32,"atk":2500,"def":2100,"art":"art/60461804.jpg"},"62089826":{"name":"True Light","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/62089826.jpg"},"62962630":{"name":"Aluber the Jester of Despia","type":33,"level":4,"attribute":32,"atk":1800,"def":0,"art":"art/62962630.jpg"},"63013339":{"name":"Sky Striker Ace - Camellia","type":67108897,"level":2,"attribute":32,"atk":1500,"def":0,"art":"art/63013339.jpg"},"63166095":{"name":"Sky Striker Mobilize - Engage!","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/63166095.jpg"},"63198739":{"name":"Primite Dragon Ether Beryl","type":33,"level":4,"attribute":1,"atk":1600,"def":0,"art":"art/63198739.jpg"},"63288573":{"name":"Sky Striker Ace - Kagari","type":67108897,"level":1,"attribute":4,"atk":1500,"def":0,"art":"art/63288573.jpg"},"63436931":{"name":"Crimson Dragon","type":8225,"level":12,"attribute":16,"atk":0,"def":0,"art":"art/63436931.jpg"},"63941210":{"name":"Jizukiru, the Star Destroying Kaiju","type":33,"level":10,"attribute":16,"atk":3300,"def":2600,"art":"art/63941210.jpg"},"64116319":{"name":"Toon Harpie Lady","type":4194337,"level":4,"attribute":8,"atk":1300,"def":1400,"art":"art/64116319.jpg"},"65741786":{"name":"I:P Masquerena","type":67108897,"level":2,"attribute":32,"atk":800,"def":0,"art":"art/65741786.jpg"},"66011101":{"name":"Number 60: Dugares the Timeless","type":8388641,"level":4,"attribute":4,"atk":1200,"def":1200,"art":"art/66011101.webp"},"66206748":{"name":"Masked HERO Fountain","type":33,"level":4,"attribute":2,"atk":1000,"def":1400,"art":"art/66206748.jpg"},"66574418":{"name":"The Black Stone of Legend","type":33,"level":1,"attribute":32,"atk":0,"def":0,"art":"art/66574418.jpg"},"68304193":{"name":"Kashtira Unicorn","type":33,"level":7,"attribute":8,"atk":2500,"def":2100,"art":"art/68304193.jpg"},"68468459":{"name":"Fallen of Albaz","type":33,"level":4,"attribute":32,"atk":1800,"def":0,"art":"art/68468459.jpg"},"69540484":{"name":"Kashtira Birth","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/69540484.jpg"},"69680031":{"name":"Dogmatika Fleurdelis, the Knighted","type":33,"level":8,"attribute":16,"atk":2500,"def":2500,"art":"art/69680031.jpg"},"69946549":{"name":"Predaplant Dragostapelia","type":97,"level":8,"attribute":32,"atk":2700,"def":1900,"art":"art/69946549.jpg"},"70368879":{"name":"Upstart Goblin","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/70368879.jpg"},"70493141":{"name":"The Ascended of Thunder","type":33,"level":7,"attribute":16,"atk":2700,"def":2400,"art":"art/70493141.jpg"},"70534340":{"name":"Lubellion the Searing Dragon","type":97,"level":8,"attribute":16,"atk":2500,"def":3000,"art":"art/70534340.jpg"},"71222868":{"name":"Raidraptor - Rising Rebellion Falcon","type":8388641,"level":13,"attribute":32,"atk":4000,"def":3500,"art":"art/71222868.jpg"},"72167543":{"name":"Downerd Magician","type":8388641,"level":4,"attribute":32,"atk":2100,"def":200,"art":"art/72167543.jpg"},"73542331":{"name":"Kashtira Shangri-Ira","type":8388641,"level":7,"attribute":4,"atk":0,"def":3000,"art":"art/73542331.jpg"},"73628505":{"name":"Terraforming","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/73628505.jpg"},"73642296":{"name":"Ghost Belle & Haunted Mansion","type":4129,"level":3,"attribute":1,"atk":0,"def":1800,"art":"art/73642296.jpg"},"73819701":{"name":"Fallen of the White Dragon","type":33,"level":4,"attribute":32,"atk":1800,"def":0,"art":"art/73819701.jpg"},"74405783":{"name":"The Three Champions of Swordsoul","type":8225,"level":8,"attribute":16,"atk":2500,"def":2500,"art":"art/74405783.jpg"},"74677422":{"name":"Red-Eyes Black Dragon","type":17,"level":7,"attribute":32,"atk":2400,"def":2000,"art":"art/74677422.jpg"},"75047173":{"name":"Favorite Contact","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/75047173.jpg"},"75147529":{"name":"Sky Striker Ace - Zeke","type":67108897,"level":2,"attribute":32,"atk":1500,"def":0,"art":"art/75147529.jpg"},"76072561":{"name":"Sky Striker Ace = Zero","type":67108897,"level":2,"attribute":16,"atk":2000,"def":0,"art":"art/76072561.jpg"},"76666602":{"name":"The Dragon that Devours the Dogma","type":97,"level":8,"attribute":32,"atk":3000,"def":2500,"art":"art/76666602.jpg"},"78114463":{"name":"Solemn Accusation","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/78114463.jpg"},"78144171":{"name":"Dark Armed, the Dragon of Annihilation","type":8388641,"level":7,"attribute":32,"atk":2800,"def":1000,"art":"art/78144171.jpg"},"78199891":{"name":"Mikanko Rivalry","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/78199891.jpg"},"78534861":{"name":"Scareclaw Kashtira","type":33,"level":7,"attribute":1,"atk":0,"def":2600,"art":"art/78534861.jpg"},"79447365":{"name":"Toon Mask","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/79447365.jpg"},"79912449":{"name":"Mikanko Reflection Rondo","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/79912449.jpg"},"80044027":{"name":"Mikanko Fire Dance","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/80044027.jpg"},"80117527":{"name":"Number 11: Big Eye","type":8388641,"level":7,"attribute":32,"atk":2600,"def":2000,"art":"art/80117527.jpg"},"80326401":{"name":"Wishes for Eyes of Blue","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/80326401.jpg"},"80843006":{"name":"Mixousia the Confounder","type":97,"level":8,"attribute":32,"atk":2700,"def":1500,"art":"art/80843006.jpg"},"81196066":{"name":"Lunalight Perfume Dancer","type":97,"level":6,"attribute":32,"atk":2000,"def":1500,"art":"art/81196066.webp"},"81260679":{"name":"Ohime the Manifested Mikanko","type":161,"level":6,"attribute":16,"atk":0,"def":0,"art":"art/81260679.jpg"},"81439173":{"name":"Foolish Burial","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/81439173.webp"},"82344137":{"name":"Phara the Primordial Goddess","type":33,"level":8,"attribute":32,"atk":2800,"def":2800,"art":"art/82344137.jpg"},"82489470":{"name":"The Golden Swordsoul","type":4129,"level":4,"attribute":16,"atk":1800,"def":1500,"art":"art/82489470.jpg"},"82738008":{"name":"Branded in Red","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/82738008.jpg"},"83190280":{"name":"Lunalight Tiger","type":16777249,"level":3,"attribute":16,"atk":1200,"def":800,"art":"art/83190280.webp"},"83629030":{"name":"Toon Cyber Dragon","type":4194337,"level":5,"attribute":16,"atk":2100,"def":1600,"art":"art/83629030.jpg"},"84192580":{"name":"Mulcharmy Purulia","type":33,"level":4,"attribute":2,"atk":100,"def":600,"art":"art/84192580.jpg"},"84550369":{"name":"Mikanko Shinbu - Noble Twins","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/84550369.jpg"},"84988419":{"name":"Bloom Diva the Melodious Choir","type":97,"level":6,"attribute":16,"atk":1000,"def":2000,"art":"art/84988419.jpg"},"85442146":{"name":"Dragon's Mind","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/85442146.jpg"},"85692042":{"name":"Primathmech Alembertian","type":8388641,"level":4,"attribute":1,"atk":2000,"def":0,"art":"art/85692042.jpg"},"86066372":{"name":"Accesscode Talker","type":67108897,"level":4,"attribute":32,"atk":2300,"def":0,"art":"art/86066372.jpg"},"87116928":{"name":"Chimeratech Megafleet Dragon","type":97,"level":10,"attribute":32,"atk":0,"def":0,"art":"art/87116928.jpg"},"87209160":{"name":"Tri-Brigade Fraktall","type":33,"level":4,"attribute":4,"atk":1900,"def":1600,"art":"art/87209160.webp"},"87746184":{"name":"Albion the Branded Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/87746184.jpg"},"87931906":{"name":"Lunalight Fusion","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/87931906.webp"},"88032456":{"name":"Mimicat","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/88032456.jpg"},"88753594":{"name":"Lunalight Sabre Dancer","type":97,"level":9,"attribute":32,"atk":3000,"def":2600,"art":"art/88753594.webp"},"89604813":{"name":"Blue-Eyes Ultimate Spirit Dragon","type":8225,"level":12,"attribute":16,"atk":3500,"def":4000,"art":"art/89604813.jpg"},"89631139":{"name":"Blue-Eyes White Dragon","type":17,"level":8,"attribute":16,"atk":3000,"def":2500,"art":"art/89631139.jpg"},"89943723":{"name":"Elemental HERO Neos","type":17,"level":7,"attribute":16,"atk":2500,"def":2000,"art":"art/89943723.jpg"},"89997728":{"name":"Toon Table of Contents","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/89997728.jpg"},"90448279":{"name":"Divine Arsenal AA-ZEUS - Sky Thunder","type":8388641,"level":12,"attribute":16,"atk":3000,"def":3000,"art":"art/90448279.jpg"},"90590303":{"name":"Number 41: Bagooska the Terribly Tired Tapir","type":8388641,"level":4,"attribute":1,"atk":2100,"def":2000,"art":"art/90590303.webp"},"90673288":{"name":"Sky Striker Ace - Shizuku","type":67108897,"level":1,"attribute":2,"atk":1500,"def":0,"art":"art/90673288.jpg"},"91500017":{"name":"Toon Bookmark","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/91500017.jpg"},"92519087":{"name":"Virtual World Kyubi - Shenshen","type":8225,"level":9,"attribute":8,"atk":2800,"def":2400,"art":"art/92519087.jpg"},"93039339":{"name":"Super Starslayer TY-PHON - Sky Crisis","type":8388641,"level":12,"attribute":32,"atk":2900,"def":2900,"art":"art/93039339.jpg"},"93347961":{"name":"Elemental HERO Flame Wingman - Infernal Rage","type":97,"level":8,"attribute":8,"atk":2100,"def":1200,"art":"art/93347961.jpg"},"94145021":{"name":"Droll & Lock Bird","type":33,"level":1,"attribute":8,"atk":0,"def":0,"art":"art/94145021.webp"},"94259633":{"name":"Relinquished Anima","type":67108897,"level":1,"attribute":32,"atk":0,"def":0,"art":"art/94259633.jpg"},"94392192":{"name":"Kashtira Ogre","type":33,"level":7,"attribute":2,"atk":2800,"def":1000,"art":"art/94392192.jpg"},"94503794":{"name":"Kerzebs, the Gaoled Glutton","type":8388641,"level":7,"attribute":32,"atk":700,"def":2500,"art":"art/94503794.jpg"},"95515789":{"name":"Blazing Cartesia, the Virtuous","type":4129,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/95515789.jpg"},"96381979":{"name":"Brotherhood of the Fire Fist - Tiger King","type":8388641,"level":4,"attribute":4,"atk":2200,"def":1800,"art":"art/96381979.webp"},"96729612":{"name":"Preparation of Rites","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/96729612.jpg"},"97045737":{"name":"Dominus Purge","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/97045737.jpg"},"97165977":{"name":"Lunalight Panther Dancer","type":97,"level":8,"attribute":32,"atk":2800,"def":2500,"art":"art/97165977.webp"},"97268402":{"name":"Effect Veiler","type":4129,"level":1,"attribute":16,"atk":0,"def":0,"art":"art/97268402.jpg"},"98127546":{"name":"Underworld Goddess of the Closed World","type":67108897,"level":5,"attribute":16,"atk":3000,"def":0,"art":"art/98127546.jpg"},"98338152":{"name":"Sky Striker Mecha - Widow Anchor","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/98338152.jpg"},"98462037":{"name":"Sky Striker Ace - Azalea","type":67108897,"level":2,"attribute":32,"atk":1500,"def":0,"art":"art/98462037.jpg"},"98829635":{"name":"Forbidden Crown","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/98829635.jpg"},"99330325":{"name":"Interrupted Kaiju Slumber","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/99330325.jpg"},"99550630":{"name":"Sky Striker Maneuver - Afterburners!","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/99550630.jpg"}}}
++{"_meta":{"by":"tools/r33-deck-cards.mjs","cards":299},"cards":{"102380":{"name":"Lava Golem","type":33554465,"level":8,"attribute":4,"atk":3000,"def":2500,"art":"art/102380.jpg"},"213326":{"name":"E - Emergency Call","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/213326.jpg"},"1948619":{"name":"Xtra HERO Wonder Driver","type":67108897,"level":2,"attribute":16,"atk":1900,"def":0,"art":"art/1948619.jpg"},"1984618":{"name":"Nadir Servant","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/1984618.jpg"},"2295440":{"name":"One for One","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/2295440.jpg"},"2344618":{"name":"Lunalight Masquerade","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/2344618.webp"},"2606417":{"name":"Reversal Box","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/2606417.jpg"},"2857636":{"name":"Knightmare Phoenix","type":67108897,"level":2,"attribute":4,"atk":1900,"def":0,"art":"art/2857636.webp"},"3129527":{"name":"Sleepy Scapegoats","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/3129527.jpg"},"3410461":{"name":"Alba-Lenatus the Abyss Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2500,"art":"art/3410461.jpg"},"4423206":{"name":"M-X-Saber Invoker","type":8388641,"level":3,"attribute":1,"atk":1600,"def":500,"art":"art/4423206.jpg"},"4881365":{"name":"Alligator's Dragon Knight","type":33,"level":5,"attribute":8,"atk":1700,"def":1500,"art":"art/4881365.jpg"},"4928565":{"name":"Tearlaments Kashtira","type":33,"level":7,"attribute":2,"atk":2300,"def":1200,"art":"art/4928565.jpg"},"5318639":{"name":"Mystical Space Typhoon","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/5318639.jpg"},"6327734":{"name":"Hu-Li the Jewel Mikanko","type":33,"level":3,"attribute":8,"atk":0,"def":0,"art":"art/6327734.jpg"},"6498706":{"name":"Fusion Deployment","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/6498706.jpg"},"6637331":{"name":"Bystial Druiswurm","type":33,"level":6,"attribute":32,"atk":2500,"def":2000,"art":"art/6637331.jpg"},"6958551":{"name":"Shadow Toon","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/6958551.jpg"},"8240199":{"name":"Sage with Eyes of Blue","type":4129,"level":1,"attribute":16,"atk":0,"def":1500,"art":"art/8240199.jpg"},"8264361":{"name":"Dharc the Dark Charmer, Gloomy","type":67108897,"level":2,"attribute":32,"atk":1850,"def":0,"art":"art/8264361.jpg"},"8267140":{"name":"Cosmic Cyclone","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/8267140.webp"},"8379983":{"name":"Lunalight Gold Leo","type":33,"level":4,"attribute":32,"atk":600,"def":1600,"art":"art/8379983.webp"},"8491308":{"name":"Sky Striker Ace - Hayate","type":67108897,"level":1,"attribute":8,"atk":1500,"def":0,"art":"art/8491308.jpg"},"8949584":{"name":"A Hero Lives","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/8949584.jpg"},"8953369":{"name":"Kashtira Overlap","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/8953369.jpg"},"9411399":{"name":"Destiny HERO - Malicious","type":33,"level":6,"attribute":32,"atk":800,"def":800,"art":"art/9411399.jpg"},"9726840":{"name":"Sky Striker Mobilize - Linkage!","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/9726840.jpg"},"9839945":{"name":"Lyna the Light Charmer, Lustrous","type":67108897,"level":2,"attribute":16,"atk":1850,"def":0,"art":"art/9839945.jpg"},"10045474":{"name":"Infinite Impermanence","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/10045474.webp"},"10186633":{"name":"EN Shuffle","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/10186633.jpg"},"10443957":{"name":"Cyber Dragon Infinity","type":8388641,"level":6,"attribute":16,"atk":2100,"def":1600,"art":"art/10443957.jpg"},"10515412":{"name":"Lightstorm Dragon","type":8225,"level":9,"attribute":16,"atk":2700,"def":3000,"art":"art/10515412.jpg"},"10808715":{"name":"Masked HERO Dusk Crow","type":33,"level":4,"attribute":32,"atk":1200,"def":1000,"art":"art/10808715.jpg"},"10813327":{"name":"Waking the Dragon","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/10813327.jpg"},"11161666":{"name":"Sanaki the Mikanko Devotee","type":33,"level":3,"attribute":1,"atk":0,"def":0,"art":"art/11161666.jpg"},"11317977":{"name":"Lunalight Black Sheep","type":33,"level":2,"attribute":32,"atk":100,"def":600,"art":"art/11317977.webp"},"11321089":{"name":"Guardian Chimera","type":97,"level":9,"attribute":32,"atk":3300,"def":3300,"art":"art/11321089.webp"},"11443677":{"name":"Blue-Eyes Tyrant Dragon","type":97,"level":8,"attribute":16,"atk":3400,"def":2900,"art":"art/11443677.jpg"},"11765832":{"name":"Garura, Wings of Resonant Life","type":97,"level":6,"attribute":32,"atk":1500,"def":2400,"art":"art/11765832.jpg"},"11876803":{"name":"Lunalight Scarlet Tiger","type":33,"level":5,"attribute":32,"atk":1900,"def":1500,"art":"art/11876803.webp"},"12067160":{"name":"Gorgon of Zilofthonia","type":67108897,"level":3,"attribute":32,"atk":100,"def":0,"art":"art/12067160.jpg"},"12421694":{"name":"Sky Striker Ace - Kaina","type":67108897,"level":1,"attribute":1,"atk":1500,"def":0,"art":"art/12421694.jpg"},"12580477":{"name":"Raigeki","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/12580477.jpg"},"13935001":{"name":"Lunalight Serenade Dance","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/13935001.webp"},"14152693":{"name":"Lunalight Emerald Bird","type":33,"level":4,"attribute":32,"atk":1200,"def":1000,"art":"art/14152693.webp"},"14532163":{"name":"Lightning Storm","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/14532163.jpg"},"14558127":{"name":"Ash Blossom & Joyous Spring","type":4129,"level":3,"attribute":4,"atk":0,"def":1800,"art":"art/14558127.webp"},"15259703":{"name":"Toon World","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/15259703.jpg"},"15270885":{"name":"Toon Goblin Attack Force","type":4194337,"level":4,"attribute":1,"atk":2300,"def":0,"art":"art/15270885.jpg"},"15693423":{"name":"Evenly Matched","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/15693423.webp"},"16259549":{"name":"Number 49: Fortune Tune","type":8388641,"level":3,"attribute":16,"atk":400,"def":900,"art":"art/16259549.jpg"},"16605586":{"name":"Destiny HERO - Denier","type":33,"level":3,"attribute":32,"atk":1100,"def":600,"art":"art/16605586.jpg"},"17217034":{"name":"Combined Maneuver - Engage Zero!","type":67108897,"level":2,"attribute":16,"atk":1500,"def":0,"art":"art/17217034.jpg"},"17242022":{"name":"Red-Eyes Black Dragon Exceed","type":97,"level":9,"attribute":32,"atk":3400,"def":3000,"art":"art/17242022.jpg"},"17725109":{"name":"Roar of the Blue-Eyed Dragons","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/17725109.jpg"},"17751597":{"name":"Branded Retribution","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/17751597.jpg"},"17947697":{"name":"Maiden of White","type":4129,"level":1,"attribute":16,"atk":0,"def":0,"art":"art/17947697.jpg"},"17955766":{"name":"Neo-Spacian Aqua Dolphin","type":33,"level":3,"attribute":2,"atk":600,"def":800,"art":"art/17955766.jpg"},"18094166":{"name":"Vision HERO Faris","type":33,"level":5,"attribute":32,"atk":1600,"def":1800,"art":"art/18094166.jpg"},"18144506":{"name":"Harpie's Feather Duster","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/18144506.jpg"},"18144507":{"name":"Harpie's Feather Duster","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/18144507.jpg"},"18377261":{"name":"Ha-Re the Sword Mikanko","type":33,"level":3,"attribute":4,"atk":0,"def":0,"art":"art/18377261.jpg"},"19096726":{"name":"Tri-Brigade Mercourier","type":33,"level":4,"attribute":32,"atk":800,"def":0,"art":"art/19096726.jpg"},"19222426":{"name":"Elemental HERO Thunder Giant - Voltic Thunder","type":97,"level":6,"attribute":16,"atk":2400,"def":1500,"art":"art/19222426.jpg"},"19304410":{"name":"Tri-Brigade Springans Kitt","type":33,"level":4,"attribute":16,"atk":1700,"def":1000,"art":"art/19304410.jpg"},"19324993":{"name":"Xtra HERO Infernal Devicer","type":67108897,"level":2,"attribute":32,"atk":1700,"def":0,"art":"art/19324993.jpg"},"21123811":{"name":"Cosmic Blazar Dragon","type":8225,"level":12,"attribute":8,"atk":4000,"def":4000,"art":"art/21123811.jpg"},"21143940":{"name":"Mask Change","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/21143940.jpg"},"21296502":{"name":"Toon Dark Magician","type":4194337,"level":7,"attribute":32,"atk":2500,"def":2100,"art":"art/21296502.jpg"},"21639276":{"name":"Kashtira Preparations","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/21639276.jpg"},"22865492":{"name":"Vision HERO Increase","type":33,"level":3,"attribute":32,"atk":900,"def":1100,"art":"art/22865492.jpg"},"22908820":{"name":"Elemental HERO Sunrise","type":97,"level":7,"attribute":16,"atk":2500,"def":1200,"art":"art/22908820.jpg"},"23204029":{"name":"Contrast HERO Chaos","type":97,"level":9,"attribute":32,"atk":3000,"def":2600,"art":"art/23204029.jpg"},"23656668":{"name":"Gravity Controller","type":67108897,"level":1,"attribute":32,"atk":1000,"def":0,"art":"art/23656668.jpg"},"24010609":{"name":"Sky Striker Mecha Modules - Multirole","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24010609.jpg"},"24094653":{"name":"Polymerization","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24094653.webp"},"24224830":{"name":"Called by the Grave","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24224830.webp"},"24299458":{"name":"Forbidden Droplet","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24299458.jpg"},"24361622":{"name":"Hieratic Seal of the Heavenly Spheres","type":67108897,"level":2,"attribute":16,"atk":0,"def":0,"art":"art/24361622.jpg"},"24382602":{"name":"Mausoleum of White","type":524290,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/24382602.jpg"},"24508238":{"name":"D.D. Crow","type":33,"level":1,"attribute":32,"atk":100,"def":100,"art":"art/24508238.webp"},"24550676":{"name":"Lunalight Leo Dancer","type":97,"level":10,"attribute":32,"atk":3500,"def":3000,"art":"art/24550676.webp"},"24915933":{"name":"Granguignol the Dusk Dragon","type":97,"level":8,"attribute":16,"atk":2500,"def":2500,"art":"art/24915933.jpg"},"25072579":{"name":"Prototype Sky Striker Ace - Amatsu","type":67108897,"level":1,"attribute":32,"atk":1500,"def":0,"art":"art/25072579.jpg"},"25311006":{"name":"Triple Tactics Talent","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/25311006.jpg"},"25451383":{"name":"Albion the Shrouded Dragon","type":33,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/25451383.jpg"},"25733157":{"name":"Sky Striker Mecha - Eagle Booster","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/25733157.jpg"},"25955749":{"name":"Sky Striker Maneuver - Jamming Waves!","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/25955749.jpg"},"26077387":{"name":"Sky Striker Ace - Raye","type":33,"level":4,"attribute":32,"atk":1500,"def":1500,"art":"art/26077387.jpg"},"26847978":{"name":"Tri-Brigade Ferrijit the Barren Blossom","type":67108897,"level":2,"attribute":1,"atk":1600,"def":0,"art":"art/26847978.jpg"},"27204311":{"name":"Nibiru, the Primal Being","type":33,"level":11,"attribute":16,"atk":3000,"def":600,"art":"art/27204311.webp"},"27420823":{"name":"K9-17 \"Ripper\"","type":8388641,"level":5,"attribute":8,"atk":2300,"def":1800,"art":"art/27420823.jpg"},"27699122":{"name":"Toon Page-Flip","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/27699122.jpg"},"27780618":{"name":"Vision HERO Vyon","type":33,"level":4,"attribute":32,"atk":1000,"def":1200,"art":"art/27780618.jpg"},"28642461":{"name":"K9-66a Jokul","type":33,"level":5,"attribute":32,"atk":2000,"def":1900,"art":"art/28642461.jpg"},"28674152":{"name":"Radian, the Multidimensional Kaiju","type":33,"level":7,"attribute":32,"atk":2800,"def":2500,"art":"art/28674152.jpg"},"28711704":{"name":"Toon Black Luster Soldier","type":37748769,"level":8,"attribute":1,"atk":3000,"def":2500,"art":"art/28711704.jpg"},"29095457":{"name":"Primite Drillbeam","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/29095457.jpg"},"29301450":{"name":"S:P Little Knight","type":67108897,"level":2,"attribute":32,"atk":1600,"def":0,"art":"art/29301450.jpg"},"29726552":{"name":"Kumongous, the Sticky String Kaiju","type":33,"level":7,"attribute":1,"atk":2400,"def":2500,"art":"art/29726552.jpg"},"29948294":{"name":"Branded in High Spirits","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/29948294.jpg"},"30241314":{"name":"Macro Cosmos","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/30241314.jpg"},"30271097":{"name":"The Fallen & The Virtuous","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/30271097.jpg"},"30875635":{"name":"Miracle Ejector","type":33,"level":3,"attribute":1,"atk":400,"def":400,"art":"art/30875635.jpg"},"31149212":{"name":"Kashtira Riseheart","type":33,"level":4,"attribute":4,"atk":1500,"def":2100,"art":"art/31149212.jpg"},"31733941":{"name":"Red-Eyes Toon Dragon","type":4194337,"level":7,"attribute":32,"atk":2400,"def":2000,"art":"art/31733941.jpg"},"32807846":{"name":"Reinforcement of the Army","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/32807846.jpg"},"32828466":{"name":"Wake Up Your Elemental HERO","type":97,"level":10,"attribute":16,"atk":2500,"def":2100,"art":"art/32828466.jpg"},"32909498":{"name":"Kashtira Fenrir","type":33,"level":7,"attribute":1,"atk":2400,"def":2400,"art":"art/32909498.jpg"},"33453260":{"name":"Comic Hand","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/33453260.jpg"},"33698022":{"name":"Black Rose Moonlight Dragon","type":8225,"level":7,"attribute":16,"atk":2400,"def":1800,"art":"art/33698022.jpg"},"33854624":{"name":"Bystial Magnamhut","type":33,"level":6,"attribute":32,"atk":2500,"def":2000,"art":"art/33854624.jpg"},"33925864":{"name":"Kashtira Big Bang","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/33925864.jpg"},"34267821":{"name":"Artifact Lancea","type":33,"level":5,"attribute":16,"atk":1700,"def":2300,"art":"art/34267821.jpg"},"34433770":{"name":"Sky Striker Special Maneuver - Lemnisgate!","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/34433770.jpg"},"34447918":{"name":"Kashtiratheosis","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/34447918.jpg"},"34876719":{"name":"N.As.H. Knight","type":8388641,"level":5,"attribute":2,"atk":1700,"def":2700,"art":"art/34876719.jpg"},"35261759":{"name":"Pot of Desires","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/35261759.jpg"},"35269904":{"name":"Triple Tactics Thrust","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/35269904.jpg"},"35618217":{"name":"Lunalight Kaleido Chick","type":33,"level":4,"attribute":32,"atk":1400,"def":800,"art":"art/35618217.webp"},"35726888":{"name":"Foolish Burial Goods","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/35726888.webp"},"35763582":{"name":"Lunalight Silver Hound","type":33,"level":3,"attribute":32,"atk":1400,"def":400,"art":"art/35763582.webp"},"36637374":{"name":"Branded Opening","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/36637374.jpg"},"37351133":{"name":"Sky Striker Ace - Roze","type":33,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/37351133.jpg"},"37818794":{"name":"Red-Eyes Dark Dragoon","type":97,"level":8,"attribute":32,"atk":3000,"def":2500,"art":"art/37818794.jpg"},"38342335":{"name":"Knightmare Unicorn","type":67108897,"level":3,"attribute":32,"atk":2200,"def":0,"art":"art/38342335.jpg"},"38811586":{"name":"Albion the Sanctifire Dragon","type":97,"level":8,"attribute":16,"atk":3000,"def":2500,"art":"art/38811586.jpg"},"40044918":{"name":"Elemental HERO Stratos","type":33,"level":4,"attribute":8,"atk":1800,"def":300,"art":"art/40044918.jpg"},"40235813":{"name":"Dark Time Wizard","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/40235813.jpg"},"40275470":{"name":"Jinzo - Energy Shocker","type":33,"level":7,"attribute":32,"atk":2400,"def":1500,"art":"art/40275470.jpg"},"41373230":{"name":"Titaniklad the Ash Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/41373230.jpg"},"41420027":{"name":"Solemn Judgment","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/41420027.jpg"},"41927278":{"name":"Double-Edged Sword","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/41927278.jpg"},"42097666":{"name":"Spirit with Eyes of Blue","type":67108897,"level":1,"attribute":16,"atk":300,"def":0,"art":"art/42097666.jpg"},"42141493":{"name":"Mulcharmy Fuwalos","type":33,"level":4,"attribute":8,"atk":100,"def":600,"art":"art/42141493.jpg"},"42705243":{"name":"Mikanko Promise","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/42705243.jpg"},"43175858":{"name":"Toon Kingdom","type":524290,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/43175858.jpg"},"43219114":{"name":"Majesty of the White Dragons","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/43219114.jpg"},"43321985":{"name":"Ancient Fairy Life Dragon","type":8225,"level":8,"attribute":16,"atk":2500,"def":3300,"art":"art/43321985.jpg"},"43527730":{"name":"Mikanko Water Arabesque","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/43527730.jpg"},"44146295":{"name":"Mirrorjade the Iceblade Dragon","type":97,"level":8,"attribute":32,"atk":3000,"def":2500,"art":"art/44146295.jpg"},"44362883":{"name":"Branded Fusion","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/44362883.jpg"},"44649322":{"name":"The Great Mikanko Ceremony","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/44649322.jpg"},"44886582":{"name":"Super Duper Polymerization","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/44886582.webp"},"45725480":{"name":"Sacred Sword of Seven Stars","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/45725480.jpg"},"45883110":{"name":"Guiding Quem, the Virtuous","type":4129,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/45883110.jpg"},"45906428":{"name":"Miracle Fusion","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/45906428.jpg"},"46759931":{"name":"Vision HERO Trinity","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/46759931.jpg"},"46986414":{"name":"Dark Magician","type":17,"level":7,"attribute":32,"atk":2500,"def":2100,"art":"art/46986414.jpg"},"47643326":{"name":"Lunar Rabbit Omajinai","type":4113,"level":1,"attribute":16,"atk":0,"def":1500,"art":"art/47643326.jpg"},"47705572":{"name":"Lunalight Wolf","type":16777249,"level":6,"attribute":16,"atk":2000,"def":1800,"art":"art/47705572.webp"},"48130397":{"name":"Super Polymerization","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/48130397.jpg"},"48444114":{"name":"Luna Light Perfume","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/48444114.webp"},"48770333":{"name":"Thunder King, the Lightningstrike Kaiju","type":33,"level":9,"attribute":16,"atk":3300,"def":2100,"art":"art/48770333.jpg"},"49202162":{"name":"Black Luster Soldier - Soldier of Chaos","type":67108897,"level":3,"attribute":1,"atk":3000,"def":0,"art":"art/49202162.jpg"},"49456901":{"name":"Number C104: Umbral Horror Masquerade","type":8388641,"level":5,"attribute":32,"atk":3000,"def":1500,"art":"art/49456901.jpg"},"50005218":{"name":"Sky Striker Airspace - Area Zero","type":524290,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/50005218.jpg"},"50277355":{"name":"Cross-Sheep","type":67108897,"level":2,"attribute":1,"atk":700,"def":0,"art":"art/50277355.webp"},"50546208":{"name":"Lunalight Yellow Marten","type":33,"level":4,"attribute":32,"atk":800,"def":2000,"art":"art/50546208.webp"},"50720316":{"name":"Elemental HERO Shadow Mist","type":33,"level":4,"attribute":32,"atk":1000,"def":1500,"art":"art/50720316.jpg"},"51227866":{"name":"Sky Striker Mecha - Shark Cannon","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/51227866.jpg"},"51409648":{"name":"Rindbrumm the Striking Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/51409648.jpg"},"51777272":{"name":"Lunalight Cat Dancer","type":97,"level":7,"attribute":32,"atk":2400,"def":2000,"art":"art/51777272.webp"},"52038441":{"name":"Ghost Mourner & Moonlit Chill","type":4129,"level":3,"attribute":8,"atk":0,"def":1800,"art":"art/52038441.jpg"},"52340444":{"name":"Sky Striker Mecha - Hornet Drones","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/52340444.jpg"},"52947044":{"name":"Fusion Destiny","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/52947044.jpg"},"53094821":{"name":"Toon Terror","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/53094821.jpg"},"53174748":{"name":"Mikanko Spiritwalk","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/53174748.jpg"},"53701457":{"name":"Number 28: Titanic Moth","type":8388641,"level":7,"attribute":4,"atk":2400,"def":2200,"art":"art/53701457.jpg"},"53792930":{"name":"K9-X Forced Release","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/53792930.jpg"},"53971455":{"name":"Despian Luluwalilith","type":8225,"level":12,"attribute":16,"atk":2500,"def":2500,"art":"art/53971455.jpg"},"54143349":{"name":"Radiant Typhoon Eldam","type":33,"level":3,"attribute":8,"atk":1300,"def":800,"art":"art/54143349.jpg"},"54701958":{"name":"Lunalight Liger Dancer","type":97,"level":12,"attribute":32,"atk":3800,"def":3500,"art":"art/54701958.webp"},"54862960":{"name":"Ni-Ni the Mirror Mikanko","type":33,"level":3,"attribute":2,"atk":0,"def":0,"art":"art/54862960.jpg"},"55273560":{"name":"Incredible Ecclesia, the Virtuous","type":4129,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/55273560.jpg"},"56506740":{"name":"Primite Lordly Lode","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/56506740.jpg"},"56532353":{"name":"Neo Blue-Eyes Ultimate Dragon","type":97,"level":12,"attribute":16,"atk":4500,"def":3800,"art":"art/56532353.jpg"},"56733747":{"name":"Elemental HERO Shining Neos Wingman","type":97,"level":8,"attribute":16,"atk":3100,"def":2500,"art":"art/56733747.jpg"},"57103969":{"name":"Fire Formation - Tenki","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/57103969.webp"},"57566760":{"name":"Uzuhime the Manifested Mikanko","type":8388641,"level":3,"attribute":16,"atk":0,"def":0,"art":"art/57566760.jpg"},"57736667":{"name":"Mikanko Dance - Mayowashidori","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/57736667.jpg"},"58004362":{"name":"Xtra HERO Cross Crusader","type":67108897,"level":2,"attribute":32,"atk":1600,"def":0,"art":"art/58004362.jpg"},"58069384":{"name":"Cyber Dragon Nova","type":8388641,"level":5,"attribute":16,"atk":2100,"def":1600,"art":"art/58069384.jpg"},"58288218":{"name":"Masked HERO Furnace","type":33,"level":7,"attribute":4,"atk":2200,"def":1000,"art":"art/58288218.jpg"},"58481572":{"name":"Masked HERO Dark Law","type":97,"level":6,"attribute":32,"atk":2400,"def":1800,"art":"art/58481572.jpg"},"58570206":{"name":"Heavy Polymerization","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/58570206.webp"},"59438930":{"name":"Ghost Ogre & Snow Rabbit","type":4129,"level":3,"attribute":16,"atk":0,"def":1800,"art":"art/59438930.jpg"},"59822133":{"name":"Blue-Eyes Spirit Dragon","type":8225,"level":9,"attribute":16,"atk":2500,"def":3000,"art":"art/59822133.jpg"},"60195675":{"name":"Infinitrack Mountain Smasher","type":8388641,"level":7,"attribute":1,"atk":2100,"def":3100,"art":"art/60195675.jpg"},"60242223":{"name":"Bystial Saronir","type":33,"level":6,"attribute":32,"atk":2500,"def":2000,"art":"art/60242223.jpg"},"60303245":{"name":"Salamangreat Almiraj","type":67108897,"level":1,"attribute":4,"atk":0,"def":0,"art":"art/60303245.jpg"},"60461804":{"name":"Destiny HERO - Destroyer Phoenix Enforcer","type":97,"level":8,"attribute":32,"atk":2500,"def":2100,"art":"art/60461804.jpg"},"61374414":{"name":"CXyz N.As.Ch. Knight","type":8388641,"level":6,"attribute":2,"atk":2000,"def":3000,"art":"art/61374414.jpg"},"62089826":{"name":"True Light","type":131076,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/62089826.jpg"},"62962630":{"name":"Aluber the Jester of Despia","type":33,"level":4,"attribute":32,"atk":1800,"def":0,"art":"art/62962630.jpg"},"63013339":{"name":"Sky Striker Ace - Camellia","type":67108897,"level":2,"attribute":32,"atk":1500,"def":0,"art":"art/63013339.jpg"},"63166095":{"name":"Sky Striker Mobilize - Engage!","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/63166095.jpg"},"63198739":{"name":"Primite Dragon Ether Beryl","type":33,"level":4,"attribute":1,"atk":1600,"def":0,"art":"art/63198739.jpg"},"63288573":{"name":"Sky Striker Ace - Kagari","type":67108897,"level":1,"attribute":4,"atk":1500,"def":0,"art":"art/63288573.jpg"},"63436931":{"name":"Crimson Dragon","type":8225,"level":12,"attribute":16,"atk":0,"def":0,"art":"art/63436931.jpg"},"63941210":{"name":"Jizukiru, the Star Destroying Kaiju","type":33,"level":10,"attribute":16,"atk":3300,"def":2600,"art":"art/63941210.jpg"},"64116319":{"name":"Toon Harpie Lady","type":4194337,"level":4,"attribute":8,"atk":1300,"def":1400,"art":"art/64116319.jpg"},"65118318":{"name":"Foolish Graverobber","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/65118318.jpg"},"65741786":{"name":"I:P Masquerena","type":67108897,"level":2,"attribute":32,"atk":800,"def":0,"art":"art/65741786.jpg"},"66011101":{"name":"Number 60: Dugares the Timeless","type":8388641,"level":4,"attribute":4,"atk":1200,"def":1200,"art":"art/66011101.webp"},"66206748":{"name":"Masked HERO Fountain","type":33,"level":4,"attribute":2,"atk":1000,"def":1400,"art":"art/66206748.jpg"},"66574418":{"name":"The Black Stone of Legend","type":33,"level":1,"attribute":32,"atk":0,"def":0,"art":"art/66574418.jpg"},"67115133":{"name":"Radiant Typhoon Chant","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/67115133.jpg"},"67515699":{"name":"K9-66X \"Jacks\"","type":8388641,"level":5,"attribute":32,"atk":2600,"def":2500,"art":"art/67515699.jpg"},"68304193":{"name":"Kashtira Unicorn","type":33,"level":7,"attribute":8,"atk":2500,"def":2100,"art":"art/68304193.jpg"},"68468459":{"name":"Fallen of Albaz","type":33,"level":4,"attribute":32,"atk":1800,"def":0,"art":"art/68468459.jpg"},"69540484":{"name":"Kashtira Birth","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/69540484.jpg"},"69680031":{"name":"Dogmatika Fleurdelis, the Knighted","type":33,"level":8,"attribute":16,"atk":2500,"def":2500,"art":"art/69680031.jpg"},"69946549":{"name":"Predaplant Dragostapelia","type":97,"level":8,"attribute":32,"atk":2700,"def":1900,"art":"art/69946549.jpg"},"70368879":{"name":"Upstart Goblin","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/70368879.jpg"},"70493141":{"name":"The Ascended of Thunder","type":33,"level":7,"attribute":16,"atk":2700,"def":2400,"art":"art/70493141.jpg"},"70534340":{"name":"Lubellion the Searing Dragon","type":97,"level":8,"attribute":16,"atk":2500,"def":3000,"art":"art/70534340.jpg"},"71068247":{"name":"Totem Bird","type":8388641,"level":3,"attribute":8,"atk":1900,"def":1400,"art":"art/71068247.jpg"},"71166481":{"name":"Number 75: Bamboozling Gossip Shadow","type":8388641,"level":3,"attribute":8,"atk":1000,"def":2600,"art":"art/71166481.jpg"},"71222868":{"name":"Raidraptor - Rising Rebellion Falcon","type":8388641,"level":13,"attribute":32,"atk":4000,"def":3500,"art":"art/71222868.jpg"},"72167543":{"name":"Downerd Magician","type":8388641,"level":4,"attribute":32,"atk":2100,"def":200,"art":"art/72167543.jpg"},"73542331":{"name":"Kashtira Shangri-Ira","type":8388641,"level":7,"attribute":4,"atk":0,"def":3000,"art":"art/73542331.jpg"},"73628505":{"name":"Terraforming","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/73628505.jpg"},"73642296":{"name":"Ghost Belle & Haunted Mansion","type":4129,"level":3,"attribute":1,"atk":0,"def":1800,"art":"art/73642296.jpg"},"73819701":{"name":"Fallen of the White Dragon","type":33,"level":4,"attribute":32,"atk":1800,"def":0,"art":"art/73819701.jpg"},"74405783":{"name":"The Three Champions of Swordsoul","type":8225,"level":8,"attribute":16,"atk":2500,"def":2500,"art":"art/74405783.jpg"},"74677422":{"name":"Red-Eyes Black Dragon","type":17,"level":7,"attribute":32,"atk":2400,"def":2000,"art":"art/74677422.jpg"},"75047173":{"name":"Favorite Contact","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/75047173.jpg"},"75147529":{"name":"Sky Striker Ace - Zeke","type":67108897,"level":2,"attribute":32,"atk":1500,"def":0,"art":"art/75147529.jpg"},"76072561":{"name":"Sky Striker Ace = Zero","type":67108897,"level":2,"attribute":16,"atk":2000,"def":0,"art":"art/76072561.jpg"},"76630812":{"name":"Graceful & Skull Dice","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/76630812.jpg"},"76660178":{"name":"Fisherman of Legend","type":33,"level":4,"attribute":2,"atk":1850,"def":1600,"art":"art/76660178.jpg"},"76666602":{"name":"The Dragon that Devours the Dogma","type":97,"level":8,"attribute":32,"atk":3000,"def":2500,"art":"art/76666602.jpg"},"77482666":{"name":"Swiftwind Panther Warrior","type":33,"level":4,"attribute":1,"atk":2000,"def":1600,"art":"art/77482666.jpg"},"78114463":{"name":"Solemn Accusation","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/78114463.jpg"},"78144171":{"name":"Dark Armed, the Dragon of Annihilation","type":8388641,"level":7,"attribute":32,"atk":2800,"def":1000,"art":"art/78144171.jpg"},"78199891":{"name":"Mikanko Rivalry","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/78199891.jpg"},"78534861":{"name":"Scareclaw Kashtira","type":33,"level":7,"attribute":1,"atk":0,"def":2600,"art":"art/78534861.jpg"},"79447365":{"name":"Toon Mask","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/79447365.jpg"},"79791695":{"name":"CXyz Hope Chaos Barian Dragon","type":8388641,"level":7,"attribute":32,"atk":0,"def":0,"art":"art/79791695.jpg"},"79912449":{"name":"Mikanko Reflection Rondo","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/79912449.jpg"},"80044027":{"name":"Mikanko Fire Dance","type":262146,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/80044027.jpg"},"80117527":{"name":"Number 11: Big Eye","type":8388641,"level":7,"attribute":32,"atk":2600,"def":2000,"art":"art/80117527.jpg"},"80181649":{"name":"\"A Case for K9\"","type":131074,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/80181649.jpg"},"80326401":{"name":"Wishes for Eyes of Blue","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/80326401.jpg"},"80538047":{"name":"Radiant Typhoon Swen","type":33,"level":3,"attribute":8,"atk":1600,"def":400,"art":"art/80538047.jpg"},"80843006":{"name":"Mixousia the Confounder","type":97,"level":8,"attribute":32,"atk":2700,"def":1500,"art":"art/80843006.jpg"},"81196066":{"name":"Lunalight Perfume Dancer","type":97,"level":6,"attribute":32,"atk":2000,"def":1500,"art":"art/81196066.webp"},"81260679":{"name":"Ohime the Manifested Mikanko","type":161,"level":6,"attribute":16,"atk":0,"def":0,"art":"art/81260679.jpg"},"81439173":{"name":"Foolish Burial","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/81439173.webp"},"82344137":{"name":"Phara the Primordial Goddess","type":33,"level":8,"attribute":32,"atk":2800,"def":2800,"art":"art/82344137.jpg"},"82489470":{"name":"The Golden Swordsoul","type":4129,"level":4,"attribute":16,"atk":1800,"def":1500,"art":"art/82489470.jpg"},"82738008":{"name":"Branded in Red","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/82738008.jpg"},"83190280":{"name":"Lunalight Tiger","type":16777249,"level":3,"attribute":16,"atk":1200,"def":800,"art":"art/83190280.webp"},"83629030":{"name":"Toon Cyber Dragon","type":4194337,"level":5,"attribute":16,"atk":2100,"def":1600,"art":"art/83629030.jpg"},"84192580":{"name":"Mulcharmy Purulia","type":33,"level":4,"attribute":2,"atk":100,"def":600,"art":"art/84192580.jpg"},"84211599":{"name":"Pot of Prosperity","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/84211599.jpg"},"84550369":{"name":"Mikanko Shinbu - Noble Twins","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/84550369.jpg"},"84988419":{"name":"Bloom Diva the Melodious Choir","type":97,"level":6,"attribute":16,"atk":1000,"def":2000,"art":"art/84988419.jpg"},"85442146":{"name":"Dragon's Mind","type":1048580,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/85442146.jpg"},"85692042":{"name":"Primathmech Alembertian","type":8388641,"level":4,"attribute":1,"atk":2000,"def":0,"art":"art/85692042.jpg"},"86066372":{"name":"Accesscode Talker","type":67108897,"level":4,"attribute":32,"atk":2300,"def":0,"art":"art/86066372.jpg"},"87116928":{"name":"Chimeratech Megafleet Dragon","type":97,"level":10,"attribute":32,"atk":0,"def":0,"art":"art/87116928.jpg"},"87209160":{"name":"Tri-Brigade Fraktall","type":33,"level":4,"attribute":4,"atk":1900,"def":1600,"art":"art/87209160.webp"},"87746184":{"name":"Albion the Branded Dragon","type":97,"level":8,"attribute":32,"atk":2500,"def":2000,"art":"art/87746184.jpg"},"87931906":{"name":"Lunalight Fusion","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/87931906.webp"},"88032456":{"name":"Mimicat","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/88032456.jpg"},"88753594":{"name":"Lunalight Sabre Dancer","type":97,"level":9,"attribute":32,"atk":3000,"def":2600,"art":"art/88753594.webp"},"89604813":{"name":"Blue-Eyes Ultimate Spirit Dragon","type":8225,"level":12,"attribute":16,"atk":3500,"def":4000,"art":"art/89604813.jpg"},"89631139":{"name":"Blue-Eyes White Dragon","type":17,"level":8,"attribute":16,"atk":3000,"def":2500,"art":"art/89631139.jpg"},"89943723":{"name":"Elemental HERO Neos","type":17,"level":7,"attribute":16,"atk":2500,"def":2000,"art":"art/89943723.jpg"},"89997728":{"name":"Toon Table of Contents","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/89997728.jpg"},"90303227":{"name":"K9-X \"Werewolf\"","type":8388641,"level":9,"attribute":16,"atk":3300,"def":2500,"art":"art/90303227.jpg"},"90448279":{"name":"Divine Arsenal AA-ZEUS - Sky Thunder","type":8388641,"level":12,"attribute":16,"atk":3000,"def":3000,"art":"art/90448279.jpg"},"90590303":{"name":"Number 41: Bagooska the Terribly Tired Tapir","type":8388641,"level":4,"attribute":1,"atk":2100,"def":2000,"art":"art/90590303.webp"},"90673288":{"name":"Sky Striker Ace - Shizuku","type":67108897,"level":1,"attribute":2,"atk":1500,"def":0,"art":"art/90673288.jpg"},"91025875":{"name":"K9-ØØ Lupis","type":33,"level":5,"attribute":1,"atk":2300,"def":200,"art":"art/91025875.jpg"},"91500017":{"name":"Toon Bookmark","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/91500017.jpg"},"92221402":{"name":"Chaotic Elements","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/92221402.jpg"},"92248362":{"name":"K9-17 Izuna","type":33,"level":5,"attribute":1,"atk":2100,"def":1600,"art":"art/92248362.jpg"},"92519087":{"name":"Virtual World Kyubi - Shenshen","type":8225,"level":9,"attribute":8,"atk":2800,"def":2400,"art":"art/92519087.jpg"},"93039339":{"name":"Super Starslayer TY-PHON - Sky Crisis","type":8388641,"level":12,"attribute":32,"atk":2900,"def":2900,"art":"art/93039339.jpg"},"93347961":{"name":"Elemental HERO Flame Wingman - Infernal Rage","type":97,"level":8,"attribute":8,"atk":2100,"def":1200,"art":"art/93347961.jpg"},"94145021":{"name":"Droll & Lock Bird","type":33,"level":1,"attribute":8,"atk":0,"def":0,"art":"art/94145021.webp"},"94259633":{"name":"Relinquished Anima","type":67108897,"level":1,"attribute":32,"atk":0,"def":0,"art":"art/94259633.jpg"},"94392192":{"name":"Kashtira Ogre","type":33,"level":7,"attribute":2,"atk":2800,"def":1000,"art":"art/94392192.jpg"},"94503794":{"name":"Kerzebs, the Gaoled Glutton","type":8388641,"level":7,"attribute":32,"atk":700,"def":2500,"art":"art/94503794.jpg"},"95515789":{"name":"Blazing Cartesia, the Virtuous","type":4129,"level":4,"attribute":16,"atk":1500,"def":1500,"art":"art/95515789.jpg"},"96381979":{"name":"Brotherhood of the Fire Fist - Tiger King","type":8388641,"level":4,"attribute":4,"atk":2200,"def":1800,"art":"art/96381979.webp"},"96729612":{"name":"Preparation of Rites","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/96729612.jpg"},"97045737":{"name":"Dominus Purge","type":4,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/97045737.jpg"},"97165977":{"name":"Lunalight Panther Dancer","type":97,"level":8,"attribute":32,"atk":2800,"def":2500,"art":"art/97165977.webp"},"97268402":{"name":"Effect Veiler","type":4129,"level":1,"attribute":16,"atk":0,"def":0,"art":"art/97268402.jpg"},"98127546":{"name":"Underworld Goddess of the Closed World","type":67108897,"level":5,"attribute":16,"atk":3000,"def":0,"art":"art/98127546.jpg"},"98338152":{"name":"Sky Striker Mecha - Widow Anchor","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/98338152.jpg"},"98462037":{"name":"Sky Striker Ace - Azalea","type":67108897,"level":2,"attribute":32,"atk":1500,"def":0,"art":"art/98462037.jpg"},"98829635":{"name":"Forbidden Crown","type":65538,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/98829635.jpg"},"99330325":{"name":"Interrupted Kaiju Slumber","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/99330325.jpg"},"99550630":{"name":"Sky Striker Maneuver - Afterburners!","type":2,"level":0,"attribute":0,"atk":0,"def":0,"art":"art/99550630.jpg"}}}
+diff --git a/dist/index.html b/dist/index.html
+index 0c171e5..4ee97d1 100644
+--- a/dist/index.html
++++ b/dist/index.html
+@@ -1,9 +1,9 @@
+-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r35.7</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r35.8</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
+ <link rel="stylesheet" href="arenas.css">
+ <link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
+ <link rel="stylesheet" href="./fx-r23.css"><link rel="stylesheet" href="./r26-panels.css"><link rel="stylesheet" href="./learning-routes.css"><link rel="stylesheet" href="./deck-list.css"><link rel="stylesheet" href="./r33-polish.css"><link rel="stylesheet" href="./r34-arena.css"><link rel="stylesheet" href="./r34-persona.css">
+ </head><body data-theme="vibrant">
+-<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r35.7</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
++<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r35.8</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
+ <main id="setup"><section class="intro"><div><p class="eyebrow"><span class="live-dot"></span> YOUR DUEL ROOM</p><h1>Your decks.<br><em>Either side</em> of the table.</h1><p class="lead">Learn the line. Face the interruption. Play it again.<br>Choose your deck, choose your rival, and take the seat you want.</p></div><div class="hero-art"><img src="art/44146295.jpg" alt="Mirrorjade the Iceblade Dragon"><span class="art-stamp">CRIMSON ABYSS<br><b>THE ICEBLADE DRAGON</b></span></div></section>
+ <div class="section-head"><div><p class="eyebrow">01 / CHOOSE YOUR DECKS</p><h2>Set the matchup</h2></div><button id="import" class="quiet">＋ Import .ydk</button><input id="file" type="file" accept=".ydk" hidden></div>
+ <div id="deck-grid" class="deck-grid" aria-label="Your deck collection"></div>
+diff --git a/dist/offline-assets.json b/dist/offline-assets.json
+index d4be4ed..ef0d4d0 100644
+--- a/dist/offline-assets.json
++++ b/dist/offline-assets.json
+@@ -66,6 +66,7 @@
+   "./art/16259549.jpg",
+   "./art/16605586.jpg",
+   "./art/17217034.jpg",
++  "./art/17242022.jpg",
+   "./art/17725109.jpg",
+   "./art/17751597.jpg",
+   "./art/17947697.jpg",
+@@ -106,13 +107,16 @@
+   "./art/25451383.jpg",
+   "./art/25733157.jpg",
+   "./art/25955749.jpg",
++  "./art/2606417.jpg",
+   "./art/26077387.jpg",
+   "./art/26847978.jpg",
+   "./art/27204311.webp",
++  "./art/27420823.jpg",
+   "./art/27699122.jpg",
+   "./art/27780618.jpg",
+   "./art/2857636.jpg",
+   "./art/2857636.webp",
++  "./art/28642461.jpg",
+   "./art/28674152.jpg",
+   "./art/28711704.jpg",
+   "./art/29095457.jpg",
+@@ -123,6 +127,7 @@
+   "./art/30271097.jpg",
+   "./art/30875635.jpg",
+   "./art/31149212.jpg",
++  "./art/3129527.jpg",
+   "./art/31733941.jpg",
+   "./art/32807846.jpg",
+   "./art/32828466.jpg",
+@@ -135,6 +140,7 @@
+   "./art/34267821.jpg",
+   "./art/34433770.jpg",
+   "./art/34447918.jpg",
++  "./art/34876719.jpg",
+   "./art/35261759.jpg",
+   "./art/35269904.jpg",
+   "./art/35618217.webp",
+@@ -146,6 +152,8 @@
+   "./art/38342335.jpg",
+   "./art/38811586.jpg",
+   "./art/40044918.jpg",
++  "./art/40235813.jpg",
++  "./art/40275470.jpg",
+   "./art/41373230.jpg",
+   "./art/41420027.jpg",
+   "./art/41927278.jpg",
+@@ -157,6 +165,7 @@
+   "./art/43321985.jpg",
+   "./art/43527730.jpg",
+   "./art/44146295.jpg",
++  "./art/4423206.jpg",
+   "./art/44362883.jpg",
+   "./art/44649322.jpg",
+   "./art/44886582.webp",
+@@ -171,8 +180,10 @@
+   "./art/48130397.jpg",
+   "./art/48444114.webp",
+   "./art/48770333.jpg",
++  "./art/4881365.jpg",
+   "./art/49202162.jpg",
+   "./art/4928565.jpg",
++  "./art/49456901.jpg",
+   "./art/50005218.jpg",
+   "./art/50277355.webp",
+   "./art/50546208.webp",
+@@ -185,8 +196,11 @@
+   "./art/52947044.jpg",
+   "./art/53094821.jpg",
+   "./art/53174748.jpg",
++  "./art/5318639.jpg",
+   "./art/53701457.jpg",
++  "./art/53792930.jpg",
+   "./art/53971455.jpg",
++  "./art/54143349.jpg",
+   "./art/54701958.webp",
+   "./art/54862960.jpg",
+   "./art/55273560.jpg",
+@@ -201,11 +215,13 @@
+   "./art/58288218.jpg",
+   "./art/58481572.jpg",
+   "./art/58570206.webp",
++  "./art/59438930.jpg",
+   "./art/59822133.jpg",
+   "./art/60195675.jpg",
+   "./art/60242223.jpg",
+   "./art/60303245.jpg",
+   "./art/60461804.jpg",
++  "./art/61374414.jpg",
+   "./art/62089826.jpg",
+   "./art/62962630.jpg",
+   "./art/63013339.jpg",
+@@ -217,11 +233,14 @@
+   "./art/63941210.jpg",
+   "./art/64116319.jpg",
+   "./art/6498706.jpg",
++  "./art/65118318.jpg",
+   "./art/65741786.jpg",
+   "./art/66011101.webp",
+   "./art/66206748.jpg",
+   "./art/6637331.jpg",
+   "./art/66574418.jpg",
++  "./art/67115133.jpg",
++  "./art/67515699.jpg",
+   "./art/68304193.jpg",
+   "./art/68468459.jpg",
+   "./art/69540484.jpg",
+@@ -231,6 +250,8 @@
+   "./art/70368879.jpg",
+   "./art/70493141.jpg",
+   "./art/70534340.jpg",
++  "./art/71068247.jpg",
++  "./art/71166481.jpg",
+   "./art/71222868.jpg",
+   "./art/72167543.jpg",
+   "./art/73542331.jpg",
+@@ -242,16 +263,22 @@
+   "./art/75047173.jpg",
+   "./art/75147529.jpg",
+   "./art/76072561.jpg",
++  "./art/76630812.jpg",
++  "./art/76660178.jpg",
+   "./art/76666602.jpg",
++  "./art/77482666.jpg",
+   "./art/78114463.jpg",
+   "./art/78144171.jpg",
+   "./art/78199891.jpg",
+   "./art/78534861.jpg",
+   "./art/79447365.jpg",
++  "./art/79791695.jpg",
+   "./art/79912449.jpg",
+   "./art/80044027.jpg",
+   "./art/80117527.jpg",
++  "./art/80181649.jpg",
+   "./art/80326401.jpg",
++  "./art/80538047.jpg",
+   "./art/80843006.jpg",
+   "./art/81196066.webp",
+   "./art/81260679.jpg",
+@@ -267,6 +294,7 @@
+   "./art/83629030.jpg",
+   "./art/8379983.webp",
+   "./art/84192580.jpg",
++  "./art/84211599.jpg",
+   "./art/84550369.jpg",
+   "./art/8491308.jpg",
+   "./art/84988419.jpg",
+@@ -285,10 +313,14 @@
+   "./art/89631139.jpg",
+   "./art/89943723.jpg",
+   "./art/89997728.jpg",
++  "./art/90303227.jpg",
+   "./art/90448279.jpg",
+   "./art/90590303.webp",
+   "./art/90673288.jpg",
++  "./art/91025875.jpg",
+   "./art/91500017.jpg",
++  "./art/92221402.jpg",
++  "./art/92248362.jpg",
+   "./art/92519087.jpg",
+   "./art/93039339.jpg",
+   "./art/93347961.jpg",
+@@ -312,17 +344,6 @@
+   "./art/98829635.jpg",
+   "./art/99330325.jpg",
+   "./art/99550630.jpg",
+-  "./art/40235813.jpg",
+-  "./art/77482666.jpg",
+-  "./art/4881365.jpg",
+-  "./art/3129527.jpg",
+-  "./art/76630812.jpg",
+-  "./art/65118318.jpg",
+-  "./art/2606417.jpg",
+-  "./art/76660178.jpg",
+-  "./art/17242022.jpg",
+-  "./art/79791695.jpg",
+-  "./art/40275470.jpg",
+   "./audio/CREDITS.md",
+   "./audio/ddl-track-battle-groove.mp3",
+   "./audio/ddl-track-buant-groove.mp3",
+diff --git a/dist/sw.js b/dist/sw.js
+index 7a0d60b..8314f4f 100644
+--- a/dist/sw.js
++++ b/dist/sw.js
+@@ -1,6 +1,6 @@
+-// r35.7 (r35.6 + new deck Time Typhoon: K9 Radiant Typhoon Dark Time Wizard, Kevy's list 29 Oct; 11 cards from ProjectIgnis BabelCDB/CardScripts with pinned sources; AI brain + combo book): cache 2026-10-29-r35.7. // r35.6 (r35.5 + job 29 fix: Cosmic Cyclone / MST / Twin Twisters / Tornado Dragon / Galaxy Cyclone need a TARGETABLE opposing Spell/Trap; Hu-Li shield per printed text; RELAY-063/064/065, Seto 05:25 + 07:20): cache 2026-10-29-r35.6. // r35.5 (r35.4 + RELAY-058 ledger restart fix + RELAY-059 Skip cancels the shuffle overlay): cache 2026-10-28-r35.5. // r35.2 (effect-ready pile glow, Mikanko damage plan + Akiza E1): cache 2026-10-24-r35.2. r35.1 (Kevy's soundtrack update, 80% audio defaults): cache 2026-10-24-r35.1. r35 (effect titles, public card names): cache 2026-10-24-r35. r34.1 (card-slap chain sounds, tablet smoothness): cache 2026-10-23-r34.1. r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31, r32 (captions, hand traps, going-second holds, new soundtrack): 2026-10-22-r32, r32.1 (Link boss hold, draw spells, Mirrorjade wipe, music picker): 2026-10-22-r32-1, r33 (deck lists, tablet smoothness, Branded deck brain): 2026-10-23-r33, r34 (deck brains, Mikanko/Sky/Branded book updates, ChatGPT N3-N5 fixes): 2026-10-23-r34, r33.1 (ChatGPT review fixes: Imperm/Veiler targets, caption reset): 2026-10-23-r33-1): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
++// r35.8 (r35.7 + art for the 21 Time Typhoon cards that had none, and the deck-list viewer data rebuilt to include Time Typhoon; Kevy 14:29 screenshots): cache 2026-10-29-r35.8. // r35.7 (r35.6 + new deck Time Typhoon: K9 Radiant Typhoon Dark Time Wizard, Kevy's list 29 Oct; 11 cards from ProjectIgnis BabelCDB/CardScripts with pinned sources; AI brain + combo book): cache 2026-10-29-r35.7. // r35.6 (r35.5 + job 29 fix: Cosmic Cyclone / MST / Twin Twisters / Tornado Dragon / Galaxy Cyclone need a TARGETABLE opposing Spell/Trap; Hu-Li shield per printed text; RELAY-063/064/065, Seto 05:25 + 07:20): cache 2026-10-29-r35.6. // r35.5 (r35.4 + RELAY-058 ledger restart fix + RELAY-059 Skip cancels the shuffle overlay): cache 2026-10-28-r35.5. // r35.2 (effect-ready pile glow, Mikanko damage plan + Akiza E1): cache 2026-10-24-r35.2. r35.1 (Kevy's soundtrack update, 80% audio defaults): cache 2026-10-24-r35.1. r35 (effect titles, public card names): cache 2026-10-24-r35. r34.1 (card-slap chain sounds, tablet smoothness): cache 2026-10-23-r34.1. r18.1/r21 (r22-engine: cache 2026-10-21-r22engine, r22.1 art: 2026-10-21-r22art, r22b (badge r22b): 2026-10-21-r22b, r23-fx: 2026-10-21-r23fx, r23b (climbing action-jazz score): 2026-10-21-r23b, r24 (cutscenes, soundtrack): 2026-10-21-r24, r25 (Branded v5.3, 19 Oct default): 2026-10-21-r25, r26 (v5.3 book, longer cutscenes, bold panels): 2026-10-21-r26, r27 (deck review: Kashtira/Blue-Eyes/Toon books, tribute rule): 2026-10-22-r27, r28 (Lunalight book, Learning route lines, rendered SFX): 2026-10-22-r28, r29 (human-paced AI decisions): 2026-10-22-r29, r30 (book-trust AI, Branded holds): 2026-10-22-r30, r31 (HERO and Mikanko books): 2026-10-22-r31, r32 (captions, hand traps, going-second holds, new soundtrack): 2026-10-22-r32, r32.1 (Link boss hold, draw spells, Mirrorjade wipe, music picker): 2026-10-22-r32-1, r33 (deck lists, tablet smoothness, Branded deck brain): 2026-10-23-r33, r34 (deck brains, Mikanko/Sky/Branded book updates, ChatGPT N3-N5 fixes): 2026-10-23-r34, r33.1 (ChatGPT review fixes: Imperm/Veiler targets, caption reset): 2026-10-23-r33-1): per-build cache name. On activate, remove older caches of this build (ddl-test-r21-*) and every legacy
+ // duel-lab-* cache (r17 and earlier), so devices that update don't keep stale copies; unrelated caches are left alone.
+-const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-29-r35.7',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
++const CACHE_PREFIX='ddl-test-r21-',CACHE=CACHE_PREFIX+'2026-10-29-r35.8',OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
+ self.addEventListener('install',event=>event.waitUntil((async()=>{const manifest=await fetch('./offline-assets.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Offline manifest unavailable');return r.json()});const cache=await caches.open(CACHE);for(let i=0;i<manifest.length;i+=12)await cache.addAll(manifest.slice(i,i+12));await self.skipWaiting()})()));
+ self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&OLD_PREFIXES.some(prefix=>key.startsWith(prefix)))await caches.delete(key);await self.clients.claim()})()));
+ self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==self.location.origin)return;event.respondWith((async()=>{const cache=await caches.open(CACHE);if(event.request.mode==='navigate'){try{const response=await fetch(event.request);if(response.ok){await cache.put('./',response.clone());return response}}catch{}return await cache.match('./')||await cache.match('./index.html')||Response.error()}return await cache.match(event.request)||await fetch(event.request)})())});
+diff --git a/tests/r36-dtw-identity.test.mjs b/tests/r36-dtw-identity.test.mjs
+index d708f42..7efe851 100644
+--- a/tests/r36-dtw-identity.test.mjs
++++ b/tests/r36-dtw-identity.test.mjs
+@@ -5,7 +5,8 @@
+ //  2 Every shared script (utility, proc_*, constants, lab_*) and every existing c*.lua is in that byte-identical set.
+ //  3 The new scripts define CARD_DARK_TIME_WIZARD only as a LOCAL (no new global, no shared-file change), and each new
+ //    script minus its 1-2 line header is byte-identical to its pinned upstream copy (tools/data/r36-betb-sources.json).
+-//  4 Every card in the new deck exists, has a script where it needs one, and the list is legal on tcg-2026-10-19
++//  4 Every card in the new deck has art (file present) and is in the deck-list viewer data (dist/deck-cards.json);
++//    every card in the new deck exists, has a script where it needs one, and the list is legal on tcg-2026-10-19
+ //    (counts per name across Main + Extra + Side, Forbidden / Limited / Semi-Limited).
+ import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';import {gunzipSync} from 'node:zlib';
+ const sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+@@ -15,7 +16,12 @@ const NEW_NOTES=['40235813','77482666','4881365','76660178','3129527','76630812'
+ const ser=o=>JSON.stringify(o);
+ // 1 + 2
+ const cards=JSON.parse(gunzipSync(fs.readFileSync('dist/cards.json.gz'))),scripts=JSON.parse(gunzipSync(fs.readFileSync('dist/scripts.json.gz'))),decks=JSON.parse(fs.readFileSync('dist/decks.json','utf8'));
+-{const c={...cards};for(const i of [...NEW,...TOKENS]){assert.ok(c[i],'added card '+i);delete c[i]}assert.equal(sha(ser(c)),R35_6.cards,'cards.json minus the 12 additions = r35.6 byte for byte')}
++// r36 art (Kevy 14:29 "Missing card arts"): 21 cards already in the database got a display-only 'art' path; that key is the
++// only change to those entries, so removing it (and the 12 added cards) must give r35.6 byte for byte.
++const ART_ADDED=[80538047,54143349,92248362,28642461,91025875,67115133,5318639,80181649,53792930,92221402,84211599,4423206,71068247,71166481,27420823,67515699,90303227,34876719,61374414,49456901,59438930];
++{const c={...cards};for(const i of [...NEW,...TOKENS]){assert.ok(c[i],'added card '+i);delete c[i]}
++ for(const i of ART_ADDED){assert.equal(c[i].art,'art/'+i+'.jpg','art path '+i);assert.ok(fs.existsSync('dist/art/'+i+'.jpg'),'art file '+i);const {art,...rest}=c[i];c[i]=rest}
++ assert.equal(sha(ser(c)),R35_6.cards,'cards.json minus the 12 additions and the 21 art paths = r35.6 byte for byte')}
+ {const s={...scripts};for(const i of NEW){assert.ok(s['c'+i+'.lua'],'added script '+i);delete s['c'+i+'.lua']}assert.equal(sha(ser(s)),R35_6.scripts,'scripts.json minus the 11 additions = r35.6 byte for byte (every shared and existing script unchanged)')}
+ {const d=JSON.parse(JSON.stringify(decks));assert.equal(d.decks.at(-1).id,'dtw','the new deck is appended last');d.decks.pop();for(const k of NEW_NOTES){assert.ok(d.notes[k],'note '+k);delete d.notes[k]}
+  assert.equal(sha(ser(d)),R35_6.decks,'decks.json minus the new deck and its 10 card notes = r35.6 byte for byte')}
+@@ -32,5 +38,7 @@ assert.equal(cards[79791695].name,'CXyz Hope Chaos Barian Dragon','official TCG
+ const bl=JSON.parse(fs.readFileSync('dist/banlists/tcg-2026-10-19.json','utf8')).cards,dtw=decks.decks.find(x=>x.id==='dtw'),v=dtw.banlistVariants['tcg-2026-10-19'];
+ assert.deepEqual([v.main.length,v.extra.length,v.side.length],[40,15,15],'40 / 15 / 15');
+ const count=new Map();for(const id of [...v.main,...v.extra,...v.side]){const c=cards[id];assert.ok(c,'card exists '+id);if(c.type&(32|2|4|16777216))assert.ok(scripts['c'+(c.alias||id)+'.lua']||scripts['c'+id+'.lua'],'script for '+c.name);const base=String(c.alias||id);count.set(base,(count.get(base)||0)+1)}
++for(const id of new Set([...v.main,...v.extra,...v.side]))assert.ok(cards[id].art&&fs.existsSync('dist/'+cards[id].art),'art for '+cards[id].name+' (Kevy 14:29: missing card arts)');
++{const dc=JSON.parse(fs.readFileSync('dist/deck-cards.json','utf8')).cards;for(const id of new Set([...v.main,...v.extra,...v.side]))assert.ok(dc[id]?.art,'deck-list viewer data has '+cards[id].name)}
+ for(const [id,n] of count){const lim=bl[id]?.max??3;assert.ok(n<=lim,cards[id].name+': '+n+' copies, limit '+lim)}
+ console.log(JSON.stringify({test:'r36-dtw-identity',pass:true,node:process.version,added:{cards:NEW.length+TOKENS.length,scripts:NEW.length},distinctNames:count.size}));
+diff --git a/tools/data/r36-betb-sources.json b/tools/data/r36-betb-sources.json
+index 943dc57..d6b79ab 100644
+--- a/tools/data/r36-betb-sources.json
++++ b/tools/data/r36-betb-sources.json
+@@ -165,5 +165,196 @@
+    "sha256": "fd47801524cff44315561ff47b13a622bf1f897f25afa204483d33be400aee48",
+    "source": "https://images.ygoprodeck.com/images/cards/40275470.jpg"
+   }
++ },
++ "artExistingCards": {
++  "80538047": {
++   "name": "Radiant Typhoon Swen",
++   "file": "art/80538047.jpg",
++   "sha256": "20c39df6c1750a08115ad02da19ca6c7bd2d729177f2bc1ed87f26e146813964",
++   "bytes": 211255,
++   "source": "https://images.ygoprodeck.com/images/cards/80538047.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "54143349": {
++   "name": "Radiant Typhoon Eldam",
++   "file": "art/54143349.jpg",
++   "sha256": "fb464add8b4e66c607d0780bf1f311afcaf980b639f88beecc2989b4175a31e0",
++   "bytes": 206374,
++   "source": "https://images.ygoprodeck.com/images/cards/54143349.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "92248362": {
++   "name": "K9-17 Izuna",
++   "file": "art/92248362.jpg",
++   "sha256": "48db992fb4f41a43a91a0bf7e51a3126d9d79bf030b4bd02ad45685ae0b9fc95",
++   "bytes": 190989,
++   "source": "https://images.ygoprodeck.com/images/cards/92248362.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "28642461": {
++   "name": "K9-66a Jokul",
++   "file": "art/28642461.jpg",
++   "sha256": "b7aebbec1729ef85f93e0221ec360b878a3d8f51895329d14576ffaf22eb64f1",
++   "bytes": 191656,
++   "source": "https://images.ygoprodeck.com/images/cards/28642461.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "91025875": {
++   "name": "K9-ØØ Lupis",
++   "file": "art/91025875.jpg",
++   "sha256": "f9bbb8939ec672baff2adf0eb99533548616a28d98960379b7c3341806149b5d",
++   "bytes": 165089,
++   "source": "https://images.ygoprodeck.com/images/cards/91025875.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "67115133": {
++   "name": "Radiant Typhoon Chant",
++   "file": "art/67115133.jpg",
++   "sha256": "416e4d6b56065c965f27e427895988082c78f76346f92d822d187099e6a69a94",
++   "bytes": 171464,
++   "source": "https://images.ygoprodeck.com/images/cards/67115133.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "5318639": {
++   "name": "Mystical Space Typhoon",
++   "file": "art/5318639.jpg",
++   "sha256": "cff20f0437fd05223125875cdf9174566eeb8829d8ffdc536c77629bd6f91f37",
++   "bytes": 136476,
++   "source": "https://images.ygoprodeck.com/images/cards/5318639.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "80181649": {
++   "name": "\"A Case for K9\"",
++   "file": "art/80181649.jpg",
++   "sha256": "a85be83483ff20f616fd256c13add512f9b51da9ff7d185ed68263e91ab11493",
++   "bytes": 172578,
++   "source": "https://images.ygoprodeck.com/images/cards/80181649.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "53792930": {
++   "name": "K9-X Forced Release",
++   "file": "art/53792930.jpg",
++   "sha256": "6cc9b620c361ca8e4b3e866014f97da8242a34626fdaeb07669c009d12c5459c",
++   "bytes": 186635,
++   "source": "https://images.ygoprodeck.com/images/cards/53792930.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "92221402": {
++   "name": "Chaotic Elements",
++   "file": "art/92221402.jpg",
++   "sha256": "f9867e3ba9aa97b35dc245634804ad4e5c8096e6678f4518f2dc70e416b7b45b",
++   "bytes": 175086,
++   "source": "https://images.ygoprodeck.com/images/cards/92221402.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "84211599": {
++   "name": "Pot of Prosperity",
++   "file": "art/84211599.jpg",
++   "sha256": "89122ff725982053881b81f56e52efe74b4c3472af80fa63df8e1e4639ab72a5",
++   "bytes": 176696,
++   "source": "https://images.ygoprodeck.com/images/cards/84211599.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "4423206": {
++   "name": "M-X-Saber Invoker",
++   "file": "art/4423206.jpg",
++   "sha256": "af134f5642892eb1b601180aed3e6e07eb97e8a6a12586278f3db9783c778b2d",
++   "bytes": 161868,
++   "source": "https://images.ygoprodeck.com/images/cards/4423206.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "71068247": {
++   "name": "Totem Bird",
++   "file": "art/71068247.jpg",
++   "sha256": "32bfa3f331401a3976d393b36102fa50b05b875428b7b216d160442885ae59f5",
++   "bytes": 162501,
++   "source": "https://images.ygoprodeck.com/images/cards/71068247.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "71166481": {
++   "name": "Number 75: Bamboozling Gossip Shadow",
++   "file": "art/71166481.jpg",
++   "sha256": "da3ff0b4af8c181c1a22127c42e41e59a1a11bb6e932b99c8c4c1e6691a59ebd",
++   "bytes": 160860,
++   "source": "https://images.ygoprodeck.com/images/cards/71166481.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "27420823": {
++   "name": "K9-17 \"Ripper\"",
++   "file": "art/27420823.jpg",
++   "sha256": "76e0997a085b668fb337d6d6d8719f0f06e8f03aaefa6dd5284759c34c16a6df",
++   "bytes": 188719,
++   "source": "https://images.ygoprodeck.com/images/cards/27420823.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "67515699": {
++   "name": "K9-66X \"Jacks\"",
++   "file": "art/67515699.jpg",
++   "sha256": "bb495b0cefa383860b823395e37150650c725f6e48a244e8b455fd33e1f1a432",
++   "bytes": 217387,
++   "source": "https://images.ygoprodeck.com/images/cards/67515699.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "90303227": {
++   "name": "K9-X \"Werewolf\"",
++   "file": "art/90303227.jpg",
++   "sha256": "96c6d5bad5e49646775a6f8621bb826c9b1937649b6ce46fa73858a933b2b196",
++   "bytes": 188214,
++   "source": "https://images.ygoprodeck.com/images/cards/90303227.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "34876719": {
++   "name": "N.As.H. Knight",
++   "file": "art/34876719.jpg",
++   "sha256": "4f3a00873ff92d73ac77a2fe9f5cdbcfb4d4c8704f930b53d52a429504a3062d",
++   "bytes": 181379,
++   "source": "https://images.ygoprodeck.com/images/cards/34876719.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "61374414": {
++   "name": "CXyz N.As.Ch. Knight",
++   "file": "art/61374414.jpg",
++   "sha256": "2cb5634a0a80fd5004da1e050c5d3d5401bd0f832a7578e5c8b778c0752d47f0",
++   "bytes": 183007,
++   "source": "https://images.ygoprodeck.com/images/cards/61374414.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "49456901": {
++   "name": "Number C104: Umbral Horror Masquerade",
++   "file": "art/49456901.jpg",
++   "sha256": "507d94295d3847ba0a4bf09f537e6f5ac994384f25b923113e7c364c03803a86",
++   "bytes": 185032,
++   "source": "https://images.ygoprodeck.com/images/cards/49456901.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  },
++  "59438930": {
++   "name": "Ghost Ogre & Snow Rabbit",
++   "file": "art/59438930.jpg",
++   "sha256": "13eff2d0f7c4f077cddae68baba5b56c61c8502c0793aa645a255dd88d9ea915",
++   "bytes": 180377,
++   "source": "https://images.ygoprodeck.com/images/cards/59438930.jpg",
++   "downloaded": "2026-10-29 (Australia/Sydney)",
++   "unedited": true
++  }
+  }
+ }
+diff --git a/tools/r36-add-dtw-art.py b/tools/r36-add-dtw-art.py
+new file mode 100644
+index 0000000..ed25ff8
+--- /dev/null
++++ b/tools/r36-add-dtw-art.py
+@@ -0,0 +1,43 @@
++"""r36 (Claude, 29 Oct 2026; Kevy 14:29 screenshots: "Missing card arts").
++Time Typhoon uses 21 cards that were already in our card database but had no art, because no earlier preset deck used
++them (MST, "A Case for K9", K9-66X "Jacks", the K9 and Radiant Typhoon monsters ...). This adds their art the same way
++every existing art file was added: the unedited YGOPRODeck image (813x1185 jpg), an 'art' path in the card entry placed
++before 'scriptSupported' (the key order every card with art already has), and the file in offline-assets.json.
++The 'art' key is display-only: the engine never reads it. No other field of any entry changes (checked below).
++Usage: python3 tools/r36-add-dtw-art.py <folder with the 21 downloaded <id>.jpg files>
++"""
++import sys,os,json,gzip,hashlib
++ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
++ART=[80538047,54143349,92248362,28642461,91025875,67115133,5318639,80181649,53792930,92221402,84211599,
++     4423206,71068247,71166481,27420823,67515699,90303227,34876719,61374414,49456901,59438930]
++def gz_read(p):return gzip.decompress(open(p,'rb').read())
++def gz_write(p,obj):open(p,'wb').write(gzip.compress(json.dumps(obj,ensure_ascii=False,separators=(',',':')).encode(),mtime=0))
++def main(dl):
++    cards_p=os.path.join(ROOT,'dist/cards.json.gz');raw=gz_read(cards_p);cards=json.loads(raw)
++    assert json.dumps(cards,ensure_ascii=False,separators=(',',':')).encode()==raw,'cards.json round trip'
++    before={k:dict(v) for k,v in cards.items()}
++    pins=json.load(open(os.path.join(ROOT,'tools/data/r36-betb-sources.json')))
++    rec=pins.setdefault('artExistingCards',{})
++    for i in ART:
++        c=cards[str(i)];assert 'art' not in c,f'{i} already has art'
++        src=os.path.join(dl,f'{i}.jpg');b=open(src,'rb').read();assert b[:3]==b'\xff\xd8\xff',f'{i} not a jpeg'
++        open(os.path.join(ROOT,'dist/art',f'{i}.jpg'),'wb').write(b)
++        n={}
++        for k,v in c.items():
++            if k=='scriptSupported':n['art']=f'art/{i}.jpg'
++            n[k]=v
++        assert 'art' in n;cards[str(i)]=n
++        rec[str(i)]={'name':c['name'],'file':f'art/{i}.jpg','sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b),
++                     'source':f'https://images.ygoprodeck.com/images/cards/{i}.jpg','downloaded':'2026-10-29 (Australia/Sydney)','unedited':True}
++    for k,v in cards.items():
++        o=before[k]
++        if int(k) in ART:assert {a:b for a,b in v.items() if a!='art'}==o and list(x for x in v if x!='art')==list(o),k
++        else:assert v==o,k
++    gz_write(cards_p,cards)
++    a_p=os.path.join(ROOT,'dist/offline-assets.json');a=json.load(open(a_p))
++    first=next(j for j,x in enumerate(a) if x.startswith('./art/'));last=max(j for j,x in enumerate(a) if x.startswith('./art/'))
++    arts=sorted(a[first:last+1]+[f'./art/{i}.jpg' for i in ART]);assert len(set(arts))==len(arts)
++    open(a_p,'w').write(json.dumps(a[:first]+arts+a[last+1:],indent=2)+'\n')
++    open(os.path.join(ROOT,'tools/data/r36-betb-sources.json'),'w').write(json.dumps(pins,indent=1,ensure_ascii=False)+'\n')
++    print(json.dumps({'art_added':len(ART),'cards_with_art':sum(1 for v in cards.values() if 'art' in v)}))
++if __name__=='__main__':main(sys.argv[1])
+-- 
+2.43.0
+

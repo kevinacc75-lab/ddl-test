@@ -1,0 +1,75 @@
+// r36 Time Typhoon, NATIVE fixtures closing the gaps listed in the review package (Claude, 29 Oct 2026). SELF-VERIFIED
+// (builder = verifier), NOT independent. Real engine; tools/s3-harness.mjs.
+//  V  Sleepy Scapegoats' substitution: their Lightning Storm would destroy our face-up Alligator's Dragon Knight (it
+//     mentions Dark Time Wizard); we destroy 1 Scapegoat Token instead, and Alligator stays.
+//  W  Red-Eyes Black Dragon Exceed is NOT protected from Traps (R1): their Infinite Impermanence negates it.
+//  X  Foolish Graverobber's GY effect: banish it to Set 1 Spell from THEIR GY (Raigeki) to our field.
+//  Y  Fisherman of Legend: summoned on their turn, destroys their monster, then returns to our hand in that End Phase.
+//  Z  Swiftwind Panther Warrior CAN declare an attack once a monster was Tributed this turn (the other side of native N).
+import assert from 'node:assert/strict';
+import {engine,stopEngine,scenario,drive,labels,seatOf,M,R,hand,field,gy} from '../tools/s3-harness.mjs';
+await engine();
+const ALLI="Alligator's Dragon Knight",EX='Red-Eyes Black Dragon Exceed',P='Swiftwind Panther Warrior',F='Fisherman of Legend';
+const nm=(d,l)=>l.map(c=>d.name(c.code));
+const auto=d=>{const m=d.prompt;if(m.type===M.SELECT_PLACE){d.respond(d.choices()[0].response);return true}if(m.type===M.SELECT_POSITION){d.respond((d.choices().find(o=>o.label==='Face-up Attack')||d.choices()[0]).response);return true}return false};
+const sel=d=>d.prompt.selects||d.prompt.select_cards||[];
+const pickName=(d,n)=>{const m=d.prompt,j=sel(d).findIndex(c=>d.name(c.code)===n);if(j<0)return false;d.respond(m.type===M.SELECT_UNSELECT_CARD?{type:R.SELECT_UNSELECT_CARD,index:j}:{type:R.SELECT_CARD,indicies:[j]});return true};
+const results={};
+// V
+{const d=scenario(['dtw','mikanko'],[{name:'Sleepy Scapegoats',location:2,owner:0},{name:ALLI,location:4,owner:0},{name:'Lightning Storm',location:2,owner:1}],{first:0,seed:11});
+ const r1=drive(d,{steps:{0:['Activate · Sleepy Scapegoats']},onPrompt:dd=>{if(auto(dd))return true;if(dd.prompt.type===M.ANNOUNCE_NUMBER){dd.respond(dd.choices().at(-1).response);return true}return false},
+  until:dd=>dd.prompt.type===M.SELECT_IDLECMD&&seatOf(dd.prompt)===0&&field(dd,0).some(c=>/Token/.test(dd.name(c.code)))});
+ assert.ok(r1.stopped,'(V) Tokens summoned: '+JSON.stringify(r1).slice(0,300));const tokens0=field(d,0).filter(c=>/Token/.test(d.name(c.code))).length;
+ let offered=false;
+ const r2=drive(d,{steps:{0:['End turn'],1:['Activate · Lightning Storm']},max:400,onPrompt:dd=>{if(auto(dd))return true;const m=dd.prompt,s=seatOf(m);
+   if(s===1&&m.type===M.SELECT_OPTION){const L=labels(dd),j=L.findIndex(l=>/Attack Position|monster/i.test(l));dd.respond(dd.choices()[j<0?0:j].response);return true}
+   if(s===0&&(m.type===M.SELECT_EFFECTYN||m.type===M.SELECT_YESNO)&&dd.turn===2){offered=true;dd.respond(dd.choices().find(o=>o.label==='Yes').response);return true}
+   if(s===0&&dd.turn===2&&[M.SELECT_CARD,M.SELECT_UNSELECT_CARD].includes(m.type)){const j=sel(dd).findIndex(c=>/Token/.test(dd.name(c.code)));if(j>=0){offered=true;pickName(dd,dd.name(sel(dd)[j].code));return true}}
+   return false},
+  until:dd=>dd.turn===2&&gy(dd,1).some(c=>dd.name(c.code)==='Lightning Storm')&&!dd.chain?.length&&seatOf(dd.prompt)===1&&dd.prompt.type===M.SELECT_IDLECMD});
+ assert.ok(r2.stopped,'(V) their Lightning Storm resolved: '+JSON.stringify(r2).slice(0,300));
+ const tokens1=field(d,0).filter(c=>/Token/.test(d.name(c.code))).length;
+ assert.equal(offered,true,'(V) the substitution was offered');
+ assert.ok(field(d,0).some(c=>d.name(c.code)===ALLI),'(V) Alligator survives: '+nm(d,field(d,0)));
+ assert.equal(tokens1,tokens0-1,'(V) one Token destroyed instead');
+ results.V={tokensBefore:tokens0,tokensAfter:tokens1,ourField:nm(d,field(d,0))};d.stop()}
+// W
+{const d=scenario(['dtw','dtw'],[{name:EX,location:4,owner:0},{name:'Infinite Impermanence',location:8,owner:1,position:10}],{first:0,seed:11});
+ const r=drive(d,{steps:{0:['End turn'],1:['Chain · Infinite Impermanence','pick:'+EX]},max:300,onPrompt:auto,
+  until:dd=>gy(dd,1).some(c=>dd.name(c.code)==='Infinite Impermanence')&&!dd.chain?.length});
+ assert.ok(r.stopped,'(W) their Infinite Impermanence resolved: '+JSON.stringify(r).slice(0,300));
+ const e=field(d,0).find(c=>d.name(c.code)===EX);assert.ok(e,'(W) Exceed still on the field');assert.ok(e.status&1,'(W) Exceed is negated by their Trap (its protection covers monster and Spell effects only)');
+ results.W={status:e.status};d.stop()}
+// X
+{const d=scenario(['dtw','mikanko'],[{name:'Foolish Graverobber',location:16,owner:0},{name:'Raigeki',location:16,owner:1}],{first:0,seed:11});
+ const r=drive(d,{steps:{0:['Activate · Foolish Graverobber','pick:Raigeki']},onPrompt:auto,max:200,
+  until:dd=>dd.prompt.type===M.SELECT_IDLECMD&&seatOf(dd.prompt)===0&&d.zone(0,8).some(c=>c&&dd.name(c.code)==='Raigeki')});
+ assert.ok(r.stopped,'(X) Raigeki Set on our field: '+JSON.stringify(r).slice(0,300));
+ const s=d.zone(0,8).find(c=>c&&d.name(c.code)==='Raigeki');assert.ok(!(s.position&5),'(X) it is Set (face-down)');
+ assert.ok(!gy(d,0).some(c=>d.name(c.code)==='Foolish Graverobber'),'(X) Graverobber left the GY (banished as the cost)');
+ results.X={set:'Raigeki',position:s.position};d.stop()}
+// Y
+{const d=scenario(['dtw','dtw'],[{name:ALLI,location:4,owner:0},{name:F,location:2,owner:0},{name:'Radiant Typhoon Eldam',location:2,owner:1}],{first:1,seed:11});
+ let summoned=false;
+ const r=drive(d,{steps:{1:['Normal Summon · Radiant Typhoon Eldam','Yes','pick:Radiant Typhoon Swen','End turn']},max:600,onPrompt:dd=>{if(auto(dd))return true;const m=dd.prompt;if(seatOf(m)!==0||dd.turn!==1)return false;
+   if((m.type===M.SELECT_EFFECTYN||m.type===M.SELECT_YESNO)&&m.code&&dd.name(m.code)===F){dd.respond(dd.choices().find(o=>o.label==='Yes').response);return true}
+   if(m.type===M.SELECT_CHAIN){const c=dd.choices().find(o=>o.label.includes(F));if(c){dd.respond(c.response);return true}}
+   if([M.SELECT_CARD,M.SELECT_UNSELECT_CARD].includes(m.type)&&pickName(dd,'Radiant Typhoon Eldam'))return true;
+   return false},
+  until:dd=>{if(field(dd,0).some(c=>dd.name(c.code)===F))summoned=true;return dd.turn===2&&seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_IDLECMD}});
+ assert.ok(r.stopped,'(Y) reached our turn: '+JSON.stringify(r).slice(0,300));
+ assert.equal(summoned,true,'(Y) Fisherman was Special Summoned on their turn');
+ assert.ok(!field(d,1).some(c=>d.name(c.code)==='Radiant Typhoon Eldam'),'(Y) their Eldam destroyed');
+ assert.ok(hand(d,0).some(c=>d.name(c.code)===F)&&!field(d,0).some(c=>d.name(c.code)===F),'(Y) Fisherman back in our hand after their End Phase');
+ results.Y={ourHand:nm(d,hand(d,0)),theirField:nm(d,field(d,1))};d.stop()}
+// Z
+{const d=scenario(['dtw','dtw'],[{name:P,location:4,owner:0},{name:'Radiant Typhoon Swen',location:2,owner:0}],{first:1,seed:11});
+ const r=drive(d,{steps:{0:['Activate · '+P,'pick:Radiant Typhoon Swen','pick:Reversal Box','Battle'],1:['End turn']},max:400,onPrompt:dd=>{if(auto(dd))return true;const m=dd.prompt;
+   if(seatOf(m)===0&&m.type===M.SELECT_OPTION){const j=labels(dd).findIndex(l=>/Send/i.test(l));dd.respond(dd.choices()[j<0?1:j].response);return true}return false},
+  until:dd=>seatOf(dd.prompt)===0&&dd.prompt.type===M.SELECT_BATTLECMD});
+ assert.ok(r.stopped,'(Z) our Battle Phase: '+JSON.stringify(r).slice(0,300));
+ assert.ok(gy(d,0).some(c=>d.name(c.code)==='Radiant Typhoon Swen'),'(Z) Swen was Tributed');
+ const atk=(d.prompt.attacks||[]).map(c=>d.name(c.code));assert.ok(atk.includes(P),'(Z) Panther can attack after a Tribute this turn: '+atk);
+ results.Z={attackers:atk,ourGy:nm(d,gy(d,0))};d.stop()}
+stopEngine();
+console.log(JSON.stringify({test:'r36-dtw-native4',pass:true,node:process.version,results}));

@@ -1,0 +1,27 @@
+From 428424d0b226dbdd872dc64e1f0a9fd8f6bb3eb5 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 13:20:27 +1100
+Subject: [PATCH 06/14] r27 audit tool: write <out>.partial after every seed so
+ a timeout keeps finished seeds (tooling only)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tools/r27-deck-audit.mjs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/r27-deck-audit.mjs b/tools/r27-deck-audit.mjs
+index de8c8a1..5bcfe5c 100644
+--- a/tools/r27-deck-audit.mjs
++++ b/tools/r27-deck-audit.mjs
+@@ -53,6 +53,6 @@ for(let k=0;k<N;k++){const seed=start+k,opp=opps[k%opps.length],first=order==='f
+   if(s===0&&cur){const txt=describe(p,plan.response);if(txt)cur.moves.push(txt+(plan.book?.rule?'   ['+plan.book.rule+']':''))}
+   if(s===0&&!cur&&p.type===M.SELECT_CHAIN&&plan.response.index!=null)(row.oppTurnResponses||=[]).push('t'+d.turn+' chain: '+nm(p.selects[plan.response.index]));
+   d.respond(plan.response);for(const x of pilots)x.observe?.(plan);n++}
+- close();row.guards=(pilots[0].blocks||[]).filter(b=>b.seat===0).map(b=>'t'+b.turn+': '+b.reason);row.finished=d.finished;row.winner=d.finished?d.winner:null;out.push(row);d.stop();if(search)dropAllPools();
++ close();row.guards=(pilots[0].blocks||[]).filter(b=>b.seat===0).map(b=>'t'+b.turn+': '+b.reason);row.finished=d.finished;row.winner=d.finished?d.winner:null;out.push(row);d.stop();if(search)dropAllPools();{const f=arg('out',null);if(f)fs.writeFileSync(f+'.partial',JSON.stringify({deck:DECK,list:LIST,search,order,node:process.version,partial:true,rows:out},null,1))}/* r36: partial output after every seed, so a timeout keeps the finished seeds */
+  process.stderr.write(`${DECK} seed ${seed} vs ${opp} done (${Math.round((Date.now()-t0)/1000)}s)\n`)}
+ const file=arg('out',null);const json=JSON.stringify({deck:DECK,list:LIST,search,order,node:process.version,rows:out},null,1);if(file)fs.writeFileSync(file,json);else console.log(json);
+-- 
+2.43.0
+

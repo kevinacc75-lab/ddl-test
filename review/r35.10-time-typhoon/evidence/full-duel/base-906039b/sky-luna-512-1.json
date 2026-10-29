@@ -1,0 +1,796 @@
+{
+ "seed": 512,
+ "first": 1,
+ "decks": [
+  "sky",
+  "luna"
+ ],
+ "deadlineMs": 1500,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 0,
+ "turn": 6,
+ "lp": [
+  8000,
+  0
+ ],
+ "wallSec": 141,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 1,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Lunalight Perfume Dancer",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "active": 1,
+   "lp": [
+    8000,
+    5050
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Sky Striker Ace - Shizuku",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "active": 0,
+   "lp": [
+    8000,
+    5050
+   ],
+   "ownMons": [
+    {
+     "name": "Sky Striker Ace - Shizuku",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": []
+  },
+  {
+   "turn": 5,
+   "active": 1,
+   "lp": [
+    8000,
+    5050
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "active": 0,
+   "lp": [
+    8000,
+    5050
+   ],
+   "ownMons": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "oppMons": [
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1400,
+     "pos": "DEF"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Shizuku",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Perfume Dancer",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 3,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Shizuku",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 0,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace - Shizuku",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon Sky Striker Ace - Kagari",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 3
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace - Raye",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "atk": 2100,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "special summon S:P Little Knight",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Mobilize - Engage!",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "S:P Little Knight",
+     "atk": 1600,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Sky Striker Maneuver - Jamming Waves!",
+   "rule": "Win-focused candidate scoring",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "normal summon Sky Striker Ace - Raye",
+   "rule": "Blunder guard / relevant target",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "set Sky Striker Mecha - Widow Anchor",
+   "rule": "Prepare a later response",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "battle",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 5
+   }
+  },
+  {
+   "turn": 4,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 4
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Luna Light Perfume",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1400,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "activate Lunalight Kaleido Chick",
+   "rule": "Opening book LU-01",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1400,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 0
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "battle",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1400,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "to Main 2",
+   "rule": "Preserve the board",
+   "why": [],
+   "search": {
+    "status": "fallback",
+    "worlds": 1
+   }
+  },
+  {
+   "turn": 5,
+   "seat": 1,
+   "deck": "luna",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Lunalight Kaleido Chick",
+     "atk": 1400,
+     "pos": "DEF"
+    }
+   ],
+   "opp": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "atk": 2000,
+     "pos": "ATK"
+    }
+   ],
+   "canBattle": false,
+   "attacks": [],
+   "chose": "END TURN",
+   "rule": "Move to the next phase",
+   "why": [],
+   "search": null
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "sky",
+   "type": "main",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": true,
+   "attacks": [],
+   "chose": "BATTLE",
+   "rule": "Information-set root search",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "sky",
+   "type": "battle",
+   "lp": [
+    8000,
+    5050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "direct": true
+    },
+    {
+     "name": "Sky Striker Ace - Roze",
+     "direct": true
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Sky Striker Ace - Roze",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "sky",
+   "type": "battle",
+   "lp": [
+    8000,
+    3550
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "direct": true
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Sky Striker Ace - Roze",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 9
+   }
+  },
+  {
+   "turn": 6,
+   "seat": 0,
+   "deck": "sky",
+   "type": "battle",
+   "lp": [
+    8000,
+    2050
+   ],
+   "own": [
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Roze",
+     "atk": 1500,
+     "pos": "ATK"
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "atk": 2200,
+     "pos": "ATK"
+    }
+   ],
+   "opp": [],
+   "canBattle": false,
+   "attacks": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "direct": true
+    }
+   ],
+   "chose": "ATTACK with Sky Striker Ace - Kagari",
+   "rule": "Pursue projected lethal",
+   "why": [],
+   "search": {
+    "status": "reduced",
+    "worlds": 10
+   }
+  }
+ ]
+}

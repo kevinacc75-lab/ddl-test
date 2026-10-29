@@ -1,0 +1,47 @@
+{
+ "seed": 515,
+ "first": 0,
+ "decks": [
+  "kashtira",
+  "branded"
+ ],
+ "deadlineMs": 300,
+ "node": "v22.22.0",
+ "finished": true,
+ "winner": 1,
+ "turn": 2,
+ "lp": [
+  0,
+  8000
+ ],
+ "wallSec": 6,
+ "turns": [
+  {
+   "turn": 1,
+   "active": 0,
+   "lp": [
+    8000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": []
+  },
+  {
+   "turn": 2,
+   "active": 1,
+   "lp": [
+    5000,
+    8000
+   ],
+   "ownMons": [],
+   "oppMons": [
+    {
+     "name": "Kashtira Shangri-Ira",
+     "atk": 0,
+     "pos": "DEF"
+    }
+   ]
+  }
+ ],
+ "rows": []
+}

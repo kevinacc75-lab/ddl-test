@@ -1,0 +1,1 @@
+{"test":"r21-no-passive-search","pass":true,"openings":[{"seed":1,"opp":"sky","first":true,"searched":2,"passive":0},{"seed":2,"opp":"luna","first":false,"searched":5,"passive":0},{"seed":3,"opp":"mikanko","first":true,"searched":13,"passive":0},{"seed":4,"opp":"sky","first":false,"searched":25,"passive":0}]}

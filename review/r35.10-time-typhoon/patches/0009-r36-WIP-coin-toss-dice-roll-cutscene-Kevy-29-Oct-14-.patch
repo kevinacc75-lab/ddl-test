@@ -1,0 +1,549 @@
+From 92ece9a1fcb21884fea94b262558a1ea50562913 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 29 Oct 2026 16:43:22 +1100
+Subject: [PATCH 09/14] r36 WIP: coin toss / dice roll cutscene (Kevy 29 Oct
+ 14:29)
+
+- coin-tap.mjs: worker capture of the engine's TOSS_COIN / TOSS_DICE (+ the call read from the duel's own accepted
+  response to the 60 Heads / 61 Tails prompt), same conditions as ShuffleTap; worker.mjs sends coin:coinTap.drain().
+- coin-cutscene.mjs/.css: CoinScene (original coin + dice art, 3D toss/roll landing on the engine's result, RIGHT/WRONG
+  CALL, synthesized sound), coinBatches places each toss right after the event it followed; COIN_MS per preset.
+- presentation.mjs: coin batches in the queue (Skip works), clear/reset; app.mjs: dedupe per epoch, heads/tails call
+  buttons for the human's call.
+- tests/r36-coin.test.mjs: real-engine capture (right / wrong call, both call sides), no effect on the duel (with vs
+  without the tap), dice results match Graceful & Skull Dice's ATK change, ordering. SELF-VERIFIED.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/app.mjs             |  11 +++-
+ dist/coin-cutscene.css   |  61 ++++++++++++++++++++
+ dist/coin-cutscene.mjs   | 122 +++++++++++++++++++++++++++++++++++++++
+ dist/coin-tap.mjs        |  54 +++++++++++++++++
+ dist/index.html          |   2 +-
+ dist/offline-assets.json |   5 +-
+ dist/presentation.mjs    |  11 +++-
+ dist/worker.mjs          |  22 +++----
+ tests/r36-coin.test.mjs  |  66 +++++++++++++++++++++
+ 9 files changed, 338 insertions(+), 16 deletions(-)
+ create mode 100644 dist/coin-cutscene.css
+ create mode 100644 dist/coin-cutscene.mjs
+ create mode 100644 dist/coin-tap.mjs
+ create mode 100644 tests/r36-coin.test.mjs
+
+diff --git a/dist/app.mjs b/dist/app.mjs
+index f71aae1..f4b28c6 100644
+--- a/dist/app.mjs
++++ b/dist/app.mjs
+@@ -13,6 +13,11 @@ if(!preferences.mdVersion){preferences.effectPace='readable';preferences.mdVersi
+ if(!preferences.labVersion){preferences.preset='duel';preferences.tapToContinue=false;preferences.chainFlow=true;preferences.tabletStage=true;preferences.labVersion=2}
+ preferences.modePaces??={};preferences.chainView??='auto';
+ const sound=new Soundscape({enabled:preferences.sound,volume:preferences.volume});
++// r36 (Kevy 29 Oct 14:29, coin flip cutscene): the worker's coin envelope (coin-tap.mjs) is shown once per toss; ids are
++// deduped per epoch like the shuffle overlay, so a re-sent state never replays a toss.
++let coinSeen={epoch:null,high:0};function coinEpochOk(c){try{if(!c||!Number.isFinite(c.epoch)||!Array.isArray(c.tosses))return false;if(c.epoch!==coinSeen.epoch)coinSeen={epoch:c.epoch,high:0};const fresh=c.tosses.filter(t=>t&&Number(t.id)>coinSeen.high);for(const t of fresh)coinSeen.high=Math.max(coinSeen.high,Number(t.id));c.tosses=fresh;return fresh.length>0}catch{return false}}
++// The engine's "call it" prompt (SELECT_OPTION with the system strings 60 Heads / 61 Tails): shown as a coin, not a list.
++const COIN_CALL={60:'heads',61:'tails'};function isCoinCall(m){const o=(m?.options||[]).map(Number);return o.length===2&&o.every(v=>COIN_CALL[v])&&o[0]!==o[1]}
+ const shuffleOverlay=new ShuffleOverlay({sound,view:()=>view,options:()=>({enabled:preferences.shuffleFx!==false&&preferences.preset!=='instant',reduced:!!preferences.motion||!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches})});document.addEventListener('visibilitychange',()=>{if(document.hidden)shuffleOverlay.cancel()});
+ // RELAY-059: every Skip route also cancels the shuffle overlay locally (no worker message). The presentation's own Skip buttons and Escape on its scene dialogs get an extra listener here; presentation.mjs is unchanged.
+ for(const id of ['skip-fx','skip-scene','skip-victory'])document.getElementById(id)?.addEventListener('click',()=>shuffleOverlay.cancel());for(const id of ['summon-scene','victory-scene'])document.getElementById(id)?.addEventListener('cancel',()=>shuffleOverlay.cancel());
+@@ -141,7 +146,7 @@ $('#mode').onchange=()=>{$('#seat').disabled=$('#mode').value!=='play';selectMod
+ $('#import').onclick=()=>$('#file').click();$('#file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>65536)throw Error('Deck file is too large. Choose a .ydk file under 64 KB.');const d=expandYdk(await file.text(),db);d.name=file.name.replace(/\.ydk$/i,'').slice(0,60);decks.push(d);drawDecks();$('#deck-a').value=d.id;syncDeckSelection();saveImports();notify(deckWarning(d)||('Imported '+d.main.length+' Main / '+d.extra.length+' Extra / '+d.side.length+' Side.'),!!deckWarning(d))}catch(e){notify(e.message,true)}finally{$('#file').value=''}};
+ function saveImports(){try{localStorage.setItem('doctrine-lab-decks-v1',JSON.stringify(decks.filter(d=>d.id.startsWith('custom-'))))}catch{notify('Your browser could not save the imported deck. Export it to keep a copy.')}}
+ $('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=mode!=='watch';$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
+-function receive({data:x}){if(x.type==='human-reply-result'){if(x.clientSession!==humanClientSession)return;if(x.accepted)return;if(humanFlow.reject(x)){busy=false;notify(x.reason||'Choice changed; choose again.');$('#choices').querySelectorAll('button').forEach(n=>n.disabled=false);if(x.current)receive({data:x.current});if(latestDecisionMessage&&!pendingChainDecision)renderDecision(latestDecisionMessage);humanFlow.autoBlocked=true;syncHumanChoiceStatus()}return}if(x.type==='export-replay'){download(JSON.stringify(x.replay,null,2),'doctrine-replay.json');return}if(x.type==='load-progress'){$('#decision-note').textContent=x.message;return}if(x.type==='rewound'){resetHumanInteraction();presentation.reset();shuffleOverlay.reset();shell?.rewound();return}if(x.type==='export'){download('Duel Doctrine Lab\n'+duelDecks.map(d=>d.name).join(' vs ')+'\n\n'+x.text,'doctrine-duel-log.txt');return}if(x.type==='error'){shuffleOverlay.cancel();resetHumanInteraction();busy=false;disabled=true;notify(x.message,true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent=x.message;return}if(x.type==='notice'){notify(x.message);return}if(x.type!=='state')return;if(x.human?.protocol===2){if(x.human.clientSession!==humanClientSession||x.human.epoch<expectedHumanEpoch||x.human.stateSeq<=humanStateSeq)return;humanStateSeq=x.human.stateSeq;humanHolds.contextFrom(x.human)}latestDecisionMessage=x;const flowChanged=humanFlow.update(x);const decisionChanged=state?.revision!==x.state.revision,fieldChanged=decisionChanged||view!==x.view||mode!==x.mode||lastStudy!==x.study,decisionUIChanged=decisionChanged||fieldChanged||isAi!==x.ai||disabled!==x.disabled;lastStudy=x.study;computerPaused=x.paused;state=x.state;matchInfo=x.match;choices=x.choices;multi=x.multi;sums=x.sums;view=x.view;mode=x.mode;isAi=x.ai;disabled=x.disabled;busy=humanFlow.inFlight;if(decisionUIChanged)selected.clear();$('#pause').textContent=x.paused?'Resume computer':'Pause computer';$('#pause').disabled=mode==='manual'||disabled;$('#step').disabled=!x.ai||disabled;if(fieldChanged){const oldStats=new Map([...document.querySelectorAll('[data-slot] .card-stats')].map(n=>[n.closest('[data-slot]').dataset.slot,n.textContent]));renderState();if(preferences.cinematics!==false&&!preferences.motion)for(const e of x.events||[])if(e.type==='move'&&e.to&&[4,8].includes(e.to.location))document.querySelector(`[data-slot="${e.to.controller}:${e.to.location}:${e.to.sequence}"]`)?.classList.add('fx-arriving');for(const n of document.querySelectorAll('[data-slot] .card-stats'))if(oldStats.has(n.closest('[data-slot]').dataset.slot)&&oldStats.get(n.closest('[data-slot]').dataset.slot)!==n.textContent)n.classList.add('stat-changed');presentation.refreshField();}syncDuelControls();presentation.syncLifePoints(state.players.map(p=>p.lp),x.events);sound.updateState(state,duelDecks,x.coach?.intent?.battle?.lethal);shell?.state(x);renderCoach(x);renderCue(x);syncWakeLock();renderMatchStudy(x);updatePhaseControls();presentation.play((x.events||[]).map(e=>{const c=state.chain.find(c=>c.chain_size===(e.linkedChain??e.chain));return c?{...e,source:{controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence}}:e}),x.lastEventId);shuffleOverlay.viewChanged();shuffleOverlay.accept(x.shuffle);presentDecision(x,decisionUIChanged||flowChanged);wasAi=isAi;syncHumanChoiceStatus();queueMicrotask(()=>{drainHumanChoice();maybeAutoSkipEmptyChain()})}
++function receive({data:x}){if(x.type==='human-reply-result'){if(x.clientSession!==humanClientSession)return;if(x.accepted)return;if(humanFlow.reject(x)){busy=false;notify(x.reason||'Choice changed; choose again.');$('#choices').querySelectorAll('button').forEach(n=>n.disabled=false);if(x.current)receive({data:x.current});if(latestDecisionMessage&&!pendingChainDecision)renderDecision(latestDecisionMessage);humanFlow.autoBlocked=true;syncHumanChoiceStatus()}return}if(x.type==='export-replay'){download(JSON.stringify(x.replay,null,2),'doctrine-replay.json');return}if(x.type==='load-progress'){$('#decision-note').textContent=x.message;return}if(x.type==='rewound'){resetHumanInteraction();presentation.reset();shuffleOverlay.reset();shell?.rewound();return}if(x.type==='export'){download('Duel Doctrine Lab\n'+duelDecks.map(d=>d.name).join(' vs ')+'\n\n'+x.text,'doctrine-duel-log.txt');return}if(x.type==='error'){shuffleOverlay.cancel();resetHumanInteraction();busy=false;disabled=true;notify(x.message,true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent=x.message;return}if(x.type==='notice'){notify(x.message);return}if(x.type!=='state')return;if(x.human?.protocol===2){if(x.human.clientSession!==humanClientSession||x.human.epoch<expectedHumanEpoch||x.human.stateSeq<=humanStateSeq)return;humanStateSeq=x.human.stateSeq;humanHolds.contextFrom(x.human)}latestDecisionMessage=x;const flowChanged=humanFlow.update(x);const decisionChanged=state?.revision!==x.state.revision,fieldChanged=decisionChanged||view!==x.view||mode!==x.mode||lastStudy!==x.study,decisionUIChanged=decisionChanged||fieldChanged||isAi!==x.ai||disabled!==x.disabled;lastStudy=x.study;computerPaused=x.paused;state=x.state;matchInfo=x.match;choices=x.choices;multi=x.multi;sums=x.sums;view=x.view;mode=x.mode;isAi=x.ai;disabled=x.disabled;busy=humanFlow.inFlight;if(decisionUIChanged)selected.clear();$('#pause').textContent=x.paused?'Resume computer':'Pause computer';$('#pause').disabled=mode==='manual'||disabled;$('#step').disabled=!x.ai||disabled;if(fieldChanged){const oldStats=new Map([...document.querySelectorAll('[data-slot] .card-stats')].map(n=>[n.closest('[data-slot]').dataset.slot,n.textContent]));renderState();if(preferences.cinematics!==false&&!preferences.motion)for(const e of x.events||[])if(e.type==='move'&&e.to&&[4,8].includes(e.to.location))document.querySelector(`[data-slot="${e.to.controller}:${e.to.location}:${e.to.sequence}"]`)?.classList.add('fx-arriving');for(const n of document.querySelectorAll('[data-slot] .card-stats'))if(oldStats.has(n.closest('[data-slot]').dataset.slot)&&oldStats.get(n.closest('[data-slot]').dataset.slot)!==n.textContent)n.classList.add('stat-changed');presentation.refreshField();}syncDuelControls();presentation.syncLifePoints(state.players.map(p=>p.lp),x.events);sound.updateState(state,duelDecks,x.coach?.intent?.battle?.lethal);shell?.state(x);renderCoach(x);renderCue(x);syncWakeLock();renderMatchStudy(x);updatePhaseControls();presentation.play((x.events||[]).map(e=>{const c=state.chain.find(c=>c.chain_size===(e.linkedChain??e.chain));return c?{...e,source:{controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence}}:e}),x.lastEventId,coinEpochOk(x.coin)?x.coin.tosses:[]);shuffleOverlay.viewChanged();shuffleOverlay.accept(x.shuffle);presentDecision(x,decisionUIChanged||flowChanged);wasAi=isAi;syncHumanChoiceStatus();queueMicrotask(()=>{drainHumanChoice();maybeAutoSkipEmptyChain()})}
+ function renderMatchStudy(x){const target=$('#match-study');target.hidden=!x.match||mode==='play';if(!x.match)return;target.innerHTML=`<span class="eyebrow">AI DUEL</span><strong>SEED ${x.match.seed}</strong><span>${x.match.pilots.map(p=>esc(p.name)+' · '+esc(p.label)).join(' / ')}</span><small>Fresh hands + serious pilots · ${'Optimal · bounded search'} · Doctrine ${x.match.doctrine?'on':'off'}</small>`}
+ $('#reuse-seed').onclick=()=>{if(!matchInfo)return;const saved=matchInfo;$('#new').click();$('#game-seed').value=String(saved.seed);$('#first').value=String(saved.first);$('#variation').value=saved.variation;$('#pilot-strategy').value=saved.strategy||'tactical';$('#pilot-strategy').onchange();$('#doctrine-guidance').checked=saved.doctrine!==false;$('#pilot-a').value=saved.styles[0];$('#pilot-b').value=saved.styles[1];notify('Seed '+saved.seed+' restored. Enter the room to study the same duel again. Clear the seed for a fresh game.')};
+ function renderCue(x){$('.field-cue')?.classList.toggle('coach-hidden',mode==='watch'&&!coachOn());const thought=x.coach?.intent;$('#cue-owner').textContent=state.finished?'DUEL COMPLETE':disabled?'DUEL STOPPED':isAi?'COMPUTER CHOICE':'YOUR DECISION';$('#cue-text').textContent=thought?.title||x.title;$('#cue-open').textContent=state.finished?'View journal →':mode==='watch'?'Why this choice? →':'View actions →';$('#field-status').textContent=state.finished?'COMPLETE':x.paused?'PAUSED':isAi?'COMPUTER':'YOUR MOVE';$('#action-count').textContent=!isAi&&!state.finished?(choices.length||'!'):'';document.querySelector('[data-view="play"]').classList.toggle('needs-action',!isAi&&!state.finished&&!disabled)}
+@@ -240,10 +245,14 @@ function finishPendingChainDecision(){
+  if(pending&&state===pending.message.state)presentDecision(pending.message,true,pending.previousWasAi);
+  drainHumanChoice();maybeAutoSkipEmptyChain();
+ }
++function renderCoinCall(m){const card=db?.[state.chain?.at?.(-1)?.code]?.name;$('#decision-title').textContent='Call it: heads or tails?';$('#decision-note').textContent=(card?card+' tosses a coin. ':'')+'The duel engine tosses the coin after you call it.';
++ $('#choices').innerHTML='<div class="coin-call-row">'+m.options.map((v,i)=>{const side=COIN_CALL[Number(v)];return `<button class="choice coin-call-btn" data-choice="${i}" data-side="${side}" aria-label="Call ${side}"><i class="coin-call-face" aria-hidden="true"></i><span class="choice-text">${side==='heads'?'HEADS':'TAILS'}</span></button>`}).join('')+'</div>';
++ $('#choices').onclick=e=>{const n=e.target.closest('[data-choice]');if(n){sound.play?.('confirm');reply(choices[Number(n.dataset.choice)].response)}}}
+ function renderDecision(x){$('#decision-note').hidden=false;document.querySelectorAll('.legal-target').forEach(n=>n.classList.remove('legal-target'));if(!isAi&&!disabled&&!state.finished&&[M.SELECT_PLACE,M.SELECT_DISFIELD].includes(state.prompt?.type))for(const c of choices)for(const place of c.response?.places||[])document.querySelector(`[data-slot="${matchInfo?.first===1?1-(place.player??place.controller):(place.player??place.controller)}:${place.location}:${place.sequence}"]`)?.classList.add('legal-target');$('#decision-title').textContent=disabled?'Duel stopped':state.finished?'Duel complete':x.title;$('#decision-owner').textContent=disabled?'ENGINE STOPPED':isAi?'COMPUTER DECISION':'YOUR DECISION';$('.decision').classList.toggle('disabled',disabled);$('#decision-note').textContent=disabled?'A compatibility error stopped this duel. Choose a new matchup.':state.finished?'Choose New matchup to change decks and practise again.':isAi?'Independent pilot · pause to inspect the field, or take the other seat to make the choice yourself.':x.description||'These choices come from the duel engine. Tap a card’s ⓘ to read its effect before committing.';$('#selection-bar').hidden=true;if(disabled||state.finished||isAi){$('#choices').innerHTML='';return}const m=state.prompt;if(!m){$('#choices').innerHTML='';return}
+  if(m.type===M.SORT_CARD||m.type===M.SORT_CHAIN){renderOrder(m);return}
+  if(m.type===M.SELECT_SUM){$('#choices').innerHTML=sums.map((arr,i)=>`<button class="choice" data-sum="${i}"><span class="choice-text">${arr.map(j=>name((j<(m.selects_must?.length||0)?m.selects_must[j]:m.selects[j-(m.selects_must?.length||0)]).code)).map(esc).join(' + ')}</span></button>`).join('')||'<p class="muted">No automatic material set found. Take another route if cancellation is available.</p>';$('#choices').querySelectorAll('[data-sum]').forEach(n=>n.onclick=()=>reply({type:R.SELECT_SUM,indicies:sums[Number(n.dataset.sum)]}));return}
+  if(m.type===M.SELECT_CHAIN){const model=buildChainPromptModel({state,choices,db:db||{},isAi,disabled});if(model&&model.kind!=='empty-optional'){renderChainPrompt(model);return}}
++ if(m.type===M.SELECT_OPTION&&isCoinCall(m)&&choices.length===2){renderCoinCall(m);return}
+  if(multi){renderMulti(m);return}
+  $('#choices').innerHTML=choices.map((c,i)=>`<button class="choice" data-choice="${i}">${image(c.code)}<span class="choice-text">${esc(c.label)}${c.detail?`<small>${esc(c.detail)}</small>`:''}</span>${c.code?`<span class="inspect" data-inspect="${c.code}" role="button" tabindex="0" aria-label="Inspect ${esc(name(c.code))}">ⓘ</span>`:''}</button>`).join('');$('#choices').onclick=e=>{const inspect=e.target.closest?.('[data-inspect]');if(inspect){e.stopPropagation();dossier(Number(inspect.dataset.inspect));return}const n=e.target.closest('[data-choice]');if(n)reply(choices[Number(n.dataset.choice)].response)};
+  if((m.type===M.SELECT_PLACE||m.type===M.SELECT_DISFIELD)&&m.count>1){multi=true;$('#selection-bar').hidden=false;$('#confirm').disabled=true;$('#selection-info').textContent='Choose '+m.count+' zones.';$('#cancel-select').hidden=true;$('#choices').onclick=e=>{const n=e.target.closest('[data-choice]');if(!n)return;toggleSelect(Number(n.dataset.choice),n);$('#confirm').disabled=selected.size!==m.count};$('#confirm').onclick=()=>reply({type:m.type===M.SELECT_PLACE?R.SELECT_PLACE:R.SELECT_DISFIELD,places:[...selected].map(i=>choices[i].response.places[0])})}
+diff --git a/dist/coin-cutscene.css b/dist/coin-cutscene.css
+new file mode 100644
+index 0000000..f488cf6
+--- /dev/null
++++ b/dist/coin-cutscene.css
+@@ -0,0 +1,61 @@
++/* r36 (Claude, 29 Oct 2026; Kevy 14:29): coin toss / dice roll cutscene (coin-cutscene.mjs). Original art: the coin faces
++   and dice are drawn here; no card art is used on them. Lives inside the shared #summon-scene dialog (Skip cutscene works). */
++#summon-scene.coin-active>.scene-content,#summon-scene.coin-active>.scene-aura,#summon-scene.coin-active>.scene-rings,#summon-scene.coin-active>.scene-particles{display:none!important}
++#summon-scene.coin-active::after{display:none!important}
++#summon-scene.coin-active .coin-scene{--coin-gold:#ffd25a;--coin-deep:#9a6412;--coin-silver:#d9dcf0;--coin-night:#2a2350;--coin-accent:#b48cff;
++ position:fixed;inset:0;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;justify-items:center;align-items:center;gap:6px;padding:72px 16px 96px;box-sizing:border-box;
++ color:#fff;text-align:center;font-family:system-ui,sans-serif;isolation:isolate;overflow:hidden;
++ background:radial-gradient(ellipse at 50% 55%,rgba(180,140,255,.28),rgba(20,12,46,.0) 55%),radial-gradient(ellipse at 50% 120%,rgba(255,210,90,.18),transparent 60%),rgba(8,6,20,.92)}
++#summon-scene.coin-active .coin-scene[data-deck-theme=branded]{--coin-accent:#e0402a}
++#summon-scene.coin-active .coin-scene[data-deck-theme=luna],#summon-scene.coin-active .coin-scene[data-deck-theme=blueeyes]{--coin-accent:#4d8dff}
++#summon-scene.coin-active .coin-scene[data-deck-theme=mikanko],#summon-scene.coin-active .coin-scene[data-deck-theme=kashtira]{--coin-accent:#ffd21a}
++#summon-scene.coin-active .coin-banner{display:grid;gap:2px;justify-items:center;z-index:3}
++#summon-scene.coin-active .coin-kicker{margin:0;padding:3px 22px;background:repeating-linear-gradient(130deg,var(--coin-gold) 0 18px,#e8b400 18px 23px);color:#140c00;font:italic 900 15px/1.3 system-ui;letter-spacing:.18em;transform:skewX(-8deg)}
++#summon-scene.coin-active .coin-card{margin:4px 0 0;font:italic 900 clamp(22px,4.4vw,40px)/1.05 system-ui;letter-spacing:.02em;text-transform:uppercase;text-shadow:0 0 18px var(--coin-accent),0 3px 0 #000}
++#summon-scene.coin-active .coin-call{margin:0;padding:5px 16px;border:2px solid var(--coin-accent);border-radius:999px;background:rgba(10,6,30,.75);font:800 clamp(13px,2.2vw,17px)/1.2 system-ui;letter-spacing:.12em;text-transform:uppercase;z-index:3}
++#summon-scene.coin-active .coin-arena{position:relative;width:min(70vw,520px);height:100%;min-height:200px;display:grid;place-items:center;perspective:900px}
++#summon-scene.coin-active .coin-glow{position:absolute;width:min(62vmin,420px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,226,140,.65),rgba(180,140,255,.25) 45%,transparent 70%);opacity:0;pointer-events:none}
++#summon-scene.coin-active .coin-scene[data-won=false] .coin-glow{background:radial-gradient(circle,rgba(255,70,70,.55),rgba(90,0,0,.25) 45%,transparent 70%)}
++#summon-scene.coin-active .coin-shadow{position:absolute;bottom:8%;width:min(30vmin,190px);height:min(5vmin,30px);border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.75),transparent 70%);opacity:.5}
++/* the coin */
++#summon-scene.coin-active .coin-toss{position:relative;width:min(34vmin,210px);aspect-ratio:1;transform-style:preserve-3d}
++#summon-scene.coin-active .coin-body{position:absolute;inset:0;transform-style:preserve-3d}
++#summon-scene.coin-active .coin-rim{position:absolute;inset:0;border-radius:50%;background:linear-gradient(90deg,#6b4308,#c8902a 30%,#7a4f0c 60%,#b07b1c);box-shadow:inset 0 0 0 3px rgba(0,0,0,.25)}
++#summon-scene.coin-active .coin-face{position:absolute;inset:0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-sizing:border-box}
++#summon-scene.coin-active .coin-face svg{width:60%;height:auto;aspect-ratio:1;display:block}
++#summon-scene.coin-active .coin-face b{font:900 clamp(11px,2.2vmin,16px)/1 system-ui;letter-spacing:.3em;margin-left:.3em}
++#summon-scene.coin-active .coin-heads{transform:translateZ(4px);color:#5a3500;
++ background:radial-gradient(circle at 34% 28%,#fff6c8,var(--coin-gold) 32%,#d99a22 64%,var(--coin-deep) 100%);
++ box-shadow:inset 0 0 0 5px #b07818,inset 0 0 0 9px #ffe08a,inset 0 0 0 12px #a86f14,0 0 24px rgba(255,210,90,.35)}
++#summon-scene.coin-active .coin-tails{transform:rotateX(180deg) translateZ(4px);color:#1c1640;
++ background:radial-gradient(circle at 34% 28%,#ffffff,var(--coin-silver) 30%,#8f93b8 66%,var(--coin-night) 100%);
++ box-shadow:inset 0 0 0 5px #6d7099,inset 0 0 0 9px #eef0ff,inset 0 0 0 12px #5a5d86,0 0 24px rgba(180,190,255,.35)}
++/* the result */
++#summon-scene.coin-active .coin-result{display:grid;gap:4px;justify-items:center;z-index:3;opacity:0}
++#summon-scene.coin-active .coin-word{margin:0;font:italic 900 clamp(34px,8vw,72px)/1 system-ui;letter-spacing:.06em;color:var(--coin-gold);text-shadow:0 0 22px rgba(255,210,90,.75),0 4px 0 #000}
++#summon-scene.coin-active .coin-scene[data-result=tails] .coin-word{color:#e6e8ff;text-shadow:0 0 22px rgba(190,200,255,.8),0 4px 0 #000}
++#summon-scene.coin-active .coin-scene[data-kind=dice] .coin-word{color:#fff;text-shadow:0 0 22px var(--coin-accent),0 4px 0 #000}
++#summon-scene.coin-active .coin-verdict{margin:0;padding:4px 18px;font:900 clamp(15px,3vw,24px)/1.1 system-ui;letter-spacing:.16em;transform:skewX(-8deg)}
++#summon-scene.coin-active .coin-verdict:empty{display:none}
++#summon-scene.coin-active .coin-scene[data-won=true] .coin-verdict{background:#ffd25a;color:#140c00;box-shadow:0 0 26px rgba(255,210,90,.7)}
++#summon-scene.coin-active .coin-scene[data-won=false] .coin-verdict{background:#c8102e;color:#fff;box-shadow:0 0 26px rgba(255,40,60,.6)}
++#summon-scene.coin-active .coin-sparks{position:absolute;left:50%;top:52%;width:0;height:0;pointer-events:none;z-index:2}
++#summon-scene.coin-active .coin-spark{position:absolute;width:10px;height:10px;margin:-5px;border-radius:2px;background:var(--coin-gold);box-shadow:0 0 10px var(--coin-gold);transform:rotate(45deg);opacity:0}
++/* dice */
++#summon-scene.coin-active .dice-tray{display:flex;gap:min(8vw,56px);align-items:center;justify-content:center}
++#summon-scene.coin-active .die-wrap{--die:min(20vmin,120px);--die-half:calc(var(--die) / 2);width:var(--die);height:var(--die);perspective:700px}
++#summon-scene.coin-active .die{position:relative;width:100%;height:100%;transform-style:preserve-3d}
++#summon-scene.coin-active .die-face{position:absolute;inset:0;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:14%;box-sizing:border-box;border-radius:16%;
++ background:radial-gradient(circle at 30% 25%,#fff,#efeaff 45%,#c9c0f0);box-shadow:inset 0 0 0 3px rgba(80,60,160,.35),inset 0 -6px 12px rgba(60,40,140,.25);backface-visibility:hidden;-webkit-backface-visibility:hidden}
++#summon-scene.coin-active .pip{place-self:center;width:58%;aspect-ratio:1;border-radius:50%}
++#summon-scene.coin-active .pip.on{background:radial-gradient(circle at 35% 30%,#6b4bd6,#1d0f52);box-shadow:inset 0 2px 3px rgba(0,0,0,.5)}
++#summon-scene.coin-active .die-face[data-face="1"] .pip.on{background:radial-gradient(circle at 35% 30%,#ff6a6a,#8a0b18);width:72%}
++/* the human's call: two coins instead of a plain list */
++.coin-call-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
++.choice.coin-call-btn{display:grid;justify-items:center;gap:6px;min-width:120px;padding:12px 18px}
++.coin-call-face{width:64px;height:64px;border-radius:50%;display:block}
++.coin-call-btn[data-side=heads] .coin-call-face{background:radial-gradient(circle at 34% 28%,#fff6c8,#ffd25a 32%,#d99a22 64%,#9a6412);box-shadow:inset 0 0 0 4px #b07818,inset 0 0 0 7px #ffe08a}
++.coin-call-btn[data-side=tails] .coin-call-face{background:radial-gradient(circle at 34% 28%,#fff,#d9dcf0 30%,#8f93b8 66%,#2a2350);box-shadow:inset 0 0 0 4px #6d7099,inset 0 0 0 7px #eef0ff}
++.coin-call-btn .choice-text{font-weight:900;letter-spacing:.2em}
++.coin-log{margin:4px 0 0;font-size:12px;opacity:.85}
++@media (max-width:640px){#summon-scene.coin-active .coin-scene{padding:58px 10px 88px}}
+diff --git a/dist/coin-cutscene.mjs b/dist/coin-cutscene.mjs
+new file mode 100644
+index 0000000..9962500
+--- /dev/null
++++ b/dist/coin-cutscene.mjs
+@@ -0,0 +1,122 @@
++// r36 (Claude, 29 Oct 2026; Kevy 14:29: "we need a inbuilt randomized coin flip widget for when the user plays card like
++// the time wizard spell that needs heads or tails ... make this a unique animation and cutscene that plays with sound fx").
++// Coin toss and dice roll cutscenes. Presentation only:
++//  - inputs: the worker's coin envelope {epoch, tosses:[{id, kind, seat, results, call, code, afterEventId}]} (see
++//    coin-tap.mjs) and printed card data. The RESULT always comes from the engine (the duel's own seeded random number);
++//    nothing here picks, changes or predicts a result, and nothing here talks to the worker;
++//  - each toss becomes one presentation batch placed right after the public event it followed (afterEventId), so the coin
++//    lands BEFORE the cards it decides are destroyed, and the duel waits for it like any other cutscene (Skip works);
++//  - timings per preset (COIN_MS); Instant or cinematics off: no scene (duration 0); reduced motion: a still result card;
++//  - original art only: the coin faces and dice are drawn here (CSS + inline SVG), no card art is copied onto them;
++//  - sound: original synthesis through the app's sound engine (sfx bus, so the user's mute and volume apply).
++export const COIN_MS=Object.freeze({learning:4800,duel:3400,broadcast:2300,instant:0});
++const SVG_NS='http://www.w3.org/2000/svg';
++// An hourglass inside a clock ring (heads) and a crescent moon over a star field (tails): original emblems.
++const HEADS_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".75"/>'+
++ Array.from({length:12},(_,i)=>{const a=i*Math.PI/6,r1=i%3?35:32,r2=40;return `<line x1="${(50+r1*Math.sin(a)).toFixed(1)}" y1="${(50-r1*Math.cos(a)).toFixed(1)}" x2="${(50+r2*Math.sin(a)).toFixed(1)}" y2="${(50-r2*Math.cos(a)).toFixed(1)}" stroke="currentColor" stroke-width="${i%3?2:3.5}"/>`}).join('')+
++ '<path d="M36 26h28M36 74h28M38 27c0 12 10 16 12 23-2 7-12 11-12 23M62 27c0 12-10 16-12 23 2 7 12 11 12 23" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><path d="M43 36h14c-2 5-5 8-7 11-2-3-5-6-7-11zM42 70c2-6 5-9 8-11 3 2 6 5 8 11z" fill="currentColor"/></svg>';
++const TAILS_SVG='<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".75"/><path d="M60 24a28 28 0 1 0 16 46 24 24 0 1 1-16-46z" fill="currentColor"/>'+
++ [[30,30,2.6],[24,52,1.8],[34,70,2.2],[68,36,1.6],[44,22,1.4]].map(([x,y,r])=>`<path d="M${x} ${y-r*2}l${r*.6} ${r*1.4} ${r*1.4} ${r*.6}-${r*1.4} ${r*.6}-${r*.6} ${r*1.4}-${r*.6}-${r*1.4}-${r*1.4}-${r*.6} ${r*1.4}-${r*.6}z" fill="currentColor"/>`).join('')+'</svg>';
++// Dice: pip layout per face, and the cube rotation that shows each value to the viewer.
++const PIPS={1:[5],2:[1,9],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
++const FACE_ROT={1:'rotateX(0deg) rotateY(0deg)',2:'rotateX(0deg) rotateY(-90deg)',3:'rotateX(-90deg) rotateY(0deg)',4:'rotateX(90deg) rotateY(0deg)',5:'rotateX(0deg) rotateY(90deg)',6:'rotateX(0deg) rotateY(180deg)'};
++const FACE_POS={1:'rotateY(0deg)',2:'rotateY(90deg)',3:'rotateX(90deg)',4:'rotateX(-90deg)',5:'rotateY(-90deg)',6:'rotateY(180deg)'};
++
++// Insert one batch per toss after the batch holding its afterEventId (or before the first later event).
++export function coinBatches(batches,tosses,preset){
++ const list=(tosses||[]).filter(t=>t&&(t.kind==='coin'||t.kind==='dice')&&Array.isArray(t.results)&&t.results.length);
++ if(!list.length)return batches;const out=[...batches],ms=COIN_MS[preset]??COIN_MS.learning;
++ for(const t of list){const batch={events:[{type:'coinToss',id:t.afterEventId,player:t.seat,code:t.code||0,toss:Object.freeze({...t,results:Object.freeze([...t.results])})}],duration:ms};
++  let at=out.findIndex(b=>(b.events||[]).some(e=>e.type!=='coinToss'&&Number(e.id)>t.afterEventId));if(at<0)at=out.length;
++  // keep tosses in order when several land in the same gap
++  while(at>0&&out[at-1].events?.[0]?.type==='coinToss'&&out[at-1].events[0].toss.id>t.id)at--;
++  out.splice(at,0,batch)}
++ return out}
++export const tossWon=t=>t?.kind==='coin'&&t.call?(t.results[0]?'heads':'tails')===t.call:null;
++export const tossLine=(t,name='')=>{if(!t)return '';const who=name?name+' · ':'';
++ if(t.kind==='dice'){const r=t.results;return who+'Dice: '+r.join(' + ')+(r.length>1?' = '+r.reduce((a,b)=>a+b,0):'')}
++ const faces=t.results.map(v=>v?'Heads':'Tails').join(', '),won=tossWon(t);return who+'Coin: '+faces+(t.call?' (called '+(t.call==='heads'?'Heads':'Tails')+' · '+(won?'right call':'wrong call')+')':'')};
++
++// Original coin / dice sounds, built on the app's Soundscape helpers (tone, noise, sample). Best effort, never throws.
++export function coinSound(sound,kind,step,{won=null,ms=3400}={}){
++ try{if(!sound?.tone)return;const s=ms/3400;/* the cues stretch a little with the scene pace */
++  const ping=(f,at,d=.35,g=.06)=>sound.tone(f,d,{at,end:f*.995,type:'sine',gain:g,attack:.004});
++  const ring=(at,g=.07)=>{ping(2093,at,.55,g);ping(3135,at,.45,g*.7);ping(4699,at,.3,g*.45);ping(6272,at,.18,g*.3)};
++  if(kind==='dice'){
++   if(step==='throw'){sound.sample?.('whoosh',{gain:.5,rate:1.25});for(const [i,at] of [.05,.16,.24,.37,.46,.6,.7,.83].entries())sound.noise(.05,{gain:.12-i*.008,frequency:2600-i*120,end:900,at:at*s,attack:.002})}
++   else if(step==='land'){sound.noise(.09,{gain:.2,frequency:1800,end:300,attack:.002});sound.tone(140,.18,{end:70,type:'triangle',gain:.18})}
++   else if(step==='reveal'){for(const [i,f] of [784,988,1175].entries())sound.tone(f,.22,{at:i*.07,type:'triangle',gain:.08})}
++   return}
++  if(step==='flick'){sound.noise(.03,{gain:.18,frequency:6000,end:2500,attack:.001});ring(.01,.08);sound.sample?.('whoosh',{gain:.55,rate:1.1})}
++  else if(step==='spin'){/* the shimmer of a spinning coin: pings that slow down as it falls */let at=.05;for(let i=0;i<11;i++){ping(i%2?2637:3520,at*s,.12,.035-i*.002);at+=.07+i*.012}}
++  else if(step==='land'){ring(0,.09);sound.noise(.04,{gain:.16,frequency:5200,end:1800,attack:.001});ring(.16*s,.04);sound.noise(.03,{gain:.08,frequency:4200,end:1600,at:.16*s,attack:.001});ring(.26*s,.02)}
++  else if(step==='reveal'){
++   if(won===true){for(const [i,f] of [1047,1319,1568,2093].entries())sound.tone(f,.32,{at:i*.075,type:'triangle',gain:.09});sound.tone(523,.6,{at:.3,type:'sawtooth',gain:.035,lowpass:1800});for(let i=0;i<6;i++)ping(3000+i*420,.32+i*.05,.16,.03)}
++   else if(won===false){sound.tone(392,.4,{end:277,type:'sawtooth',gain:.06,lowpass:1200});sound.tone(311,.55,{at:.18,end:196,type:'sawtooth',gain:.06,lowpass:900});sound.tone(70,.45,{at:.1,end:40,type:'sine',gain:.22});sound.noise(.25,{gain:.1,frequency:400,end:90,at:.1})}
++   else{for(const [i,f] of [880,1175].entries())sound.tone(f,.25,{at:i*.08,type:'triangle',gain:.08})}}
++ }catch{/* sound is best effort */}}
++
++export class CoinScene{
++ constructor({document,db,decks=()=>[],sound=null,animate,setTimer=(f,ms)=>setTimeout(f,ms),clearTimer=t=>clearTimeout(t)}){Object.assign(this,{document,db,decks,sound,animate,setTimer,clearTimer});this.animations=[];this.timers=[];this.node=null}
++ clear(){for(const a of this.animations)try{a?.cancel()}catch{}this.animations=[];for(const t of this.timers)try{this.clearTimer(t)}catch{}this.timers=[];this.node?.remove();this.node=null;this.document.getElementById('summon-scene')?.classList.remove('coin-active')}
++ reset(){this.clear();this.logNode?.remove();this.logNode=null}
++ el(tag,cls,text){const n=this.document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
++ motion(node,frames,options){try{const a=this.animate?this.animate(node,frames,options):node.animate?.(frames,options);if(a)this.animations.push(a)}catch{}}
++ later(ms,f){this.timers.push(this.setTimer(()=>{try{f()}catch{}},Math.max(0,ms)))}
++ log(t){const name=this.db()[t.code]?.name||'';if(!this.logNode?.isConnected){this.logNode=this.el('p','coin-log');this.logNode.id='coin-toss-log';this.logNode.setAttribute('role','log');(this.document.getElementById('event-log')?.parentElement||this.document.body).append(this.logNode)}this.logNode.textContent=tossLine(t,name)}
++ show(e,duration,{reduced=false,deck=null,ownSeat=false}={}){
++  this.clear();const t=e.toss,doc=this.document,dialog=doc.getElementById('summon-scene');if(!t||!dialog)throw new Error('Coin toss scene unavailable');
++  const ms=Math.max(600,duration),card=this.db()[t.code],coin=t.kind==='coin',won=tossWon(t),side=coin?(t.results[0]?'heads':'tails'):null;
++  const root=this.el('section','coin-scene');this.node=root;root.dataset.kind=t.kind;root.dataset.deckTheme=deck?.id||'custom';root.dataset.result=coin?side:'dice';root.dataset.won=won===null?'none':String(won);
++  root.setAttribute('role','img');root.setAttribute('aria-label',tossLine(t,card?.name||''));
++  root.style.setProperty('--coin-ms',ms+'ms');
++  const banner=this.el('div','coin-banner');banner.append(this.el('p','coin-kicker',coin?'COIN TOSS':'DICE ROLL'),this.el('h2','coin-card',card?.name||'Card effect'));
++  const who=deck?.name||(ownSeat?'You':'Opponent');
++  const callChip=this.el('p','coin-call',coin?(t.call?who+' calls '+(t.call==='heads'?'HEADS':'TAILS'):who+' tosses'):who+' rolls '+(t.results.length>1?t.results.length+' dice':'a die'));
++  const arena=this.el('div','coin-arena'),shadow=this.el('i','coin-shadow'),glow=this.el('i','coin-glow');arena.append(glow,shadow);
++  const result=this.el('div','coin-result'),word=this.el('p','coin-word'),verdict=this.el('p','coin-verdict');result.append(word,verdict);
++  const sparks=this.el('div','coin-sparks');sparks.setAttribute('aria-hidden','true');
++  root.append(banner,callChip,arena,result,sparks);dialog.append(root);dialog.classList.add('coin-active');if(!dialog.open)try{dialog.showModal()}catch{dialog.setAttribute('open','')}
++  this.log(t);
++  const land=ms*.56,reveal=ms*.62;
++  if(coin){
++   word.textContent=t.results.map(v=>v?'HEADS':'TAILS').join(' · ');
++   verdict.textContent=won===true?'RIGHT CALL!':won===false?'WRONG CALL':'';
++   const toss=this.el('div','coin-toss'),body=this.el('div','coin-body');
++   const heads=this.el('div','coin-face coin-heads'),tails=this.el('div','coin-face coin-tails');
++   heads.innerHTML=HEADS_SVG+'<b>HEADS</b>';tails.innerHTML=TAILS_SVG+'<b>TAILS</b>';
++   for(let i=1;i<=6;i++){const rim=this.el('i','coin-rim');rim.style.transform=`translateZ(${(i-3.5)*1.1}px)`;body.append(rim)}
++   body.append(heads,tails);toss.append(body);arena.append(toss);
++   const end=(t.results[0]?0:180)+360*7;
++   if(reduced){body.style.transform=`rotateX(${end%360}deg)`;this.motion(toss,[{opacity:0},{opacity:1}],{duration:ms*.15,fill:'both'})}
++   else{
++    // up, hang, fall, two small bounces; the spin slows as it lands on the engine's result
++    this.motion(toss,[{transform:'translateY(18vh) scale(.6)',opacity:0},{transform:'translateY(10vh) scale(.8)',opacity:1,offset:.06},{transform:'translateY(-30vh) scale(1.08)',offset:.28,easing:'ease-in'},{transform:'translateY(0) scale(1)',offset:.52},{transform:'translateY(-5vh) scale(1)',offset:.57,easing:'ease-in'},{transform:'translateY(0) scale(1)',offset:.62},{transform:'translateY(-1.2vh)',offset:.65},{transform:'translateY(0) scale(1)',offset:.68},{transform:'translateY(0) scale(1.06)',offset:.78},{transform:'translateY(0) scale(1)'}],{duration:ms,easing:'ease-out',fill:'both'});
++    this.motion(body,[{transform:'rotateX(0deg) rotateY(0deg)'},{transform:`rotateX(${end*.55}deg) rotateY(18deg)`,offset:.3},{transform:`rotateX(${end*.93}deg) rotateY(-10deg)`,offset:.5},{transform:`rotateX(${end}deg) rotateY(0deg)`,offset:.62},{transform:`rotateX(${end}deg) rotateY(0deg)`}],{duration:ms,easing:'cubic-bezier(.25,.6,.35,1)',fill:'both'});
++    this.motion(shadow,[{transform:'scale(.4)',opacity:.1},{transform:'scale(.25)',opacity:.08,offset:.28},{transform:'scale(1)',opacity:.55,offset:.52},{transform:'scale(.8)',opacity:.4,offset:.57},{transform:'scale(1)',opacity:.55,offset:.62},{transform:'scale(1)',opacity:.55}],{duration:ms,fill:'both'});
++   }
++   coinSound(this.sound,'coin','flick',{ms});if(!reduced)this.later(ms*.08,()=>coinSound(this.sound,'coin','spin',{ms}));
++   this.later(reduced?ms*.1:land,()=>coinSound(this.sound,'coin','land',{ms}));
++  }else{
++   const total=t.results.reduce((a,b)=>a+b,0);word.textContent=t.results.join(' + ')+(t.results.length>1?' = '+total:'');verdict.textContent='';
++   const tray=this.el('div','dice-tray');arena.append(tray);
++   for(const [i,v] of t.results.entries()){
++    const wrap=this.el('div','die-wrap'),cube=this.el('div','die');wrap.append(cube);tray.append(wrap);
++    for(let f=1;f<=6;f++){const face=this.el('div','die-face');face.dataset.face=String(f);face.style.transform=FACE_POS[f]+' translateZ(var(--die-half))';for(let p=1;p<=9;p++){const pip=this.el('i',PIPS[f].includes(p)?'pip on':'pip');face.append(pip)}cube.append(face)}
++    const spinX=720+i*360,spinY=540+i*180,final=FACE_ROT[v];
++    if(reduced)cube.style.transform=final;
++    else{const dir=i%2?-1:1;
++     this.motion(wrap,[{transform:`translate(${-60*dir}vw,-12vh) rotate(${-40*dir}deg)`,opacity:0},{transform:`translate(${-30*dir}vw,-16vh) rotate(${-20*dir}deg)`,opacity:1,offset:.12},{transform:`translate(${6*dir}vw,0) rotate(${8*dir}deg)`,offset:.34,easing:'ease-in'},{transform:`translate(${2*dir}vw,-5vh) rotate(${3*dir}deg)`,offset:.42,easing:'ease-out'},{transform:'translate(0,0) rotate(0deg)',offset:.52},{transform:'translate(0,-1vh)',offset:.55},{transform:'translate(0,0)',offset:.58},{transform:'translate(0,0) scale(1.08)',offset:.7},{transform:'translate(0,0) scale(1)'}],{duration:ms,easing:'ease-out',fill:'both'});
++     this.motion(cube,[{transform:'rotateX(0deg) rotateY(0deg)'},{transform:`rotateX(${spinX}deg) rotateY(${spinY}deg)`,offset:.45},{transform:final,offset:.56},{transform:final}],{duration:ms,easing:'cubic-bezier(.3,.55,.4,1)',fill:'both'})}
++   }
++   coinSound(this.sound,'dice','throw',{ms});this.later(reduced?ms*.1:land*.95,()=>coinSound(this.sound,'dice','land',{ms}));
++  }
++  this.motion(banner,[{opacity:0,transform:'translateY(-24px)'},{opacity:1,transform:'translateY(0)'}],{duration:Math.min(420,ms*.14),easing:'ease-out',fill:'both'});
++  this.motion(callChip,[{opacity:0,transform:'scale(.8)'},{opacity:1,transform:'scale(1)'}],{delay:ms*.05,duration:Math.min(360,ms*.12),easing:'ease-out',fill:'both'});
++  this.motion(result,[{opacity:0,transform:'scale(.6)'},{opacity:0,transform:'scale(.6)',offset:reveal/ms},{opacity:1,transform:'scale(1.12)',offset:Math.min(.95,reveal/ms+.06)},{opacity:1,transform:'scale(1)'}],{duration:ms,easing:'ease-out',fill:'both'});
++  this.motion(glow,[{opacity:0},{opacity:0,offset:land/ms},{opacity:.9,offset:Math.min(.95,land/ms+.05)},{opacity:.45}],{duration:ms,fill:'both'});
++  if(!reduced&&won!==false){for(let i=0;i<14;i++){const sp=this.el('i','coin-spark'),a=i/14*Math.PI*2,d=22+(i%3)*9;sparks.append(sp);this.motion(sp,[{transform:'translate(0,0) scale(0)',opacity:0},{transform:'translate(0,0) scale(0)',opacity:0,offset:reveal/ms},{transform:`translate(${Math.cos(a)*d}vmin,${Math.sin(a)*d}vmin) scale(1)`,opacity:1,offset:Math.min(.97,reveal/ms+.12)},{transform:`translate(${Math.cos(a)*d*1.2}vmin,${Math.sin(a)*d*1.2+6}vmin) scale(.4)`,opacity:0}],{duration:ms,easing:'ease-out',fill:'both'})}}
++  if(!reduced&&won===false)this.motion(root,[{transform:'translate(0,0)'},{transform:'translate(0,0)',offset:reveal/ms},{transform:'translate(-10px,4px)',offset:Math.min(.96,reveal/ms+.02)},{transform:'translate(9px,-3px)',offset:Math.min(.97,reveal/ms+.04)},{transform:'translate(-5px,2px)',offset:Math.min(.98,reveal/ms+.06)},{transform:'translate(0,0)',offset:Math.min(.99,reveal/ms+.08)},{transform:'translate(0,0)'}],{duration:ms,fill:'both'});
++  this.later(reveal,()=>{root.dataset.revealed='true';coinSound(this.sound,t.kind,'reveal',{won,ms})});
++ }
++}
+diff --git a/dist/coin-tap.mjs b/dist/coin-tap.mjs
+new file mode 100644
+index 0000000..7865e5d
+--- /dev/null
++++ b/dist/coin-tap.mjs
+@@ -0,0 +1,54 @@
++// r36 (Claude, 29 Oct 2026; Kevy 14:29: "we need a inbuilt randomized coin flip widget for when the user plays card like
++// the time wizard spell that needs heads or tails ... a unique animation and cutscene that plays with sound fx").
++// Coin-toss / dice-roll capture for the on-screen duel only. Same design and conditions as ShuffleTap (RELAY-046 "Tap B",
++// Seto 27 Oct 10:10); duel.mjs, the AI (ai/*), random.mjs and the frozen gate are untouched, and the gate never loads
++// worker.mjs. THE RESULT IS NEVER MADE HERE: the engine tosses the coin / rolls the die from the duel's own seed (so a
++// replay or rewind gives the same result); this tap only reads the engine's TOSS_COIN / TOSS_DICE message afterwards so
++// the screen can show it.
++//  - install once, before the first start; only on the ONE real duel object owned by worker.mjs (never a prototype, the
++//    core, duelGetMessage, or an AI / pool / clone duel);
++//  - call the original handleMessage FIRST with the same receiver and message, return its result, let its errors
++//    propagate unchanged; only after it returns, and only while armed, copy scalars:
++//      coin: {id, kind:'coin', seat, results:[true=heads|false=tails], call:'heads'|'tails'|null, code, afterEventId}
++//      dice: {id, kind:'dice', seat, results:[1..6], call:null, code, afterEventId}
++//    'call' is read from the duel's own response history: the response given to the engine's "call it" prompt
++//    (SELECT_OPTION whose two options are the system strings 60 Heads / 61 Tails) immediately before the toss. The duel
++//    records a response only after the engine accepts it (Duel.respond pushes it after advance), so the tap notes the
++//    history position of that prompt and reads the response at drain time, when the worker sends the state.
++//    'code' is the card whose chain link is resolving (public). Never the raw message; no await, timer, random number,
++//    duel.log write, engine call or postMessage;
++//  - fails open (a presentation failure can never break the duel); bounded (max 16 pending, extra dropped and counted);
++//  - reset / arm / disarm / drain exactly as ShuffleTap (startup, rewind, import: disarmed during reconstruction).
++export const COIN_MAX_PENDING=16,COIN_HEADS_STRING=60,COIN_TAILS_STRING=61;
++export class CoinTap{
++ constructor({coinType,diceType,optionType,max=COIN_MAX_PENDING}={}){
++  if(![coinType,diceType,optionType].every(Number.isInteger))throw Error('CoinTap needs the engine TOSS_COIN, TOSS_DICE and SELECT_OPTION message types');
++  Object.assign(this,{coinType,diceType,optionType,max});this.armed=false;this.epoch=0;this.seq=0;this.pending=[];this.dropped=0;this.duel=null;this.callPrompt=null;
++ }
++ install(duel){
++  if(this.duel===duel)return true;if(this.duel)throw Error('CoinTap is bound to one duel object');
++  const original=duel.handleMessage,tap=this;if(typeof original!=='function')throw Error('Duel has no handleMessage');
++  duel.handleMessage=function(m){const result=original.call(this,m);tap.capture(this,m);return result};
++  this.duel=duel;return true;
++ }
++ capture(receiver,m){
++  try{if(!this.armed||receiver!==this.duel||!m)return;
++   if(m.type===this.optionType){const o=(m.options||[]).map(Number);
++    this.callPrompt=o.length===2&&o.includes(COIN_HEADS_STRING)&&o.includes(COIN_TAILS_STRING)?{options:o,at:(receiver.responseHistory?.length||0)+(receiver._responding?1:0)}/* the response in flight is recorded after advance (same count as the duel's own decision index) */:null;return}
++   if(m.type!==this.coinType&&m.type!==this.diceType)return;
++   const seat=receiver.fromEngine?.(m.player);if(seat!==0&&seat!==1)return;
++   const coin=m.type===this.coinType,results=(Array.isArray(m.results)?m.results:[]).slice(0,8).map(v=>coin?!!v:Number(v)).filter(v=>coin||(Number.isInteger(v)&&v>=1&&v<=6));
++   if(!results.length)return;
++   const p=coin?this.callPrompt:null;this.callPrompt=null;
++   const top=receiver.chain?.at?.(-1),code=Number(top?.code)||0;
++   const id=++this.seq;if(this.pending.length>=this.max){this.dropped++;return}
++   this.pending.push({id,kind:coin?'coin':'dice',seat,results,call:null,code,afterEventId:Number(receiver.eventSeq)||0,callAt:p?p.at:null,callOptions:p?p.options:null});
++  }catch{/* fail open: decoration only */}
++ }
++ reset(){this.armed=false;this.pending=[];this.callPrompt=null;this.epoch++;this.seq=0}
++ arm(){this.armed=true}
++ disarm(){this.armed=false;this.pending=[];this.callPrompt=null}
++ // resolve each pending call from the duel's accepted responses, then hand out plain scalars only
++ callOf(t){try{const h=this.duel?.responseHistory;if(t.callAt==null||!h||h.length<=t.callAt)return null;const pick=t.callOptions?.[h[t.callAt]?.index];return pick===COIN_HEADS_STRING?'heads':pick===COIN_TAILS_STRING?'tails':null}catch{return null}}
++ drain(){const out={epoch:this.epoch,tosses:this.pending.map(({callAt,callOptions,...t})=>({...t,call:t.kind==='coin'?this.callOf({callAt,callOptions}):null})),dropped:this.dropped};this.pending=[];return out}
++}
+diff --git a/dist/index.html b/dist/index.html
+index 4ee97d1..6665d5c 100644
+--- a/dist/index.html
++++ b/dist/index.html
+@@ -1,6 +1,6 @@
+ <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r35.8</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
+ <link rel="stylesheet" href="arenas.css">
+-<link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
++<link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="coin-cutscene.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
+ <link rel="stylesheet" href="./fx-r23.css"><link rel="stylesheet" href="./r26-panels.css"><link rel="stylesheet" href="./learning-routes.css"><link rel="stylesheet" href="./deck-list.css"><link rel="stylesheet" href="./r33-polish.css"><link rel="stylesheet" href="./r34-arena.css"><link rel="stylesheet" href="./r34-persona.css">
+ </head><body data-theme="vibrant">
+ <header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r35.8</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
+diff --git a/dist/offline-assets.json b/dist/offline-assets.json
+index ef0d4d0..3a539ab 100644
+--- a/dist/offline-assets.json
++++ b/dist/offline-assets.json
+@@ -480,5 +480,8 @@
+   "./audio/sfx/sfx.json",
+   "./jazz-score.mjs",
+   "./shuffle-overlay.mjs",
+-  "./shuffle-tap.mjs"
++  "./shuffle-tap.mjs",
++  "./coin-tap.mjs",
++  "./coin-cutscene.mjs",
++  "./coin-cutscene.css"
+ ]
+diff --git a/dist/presentation.mjs b/dist/presentation.mjs
+index 9a05a2f..1e72fce 100644
+--- a/dist/presentation.mjs
++++ b/dist/presentation.mjs
+@@ -1,4 +1,5 @@
+ import {SummonCutscenes,SummonScene,summonEnabled,SUMMON_MS} from './summon-cutscenes.mjs';
++import {CoinScene,coinBatches,COIN_MS} from './coin-cutscene.mjs';// r36 (Kevy 29 Oct 14:29): coin toss / dice roll cutscenes
+ import {FusionMaterials,MaterialsScene,materialsEnabled} from './fusion-materials.mjs';
+ import {LP_TYPES,createLpFx} from './lp-fx.mjs';
+ import {effectFocus,effectMarkup} from './effect-focus.mjs';
+@@ -49,6 +50,8 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+  const lpTypes=LP_TYPES,pendingLife=new Map();
+  const fusionMaterials=new FusionMaterials(),materialsScene=new MaterialsScene({document,db,frame:cardFrame,animate,scale:timingScale});
+  const summonCutscenes=new SummonCutscenes(),summonScene=new SummonScene({document,db,frame:cardFrame,animate,scale:timingScale});
++ const coinScene=new CoinScene({document,db,decks,sound,animate});/* r36: results come from the engine via the worker's coin envelope; this only shows them */
++ const coinVisual=()=>enabled&&!skipCutins&&!!COIN_MS[preset],coinStill=()=>reduced||document.body.classList.contains('quiet-motion')||!!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const summonVisual=()=>summonEnabled({preset,enabled,reduced,skipCutins},document.body);
+  const legacySummon=e=>!!e?.b2Summon&&!e.b2Summon.confirmed&&summonVisual()&&e.special;
+  const materialsVisual=()=>materialsEnabled({preset,enabled,reduced,skipCutins},document.body)&&!summonVisual();/* r26: the B2 summon cutscene already shows the materials merging; the separate panel only plays when B2 cannot */
+@@ -216,6 +219,7 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+  function finishLine(e){const h=finishHit;if(!h||h.after>0||e.player===null||h.player===e.player)return '';const name=c=>db()[c]?.name||'';const a=h.attack;
+   return a&&name(a.code)?name(a.code)+(a.direct?' attacks directly':' battles'+(name(a.to)?' '+name(a.to):''))+' · '+h.amount+' damage':h.amount+' damage from a card effect'}
+  function event(batch,duration){
++  if(batch[0].type==='coinToss'){const e=batch[0];coinScene.log(e.toss);if(duration>0&&coinVisual()){coinScene.show(e,duration*timingScale,{reduced:coinStill(),deck:decks()[e.player],ownSeat:e.player===view()});stage.hidden=true}return}/* r36: coin / dice cutscene */
+   for(const e of batch)trackFinish(e);
+   if(batch[0].type==='fusionMaterials'){document.dispatchEvent(new window.CustomEvent('duel-presentation-event',{detail:batch[0]}));stage.hidden=true;materialsScene.show(batch[0],duration,materialsVisual());return}
+   if(batch.every(e=>e.b1Material)){for(const m of batch)if(m.type==='move')routes.flight(m,0,Math.min(400,duration));return}/* r28: Fusion materials (shown again in the summon scene) still get their Learning route lines */
+@@ -279,7 +283,7 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+ 
+  }
+  function closeChainLog(){if(document.body.dataset.chainLog){delete document.body.dataset.chainLog;$('#chain-log-btn')?.setAttribute('aria-pressed','false')}}
+- function clearStage(closeVictory=false){routes.clear();summonScene.clear();materialsScene.clear();closeChainLog();delete stage.dataset.moving;pageTimers.forEach(clearTimeout);pageTimers=[];delete $('#event-effect')?.dataset.more;delete $('#event-effect')?.dataset.page;if($('#event-effect-text'))$('#event-effect-text').style.paddingBottom='';clearTimeout(returnTimer);clearTimeout(lpStartTimer);lpFx.finish();clearFieldScene();clearTimeout(lifeTimer);if(lifeTarget){displayLP[lifeTarget.player]=lifeTarget.after;pendingLife.delete(lifeTarget.id);lifeTarget=null;writeLife()}if(closeVictory&&victory.open)victory.close();if(scene.open)scene.close();scene.classList.remove('playing');stage.hidden=true;stage.classList.remove('live')}
++ function clearStage(closeVictory=false){routes.clear();summonScene.clear();coinScene.clear();materialsScene.clear();closeChainLog();delete stage.dataset.moving;pageTimers.forEach(clearTimeout);pageTimers=[];delete $('#event-effect')?.dataset.more;delete $('#event-effect')?.dataset.page;if($('#event-effect-text'))$('#event-effect-text').style.paddingBottom='';clearTimeout(returnTimer);clearTimeout(lpStartTimer);lpFx.finish();clearFieldScene();clearTimeout(lifeTimer);if(lifeTarget){displayLP[lifeTarget.player]=lifeTarget.after;pendingLife.delete(lifeTarget.id);lifeTarget=null;writeLife()}if(closeVictory&&victory.open)victory.close();if(scene.open)scene.close();scene.classList.remove('playing');stage.hidden=true;stage.classList.remove('live')}
+  function armTimer(ms){clearTimeout(timer);remaining=Math.max(0,ms);deadline=Date.now()+remaining;if(!held)timer=setTimeout(()=>complete?.(),remaining)}
+  function next(){
+   clearTimeout(timer);const batch=queue.shift();
+@@ -288,6 +292,7 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+   playing=true;skip.hidden=false;document.body.dataset.fxBusy='true';onBusy?.(true);
+   if(batch.events[0].b2Summon)batch.duration=summonVisual()&&(batch.events[0].b2Summon.confirmed||legacySummon(batch.events[0]))?(SUMMON_MS[preset]??SUMMON_MS.learning):0;
+   if(batch.events[0].type==='fusionMaterials'&&!materialsVisual())batch.duration=0;
++  if(batch.events[0].type==='coinToss')batch.duration=coinVisual()?(COIN_MS[preset]??COIN_MS.learning):0;
+   if(batch.events[0].type==='turn'&&TURN_MS[preset]&&enabled)batch.duration=TURN_MS[preset];
+   // Seto: only the existing 900 ms AI direct-attack hold in Learning/Duel changes.
+   const attack=batch.events[0];
+@@ -319,8 +324,8 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+  return {
+   syncLifePoints(values,events=[]){actualLP=values.map(n=>Math.max(0,n));for(const e of events)if(e.id>seen&&lpTypes.has(e.type))pendingLife.set(e.id,e);if(!playing)settleLife();else writeLife()},
+   configure({cinematics,skipCutins:nextSkipCutins=false,motion,pace:nextPace=1,effectPace:nextEffectPace,preset:nextPreset='learning',chainView:nextView,tapToContinue:nextTap=false,chainFlow:nextFlow=true}){skipCutins=!!nextSkipCutins;preset=nextPreset;chainView=nextView;tapToContinue=nextTap;chainFlow=nextFlow;const changed=enabled!==cinematics||reduced!==motion;enabled=cinematics;reduced=motion;pace=nextPace;effectPace=nextEffectPace;if(changed)skipAll();else if(materialsScene.node&&!materialsVisual()||summonScene.node&&!summonVisual())skipCurrent()},
+-  play(events,ackId){const fresh=[];for(const e of events||[])if(e.id>seen){seen=e.id;fresh.push(e)}seen=Math.max(seen,Number(ackId)||0);for(const e of fresh)if(lpTypes.has(e.type))pendingLife.set(e.id,e);fusionMaterials.observe(fresh,db());summonCutscenes.observe(fresh,db());const batches=director.ingest(fresh,db(),{cinematics:enabled,skipCutins,motion:reduced,pace,effectPace,preset,chainView:chainView==='auto'?undefined:chainView,tapToContinue,chainFlow,deferResolution:true});for(const e of fresh){if(e.type==='activate'&&!chainVisual.has(e.chain))chainVisual.set(e.chain,{...e,name:db()[e.code]?.name,status:'pending'});if(e.type==='target'){const c=chainVisual.get(e.chain)||[...chainVisual.values()].at(-1);if(c)c.targets=e.cards}}refreshField();queue.push(...summonCutscenes.decorate(fusionMaterials.decorate(batches,preset),preset));if(queue.length&&!playing)next();else if(!playing)clearArriving(),onBusy?.(false,seen)},
+-  reset(){fx23.clear();document.querySelectorAll('.ko-loser,.ko-slow').forEach(n=>n.classList.remove('ko-loser','ko-slow'));director.reset();summonCutscenes.reset();summonScene.reset();fusionMaterials.reset();materialsScene.reset();hold(false);skipAll();$('#effect-dock').hidden=true;actualLP=[8000,8000],effectMetrics=[],activeEffect=null,currentHold=false;displayLP=[8000,8000];writeLife();seen=0;clearTimeout(ribbonTimer);ribbon.hidden=true;/* r34.1 (ChatGPT RELAY-030): a held chain from the last duel must not stay in the side panel */$('#chain').innerHTML='';const st=$('#event-chain-strip');if(st){st.innerHTML='';st.hidden=true}},
++  play(events,ackId,tosses){const fresh=[];for(const e of events||[])if(e.id>seen){seen=e.id;fresh.push(e)}seen=Math.max(seen,Number(ackId)||0);for(const e of fresh)if(lpTypes.has(e.type))pendingLife.set(e.id,e);fusionMaterials.observe(fresh,db());summonCutscenes.observe(fresh,db());const batches=director.ingest(fresh,db(),{cinematics:enabled,skipCutins,motion:reduced,pace,effectPace,preset,chainView:chainView==='auto'?undefined:chainView,tapToContinue,chainFlow,deferResolution:true});for(const e of fresh){if(e.type==='activate'&&!chainVisual.has(e.chain))chainVisual.set(e.chain,{...e,name:db()[e.code]?.name,status:'pending'});if(e.type==='target'){const c=chainVisual.get(e.chain)||[...chainVisual.values()].at(-1);if(c)c.targets=e.cards}}refreshField();queue.push(...coinBatches(summonCutscenes.decorate(fusionMaterials.decorate(batches,preset),preset),tosses,preset));if(queue.length&&!playing)next();else if(!playing)clearArriving(),onBusy?.(false,seen)},
++  reset(){fx23.clear();document.querySelectorAll('.ko-loser,.ko-slow').forEach(n=>n.classList.remove('ko-loser','ko-slow'));director.reset();summonCutscenes.reset();summonScene.reset();coinScene.reset();fusionMaterials.reset();materialsScene.reset();hold(false);skipAll();$('#effect-dock').hidden=true;actualLP=[8000,8000],effectMetrics=[],activeEffect=null,currentHold=false;displayLP=[8000,8000];writeLife();seen=0;clearTimeout(ribbonTimer);ribbon.hidden=true;/* r34.1 (ChatGPT RELAY-030): a held chain from the last duel must not stay in the side panel */$('#chain').innerHTML='';const st=$('#event-chain-strip');if(st){st.innerHTML='';st.hidden=true}},
+   refreshField,
+   get metrics(){return [...effectMetrics]},
+   hold,
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index 1663fb4..e5bec43 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -8,9 +8,11 @@ import {readCompressed} from './load.mjs';
+ import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
+ // r35 item 8 (RELAY-046 Tap B, Seto 27 Oct 10:10): deck-shuffle capture on the one real duel (see shuffle-tap.mjs).
+ import {ShuffleTap} from './shuffle-tap.mjs';const shuffleTap=new ShuffleTap({shuffleType:M.SHUFFLE_DECK});
++// r36 (Kevy 29 Oct 14:29, coin flip cutscene): coin-toss / dice-roll capture on the same one real duel, same conditions (see coin-tap.mjs).
++import {CoinTap} from './coin-tap.mjs';const coinTap=new CoinTap({coinType:M.TOSS_COIN,diceType:M.TOSS_DICE,optionType:M.SELECT_OPTION});
+ const humanBridge=new HumanResponseBridge(),pauseOwners=new WorkerPauseOwners();let interactionProtocol=1,lastHumanState=null;
+ function resetHumanTransport(session=humanBridge.clientSession){humanBridge.reset(session);pauseOwners.reset(humanBridge.epoch,paused);lastHumanState=null}
+-function rejectHumanReply(x,reason){postMessage({type:'human-reply-result',clientSession:humanBridge.clientSession,requestId:x.human?.requestId,accepted:false,reason,current:lastHumanState?{...lastHumanState,events:[],shuffle:lastHumanState.shuffle&&{...lastHumanState.shuffle,shuffles:[]},human:{...lastHumanState.human,stateSeq:++humanBridge.stateSeq}}:null})}
++function rejectHumanReply(x,reason){postMessage({type:'human-reply-result',clientSession:humanBridge.clientSession,requestId:x.human?.requestId,accepted:false,reason,current:lastHumanState?{...lastHumanState,events:[],shuffle:lastHumanState.shuffle&&{...lastHumanState.shuffle,shuffles:[]},coin:lastHumanState.coin&&{...lastHumanState.coin,tosses:[]},human:{...lastHumanState.human,stateSeq:++humanBridge.stateSeq}}:null})}
+ const director=new ChainDirector();let preset='learning',tapToContinue=false,chainFlow=true,chainView;let duel,view=0,mode='play',study=false,paused=false,timer,delay=1200,loading,disabled=false,generation=0;
+ let replayHistory=[],dealHand=false;let pilots=[],matchInfo=null,plan,thoughts=[],thoughtSeq=0,deliveredSeq=0,presentationUntil=0,presentationPending=false,cinematics=true,motion=false,pace=1,learnHold=false,effectPace='readable';
+ const aiSeat=p=>mode==='watch'||(mode==='play'&&p!==view);
+@@ -72,7 +74,7 @@ function send(){
+  const multi=m&&[M.SELECT_CARD,M.SELECT_TRIBUTE,M.SELECT_SUM,M.SELECT_COUNTER,M.ANNOUNCE_RACE,M.ANNOUNCE_ATTRIB].includes(m.type);
+  if(!pauseOwners.owners.size)pauseOwners.base=paused;
+  const human=interactionProtocol===2?{...humanBridge.issue({revision:duel.revision,seat:m?.seat,prompt:m,ai:isAi,disabled,finished:duel.finished}),pauseOwners:[...pauseOwners.owners],basePaused:pauseOwners.base}:undefined;
+- const message={type:'state',human,lastEventId:deliveredSeq,shuffle:shuffleTap.drain(),state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
++ const message={type:'state',human,lastEventId:deliveredSeq,shuffle:shuffleTap.drain(),coin:coinTap.drain(),state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
+  schedule();
+ }
+ function schedule(){clearTimeout(timer);if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;const stepMs=delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay;timer=setTimeout(step,Math.max(stepMs,presentationUntil-Date.now(),humanWait(),addedWait(stepMs)))}}
+@@ -85,22 +87,22 @@ function step(){
+   if(duel.retries>before){paused=true;postMessage({type:'notice',message:'The computer’s selection was rejected. Take control to choose the required cards.'})}
+   if(mode==='watch'&&learnHold)paused=true;
+   send();
+- }catch(e){disabled=true;paused=true;shuffleTap.disarm();postMessage({type:'error',message:e.message});send()}
++ }catch(e){disabled=true;paused=true;shuffleTap.disarm();coinTap.disarm();postMessage({type:'error',message:e.message});send()}
+ }
+ onmessage=async ({data:x})=>{try{
+  if(interactionProtocol===2&&['pause','step','control','rewind'].includes(x.type)&&(x.clientSession!==humanBridge.clientSession||x.epoch!==humanBridge.epoch))return;
+  if(x.type==='load-library'){postMessage({type:'load-progress',message:'Decompressing card library…'});postMessage({type:'library',db:await readCompressed('cards.json.gz')});return}
+- if(x.type==='start'){shuffleTap.reset();interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
++ if(x.type==='start'){shuffleTap.reset();coinTap.reset();interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
+   director.reset();preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;const run=++generation;clearTimeout(timer);disabled=false;paused=!!x.dealHand;dealHand=!!x.dealHand;replayHistory=[];view=x.view;mode=x.mode;study=x.study;delay=x.delay||2200;cinematics=x.cinematics!==false;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';learnHold=!!x.learnHold;thoughts=[];thoughtSeq=0;plan=null;deliveredSeq=0;presentationUntil=0;presentationPending=false;
+-  if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}shuffleTap.install(duel);await warmThinkWorker();
+-  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',pilots:pilots.map(p=>p.info())};send();
++  if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}shuffleTap.install(duel);coinTap.install(duel);await warmThinkWorker();
++  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',pilots:pilots.map(p=>p.info())};send();
+  }else if(x.type==='reply'){
+   if(interactionProtocol===2){const checked=humanBridge.check(x,{prompt:duel?.prompt,choices:duel?.choices()||[],sums:duel?.prompt?.type===M.SELECT_SUM?sumSelections(duel.prompt):[]});if(!checked.ok){rejectHumanReply(x,checked.reason);return}if(pauseOwners.owners.size){humanBridge.used=null;rejectHumanReply(x,'Close the reading panel before submitting.');return}}
+   cancelThink();if(disabled)throw Error('This duel is stopped. Start a new duel.');const retries=duel.retries;duel.respond(x.response,x.revision);if(interactionProtocol===2)humanBridge.ack={requestId:x.human.requestId,accepted:duel.retries===retries};replayHistory=duel.responseHistory.slice();plan=null;send()
+  }
+  else if(x.type==='human-hold'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||!pauseOwners.change(x))return;paused=pauseOwners.paused;send()}
+  else if(x.type==='human-recover'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||x.epoch!==humanBridge.epoch)return;pauseOwners.releaseAll();paused=pauseOwners.paused;send()}
+- else if(x.type==='rewind'){cancelThink();clearTimeout(timer);shuffleTap.reset();const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400});for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}shuffleTap.arm();replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
++ else if(x.type==='rewind'){cancelThink();clearTimeout(timer);shuffleTap.reset();coinTap.reset();const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400});for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}shuffleTap.arm();coinTap.arm();replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
+  else if(x.type==='pause'){if(interactionProtocol===2){pauseOwners.manual(x.value);paused=pauseOwners.paused}else paused=x.value===undefined?!paused:!!x.value;send()}
+  else if(x.type==='step'){clearTimeout(timer);paused=true;resetHumanTransport();step()}
+  else if(x.type==='control'){clearTimeout(timer);view=x.seat;mode='play';paused=false;resetHumanTransport();send()}
+@@ -110,7 +112,7 @@ onmessage=async ({data:x})=>{try{
+  else if(x.type==='learn'){learnHold=x.value;send()}
+  else if(x.type==='skip-scene'||x.type==='presentation-done'){if(x.eventId>=deliveredSeq){presentationUntil=0;presentationPending=false;presentationDoneAt=Date.now();if(thinking?.fallback&&paceKind()!=='instant'){const due=thinkDeadline(thinking.started);if(due<thinking.deadlineAt){thinking.deadlineAt=due;if(deadlineBox&&Atomics.load(deadlineBox,0)===thinking.id)Atomics.store(deadlineBox,1,due-deadlineBase);clearTimeout(thinkTimeout);thinkTimeout=setTimeout(thinking.fallback,Math.max(0,due-Date.now()))}}schedule()}}
+  else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,responses:duel.responseHistory}})}
+- else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();replayHistory=duel.responseHistory.slice();matchInfo={...matchInfo,seed:r.seed,first:r.first};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
++ else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();matchInfo={...matchInfo,seed:r.seed,first:r.first};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
+  else if(x.type==='export'){const extra=mode==='watch'?'\n\nINDEPENDENT PROCEDURAL PILOT CHOICES\n'+thoughts.map(t=>'Turn '+t.turn+' · '+duel.decks[t.seat].name+' · '+t.title+'\n'+t.rule+': '+t.reason+(t.doctrine?'\nDOCTRINE: '+t.doctrine.title+' · '+t.doctrine.status:'')).join('\n\n'):'';postMessage({type:'export',text:'GAME SEED '+matchInfo?.seed+' · FIRST SEAT '+matchInfo?.first+' · VARIATION '+matchInfo?.variation+' · PILOT '+matchInfo?.strategy+' · DOCTRINE '+(matchInfo?.doctrine?'ON':'OFF')+'\n'+pilots.map(p=>p.name+': '+p.info().label+' · seed '+p.seed).join('\n')+'\n\n'+(duel?.log.map(e=>e.text).join('\n')||'')+extra})}
+- else if(x.type==='stop'){cancelThink();shuffleTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
+- }catch(e){disabled=true;paused=true;shuffleTap.disarm();postMessage({type:'error',message:e.message});resetHumanTransport();if(duel?.handle)send()}};
++ else if(x.type==='stop'){cancelThink();shuffleTap.disarm();coinTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
++ }catch(e){disabled=true;paused=true;shuffleTap.disarm();coinTap.disarm();postMessage({type:'error',message:e.message});resetHumanTransport();if(duel?.handle)send()}};
+diff --git a/tests/r36-coin.test.mjs b/tests/r36-coin.test.mjs
+new file mode 100644
+index 0000000..71b7c80
+--- /dev/null
++++ b/tests/r36-coin.test.mjs
+@@ -0,0 +1,66 @@
++// r36 coin toss / dice roll cutscene (Claude, 29 Oct 2026; Kevy 14:29). SELF-VERIFIED (builder = verifier), NOT independent.
++//  1 CoinTap on the real engine: Dark Time Wizard's coin gives ONE coin entry with the engine's result, the call read from
++//    the duel's own response to the "call it" prompt (options 60 Heads / 61 Tails), the resolving card and the event it
++//    followed; right call (seed 16) and wrong call (seed 11) both reported correctly.
++//  2 The tap changes nothing: the same duel with and without the tap gives the same responses, log and result.
++//  3 Graceful & Skull Dice gives ONE dice entry with two results 1..6, and its effect text agrees with them.
++//  4 Disarmed / reset taps capture nothing; drain empties; a second duel object is refused.
++//  5 coinBatches: each toss is placed after the event it followed and before later events (so the coin lands before the
++//    destruction it causes); tosses in the same gap stay in order; tossLine wording.
++import assert from 'node:assert/strict';
++import {engine,stopEngine,scenario,drive,labels,M,field,gy} from '../tools/s3-harness.mjs';
++import {CoinTap} from '../dist/coin-tap.mjs';
++import {coinBatches,tossLine,tossWon,COIN_MS} from '../dist/coin-cutscene.mjs';
++await engine();
++const DTW='Dark Time Wizard',auto=d=>{const m=d.prompt;if(m.type===M.SELECT_PLACE||m.type===M.SELECT_POSITION){d.respond(d.choices()[0].response);return true}return false};
++const newTap=()=>new CoinTap({coinType:M.TOSS_COIN,diceType:M.TOSS_DICE,optionType:M.SELECT_OPTION});
++function coinDuel(seed,withTap,callIndex=0){
++ const d=scenario(['dtw','dtw'],[{name:DTW,location:2,owner:0},{name:'Swiftwind Panther Warrior',location:4,owner:0},{name:'K9-17 Izuna',location:4,owner:1}],{first:0,seed});
++ const tap=withTap?newTap():null;if(tap){tap.install(d);tap.arm()}
++ let callSeen=null;
++ const r=drive(d,{steps:{0:['Activate · '+DTW,'Toss a coin']},onPrompt:dd=>{if(auto(dd))return true;const m=dd.prompt;
++   if(m.type===M.SELECT_OPTION&&(m.options||[]).map(Number).join()==='60,61'){callSeen=true;dd.respond(dd.choices()[callIndex].response);return true}return false},
++  until:dd=>dd.prompt.type===M.SELECT_IDLECMD&&gy(dd,0).some(c=>dd.name(c.code)===DTW)});
++ assert.ok(r.stopped,'coin duel resolved');assert.equal(callSeen,true,'the engine asked for a call with options 60/61');
++ const out={tap:tap?.drain(),responses:JSON.stringify(d.responseHistory),log:d.log.map(x=>x.text).join('\n'),lp:[...d.lp],theirs:field(d,1).length,ours:field(d,0).length,eventSeq:d.eventSeq};d.stop();return out}
++// 1 + 2
++const results={};
++for(const [seed,callIndex] of [[16,0],[11,0],[16,1]]){
++ const a=coinDuel(seed,true,callIndex),b=coinDuel(seed,false,callIndex);
++ assert.equal(a.tap.tosses.length,1,'one toss captured');const t=a.tap.tosses[0];
++ assert.equal(t.kind,'coin');assert.equal(t.seat,0);assert.equal(t.code,40235813,'the resolving card is Dark Time Wizard');
++ assert.equal(t.call,callIndex===0?'heads':'tails','the call is read from the duel response');
++ assert.equal(t.results.length,1);assert.equal(typeof t.results[0],'boolean');
++ const right=tossWon(t);assert.equal(right,a.theirs===0,'right call <=> their monster destroyed (the engine decided; the tap only reports it)');
++ assert.ok(t.afterEventId>0&&t.afterEventId<a.eventSeq,'the toss sits between events');
++ assert.equal(a.responses,b.responses,'same responses with and without the tap');assert.equal(a.log,b.log,'same log with and without the tap');assert.deepEqual(a.lp,b.lp,'same LP');
++ results[seed+'/'+callIndex]={toss:t,line:tossLine(t,DTW)}}
++assert.notEqual(results['16/0'].toss.results[0],results['11/0'].toss.results[0],'the two seeds give different coin results (heads vs tails), so both branches are covered');
++// 3 dice
++{const d=scenario(['dtw','dtw'],[{name:'Graceful & Skull Dice',location:2,owner:0},{name:'Swiftwind Panther Warrior',location:4,owner:0},{name:'K9-17 Izuna',location:4,owner:1}],{first:0,seed:11});
++ const tap=newTap();tap.install(d);tap.arm();const atk0=field(d,1)[0].attack;
++ const r=drive(d,{steps:{0:['Activate · Graceful & Skull Dice']},onPrompt:auto,until:dd=>dd.prompt.type===M.SELECT_IDLECMD&&gy(dd,0).some(c=>dd.name(c.code)==='Graceful & Skull Dice')});
++ assert.ok(r.stopped,'dice resolved');const out=tap.drain();assert.equal(out.tosses.length,1,'one dice entry (two dice in one roll)');const t=out.tosses[0];
++ assert.equal(t.kind,'dice');assert.equal(t.results.length,2);assert.ok(t.results.every(v=>v>=1&&v<=6));assert.equal(t.call,null);assert.equal(t.code,76630812);
++ const total=t.results[0]+t.results[1],atk1=field(d,1)[0].attack;assert.equal(atk0-atk1,total*200,'their monster lost (total x 200) ATK, matching the captured dice');
++ results.dice={toss:t,atk:[atk0,atk1],line:tossLine(t,'Graceful & Skull Dice')};d.stop()}
++// 4
++{const d=scenario(['dtw','dtw'],[{name:DTW,location:2,owner:0},{name:'Swiftwind Panther Warrior',location:4,owner:0},{name:'K9-17 Izuna',location:4,owner:1}],{first:0,seed:16});
++ const tap=newTap();tap.install(d);/* not armed */
++ drive(d,{steps:{0:['Activate · '+DTW,'Toss a coin','Choose an available effect']},onPrompt:auto,until:dd=>dd.prompt.type===M.SELECT_IDLECMD&&gy(dd,0).some(c=>dd.name(c.code)===DTW)});
++ assert.equal(tap.drain().tosses.length,0,'a disarmed tap captures nothing');assert.throws(()=>tap.install({handleMessage(){}}),/one duel/,'bound to one duel');
++ tap.arm();tap.reset();assert.equal(tap.armed,false,'reset disarms');assert.equal(tap.drain().epoch,1,'reset starts a new epoch');d.stop()}
++// 5
++{const ev=(id,type='move')=>({id,type});
++ const batches=[{events:[ev(5,'activate')]},{events:[ev(6,'resolve'),ev(7,'move')]},{events:[ev(8,'move')]}];
++ const t1={id:1,kind:'coin',seat:0,results:[true],call:'heads',code:40235813,afterEventId:6},t2={id:2,kind:'dice',seat:0,results:[3,4],call:null,code:76630812,afterEventId:6};
++ const out=coinBatches(batches,[t2,t1],'duel');
++ const kinds=out.map(b=>b.events[0].type==='coinToss'?'toss'+b.events[0].toss.id:b.events[0].id);
++ assert.deepEqual(kinds,[5,'toss1','toss2',6,8],'tosses after event 5 and before the batch holding event 7 (a later event), in toss order');
++ assert.equal(out[1].duration,COIN_MS.duel);
++ assert.deepEqual(coinBatches(batches,[{...t1,afterEventId:99}],'learning').map(b=>b.events[0].type).at(-1),'coinToss','a toss after every event goes last');
++ assert.equal(coinBatches(batches,[],'duel'),batches,'no tosses: unchanged');
++ assert.equal(tossLine({kind:'coin',results:[false],call:'heads'},'Dark Time Wizard'),'Dark Time Wizard · Coin: Tails (called Heads · wrong call)');
++ assert.equal(tossLine({kind:'dice',results:[3,4]},'Graceful & Skull Dice'),'Graceful & Skull Dice · Dice: 3 + 4 = 7')}
++stopEngine();
++console.log(JSON.stringify({test:'r36-coin',pass:true,node:process.version,results}));
+-- 
+2.43.0
+

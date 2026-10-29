@@ -1,0 +1,360 @@
+{
+ "note": "r36 Time Typhoon source pins (Claude, 29 Oct 2026; Seto 11:24 verification plan item 1).",
+ "babelcdb": {
+  "repo": "https://github.com/ProjectIgnis/BabelCDB",
+  "commit": "2e6f985a5537d9b16ec7396787b5279d94af419d",
+  "commitDate": "2026-10-27T14:08:53+01:00",
+  "file": "release-betb.cdb",
+  "sha256": "939a33357d6d43e0c392a33df4e31034152a7bec09696041239cded0d8d8e3ae",
+  "rows": [
+   40235813,
+   77482666,
+   4881365,
+   3129527,
+   76630812,
+   65118318,
+   2606417,
+   76660178,
+   17242022,
+   79791695,
+   40275470,
+   3129528
+  ]
+ },
+ "cardscripts": {
+  "repo": "https://github.com/ProjectIgnis/CardScripts",
+  "commit": "bc5d82d66842f3c62d20747c530b164ce98004f3",
+  "commitDate": "2026-10-28T04:36:16-03:00",
+  "scripts": {
+   "c40235813.lua": {
+    "name": "Dark Time Wizard",
+    "upstreamSha256": "780b25e7424ac04a1d5cc0d6a2cf38d3c5ddd4d23aa398a5f081b71bc2bb8cd5",
+    "bundledSha256": "87620a49520092f22604c07f0163c7cc59f8ece5481890662b9839feeecab91b",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 1
+   },
+   "c77482666.lua": {
+    "name": "Swiftwind Panther Warrior",
+    "upstreamSha256": "a2df363b7ad5eb495dde30d1a5d8072b313ae7efa546e4829f94ef75a98ea70e",
+    "bundledSha256": "af42dfb60f3f774d87882e268796d9ef2c3b92d40cc378e4480dc451cc47fc05",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c4881365.lua": {
+    "name": "Alligator's Dragon Knight",
+    "upstreamSha256": "f5bf9d0f1b4cb08235342e93358f9ebabc76008e897556504d61443875187a60",
+    "bundledSha256": "44cc4132e4f231070ff9c7337ad128e3029926a1287eb8400b7b6d0f88d95978",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c3129527.lua": {
+    "name": "Sleepy Scapegoats",
+    "upstreamSha256": "48a6804f9513c27b06c2c710557d1a73ba0c2f8b956e4987b3cf3ad53c99f926",
+    "bundledSha256": "dbc0cabf455607c4d2b2d9fb33ac00ed763b699db6d1a2cc8ec844178bb9da77",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c76630812.lua": {
+    "name": "Graceful & Skull Dice",
+    "upstreamSha256": "b243a071a1e99d4df3ca47f4adf18e452523c9ad59aa40f973ee8e2e311c6922",
+    "bundledSha256": "2c431f3c5dafe7c65dbc26815df8262db851bc43e5c51b91d4751369ee5baabe",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c65118318.lua": {
+    "name": "Foolish Graverobber",
+    "upstreamSha256": "cb912d3578b1fe9e86c70204e708ba7360f8b9e96bcc5d0569735287931c4f6f",
+    "bundledSha256": "6eb774776b06a934253f369b7568caa6253636acec541f55bd36e574f244c515",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c2606417.lua": {
+    "name": "Reversal Box",
+    "upstreamSha256": "1222d11e7dba4702672067aa6145d42b6f6f45f242e078c951deac9f9570e9aa",
+    "bundledSha256": "56ee26c81096863de9aebf7c3476a9287943ef6b556ad1e027fd57a02e90ddb1",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c76660178.lua": {
+    "name": "Fisherman of Legend",
+    "upstreamSha256": "8ea936cdd78b12ee25ad6f08467dd4f5e50f087ae8eec7f27c7be97038caedfb",
+    "bundledSha256": "b88a5cb954ff4303cebc19d6773c2ca0b6b2b354acfc47e747d1b4d70e8568f3",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c17242022.lua": {
+    "name": "Red-Eyes Black Dragon Exceed",
+    "upstreamSha256": "8ac96bbcf45a54f4e4af71731a1266ac819b2f039d8403bf2bbf6cd4eae9ece9",
+    "bundledSha256": "b5bb65fa96eb224baf7e5399550b1067a1ce42dd886299c6ad92650607aad10a",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   },
+   "c79791695.lua": {
+    "name": "CXyz Hope Chaos Barian Dragon",
+    "upstreamSha256": "8a5c6899beaa9287f23d37e02d6b612588ff579944afb7f08c8e6e92293d70a4",
+    "bundledSha256": "9a304e5e9de5ba7489c783e29dce92978fb0285e4c6c514b75851f93c7e27aa8",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 1
+   },
+   "c40275470.lua": {
+    "name": "Jinzo - Energy Shocker",
+    "upstreamSha256": "32317130bccdedcc20a7599c4bb1e99e0837ec0d0b37c8c59b1ea832847bee80",
+    "bundledSha256": "a38585fbaf0f556dcde56d02db24dac22cc4ec9b2376b046cc854ef0849df797",
+    "bundledMinusHeaderEqualsUpstream": true,
+    "headerLines": 2
+   }
+  }
+ },
+ "bundledHeader": "2 lines added at the top of each script: a provenance comment, and (when the script uses it) local CARD_DARK_TIME_WIZARD=40235813. Nothing else changes.",
+ "tcgNameOverrides": {
+  "79791695": "CXyz Hope Chaos Barian Dragon"
+ },
+ "art": {
+  "40235813": {
+   "file": "art/40235813.jpg",
+   "sha256": "11bb271fa3ac26f3761d2324a9e0941fde9a0e364522b2ebd4132b256e48f0b7",
+   "source": "https://images.ygoprodeck.com/images/cards/40235813.jpg"
+  },
+  "77482666": {
+   "file": "art/77482666.jpg",
+   "sha256": "dd6b25405393265356c4c8262a5fa93b41ebca9e4586d977af3a327a87f5d506",
+   "source": "https://images.ygoprodeck.com/images/cards/77482666.jpg"
+  },
+  "4881365": {
+   "file": "art/4881365.jpg",
+   "sha256": "528c87cc6f6f8c8fcdbe9ab20d0a4d13571e7f5c5d019c4723f1cbb5e3b58c0c",
+   "source": "https://images.ygoprodeck.com/images/cards/4881365.jpg"
+  },
+  "3129527": {
+   "file": "art/3129527.jpg",
+   "sha256": "d72f2b10e68a999ea427bca3d872922cf2943c7b558e7db6a3f50e6349090ec7",
+   "source": "https://images.ygoprodeck.com/images/cards/3129527.jpg"
+  },
+  "76630812": {
+   "file": "art/76630812.jpg",
+   "sha256": "18627ddafcdf4509fc36c76f7498ab0eea906b2b279e89bb8ef49072d89b7908",
+   "source": "https://images.ygoprodeck.com/images/cards/76630812.jpg"
+  },
+  "65118318": {
+   "file": "art/65118318.jpg",
+   "sha256": "dd5f00c8b0996ff866b82a302c0a1f6f46e54ed3a2776ab0124f59a0ffb7b42c",
+   "source": "https://images.ygoprodeck.com/images/cards/65118318.jpg"
+  },
+  "2606417": {
+   "file": "art/2606417.jpg",
+   "sha256": "79a8ea735d1ec95b3c08fa0db48308267e67d7c219ac54d035c49363113292cf",
+   "source": "https://images.ygoprodeck.com/images/cards/2606417.jpg"
+  },
+  "76660178": {
+   "file": "art/76660178.jpg",
+   "sha256": "dc8a513ad50785e36becdb1f6ba00fad30fe37516f8b53c8f74ca1c3c259954c",
+   "source": "https://images.ygoprodeck.com/images/cards/76660178.jpg"
+  },
+  "17242022": {
+   "file": "art/17242022.jpg",
+   "sha256": "63b32731b3143947ee9dd2f45e0fc1bb6cd7f0f8fc69e0cab42d931daff8e6bc",
+   "source": "https://images.ygoprodeck.com/images/cards/17242022.jpg"
+  },
+  "79791695": {
+   "file": "art/79791695.jpg",
+   "sha256": "a4d40f79df0e5bdbb307fbf38afd35fdaded5e54081d7acbfff1b8fd4d36ded3",
+   "source": "https://images.ygoprodeck.com/images/cards/79791695.jpg"
+  },
+  "40275470": {
+   "file": "art/40275470.jpg",
+   "sha256": "fd47801524cff44315561ff47b13a622bf1f897f25afa204483d33be400aee48",
+   "source": "https://images.ygoprodeck.com/images/cards/40275470.jpg"
+  }
+ },
+ "artExistingCards": {
+  "80538047": {
+   "name": "Radiant Typhoon Swen",
+   "file": "art/80538047.jpg",
+   "sha256": "20c39df6c1750a08115ad02da19ca6c7bd2d729177f2bc1ed87f26e146813964",
+   "bytes": 211255,
+   "source": "https://images.ygoprodeck.com/images/cards/80538047.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "54143349": {
+   "name": "Radiant Typhoon Eldam",
+   "file": "art/54143349.jpg",
+   "sha256": "fb464add8b4e66c607d0780bf1f311afcaf980b639f88beecc2989b4175a31e0",
+   "bytes": 206374,
+   "source": "https://images.ygoprodeck.com/images/cards/54143349.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "92248362": {
+   "name": "K9-17 Izuna",
+   "file": "art/92248362.jpg",
+   "sha256": "48db992fb4f41a43a91a0bf7e51a3126d9d79bf030b4bd02ad45685ae0b9fc95",
+   "bytes": 190989,
+   "source": "https://images.ygoprodeck.com/images/cards/92248362.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "28642461": {
+   "name": "K9-66a Jokul",
+   "file": "art/28642461.jpg",
+   "sha256": "b7aebbec1729ef85f93e0221ec360b878a3d8f51895329d14576ffaf22eb64f1",
+   "bytes": 191656,
+   "source": "https://images.ygoprodeck.com/images/cards/28642461.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "91025875": {
+   "name": "K9-ØØ Lupis",
+   "file": "art/91025875.jpg",
+   "sha256": "f9bbb8939ec672baff2adf0eb99533548616a28d98960379b7c3341806149b5d",
+   "bytes": 165089,
+   "source": "https://images.ygoprodeck.com/images/cards/91025875.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "67115133": {
+   "name": "Radiant Typhoon Chant",
+   "file": "art/67115133.jpg",
+   "sha256": "416e4d6b56065c965f27e427895988082c78f76346f92d822d187099e6a69a94",
+   "bytes": 171464,
+   "source": "https://images.ygoprodeck.com/images/cards/67115133.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "5318639": {
+   "name": "Mystical Space Typhoon",
+   "file": "art/5318639.jpg",
+   "sha256": "cff20f0437fd05223125875cdf9174566eeb8829d8ffdc536c77629bd6f91f37",
+   "bytes": 136476,
+   "source": "https://images.ygoprodeck.com/images/cards/5318639.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "80181649": {
+   "name": "\"A Case for K9\"",
+   "file": "art/80181649.jpg",
+   "sha256": "a85be83483ff20f616fd256c13add512f9b51da9ff7d185ed68263e91ab11493",
+   "bytes": 172578,
+   "source": "https://images.ygoprodeck.com/images/cards/80181649.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "53792930": {
+   "name": "K9-X Forced Release",
+   "file": "art/53792930.jpg",
+   "sha256": "6cc9b620c361ca8e4b3e866014f97da8242a34626fdaeb07669c009d12c5459c",
+   "bytes": 186635,
+   "source": "https://images.ygoprodeck.com/images/cards/53792930.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "92221402": {
+   "name": "Chaotic Elements",
+   "file": "art/92221402.jpg",
+   "sha256": "f9867e3ba9aa97b35dc245634804ad4e5c8096e6678f4518f2dc70e416b7b45b",
+   "bytes": 175086,
+   "source": "https://images.ygoprodeck.com/images/cards/92221402.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "84211599": {
+   "name": "Pot of Prosperity",
+   "file": "art/84211599.jpg",
+   "sha256": "89122ff725982053881b81f56e52efe74b4c3472af80fa63df8e1e4639ab72a5",
+   "bytes": 176696,
+   "source": "https://images.ygoprodeck.com/images/cards/84211599.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "4423206": {
+   "name": "M-X-Saber Invoker",
+   "file": "art/4423206.jpg",
+   "sha256": "af134f5642892eb1b601180aed3e6e07eb97e8a6a12586278f3db9783c778b2d",
+   "bytes": 161868,
+   "source": "https://images.ygoprodeck.com/images/cards/4423206.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "71068247": {
+   "name": "Totem Bird",
+   "file": "art/71068247.jpg",
+   "sha256": "32bfa3f331401a3976d393b36102fa50b05b875428b7b216d160442885ae59f5",
+   "bytes": 162501,
+   "source": "https://images.ygoprodeck.com/images/cards/71068247.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "71166481": {
+   "name": "Number 75: Bamboozling Gossip Shadow",
+   "file": "art/71166481.jpg",
+   "sha256": "da3ff0b4af8c181c1a22127c42e41e59a1a11bb6e932b99c8c4c1e6691a59ebd",
+   "bytes": 160860,
+   "source": "https://images.ygoprodeck.com/images/cards/71166481.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "27420823": {
+   "name": "K9-17 \"Ripper\"",
+   "file": "art/27420823.jpg",
+   "sha256": "76e0997a085b668fb337d6d6d8719f0f06e8f03aaefa6dd5284759c34c16a6df",
+   "bytes": 188719,
+   "source": "https://images.ygoprodeck.com/images/cards/27420823.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "67515699": {
+   "name": "K9-66X \"Jacks\"",
+   "file": "art/67515699.jpg",
+   "sha256": "bb495b0cefa383860b823395e37150650c725f6e48a244e8b455fd33e1f1a432",
+   "bytes": 217387,
+   "source": "https://images.ygoprodeck.com/images/cards/67515699.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "90303227": {
+   "name": "K9-X \"Werewolf\"",
+   "file": "art/90303227.jpg",
+   "sha256": "96c6d5bad5e49646775a6f8621bb826c9b1937649b6ce46fa73858a933b2b196",
+   "bytes": 188214,
+   "source": "https://images.ygoprodeck.com/images/cards/90303227.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "34876719": {
+   "name": "N.As.H. Knight",
+   "file": "art/34876719.jpg",
+   "sha256": "4f3a00873ff92d73ac77a2fe9f5cdbcfb4d4c8704f930b53d52a429504a3062d",
+   "bytes": 181379,
+   "source": "https://images.ygoprodeck.com/images/cards/34876719.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "61374414": {
+   "name": "CXyz N.As.Ch. Knight",
+   "file": "art/61374414.jpg",
+   "sha256": "2cb5634a0a80fd5004da1e050c5d3d5401bd0f832a7578e5c8b778c0752d47f0",
+   "bytes": 183007,
+   "source": "https://images.ygoprodeck.com/images/cards/61374414.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "49456901": {
+   "name": "Number C104: Umbral Horror Masquerade",
+   "file": "art/49456901.jpg",
+   "sha256": "507d94295d3847ba0a4bf09f537e6f5ac994384f25b923113e7c364c03803a86",
+   "bytes": 185032,
+   "source": "https://images.ygoprodeck.com/images/cards/49456901.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  },
+  "59438930": {
+   "name": "Ghost Ogre & Snow Rabbit",
+   "file": "art/59438930.jpg",
+   "sha256": "13eff2d0f7c4f077cddae68baba5b56c61c8502c0793aa645a255dd88d9ea915",
+   "bytes": 180377,
+   "source": "https://images.ygoprodeck.com/images/cards/59438930.jpg",
+   "downloaded": "2026-10-29 (Australia/Sydney)",
+   "unedited": true
+  }
+ }
+}

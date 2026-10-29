@@ -1,0 +1,1 @@
+{"test":"r22-l5-deck-bottom","pass":true,"node":"v22.22.2","order":[2,0,1],"bottom":"30875635,27780618,18094166","seat1":{"decision":204,"worlds":2,"role":"opponent"},"seat0":{"decision":202,"worlds":3,"role":"sorter"}}
