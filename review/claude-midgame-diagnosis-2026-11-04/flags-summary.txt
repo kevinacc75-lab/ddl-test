@@ -1,0 +1,18 @@
+AB-blueeyes-hero-71084-0.json winner 0 turns 5 [('CHURN_NO_PROGRESS', 4, 6)]
+AB-branded-mikanko-71082-1.json winner 0 turns 6 [('IDLE_WITH_HAND', 5, 3), ('SELF_DAMAGE_OWN_TURN', 6, 1000)]
+AB-dtw-branded-71081-0.json winner 0 turns 5 [('SELF_DAMAGE_OWN_TURN', 4, 2800)]
+AB-dtw-branded-71081-1.json winner 1 turns 9 []
+AB-kashtira-branded-71086-0.json winner None turns 17 []
+AB-luna-toon-71085-1.json winner 0 turns 4 [('IDLE_WITH_HAND', 3, 4)]
+AB-sky-kashtira-71083-0.json winner 1 turns 12 [('IDLE_WITH_HAND', 7, 3), ('IDLE_WITH_HAND', 9, 4)]
+AB-sky-mikanko-71087-1.json winner 1 turns 13 [('DEF_SWITCH_VS_EMPTY', 3, None), ('IDLE_WITH_HAND', 4, 5), ('DEF_SWITCH_VS_EMPTY', 5, None), ('OPEN_BOARD_NO_ATTACK', 9, ['Hu-Li the Jewel Mikanko', 'Uzuhime the Manifested Mikanko'])]
+blueeyes-hero-71084-0.json winner 0 turns 9 [('CHURN_NO_PROGRESS', 4, 9)]
+branded-mikanko-71082-1.json winner 1 turns 4 [('LOST_ON_OWN_TURN', 4, 1500)]
+dtw-branded-71081-0.json winner 0 turns 5 [('CHURN_NO_PROGRESS', 4, 9)]
+dtw-branded-71081-1.json winner 1 turns 7 [('DEF_SWITCH_VS_EMPTY', 3, None)]
+kashtira-branded-71086-0.json winner 0 turns 11 []
+luna-toon-71085-1.json winner 0 turns 4 [('IDLE_WITH_HAND', 3, 4), ('DEF_SWITCH_VS_EMPTY', 4, None)]
+sky-kashtira-71083-0.json winner 1 turns 12 [('CHURN_NO_PROGRESS', 3, 7), ('CHURN_NO_PROGRESS', 4, 6), ('CHURN_NO_PROGRESS', 9, 6)]
+sky-mikanko-71087-1.json winner None turns 17 [('DEF_SWITCH_VS_EMPTY', 3, None), ('IDLE_WITH_HAND', 4, 5), ('DEF_SWITCH_VS_EMPTY', 5, None), ('SELF_DAMAGE_OWN_TURN', 6, 2000), ('IDLE_WITH_HAND', 8, 4), ('CHURN_NO_PROGRESS', 9, 13), ('OPEN_BOARD_NO_ATTACK', 11, ['Uzuhime the Manifested Mikanko', 'Uzuhime the Manifested Mikanko']), ('CHURN_NO_PROGRESS', 12, 11), ('OPEN_BOARD_NO_ATTACK', 13, ['Uzuhime the Manifested Mikanko', 'Uzuhime the Manifested Mikanko', 'Ohime the Manifested Mikanko']), ('CHURN_NO_PROGRESS', 14, 8), ('OPEN_BOARD_NO_ATTACK', 15, ['Uzuhime the Manifested Mikanko', 'Uzuhime the Manifested Mikanko'])]
+AB {'CHURN_NO_PROGRESS': 1, 'games': 8, 'turns3+': 55, 'IDLE_WITH_HAND': 5, 'SELF_DAMAGE_OWN_TURN': 2, 'DEF_SWITCH_VS_EMPTY': 2, 'OPEN_BOARD_NO_ATTACK': 1}
+base {'CHURN_NO_PROGRESS': 8, 'games': 8, 'turns3+': 53, 'LOST_ON_OWN_TURN': 1, 'DEF_SWITCH_VS_EMPTY': 4, 'IDLE_WITH_HAND': 3, 'SELF_DAMAGE_OWN_TURN': 1, 'OPEN_BOARD_NO_ATTACK': 3}
