@@ -1,0 +1,14 @@
+not ok 1 intent carries its chain link: removalFor at an open Main Phase -> link 1 -- Expected values to be strictly equal:
+ok 2 control - original link 1 target at activation (link 1 newest, nothing resolving): wrong pick -> Albion (removalOverride)
+ok 3 control - original link 1 resolution YesNo "take control" No -> Yes; Yes kept
+ok 4 control - Forbidden Droplet cost at activation of link 1 still verified/overridden (cost stage)
+not ok 5 F1 (FAILED before): a SECOND Widow Anchor activated as link 2 - its target prompt is NOT overridden by link 1's intent (null) -- Expected values to be strictly deep-equal:
+not ok 6 F1 (FAILED before): the second copy's link 2 resolving - its "take control" YesNo is NOT answered by link 1's intent -- Expected values to be strictly equal:
+ok 7 different-code link: Linkage! chained as link 2, its selections -> null
+not ok 8 F1 (FAILED before): opponent's copy of Widow Anchor at link 1 (no link of ours) -> null -- Expected values to be strictly equal:
+not ok 9 F1 (FAILED before): rejected / cancelled activation - no chain link of ours ever opened; a later same-code selection -> null -- Expected values to be strictly equal:
+not ok 10 F1 (FAILED before): bound to S/T sequence 0; a NEW chain whose link 1 is another copy (S/T sequence 1) -> null, and removalDone -- Expected values to be strictly equal:
+not ok 11 removalDone: unbound -> false; bound and link 1 present -> false; link solved / chain ended -> true; another turn -> true -- removalDone missing (pre-fix tree)
+ok 12 removalBind only binds while our link is the newest and nothing resolves; otherwise unchanged
+not ok 13 OptimalPilot: observe() still arms pendingRemoval with the intent (link kept); the bind/clear lifecycle in base() is shown natively by tools/r36-f1-native.mjs (pendingBefore/pendingAfter per prompt) -- Expected values to be strictly equal:
+r36 F1 tests: 5 passed, 8 FAILED

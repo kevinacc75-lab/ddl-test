@@ -1,0 +1,1740 @@
+{
+ "scenario": "secondCopy",
+ "decks": [
+  "sky",
+  "branded"
+ ],
+ "placements": [
+  {
+   "name": "Sky Striker Mecha - Widow Anchor",
+   "location": 2,
+   "owner": 0
+  },
+  {
+   "name": "Sky Striker Mecha - Widow Anchor",
+   "location": 8,
+   "sequence": 1,
+   "position": 10,
+   "owner": 0
+  },
+  {
+   "name": "Sky Striker Ace - Kagari",
+   "location": 4,
+   "sequence": 5,
+   "owner": 0
+  },
+  {
+   "name": "Upstart Goblin",
+   "location": 16,
+   "owner": 0
+  },
+  {
+   "name": "Upstart Goblin",
+   "location": 16,
+   "owner": 0
+  },
+  {
+   "name": "Upstart Goblin",
+   "location": 16,
+   "owner": 0
+  },
+  {
+   "name": "Albion the Shrouded Dragon",
+   "location": 4,
+   "sequence": 0,
+   "owner": 1
+  }
+ ],
+ "steps": [
+  {
+   "i": 0,
+   "seat": 0,
+   "type": "SELECT_PLACE",
+   "hint": 98338152,
+   "resolvingChain": null,
+   "chain": [],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Your Spell / Trap zone 1",
+    "Your Spell / Trap zone 3",
+    "Your Spell / Trap zone 4",
+    "Your Spell / Trap zone 5"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 10,
+    "places": [
+     {
+      "player": 0,
+      "location": 8,
+      "sequence": 0
+     }
+    ]
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 1,
+   "seat": 0,
+   "type": "SELECT_CARD",
+   "hint": 551,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "min": 1,
+   "max": 1,
+   "cards": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    },
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "description": null,
+   "labels": [],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 5,
+    "indicies": [
+     1
+    ]
+   },
+   "pilotPicked": [
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "followUpStats": {
+    "removalVerified": 1
+   },
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   },
+   "adversarialBaseline": {
+    "picked": {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    },
+    "followUp": {
+     "stat": "removalOverride",
+     "stage": "target",
+     "picked": [
+      {
+       "name": "Albion the Shrouded Dragon",
+       "controller": 1,
+       "location": 4,
+       "sequence": 0,
+       "position": 1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "i": 2,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 551,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  },
+  {
+   "i": 3,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 551,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "cards": [
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "position": 10
+    },
+    {
+     "name": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 2,
+     "sequence": 3,
+     "position": 10
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Chain · Sky Striker Mecha - Widow Anchor",
+    "Chain · Sky Striker Mobilize - Linkage!",
+    "Do not chain"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "forced": "activate the Set Sky Striker Mecha - Widow Anchor as link 2 (Chain · Sky Striker Mecha - Widow Anchor)"
+  },
+  {
+   "i": 4,
+   "seat": 0,
+   "type": "SELECT_CARD",
+   "hint": 551,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "min": 1,
+   "max": 1,
+   "cards": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    },
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "description": null,
+   "labels": [],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 5,
+    "indicies": [
+     1
+    ]
+   },
+   "pilotPicked": [
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "followUpStats": {
+    "removalVerified": 1
+   },
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   },
+   "adversarialBaseline": {
+    "picked": {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    },
+    "followUp": {
+     "stat": "removalOverride",
+     "stage": "target",
+     "picked": [
+      {
+       "name": "Albion the Shrouded Dragon",
+       "controller": 1,
+       "location": 4,
+       "sequence": 0,
+       "position": 1
+      }
+     ]
+    }
+   },
+   "played": {
+    "type": 5,
+    "indicies": [
+     1
+    ]
+   },
+   "link2Target": true
+  },
+  {
+   "i": 5,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 551,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  },
+  {
+   "i": 6,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 551,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "cards": [
+    {
+     "name": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 2,
+     "sequence": 3,
+     "position": 10
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Chain · Sky Striker Mobilize - Linkage!",
+    "Do not chain"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 8,
+    "index": 0
+   },
+   "pilotPicked": [
+    {
+     "name": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 2,
+     "sequence": 3,
+     "position": 10
+    }
+   ],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 7,
+   "seat": 0,
+   "type": "SELECT_PLACE",
+   "hint": 9726840,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mobilize - Linkage!",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Your Spell / Trap zone 3",
+    "Your Spell / Trap zone 4",
+    "Your Spell / Trap zone 5"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 10,
+    "places": [
+     {
+      "player": 0,
+      "location": 8,
+      "sequence": 2
+     }
+    ]
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 8,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 9726840,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    },
+    {
+     "size": 3,
+     "card": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 2,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mobilize - Linkage!",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  },
+  {
+   "i": 9,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 9726840,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    },
+    {
+     "size": 3,
+     "card": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 2,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mobilize - Linkage!",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 8,
+    "index": null
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 10,
+   "seat": 0,
+   "type": "SELECT_CARD",
+   "hint": 504,
+   "resolvingChain": 3,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    },
+    {
+     "size": 3,
+     "card": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 2,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mobilize - Linkage!",
+   "min": 1,
+   "max": 1,
+   "cards": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    }
+   ],
+   "description": null,
+   "labels": [],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 5,
+    "indicies": [
+     0
+    ]
+   },
+   "pilotPicked": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    }
+   ],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   },
+   "adversarialBaseline": {
+    "picked": {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    },
+    "followUp": null
+   }
+  },
+  {
+   "i": 11,
+   "seat": 0,
+   "type": "SELECT_CARD",
+   "hint": 509,
+   "resolvingChain": 3,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    },
+    {
+     "size": 3,
+     "card": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 2,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mobilize - Linkage!",
+   "min": 1,
+   "max": 1,
+   "cards": [
+    {
+     "name": "Combined Maneuver - Engage Zero!",
+     "controller": 0,
+     "location": 64,
+     "sequence": 13,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace - Kaina",
+     "controller": 0,
+     "location": 64,
+     "sequence": 11,
+     "position": 8
+    },
+    {
+     "name": "Prototype Sky Striker Ace - Amatsu",
+     "controller": 0,
+     "location": 64,
+     "sequence": 9,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace - Hayate",
+     "controller": 0,
+     "location": 64,
+     "sequence": 6,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace - Shizuku",
+     "controller": 0,
+     "location": 64,
+     "sequence": 5,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 64,
+     "sequence": 4,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 64,
+     "sequence": 3,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 64,
+     "sequence": 2,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 64,
+     "sequence": 1,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 64,
+     "sequence": 0,
+     "position": 8
+    }
+   ],
+   "description": null,
+   "labels": [],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 5,
+    "indicies": [
+     7
+    ]
+   },
+   "pilotPicked": [
+    {
+     "name": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 64,
+     "sequence": 2,
+     "position": 8
+    }
+   ],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   },
+   "adversarialBaseline": {
+    "picked": {
+     "name": "Combined Maneuver - Engage Zero!",
+     "controller": 0,
+     "location": 64,
+     "sequence": 13,
+     "position": 8
+    },
+    "followUp": null
+   }
+  },
+  {
+   "i": 12,
+   "seat": 0,
+   "type": "SELECT_PLACE",
+   "hint": 76072561,
+   "resolvingChain": 3,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    },
+    {
+     "size": 3,
+     "card": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 2,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Mobilize - Linkage!",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Your Monster zone Extra 1",
+    "Your Monster zone Extra 2"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 10,
+    "places": [
+     {
+      "player": 0,
+      "location": 4,
+      "sequence": 5
+     }
+    ]
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 13,
+   "seat": 0,
+   "type": "SELECT_YESNO",
+   "hint": 76072561,
+   "resolvingChain": 2,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    },
+    {
+     "size": 3,
+     "card": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 2,
+     "solved": true
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "cards": [],
+   "description": {
+    "code": 98338152,
+    "index": 1
+   },
+   "labels": [
+    "Yes",
+    "No"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 3,
+    "yes": true
+   },
+   "pilotPicked": [],
+   "pilotYes": true,
+   "followUpStats": {
+    "removalVerified": 1
+   },
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   },
+   "adversarialBaseline": {
+    "yes": false,
+    "followUp": {
+     "stat": "removalOverride",
+     "stage": "control",
+     "yes": true
+    }
+   }
+  },
+  {
+   "i": 14,
+   "seat": 0,
+   "type": "SELECT_PLACE",
+   "hint": 25451383,
+   "resolvingChain": 2,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "solved": false
+    },
+    {
+     "size": 3,
+     "card": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 2,
+     "solved": true
+    }
+   ],
+   "currentEffect": "Sky Striker Mecha - Widow Anchor",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Your Monster zone 1",
+    "Your Monster zone 2",
+    "Your Monster zone 3",
+    "Your Monster zone 4",
+    "Your Monster zone 5"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 10,
+    "places": [
+     {
+      "player": 0,
+      "location": 4,
+      "sequence": 0
+     }
+    ]
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 15,
+   "seat": 0,
+   "type": "SELECT_EFFECTYN",
+   "hint": 25451383,
+   "resolvingChain": null,
+   "chain": [],
+   "currentEffect": null,
+   "cards": [],
+   "description": {
+    "system": 221
+   },
+   "labels": [
+    "Yes",
+    "No"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 2,
+    "yes": true
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 16,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 25451383,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Ace = Zero",
+   "cards": [
+    {
+     "name": "Ash Blossom & Joyous Spring",
+     "controller": 1,
+     "location": 2,
+     "sequence": 0,
+     "position": 10
+    },
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "controller": 1,
+     "location": 2,
+     "sequence": 4,
+     "position": 10
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Chain · Ash Blossom & Joyous Spring",
+    "Chain · Dogmatika Fleurdelis, the Knighted",
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  },
+  {
+   "i": 17,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 25451383,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Ace = Zero",
+   "cards": [
+    {
+     "name": "Sky Striker Special Maneuver - Lemnisgate!",
+     "controller": 0,
+     "location": 2,
+     "sequence": 0,
+     "position": 10
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Chain · Sky Striker Special Maneuver - Lemnisgate!",
+    "Do not chain"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 8,
+    "index": 0
+   },
+   "pilotPicked": [
+    {
+     "name": "Sky Striker Special Maneuver - Lemnisgate!",
+     "controller": 0,
+     "location": 2,
+     "sequence": 0,
+     "position": 10
+    }
+   ],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 18,
+   "seat": 0,
+   "type": "SELECT_PLACE",
+   "hint": 34433770,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Special Maneuver - Lemnisgate!",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Your Spell / Trap zone 1",
+    "Your Spell / Trap zone 2",
+    "Your Spell / Trap zone 3",
+    "Your Spell / Trap zone 4",
+    "Your Spell / Trap zone 5"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 10,
+    "places": [
+     {
+      "player": 0,
+      "location": 8,
+      "sequence": 0
+     }
+    ]
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 19,
+   "seat": 0,
+   "type": "SELECT_UNSELECT_CARD",
+   "hint": 507,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Special Maneuver - Lemnisgate!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Special Maneuver - Lemnisgate!",
+   "min": 2,
+   "max": 2,
+   "cards": [
+    {
+     "name": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 16,
+     "sequence": 6,
+     "position": 5
+    },
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 16,
+     "sequence": 5,
+     "position": 5
+    },
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 16,
+     "sequence": 4,
+     "position": 5
+    },
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 16,
+     "sequence": 3,
+     "position": 5
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Use · Sky Striker Mobilize - Linkage!",
+    "Use · Sky Striker Mecha - Widow Anchor",
+    "Use · Sky Striker Mecha - Widow Anchor",
+    "Use · Sky Striker Ace - Kagari"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 7,
+    "index": 2
+   },
+   "pilotPicked": [
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 16,
+     "sequence": 4,
+     "position": 5
+    }
+   ],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 20,
+   "seat": 0,
+   "type": "SELECT_UNSELECT_CARD",
+   "hint": 507,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Special Maneuver - Lemnisgate!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Special Maneuver - Lemnisgate!",
+   "min": 2,
+   "max": 2,
+   "cards": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 16,
+     "sequence": 3,
+     "position": 5
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Use · Sky Striker Ace - Kagari",
+    "Unselect · Sky Striker Mecha - Widow Anchor"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 7,
+    "index": 0
+   },
+   "pilotPicked": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 16,
+     "sequence": 3,
+     "position": 5
+    }
+   ],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 21,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 507,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Special Maneuver - Lemnisgate!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Special Maneuver - Lemnisgate!",
+   "cards": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "controller": 1,
+     "location": 2,
+     "sequence": 4,
+     "position": 10
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Chain · Dogmatika Fleurdelis, the Knighted",
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  },
+  {
+   "i": 22,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 507,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Special Maneuver - Lemnisgate!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": false
+    }
+   ],
+   "currentEffect": "Sky Striker Special Maneuver - Lemnisgate!",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 8,
+    "index": null
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 23,
+   "seat": 0,
+   "type": "SELECT_CARD",
+   "hint": 506,
+   "resolvingChain": 1,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "solved": false
+    },
+    {
+     "size": 2,
+     "card": "Sky Striker Special Maneuver - Lemnisgate!",
+     "controller": 0,
+     "location": 8,
+     "sequence": 0,
+     "solved": true
+    }
+   ],
+   "currentEffect": "Sky Striker Ace = Zero",
+   "min": 1,
+   "max": 1,
+   "cards": [
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 1,
+     "sequence": 27,
+     "position": 10
+    },
+    {
+     "name": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 23,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 22,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 20,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mecha - Shark Cannon",
+     "controller": 0,
+     "location": 1,
+     "sequence": 18,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mecha - Hornet Drones",
+     "controller": 0,
+     "location": 1,
+     "sequence": 15,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Airspace - Area Zero",
+     "controller": 0,
+     "location": 1,
+     "sequence": 13,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 1,
+     "sequence": 11,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 9,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Maneuver - Afterburners!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 7,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mecha - Eagle Booster",
+     "controller": 0,
+     "location": 1,
+     "sequence": 5,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Maneuver - Jamming Waves!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 3,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Maneuver - Afterburners!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 1,
+     "position": 8
+    },
+    {
+     "name": "Sky Striker Mobilize - Linkage!",
+     "controller": 0,
+     "location": 16,
+     "sequence": 4,
+     "position": 5
+    },
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 16,
+     "sequence": 3,
+     "position": 5
+    }
+   ],
+   "description": null,
+   "labels": [],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 5,
+    "indicies": [
+     2
+    ]
+   },
+   "pilotPicked": [
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "controller": 0,
+     "location": 1,
+     "sequence": 22,
+     "position": 8
+    }
+   ],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   },
+   "adversarialBaseline": {
+    "picked": {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 1,
+     "sequence": 27,
+     "position": 10
+    },
+    "followUp": null
+   }
+  },
+  {
+   "i": 24,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 506,
+   "resolvingChain": null,
+   "chain": [],
+   "currentEffect": null,
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "pendingBefore": {
+    "link": null,
+    "source": null
+   },
+   "pilotResponse": {
+    "type": 8,
+    "index": null
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "pendingAfter": {
+    "link": null,
+    "source": null
+   }
+  },
+  {
+   "i": 25,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 506,
+   "resolvingChain": null,
+   "chain": [],
+   "currentEffect": null,
+   "cards": [
+    {
+     "name": "Dogmatika Fleurdelis, the Knighted",
+     "controller": 1,
+     "location": 2,
+     "sequence": 4,
+     "position": 10
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Chain · Dogmatika Fleurdelis, the Knighted",
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  }
+ ],
+ "notes": [],
+ "boardBefore": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Sky Striker Ace - Kagari",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    }
+   ],
+   "st": [
+    {
+     "name": "Sky Striker Mecha - Widow Anchor",
+     "controller": 0,
+     "location": 8,
+     "sequence": 1,
+     "position": 10
+    }
+   ],
+   "gy": [
+    "Upstart Goblin",
+    "Upstart Goblin",
+    "Upstart Goblin"
+   ]
+  },
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "st": [],
+   "gy": []
+  }
+ ],
+ "removalFor": {
+  "card": "Sky Striker Mecha - Widow Anchor",
+  "effect": "control",
+  "target": "Albion the Shrouded Dragon",
+  "intent": {
+   "code": 98338152,
+   "effect": "control",
+   "activation": {
+    "type": 1,
+    "action": 5,
+    "index": 1
+   },
+   "target": {
+    "code": 25451383,
+    "location": 4,
+    "sequence": 0,
+    "controller": 1
+   },
+   "costs": null,
+   "preferredCost": null,
+   "turn": 3
+  }
+ },
+ "activationLabel": "Activate · Sky Striker Mecha - Widow Anchor",
+ "boardAfter": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 0,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    },
+    {
+     "name": "Sky Striker Ace = Zero",
+     "controller": 0,
+     "location": 4,
+     "sequence": 5,
+     "position": 1
+    }
+   ],
+   "st": [],
+   "gy": [
+    "Upstart Goblin",
+    "Upstart Goblin",
+    "Upstart Goblin",
+    "Sky Striker Mecha - Widow Anchor",
+    "Sky Striker Mobilize - Linkage!",
+    "Sky Striker Special Maneuver - Lemnisgate!"
+   ]
+  },
+  {
+   "lp": 8000,
+   "field": [],
+   "st": [],
+   "gy": []
+  }
+ ],
+ "errors": [],
+ "pendingAtEnd": {
+  "link": null,
+  "source": null
+ }
+}

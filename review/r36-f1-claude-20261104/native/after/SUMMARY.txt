@@ -1,0 +1,8 @@
+secondCopy: Activate · Sky Striker Mecha - Widow Anchor | SELECT_CARD/h551/rcnull/links1 pilot=Albion the Shrouded Dragon@1 stats={"removalVerified":1} adv={"stat":"removalOverride","stage":"target","picked":["Albion the Shrouded Dragon@1"]}
+  FORCED activate the Set Sky Striker Mecha - Widow Anchor as link 2 (Chain · Sky Striker Mecha - Widow Anchor)
+  SELECT_CARD/h551/rcnull/links2/LINK2-TARGET pilot=Albion the Shrouded Dragon@1 stats={} adv=null
+  SELECT_CARD/h504/rc3/links3 pilot=Sky Striker Ace - Kagari@0 stats={} adv=null
+  SELECT_CARD/h509/rc3/links3 pilot=Sky Striker Ace = Zero@0 stats={} adv=null
+  SELECT_YESNO/h76072561/rc1/links3 pilot=yes=true stats={"removalVerified":1} adv={"stat":"removalOverride","stage":"control","yes":true}
+  SELECT_CARD/h506/rc1/links2 pilot=Sky Striker Mobilize - Engage!@0 stats={} adv=null
+  after: P0 field Albion the Shrouded Dragon,Sky Striker Ace = Zero / P1 field ; errors 0

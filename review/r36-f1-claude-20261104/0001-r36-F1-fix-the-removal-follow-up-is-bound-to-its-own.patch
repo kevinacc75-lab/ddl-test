@@ -1,0 +1,297 @@
+From 73e2d076a28de98c757aced20d111e4d22ec2b49 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 01:01:31 +1100
+Subject: [PATCH] r36 F1 fix: the removal follow-up is bound to its own
+ activation (chain link + source instance)
+
+removalFor's intent now records the chain link its activation opens (link 1 from an open game state).
+removalFollowUp only acts while THAT link of OUR card with the intent's code is the newest link
+(cost/target payment) or the resolving link; on first sight it binds to the link's source instance
+(location/sequence). A second copy of the same card at a later link, an opponent's copy, a rejected or
+cancelled activation (no link of ours ever opened), or a new chain after ours resolved no longer inherit
+the intent. OptimalPilot binds the pending intent and drops it as soon as its link is gone
+(removalBind/removalDone), not only at the next Idle/Battle prompt.
+
+Tests: tests/r36-f1.test.mjs (13; 8 fail on 6e47453); b1-r2/b1-r3 fixture prompt context now carries
+our own chain link 1 at the activation stage, as the native engine does. Native: tools/r36-f1-native.mjs
+(second Widow Anchor as link 2). A/B/C defaults unchanged. Builder: Claude (Seto out); SELF-VERIFIED,
+for ChatGPT review.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/ai/midgame-rules.mjs        | 39 +++++++++++++---
+ dist/optimal-pilot.mjs           |  3 +-
+ tests/r36-f1.test.mjs            | 65 +++++++++++++++++++++++++++
+ tests/r36-midgame-b1-r2.test.mjs |  2 +-
+ tests/r36-midgame-b1-r3.test.mjs |  2 +-
+ tools/r36-f1-native.mjs          | 76 ++++++++++++++++++++++++++++++++
+ 6 files changed, 178 insertions(+), 9 deletions(-)
+ create mode 100644 tests/r36-f1.test.mjs
+ create mode 100644 tools/r36-f1-native.mjs
+
+diff --git a/dist/ai/midgame-rules.mjs b/dist/ai/midgame-rules.mjs
+index db0a0b4..e3f7b02 100644
+--- a/dist/ai/midgame-rules.mjs
++++ b/dist/ai/midgame-rules.mjs
+@@ -200,7 +200,7 @@ export function removalFor(d,seat,m,blocked,{bookStep=false}={}){
+    // every cost whose projection is as good as the chosen one is acceptable to the follow-up policy
+    const allowed=model.cost==='otherHandOrField'?proj.filter(v=>v.opens===top.opens&&v.damage>=top.damage).map(v=>({...ident(v.paid),controller:seat})):null;
+    const cand={index:i,card:d.name(act.code),target:d.name(foe.code),effect:model.effect,opens:top.opens,gain,cost:top.paid?d.name(top.paid.code):null,costKind:top.kind,
+-    intent:{code:act.code,effect:model.effect,activation:{type:R_IDLE,action:5,index:i},target:{...ident(foe),controller:1-seat},costs:allowed,preferredCost:top.paid?{...ident(top.paid),controller:seat}:null,turn:d.turn}};
++    intent:{code:act.code,effect:model.effect,activation:{type:R_IDLE,action:5,index:i},target:{...ident(foe),controller:1-seat},costs:allowed,preferredCost:top.paid?{...ident(top.paid),controller:seat}:null,turn:d.turn,link:(d.chain||[]).length+1}};/* r36 F1: the chain link this activation will open */
+    if(!best||(cand.opens&&!best.opens)||(cand.opens===best.opens&&cand.gain>best.gain))best=cand;
+   }
+  });
+@@ -235,16 +235,43 @@ export const REMOVAL_STAGES={
+  'Sky Striker Mecha - Widow Anchor':[{at:'activate',hint:551,role:'target',loc:[4]},{at:'resolve',yesno:1,role:'control'}],
+ };
+ const sameCard=(d,c,t)=>c&&t&&d.fromEngine(c.controller)===t.controller&&c.code===t.code&&c.location===t.location&&(c.location===2||c.sequence===t.sequence);
+-// 'resolve' while our activation's chain link is resolving, 'activate' while no link is resolving (cost/target payment).
+-function removalStageAt(d,intent){
+- if(d.resolvingChain==null)return 'activate';
+- const link=(d.chain||[]).find(c=>c.chain_size===d.resolvingChain);return link&&link.code===intent.code?'resolve':null;
++// r36 F1 (ChatGPT finding F1; bounded fix approved by Kevy 4 Nov 08:23 WITA): the follow-up belongs to ONE activation - the chain link it opened (intent.link, link 1 from an open
++// game state) of OUR card with the intent's code, and once seen, the same source instance (location/sequence). A second
++// copy of the same card activated in the same chain (a later link), an opponent's copy, or a new chain after ours has
++// resolved never inherits the intent. 'activate' = our link is the newest link and nothing is resolving (its cost/target
++// payment); 'resolve' = our link is the one resolving; anything else = null (not our activation's prompt).
++const linkSource=c=>({location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence});
++function removalLink(d,seat,intent){
++ if(!intent||intent.link==null)return null;
++ const link=(d.chain||[]).find(c=>c.chain_size===intent.link&&!c.solved);
++ if(!link||link.code!==intent.code||link.controller!==seat)return null;
++ if(intent.source){const s=linkSource(link);if(s.location!==intent.source.location||s.sequence!==intent.source.sequence)return null}
++ return link;
++}
++function removalStageAt(d,seat,intent){
++ const link=removalLink(d,seat,intent);if(!link)return null;
++ if(d.resolvingChain==null)return Math.max(0,...(d.chain||[]).map(c=>c.chain_size))===intent.link?'activate':null;
++ return d.resolvingChain===intent.link?'resolve':null;
++}
++// Binds the intent to the source instance of its own chain link the first time that link is seen while it is being
++// activated (newest link, nothing resolving). Returns the (possibly) bound intent; pure.
++export function removalBind(d,seat,intent){
++ if(!intent||intent.source||d.resolvingChain!=null)return intent;
++ const link=removalLink(d,seat,intent);if(!link||Math.max(0,...(d.chain||[]).map(c=>c.chain_size))!==intent.link)return intent;
++ return {...intent,source:linkSource(link)};
++}
++// True when the intent can no longer apply: a different turn, or it was bound and its link is gone / solved / replaced
++// (chain resolved or ended, activation negated and solved, a new chain's link 1 is another instance).
++export function removalDone(d,seat,intent){
++ if(!intent)return true;if(d.turn!==intent.turn)return true;
++ return !!intent.source&&!removalLink(d,seat,intent);
+ }
+ const stringIndex=(v,code)=>{try{const n=BigInt(v||0);return n>>20n===BigInt(code)?Number(n&0xFFFFFn):null}catch{return null}};
+ export function removalFollowUp(d,seat,m,r,intent){
+  if(!intent||d.turn!==intent.turn)return null;
+  const src=d.currentEffect?.code||d.lastCard;if(src&&src!==intent.code)return null;
+- const stages=REMOVAL_STAGES[d.name(intent.code)]||[],at=removalStageAt(d,intent);if(!at)return null;
++ intent=removalBind(d,seat,intent);
++ const stages=REMOVAL_STAGES[d.name(intent.code)]||[],at=removalStageAt(d,seat,intent);if(!at)return null;
+  if(m.type===M.SELECT_YESNO){
+   const st=stages.find(s=>s.at===at&&s.yesno!=null&&stringIndex(m.description,intent.code)===s.yesno);if(!st)return null;
+   if(st.role==='control'&&intent.effect==='control')return r?.yes===true?{response:r,stat:'removalVerified',stage:'control'}:{response:{...r,type:R.SELECT_YESNO,yes:true},stat:'removalOverride',stage:'control'};
+diff --git a/dist/optimal-pilot.mjs b/dist/optimal-pilot.mjs
+index eaabda6..40f4e53 100644
+--- a/dist/optimal-pilot.mjs
++++ b/dist/optimal-pilot.mjs
+@@ -13,7 +13,7 @@ import {buildPlan} from './pilot-notes.mjs';
+ import {thinkNodeBudget} from './ai/think-flags.mjs';
+ import {MIDGAME,JUDGE,thisTurnBattle} from './ai/midgame.mjs';/* r36 midgame arms (flags, default off) */
+ import {makeAfterBattleJudge} from './ai/after-battle.mjs';/* r36 Arm A after-battle rollout (RELAY-075 A1) */
+-import {newMidgameStats,midgameHold,bookAllowed,removalFor,removalFollowUp,battleNoSearch,endToBattle,closeOutOptions} from './ai/midgame-rules.mjs';/* r36 Arm B/C (flags) */
++import {newMidgameStats,midgameHold,bookAllowed,removalFor,removalFollowUp,removalBind,removalDone,battleNoSearch,endToBattle,closeOutOptions} from './ai/midgame-rules.mjs';/* r36 Arm B/C (flags) */
+ import {newBookState,idleStep,passiveCheck,setDecision,holdReason,bookPick,optionPick,bookActivationBlock,bookSummonBlock,bookSpecialBlock,tributeBlock,BOOKS,handTrapUse} from './ai/book/book.mjs';
+ export const isPayoff=n=>/Mirrorjade|Dark Dragoon|Uzuhime|Liger Dancer|Leo Dancer|Kashtira Shangri-Ira|Blue-Eyes Spirit Dragon|Blue-Eyes Ultimate Spirit Dragon|Cosmic Blazar Dragon|Masked HERO Dark Law|Destroyer Phoenix Enforcer/.test(n);/* r27 (deck review): each deck's end-board boss is protected as a cost/material/tribute and scored by search */
+ const removal=n=>/Cosmic Cyclone|Mystical Space Typhoon|Twin Twisters|Tornado Dragon|Galaxy Cyclone|Mirrorjade|Dark Dragoon|Afterburners|Widow Anchor|Infinite Impermanence|Forbidden Droplet|Called by the Grave|Shark Cannon|Harpie|S:P Little Knight/.test(n);
+@@ -138,6 +138,7 @@ export class OptimalPilot extends ProceduralPilot{
+   if(m.type===M.SELECT_CARD&&d.hint===551&&/Infinite Impermanence|Widow Anchor/.test(d.name(d.currentEffect?.code||d.lastCard))){const top=d.chain.at(-1),i=m.selects.findIndex(c=>d.fromEngine(c.controller)!==seat&&c.code===top?.code);if(i>=0)r.indicies=[i]}
+   if(m.type===M.SELECT_IDLECMD&&r.action===4&&d.active===seat&&d.zone(seat,4).some(c=>c&&d.name(c.code)==='Red-Eyes Dark Dragoon')&&d.zone(seat,2).filter(Boolean).length<=1)r={type:R.SELECT_IDLECMD,action:m.to_bp?6:7,index:null};
+   // r36 Arm B (RELAY-076 B1): while our removal activation resolves, its cost / target picks must match removalFor's projection.
++  if(this.pendingRemoval){this.pendingRemoval=removalBind(d,seat,this.pendingRemoval);if(removalDone(d,seat,this.pendingRemoval))this.pendingRemoval=null}/* r36 F1: bind to our own chain link; drop once it is gone */
+   if(this.pendingRemoval){const f=removalFollowUp(d,seat,m,r,this.pendingRemoval);if(f){if(log)this.midgameStats[f.stat]++;r=f.response}}
+   let bookAlt=null;let rmIntent=null;
+   const mgAllow=m.type===M.SELECT_IDLECMD?bookAllowed(d,seat,plan):{ok:true};if(!mgAllow.ok&&log&&this.book)this.midgameStats[mgAllow.stat]++;/* r36 Arm B: a found lethal skips the book; no book line in Main Phase 2 from turn 3 */
+diff --git a/tests/r36-f1.test.mjs b/tests/r36-f1.test.mjs
+new file mode 100644
+index 0000000..75c0602
+--- /dev/null
++++ b/tests/r36-f1.test.mjs
+@@ -0,0 +1,65 @@
++// r36 F1 (Claude as builder, 5 Nov 2026; Kevy approved the bounded fix 4 Nov 08:23 WITA; ChatGPT reviews).
++// The removal follow-up belongs to ONE activation: the chain link it opened (intent.link) of OUR card with the intent's
++// code, bound on first sight to that link's source instance (location/sequence). Prompt contexts below follow the
++// native engine (tools/r36-b1-native-trace.mjs, tools/r36-f1-native.mjs): our link exists while its cost/target is
++// paid and while it resolves. Several checks FAIL on the pre-fix tree 6e47453 (marked "FAILED before").
++import assert from 'node:assert/strict';import fs from 'node:fs';import {gunzipSync} from 'node:zlib';
++import * as MR from '../dist/ai/midgame-rules.mjs';const {removalFor,removalFollowUp}=MR;
++// on the pre-fix tree these helpers do not exist: stand-ins let the same file run there and show which checks fail
++const removalBind=MR.removalBind||((d,s,i)=>i),removalDone=MR.removalDone||(()=>{throw new Error('removalDone missing (pre-fix tree)')});import {setMidgame} from '../dist/ai/midgame-flags.mjs';
++import {M,R} from '../dist/duel.mjs';import {OptimalPilot} from '../dist/optimal-pilot.mjs';
++const db=JSON.parse(gunzipSync(fs.readFileSync(new URL('../dist/cards.json.gz',import.meta.url))));
++const scripts=JSON.parse(gunzipSync(fs.readFileSync(new URL('../dist/scripts.json.gz',import.meta.url))));
++const code=n=>{const k=Object.keys(db).find(k=>db[k].name===n);assert.ok(k,n);return +k};
++let pass=0,fail=0;const ok=(n,f)=>{try{f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0]);if(process.env.F1_STACK)console.log(e.stack)}};
++const WA='Sky Striker Mecha - Widow Anchor',KG='Sky Striker Ace - Kagari',AL='Albion the Shrouded Dragon',LK='Sky Striker Mobilize - Linkage!',FD='Forbidden Droplet';
++const GF_='Gearfried the Iron Knight';
++const mon=(owner,seq,name,attack)=>({controller:owner,location:4,sequence:seq,position:1,code:code(name),attack,defense:0});
++function board({own=[],enemy=[],hand=[],grave=[],lp=[8000,8000],act=[]}){
++ const z={0:{4:own.map(([n,a,s])=>mon(0,s,n,a)),2:hand.map((n,i)=>({controller:0,location:2,sequence:i,position:0,code:code(n)})),8:[],16:grave.map((n,i)=>({controller:0,location:16,sequence:i,position:0,code:code(n)}))},1:{4:enemy.map(([n,a],i)=>mon(1,i,n,a)),2:[],8:[],16:[]}};
++ const activates=act.map(n=>{const h=z[0][2].find(c=>c.code===code(n));return {code:h.code,location:h.location,controller:0,sequence:h.sequence}});
++ return {turn:5,phase:4,active:0,lp,db,scripts,zone:(p,l)=>z[p][l]||[],name:c=>db[c]?.name||'',fromEngine:x=>x,decks:[],prompt:{type:M.SELECT_IDLECMD,seat:0,to_bp:true,activates},z,chain:[],resolvingChain:null};
++}
++setMidgame({A:false,B:true,C:false});
++const WAI=()=>{const d=board({own:[[KG,1500,5]],enemy:[[AL,2500]],hand:[WA],grave:['Upstart Goblin','Upstart Goblin','Upstart Goblin'],lp:[8000,1500],act:[WA]});const r=removalFor(d,0,d.prompt,()=>false,{});return {d,r,intent:{...r.intent,seat:0}}};
++// a chain link as duel.mjs stores it (controller already seat-mapped)
++const L=(size,name,{controller=0,location=8,sequence=0,solved=false}={})=>({chain_size:size,code:code(name),controller,triggering_location:location,triggering_sequence:sequence,solved});
++const ctx=(d,{type=M.SELECT_CARD,cards=[],hint,chain=[],resolving=null,src,description,min=1,max=1}={})=>Object.assign(Object.create(d),{prompt:{type,seat:0,min,max,selects:cards,description},hint,lastCard:src,currentEffect:src?{code:src}:null,chain,resolvingChain:resolving});
++const MIX=d=>[d.z[0][4][0],d.z[1][4][0]];
++const tgt=(d,chain,src=code(WA))=>ctx(d,{cards:MIX(d),hint:551,chain,src});
++const yn=(d,chain,resolving,idx=1)=>ctx(d,{type:M.SELECT_YESNO,chain,resolving,src:code(WA),description:((BigInt(code(WA))<<20n)|BigInt(idx)).toString()});
++const fu=(s,r,intent)=>removalFollowUp(s,0,s.prompt,r,intent);
++const own0=()=>({type:R.SELECT_CARD,indicies:[0]});
++
++ok('intent carries its chain link: removalFor at an open Main Phase -> link 1',()=>{const {intent}=WAI();assert.equal(intent.link,1);assert.equal(intent.code,code(WA))});
++ok('control - original link 1 target at activation (link 1 newest, nothing resolving): wrong pick -> Albion (removalOverride)',()=>{
++ const {d,intent}=WAI(),f=fu(tgt(d,[L(1,WA)]),own0(),intent);assert.equal(f?.stat,'removalOverride');assert.deepEqual(f.response.indicies,[1])});
++ok('control - original link 1 resolution YesNo "take control" No -> Yes; Yes kept',()=>{
++ const {d,intent}=WAI(),ch=[L(1,WA),L(2,WA,{sequence:1,solved:true})];
++ assert.equal(fu(yn(d,ch,1),{type:R.SELECT_YESNO,yes:false},intent)?.stat,'removalOverride');assert.equal(fu(yn(d,ch,1),{type:R.SELECT_YESNO,yes:true},intent)?.stat,'removalVerified')});
++ok('control - Forbidden Droplet cost at activation of link 1 still verified/overridden (cost stage)',()=>{
++ const d=board({own:[[GF_,1800,0],['Celtic Guardian',1400,1]],enemy:[[AL,3000]],hand:[FD,'Upstart Goblin'],lp:[8000,300],act:[FD]});const r=removalFor(d,0,d.prompt,()=>false,{});assert.ok(r,'removalFor');const intent={...r.intent,seat:0};
++ const cards=d.z[0][2].filter(c=>c.code!==code(FD)).concat(d.z[0][4]),pref=cards.findIndex(c=>intent.costs.some(t=>t.code===c.code&&t.location===c.location&&t.sequence===c.sequence));assert.ok(pref>=0);
++ const s=ctx(d,{cards,hint:504,chain:[L(1,FD,{location:8,sequence:2})],src:code(FD)}),f=fu(s,{type:R.SELECT_CARD,indicies:[pref]},intent);assert.equal(f?.stat,'removalVerified')});
++ok('F1 (FAILED before): a SECOND Widow Anchor activated as link 2 - its target prompt is NOT overridden by link 1\'s intent (null)',()=>{
++ const {d,intent}=WAI(),b=removalBind(tgt(d,[L(1,WA)]),0,intent);assert.deepEqual(b.source,{location:8,sequence:0});
++ assert.equal(fu(tgt(d,[L(1,WA),L(2,WA,{sequence:1})]),own0(),b),null);assert.equal(fu(tgt(d,[L(1,WA),L(2,WA,{sequence:1})]),own0(),intent),null,'unbound intent too')});
++ok('F1 (FAILED before): the second copy\'s link 2 resolving - its "take control" YesNo is NOT answered by link 1\'s intent',()=>{
++ const {d,intent}=WAI();assert.equal(fu(yn(d,[L(1,WA),L(2,WA,{sequence:1})],2),{type:R.SELECT_YESNO,yes:false},intent),null)});
++ok('different-code link: Linkage! chained as link 2, its selections -> null',()=>{
++ const {d,intent}=WAI();assert.equal(fu(ctx(d,{cards:[d.z[0][4][0]],hint:504,chain:[L(1,WA),L(2,LK,{location:2,sequence:3})],resolving:2,src:code(LK)}),own0(),intent),null);
++ assert.equal(fu(ctx(d,{cards:MIX(d),hint:551,chain:[L(1,WA),L(2,LK,{location:2,sequence:3})],src:code(LK)}),own0(),intent),null)});
++ok('F1 (FAILED before): opponent\'s copy of Widow Anchor at link 1 (no link of ours) -> null',()=>{
++ const {d,intent}=WAI();assert.equal(fu(tgt(d,[L(1,WA,{controller:1})]),own0(),intent),null)});
++ok('F1 (FAILED before): rejected / cancelled activation - no chain link of ours ever opened; a later same-code selection -> null',()=>{
++ const {d,intent}=WAI();assert.equal(fu(tgt(d,[]),own0(),intent),null)});
++ok('F1 (FAILED before): bound to S/T sequence 0; a NEW chain whose link 1 is another copy (S/T sequence 1) -> null, and removalDone',()=>{
++ const {d,intent}=WAI(),b=removalBind(tgt(d,[L(1,WA)]),0,intent),s=tgt(d,[L(1,WA,{sequence:1})]);assert.equal(fu(s,own0(),b),null);assert.equal(removalDone(s,0,b),true)});
++ok('removalDone: unbound -> false; bound and link 1 present -> false; link solved / chain ended -> true; another turn -> true',()=>{
++ const {d,intent}=WAI(),b=removalBind(tgt(d,[L(1,WA)]),0,intent);assert.equal(removalDone(tgt(d,[]),0,intent),false);assert.equal(removalDone(tgt(d,[L(1,WA)]),0,b),false);
++ assert.equal(removalDone(tgt(d,[L(1,WA,{solved:true})]),0,b),true);assert.equal(removalDone(tgt(d,[]),0,b),true);assert.equal(removalDone(Object.assign(Object.create(d),{turn:6,chain:[L(1,WA)]}),0,b),true)});
++ok('removalBind only binds while our link is the newest and nothing resolves; otherwise unchanged',()=>{
++ const {d,intent}=WAI();assert.equal(removalBind(tgt(d,[L(1,WA),L(2,LK)]),0,intent),intent);assert.equal(removalBind(yn(d,[L(1,WA)],1),0,intent),intent);assert.equal(removalBind(tgt(d,[]),0,intent),intent)});
++ok('OptimalPilot: observe() still arms pendingRemoval with the intent (link kept); the bind/clear lifecycle in base() is shown natively by tools/r36-f1-native.mjs (pendingBefore/pendingAfter per prompt)',()=>{
++ const {intent}=WAI(),p=new OptimalPilot({seat:0,seed:1,searchEnabled:false});p.observe({response:intent.activation,removalIntent:intent});assert.equal(p.pendingRemoval,intent);assert.equal(p.pendingRemoval.link,1)});
++console.log('r36 F1 tests: '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;
+diff --git a/tests/r36-midgame-b1-r2.test.mjs b/tests/r36-midgame-b1-r2.test.mjs
+index 4ccb8dd..123927b 100644
+--- a/tests/r36-midgame-b1-r2.test.mjs
++++ b/tests/r36-midgame-b1-r2.test.mjs
+@@ -61,7 +61,7 @@ const armed=()=>{const d=SW();d.z[0][2].push({controller:0,location:2,sequence:1
+ // sets and whether the card's own chain link is resolving - so the fixtures now carry that context (Droplet: cost =
+ // TOGRAVE 504 at activation; target = NEGATE 575 while its link resolves).
+ const sel=(d,cards,lastCard,{hint=504,resolving=false}={})=>Object.assign(Object.create(d),{prompt:{type:M.SELECT_CARD,seat:0,min:1,max:cards.length,selects:cards},lastCard,hint,
+- resolvingChain:resolving?1:null,chain:resolving?[{chain_size:1,code:lastCard}]:[]});
++ resolvingChain:resolving?1:null,chain:lastCard?[{chain_size:1,code:lastCard,controller:0}]:[]});/* r36 F1: as on the native engine (r36-b1-native traces), our activation's own chain link 1 exists while its cost/target is paid and while it resolves */
+ ok('follow-up: cost prompt [Sword (field), Branded Fusion (hand)] - a default pick of the Sword is replaced by the projected Branded Fusion (removalOverride)',()=>{const {d,intent}=armed(),cards=[{controller:0,location:8,sequence:0,code:code('Double-Edged Sword')},{controller:0,location:2,sequence:0,code:code('Branded Fusion')}];
+  const f=removalFollowUp(sel(d,cards,code('Forbidden Droplet')),0,sel(d,cards).prompt,{type:R.SELECT_CARD,indicies:[0]},intent);assert.equal(f.stat,'removalOverride');assert.deepEqual(f.response.indicies,[1])});
+ ok('follow-up: a default pick that is a projected-equivalent cost is kept (removalVerified); a 2-card pick is cut to the projected single cost',()=>{const {d,intent}=armed(),cards=[{controller:0,location:8,sequence:0,code:code('Double-Edged Sword')},{controller:0,location:2,sequence:0,code:code('Branded Fusion')}],s=sel(d,cards,code('Forbidden Droplet'));
+diff --git a/tests/r36-midgame-b1-r3.test.mjs b/tests/r36-midgame-b1-r3.test.mjs
+index d35518c..d2a1e6f 100644
+--- a/tests/r36-midgame-b1-r3.test.mjs
++++ b/tests/r36-midgame-b1-r3.test.mjs
+@@ -50,7 +50,7 @@ ok('aura on the OPPONENT side counts too: a retained opposing Command Knight (co
+ // ---- (2) mixed-side follow-up ----
+ const MJ='Mirrorjade the Iceblade Dragon',AB='Sky Striker Maneuver - Afterburners!',WA='Sky Striker Mecha - Widow Anchor',KG='Sky Striker Ace - Kagari';
+ const at=(d,{type=M.SELECT_CARD,cards=[],hint,resolving=null,src,min=1,max=1,description}={})=>Object.assign(Object.create(d),{prompt:{type,seat:0,min,max,selects:cards,description},hint,lastCard:src,currentEffect:{code:src},
+- resolvingChain:resolving?1:null,chain:resolving?[{chain_size:1,code:resolving}]:[]});
++ resolvingChain:resolving?1:null,chain:(resolving||src)?[{chain_size:1,code:resolving||src,controller:0}]:[]});/* r36 F1: as on the native engine (r36-b1-native traces), the card's own chain link 1 exists while its cost/target is paid and while it resolves */
+ const fu=(s,r,intent)=>removalFollowUp(s,0,s.prompt,r,intent);
+ const MJI=()=>{const d=board({own:[[MJ,3000]],enemy:[[AL,3000]],lp:[8000,3000],act:[MJ]});const r=pick(d);return {d,r,intent:{...r.intent,seat:0}}};
+ ok('Mirrorjade intent (real removalFor): banish Albion opens lethal; stages from c44146295.lua: cost TOGRAVE from the Extra Deck (not modelled), resolution REMOVE over BOTH MZONEs',()=>{
+diff --git a/tools/r36-f1-native.mjs b/tools/r36-f1-native.mjs
+new file mode 100644
+index 0000000..9abf7f1
+--- /dev/null
++++ b/tools/r36-f1-native.mjs
+@@ -0,0 +1,76 @@
++// r36 F1 (Claude as builder while Seto is out, 5 Nov 2026; fix approved by Kevy 4 Nov 08:23 WITA; ChatGPT reviews).
++// NATIVE repro of F1: a removal intent armed by our first Widow Anchor must not be applied to a SECOND copy of the same
++// card activated later in the same chain (different chain link, different S/T instance). Real engine (s3-harness
++// scenario), turn 3 Main Phase 1. Link 1 = Widow Anchor from hand (the pilot's removal activation, real removalFor
++// intent, armed through observe()). At our next chain window the trace FORCES the Set Widow Anchor (S/T sequence 1)
++// as link 2 and answers its target prompt with a deliberate baseline (the other face-up Effect Monster offered: our Kagari); every following
++// prompt is recorded with the real pilot answer (plan() -> base() -> removalFollowUp) and its follow-up stats, plus
++// the follow-up's answer to an adversarial baseline. Expected after the fix: link 2's target and its resolution YesNo
++// are NOT touched by link 1's intent; link 1's own resolution YesNo is still verified/overridden.
++// Usage: node tools/r36-f1-native.mjs <outdir>     (dev tool; no proof seeds; one engine at a time)
++import fs from 'node:fs';
++import {engine,stopEngine,scenario,drive,labels,M,R} from './s3-harness.mjs';
++import {createOptimalPilots} from '../dist/optimal-pilot.mjs';
++import {setMidgame} from '../dist/ai/midgame-flags.mjs';
++import {removalFor,removalFollowUp} from '../dist/ai/midgame-rules.mjs';
++import {safeView} from '../dist/ai/knowledge.mjs';
++import {decodeEffectId} from '../dist/effect-id.mjs';
++const out=process.argv[2]||'traces-f1';fs.mkdirSync(out,{recursive:true});
++const WA='Sky Striker Mecha - Widow Anchor';
++const SC={
++ secondCopy:{decks:['sky','branded'],place:[{name:WA,location:2,owner:0},{name:WA,location:8,sequence:1,position:10,owner:0},{name:'Sky Striker Ace - Kagari',location:4,sequence:5,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Albion the Shrouded Dragon',location:4,sequence:0,owner:1}]},
++};
++const cardOf=(d,c)=>c?{name:d.name(c.code),controller:d.fromEngine(c.controller),location:c.location,sequence:c.sequence,position:c.position}:null;
++const board=d=>[0,1].map(p=>({lp:d.lp[p],field:d.zone(p,4).filter(Boolean).map(c=>cardOf(d,c)),st:d.zone(p,8).filter(Boolean).map(c=>cardOf(d,c)),gy:d.zone(p,16).filter(Boolean).map(c=>d.name(c.code))}));
++const desc=v=>{const x=decodeEffectId(v);return x.code?{code:x.code,index:x.index}:{system:x.system}};
++await engine();setMidgame({A:false,B:true,C:false});
++const summary=[];
++for(const [name,sc] of Object.entries(SC)){
++ const T={scenario:name,decks:sc.decks,placements:sc.place,steps:[],notes:[]};
++ const d=scenario(sc.decks,sc.place,{first:0,seed:7});
++ const endTurn=d=>{const m=d.prompt;if(m.type===M.SELECT_IDLECMD&&d.turn<3){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){d.respond(c.response);return true}}return false};
++ const r0=drive(d,{until:d=>d.turn>=3&&d.prompt?.type===M.SELECT_IDLECMD&&d.prompt.seat===0,onPrompt:endTurn,max:400});
++ if(!r0.stopped){T.notes.push('did not reach turn 3');fs.writeFileSync(out+'/'+name+'.json',JSON.stringify(T,null,1));summary.push(name+': NOT REACHED');continue}
++ T.boardBefore=board(d);
++ const pilots=createOptimalPilots({seed:7,searchEnabled:false});
++ const view=safeView(d,0),rm=removalFor(view,0,view.prompt,()=>false,{bookStep:false});
++ T.removalFor=rm?{card:rm.card,effect:rm.effect,target:rm.target,intent:rm.intent}:null;
++ if(!rm){T.notes.push('removalFor null');fs.writeFileSync(out+'/'+name+'.json',JSON.stringify(T,null,1));summary.push(name+': removalFor null');continue}
++ const plan=pilots[0].plan(d);let act=plan;
++ if(!plan.removalIntent){T.notes.push('pilot plan was not the removal; forced with the real intent');act={response:rm.intent.activation,removalIntent:{...rm.intent,seat:0}}}
++ T.activationLabel=d.choices().find(o=>JSON.stringify(o.response)===JSON.stringify(act.response))?.label||null;
++ d.respond(act.response);for(const x of pilots)x.observe?.(act);
++ let forced=false;
++ for(let i=0;i<120&&d.prompt;i++){const m=d.prompt,seat=m.seat??m.player;
++  if(seat===0&&(m.type===M.SELECT_IDLECMD||m.type===M.SELECT_BATTLECMD))break;
++  const cards=m.selects||m.select_cards||[];
++  const st={i,seat,type:Object.keys(M).find(k=>M[k]===m.type)||m.type,hint:d.hint,resolvingChain:d.resolvingChain,
++   chain:(d.chain||[]).map(c=>({size:c.chain_size,card:d.name(c.code),controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence,solved:!!c.solved})),
++   currentEffect:d.currentEffect?d.name(d.currentEffect.code):null,min:m.min,max:m.max,cards:cards.map(c=>cardOf(d,c)),description:m.description!=null?desc(m.description):null,labels:labels(d).slice(0,12)};
++  if(seat===0){
++   const intent=pilots[0].pendingRemoval,v=safeView(d,0);st.pendingBefore=intent?{link:intent.link??null,source:intent.source??null}:null;
++   // the forced second copy: our first chain window after link 1 exists
++   if(!forced&&m.type===M.SELECT_CHAIN&&(d.chain||[]).length===1){const c=d.choices().find(o=>o.label.includes(WA));
++    if(c){forced=true;st.forced='activate the Set '+WA+' as link 2 ('+c.label+')';const p={response:c.response};T.steps.push(st);d.respond(p.response);for(const x of pilots)x.observe?.(p);continue}
++    st.note='no '+WA+' chain option offered: '+d.choices().map(o=>o.label).join(' | ')}
++   const before={...pilots[0].midgameStats};const p=pilots[0].plan(d);
++   st.pilotResponse=p.response;st.pilotPicked=(p.response.indicies||(p.response.index!=null?[p.response.index]:[])).map(j=>cardOf(d,cards[j]));
++   if(m.type===M.SELECT_YESNO)st.pilotYes=p.response.yes;
++   st.followUpStats=Object.fromEntries(Object.entries(pilots[0].midgameStats).filter(([k,v])=>/^removal(Verified|Override|Mismatch)$/.test(k)&&v!==before[k]).map(([k,v])=>[k,v-before[k]]));
++   st.pendingAfter=pilots[0].pendingRemoval?{link:pilots[0].pendingRemoval.link??null,source:pilots[0].pendingRemoval.source??null}:null;
++   if(m.type===M.SELECT_CARD&&cards.length){const alt=cards.findIndex(c=>d.name(c.code)!=='Albion the Shrouded Dragon');
++    if(alt>=0){const f=intent?removalFollowUp(v,0,v.prompt,{type:R.SELECT_CARD,indicies:[alt]},intent):null;st.adversarialBaseline={picked:cardOf(d,cards[alt]),followUp:f?{stat:f.stat,stage:f.stage,picked:(f.response.indicies||[]).map(j=>cardOf(d,cards[j]))}:null}}}
++   if(m.type===M.SELECT_YESNO){const f=intent?removalFollowUp(v,0,v.prompt,{type:R.SELECT_YESNO,yes:false},intent):null;st.adversarialBaseline={yes:false,followUp:f?{stat:f.stat,stage:f.stage,yes:f.response.yes}:null}}
++   // link 2's target prompt: play the deliberate baseline (the non-Albion card) unless the pilot itself was overridden
++   let resp=p.response;
++   if(forced&&m.type===M.SELECT_CARD&&d.resolvingChain==null&&(d.chain||[]).length===2&&st.adversarialBaseline){const alt=cards.findIndex(c=>d.name(c.code)!=='Albion the Shrouded Dragon');
++    const f=st.adversarialBaseline.followUp;resp=f?{type:R.SELECT_CARD,...(f.response?{}:{}),indicies:(f.picked||[]).length?[cards.findIndex(c=>cardOf(d,c).name===f.picked[0].name&&d.fromEngine(c.controller)===f.picked[0].controller)]:[alt]}:{type:R.SELECT_CARD,indicies:[alt]};st.played=resp;st.link2Target=true}
++   T.steps.push(st);d.respond(resp);for(const x of pilots)x.observe?.({...p,response:resp})}
++  else{const c=d.choices().find(o=>['Do not chain','No'].includes(o.label));const p=c?{response:c.response}:pilots[1].plan(d);st.seat1=c?c.label:'pilot';T.steps.push(st);d.respond(p.response);for(const x of pilots)x.observe?.(p)}
++ }
++ T.boardAfter=board(d);T.errors=d.errors;T.pendingAtEnd=pilots[0].pendingRemoval?{link:pilots[0].pendingRemoval.link??null,source:pilots[0].pendingRemoval.source??null}:null;
++ fs.writeFileSync(out+'/'+name+'.json',JSON.stringify(T,null,1));
++ summary.push(name+': '+T.activationLabel+' | '+T.steps.filter(s=>s.seat===0&&(s.forced||['SELECT_CARD','SELECT_YESNO'].includes(s.type))).map(s=>s.forced?'FORCED '+s.forced:s.type+'/h'+s.hint+'/rc'+s.resolvingChain+'/links'+s.chain.length+(s.link2Target?'/LINK2-TARGET':'')+' pilot='+(s.type==='SELECT_YESNO'?'yes='+s.pilotYes:s.pilotPicked.map(c=>c.name+'@'+c.controller).join(','))+' stats='+JSON.stringify(s.followUpStats)+(s.adversarialBaseline?' adv='+JSON.stringify(s.adversarialBaseline.followUp&&{stat:s.adversarialBaseline.followUp.stat,stage:s.adversarialBaseline.followUp.stage,picked:s.adversarialBaseline.followUp.picked?.map(c=>c.name+'@'+c.controller),yes:s.adversarialBaseline.followUp.yes}):'')).join('\n  ')+'\n  after: P0 field '+T.boardAfter[0].field.map(c=>c.name).join(',')+' / P1 field '+T.boardAfter[1].field.map(c=>c.name).join(',')+'; errors '+(T.errors?.length||0));
++}
++fs.writeFileSync(out+'/SUMMARY.txt',summary.join('\n\n')+'\n');console.log(summary.join('\n\n'));
++stopEngine();
+-- 
+2.43.0
+

@@ -1,0 +1,23 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: optimal-pilot.mjs minus the fix = the pinned r22b..r35.5 file
++ actual - expected
+
++ '30ecefa3f7ccb773d49ef2ae253f4b5dbf45ed1d5f6194ca581c293208a99b48'
+- '8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7'
+
+    at file:///home/claude/r36-mid/tests/r35-cyclone-pin.test.mjs:9:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '30ecefa3f7ccb773d49ef2ae253f4b5dbf45ed1d5f6194ca581c293208a99b48',
+  expected: '8b8c03c360961cca10b2f265c399d12dadeac589d00ba031d2620ad73f0960c7',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2
