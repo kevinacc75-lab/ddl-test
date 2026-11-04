@@ -14,7 +14,7 @@ const snap=()=>[0,1].map(s=>({lp:d.lp[s],hand:d.zone(s,2).filter(Boolean).map(nm
 const turns=[];let cur=null,n=0,err=null;
 try{d.start([all.find(x=>x.id===A),all.find(x=>x.id===B)],{seed,first});
  while(d.prompt&&!d.finished&&n<6000){
-  if(!cur||cur.turn!==d.turn){if(cur){cur.after=snap();turns.push(cur)}if(d.turn>maxTurn)break;cur={turn:d.turn,active:d.active,before:snap(),acts:[]}}
+  if(!cur||cur.turn!==d.turn){if(cur){cur.after=snap();turns.push(cur);cur=null}if(d.turn>maxTurn)break;/* v2 (RELAY-105 T-D1): cur cleared before the cap break, so the final push cannot duplicate the last turn */cur={turn:d.turn,active:d.active,before:snap(),acts:[]}}
   const m=d.prompt;deadline=performance.now()+dl;const ts=performance.now();const plan=pilots[m.seat].plan(d);deadline=Infinity;if(!plan?.response)break;
   const top=[M.SELECT_IDLECMD,M.SELECT_BATTLECMD].includes(m.type)||(m.type===M.SELECT_CHAIN&&plan.response.index!=null)||[M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type);
   if(top)cur.acts.push({seat:m.seat,phase:d.phase,title:plan.title,rule:plan.book?.rule||plan.rule||null,kind:plan.kind||null,ms:Math.round(performance.now()-ts),opts:m.type===M.SELECT_IDLECMD?{sum:(m.summons||[]).length,ss:(m.special_summons||[]).length,act:(m.activates||[]).length,bp:!!m.to_bp}:m.type===M.SELECT_BATTLECMD?{attacks:(m.attacks||[]).map(c=>d.name(c.code)+(c.direct_attackable?'*direct':'')),oppLp:d.lp[1-m.seat]}:null});
