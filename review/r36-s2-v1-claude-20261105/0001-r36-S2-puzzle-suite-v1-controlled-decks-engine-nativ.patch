@@ -1,0 +1,173 @@
+From 02ce728dfe955175737f8d4ad68fb153992f93dd Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 09:49:34 +1100
+Subject: [PATCH] r36 S2 puzzle suite v1 (controlled decks, engine-native) +
+ S4a flag E (engine-offered Defence Position attackers; default off, in no
+ recipe)
+
+Puzzles a, a2, b, b2 pass in Classic and Enhanced (search off/100/400); puzzle e (Scareclaw Kashtira
+in Defence vs an empty board) fails in both, the 4 Nov finding F-E, and passes with flag E.
+Expected plays are PENDING Alexis; nothing reviewed yet.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/ai/s4-flags.mjs     |  9 +++++
+ dist/tactics.mjs         |  4 +-
+ tests/r36-s4-e.test.mjs  | 17 +++++++++
+ tools/r36-s2-puzzles.mjs | 81 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 110 insertions(+), 1 deletion(-)
+ create mode 100644 dist/ai/s4-flags.mjs
+ create mode 100644 tests/r36-s4-e.test.mjs
+ create mode 100644 tools/r36-s2-puzzles.mjs
+
+diff --git a/dist/ai/s4-flags.mjs b/dist/ai/s4-flags.mjs
+new file mode 100644
+index 0000000..2d4b1bd
+--- /dev/null
++++ b/dist/ai/s4-flags.mjs
+@@ -0,0 +1,9 @@
++// r36 S4 battle-planner flags (Claude as builder, 5 Nov 2026; plan item S4, found by S2 puzzle e). Kept out of
++// midgame-flags.mjs so the reviewed A/B/C/T/Z shape and the Classic/Enhanced recipes do not change. Default OFF and in no
++// recipe until reviewed:
++//   E = planBattle uses every attacker the ENGINE offers, including face-up Defence Position ones (e.g. Scareclaw
++//       Kashtira: "This card can attack while in face-up Defense Position. If it does, apply its DEF for damage
++//       calculation."), scored with DEF when its text says so.
++const env=String(globalThis.process?.env?.DDL_S4??globalThis.DDL_S4??'').toUpperCase();
++export const S4=Object.fromEntries(['E'].map(k=>[k,env.includes(k)]));
++export function setS4(flags={}){for(const k of Object.keys(S4))if(k in flags)S4[k]=!!flags[k];return {...S4}}
+diff --git a/dist/tactics.mjs b/dist/tactics.mjs
+index 92fb4ba..a4cfdc5 100644
+--- a/dist/tactics.mjs
++++ b/dist/tactics.mjs
+@@ -1,6 +1,7 @@
+ // Bounded public-board tactics. No opponent hand/Deck identities and no claims
+ // of complete game-tree search or certainty against unseen responses.
+ import {MIDGAME} from './ai/midgame-flags.mjs';/* r36 Arm B battle rule (flag, default off) */
++import {S4} from './ai/s4-flags.mjs';/* r36 S4a flag E (default off) */
+ const key=c=>[c.controller,c.location,c.sequence].join(':');
+ const disabled=c=>!!(c.status&1);
+ export function tacticalContext(d,seat){
+@@ -24,7 +25,8 @@ export function battleOutcome(ctx,attacker,target){
+  return {damage,taken,destroyed,lost,uncertain:!!target.unknown};
+ }
+ export function planBattle(ctx,attacks,{nodeLimit=1400}={}){
+- const offered=attacks.map((c,index)=>({card:ctx.own.find(x=>x.sequence===c.sequence&&x.location===c.location),index,direct:!!c.can_direct})).filter(a=>a.card&&(a.card.position&1));
++ const offered=attacks.map((c,index)=>({card:ctx.own.find(x=>x.sequence===c.sequence&&x.location===c.location),index,direct:!!c.can_direct})).filter(a=>a.card&&((a.card.position&1)||S4.E));
++ if(S4.E)for(const a of offered)if(!(a.card.position&1)&&/apply its DEF for damage calculation/i.test(ctx.db[a.card.code]?.desc||''))a.card={...a.card,attack:a.card.defense||0};/* r36 S4a flag E: engine-offered Defence Position attackers */
+  let nodes=0,best={score:0,damage:0,taken:0,steps:[],uncertain:false};
+  // r36 Arm B (turn 3+): a trade that destroys a blocker is explored even at a loss, but such a line is only kept when it
+  // reaches lethal (MG-05 negative prefix). RELAY-075 B2: the ahead/trade penalty (flag T) and the zero-damage direct-attack
+diff --git a/tests/r36-s4-e.test.mjs b/tests/r36-s4-e.test.mjs
+new file mode 100644
+index 0000000..42c2ac1
+--- /dev/null
++++ b/tests/r36-s4-e.test.mjs
+@@ -0,0 +1,17 @@
++// r36 S4a flag E (Claude as builder, 5 Nov 2026). Engine-native puzzle S2-e (tools/r36-s2-puzzles.mjs, controlled decks):
++// Scareclaw Kashtira in face-up Defence Position vs an empty board. With E off (default, both Classic and Enhanced
++// recipes) the battle planner drops the engine-offered attacker (r35 behaviour, kept for Classic parity); with E on it
++// attacks and its DEF is used. E is in no recipe until reviewed.
++import assert from 'node:assert/strict';import {execFileSync} from 'node:child_process';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
++import {S4,setS4} from '../dist/ai/s4-flags.mjs';import {AI_MODES} from '../dist/ai/midgame-flags.mjs';
++assert.deepEqual({...S4},{E:false},'E defaults off (no DDL_S4 in the test env)');
++assert.ok(!('E' in AI_MODES.classic)&&!('E' in AI_MODES.enhanced),'E is in neither recipe');
++assert.deepEqual(setS4({E:true}),{E:true});setS4({E:false});
++const out=fs.mkdtempSync(path.join(os.tmpdir(),'s4e-'));
++const run=f=>execFileSync(process.execPath,['tools/r36-s2-puzzles.mjs',out,'--only','e','--modes','classic,enhanced',...(f?['--flags',f]:[])],{encoding:'utf8'});
++const off=run(''),on=run('E');
++assert.match(off,/e classic s0: FAIL - engine offered Scareclaw Kashtira as an attacker: true; it attacked: false/,'E off, Classic: r35 behaviour');
++assert.match(off,/e enhanced s0: FAIL - engine offered Scareclaw Kashtira as an attacker: true; it attacked: false/,'E off, Enhanced: unchanged');
++assert.match(on,/e classic\+E s0: PASS .*it attacked: true/,'E on: attacks');assert.match(on,/e enhanced\+E s0: PASS .*it attacked: true/,'E on: attacks (Enhanced)');
++const T=JSON.parse(fs.readFileSync(out+'/e-classic+E-s0.json','utf8'));assert.equal(T.boardAfter[1].lp,8000-2600,'damage = Scareclaw Kashtira DEF 2600');
++console.log(JSON.stringify({test:'r36-s4-e',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tools/r36-s2-puzzles.mjs b/tools/r36-s2-puzzles.mjs
+new file mode 100644
+index 0000000..5d02082
+--- /dev/null
++++ b/tools/r36-s2-puzzles.mjs
+@@ -0,0 +1,81 @@
++// r36 S2 midgame puzzle suite, v1 (Claude as builder while Seto is out, 5 Nov 2026; plan item S2 in
++// review/claude-midgame-diagnosis-2026-11-04). Engine-native positions: named cards are dealt to chosen zones at duel
++// creation (tools/s3-harness.mjs scenario, 19 Oct lists), turns 1-2 are passed (End Turn; chains declined), and on turn 3
++// seat 0's real OptimalPilot plays its whole turn. Seat 1 declines every chain/yes-no and otherwise uses its own pilot.
++// Each puzzle runs per AI mode (classic, enhanced) and per search setting (off, or a node budget with NO clock, world
++// pool on), so a run is deterministic on any host. The EXPECTED plays below are Claude's proposals and stay PENDING until
++// Alexis confirms each one (rulings) and ChatGPT reviews; a FAIL is a lead, not a verdict.
++// Usage: node tools/r36-s2-puzzles.mjs <outdir> [--search N] [--only a,b] [--modes classic,enhanced]
++import fs from 'node:fs';
++import {engine,stopEngine,db,scripts,labels,v19,code,M} from './s3-harness.mjs';
++import {Duel} from '../dist/duel.mjs';
++import {createOptimalPilots} from '../dist/optimal-pilot.mjs';
++import {setAiMode} from '../dist/ai/midgame-flags.mjs';
++import {setS4} from '../dist/ai/s4-flags.mjs';
++import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';
++const argv=process.argv.slice(2),out=argv[0]||'s2-out',opt=(k,v)=>{const i=argv.indexOf('--'+k);return i>0?argv[i+1]:v};
++const nodes=+opt('search',0),only=(opt('only','')||'').split(',').filter(Boolean),modes=opt('modes','classic,enhanced').split(','),extra=(opt('flags','')||'').toUpperCase();/* --flags E: also switch these S4 flags on (dev screen only) */
++fs.mkdirSync(out,{recursive:true});
++// CONTROLLED decks: each side's deck is only its placed cards plus 40 minus that many copies of Black Luster Soldier, a
++// Ritual Monster with no Ritual Spell in the deck, so it can never be played (it can only be a cost or discard). So hands
++// and draws are dead and the position alone decides the turn. The deck keeps its real id (books and doctrine are keyed
++// by it); book lines simply find their cards missing.
++const FILLER=code('Black Luster Soldier'),EXTRA=0x40|0x2000|0x800000|0x4000000;
++async function scenario(deckIds,placements,{first=0,seed=7}={}){const live=await engine(),core=live.core,orig=core.duelNewCard;
++ const decks=deckIds.map((id,o)=>{const mine=placements.filter(p=>p.owner===o).map(p=>code(p.name));const main=mine.filter(c=>!(db[c].type&EXTRA)),extra=mine.filter(c=>db[c].type&EXTRA);
++  return {...v19(id),main:[...main,...Array(Math.max(0,40-main.length)).fill(FILLER)],extra,side:[]}});
++ const left=placements.map(p=>({...p,codes:new Set([code(p.name)])}));let d;
++ core.duelNewCard=(h,info)=>{const p=left.find(x=>!x.used&&x.codes.has(info.code)&&d.toEngine(x.owner)===info.team);if(p){p.used=true;info={...info,location:p.location,sequence:p.sequence??0,position:p.position??1}}return orig.call(core,h,info)};
++ d=new Duel(core,db,scripts);try{d.start(decks,{seed,first})}finally{core.duelNewCard=orig}
++ if(!left.every(p=>p.used))throw Error('not placed: '+left.filter(p=>!p.used).map(p=>p.name));if(d.errors?.length)throw Error('script errors: '+JSON.stringify(d.errors));return d}
++const ATK=1,DEF=4,SET_ST=10;/* POS_FACEUP_ATTACK, POS_FACEUP_DEFENSE, POS_FACEDOWN (Spell/Trap Set) */
++// Each puzzle: decks, placements (owner 0 = the AI under test, moving first), and expect(T) -> {pass, why}.
++const P={
++ a:{title:'(a) attacker vs an empty board: attack, never switch to Defence',decks:['branded','sky'],
++  place:[{name:'Granguignol the Dusk Dragon',location:4,sequence:2,owner:0,position:ATK},{name:'Sky Striker Mobilize - Engage!',location:8,sequence:2,owner:1,position:SET_ST}],
++  expect:T=>{const g=T.own.filter(x=>/Granguignol/.test(x.label||''));const atk=g.some(x=>x.kind==='attack'),def=g.some(x=>x.kind==='position');
++   return {pass:atk&&!def,why:'Granguignol attacked: '+atk+'; Granguignol position change: '+def}}},
++ b:{title:'(b) Dark Armed (2800) vs Fleurdelis (2500): take the trade',decks:['kashtira','branded'],
++  place:[{name:'Dark Armed, the Dragon of Annihilation',location:4,sequence:2,owner:0,position:ATK},{name:'Dogmatika Fleurdelis, the Knighted',location:4,sequence:2,owner:1,position:ATK}],
++  expect:T=>{const gone=!T.boardAfter[1].field.some(c=>/Fleurdelis/.test(c.name));const atk=T.own.some(x=>x.kind==='attack'&&/Dark Armed/.test(x.label||''));
++   return {pass:gone,why:'Fleurdelis off the field at end of turn 3: '+gone+'; Dark Armed attacked: '+atk}}},
++ a2:{title:'(a2) as (a), but the opponent holds real cards (3 in hand + 2 set): still attack, never switch to Defence',decks:['branded','sky'],
++  place:[{name:'Granguignol the Dusk Dragon',location:4,sequence:2,owner:0,position:ATK},{name:'Sky Striker Mobilize - Engage!',location:8,sequence:2,owner:1,position:SET_ST},{name:'Infinite Impermanence',location:8,sequence:1,owner:1,position:SET_ST},
++   {name:'Ash Blossom & Joyous Spring',location:2,owner:1},{name:'Sky Striker Maneuver - Jamming Waves!',location:2,owner:1},{name:'Forbidden Droplet',location:2,owner:1}],
++  expect:T=>{const g=T.own.filter(x=>/Granguignol/.test(x.label||''));const atk=g.some(x=>x.kind==='attack'),def=g.some(x=>x.kind==='position');
++   return {pass:atk&&!def,why:'Granguignol attacked: '+atk+'; Granguignol position change: '+def}}},
++ b2:{title:'(b2) as (b), but the opponent holds real cards (3 in hand + 1 set): take the trade',decks:['kashtira','branded'],
++  place:[{name:'Dark Armed, the Dragon of Annihilation',location:4,sequence:2,owner:0,position:ATK},{name:'Dogmatika Fleurdelis, the Knighted',location:4,sequence:2,owner:1,position:ATK},{name:'Branded Retribution',location:8,sequence:2,owner:1,position:SET_ST},
++   {name:'Ash Blossom & Joyous Spring',location:2,owner:1},{name:'Branded in Red',location:2,owner:1},{name:'Fallen of Albaz',location:2,owner:1}],
++  expect:T=>{const gone=!T.boardAfter[1].field.some(c=>/Fleurdelis/.test(c.name));const atk=T.own.some(x=>x.kind==='attack'&&/Dark Armed/.test(x.label||''));
++   return {pass:gone,why:'Fleurdelis off the field at end of turn 3: '+gone+'; Dark Armed attacked: '+atk}}},
++ e:{title:'(e) Scareclaw Kashtira in Defence vs an empty board: attack if the engine offers it',decks:['kashtira','branded'],
++  place:[{name:'Scareclaw Kashtira',location:4,sequence:2,owner:0,position:DEF}],
++  expect:T=>{const offered=T.battleOffers.some(o=>o.some(l=>/Scareclaw Kashtira/.test(l)));const atk=T.own.some(x=>x.kind==='attack'&&/Scareclaw Kashtira/.test(x.label||''));
++   return {pass:!offered||atk,why:'engine offered Scareclaw Kashtira as an attacker: '+offered+'; it attacked: '+atk}}},
++};
++const kindOf=(type,label)=>type===M.SELECT_BATTLECMD&&/^Attack/i.test(label)?'attack':type===M.SELECT_IDLECMD&&/Defen[cs]e|Change position|position/i.test(label)?'position':type===M.SELECT_IDLECMD&&/Activate|Summon|Set|Special/i.test(label)?'play':/Battle Phase|End Turn|End phase|Main Phase 2/i.test(label)?'phase':'other';
++const cardOf=(d,c)=>c?{name:d.name(c.code),position:c.position,sequence:c.sequence}:null;
++const board=d=>[0,1].map(p=>({lp:d.lp[p],field:d.zone(p,4).filter(Boolean).map(c=>cardOf(d,c)),st:d.zone(p,8).filter(Boolean).map(c=>cardOf(d,c)),hand:d.zone(p,2).filter(Boolean).length,gy:d.zone(p,16).filter(Boolean).length}));
++async function pilotsFor(seed){if(!nodes)return createOptimalPilots({seed,searchEnabled:false});const ps=[];
++ for(const s of [0,1]){const core=await createSearchCore(db,scripts);ps[s]=createOptimalPilots({seed,nodeBudget:nodes,searchCore:core,worldPool:true,poolKey:'s2:'+seed+':'+s,poolSize:10,seatCapBytes:40*1048576,shouldStop:()=>false})[s]}return ps}
++await engine();const rows=[];
++for(const [id,pz] of Object.entries(P)){if(only.length&&!only.includes(id))continue;
++ for(const mode of modes){setAiMode(mode);setS4(Object.fromEntries([...extra].map(k=>[k,true])));const seed=7;const T={puzzle:id,title:pz.title,mode:mode+(extra?'+'+extra:''),search:nodes,seed,decks:pz.decks,placements:pz.place,own:[],battleOffers:[],notes:[]};
++  let d;try{d=await scenario(pz.decks,pz.place,{first:0,seed})}catch(e){T.notes.push('setup failed: '+e.message);rows.push(T);continue}
++  const ps=await pilotsFor(seed);T.boardStart=board(d);let n=0;
++  const pass=()=>{const c=d.choices().find(o=>['Do not chain','No'].includes(o.label));if(c){d.respond(c.response);return true}return false};
++  try{while(d.prompt&&!d.finished&&n++<3000&&d.turn<=3){const m=d.prompt,s=m.seat??m.player;
++    if(d.turn<3){if(m.type===M.SELECT_IDLECMD){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){d.respond(c.response);continue}}
++     if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&pass())continue;const p=ps[s].plan(d);d.respond(p.response);continue}
++    if(T.turn3Start==null){T.turn3Start=board(d)}
++    if(s===1){if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&pass())continue;const p=ps[1].plan(d);d.respond(p.response);for(const x of ps)x.observe?.(p);continue}
++    const ls=labels(d);if(m.type===M.SELECT_BATTLECMD)T.battleOffers.push(ls.filter(l=>/^Attack/i.test(l)));
++    const p=ps[0].plan(d);const label=d.choices().find(o=>JSON.stringify(o.response)===JSON.stringify(p.response))?.label||null;
++    if(m.type===M.SELECT_IDLECMD||m.type===M.SELECT_BATTLECMD)T.own.push({phase:d.phase,type:m.type===M.SELECT_IDLECMD?'idle':'battle',label,kind:kindOf(m.type,label||''),rule:p.rule||p.book?.rule||null,reason:p.book?.reason||p.reason||null});
++    d.respond(p.response);for(const x of ps)x.observe?.(p)}}catch(e){T.notes.push('error: '+e.message)}
++  T.boardAfter=board(d);T.finished=!!d.finished;T.winner=d.finished?d.winner:null;T.errors=d.errors;T.stats=ps[0].midgameStats||null;
++  T.result=pz.expect(T);rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}.json`,JSON.stringify(T,null,1));
++  try{d.stop?.()}catch{}}}
++const sum=rows.map(T=>`${T.puzzle} ${T.mode} s${T.search}: ${T.result?(T.result.pass?'PASS':'FAIL'):'NO RESULT'} - ${T.result?.why||T.notes.join('; ')}\n   turn 3 plays: ${T.own.map(x=>x.kind+':'+(x.label||'?')).join(' | ')}\n   LP after: ${T.boardAfter?.map(b=>b.lp).join('/')}${T.finished?' (duel over, winner '+T.winner+')':''}`);
++fs.writeFileSync(`${out}/SUMMARY-s${nodes}${extra?'-'+extra:''}.txt`,sum.join('\n')+'\n');console.log(sum.join('\n'));stopEngine();process.exit(0);
+-- 
+2.43.0
+

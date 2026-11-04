@@ -1,0 +1,150 @@
+{
+ "puzzle": "e",
+ "title": "(e) Scareclaw Kashtira in Defence vs an empty board: attack if the engine offers it",
+ "mode": "classic+E",
+ "search": 0,
+ "seed": 7,
+ "decks": [
+  "kashtira",
+  "branded"
+ ],
+ "placements": [
+  {
+   "name": "Scareclaw Kashtira",
+   "location": 4,
+   "sequence": 2,
+   "owner": 0,
+   "position": 4
+  }
+ ],
+ "own": [
+  {
+   "phase": 4,
+   "type": "idle",
+   "label": "Enter Battle Phase",
+   "kind": "phase",
+   "rule": "Move to the next phase",
+   "reason": "The pilot has no remaining play it prefers and has a monster on the field, so it enters battle."
+  },
+  {
+   "phase": 8,
+   "type": "battle",
+   "label": "Attack · Scareclaw Kashtira",
+   "kind": "attack",
+   "rule": "Plan the battle sequence",
+   "reason": "The planner compared 2 visible-board combat states. This line projects 2600 damage and 0 damage to this seat, prioritising lethal, useful removals and survival. Visible-board combat estimate; unseen responses, attack limits and unmodelled effects can change it."
+  },
+  {
+   "phase": 8,
+   "type": "battle",
+   "label": "Enter Main Phase 2",
+   "kind": "phase",
+   "rule": "Preserve the board",
+   "reason": "No positive battle sequence survived the visible-board risk checks. It moves to the next phase instead of committing a losing attack."
+  },
+  {
+   "phase": 256,
+   "type": "idle",
+   "label": "End turn",
+   "kind": "phase",
+   "rule": "Move to the next phase",
+   "reason": "The pilot has no remaining play it prefers, so it ends the turn."
+  }
+ ],
+ "battleOffers": [
+  [
+   "Attack · Scareclaw Kashtira"
+  ],
+  []
+ ],
+ "notes": [],
+ "boardStart": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Scareclaw Kashtira",
+     "position": 4,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 5,
+   "gy": 0
+  },
+  {
+   "lp": 8000,
+   "field": [],
+   "st": [],
+   "hand": 5,
+   "gy": 0
+  }
+ ],
+ "turn3Start": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Scareclaw Kashtira",
+     "position": 4,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 6,
+   "gy": 0
+  },
+  {
+   "lp": 8000,
+   "field": [],
+   "st": [],
+   "hand": 6,
+   "gy": 0
+  }
+ ],
+ "boardAfter": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Scareclaw Kashtira",
+     "position": 4,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 6,
+   "gy": 0
+  },
+  {
+   "lp": 5400,
+   "field": [],
+   "st": [],
+   "hand": 7,
+   "gy": 0
+  }
+ ],
+ "finished": false,
+ "winner": null,
+ "errors": [],
+ "stats": {
+  "lethalLock": 0,
+  "lethalNoSearch": 0,
+  "directNoSearch": 0,
+  "mp2BookOff": 0,
+  "readyHold": 0,
+  "targetHold": 0,
+  "removal": 0,
+  "bpInsteadOfEnd": 0,
+  "advisoryBook": 0,
+  "closeOutOptions": 0,
+  "bookAtTarget": 0,
+  "removalVerified": 0,
+  "removalOverride": 0,
+  "removalMismatch": 0
+ },
+ "result": {
+  "pass": true,
+  "why": "engine offered Scareclaw Kashtira as an attacker: true; it attacked: true"
+ }
+}

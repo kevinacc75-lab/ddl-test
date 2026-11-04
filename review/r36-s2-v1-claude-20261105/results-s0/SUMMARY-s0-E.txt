@@ -1,0 +1,30 @@
+a classic+E s0: PASS - Granguignol attacked: true; Granguignol position change: false
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/5500
+a enhanced+E s0: PASS - Granguignol attacked: true; Granguignol position change: false
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/5500
+b classic+E s0: PASS - Fleurdelis off the field at end of turn 3: true; Dark Armed attacked: true
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/7700
+b enhanced+E s0: PASS - Fleurdelis off the field at end of turn 3: true; Dark Armed attacked: true
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/7700
+a2 classic+E s0: PASS - Granguignol attacked: true; Granguignol position change: false
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/5500
+a2 enhanced+E s0: PASS - Granguignol attacked: true; Granguignol position change: false
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/5500
+b2 classic+E s0: PASS - Fleurdelis off the field at end of turn 3: true; Dark Armed attacked: true
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/7700
+b2 enhanced+E s0: PASS - Fleurdelis off the field at end of turn 3: true; Dark Armed attacked: true
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/7700
+e classic+E s0: PASS - engine offered Scareclaw Kashtira as an attacker: true; it attacked: true
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Scareclaw Kashtira | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/5400
+e enhanced+E s0: PASS - engine offered Scareclaw Kashtira as an attacker: true; it attacked: true
+   turn 3 plays: phase:Enter Battle Phase | attack:Attack · Scareclaw Kashtira | phase:Enter Main Phase 2 | phase:End turn
+   LP after: 8000/5400

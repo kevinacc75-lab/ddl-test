@@ -1,0 +1,212 @@
+{
+ "puzzle": "a2",
+ "title": "(a2) as (a), but the opponent holds real cards (3 in hand + 2 set): still attack, never switch to Defence",
+ "mode": "classic+E",
+ "search": 0,
+ "seed": 7,
+ "decks": [
+  "branded",
+  "sky"
+ ],
+ "placements": [
+  {
+   "name": "Granguignol the Dusk Dragon",
+   "location": 4,
+   "sequence": 2,
+   "owner": 0,
+   "position": 1
+  },
+  {
+   "name": "Sky Striker Mobilize - Engage!",
+   "location": 8,
+   "sequence": 2,
+   "owner": 1,
+   "position": 10
+  },
+  {
+   "name": "Infinite Impermanence",
+   "location": 8,
+   "sequence": 1,
+   "owner": 1,
+   "position": 10
+  },
+  {
+   "name": "Ash Blossom & Joyous Spring",
+   "location": 2,
+   "owner": 1
+  },
+  {
+   "name": "Sky Striker Maneuver - Jamming Waves!",
+   "location": 2,
+   "owner": 1
+  },
+  {
+   "name": "Forbidden Droplet",
+   "location": 2,
+   "owner": 1
+  }
+ ],
+ "own": [
+  {
+   "phase": 4,
+   "type": "idle",
+   "label": "Enter Battle Phase",
+   "kind": "phase",
+   "rule": "Move to the next phase",
+   "reason": "The pilot has no remaining play it prefers and has a monster on the field, so it enters battle."
+  },
+  {
+   "phase": 8,
+   "type": "battle",
+   "label": "Attack · Granguignol the Dusk Dragon",
+   "kind": "attack",
+   "rule": "Plan the battle sequence",
+   "reason": "The planner compared 2 visible-board combat states. This line projects 2500 damage and 0 damage to this seat, prioritising lethal, useful removals and survival. Visible-board combat estimate; unseen responses, attack limits and unmodelled effects can change it."
+  },
+  {
+   "phase": 8,
+   "type": "battle",
+   "label": "Enter Main Phase 2",
+   "kind": "phase",
+   "rule": "Preserve the board",
+   "reason": "No positive battle sequence survived the visible-board risk checks. It moves to the next phase instead of committing a losing attack."
+  },
+  {
+   "phase": 256,
+   "type": "idle",
+   "label": "End turn",
+   "kind": "phase",
+   "rule": "Move to the next phase",
+   "reason": "The pilot has no remaining play it prefers, so it ends the turn."
+  }
+ ],
+ "battleOffers": [
+  [
+   "Attack · Granguignol the Dusk Dragon"
+  ],
+  []
+ ],
+ "notes": [],
+ "boardStart": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "position": 1,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 5,
+   "gy": 0
+  },
+  {
+   "lp": 8000,
+   "field": [],
+   "st": [
+    {
+     "name": "Infinite Impermanence",
+     "position": 10,
+     "sequence": 1
+    },
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "position": 10,
+     "sequence": 2
+    }
+   ],
+   "hand": 8,
+   "gy": 0
+  }
+ ],
+ "turn3Start": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "position": 1,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 6,
+   "gy": 0
+  },
+  {
+   "lp": 8000,
+   "field": [],
+   "st": [
+    {
+     "name": "Infinite Impermanence",
+     "position": 10,
+     "sequence": 1
+    },
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "position": 10,
+     "sequence": 2
+    }
+   ],
+   "hand": 6,
+   "gy": 3
+  }
+ ],
+ "boardAfter": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "position": 1,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 6,
+   "gy": 0
+  },
+  {
+   "lp": 5500,
+   "field": [],
+   "st": [
+    {
+     "name": "Infinite Impermanence",
+     "position": 10,
+     "sequence": 1
+    },
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "position": 10,
+     "sequence": 2
+    }
+   ],
+   "hand": 7,
+   "gy": 3
+  }
+ ],
+ "finished": false,
+ "winner": null,
+ "errors": [],
+ "stats": {
+  "lethalLock": 0,
+  "lethalNoSearch": 0,
+  "directNoSearch": 0,
+  "mp2BookOff": 0,
+  "readyHold": 0,
+  "targetHold": 0,
+  "removal": 0,
+  "bpInsteadOfEnd": 0,
+  "advisoryBook": 0,
+  "closeOutOptions": 0,
+  "bookAtTarget": 0,
+  "removalVerified": 0,
+  "removalOverride": 0,
+  "removalMismatch": 0
+ },
+ "result": {
+  "pass": true,
+  "why": "Granguignol attacked: true; Granguignol position change: false"
+ }
+}
