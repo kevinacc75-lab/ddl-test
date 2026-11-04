@@ -1,0 +1,87 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "minTurn": 5,
+ "devices": {
+  "desktop": {
+   "cold": {
+    "value": "classic",
+    "visible": true,
+    "options": [
+     "Classic",
+     "Enhanced (experimental)"
+    ]
+   },
+   "classicBanner": "AI Classic",
+   "afterMidDuelSwitch": "AI Classic",
+   "classicTurn": {
+    "text": "Crimson Abyss · Turn 1",
+    "n": 1,
+    "title": "Pilot A is choosing its next play"
+   },
+   "enhancedBanner": "AI Enhanced (experimental)",
+   "enhancedReached": {
+    "text": "Zero Protocol · Turn 3",
+    "n": 3,
+    "title": "Pilot B is choosing its next play"
+   },
+   "afterReload": "classic",
+   "playBanner": "AI Enhanced (experimental)",
+   "playBannerHidden": true,
+   "errors": []
+  },
+  "tabletPortrait": {
+   "cold": {
+    "value": "classic",
+    "visible": true,
+    "options": [
+     "Classic",
+     "Enhanced (experimental)"
+    ]
+   },
+   "classicBanner": "AI Classic",
+   "afterMidDuelSwitch": "AI Classic",
+   "classicTurn": {
+    "text": "Crimson Abyss · Turn 1",
+    "n": 1,
+    "title": "Pilot A is choosing its next play"
+   },
+   "enhancedBanner": "AI Enhanced (experimental)",
+   "enhancedReached": {
+    "text": "Zero Protocol · Turn 3",
+    "n": 3,
+    "title": "Pilot B is choosing its next play"
+   },
+   "afterReload": "classic",
+   "playBanner": "AI Enhanced (experimental)",
+   "playBannerHidden": true,
+   "errors": []
+  },
+  "tabletLandscape": {
+   "cold": {
+    "value": "classic",
+    "visible": true,
+    "options": [
+     "Classic",
+     "Enhanced (experimental)"
+    ]
+   },
+   "classicBanner": "AI Classic",
+   "afterMidDuelSwitch": "AI Classic",
+   "classicTurn": {
+    "text": "Crimson Abyss · Turn 1",
+    "n": 1,
+    "title": "Pilot A is choosing its next play"
+   },
+   "enhancedBanner": "AI Enhanced (experimental)",
+   "enhancedReached": {
+    "text": "Zero Protocol · Turn 3",
+    "n": 3,
+    "title": "Pilot B is choosing its next play"
+   },
+   "afterReload": "classic",
+   "playBanner": "AI Enhanced (experimental)",
+   "playBannerHidden": true,
+   "errors": []
+  }
+ }
+}

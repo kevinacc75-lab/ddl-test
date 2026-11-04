@@ -1,0 +1,9 @@
+tree 8b7f477ed088caef1cfcdf77affb1db52e4b5b60 node v22.22.2
+0 tests/r32-review-fixes.test.mjs
+0 tests/r36-ai-mode.test.mjs
+1 tests/r35-shuffle-app-pin.test.mjs
+1 tests/r35.12-coin-dice-sfx.test.mjs
+1 tests/r36-coin-pin.test.mjs
+1 tests/r23-fx.test.mjs
+1 tests/r30-book-trust.test.mjs
+1 tests/r35-cyclone-pin.test.mjs

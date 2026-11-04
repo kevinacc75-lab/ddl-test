@@ -1,0 +1,127 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "minTurn": 6,
+ "minutes": 50,
+ "seed": 71007,
+ "decks": [
+  "branded",
+  "sky"
+ ],
+ "samples": [
+  {
+   "sec": 31,
+   "turn": "Crimson Abyss · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 61,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 91,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 121,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 151,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 181,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 211,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 241,
+   "turn": "Crimson Abyss · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 271,
+   "turn": "Crimson Abyss · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 301,
+   "turn": "Crimson Abyss · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 331,
+   "turn": "Crimson Abyss · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 362,
+   "turn": "Zero Protocol · Turn 2",
+   "n": 2,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 392,
+   "turn": "Crimson Abyss wins",
+   "n": 0,
+   "title": "Duel complete",
+   "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": true
+  }
+ ],
+ "errors": [],
+ "final": {
+  "turn": "Crimson Abyss wins",
+  "n": 0,
+  "title": "Duel complete",
+  "banner": "AI DUELSEED 71007Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+  "over": true
+ },
+ "reachedTurn": 0,
+ "ended": true,
+ "wallSec": 392
+}

@@ -1,0 +1,191 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "minTurn": 6,
+ "minutes": 55,
+ "seed": 71009,
+ "decks": [
+  "kashtira",
+  "branded"
+ ],
+ "samples": [
+  {
+   "sec": 31,
+   "turn": "Sealed Horizon · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 61,
+   "turn": "Crimson Abyss · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 91,
+   "turn": "Crimson Abyss · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 121,
+   "turn": "Crimson Abyss · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 151,
+   "turn": "Crimson Abyss · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 181,
+   "turn": "Sealed Horizon · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 211,
+   "turn": "Sealed Horizon · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 241,
+   "turn": "Sealed Horizon · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 271,
+   "turn": "Sealed Horizon · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 301,
+   "turn": "Crimson Abyss · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 331,
+   "turn": "Crimson Abyss · Turn 2",
+   "n": 2,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 361,
+   "turn": "Sealed Horizon · Turn 3",
+   "n": 3,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 391,
+   "turn": "Sealed Horizon · Turn 3",
+   "n": 3,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 421,
+   "turn": "Sealed Horizon · Turn 3",
+   "n": 3,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 451,
+   "turn": "Crimson Abyss · Turn 3",
+   "n": 3,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 481,
+   "turn": "Crimson Abyss · Turn 3",
+   "n": 3,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 511,
+   "turn": "Sealed Horizon · Turn 4",
+   "n": 4,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 541,
+   "turn": "Sealed Horizon · Turn 4",
+   "n": 4,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 571,
+   "turn": "Sealed Horizon · Turn 5",
+   "n": 5,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 601,
+   "turn": "Crimson Abyss · Turn 5",
+   "n": 5,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 631,
+   "turn": "Sealed Horizon · Turn 6",
+   "n": 6,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  }
+ ],
+ "errors": [],
+ "final": {
+  "turn": "Sealed Horizon · Turn 6",
+  "n": 6,
+  "title": "Pilot A is choosing its next play",
+  "banner": "AI DUELSEED 71009Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+  "over": false
+ },
+ "reachedTurn": 6,
+ "ended": false,
+ "wallSec": 631
+}

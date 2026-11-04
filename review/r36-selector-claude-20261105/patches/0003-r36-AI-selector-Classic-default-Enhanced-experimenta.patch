@@ -1,0 +1,276 @@
+From 707e4a60d0c4851123f1d3de921a57e89a2a7427 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 01:45:49 +1100
+Subject: [PATCH 3/5] r36 AI selector: Classic (default) / Enhanced
+ (experimental), fixed per duel
+
+Kevy 4 Nov 11:09: experimental Enhanced preview, old AI kept as Classic. ChatGPT RELAY-105 readiness:
+- one exact recipe (ai/midgame-flags.mjs AI_MODES): Classic = every r36 switch off; Enhanced = A+B; C/T/Z off
+- cold load = Classic (select default, nothing stored); a change applies to the next new duel (worker.mjs
+  sets the mode at 'start'; imported replays run Classic); every think names its mode and ai-worker.mjs sets
+  it per think (no stale global); stale thinks are already discarded by id/revision
+- Finding B (Enhanced only): worker.mjs passes its local pilot's pendingRemoval in the think message and
+  ai-worker.mjs puts it on the fresh pilot, so B1's follow-up reaches the played move in the browser
+- match banner names the AI mode
+Tests: tests/r36-ai-mode.test.mjs (10, real ai-worker in Node; each changed file minus the selector lines =
+r35.12 bytes). Tools: r36-ai-mode-browser.mjs (Playwright, 3 devices), r36-classic-parity.mjs.
+Base: r36 F1 (73e2d07) + r35.12 (cc84a5f, d3177e0 cherry-picked). Builder: Claude; SELF-VERIFIED.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/ai/ai-worker.mjs         |  4 ++-
+ dist/ai/midgame-flags.mjs     |  6 ++++
+ dist/app.mjs                  |  4 +--
+ dist/index.html               |  2 +-
+ dist/worker.mjs               |  8 ++++--
+ tests/r36-ai-mode.test.mjs    | 54 +++++++++++++++++++++++++++++++++++
+ tools/r36-ai-mode-browser.mjs | 37 ++++++++++++++++++++++++
+ tools/r36-classic-parity.mjs  | 24 ++++++++++++++++
+ 8 files changed, 132 insertions(+), 7 deletions(-)
+ create mode 100644 tests/r36-ai-mode.test.mjs
+ create mode 100644 tools/r36-ai-mode-browser.mjs
+ create mode 100644 tools/r36-classic-parity.mjs
+
+diff --git a/dist/ai/ai-worker.mjs b/dist/ai/ai-worker.mjs
+index 3bc92a1..2837820 100644
+--- a/dist/ai/ai-worker.mjs
++++ b/dist/ai/ai-worker.mjs
+@@ -4,6 +4,7 @@ import {buildPlan} from '../pilot-notes.mjs';
+ import {createOptimalPilots} from '../optimal-pilot.mjs';
+ import {readCompressed} from '../load.mjs';
+ import {createSearchCore} from './engine-snapshot.mjs';
++import {AI_MODES,aiModeOf,setMidgame} from './midgame-flags.mjs';
+ // Round 2b: persistent world pool (Seto ruling A; switched on 14 Oct). One pool per duel and seat, kept between thinks.
+ export const WORLD_POOL_ENABLED=true;
+ let cancelled=new Set(),resources;
+@@ -13,7 +14,8 @@ onmessage=async({data:x})=>{
+  const capMs=x.capMs??(x.nodeBudget<100?400:1500),deadline=performance.now()+Math.max(0,(x.deadlineAt?x.deadlineAt-Date.now():capMs-(Date.now()-(x.startedAt??Date.now())))-20),box=x.deadlineBox||null,shouldStop=()=>performance.now()>=deadline||(box!==null&&Atomics.load(box,0)===x.id&&Date.now()>=x.deadlineBase+Atomics.load(box,1)-20);
+  let d;try{const {db,scripts,core,searchCore}=await warm();if(cancelled.has(x.id))return;
+  const foundation=new Duel(core,db,scripts),context=x.seatContext,state=context.publicState;if(!state)throw Error('Sanitized root state missing');d=foundation;Object.assign(d,state);d.handle=null;d.seatContext=context;d.decks=context.decks;d.order=context.first===0?[0,1]:[1,0];d.fromEngine=p=>d.order[p];d.toEngine=p=>d.order.indexOf(p);d.lp=state.players.map(p=>p.lp);d.responseHistory=Array(context.history.length);d.instances=new Map();d.instanceSlots=new Map();d.attempts=new Map();d.stateKeys=new Map();d.actions=0;d.copyCounts=new Map();d.pendingIdentityEntries=new Set();d.log=[];d.events=[];d.knowledge=[0,1].map(view=>new Knowledge(view,d.decks,d.fromEngine));d.zone=(p,l)=>l===1?Array.from({length:state.players[p].deck},(_,sequence)=>({code:0,controller:p,location:l,sequence,hidden:true})):state.players[p].zones[l]||[];d.snapshot=()=>({...state,log:d.log});
+- const pilot=createOptimalPilots({seed:x.seed,nodeBudget:x.nodeBudget,doctrine:x.doctrine,shouldStop,searchCore,worldPool:WORLD_POOL_ENABLED,poolKey:x.duelId!==undefined?'live:'+x.duelId:undefined,poolSize:x.poolSize,seatCapBytes:x.aiSeats?80*1048576/x.aiSeats:undefined})[x.seat];pilot.priorSearchRoots=x.priorSearchRoots;pilot.decisions=x.decisionCount||0;pilot.onProgress=stats=>{if(stats.aggregatedWorlds<8){postMessage({type:'progress',id:x.id,revision:x.revision,stats});return}postMessage({type:'progress',id:x.id,revision:x.revision,stats,response:stats.response,plan:{...buildPlan(d,stats.response,{rule:'Capped information-set search',reason:'Best sampled action aggregated over '+stats.aggregatedWorlds+' worlds',kind:'effect'}),revision:x.revision,search:stats}})};const before=d.log.length,plan=pilot.plan(d);plan.revision=x.revision;
++ setMidgame(AI_MODES[aiModeOf(x.aiMode)]);/* r36 AI selector: every think runs the duel's own mode (a stale think of an older duel is discarded by id/revision in worker.mjs) */
++ const pilot=createOptimalPilots({seed:x.seed,nodeBudget:x.nodeBudget,doctrine:x.doctrine,shouldStop,searchCore,worldPool:WORLD_POOL_ENABLED,poolKey:x.duelId!==undefined?'live:'+x.duelId:undefined,poolSize:x.poolSize,seatCapBytes:x.aiSeats?80*1048576/x.aiSeats:undefined})[x.seat];pilot.priorSearchRoots=x.priorSearchRoots;if(aiModeOf(x.aiMode)==='enhanced'&&x.pendingRemoval)pilot.pendingRemoval=x.pendingRemoval;/* r36 Finding B: carry the B1 removal follow-up into the fresh pilot (Enhanced only) */pilot.decisions=x.decisionCount||0;pilot.onProgress=stats=>{if(stats.aggregatedWorlds<8){postMessage({type:'progress',id:x.id,revision:x.revision,stats});return}postMessage({type:'progress',id:x.id,revision:x.revision,stats,response:stats.response,plan:{...buildPlan(d,stats.response,{rule:'Capped information-set search',reason:'Best sampled action aggregated over '+stats.aggregatedWorlds+' worlds',kind:'effect'}),revision:x.revision,search:stats}})};const before=d.log.length,plan=pilot.plan(d);plan.revision=x.revision;
+  if(!cancelled.has(x.id))postMessage({type:'decision',id:x.id,revision:x.revision,response:plan.response,explain:plan.reason,stats:plan.search||{nodes:0,determinizations:0},plan,guards:d.log.slice(before).filter(e=>e.kind==='guard')});
+  }catch(e){postMessage({type:'error',id:x.id,revision:x.revision,message:e.message})}finally{d?.stop()}
+ };
+diff --git a/dist/ai/midgame-flags.mjs b/dist/ai/midgame-flags.mjs
+index 35158e7..0afdac4 100644
+--- a/dist/ai/midgame-flags.mjs
++++ b/dist/ai/midgame-flags.mjs
+@@ -6,4 +6,10 @@ const env=String(globalThis.process?.env?.DDL_MIDGAME??globalThis.DDL_MIDGAME??'
+ const KEYS=['A','B','C','T','Z'];
+ export const MIDGAME=Object.fromEntries(KEYS.map(k=>[k,env.includes(k)]));
+ export function setMidgame(flags={}){for(const k of KEYS)if(k in flags)MIDGAME[k]=!!flags[k];return {...MIDGAME}}
++// r36 AI selector (Kevy 4 Nov 11:09: experimental Enhanced preview, old AI kept as Classic = default). One exact recipe per
++// mode: Classic = every r36 switch off (r35.12 behaviour); Enhanced = Arm A (after-battle judge) + Arm B (battle rules and the
++// removal follow-up). C (doctrine draft), T and Z stay off in both (held for review).
++export const AI_MODES=Object.freeze({classic:Object.freeze({A:false,B:false,C:false,T:false,Z:false}),enhanced:Object.freeze({A:true,B:true,C:false,T:false,Z:false})});
++export const aiModeOf=v=>v==='enhanced'?'enhanced':'classic';
++export function setAiMode(mode){return setMidgame(AI_MODES[aiModeOf(mode)])}
+ export const midgameLabel=()=>KEYS.filter(k=>MIDGAME[k]).join('')||'off';
+diff --git a/dist/app.mjs b/dist/app.mjs
+index f4b28c6..5ae843d 100644
+--- a/dist/app.mjs
++++ b/dist/app.mjs
+@@ -145,9 +145,9 @@ function selectModePace(){const m=$('#mode').value;preferences.preset=preference
+ $('#mode').onchange=()=>{$('#seat').disabled=$('#mode').value!=='play';selectModePace()};selectModePace();
+ $('#import').onclick=()=>$('#file').click();$('#file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>65536)throw Error('Deck file is too large. Choose a .ydk file under 64 KB.');const d=expandYdk(await file.text(),db);d.name=file.name.replace(/\.ydk$/i,'').slice(0,60);decks.push(d);drawDecks();$('#deck-a').value=d.id;syncDeckSelection();saveImports();notify(deckWarning(d)||('Imported '+d.main.length+' Main / '+d.extra.length+' Extra / '+d.side.length+' Side.'),!!deckWarning(d))}catch(e){notify(e.message,true)}finally{$('#file').value=''}};
+ function saveImports(){try{localStorage.setItem('doctrine-lab-decks-v1',JSON.stringify(decks.filter(d=>d.id.startsWith('custom-'))))}catch{notify('Your browser could not save the imported deck. Export it to keep a copy.')}}
+-$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=mode!=='watch';$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
++$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=mode!=='watch';$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,aiMode:$('#ai-mode')?.value==='enhanced'?'enhanced':'classic',dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
+ function receive({data:x}){if(x.type==='human-reply-result'){if(x.clientSession!==humanClientSession)return;if(x.accepted)return;if(humanFlow.reject(x)){busy=false;notify(x.reason||'Choice changed; choose again.');$('#choices').querySelectorAll('button').forEach(n=>n.disabled=false);if(x.current)receive({data:x.current});if(latestDecisionMessage&&!pendingChainDecision)renderDecision(latestDecisionMessage);humanFlow.autoBlocked=true;syncHumanChoiceStatus()}return}if(x.type==='export-replay'){download(JSON.stringify(x.replay,null,2),'doctrine-replay.json');return}if(x.type==='load-progress'){$('#decision-note').textContent=x.message;return}if(x.type==='rewound'){resetHumanInteraction();presentation.reset();shuffleOverlay.reset();shell?.rewound();return}if(x.type==='export'){download('Duel Doctrine Lab\n'+duelDecks.map(d=>d.name).join(' vs ')+'\n\n'+x.text,'doctrine-duel-log.txt');return}if(x.type==='error'){shuffleOverlay.cancel();resetHumanInteraction();busy=false;disabled=true;notify(x.message,true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent=x.message;return}if(x.type==='notice'){notify(x.message);return}if(x.type!=='state')return;if(x.human?.protocol===2){if(x.human.clientSession!==humanClientSession||x.human.epoch<expectedHumanEpoch||x.human.stateSeq<=humanStateSeq)return;humanStateSeq=x.human.stateSeq;humanHolds.contextFrom(x.human)}latestDecisionMessage=x;const flowChanged=humanFlow.update(x);const decisionChanged=state?.revision!==x.state.revision,fieldChanged=decisionChanged||view!==x.view||mode!==x.mode||lastStudy!==x.study,decisionUIChanged=decisionChanged||fieldChanged||isAi!==x.ai||disabled!==x.disabled;lastStudy=x.study;computerPaused=x.paused;state=x.state;matchInfo=x.match;choices=x.choices;multi=x.multi;sums=x.sums;view=x.view;mode=x.mode;isAi=x.ai;disabled=x.disabled;busy=humanFlow.inFlight;if(decisionUIChanged)selected.clear();$('#pause').textContent=x.paused?'Resume computer':'Pause computer';$('#pause').disabled=mode==='manual'||disabled;$('#step').disabled=!x.ai||disabled;if(fieldChanged){const oldStats=new Map([...document.querySelectorAll('[data-slot] .card-stats')].map(n=>[n.closest('[data-slot]').dataset.slot,n.textContent]));renderState();if(preferences.cinematics!==false&&!preferences.motion)for(const e of x.events||[])if(e.type==='move'&&e.to&&[4,8].includes(e.to.location))document.querySelector(`[data-slot="${e.to.controller}:${e.to.location}:${e.to.sequence}"]`)?.classList.add('fx-arriving');for(const n of document.querySelectorAll('[data-slot] .card-stats'))if(oldStats.has(n.closest('[data-slot]').dataset.slot)&&oldStats.get(n.closest('[data-slot]').dataset.slot)!==n.textContent)n.classList.add('stat-changed');presentation.refreshField();}syncDuelControls();presentation.syncLifePoints(state.players.map(p=>p.lp),x.events);sound.updateState(state,duelDecks,x.coach?.intent?.battle?.lethal);shell?.state(x);renderCoach(x);renderCue(x);syncWakeLock();renderMatchStudy(x);updatePhaseControls();presentation.play((x.events||[]).map(e=>{const c=state.chain.find(c=>c.chain_size===(e.linkedChain??e.chain));return c?{...e,source:{controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence}}:e}),x.lastEventId,coinEpochOk(x.coin)?x.coin.tosses:[]);shuffleOverlay.viewChanged();shuffleOverlay.accept(x.shuffle);presentDecision(x,decisionUIChanged||flowChanged);wasAi=isAi;syncHumanChoiceStatus();queueMicrotask(()=>{drainHumanChoice();maybeAutoSkipEmptyChain()})}
+-function renderMatchStudy(x){const target=$('#match-study');target.hidden=!x.match||mode==='play';if(!x.match)return;target.innerHTML=`<span class="eyebrow">AI DUEL</span><strong>SEED ${x.match.seed}</strong><span>${x.match.pilots.map(p=>esc(p.name)+' · '+esc(p.label)).join(' / ')}</span><small>Fresh hands + serious pilots · ${'Optimal · bounded search'} · Doctrine ${x.match.doctrine?'on':'off'}</small>`}
++function renderMatchStudy(x){const target=$('#match-study');target.hidden=!x.match||mode==='play';if(!x.match)return;target.innerHTML=`<span class="eyebrow">AI DUEL</span><strong>SEED ${x.match.seed}</strong><span>${x.match.pilots.map(p=>esc(p.name)+' · '+esc(p.label)).join(' / ')}</span><small>Fresh hands + serious pilots · ${'Optimal · bounded search'} · Doctrine ${x.match.doctrine?'on':'off'} · AI ${x.match.aiMode==='enhanced'?'Enhanced (experimental)':'Classic'}</small>`}
+ $('#reuse-seed').onclick=()=>{if(!matchInfo)return;const saved=matchInfo;$('#new').click();$('#game-seed').value=String(saved.seed);$('#first').value=String(saved.first);$('#variation').value=saved.variation;$('#pilot-strategy').value=saved.strategy||'tactical';$('#pilot-strategy').onchange();$('#doctrine-guidance').checked=saved.doctrine!==false;$('#pilot-a').value=saved.styles[0];$('#pilot-b').value=saved.styles[1];notify('Seed '+saved.seed+' restored. Enter the room to study the same duel again. Clear the seed for a fresh game.')};
+ function renderCue(x){$('.field-cue')?.classList.toggle('coach-hidden',mode==='watch'&&!coachOn());const thought=x.coach?.intent;$('#cue-owner').textContent=state.finished?'DUEL COMPLETE':disabled?'DUEL STOPPED':isAi?'COMPUTER CHOICE':'YOUR DECISION';$('#cue-text').textContent=thought?.title||x.title;$('#cue-open').textContent=state.finished?'View journal →':mode==='watch'?'Why this choice? →':'View actions →';$('#field-status').textContent=state.finished?'COMPLETE':x.paused?'PAUSED':isAi?'COMPUTER':'YOUR MOVE';$('#action-count').textContent=!isAi&&!state.finished?(choices.length||'!'):'';document.querySelector('[data-view="play"]').classList.toggle('needs-action',!isAi&&!state.finished&&!disabled)}
+ function renderCoach(x){
+diff --git a/dist/index.html b/dist/index.html
+index 0d1c6a8..f30b285 100644
+--- a/dist/index.html
++++ b/dist/index.html
+@@ -7,7 +7,7 @@
+ <main id="setup"><section class="intro"><div><p class="eyebrow"><span class="live-dot"></span> YOUR DUEL ROOM</p><h1>Your decks.<br><em>Either side</em> of the table.</h1><p class="lead">Learn the line. Face the interruption. Play it again.<br>Choose your deck, choose your rival, and take the seat you want.</p></div><div class="hero-art"><img src="art/44146295.jpg" alt="Mirrorjade the Iceblade Dragon"><span class="art-stamp">CRIMSON ABYSS<br><b>THE ICEBLADE DRAGON</b></span></div></section>
+ <div class="section-head"><div><p class="eyebrow">01 / CHOOSE YOUR DECKS</p><h2>Set the matchup</h2></div><button id="import" class="quiet">＋ Import .ydk</button><input id="file" type="file" accept=".ydk" hidden></div>
+ <div id="deck-grid" class="deck-grid" aria-label="Your deck collection"></div>
+-<section class="matchup-panel"><div class="seat"><label for="deck-a">DECK A</label><select id="deck-a"></select></div><button id="swap" class="swap" aria-label="Swap decks">⇄</button><div class="seat"><label for="deck-b">DECK B</label><select id="deck-b"></select></div><div class="config"><label for="mode">Practice mode</label><select id="mode"><option value="watch" selected>AI vs AI · Watch a duel</option><option value="hand">Deal a hand · Watch its pilot</option><option value="replay">Replay a seed</option><option value="play">Play against the computer</option><option value="manual">Control both seats</option></select><label for="seat">Your seat</label><select id="seat"><option value="0">I pilot Deck A</option><option value="1">I pilot Deck B</option></select><label for="first">Who goes first?</label><select id="first"><option value="0">Deck A</option><option value="1">Deck B</option><option value="random" selected>Random</option></select><label for="banlist">Banlist</label><select id="banlist"><option value="tcg-2026-09-21">TCG Advanced · 21 Sep 2026 (default)</option></select></div><div class="pilot-config"><div><p class="eyebrow">TWO INDEPENDENT PILOTS</p><h3>A fresh duel, every time.</h3><p>Both pilots follow their deck plan and compare legal lines. Pause to study the actual decisions.</p></div><p class="optimal-note">Optimal pilot · one serious policy. Random hands, deterministic decisions.</p><div hidden><select id="pilot-a"><option value="optimal">Optimal</option></select><select id="pilot-b"><option value="optimal">Optimal</option></select><select id="pilot-strategy"><option value="optimal">Optimal</option></select><select id="variation"><option value="none">None</option></select></div><label class="doctrine-toggle"><span><input id="doctrine-guidance" type="checkbox" checked> Use Doctrine routes</span><span class="seed-help">Your authored lines, when resources and engine prompts support them</span></label><label>Game seed <span class="seed-help">Leave blank for a fresh game</span><input id="game-seed" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="New random game"></label></div><div class="launch"><button id="start" class="primary" disabled>Loading card library…</button><p id="load-status" role="status">Preparing your practice room.</p></div></section>
++<section class="matchup-panel"><div class="seat"><label for="deck-a">DECK A</label><select id="deck-a"></select></div><button id="swap" class="swap" aria-label="Swap decks">⇄</button><div class="seat"><label for="deck-b">DECK B</label><select id="deck-b"></select></div><div class="config"><label for="mode">Practice mode</label><select id="mode"><option value="watch" selected>AI vs AI · Watch a duel</option><option value="hand">Deal a hand · Watch its pilot</option><option value="replay">Replay a seed</option><option value="play">Play against the computer</option><option value="manual">Control both seats</option></select><label for="seat">Your seat</label><select id="seat"><option value="0">I pilot Deck A</option><option value="1">I pilot Deck B</option></select><label for="first">Who goes first?</label><select id="first"><option value="0">Deck A</option><option value="1">Deck B</option><option value="random" selected>Random</option></select><label for="banlist">Banlist</label><select id="banlist"><option value="tcg-2026-09-21">TCG Advanced · 21 Sep 2026 (default)</option></select></div><div class="pilot-config"><div><p class="eyebrow">TWO INDEPENDENT PILOTS</p><h3>A fresh duel, every time.</h3><p>Both pilots follow their deck plan and compare legal lines. Pause to study the actual decisions.</p></div><p class="optimal-note">Optimal pilot · one serious policy. Random hands, deterministic decisions.</p><div hidden><select id="pilot-a"><option value="optimal">Optimal</option></select><select id="pilot-b"><option value="optimal">Optimal</option></select><select id="pilot-strategy"><option value="optimal">Optimal</option></select><select id="variation"><option value="none">None</option></select></div><label class="doctrine-toggle"><span><input id="doctrine-guidance" type="checkbox" checked> Use Doctrine routes</span><span class="seed-help">Your authored lines, when resources and engine prompts support them</span></label><label class="doctrine-toggle ai-mode-toggle"><span>AI <select id="ai-mode" aria-describedby="ai-mode-help"><option value="classic" selected>Classic</option><option value="enhanced">Enhanced (experimental)</option></select></span><span class="seed-help" id="ai-mode-help">Classic is the current AI. Enhanced adds new mid-game rules from turn 3; it is an experimental preview, not yet reviewed for strength. A change applies to the next new duel.</span></label><label>Game seed <span class="seed-help">Leave blank for a fresh game</span><input id="game-seed" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="New random game"></label></div><div class="launch"><button id="start" class="primary" disabled>Loading card library…</button><p id="load-status" role="status">Preparing your practice room.</p></div></section>
+ <div class="honest-note"><b>A real duel engine. Two serious computer pilots.</b><p>The engine handles card effects, legal summons, response windows and battle damage. The pilots use bounded engine-replayed combo search, Doctrine routes and a blunder guard. They can still make poor strategic choices; a familiar combo can still be the sensible route for a given hand. Saved deck profiles are loaded as-is; current tournament legality has not been rechecked. Side Decks are available to inspect and export; match siding is not included yet.</p></div>
+ </main>
+ <main id="duel" data-screen="field" hidden><div id="quick-pace" class="quick-pace" role="group" aria-label="Duel pace (quick switch)"><button type="button" data-pace="learning">Learn</button><button type="button" data-pace="duel">Duel</button><button type="button" data-pace="broadcast">Broadcast</button><button type="button" data-pace="instant">Instant</button></div>
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index e5bec43..8ebc237 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -4,6 +4,8 @@ import {exportSeatContext,safeView} from './ai/knowledge.mjs';
+ import {Duel,M} from './duel.mjs';
+ import {sumSelections} from './pilot.mjs';
+ import {createOptimalPilots as createPilots} from './optimal-pilot.mjs';
++import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */
++let aiMode='classic';
+ import {readCompressed} from './load.mjs';
+ import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
+ // r35 item 8 (RELAY-046 Tap B, Seto 27 Oct 10:10): deck-shuffle capture on the one real duel (see shuffle-tap.mjs).
+@@ -62,7 +64,7 @@ function planned(){
+  const fallback=()=>{if(thinking?.id!==id||duel.revision!==revision)return;cancelThink(false);plan=bestAggregated?.plan||publicDecision;if(bestAggregated){plan.search={...bestAggregated.stats,capped:true,status:(bestAggregated.stats.matchedWorlds??bestAggregated.stats.determinizations)>=16?'full':'reduced'};duel.record('think-cap: best action aggregated over '+bestAggregated.stats.aggregatedWorlds+' sampled worlds','guard')}else{duel.record('info-set fallback: fewer than eight aggregated worlds at '+capMs+'ms cap; public-information decision','guard');plan.search={...(lastProgress||{}),nodes:lastProgress?.nodes||0,determinizations:lastProgress?.determinizations||0,aggregatedWorlds:0,status:'fallback',capped:true}}if(duel.log.at(-1))duel.log.at(-1).reason=bestAggregated?'think-cap':'public-information fallback';metric(plan.search);send()};
+  thinkWorker.onmessage=({data:x})=>{if(thinking?.id!==id||x.id!==id||x.revision!==revision||duel.revision!==revision)return;if(x.type==='progress'){lastProgress=x.stats;if(x.stats?.aggregatedWorlds>=8&&x.plan)bestAggregated=x;postMessage({type:'ai-progress',revision,stats:x.stats});return}if(x.type==='error'){fallback();return}if(x.type==='decision'){thinkTimes.push(Date.now()-started);thinkTimes=thinkTimes.slice(-15);for(const entry of x.guards||[])if(!duel.log.some(e=>e.kind==='guard'&&e.actionIndex===entry.actionIndex&&e.text===entry.text))duel.log.push(entry);plan=x.plan;metric(x.stats);cancelThink(false);send()}};
+  thinkWorker.onerror=fallback;thinking.fallback=fallback;thinkTimeout=setTimeout(fallback,Math.max(0,deadlineAt-Date.now()));
+- thinkWorker.postMessage({type:'think',id,revision,startedAt:started,seatContext:exportSeatContext(duel,seat),seed:matchInfo.seed,first:matchInfo.first,seat,capMs,deadlineAt,deadlineBox,deadlineBase,priorSearchRoots,duelId:duelSerial,aiSeats:mode==='watch'?2:1,poolSize:mode==='watch'?10:16/*Seto 14 Oct: Watch (both seats AI) 10 worlds (~35 MB of its 40 MB share); Play 16*/,nodeBudget:preset==='instant'?40:400,doctrine:matchInfo.doctrine,decisionCount:pilots[seat].decisions});return null;
++ thinkWorker.postMessage({type:'think',id,revision,startedAt:started,seatContext:exportSeatContext(duel,seat),seed:matchInfo.seed,first:matchInfo.first,seat,capMs,deadlineAt,deadlineBox,deadlineBase,priorSearchRoots,duelId:duelSerial,aiSeats:mode==='watch'?2:1,poolSize:mode==='watch'?10:16/*Seto 14 Oct: Watch (both seats AI) 10 worlds (~35 MB of its 40 MB share); Play 16*/,nodeBudget:preset==='instant'?40:400,doctrine:matchInfo.doctrine,decisionCount:pilots[seat].decisions,aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});return null;
+ }
+ 
+ function send(){
+@@ -95,7 +97,7 @@ onmessage=async ({data:x})=>{try{
+  if(x.type==='start'){shuffleTap.reset();coinTap.reset();interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
+   director.reset();preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;const run=++generation;clearTimeout(timer);disabled=false;paused=!!x.dealHand;dealHand=!!x.dealHand;replayHistory=[];view=x.view;mode=x.mode;study=x.study;delay=x.delay||2200;cinematics=x.cinematics!==false;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';learnHold=!!x.learnHold;thoughts=[];thoughtSeq=0;plan=null;deliveredSeq=0;presentationUntil=0;presentationPending=false;
+   if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}shuffleTap.install(duel);coinTap.install(duel);await warmThinkWorker();
+-  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',pilots:pilots.map(p=>p.info())};send();
++  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',aiMode,pilots:pilots.map(p=>p.info())};send();
+  }else if(x.type==='reply'){
+   if(interactionProtocol===2){const checked=humanBridge.check(x,{prompt:duel?.prompt,choices:duel?.choices()||[],sums:duel?.prompt?.type===M.SELECT_SUM?sumSelections(duel.prompt):[]});if(!checked.ok){rejectHumanReply(x,checked.reason);return}if(pauseOwners.owners.size){humanBridge.used=null;rejectHumanReply(x,'Close the reading panel before submitting.');return}}
+   cancelThink();if(disabled)throw Error('This duel is stopped. Start a new duel.');const retries=duel.retries;duel.respond(x.response,x.revision);if(interactionProtocol===2)humanBridge.ack={requestId:x.human.requestId,accepted:duel.retries===retries};replayHistory=duel.responseHistory.slice();plan=null;send()
+@@ -112,7 +114,7 @@ onmessage=async ({data:x})=>{try{
+  else if(x.type==='learn'){learnHold=x.value;send()}
+  else if(x.type==='skip-scene'||x.type==='presentation-done'){if(x.eventId>=deliveredSeq){presentationUntil=0;presentationPending=false;presentationDoneAt=Date.now();if(thinking?.fallback&&paceKind()!=='instant'){const due=thinkDeadline(thinking.started);if(due<thinking.deadlineAt){thinking.deadlineAt=due;if(deadlineBox&&Atomics.load(deadlineBox,0)===thinking.id)Atomics.store(deadlineBox,1,due-deadlineBase);clearTimeout(thinkTimeout);thinkTimeout=setTimeout(thinking.fallback,Math.max(0,due-Date.now()))}}schedule()}}
+  else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,responses:duel.responseHistory}})}
+- else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();matchInfo={...matchInfo,seed:r.seed,first:r.first};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
++ else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();aiMode='classic';setAiMode(aiMode);matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
+  else if(x.type==='export'){const extra=mode==='watch'?'\n\nINDEPENDENT PROCEDURAL PILOT CHOICES\n'+thoughts.map(t=>'Turn '+t.turn+' · '+duel.decks[t.seat].name+' · '+t.title+'\n'+t.rule+': '+t.reason+(t.doctrine?'\nDOCTRINE: '+t.doctrine.title+' · '+t.doctrine.status:'')).join('\n\n'):'';postMessage({type:'export',text:'GAME SEED '+matchInfo?.seed+' · FIRST SEAT '+matchInfo?.first+' · VARIATION '+matchInfo?.variation+' · PILOT '+matchInfo?.strategy+' · DOCTRINE '+(matchInfo?.doctrine?'ON':'OFF')+'\n'+pilots.map(p=>p.name+': '+p.info().label+' · seed '+p.seed).join('\n')+'\n\n'+(duel?.log.map(e=>e.text).join('\n')||'')+extra})}
+  else if(x.type==='stop'){cancelThink();shuffleTap.disarm();coinTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
+  }catch(e){disabled=true;paused=true;shuffleTap.disarm();coinTap.disarm();postMessage({type:'error',message:e.message});resetHumanTransport();if(duel?.handle)send()}};
+diff --git a/tests/r36-ai-mode.test.mjs b/tests/r36-ai-mode.test.mjs
+new file mode 100644
+index 0000000..4af8891
+--- /dev/null
++++ b/tests/r36-ai-mode.test.mjs
+@@ -0,0 +1,54 @@
++// r36 AI selector (Claude as builder, Nov 2026; Kevy 4 Nov 11:09: experimental Enhanced preview, the old AI kept as
++// Classic = default; ChatGPT RELAY-105 readiness: one exact recipe with a flag map, cold load = Classic, a change takes
++// effect on a new duel, stale async responses discarded). SELF-VERIFIED; for ChatGPT review.
++//  1. Recipes: Classic = every r36 switch off; Enhanced = A+B only (C/T/Z held).
++//  2. The REAL ai-worker.mjs (Node, fetch stubbed to dist/) runs each think in the mode the think names, whatever ran
++//     before: the pilot's base() is spied for the live switches and the carried removal follow-up (Finding B).
++//  3. Source isolation: app.mjs / index.html / worker.mjs / ai-worker.mjs differ from r35.12 (git d3177e0) ONLY by the
++//     selector lines listed here (each file minus those lines = the r35.12 bytes).
++//  4. Cold load = Classic: the select's default is Classic and nothing stores the choice.
++import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import {execFileSync} from 'node:child_process';
++import {engine,stopEngine,scenario,drive,M} from '../tools/s3-harness.mjs';
++import {exportSeatContext} from '../dist/ai/knowledge.mjs';
++import {AI_MODES,aiModeOf,setAiMode,MIDGAME} from '../dist/ai/midgame-flags.mjs';
++import {OptimalPilot} from '../dist/optimal-pilot.mjs';
++let pass=0,fail=0;const ok=async(n,f)=>{try{await f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
++await ok('recipes: Classic = all off; Enhanced = A+B; C, T, Z off in both; unknown/missing mode = Classic',()=>{
++ assert.deepEqual({...AI_MODES.classic},{A:false,B:false,C:false,T:false,Z:false});assert.deepEqual({...AI_MODES.enhanced},{A:true,B:true,C:false,T:false,Z:false});
++ for(const v of [undefined,null,'','ENHANCED','abc','classic'])assert.equal(aiModeOf(v),'classic',String(v));assert.equal(aiModeOf('enhanced'),'enhanced');
++ setAiMode('enhanced');assert.deepEqual({...MIDGAME},{A:true,B:true,C:false,T:false,Z:false});setAiMode('classic');assert.deepEqual({...MIDGAME},{A:false,B:false,C:false,T:false,Z:false})});
++// ---- 2. real ai-worker ----
++globalThis.fetch=async u=>new Response(fs.readFileSync(path.join('dist',path.basename(String(u)))));
++const out=[];globalThis.postMessage=m=>out.push(m);globalThis.onmessage=null;
++await import('../dist/ai/ai-worker.mjs');const handle=globalThis.onmessage;assert.equal(typeof handle,'function');
++const seen=[];const base0=OptimalPilot.prototype.base;OptimalPilot.prototype.base=function(d,o){seen.push({midgame:{...MIDGAME},pending:this.pendingRemoval??null});return base0.call(this,d,o)};
++await engine();
++const d=scenario(['sky','branded'],[{name:'Sky Striker Mecha - Widow Anchor',location:2,owner:0},{name:'Sky Striker Ace - Kagari',location:4,sequence:5,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Albion the Shrouded Dragon',location:4,sequence:0,owner:1}],{first:0,seed:7});
++const endTurn=d=>{const m=d.prompt;if(m.type===M.SELECT_IDLECMD&&d.turn<3){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){d.respond(c.response);return true}}return false};
++assert.ok(drive(d,{until:d=>d.turn>=3&&d.prompt?.type===M.SELECT_IDLECMD&&d.prompt.seat===0,onPrompt:endTurn,max:400}).stopped,'turn 3');
++let id=0;const think=async(extra)=>{seen.length=0;out.length=0;const x={type:'think',id:++id,revision:d.revision,startedAt:Date.now(),seatContext:exportSeatContext(d,0),seed:7,first:0,seat:0,capMs:60000,nodeBudget:40,doctrine:true,decisionCount:0,duelId:900+id,aiSeats:1,poolSize:4,...extra};await handle({data:x});const dec=out.find(m=>m.type==='decision'||m.type==='error');assert.ok(dec,'a reply');assert.equal(dec.type,'decision',dec.message);return dec};
++const fakeIntent={code:98338152,effect:'control',activation:{type:1,action:5,index:0},target:{code:1,location:4,sequence:0,controller:1},costs:null,preferredCost:null,turn:d.turn,link:1,seat:0};
++await ok('real ai-worker: a Classic think runs with every switch off and ignores a carried pendingRemoval',async()=>{
++ await think({aiMode:'classic',pendingRemoval:fakeIntent});assert.ok(seen.length>0,'base() ran');for(const s of seen){assert.deepEqual(s.midgame,{A:false,B:false,C:false,T:false,Z:false});assert.equal(s.pending,null)}});
++await ok('real ai-worker: an Enhanced think runs A+B and the fresh pilot starts with the carried pendingRemoval (Finding B)',async()=>{
++ await think({aiMode:'enhanced',pendingRemoval:fakeIntent});assert.deepEqual(seen[0].midgame,{A:true,B:true,C:false,T:false,Z:false});assert.equal(seen[0].pending?.code,98338152)});
++await ok('real ai-worker: the mode is per think - Enhanced then a think with no mode field runs Classic (a stale global never leaks)',async()=>{
++ await think({aiMode:'enhanced'});assert.equal(seen[0].midgame.A,true);await think({});assert.ok(seen.every(s=>!s.midgame.A&&!s.midgame.B))});
++await ok('real ai-worker: same position, Classic think = the in-process Classic pilot\'s search-off baseline (no r36 rule reached the decision)',async()=>{
++ const dec=await think({aiMode:'classic',nodeBudget:0});setAiMode('classic');const p=new OptimalPilot({seat:0,seed:7,searchEnabled:false});
++ const {safeView}=await import('../dist/ai/knowledge.mjs');const b=base0.call(p,safeView(d,0));assert.ok(dec.response&&b?.response);assert.deepEqual(dec.response,b.response,'ai-worker Classic decision = Classic baseline');assert.ok(!dec.plan?.removalIntent,'no removal intent in Classic');
++ setAiMode('enhanced');const e=base0.call(new OptimalPilot({seat:0,seed:7,searchEnabled:false}),safeView(d,0));setAiMode('classic');assert.ok(e.removalIntent,'control: the same position in Enhanced does arm the removal (the check can see a difference)')});
++OptimalPilot.prototype.base=base0;stopEngine();
++// ---- 3. source isolation vs r35.12 ----
++const r3512=f=>execFileSync('git',['show','d3177e0:'+f],{maxBuffer:64<<20}).toString();
++const SEL={
++ 'dist/app.mjs':[["doctrine:$('#doctrine-guidance').checked,aiMode:$('#ai-mode')?.value==='enhanced'?'enhanced':'classic',","doctrine:$('#doctrine-guidance').checked,"],["· Doctrine ${x.match.doctrine?'on':'off'} · AI ${x.match.aiMode==='enhanced'?'Enhanced (experimental)':'Classic'}</small>","· Doctrine ${x.match.doctrine?'on':'off'}</small>"]],
++ 'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,'']],
++ 'dist/worker.mjs':[["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */\nlet aiMode='classic';",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode='classic';setAiMode(aiMode);matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
++ 'dist/ai/ai-worker.mjs':[["\nimport {AI_MODES,aiModeOf,setMidgame} from './midgame-flags.mjs';",''],[/ setMidgame\(AI_MODES\[aiModeOf\(x\.aiMode\)\]\);\/\*.*?\*\/\n/s,''],[/if\(aiModeOf\(x\.aiMode\)==='enhanced'&&x\.pendingRemoval\)pilot\.pendingRemoval=x\.pendingRemoval;\/\*.*?\*\//s,'']]};
++for(const [f,reps] of Object.entries(SEL))await ok(f+' minus the selector lines = r35.12 (d3177e0) bytes',()=>{let s=fs.readFileSync(f,'utf8');for(const [a,b] of reps){const before=s;s=s.replace(a,b);assert.notEqual(s,before,'selector line present: '+String(a).slice(0,60))}assert.equal(s,r3512(f))});
++// ---- 4. cold load ----
++await ok('cold load = Classic: the select defaults to Classic and the choice is not stored or restored',()=>{
++ const html=fs.readFileSync('dist/index.html','utf8');assert.match(html,/<select id="ai-mode"[^>]*><option value="classic" selected>Classic<\/option><option value="enhanced">Enhanced \(experimental\)<\/option><\/select>/);
++ const app=fs.readFileSync('dist/app.mjs','utf8');assert.equal((app.match(/ai-mode/g)||[]).length,1,'app.mjs only reads #ai-mode when a duel starts');assert.ok(!/aiMode[^;]{0,80}localStorage|localStorage[^;]{0,200}aiMode/.test(app))});
++console.log('r36 AI selector tests: '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;
+diff --git a/tools/r36-ai-mode-browser.mjs b/tools/r36-ai-mode-browser.mjs
+new file mode 100644
+index 0000000..f525b9e
+--- /dev/null
++++ b/tools/r36-ai-mode-browser.mjs
+@@ -0,0 +1,37 @@
++// r36 AI selector browser check (Claude, Nov 2026; RELAY-105 browser coverage). Serves nothing itself: pass the URL of a
++// served dist/. Chromium via the pre-installed Playwright. For each device (desktop, tablet portrait, tablet landscape):
++//  - cold load: #ai-mode is Classic and visible;
++//  - Watch duel in Classic: the match banner says "AI Classic";
++//  - switching the select to Enhanced mid-duel does NOT change the running duel (banner still Classic after 4 s);
++//  - New duel: banner says "AI Enhanced (experimental)", and the duel runs to turn >= T (or the end) with no page errors;
++//  - reload: the select is Classic again (nothing stored);
++//  - Play mode in Enhanced starts (the hidden banner text records the mode) with no page errors.
++// Usage: node tools/r36-ai-mode-browser.mjs <url> <outdir> [minTurn=5] [minutes=6]
++import {createRequire} from 'node:module';import fs from 'node:fs';const require=createRequire(import.meta.url);
++const {chromium,devices}=require('/opt/npm-tools/node_modules/playwright');
++const [url,out,minTurn='5',mins='6']=process.argv.slice(2);fs.mkdirSync(out,{recursive:true});
++const DEV={desktop:{viewport:{width:1366,height:900}},tabletPortrait:devices['Galaxy Tab S4'],tabletLandscape:devices['Galaxy Tab S4 landscape']};
++const browser=await chromium.launch();const report={url,minTurn:+minTurn,devices:{}};
++const ready=p=>p.waitForFunction(()=>document.querySelector('#start')&&!document.querySelector('#start').disabled,null,{timeout:120000});
++const start=(p,mode,ai,seed)=>p.evaluate(([mode,ai,seed])=>{const $=s=>document.querySelector(s);$('#deck-a').value='branded';$('#deck-a').dispatchEvent(new Event('change'));$('#deck-b').value='sky';$('#deck-b').dispatchEvent(new Event('change'));$('#mode').value=mode;$('#mode').dispatchEvent(new Event('change'));$('#ai-mode').value=ai;$('#ai-mode').dispatchEvent(new Event('change'));$('#game-seed').value=seed;$('#first').value='0';$('#start').click()},[mode,ai,seed]);
++const banner=p=>p.evaluate(()=>document.querySelector('#match-study')?.textContent||'');
++const turn=p=>p.evaluate(()=>{const t=document.querySelector('#turn-label')?.textContent||'';const m=t.match(/(\d+)/);return {text:t,n:m?+m[1]:0,title:document.querySelector('#decision-title')?.textContent||''}});
++const toNew=async p=>{const b=await p.$('#new');if(b&&await b.isVisible())await b.click();else await p.evaluate(()=>document.querySelector('#new')?.click());await ready(p)};
++for(const [name,dev] of Object.entries(DEV)){const ctx=await browser.newContext({...dev});const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
++ const R=report.devices[name]={};
++ try{await p.goto(url);await ready(p);
++  R.cold=await p.evaluate(()=>{const s=document.querySelector('#ai-mode');const r=s?.getBoundingClientRect();return {value:s?.value,visible:!!r&&r.width>0&&r.height>0,options:[...(s?.options||[])].map(o=>o.textContent)}});
++  await start(p,'watch','classic','71001');await p.waitForFunction(()=>/AI /.test(document.querySelector('#match-study')?.textContent||''),null,{timeout:60000});
++  R.classicBanner=(await banner(p)).match(/AI [A-Za-z ()]+$/)?.[0]||await banner(p);
++  await p.evaluate(()=>{const s=document.querySelector('#ai-mode');s.value='enhanced';s.dispatchEvent(new Event('change'))});await p.waitForTimeout(4000);
++  R.afterMidDuelSwitch=(await banner(p)).match(/AI [A-Za-z ()]+$/)?.[0];R.classicTurn=await turn(p);
++  await toNew(p);await start(p,'watch','enhanced','71002');await p.waitForFunction(()=>/AI Enhanced/.test(document.querySelector('#match-study')?.textContent||''),null,{timeout:60000});
++  R.enhancedBanner=(await banner(p)).match(/AI [A-Za-z ()]+$/)?.[0];
++  const end=Date.now()+(+mins)*60000;let t;while(Date.now()<end){t=await turn(p);if(t.n>=+minTurn||/wins|victory|complete|draw/i.test(t.title))break;await p.waitForTimeout(1000)}
++  R.enhancedReached=t;await p.screenshot({path:`${out}/${name}-enhanced.png`});
++  await p.reload();await ready(p);R.afterReload=await p.evaluate(()=>document.querySelector('#ai-mode')?.value);
++  await start(p,'play','enhanced','71003');await p.waitForFunction(()=>/AI Enhanced/.test(document.querySelector('#match-study')?.textContent||''),null,{timeout:60000});await p.waitForTimeout(5000);
++  R.playBanner=(await banner(p)).match(/AI [A-Za-z ()]+$/)?.[0];R.playBannerHidden=await p.evaluate(()=>document.querySelector('#match-study')?.hidden);await p.screenshot({path:`${out}/${name}-play.png`});
++ }catch(e){R.error=e.message.split('\n')[0]}
++ R.errors=errors.slice(0,10);await ctx.close()}
++await browser.close();fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,1));console.log(JSON.stringify(report,null,1));
+diff --git a/tools/r36-classic-parity.mjs b/tools/r36-classic-parity.mjs
+new file mode 100644
+index 0000000..88ea4c1
+--- /dev/null
++++ b/tools/r36-classic-parity.mjs
+@@ -0,0 +1,24 @@
++// r36 AI selector: Classic parity fixture (Claude, Nov 2026; RELAY-105 "Classic parity pinned to r35.12 with parity
++// fixtures"). Plays one dev-seed duel with both seats' pilots from tree T and prints the full response-stream hash.
++// --mode classic|enhanced uses that tree's setAiMode (a tree without it, e.g. r35.12, must be run with --mode none).
++// --search N: search ON with node budget N and NO clock (shouldStop never fires), world pool on, so the run is
++// deterministic on any host; --search 0 = search off. Run once on the r35.12 tree and once on the candidate in Classic;
++// the stream hashes must be equal. Dev seeds 71001-71100 only.
++// Usage: node tools/r36-classic-parity.mjs --tree T --mode classic --a branded --b sky --seed 71001 --first 0 --search 400 [--max-turn 12]
++import fs from 'node:fs';import zlib from 'node:zlib';import path from 'node:path';import crypto from 'node:crypto';import {pathToFileURL} from 'node:url';
++const arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v};
++const T=path.resolve(arg('tree')),mode=arg('mode','classic'),seed=+arg('seed',71001),first=+arg('first',0),A=arg('a'),B=arg('b'),maxTurn=+arg('max-turn',12),nodes=+arg('search',0);
++if(!(seed>=71001&&seed<=71100))throw Error('dev seeds 71001-71100 only');
++const imp=f=>import(pathToFileURL(path.join(T,'dist',f)).href),sha=s=>crypto.createHash('sha256').update(s).digest('hex');
++if(mode!=='none'){const {setAiMode}=await imp('ai/midgame-flags.mjs');setAiMode(mode)}
++const {Duel}=await imp('duel.mjs'),{createOptimalPilots}=await imp('optimal-pilot.mjs'),{createSearchCore}=await imp('ai/engine-snapshot.mjs');
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync(T+'/dist/cards.json.gz'))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync(T+'/dist/scripts.json.gz')));
++const all=JSON.parse(fs.readFileSync(T+'/dist/decks.json')).decks.map(d=>d.banlistVariants?.['tcg-2026-10-19']?{...d,...d.banlistVariants['tcg-2026-10-19']}:d);
++const d=await Duel.create(db,scripts);
++const ps=nodes>0?[0,1].map(s=>null):createOptimalPilots({seed,searchEnabled:false});
++if(nodes>0)for(const s of [0,1]){const core=await createSearchCore(db,scripts);ps[s]=createOptimalPilots({seed,nodeBudget:nodes,searchCore:core,worldPool:true,poolKey:'parity:'+seed+':'+s,poolSize:10,seatCapBytes:40*1048576,shouldStop:()=>false})[s]}
++const stream=[];let n=0,err=null;const t0=Date.now();
++try{d.start([all.find(x=>x.id===A),all.find(x=>x.id===B)],{seed,first});
++ while(d.prompt&&!d.finished&&n<6000&&d.turn<=maxTurn){const s=d.prompt.seat,plan=ps[s].plan(d);if(!plan?.response)break;stream.push(JSON.stringify(plan.response));d.respond(plan.response);for(const p of ps)p.observe?.(plan);n++}}catch(e){err=String(e?.message||e)}
++console.log(JSON.stringify({tree:T,mode,search:nodes,seed,first,decks:[A,B],maxTurn,winner:d.finished?d.winner:null,turns:d.turn,lp:d.lp,decisions:n,errors:[...(d.errors||[]),...(err?[err]:[])],streamSha256:sha(stream.join('\n')),wallMs:Date.now()-t0}));
++try{d.stop()}catch{}process.exit(0);
+-- 
+2.43.0
+

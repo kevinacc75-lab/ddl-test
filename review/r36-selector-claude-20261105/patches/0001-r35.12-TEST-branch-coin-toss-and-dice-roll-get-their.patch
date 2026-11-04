@@ -1,0 +1,362 @@
+From b065754f3ff4e301c08c823c8ec940c93b1b064c Mon Sep 17 00:00:00 2001
+From: Seto Kaiba <seto@ddl.local>
+Date: Fri, 30 Oct 2026 01:49:41 +1100
+Subject: [PATCH 1/5] r35.12 TEST branch: coin toss and dice roll get their own
+ procedural sound effects (Kevy 30 Oct)
+
+- dist/coin-cutscene.mjs: coinSound rewritten. Coin: flick + flip whoosh + spinning flutter, metallic shimmer,
+  landing clink with two bounces and settling chatter, Heads/Tails result tail, then the call sting. Dice: rattle
+  (one pitch per die), throw whoosh, tumble/hit/clatter/bounce, one settle thunk per die, pip chime per die.
+  Hits sit on the animation keyframes. Fixed-seed variation from the toss (no Math.random). Nothing scheduled when
+  sound is off, master 0, SFX 0 or audio not running. Still routed through the scene's own gain node (RELAY-068),
+  so Skip cuts it at once. +5 dB (COIN_SFX_LEVEL 1.8) over the r35.10 cues.
+- tests/r35.12-coin-dice-sfx.test.mjs (new), tools/r35.12-render-coin-dice-sfx.mjs (WAV previews),
+  tools/r35.12-sfx-paired-duel.mjs (seed 71002 sound on/off paired duel). SOUND_CREDITS.md section.
+- Untouched: AI, duel.mjs, random.mjs, worker.mjs, coin-tap.mjs, presentation.mjs, sound-engine.mjs, app.mjs,
+  frozen gate files, RC1, labels (index.html / sw.js still r35.11). SELF-VERIFIED; for ChatGPT review.
+---
+ dist/SOUND_CREDITS.md                 |  3 +
+ dist/coin-cutscene.mjs                | 93 ++++++++++++++++++++-------
+ tests/r35.12-coin-dice-sfx.test.mjs   | 89 +++++++++++++++++++++++++
+ tools/r35.12-render-coin-dice-sfx.mjs | 32 +++++++++
+ tools/r35.12-sfx-paired-duel.mjs      | 40 ++++++++++++
+ 5 files changed, 234 insertions(+), 23 deletions(-)
+ create mode 100644 tests/r35.12-coin-dice-sfx.test.mjs
+ create mode 100644 tools/r35.12-render-coin-dice-sfx.mjs
+ create mode 100644 tools/r35.12-sfx-paired-duel.mjs
+
+diff --git a/dist/SOUND_CREDITS.md b/dist/SOUND_CREDITS.md
+index b2852e3..9dda89c 100644
+--- a/dist/SOUND_CREDITS.md
++++ b/dist/SOUND_CREDITS.md
+@@ -15,3 +15,6 @@ The duel music is now Kevy's own original tracks, made with Suno: "Pulse", "Buoy
+ 
+ ## r28 rendered sound effects (22 Oct 2026)
+ Kevy asked for a robust, loud chain sound and more dynamic, epic moves and activations. `dist/audio/sfx/` now holds 28 rendered effects (MP3, about 1.3 MB): chain links 1, 2, 3 and 4+ (each heavier, longer and louder than the last), chain lock, a resolving link, Spell / Trap / monster / Field Spell activations, Equip, Normal / Special / Fusion / Synchro / Xyz / Link summons, a boss hit, card whooshes (to hand, to Graveyard, to Deck / field), banish, destroy, material, negate, attack, impact and cost. They are original: built by `tools/r28-render-sfx.py` from oscillators, filtered noise, envelopes, a synthetic reverb and soft saturation. The chain-link and resolve sounds also layer slices of the CC0 "Heavy chain" recording (BigSoundBank 0359, see `dist/audio/CREDITS.md`). No Konami or Master Duel audio. The synth cues stay as the fallback when the files are not loaded.
++
++## r35.12 coin toss and dice roll sounds (30 Oct 2026, TEST branch, not published)
++Kevy asked for the coin toss and dice roll cutscenes to have their own sound effects. They are original procedural Web Audio synthesis in `dist/coin-cutscene.mjs` (`coinSound`), built only on the existing `tone()` and `noise()` helpers of `dist/sound-engine.mjs` (oscillators, the engine's generated noise, envelopes and filters). Coin: a thumb flick, a rising and falling flip whoosh with a spinning flutter, a metallic shimmer, a landing clink with two bounces and a settling chatter, then a short Heads (bright, rising) or Tails (darker, falling) tail and the right / wrong call sting. Dice: a rattle with one pitch per die, a throw whoosh, a tumble with a table hit, rolling clatter and a bounce, then one settle thunk per die. No samples, recordings or downloads of any kind; no new licence dependencies. `tools/r35.12-render-coin-dice-sfx.mjs` renders previews for review only.
+diff --git a/dist/coin-cutscene.mjs b/dist/coin-cutscene.mjs
+index a81645d..c045d6e 100644
+--- a/dist/coin-cutscene.mjs
++++ b/dist/coin-cutscene.mjs
+@@ -8,7 +8,8 @@
+ //    lands BEFORE the cards it decides are destroyed, and the duel waits for it like any other cutscene (Skip works);
+ //  - timings per preset (COIN_MS); Instant or cinematics off: no scene (duration 0); reduced motion: a still result card;
+ //  - original art only: the coin faces and dice are drawn here (CSS + inline SVG), no card art is copied onto them;
+-//  - sound: original synthesis through the app's sound engine (sfx bus, so the user's mute and volume apply).
++//  - sound: original synthesis through the app's sound engine (sfx bus, so the user's mute and volume apply); r35.12 gives
++//    the coin and the dice their own cues (see coinSound).
+ export const COIN_MS=Object.freeze({learning:4800,duel:3400,broadcast:2300,instant:0});
+ const SVG_NS='http://www.w3.org/2000/svg';
+ // An hourglass inside a clock ring (heads) and a crescent moon over a star field (tails): original emblems.
+@@ -37,27 +38,73 @@ export const tossLine=(t,name='')=>{if(!t)return '';const who=name?name+' · ':'
+  if(t.kind==='dice'){const r=t.results;return who+'Dice: '+r.join(' + ')+(r.length>1?' = '+r.reduce((a,b)=>a+b,0):'')}
+  const faces=t.results.map(v=>v?'Heads':'Tails').join(', '),won=tossWon(t);return who+'Coin: '+faces+(t.call?' (called '+(t.call==='heads'?'Heads':'Tails')+' · '+(won?'right call':'wrong call')+')':'')};
+ 
+-// Original coin / dice sounds, built on the app's Soundscape helpers (tone, noise, sample). Best effort, never throws.
++// Original coin / dice sounds, built on the app's Soundscape helpers (tone, noise). Best effort, never throws.
+ // RELAY-068 (ChatGPT): every coin / dice sound goes through the scene's own gain node ('dest'), so clearing the scene
+ // (Skip, next scene, reset) silences the sources it already scheduled for later, and nothing else.
+-export function coinSound(sound,kind,step,{won=null,ms=3400,dest}={}){
+- try{if(!sound?.tone)return;const s=ms/3400;/* the cues stretch a little with the scene pace */
+-  const T=(f,d,o)=>sound.tone(f,d,{...o,destination:dest}),N=(d,o)=>sound.noise(d,{...o,destination:dest});
+-  const whoosh=(at=0,g=.12)=>N(.35,{gain:g,frequency:900,end:3200,at,attack:.12});/* was the 'whoosh' sample, which cannot be routed to the scene */
+-  const ping=(f,at,d=.35,g=.06)=>T(f,d,{at,end:f*.995,type:'sine',gain:g,attack:.004});
+-  const ring=(at,g=.07)=>{ping(2093,at,.55,g);ping(3135,at,.45,g*.7);ping(4699,at,.3,g*.45);ping(6272,at,.18,g*.3)};
++// r35.12 (Seto, 30 Oct 2026; Kevy 30 Oct: "I'm happy with them but they need their own sound fx"): a distinct, original
++// sound for each scene, procedurally generated (oscillators + the engine's generated noise; no samples, no downloads).
++//  coin: a thumb flick and a rising / falling flip whoosh with a spinning flutter; a metallic shimmer that slows as it
++//        falls; a landing clink with two smaller bounces and a short settling chatter; then a result tail (Heads: a bright
++//        rising "ting-ting", Tails: a darker falling pair) and, when a call was made, the right / wrong call sting.
++//  dice: a rattle in the hand (each die its own pitch, so two dice sound like two), a throw whoosh, a tumble with a hit,
++//        rolling clatter and a bounce, then one settle thunk per die and a short pip chime per die.
++// The hits are placed on the animation's own keyframes (fractions of the scene length), so they stretch with the pace.
++// Variation comes from a small fixed-seed generator built from the toss itself: no Math.random, no engine random number,
++// so a sound can never touch a duel's randomness. Muted (sound off, master volume 0 or SFX volume 0): nothing is scheduled.
++// About +5 dB over the r35.10 cues, so the scene reads clearly over the duel music (peaks stay near the attack / impact cues).
++export const COIN_SFX_LEVEL=1.8;
++export const coinAudible=sound=>{try{return !!sound?.tone&&!!sound.noise&&sound.enabled!==false&&sound.volume!==0&&sound.levels?.sfx!==0&&sound.context?.state==='running'}catch{return false}};
++export const tossSoundSeed=t=>{let h=2166136261;for(const v of [t?.id||0,t?.seat||0,...(t?.results||[])].map(Number)){h^=(v|0)+7;h=Math.imul(h,16777619)>>>0}return h||1};
++const prng=seed=>{let x=(seed>>>0)||0x9e3779b9;return()=>{x^=x<<13;x>>>=0;x^=x>>>17;x^=x<<5;x>>>=0;return x/4294967296}};
++export function coinSound(sound,kind,step,{won=null,ms=3400,dest,face=null,count=1,seed=1,still=false}={}){
++ try{if(!coinAudible(sound))return;const s=ms/3400,R=ms/1000,r=prng(seed+({flick:1,spin:2,land:3,reveal:4,throw:5}[step]||9)),j=(a=.04)=>1+(r()-.5)*a;
++  const T=(f,d,o)=>sound.tone(f,d,{...o,gain:(o?.gain??.2)*COIN_SFX_LEVEL,destination:dest}),N=(d,o)=>sound.noise(d,{...o,gain:(o?.gain??.2)*COIN_SFX_LEVEL,destination:dest});
++  // a struck metal disc: inharmonic partials (about 1 : 2.3 : 4.2 : 6.6), the high ones dying first
++  const metal=(f,at,d,g,parts=4)=>{for(const [k,[ratio,amp,len]] of [[1,1,1],[2.32,.6,.75],[4.25,.32,.5],[6.63,.18,.35]].entries()){if(k>=parts)break;T(f*ratio,d*len,{at,end:f*ratio*.997,type:'sine',gain:g*amp,attack:.002})}};
+   if(kind==='dice'){
+-   if(step==='throw'){whoosh(0,.1);for(const [i,at] of [.05,.16,.24,.37,.46,.6,.7,.83].entries())N(.05,{gain:.12-i*.008,frequency:2600-i*120,end:900,at:at*s,attack:.002})}
+-   else if(step==='land'){N(.09,{gain:.2,frequency:1800,end:300,attack:.002});T(140,.18,{end:70,type:'triangle',gain:.18})}
+-   else if(step==='reveal'){for(const [i,f] of [784,988,1175].entries())T(f,.22,{at:i*.07,type:'triangle',gain:.08})}
++   const n=Math.max(1,Math.min(6,Number(count)||1)),per=1/Math.sqrt(n);
++   const clack=(at,d,g)=>{const p=1+d*.14;N(.024,{gain:g,frequency:(3400+d*420)*j(),end:1500+d*200,at,attack:.001});T(1050*p*j(),.035,{at,end:820*p,type:'triangle',gain:g*.42,attack:.001})};
++   if(step==='throw'){
++    // 1 the rattle in the hand: each die clicks against the others at its own pitch
++    for(let d=0;d<n;d++){let at=.01+d*.017;while(at<(still?.22:.3)*s){clack(at,d,(.075+r()*.05)*per);at+=(.028+r()*.045)*s}}
++    if(still){for(let d=0;d<n;d++){const at=.26*s+d*.04;N(.07,{gain:.16*per,frequency:900,end:240,at,attack:.002});T(150*(1-d*.05),.16,{at,end:82,type:'triangle',gain:.15*per,lowpass:900,attack:.003})}return}
++    // 2 the throw whoosh, as the dice fly in
++    N(.24*R,{gain:.1,frequency:700,end:2600,at:.1*R,attack:.16*R});
++    // 3 the tumble: a hit as each die meets the table (keyframe .34), rolling clatter, a bounce (.52) and a small hop (.58)
++    for(let d=0;d<n;d++){const off=d*(.016+r()*.012);
++     N(.05,{gain:.2*per,frequency:2200+d*260,end:500,at:.34*R+off,attack:.001});T((210-d*14)*j(),.09,{at:.34*R+off,end:110,type:'triangle',gain:.16*per,attack:.002});
++     let at=.36*R+off,g=.11;while(at<.5*R){clack(at,d,g*per);g*=.86;at+=(.035+r()*.04)*s}
++     clack(.52*R+off,d,.12*per);T((180-d*12)*j(),.06,{at:.52*R+off,end:100,type:'triangle',gain:.1*per,attack:.002})}
++   }else if(step==='land'){
++    // the settle thunk: one dull wooden knock per die, then a die rocking to rest
++    for(let d=0;d<n;d++){const at=d*(.032+r()*.02);N(.08,{gain:.18*per,frequency:880*j(),end:230,at,attack:.002});T(150*(1-d*.05)*j(),.18,{at,end:80,type:'triangle',gain:.17*per,lowpass:900,attack:.003});T(62,.16,{at,end:40,type:'sine',gain:.12*per,attack:.004});
++     for(let k=1;k<=2;k++)clack(at+.05*k+r()*.02,d,.04*per/k)}
++   }else if(step==='reveal'){for(let d=0;d<n;d++)T(784*Math.pow(1.1225,d)*j(.01),.24,{at:d*.06,type:'triangle',gain:.08*per+.02,attack:.003});if(n>1)T(1568,.32,{at:n*.06+.03,type:'sine',gain:.06,attack:.003})}
+    return}
+-  if(step==='flick'){N(.03,{gain:.18,frequency:6000,end:2500,attack:.001});ring(.01,.08);whoosh(0,.11)}
+-  else if(step==='spin'){/* the shimmer of a spinning coin: pings that slow down as it falls */let at=.05;for(let i=0;i<11;i++){ping(i%2?2637:3520,at*s,.12,.035-i*.002);at+=.07+i*.012}}
+-  else if(step==='land'){ring(0,.09);N(.04,{gain:.16,frequency:5200,end:1800,attack:.001});ring(.16*s,.04);N(.03,{gain:.08,frequency:4200,end:1600,at:.16*s,attack:.001});ring(.26*s,.02)}
+-  else if(step==='reveal'){
+-   if(won===true){for(const [i,f] of [1047,1319,1568,2093].entries())T(f,.32,{at:i*.075,type:'triangle',gain:.09});T(523,.6,{at:.3,type:'sawtooth',gain:.035,lowpass:1800});for(let i=0;i<6;i++)ping(3000+i*420,.32+i*.05,.16,.03)}
+-   else if(won===false){T(392,.4,{end:277,type:'sawtooth',gain:.06,lowpass:1200});T(311,.55,{at:.18,end:196,type:'sawtooth',gain:.06,lowpass:900});T(70,.45,{at:.1,end:40,type:'sine',gain:.22});N(.25,{gain:.1,frequency:400,end:90,at:.1})}
+-   else{for(const [i,f] of [880,1175].entries())T(f,.25,{at:i*.08,type:'triangle',gain:.08})}}
++  // coin
++  const f0=2350*j(.06);
++  if(step==='flick'){
++   N(.025,{gain:.22,frequency:7000,end:3000,attack:.001});T(1800,.02,{end:900,type:'square',gain:.05,attack:.001});/* the thumb flick */
++   metal(f0,.004,.45,.06);
++   if(!still){N(.28*R,{gain:.14,frequency:500,end:3600,at:.02,attack:.14*R});N(.24*R,{gain:.1,frequency:3600,end:650,at:.28*R,attack:.06*R})}/* the flip whoosh: up, hang, down */
++  }else if(step==='spin'){
++   // the flutter of a turning coin (keyframes .08 .. .52 of the scene), louder near the top of the throw
++   const end=.44*R;let at=0,i=0;while(at<end&&i<40){const x=at/end,env=.35+.65*Math.sin(Math.PI*Math.min(1,x*1.1));N(.016,{gain:.05*env,frequency:(2400+900*env)*j(),end:1500,at,attack:.001});at+=(.05+.02*x)*s;i++}
++   // the metallic shimmer of the spinning coin: pings that slow down and drop a little as it falls
++   at=.04*s;for(let k=0;k<10;k++){metal(f0*(1.25-k*.015)*(k%2?1.12:1),at,.14,.03-k*.0018,3);at+=(.07+k*.012)*s}
++  }else if(step==='land'){
++   // the landing clink and two smaller bounces (keyframes .56 / .62 / .68 from here), then a short settling chatter
++   for(const [k,[off,g,d]] of [[0,.1,.6],[.06,.055,.35],[.12,.03,.22]].entries()){const at=off*R;N(.02,{gain:g*1.9,frequency:6500,end:2500,at,attack:.001});metal(f0*.82*(1+k*.03),at,d,g);T(230-k*20,.06,{at,end:120,type:'triangle',gain:g*.6,attack:.002})}
++   let at=.12*R+.07,gap=.065;for(let k=0;k<7;k++){N(.012,{gain:.035*(1-k/9),frequency:5200+k*250,end:2800,at,attack:.001});metal(f0*.9*(1+k*.01),at,.05,.012,2);at+=gap;gap*=.78}
++   for(let c=1;c<Math.max(1,Math.min(4,Number(count)||1));c++){const at=.03+c*.07;N(.02,{gain:.08,frequency:6000,end:2600,at,attack:.001});metal(f0*(1+c*.09),at,.3,.04,3)}/* more coins, more clinks */
++  }else if(step==='reveal'){
++   const side=face==='heads'||face==='tails'?face:null;
++   if(side==='heads'){T(1319,.18,{type:'triangle',gain:.08,attack:.003});T(1976,.32,{at:.07,type:'triangle',gain:.085,attack:.003});metal(3950,.07,.4,.025,3)}/* Heads: bright, rising */
++   else if(side==='tails'){T(880,.2,{type:'triangle',gain:.08,attack:.003});T(587,.36,{at:.08,type:'triangle',gain:.085,lowpass:1800,attack:.003});T(147,.3,{at:.08,end:110,type:'sine',gain:.08,attack:.004})}/* Tails: darker, falling */
++   else for(const [i,f] of [880,1175].entries())T(f,.25,{at:i*.08,type:'triangle',gain:.08});
++   const v=.24;/* the call verdict follows the face tail */
++   if(won===true){for(const [i,f] of [1047,1319,1568,2093].entries())T(f,.32,{at:v+i*.075,type:'triangle',gain:.09});T(523,.6,{at:v+.3,type:'sawtooth',gain:.035,lowpass:1800});for(let i=0;i<6;i++)T(3000+i*420,.16,{at:v+.32+i*.05,end:(3000+i*420)*.995,type:'sine',gain:.03,attack:.004})}
++   else if(won===false){T(392,.4,{at:v,end:277,type:'sawtooth',gain:.06,lowpass:1200});T(311,.55,{at:v+.18,end:196,type:'sawtooth',gain:.06,lowpass:900});T(70,.45,{at:v+.1,end:40,type:'sine',gain:.22});N(.25,{gain:.1,frequency:400,end:90,at:v+.1})}}
+  }catch{/* sound is best effort */}}
+ 
+ export class CoinScene{
+@@ -85,7 +132,7 @@ export class CoinScene{
+   const sparks=this.el('div','coin-sparks');sparks.setAttribute('aria-hidden','true');
+   root.append(banner,callChip,arena,result,sparks);dialog.append(root);dialog.classList.add('coin-active');if(!dialog.open)try{dialog.showModal()}catch{dialog.setAttribute('open','')}
+   this.log(t);
+-  const land=ms*.56,reveal=ms*.62;
++  const land=ms*.56,reveal=ms*.62,sfx={ms,face:side,count:t.results.length,seed:tossSoundSeed(t)};/* r35.12: per-toss sound options (face, how many coins / dice, fixed variation seed) */
+   if(coin){
+    word.textContent=t.results.map(v=>v?'HEADS':'TAILS').join(' · ');
+    verdict.textContent=won===true?'RIGHT CALL!':won===false?'WRONG CALL':'';
+@@ -102,8 +149,8 @@ export class CoinScene{
+     this.motion(body,[{transform:'rotateX(0deg) rotateY(0deg)'},{transform:`rotateX(${end*.55}deg) rotateY(18deg)`,offset:.3},{transform:`rotateX(${end*.93}deg) rotateY(-10deg)`,offset:.5},{transform:`rotateX(${end}deg) rotateY(0deg)`,offset:.62},{transform:`rotateX(${end}deg) rotateY(0deg)`}],{duration:ms,easing:'cubic-bezier(.25,.6,.35,1)',fill:'both'});
+     this.motion(shadow,[{transform:'scale(.4)',opacity:.1},{transform:'scale(.25)',opacity:.08,offset:.28},{transform:'scale(1)',opacity:.55,offset:.52},{transform:'scale(.8)',opacity:.4,offset:.57},{transform:'scale(1)',opacity:.55,offset:.62},{transform:'scale(1)',opacity:.55}],{duration:ms,fill:'both'});
+    }
+-   coinSound(this.sound,'coin','flick',{ms,dest:this.audioOut()});if(!reduced)this.later(ms*.08,()=>coinSound(this.sound,'coin','spin',{ms,dest:this.audioOut()}));
+-   this.later(reduced?ms*.1:land,()=>coinSound(this.sound,'coin','land',{ms,dest:this.audioOut()}));
++   coinSound(this.sound,'coin','flick',{...sfx,still:reduced,dest:this.audioOut()});if(!reduced)this.later(ms*.08,()=>coinSound(this.sound,'coin','spin',{...sfx,dest:this.audioOut()}));
++   this.later(reduced?ms*.1:land,()=>coinSound(this.sound,'coin','land',{...sfx,dest:this.audioOut()}));
+   }else{
+    const total=t.results.reduce((a,b)=>a+b,0);word.textContent=t.results.join(' + ')+(t.results.length>1?' = '+total:'');verdict.textContent='';
+    const tray=this.el('div','dice-tray');arena.append(tray);
+@@ -116,7 +163,7 @@ export class CoinScene{
+      this.motion(wrap,[{transform:`translate(${-60*dir}vw,-12vh) rotate(${-40*dir}deg)`,opacity:0},{transform:`translate(${-30*dir}vw,-16vh) rotate(${-20*dir}deg)`,opacity:1,offset:.12},{transform:`translate(${6*dir}vw,0) rotate(${8*dir}deg)`,offset:.34,easing:'ease-in'},{transform:`translate(${2*dir}vw,-5vh) rotate(${3*dir}deg)`,offset:.42,easing:'ease-out'},{transform:'translate(0,0) rotate(0deg)',offset:.52},{transform:'translate(0,-1vh)',offset:.55},{transform:'translate(0,0)',offset:.58},{transform:'translate(0,0) scale(1.08)',offset:.7},{transform:'translate(0,0) scale(1)'}],{duration:ms,easing:'ease-out',fill:'both'});
+      this.motion(cube,[{transform:'rotateX(0deg) rotateY(0deg)'},{transform:`rotateX(${spinX}deg) rotateY(${spinY}deg)`,offset:.45},{transform:final,offset:.56},{transform:final}],{duration:ms,easing:'cubic-bezier(.3,.55,.4,1)',fill:'both'})}
+    }
+-   coinSound(this.sound,'dice','throw',{ms,dest:this.audioOut()});this.later(reduced?ms*.1:land*.95,()=>coinSound(this.sound,'dice','land',{ms,dest:this.audioOut()}));
++   coinSound(this.sound,'dice','throw',{...sfx,still:reduced,dest:this.audioOut()});this.later(reduced?ms*.1:land*.95,()=>coinSound(this.sound,'dice','land',{...sfx,dest:this.audioOut()}));
+   }
+   this.motion(banner,[{opacity:0,transform:'translateY(-24px)'},{opacity:1,transform:'translateY(0)'}],{duration:Math.min(420,ms*.14),easing:'ease-out',fill:'both'});
+   this.motion(callChip,[{opacity:0,transform:'scale(.8)'},{opacity:1,transform:'scale(1)'}],{delay:ms*.05,duration:Math.min(360,ms*.12),easing:'ease-out',fill:'both'});
+@@ -124,6 +171,6 @@ export class CoinScene{
+   this.motion(glow,[{opacity:0},{opacity:0,offset:land/ms},{opacity:.9,offset:Math.min(.95,land/ms+.05)},{opacity:.45}],{duration:ms,fill:'both'});
+   if(!reduced&&won!==false){for(let i=0;i<14;i++){const sp=this.el('i','coin-spark'),a=i/14*Math.PI*2,d=22+(i%3)*9;sparks.append(sp);this.motion(sp,[{transform:'translate(0,0) scale(0)',opacity:0},{transform:'translate(0,0) scale(0)',opacity:0,offset:reveal/ms},{transform:`translate(${Math.cos(a)*d}vmin,${Math.sin(a)*d}vmin) scale(1)`,opacity:1,offset:Math.min(.97,reveal/ms+.12)},{transform:`translate(${Math.cos(a)*d*1.2}vmin,${Math.sin(a)*d*1.2+6}vmin) scale(.4)`,opacity:0}],{duration:ms,easing:'ease-out',fill:'both'})}}
+   if(!reduced&&won===false)this.motion(root,[{transform:'translate(0,0)'},{transform:'translate(0,0)',offset:reveal/ms},{transform:'translate(-10px,4px)',offset:Math.min(.96,reveal/ms+.02)},{transform:'translate(9px,-3px)',offset:Math.min(.97,reveal/ms+.04)},{transform:'translate(-5px,2px)',offset:Math.min(.98,reveal/ms+.06)},{transform:'translate(0,0)',offset:Math.min(.99,reveal/ms+.08)},{transform:'translate(0,0)'}],{duration:ms,fill:'both'});
+-  this.later(reveal,()=>{root.dataset.revealed='true';coinSound(this.sound,t.kind,'reveal',{won,ms,dest:this.audioOut()})});
++  this.later(reveal,()=>{root.dataset.revealed='true';coinSound(this.sound,t.kind,'reveal',{...sfx,won,dest:this.audioOut()})});
+  }
+ }
+diff --git a/tests/r35.12-coin-dice-sfx.test.mjs b/tests/r35.12-coin-dice-sfx.test.mjs
+new file mode 100644
+index 0000000..2cc16a5
+--- /dev/null
++++ b/tests/r35.12-coin-dice-sfx.test.mjs
+@@ -0,0 +1,89 @@
++// r35.12 coin / dice sound effects (Seto, 30 Oct 2026; Kevy 30 Oct). SELF-VERIFIED (builder = verifier), NOT independent.
++// The REAL Soundscape tone/noise code and the REAL CoinScene.show() on a recording fake AudioContext and a small fake DOM:
++//  1 the coin scene fires its own cues (flick, spin, land, reveal) and the dice scene its own (throw, land, reveal), every
++//    source through the scene's own gain node into the SFX bus; coin and dice, heads and tails are audibly different;
++//  2 more dice / coins give more, differently pitched hits (two dice sound like two);
++//  3 muted (sound off, master 0 or SFX 0): the scene still shows but NOTHING is scheduled; muting mid-scene stops later cues;
++//  4 Skip (scene.clear(), what every Skip route calls): the scene node is cut at once, no pending cue fires afterwards, and
++//    an unrelated sound is untouched; reduced motion keeps short cues only;
++//  5 no Math.random and fixed variation: the same toss gives the same schedule twice; sounds never touch randomness;
++//  6 settings: the presentation only calls show() when cinematics are on, skip cut-ins is off and the pace is not Instant
++//    (presentation.mjs, sound-engine.mjs, app.mjs, worker.mjs and coin-tap.mjs byte-identical to r35.11).
++import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
++import {Soundscape} from '../dist/sound-engine.mjs';
++import {CoinScene,coinSound,coinAudible,tossSoundSeed,COIN_MS} from '../dist/coin-cutscene.mjs';
++let id=0,nodes=[];
++function node(kind){const n={id:++id,kind,out:[],disconnected:false,started:null,stopped:null,freq:null,connect(t){this.out.push(t);return t},disconnect(){this.disconnected=true;this.out=[]},
++ gain:{value:1,setValueAtTime(v){this.value=v},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){},setTargetAtTime(){},cancelScheduledValues(){}},
++ frequency:{setValueAtTime(v){n.freq??=v},exponentialRampToValueAtTime(){},linearRampToValueAtTime(){},value:0},detune:{value:0},pan:{value:0},Q:{value:0},type:'',buffer:null,playbackRate:{value:1},
++ start(t){this.started=t},stop(t){this.stopped=t},onended:null};nodes.push(n);return n}
++const ctx={state:'running',currentTime:10,createOscillator:()=>node('osc'),createGain:()=>node('gain'),createBiquadFilter:()=>node('filter'),createBufferSource:()=>node('buffer'),createStereoPanner:()=>node('panner')};
++const newSound=()=>{const s=new Soundscape({enabled:true});s.context=ctx;s.buses={sfx:node('bus-sfx'),music:node('bus-music'),ui:node('bus-ui'),master:node('bus-master'),voice:node('bus-voice')};s.noiseBuffer={};return s};
++const reaches=(n,target,seen=new Set())=>{if(n===target)return true;if(seen.has(n))return false;seen.add(n);return n.out.some(x=>reaches(x,target,seen))};
++const sources=from=>nodes.slice(from).filter(n=>['osc','buffer'].includes(n.kind));
++// a small fake DOM, enough for show()
++class El{constructor(tag){this.tag=tag;this.children=[];this.dataset={};this.style={setProperty(){}};this.attrs={};this.classList={set:new Set(),add(c){this.set.add(c)},remove(c){this.set.delete(c)},contains(c){return this.set.has(c)}};this.isConnected=true;this.open=true}
++ append(...c){this.children.push(...c)}setAttribute(k,v){this.attrs[k]=v}remove(){this.isConnected=false}set innerHTML(v){this._html=v}get innerHTML(){return this._html||''}showModal(){}}
++function world(sound){const dialog=new El('dialog'),body=new El('body');const timers=[];
++ const doc={body,createElement:t=>new El(t),getElementById:id=>id==='summon-scene'?dialog:null};
++ const scene=new CoinScene({document:doc,db:()=>({40235813:{name:'Dark Time Wizard'},76630812:{name:'Graceful & Skull Dice'}}),sound,animate:()=>({cancel(){}}),
++  setTimer:(f,ms)=>{const t={f,ms,done:false};timers.push(t);return t},clearTimer:t=>{if(t)t.done=true}});
++ const flush=()=>{for(const t of [...timers].sort((a,b)=>a.ms-b.ms))if(!t.done){t.done=true;t.f()}};
++ return {scene,dialog,timers,flush}}
++const toss=(kind,results,call=null,i=1)=>({type:'coinToss',id:9,player:0,code:kind==='coin'?40235813:76630812,toss:{id:i,kind,seat:0,results,call,code:kind==='coin'?40235813:76630812,afterEventId:9}});
++const freqs=list=>list.filter(n=>n.kind==='osc').map(n=>Math.round(n.freq)).sort((a,b)=>a-b);
++// play a whole scene, return the sources it made
++function run(sound,e,{ms=COIN_MS.duel,reduced=false}={}){const w=world(sound),n0=nodes.length;w.scene.show(e,ms,{reduced});const first=sources(n0).length;w.flush();const all=sources(n0);const out=w.scene.out;return {w,all,first,out}}
++const report={};
++// 1 coin and dice fire their own cues, all through the scene node
++{const s=newSound();
++ const heads=run(s,toss('coin',[true],'heads'));const tails=run(s,toss('coin',[false],'heads'));const dice1=run(s,toss('dice',[4]));
++ for(const [name,r] of Object.entries({heads,tails,dice1})){assert.ok(r.first>0,name+': sound at the start of the scene');assert.ok(r.all.length>r.first,name+': later cues fire');
++  assert.ok(r.out&&reaches(r.out,s.buses.sfx),name+': scene node feeds the SFX bus');for(const src of r.all)assert.ok(reaches(src,r.out),name+': every source goes through the scene node');
++  const late=r.all.filter(n=>n.started>ctx.currentTime+1);assert.ok(late.length>=2,name+': cues spread over the scene ('+late.length+' after 1 s)');report[name]=r.all.length}
++ // coin: the step cues are each present and distinct from the dice
++ const cue=(kind,step,o={})=>{const n0=nodes.length,w=world(s);coinSound(s,kind,step,{ms:3400,dest:w.scene.audioOut(),seed:7,...o});return sources(n0)};
++ const steps={};for(const [k,st] of [['coin','flick'],['coin','spin'],['coin','land'],['dice','throw'],['dice','land'],['dice','reveal']]){steps[k+'.'+st]=cue(k,st);assert.ok(steps[k+'.'+st].length>0,k+' '+st+' makes sound')}
++ const firstHit=list=>{const o=list.filter(n=>n.kind==='osc'),t0=Math.min(...o.map(n=>n.started));return o.filter(n=>n.started-t0<.003)};
++ assert.ok(firstHit(steps['coin.land']).filter(n=>n.freq>1500).length>=3,'the coin lands with a metallic clink (3+ high partials in the first hit)');
++ const coinMetal=freqs(steps['coin.land']).filter(f=>f>1500).length,diceMetal=freqs(steps['dice.land']).filter(f=>f>1500).length;
++ assert.ok(coinMetal>=6,'coin landing is a metallic clink (high partials: '+coinMetal+')');assert.equal(diceMetal,0,'dice settle is a low thunk (no high partials)');
++ assert.ok(Math.min(...freqs(steps['dice.land']))<100,'dice settle has a low body');
++ const rH=cue('coin','reveal',{face:'heads'}),rT=cue('coin','reveal',{face:'tails'});assert.notDeepEqual(freqs(rH),freqs(rT),'heads and tails tails differ');
++ assert.ok(Math.max(...freqs(rH))>Math.max(...freqs(rT)),'heads tail is the brighter one');assert.ok(Math.min(...freqs(rT))<200,'tails tail has a low note');
++ const rW=cue('coin','reveal',{face:'heads',won:true}),rL=cue('coin','reveal',{face:'heads',won:false});assert.ok(rW.length>rH.length&&rL.length>rH.length,'a call adds a right / wrong sting after the face tail');assert.notDeepEqual(freqs(rW),freqs(rL));
++ report.steps=Object.fromEntries(Object.entries(steps).map(([k,v])=>[k,v.length]))}
++// 2 multiples
++{const s=newSound();const one=run(s,toss('dice',[3])),two=run(s,toss('dice',[3,5])),coin1=run(s,toss('coin',[true])),coin3=run(s,toss('coin',[true,false,true]));
++ assert.ok(two.all.length>one.all.length*1.6,'two dice: about twice the hits ('+one.all.length+' -> '+two.all.length+')');
++ const thunks=r=>new Set(r.all.filter(n=>n.kind==='osc'&&n.freq<200&&n.freq>100).map(n=>Math.round(n.freq/4))).size;assert.ok(thunks(two)>thunks(one),'each die has its own pitch');
++ assert.ok(coin3.all.length>coin1.all.length,'more coins, more clinks');report.multiples={dice1:one.all.length,dice2:two.all.length,coin1:coin1.all.length,coin3:coin3.all.length}}
++// 3 muted
++for(const [name,mute] of [['sound off',s=>{s.enabled=false}],['master volume 0',s=>s.setBus('master',0)],['SFX volume 0',s=>s.setBus('sfx',0)],['audio not running',s=>{s.context={...ctx,state:'suspended'}}]]){
++ const s=newSound();mute(s);assert.equal(coinAudible(s),false,name+': not audible');
++ for(const e of [toss('coin',[true],'heads'),toss('dice',[2,6])]){const r=run(s,e);assert.equal(r.all.length,0,name+': '+e.toss.kind+' schedules nothing');assert.equal(r.w.scene.node?.dataset.kind,e.toss.kind,name+': the scene itself still shows')}}
++{const s=newSound(),w=world(s),n0=nodes.length;w.scene.show(toss('coin',[true],'heads'),3400,{});const before=sources(n0).length;assert.ok(before>0);s.enabled=false;w.flush();assert.equal(sources(n0).length,before,'muted mid-scene: no later cue is scheduled')}
++// 4 Skip
++for(const e of [toss('coin',[false],'heads'),toss('dice',[1,6])]){const s=newSound(),w=world(s),n0=nodes.length;w.scene.show(e,COIN_MS.learning,{});
++ const started=sources(n0),out=w.scene.out;assert.ok(started.length>0);const u0=nodes.length;s.tone(440,2,{at:1.5});const unrelated=sources(u0)[0];
++ w.scene.clear();/* Skip */assert.equal(out.gain.value,0,'Skip: scene gain 0 at once');assert.equal(out.disconnected,true,'Skip: scene node disconnected');
++ for(const src of started)assert.ok(!reaches(src,s.buses.sfx),'Skip: nothing already scheduled reaches the bus');
++ assert.ok(w.timers.every(t=>t.done),'Skip: every pending cue timer is cleared');const n1=nodes.length;w.flush();assert.equal(sources(n1).length,0,'Skip: no cue fires afterwards');
++ assert.ok(reaches(unrelated,s.buses.sfx),'Skip: an unrelated sound still plays')}
++{const s=newSound();const full=run(s,toss('dice',[2,2])),still=run(s,toss('dice',[2,2]),{reduced:true});assert.ok(still.all.length>0&&still.all.length<full.all.length,'reduced motion: short cues only');
++ assert.ok(Math.max(...still.all.map(n=>n.started))-ctx.currentTime<COIN_MS.duel/1000*.6,'reduced motion: cues end with the still scene')}
++// 5 no Math.random, fixed variation
++{const s=newSound(),orig=Math.random;let calls=0;Math.random=()=>{calls++;return orig()};
++ try{const sched=e=>{const r=run(s,e);return r.all.map(n=>[n.kind,Math.round((n.freq||0)*1000),Math.round((n.started-ctx.currentTime)*1e6)])};
++  for(const e of [toss('coin',[true],'heads'),toss('coin',[false],null),toss('dice',[6,1,3])])assert.deepEqual(sched(e),sched(e),'same toss, same sound');
++  assert.equal(calls,0,'the coin / dice sounds never call Math.random')}finally{Math.random=orig}
++ assert.notEqual(tossSoundSeed({id:1,results:[true]}),tossSoundSeed({id:1,results:[false]}));report.mathRandomCalls=0}
++// 6 settings: show() is gated by the presentation (unchanged), and the shared engine files are unchanged from r35.11
++{const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
++ const R3511={'dist/presentation.mjs':'a6088b5a44f7105bb2997874c712d34227ccc5bb87dc1060575aa56912d5c67b','dist/sound-engine.mjs':'8d115002f5a19018a5f5219e4c1ba82f721b2f62d8a538bbb20ed0a535c9b1cb','dist/app.mjs':'831386c3c97f4ded44b0dc483f47decde970f9dd6bf519ae87b9dc9958c64212','dist/worker.mjs':'12f0070b744ed1e0a3fcc3dbd27b828cf44f26282908ccffb684ce46845b2560','dist/coin-tap.mjs':'fe65f93c964826df7ad853b855ef32417ad69538383816ae8d51551a3cd69cf8','dist/duel.mjs':'f0a0718445dc4a8b47cc1349e0f6283fc1fc9d7a25f3b35f107cd68665fa1cb9','dist/random.mjs':'229ba5d84d4981d40bf940694cf5abd3fbd319aa57fbed29ff90b6a55511457f'};
++ for(const [f,h] of Object.entries(R3511))assert.equal(sha(f),h,f+' byte-identical to r35.11');
++ const pres=fs.readFileSync('dist/presentation.mjs','utf8');
++ assert.ok(pres.includes("coinVisual=()=>enabled&&!skipCutins&&!!COIN_MS[preset]"),'scene (and its sound) only with cinematics on, skip cut-ins off, a non-Instant pace');
++ assert.ok(pres.includes("if(duration>0&&coinVisual()){coinScene.show("),'show() is behind coinVisual()');assert.equal(COIN_MS.instant,0);
++ assert.ok(/function clearStage\(closeVictory=false\)\{[^\n]*coinScene\.clear\(\)/.test(pres),'every Skip route (clearStage) clears the coin scene');}
++console.log(JSON.stringify({test:'r35.12-coin-dice-sfx',pass:true,node:process.version,report}));
+diff --git a/tools/r35.12-render-coin-dice-sfx.mjs b/tools/r35.12-render-coin-dice-sfx.mjs
+new file mode 100644
+index 0000000..a04a87a
+--- /dev/null
++++ b/tools/r35.12-render-coin-dice-sfx.mjs
+@@ -0,0 +1,32 @@
++// r35.12 (Seto, 30 Oct 2026): render the coin / dice scene sounds to WAV previews for review (tooling only; the game never
++// loads this). Runs the REAL CoinScene.show() timeline and coinSound() cues against a small offline renderer that follows
++// the Soundscape tone() / noise() envelopes (exponential frequency glide, fast attack, exponential decay; band-passed noise).
++// Levels: SFX bus 0.8 x master 0.5 (the defaults), no compressor. Usage: node tools/r35.12-render-coin-dice-sfx.mjs <outdir> [dist]
++import fs from 'node:fs';import path from 'node:path';import {pathToFileURL} from 'node:url';
++const out=process.argv[2]||'.',dist=process.argv[3]||new URL('../dist/',import.meta.url).pathname;
++const {CoinScene,COIN_MS}=await import(pathToFileURL(path.join(dist,'coin-cutscene.mjs')).href);
++const SR=44100;
++function renderer(seconds){const buf=new Float32Array(Math.ceil(seconds*SR));let seed=12345;const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff*2-1};
++ const env=(i,t0,dur,peak,attack,lin)=>{const t=i/SR-t0;if(t<0||t>dur)return 0;const a=Math.max(.002,attack);if(t<a)return lin?peak*t/a:.0001*Math.pow(peak/.0001,t/a);return peak*Math.pow(.0001/peak,(t-a)/Math.max(1e-4,dur-a))};
++ const sound={enabled:true,volume:.5,levels:{sfx:.8},context:{state:'running',currentTime:0},
++  tone(f,d,{at=0,end=f,type='sine',gain=.2,attack=.015,lowpass}={}){const t0=at,i0=Math.floor(t0*SR),n=Math.ceil((d+.03)*SR);let ph=0,lp=0;const k=lowpass?1-Math.exp(-2*Math.PI*lowpass/SR):1,a=Math.min(attack,d*.5);
++   for(let i=i0;i<i0+n&&i<buf.length;i++){const t=(i-i0)/SR,fr=Math.max(20,f)*Math.pow(Math.max(20,end)/Math.max(20,f),Math.min(1,t/d));ph+=fr/SR;const x=ph%1;
++    let v=type==='square'?(x<.5?1:-1):type==='sawtooth'?2*x-1:type==='triangle'?1-4*Math.abs(x-.5):Math.sin(2*Math.PI*x);lp+=k*(v-lp);buf[i]+=lp*env(i,t0,d,Math.max(.0002,gain),a,false)}},
++  noise(d,{gain=.2,frequency=4000,at=0,end=180,attack=.015}={}){const i0=Math.floor(at*SR),n=Math.ceil((d+.02)*SR);let b1=0,b2=0,y1=0,y2=0;const a=Math.min(attack,d*.5);
++   for(let i=i0;i<i0+n&&i<buf.length;i++){const t=(i-i0)/SR,fc=Math.max(40,frequency)*Math.pow(Math.max(40,end)/Math.max(40,frequency),Math.min(1,t/d)),w=2*Math.PI*Math.min(fc,SR*.45)/SR,al=Math.sin(w)/2,a0=1+al;
++    const x=rnd(),y=(al*x-al*b2-(-2*Math.cos(w))*y1-(1-al)*y2)/a0;b2=b1;b1=x;y2=y1;y1=y;buf[i]+=y*env(i,at,d,gain,a,true)}return {}}};
++ return {sound,buf}}
++class El{constructor(){this.children=[];this.dataset={};this.style={setProperty(){}};this.classList={add(){},remove(){}};this.isConnected=true;this.open=true}append(){}setAttribute(){}remove(){}set innerHTML(v){}showModal(){}}
++function scene(name,t,{ms=COIN_MS.duel,reduced=false}={}){const len=ms/1000+1.6,{sound,buf}=renderer(len);const timers=[];
++ const sc=new CoinScene({document:{body:new El(),createElement:()=>new El(),getElementById:id=>id==='summon-scene'?new El():null},db:()=>({}),sound,animate:()=>({cancel(){}}),setTimer:(f,ms)=>{timers.push({f,ms});return 0},clearTimer:()=>{}});
++ sound.tone=sound.tone.bind(sound);sound.noise=sound.noise.bind(sound);
++ const sounds=sound;const T=sounds.tone,N=sounds.noise;let now=0;sounds.tone=(f,d,o={})=>T(f,d,{...o,at:now+(o.at||0)});sounds.noise=(d,o={})=>N(d,{...o,at:now+(o.at||0)});
++ sc.audioOut=()=>undefined;sc.show({type:'coinToss',id:1,player:0,code:0,toss:{id:1,seat:0,code:0,afterEventId:1,...t}},ms,{reduced});
++ for(const x of timers.sort((a,b)=>a.ms-b.ms)){now=x.ms/1000;x.f()}
++ let peak=0;for(const v of buf)peak=Math.max(peak,Math.abs(v*.4));const pcm=Buffer.alloc(44+buf.length*2);pcm.write('RIFF',0);pcm.writeUInt32LE(36+buf.length*2,4);pcm.write('WAVEfmt ',8);pcm.writeUInt32LE(16,16);pcm.writeUInt16LE(1,20);pcm.writeUInt16LE(1,22);pcm.writeUInt32LE(SR,24);pcm.writeUInt32LE(SR*2,28);pcm.writeUInt16LE(2,32);pcm.writeUInt16LE(16,34);pcm.write('data',36);pcm.writeUInt32LE(buf.length*2,40);
++ for(let i=0;i<buf.length;i++)pcm.writeInt16LE(Math.max(-32768,Math.min(32767,Math.round(buf[i]*.4*32767))),44+i*2);
++ fs.writeFileSync(path.join(out,name+'.wav'),pcm);return {name,seconds:+len.toFixed(2),peak:+peak.toFixed(3),clipped:peak>1}}
++fs.mkdirSync(out,{recursive:true});
++const rows=[scene('coin-heads-right-call',{kind:'coin',results:[true],call:'heads'}),scene('coin-tails-wrong-call',{kind:'coin',results:[false],call:'heads'}),scene('coin-heads-no-call',{kind:'coin',results:[true],call:null}),scene('coin-tails-no-call',{kind:'coin',results:[false],call:null}),
++ scene('dice-one-die',{kind:'dice',results:[4]}),scene('dice-two-dice',{kind:'dice',results:[3,5]}),scene('coin-heads-learning-pace',{kind:'coin',results:[true],call:'heads'},{ms:COIN_MS.learning}),scene('dice-two-dice-reduced-motion',{kind:'dice',results:[2,6]},{reduced:true})];
++console.log(JSON.stringify(rows));
+diff --git a/tools/r35.12-sfx-paired-duel.mjs b/tools/r35.12-sfx-paired-duel.mjs
+new file mode 100644
+index 0000000..01aaa48
+--- /dev/null
++++ b/tools/r35.12-sfx-paired-duel.mjs
+@@ -0,0 +1,40 @@
++// r35.12 (Seto, 30 Oct 2026): paired duel proof that the coin / dice sounds change nothing in a duel. Dev seed only.
++// One full AI-vs-AI duel (Time Typhoon vs Branded, dev seed 71002, first 0, node budget 400, NO time deadline so the
++// search is deterministic), with the on-screen CoinTap armed. After every decision each captured toss is played through
++// the REAL CoinScene.show() and coinSound() with the REAL Soundscape on a recording fake AudioContext, in the SAME process
++// as the duel (stricter than the browser, where the duel runs in a worker), and every cue timer is fired.
++//   --sound on : sound enabled, cues scheduled (counted);   --sound off : sound muted (enabled=false), nothing scheduled.
++// Output: one JSON row with sha256 digests of the response history, the duel log, LP, winner, turns and the tosses.
++// Usage: DDL_TREE=<tree with dist/> node tools/r35.12-sfx-paired-duel.mjs --sound on|off --out <file.jsonl> [--seed 71002]
++import fs from 'node:fs';import zlib from 'node:zlib';import path from 'node:path';import crypto from 'node:crypto';import {pathToFileURL} from 'node:url';
++const T=process.env.DDL_TREE,arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v};
++const seed=+arg('seed',71002),first=+arg('first',0),A=arg('a','dtw'),B=arg('b','branded'),mode=arg('sound','on'),out=arg('out');
++if(!['on','off'].includes(mode))throw Error('--sound on|off');
++const imp=f=>import(pathToFileURL(path.join(T,'dist',f)).href);
++const {Duel,M}=await imp('duel.mjs'),{CoinTap}=await imp('coin-tap.mjs'),{createOptimalPilots}=await imp('optimal-pilot.mjs'),{createSearchCore}=await imp('ai/engine-snapshot.mjs');
++const {Soundscape}=await imp('sound-engine.mjs'),{CoinScene,COIN_MS}=await imp('coin-cutscene.mjs');
++const sha=s=>crypto.createHash('sha256').update(s).digest('hex');
++// sound side
++let made=0;const node=kind=>{if(kind==='osc'||kind==='buffer')made++;const n={kind,connect(t){return t},disconnect(){},gain:{value:1,setValueAtTime(v){this.value=v},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){},setTargetAtTime(){},cancelScheduledValues(){}},
++ frequency:{setValueAtTime(){},exponentialRampToValueAtTime(){},linearRampToValueAtTime(){}},detune:{value:0},pan:{value:0},start(){},stop(){},onended:null};return n};
++const ctx={state:'running',currentTime:1,createOscillator:()=>node('osc'),createGain:()=>node('gain'),createBiquadFilter:()=>node('filter'),createBufferSource:()=>node('buffer'),createStereoPanner:()=>node('panner')};
++const sound=new Soundscape({enabled:mode==='on'});sound.context=ctx;sound.buses={sfx:node('b'),music:node('b'),ui:node('b'),master:node('b'),voice:node('b')};sound.noiseBuffer={};
++class El{constructor(){this.dataset={};this.style={setProperty(){}};this.classList={add(){},remove(){}};this.isConnected=true;this.open=true}append(){}setAttribute(){}remove(){}set innerHTML(v){}showModal(){}}
++const timers=[];const scene=new CoinScene({document:{body:new El(),createElement:()=>new El(),getElementById:id=>id==='summon-scene'?new El():null},db:()=>({}),sound,animate:()=>({cancel(){}}),setTimer:(f,ms)=>{const t={f,ms,done:false};timers.push(t);return t},clearTimer:t=>{if(t)t.done=true}});
++let scenes=0;const play=t=>{scene.show({type:'coinToss',id:t.afterEventId,player:t.seat,code:t.code,toss:t},COIN_MS.duel,{});for(const x of timers.splice(0).sort((a,b)=>a.ms-b.ms))if(!x.done){x.done=true;x.f()}scene.clear();scenes++};
++// duel side (as tools/r36-coin-frequency, minus the time deadline)
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync(T+'/dist/cards.json.gz'))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync(T+'/dist/scripts.json.gz')));
++const all=JSON.parse(fs.readFileSync(T+'/dist/decks.json')).decks.map(d=>d.banlistVariants?.['tcg-2026-10-19']?{...d,...d.banlistVariants['tcg-2026-10-19']}:d);
++const core=await createSearchCore(db,scripts);
++const pilots=createOptimalPilots({seed,nodeBudget:400,searchCore:core,worldPool:true,poolKey:'sfx:'+seed,poolSize:10,seatCapBytes:40*1048576,shouldStop:()=>false});
++const d=await Duel.create(db,scripts);const tap=new CoinTap({coinType:M.TOSS_COIN,diceType:M.TOSS_DICE,optionType:M.SELECT_OPTION});tap.install(d);
++const t0=Date.now();d.start([all.find(x=>x.id===A),all.find(x=>x.id===B)],{seed,first});tap.arm();
++const tosses=[];let n=0;
++while(d.prompt&&!d.finished&&n<5000&&d.turn<=30){const m=d.prompt;const plan=pilots[m.seat].plan(d);if(!plan?.response)break;d.respond(plan.response);for(const p of pilots)p.observe?.(plan);n++;
++ for(const t of tap.drain().tosses){tosses.push({turn:d.turn,...t});play(t)}}
++const responses=JSON.stringify(d.responseHistory),log=d.log.map(x=>x.text).join('\n'),lp=[...d.lp],tossJson=JSON.stringify(tosses);
++const row={seed,first,decks:[A,B],sound:mode,soundEnabled:sound.enabled,winner:d.finished?d.winner:null,finished:!!d.finished,turns:d.turn,decisions:n,lp,eventSeq:d.eventSeq,
++ tosses:tosses.length,coin:tosses.filter(t=>t.kind==='coin').length,dice:tosses.filter(t=>t.kind==='dice').length,scenesPlayed:scenes,soundSourcesScheduled:made,
++ sha:{responses:sha(responses),log:sha(log),lp:sha(JSON.stringify(lp)),tosses:sha(tossJson),duel:sha([responses,log,JSON.stringify(lp),String(d.winner),String(d.turn),tossJson].join('\n#\n'))},
++ node:process.version,sec:Math.round((Date.now()-t0)/1000)};
++fs.appendFileSync(out,JSON.stringify(row)+'\n');console.log(JSON.stringify(row));d.stop();process.exit(0);
+-- 
+2.43.0
+

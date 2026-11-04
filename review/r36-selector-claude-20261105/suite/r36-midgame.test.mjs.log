@@ -1,0 +1,29 @@
+ok 1 Luna T7 regression: flags off the book step is played over the projected lethal (r35.11 behaviour): Lunalight Gold Leo 0 / Opening book LU-01
+ok 2 Luna T7 Arm B: a found lethal beats the book -> Battle Phase (Pursue projected lethal)
+ok 3 Arm B lethal also skips search (plan-level)
+ok 4 Turn 1-2 unchanged: the same board on turn 2 keeps the book under Arm B
+ok 5 ChatGPT MG-01 control: with no closing line (opp at 8000 LP) the book starter stays eligible under Arm B
+ok 6 RELAY-075 B2 / MG-04: Arm B (and C) keep the r35.11 book follow-up in Main Phase 2 from turn 3 (no blanket MP2 suppression)
+ok 7 RELAY-075 B2: Arm C no longer blocks the Main Phase 2 book while we control a monster (MG-04 follow-up restored)
+ok 8 Arm C: from turn 3 a book step is advice for search (not trusted); turn 1-2 still trusted
+ok 9 Arm C: Luna target (2 attackers, top >= 2500) met with Cat Dancer + Sabre Dancer; close-out options include the Battle Phase
+ok 10 Arm B: ready attackers with a damaging line -> hold Extra Deck summons and field-material Fusion; Branded Fusion (Deck material) not held
+ok 11 Arm B hold is off on turn 2, in Main Phase 2 and with flags off
+ok 12 Arm A: a visible lethal-now board scores above the same board without it; LP weight /6
+ok 13 Arm A terminal dominance (pre-registration H): win > every non-final score > loss; sooner win > later; draw = 0
+ok 14 Branded T5 Arm C: board target (2 attackers, top >= 2500) met -> Luluwalilith (Extra Deck) held until Main Phase 2
+ok 15 Branded T5 Arm C: Mirrorjade / Super Polymerization are close-out cards, never held
+ok 16 Branded T5 Arm B alone: no damaging line vs REBD Exceed 3400, so no ready-attacker hold (Arm B does not claim this fix)
+ok 17 Arm B (RELAY-075 B1, Alexis): Forbidden Droplet does NOT pick on REBD Exceed - Exceed is "Unaffected by your opponent's activated monster and Spell effects" (Konami TCG text); the r36 v1 delete-the-blocker model wrongly claimed lethal here
+ok 18 Branded T5 flags off: no hold
+ok 19 RELAY-075 B2: the zero-damage direct-attack tie-break is policy Z (held for review): B alone passes with a 0-ATK attacker, B+Z attacks, off passes
+ok 20 RELAY-075 B2: the ahead/trade penalty is policy T (held for review): ahead 2000+2000 vs one 2000 at 8000 LP - B alone does not make the even trade (not lethal), B+T trades then attacks direct
+ok 21 even trade when ahead opens lethal: 2000+2000 vs one 2000 at 2000 LP -> trade then direct (off: no attack)
+ok 22 a losing blocker trade is kept only if it reaches lethal: 1v1 even trade, not ahead -> no line
+ok 23 Arm A judge is off on turns 1-2 (incl. the turn-2 Battle Phase), on from turn 3, own turn only (active===seat)
+ok 24 ChatGPT MG-05: A 3000 + B 2000 vs X 3000 at 2000 LP -> A trades with X, B attacks directly (lethal); off: rejected
+ok 25 negative-gain blocker trade kept only because it reaches lethal: A 4000 + B 2000 vs X 4000 at 2000 LP (trade gain < 0 even when ahead)
+ok 26 ChatGPT MG-06: survival check kept -- no trade that takes own LP to 0; zero-damage attacks into monsters are not forced
+ok 27 turn 2 planner unchanged under Arm B
+ok 28 every close-out card name exists in that deck (main/extra/side, 19 Oct TCG list)
+r36-midgame tests: 28 passed

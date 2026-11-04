@@ -1,0 +1,39 @@
+From bf5fa1f0528f6cfd31e72d698b504b43562092a6 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 05:46:23 +1100
+Subject: [PATCH 5/5] r36 tools: single-device long Enhanced browser run
+ (Watch) with turn samples and page errors
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tools/r36-enhanced-long-browser.mjs | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+ create mode 100644 tools/r36-enhanced-long-browser.mjs
+
+diff --git a/tools/r36-enhanced-long-browser.mjs b/tools/r36-enhanced-long-browser.mjs
+new file mode 100644
+index 0000000..ed64e30
+--- /dev/null
++++ b/tools/r36-enhanced-long-browser.mjs
+@@ -0,0 +1,17 @@
++// r36 Enhanced long browser run (Claude, Nov 2026). One desktop Watch duel with the AI selector on Enhanced (experimental),
++// run until turn >= minTurn, the duel ends, or the time limit. Records the turn label every 30 s, page errors, the banner,
++// and a screenshot at the end. Usage: node tools/r36-enhanced-long-browser.mjs <url> <outdir> [minTurn=6] [minutes=40] [seed=71007] [a=branded] [b=sky]
++import {createRequire} from 'node:module';import fs from 'node:fs';const require=createRequire(import.meta.url);
++const {chromium}=require('/opt/npm-tools/node_modules/playwright');
++const [url,out,minTurn='6',mins='40',seed='71007',a='branded',b='sky']=process.argv.slice(2);fs.mkdirSync(out,{recursive:true});
++const browser=await chromium.launch();const ctx=await browser.newContext({viewport:{width:1366,height:900}});const p=await ctx.newPage();
++const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
++const report={url,minTurn:+minTurn,minutes:+mins,seed:+seed,decks:[a,b],samples:[],errors};const t0=Date.now();
++await p.goto(url);await p.waitForFunction(()=>document.querySelector('#start')&&!document.querySelector('#start').disabled,null,{timeout:120000});
++await p.evaluate(([seed,a,b])=>{const $=s=>document.querySelector(s);$('#deck-a').value=a;$('#deck-a').dispatchEvent(new Event('change'));$('#deck-b').value=b;$('#deck-b').dispatchEvent(new Event('change'));$('#mode').value='watch';$('#mode').dispatchEvent(new Event('change'));$('#ai-mode').value='enhanced';$('#ai-mode').dispatchEvent(new Event('change'));$('#game-seed').value=seed;$('#first').value='0';$('#start').click()},[seed,a,b]);
++const state=()=>p.evaluate(()=>{const t=document.querySelector('#turn-label')?.textContent||'';const m=t.match(/(\d+)/);return {turn:t,n:m?+m[1]:0,title:document.querySelector('#decision-title')?.textContent||'',banner:document.querySelector('#match-study')?.textContent||'',over:!!document.querySelector('#duel-summary')}});
++let s;for(;;){await p.waitForTimeout(30000);s=await state();report.samples.push({sec:Math.round((Date.now()-t0)/1000),...s});
++ if(s.n>=+minTurn||s.over||Date.now()-t0>+mins*60000)break}
++report.final=s;report.reachedTurn=s.n;report.ended=s.over;report.wallSec=Math.round((Date.now()-t0)/1000);
++await p.screenshot({path:out+'/enhanced-long.png'});fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,1));
++console.log(JSON.stringify({reachedTurn:report.reachedTurn,ended:report.ended,wallSec:report.wallSec,errors:errors.length,banner:s.banner.slice(0,160)}));await browser.close();
+-- 
+2.43.0
+

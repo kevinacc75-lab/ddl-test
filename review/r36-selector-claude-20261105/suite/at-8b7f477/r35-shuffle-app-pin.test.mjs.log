@@ -1,0 +1,20 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: app.mjs minus the shuffle lines = the r32.1 pinned app.mjs
++ actual - expected
+
++ '28738cda10887a2ae3778df3c19ac5917f74218bdd5204a36f51d72ad8c6d3d0'
+- 'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda'
+
+    at file:///home/claude/r36-mid/tests/r35-shuffle-app-pin.test.mjs:23:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '28738cda10887a2ae3778df3c19ac5917f74218bdd5204a36f51d72ad8c6d3d0',
+  expected: 'c7ff1ee0b618ee6522dc8cee756af1a572d22ee66e91091dcbe11ae9bcc08fda',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.22.2

@@ -1,0 +1,151 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "minTurn": 6,
+ "minutes": 55,
+ "seed": 71008,
+ "decks": [
+  "sky",
+  "kashtira"
+ ],
+ "samples": [
+  {
+   "sec": 32,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 62,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 92,
+   "turn": "Zero Protocol · Turn 1",
+   "n": 1,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 122,
+   "turn": "Sealed Horizon · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 152,
+   "turn": "Sealed Horizon · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 182,
+   "turn": "Sealed Horizon · Turn 1",
+   "n": 1,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 212,
+   "turn": "Zero Protocol · Turn 2",
+   "n": 2,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 242,
+   "turn": "Zero Protocol · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 272,
+   "turn": "Sealed Horizon · Turn 2",
+   "n": 2,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 302,
+   "turn": "Sealed Horizon · Turn 2",
+   "n": 2,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 332,
+   "turn": "Sealed Horizon · Turn 2",
+   "n": 2,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 362,
+   "turn": "Zero Protocol · Turn 3",
+   "n": 3,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 392,
+   "turn": "Zero Protocol · Turn 3",
+   "n": 3,
+   "title": "Pilot B is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 422,
+   "turn": "Sealed Horizon · Turn 3",
+   "n": 3,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 452,
+   "turn": "Sealed Horizon · Turn 3",
+   "n": 3,
+   "title": "Pilot A is choosing its next play",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": false
+  },
+  {
+   "sec": 482,
+   "turn": "Sealed Horizon wins",
+   "n": 0,
+   "title": "Duel complete",
+   "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "over": true
+  }
+ ],
+ "errors": [],
+ "final": {
+  "turn": "Sealed Horizon wins",
+  "n": 0,
+  "title": "Duel complete",
+  "banner": "AI DUELSEED 71008Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+  "over": true
+ },
+ "reachedTurn": 0,
+ "ended": true,
+ "wallSec": 482
+}

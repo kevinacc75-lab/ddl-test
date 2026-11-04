@@ -1,0 +1,9 @@
+ok 1 MG-02 (C draft): a Main Phase 1 book line continues while the board is below the Branded target and stops at the step where the target becomes met (persistent invariant, rechecked every IDLECMD)
+ok 2 MG-02: a consumed entry prerequisite is not re-demanded - removing the line's starter from hand does not change the continuation verdict (B and C)
+ok 3 MG-02 (B): over a found lethal the line stops (lethalLock); with no lethal it continues; turn 1-2 never gated
+ok 4 MG-04: Main Phase 2 book follow-up allowed with our monsters on the field under B, C and BC (RELAY-075 B2), as with flags off
+ok 5 MG-04: Main Phase 2 is never a hold phase - midgameHold only acts in Main Phase 1
+ok 6 MG-09: two worlds differing only in hidden information (opponent hand; face-down monster identity/ATK) give identical B/C decisions (bookAllowed, targetMet, midgameHold, closeOutOptions, removalFor, endToBattle, thisTurnBattle) for every flag set
+ok 7 MG-09 control: changing a PUBLIC fact (face-down -> face-up 3000) does change the view, so the paired check can detect a leak
+ok 8 Arm C stays a draft: default off; with C off no close-out options and no target holds
+r36-midgame-c tests: 8 passed

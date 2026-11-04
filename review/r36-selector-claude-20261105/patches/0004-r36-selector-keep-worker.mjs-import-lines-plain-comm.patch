@@ -1,0 +1,45 @@
+From 8b7f477ed088caef1cfcdf77affb1db52e4b5b60 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 05:28:18 +1100
+Subject: [PATCH 4/5] r36 selector: keep worker.mjs import lines plain (comment
+ moved to the next line) so r32-review-fixes' VM loader strips them; selector
+ test updated
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/worker.mjs            | 4 ++--
+ tests/r36-ai-mode.test.mjs | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index 8ebc237..14309bc 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -4,8 +4,8 @@ import {exportSeatContext,safeView} from './ai/knowledge.mjs';
+ import {Duel,M} from './duel.mjs';
+ import {sumSelections} from './pilot.mjs';
+ import {createOptimalPilots as createPilots} from './optimal-pilot.mjs';
+-import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */
+-let aiMode='classic';
++import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';
++let aiMode='classic';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */
+ import {readCompressed} from './load.mjs';
+ import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
+ // r35 item 8 (RELAY-046 Tap B, Seto 27 Oct 10:10): deck-shuffle capture on the one real duel (see shuffle-tap.mjs).
+diff --git a/tests/r36-ai-mode.test.mjs b/tests/r36-ai-mode.test.mjs
+index 4af8891..7fd8f92 100644
+--- a/tests/r36-ai-mode.test.mjs
++++ b/tests/r36-ai-mode.test.mjs
+@@ -44,7 +44,7 @@ const r3512=f=>execFileSync('git',['show','d3177e0:'+f],{maxBuffer:64<<20}).toSt
+ const SEL={
+  'dist/app.mjs':[["doctrine:$('#doctrine-guidance').checked,aiMode:$('#ai-mode')?.value==='enhanced'?'enhanced':'classic',","doctrine:$('#doctrine-guidance').checked,"],["· Doctrine ${x.match.doctrine?'on':'off'} · AI ${x.match.aiMode==='enhanced'?'Enhanced (experimental)':'Classic'}</small>","· Doctrine ${x.match.doctrine?'on':'off'}</small>"]],
+  'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,'']],
+- 'dist/worker.mjs':[["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */\nlet aiMode='classic';",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode='classic';setAiMode(aiMode);matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
++ 'dist/worker.mjs':[["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';\nlet aiMode='classic';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode='classic';setAiMode(aiMode);matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
+  'dist/ai/ai-worker.mjs':[["\nimport {AI_MODES,aiModeOf,setMidgame} from './midgame-flags.mjs';",''],[/ setMidgame\(AI_MODES\[aiModeOf\(x\.aiMode\)\]\);\/\*.*?\*\/\n/s,''],[/if\(aiModeOf\(x\.aiMode\)==='enhanced'&&x\.pendingRemoval\)pilot\.pendingRemoval=x\.pendingRemoval;\/\*.*?\*\//s,'']]};
+ for(const [f,reps] of Object.entries(SEL))await ok(f+' minus the selector lines = r35.12 (d3177e0) bytes',()=>{let s=fs.readFileSync(f,'utf8');for(const [a,b] of reps){const before=s;s=s.replace(a,b);assert.notEqual(s,before,'selector line present: '+String(a).slice(0,60))}assert.equal(s,r3512(f))});
+ // ---- 4. cold load ----
+-- 
+2.43.0
+
