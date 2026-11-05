@@ -1,0 +1,13 @@
+ok 1 recipes: Classic = all off; Enhanced = A+B; C, T, Z off in both; unknown/missing mode = Classic
+ok 2 real ai-worker: a Classic think runs with every switch off and ignores a carried pendingRemoval
+ok 3 real ai-worker: an Enhanced think runs A+B and the fresh pilot starts with the carried pendingRemoval (Finding B)
+ok 4 real ai-worker: the mode is per think - Enhanced then a think with no mode field runs Classic (a stale global never leaks)
+ok 5 real ai-worker: same position, Classic think = the in-process Classic pilot's search-off baseline (no r36 rule reached the decision)
+ok 6 S4 lifecycle (RELAY-109/112): setAiMode sets the COMPLETE S4 map from the recipe (Classic E=false, Enhanced E=true); Classic after Enhanced, cold/missing mode and a stray setS4 are all reset; real ai-worker thinks carry the recipe
+ok 7 served r36 PREVIEW index.html whole-file pin (RELAY-112): e4399b3b...
+ok 8 dist/app.mjs minus the selector lines = r35.12 (d3177e0) bytes
+ok 9 dist/index.html minus the selector lines = r35.12 (d3177e0) bytes
+ok 10 dist/worker.mjs minus the selector lines = r35.12 (d3177e0) bytes
+ok 11 dist/ai/ai-worker.mjs minus the selector lines = r35.12 (d3177e0) bytes
+ok 12 cold load = Classic: the select defaults to Classic and the choice is not stored or restored
+r36 AI selector tests: 12 passed

@@ -1,0 +1,139 @@
+From f9d42d4e879707e13b80aa930f303845b2fa4a01 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 6 Nov 2026 09:30:21 +1100
+Subject: [PATCH] r36 E integration (RELAY-112): AI_S4 Enhanced E=true, Classic
+ E=false (complete reset each duel start and think); puzzles e2 (decline
+ losing attack vs 3000 ATK) and e3 (destroy 2500 DEF); tests for mode maps,
+ Classic-after-Enhanced, cold/missing mode, replay reset, both first mappings,
+ served index pin
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/ai/midgame-flags.mjs  |  5 +++--
+ tests/r36-ai-mode.test.mjs | 14 +++++++++-----
+ tests/r36-s4-e.test.mjs    | 30 ++++++++++++++++++------------
+ tools/r36-s2-puzzles.mjs   |  8 +++++++-
+ 4 files changed, 37 insertions(+), 20 deletions(-)
+
+diff --git a/dist/ai/midgame-flags.mjs b/dist/ai/midgame-flags.mjs
+index b319ac9..4e5912e 100644
+--- a/dist/ai/midgame-flags.mjs
++++ b/dist/ai/midgame-flags.mjs
+@@ -12,8 +12,9 @@ export function setMidgame(flags={}){for(const k of KEYS)if(k in flags)MIDGAME[k
+ // removal follow-up). C (doctrine draft), T and Z stay off in both (held for review).
+ export const AI_MODES=Object.freeze({classic:Object.freeze({A:false,B:false,C:false,T:false,Z:false}),enhanced:Object.freeze({A:true,B:true,C:false,T:false,Z:false})});
+ export const aiModeOf=v=>v==='enhanced'?'enhanced':'classic';
+-// r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map (flag E is in neither recipe yet), so a dev/test
++// r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map, so a dev/test
+ // setting can never leak into a duel or think. setAiMode runs at each duel start (worker.mjs) and each think (ai-worker.mjs).
+-export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:false})});
++// RELAY-112 (6 Nov): flag E (engine-offered Defence Position attackers, DEF used when the card says so) joins Enhanced only.
++export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:true})});
+ export function setAiMode(mode){setS4(AI_S4[aiModeOf(mode)]);return setMidgame(AI_MODES[aiModeOf(mode)])}
+ export const midgameLabel=()=>KEYS.filter(k=>MIDGAME[k]).join('')||'off';
+diff --git a/tests/r36-ai-mode.test.mjs b/tests/r36-ai-mode.test.mjs
+index 5f2e267..3f4f43b 100644
+--- a/tests/r36-ai-mode.test.mjs
++++ b/tests/r36-ai-mode.test.mjs
+@@ -7,10 +7,10 @@
+ //  3. Source isolation: app.mjs / index.html / worker.mjs / ai-worker.mjs differ from r35.12 (git d3177e0) ONLY by the
+ //     selector lines listed here (each file minus those lines = the r35.12 bytes).
+ //  4. Cold load = Classic: the select's default is Classic and nothing stores the choice.
+-import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import {execFileSync} from 'node:child_process';
++import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';import path from 'node:path';import {execFileSync} from 'node:child_process';
+ import {engine,stopEngine,scenario,drive,M} from '../tools/s3-harness.mjs';
+ import {exportSeatContext} from '../dist/ai/knowledge.mjs';
+-import {AI_MODES,aiModeOf,setAiMode,MIDGAME} from '../dist/ai/midgame-flags.mjs';
++import {AI_MODES,AI_S4,aiModeOf,setAiMode,MIDGAME} from '../dist/ai/midgame-flags.mjs';
+ import {OptimalPilot} from '../dist/optimal-pilot.mjs';import {S4,setS4} from '../dist/ai/s4-flags.mjs';
+ let pass=0,fail=0;const ok=async(n,f)=>{try{await f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
+ await ok('recipes: Classic = all off; Enhanced = A+B; C, T, Z off in both; unknown/missing mode = Classic',()=>{
+@@ -38,9 +38,13 @@ await ok('real ai-worker: same position, Classic think = the in-process Classic
+  const dec=await think({aiMode:'classic',nodeBudget:0});setAiMode('classic');const p=new OptimalPilot({seat:0,seed:7,searchEnabled:false});
+  const {safeView}=await import('../dist/ai/knowledge.mjs');const b=base0.call(p,safeView(d,0));assert.ok(dec.response&&b?.response);assert.deepEqual(dec.response,b.response,'ai-worker Classic decision = Classic baseline');assert.ok(!dec.plan?.removalIntent,'no removal intent in Classic');
+  setAiMode('enhanced');const e=base0.call(new OptimalPilot({seat:0,seed:7,searchEnabled:false}),safeView(d,0));setAiMode('classic');assert.ok(e.removalIntent,'control: the same position in Enhanced does arm the removal (the check can see a difference)')});
+-await ok('S4 lifecycle (RELAY-109): setAiMode resets the complete S4 map; a real ai-worker think after setS4({E:true}) runs with E off in both modes',async()=>{
+- for(const m of ['enhanced','classic',undefined]){setS4({E:true});setAiMode(m);assert.deepEqual({...S4},{E:false},String(m))}
+- for(const m of ['enhanced','classic']){setS4({E:true});await think({aiMode:m});assert.ok(seen.length&&seen.every(x=>x.s4.E===false),m+': E off in every base() of the think')}});
++await ok('S4 lifecycle (RELAY-109/112): setAiMode sets the COMPLETE S4 map from the recipe (Classic E=false, Enhanced E=true); Classic after Enhanced, cold/missing mode and a stray setS4 are all reset; real ai-worker thinks carry the recipe',async()=>{
++ assert.deepEqual(JSON.parse(JSON.stringify(AI_S4)),{classic:{E:false},enhanced:{E:true}},'mode maps');
++ for(const [m,e] of [['enhanced',true],['classic',false],[undefined,false],['bogus',false]]){for(const stray of [true,false]){setS4({E:stray});setAiMode(m);assert.deepEqual({...S4},{E:e},String(m)+' after setS4 '+stray)}}
++ setAiMode('enhanced');setAiMode('classic');assert.equal(S4.E,false,'Classic after Enhanced');
++ for(const [m,e] of [['enhanced',true],['classic',false],['enhanced',true],[undefined,false]]){setS4({E:!e});await think({aiMode:m});assert.ok(seen.length&&seen.every(x=>x.s4.E===e),String(m)+': E='+e+' in every base() of the think')}
++ const W=fs.readFileSync('dist/worker.mjs','utf8');assert.ok(W.includes("aiMode='classic';setAiMode(aiMode);"),'import-replay resets to Classic (S4 included)');assert.ok(W.includes('aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);'),'duel start sets the mode (S4 included)')});
++await ok('served r36 PREVIEW index.html whole-file pin (RELAY-112): e4399b3b...',()=>assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/index.html')).digest('hex'),'e4399b3b7a846477e2185f1c3b6f45a6fd62b5887c34756a3006a425c7050d3a'));
+ OptimalPilot.prototype.base=base0;stopEngine();
+ // ---- 3. source isolation vs r35.12 ----
+ const r3512=f=>execFileSync('git',['show','d3177e0:'+f],{maxBuffer:64<<20}).toString();
+diff --git a/tests/r36-s4-e.test.mjs b/tests/r36-s4-e.test.mjs
+index d350635..b58aa45 100644
+--- a/tests/r36-s4-e.test.mjs
++++ b/tests/r36-s4-e.test.mjs
+@@ -1,19 +1,25 @@
+ // r36 S4a flag E (Claude as builder, 5 Nov 2026). Engine-native puzzle S2-e (tools/r36-s2-puzzles.mjs, controlled decks):
+ // Scareclaw Kashtira in face-up Defence Position vs an empty board. With E off (default, both Classic and Enhanced
+ // recipes) the battle planner drops the engine-offered attacker (r35 behaviour, kept for Classic parity); with E on it
+-// attacks and its DEF is used. E is in no recipe until reviewed.
++// attacks and its DEF is used. Since RELAY-112, E is in the Enhanced recipe only (AI_S4).
+ import assert from 'node:assert/strict';import {execFileSync} from 'node:child_process';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
+-import {S4,setS4} from '../dist/ai/s4-flags.mjs';import {AI_MODES} from '../dist/ai/midgame-flags.mjs';
+-assert.deepEqual({...S4},{E:false},'E defaults off (no DDL_S4 in the test env)');
+-assert.ok(!('E' in AI_MODES.classic)&&!('E' in AI_MODES.enhanced),'E is in neither recipe');
++import {S4,setS4} from '../dist/ai/s4-flags.mjs';import {AI_MODES,AI_S4} from '../dist/ai/midgame-flags.mjs';
++// RELAY-112 (6 Nov): E joins Enhanced only. Classic keeps r35 behaviour (E=false); --flags E forces it on for a dev screen.
++assert.deepEqual({...S4},{E:false},'E defaults off at module load (no DDL_S4 in the test env)');
++assert.ok(!('E' in AI_MODES.classic)&&!('E' in AI_MODES.enhanced),'E stays out of the reviewed A/B/C/T/Z shape');
++assert.deepEqual(JSON.parse(JSON.stringify(AI_S4)),{classic:{E:false},enhanced:{E:true}},'S4 recipe: Enhanced only');
+ assert.deepEqual(setS4({E:true}),{E:true});setS4({E:false});
+ const out=fs.mkdtempSync(path.join(os.tmpdir(),'s4e-'));
+-const run=f=>execFileSync(process.execPath,['tools/r36-s2-puzzles.mjs',out,'--only','e','--modes','classic,enhanced',...(f?['--flags',f]:[])],{encoding:'utf8'});
+-const off=run(''),on=run('E');
+-assert.match(off,/e classic s0 f0: FAIL - stop=turn-end .*checks=offered:y,selectedAttack:N/,'E off, Classic: r35 behaviour');
+-assert.match(off,/e enhanced s0 f0: FAIL - stop=turn-end .*checks=offered:y,selectedAttack:N/,'E off, Enhanced: unchanged');
+-assert.match(on,/e classic\+E s0 f0: PASS - stop=turn-end /,'E on: attacks');assert.match(on,/e enhanced\+E s0 f0: PASS - stop=turn-end /,'E on: attacks (Enhanced)');
+-const gateRun=f=>{try{execFileSync(process.execPath,['tools/r36-s2-puzzles.mjs',out,'--only','e','--modes','classic','--gate',...(f?['--flags',f]:[])],{encoding:'utf8'});return 0}catch(e){return e.status}};
+-assert.equal(gateRun(''),1,'--gate exits 1 when a run FAILs (E off)');assert.equal(gateRun('E'),0,'--gate exits 0 when every run PASSes (E on)');
+-const T=JSON.parse(fs.readFileSync(out+'/e-classic+E-s0-f0.json','utf8'));assert.equal(T.boardAfter[1].lp,8000-2600,'damage = Scareclaw Kashtira DEF 2600');
++const run=(first,f)=>execFileSync(process.execPath,['tools/r36-s2-puzzles.mjs',out,'--only','e,e2,e3','--modes','classic,enhanced','--first',String(first),...(f?['--flags',f]:[])],{encoding:'utf8'});
++for(const first of [0,1]){const r=run(first,'');const tag=` s0 f${first}: `;
++ assert.match(r,new RegExp('e classic'+tag+'FAIL - stop=turn-end .*checks=offered:y,selectedAttack:N'),'Classic f'+first+': r35 behaviour, no Defence attacker');
++ assert.match(r,new RegExp('e enhanced'+tag+'PASS - stop=turn-end '),'Enhanced f'+first+': direct attack from Defence (recipe E)');
++ assert.match(r,new RegExp('e2 enhanced'+tag+'PASS - .*checks=offered:y,noAttack:y'),'Enhanced f'+first+': offered but declines the losing attack into 3000 ATK');
++ assert.match(r,new RegExp('e3 enhanced'+tag+'PASS - .*selectedAttack:y,targetDestroyed:y'),'Enhanced f'+first+': destroys the 2500 DEF target, no damage');
++ assert.match(r,new RegExp('e3 classic'+tag+'FAIL - '),'Classic f'+first+': no Defence attacker');
++ assert.match(r,/matrix: 6 runs = requested; PASS 4, FAIL 2, INVALID 0/)}
++const forced=run(0,'E');assert.match(forced,/e classic\+E s0 f0: PASS - stop=turn-end /,'dev --flags E on Classic: attacks');
++const gateRun=(m,f)=>{try{execFileSync(process.execPath,['tools/r36-s2-puzzles.mjs',out,'--only','e','--modes',m,'--gate',...(f?['--flags',f]:[])],{encoding:'utf8'});return 0}catch(e){return e.status}};
++assert.equal(gateRun('classic',''),1,'--gate exits 1 when a run FAILs (Classic, E off)');assert.equal(gateRun('enhanced',''),0,'--gate exits 0 (Enhanced recipe)');
++const T=JSON.parse(fs.readFileSync(out+'/e-enhanced-s0-f0.json','utf8'));assert.equal(T.boardAfter[1].lp,8000-2600,'damage = Scareclaw Kashtira DEF 2600');assert.deepEqual(T.s4,{E:true},'record shows the recipe S4');
+ console.log(JSON.stringify({test:'r36-s4-e',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tools/r36-s2-puzzles.mjs b/tools/r36-s2-puzzles.mjs
+index 3e22515..02ed237 100644
+--- a/tools/r36-s2-puzzles.mjs
++++ b/tools/r36-s2-puzzles.mjs
+@@ -37,7 +37,7 @@ async function scenario(decks,placements,{seed=7}={}){const live=await engine(),
+  if(!left.every(p=>p.used))throw Error('not placed: '+left.filter(p=>!p.used).map(p=>p.name));if(d.errors?.length)throw Error('script errors: '+JSON.stringify(d.errors));return d}
+ const ATK=1,DEF=4,SET_ST=10;/* POS_FACEUP_ATTACK, POS_FACEUP_DEFENSE, POS_FACEDOWN (Spell/Trap Set) */
+ const stat=(n,k)=>db[code(n)][k];
+-const GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira';
++const GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira',BE='Blue-Eyes White Dragon';
+ // Strict predicates (only for VALID runs). Each returns {pass, checks:{...}}; pass = every check true.
+ const judge=checks=>({pass:Object.values(checks).every(Boolean),checks});
+ const offered=(T,n)=>T.battleOffers.some(o=>o.some(l=>l.includes(n)));
+@@ -59,6 +59,12 @@ export const P={
+   place:[{name:DA,location:4,sequence:2,owner:0,position:ATK},{name:FL,location:4,sequence:2,owner:1,position:ATK},{name:'Branded Retribution',location:8,sequence:2,owner:1,position:SET_ST},
+    {name:'Ash Blossom & Joyous Spring',location:2,owner:1},{name:'Branded in Red',location:2,owner:1},{name:'Fallen of Albaz',location:2,owner:1}],
+   expect:T=>P.b.expect(T)},
++ e2:{title:'(e2) Scareclaw Kashtira in face-up Defence (DEF 2600 used) vs Blue-Eyes White Dragon 3000 ATK: the attack would lose, so do not attack',decks:['kashtira','blueeyes'],
++  place:[{name:SK,location:4,sequence:2,owner:0,position:DEF},{name:BE,location:4,sequence:2,owner:1,position:ATK}],
++  expect:T=>judge({offered:offered(T,SK),noAttack:!attacked(T,SK),attackerStays:onField(T.boardAfter[0],SK),targetStays:onField(T.boardAfter[1],BE),ownLp:T.boardAfter[0].lp===T.boardStart[0].lp,oppLp:T.boardAfter[1].lp===T.boardStart[1].lp})},
++ e3:{title:'(e3) Scareclaw Kashtira in face-up Defence (DEF 2600 used) vs Blue-Eyes White Dragon in face-up DEF 2500: attack and destroy it, no damage either way',decks:['kashtira','blueeyes'],
++  place:[{name:SK,location:4,sequence:2,owner:0,position:DEF},{name:BE,location:4,sequence:2,owner:1,position:DEF}],
++  expect:T=>judge({offered:offered(T,SK),selectedAttack:attacked(T,SK),targetDestroyed:T.boardAfter[1].gy.includes(BE)&&!onField(T.boardAfter[1],BE),attackerStays:onField(T.boardAfter[0],SK),ownLp:T.boardAfter[0].lp===T.boardStart[0].lp,oppLp:T.boardAfter[1].lp===T.boardStart[1].lp})},
+  e:{title:'(e) Scareclaw Kashtira in face-up Defence vs an empty board: the engine offers the attack; take it (DEF used)',decks:['kashtira','branded'],
+   place:[{name:SK,location:4,sequence:2,owner:0,position:DEF}],
+   expect:T=>directOnly(T,SK,stat(SK,'defense'))},
+-- 
+2.43.0
+

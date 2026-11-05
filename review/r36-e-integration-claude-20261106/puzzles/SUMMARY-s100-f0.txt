@@ -1,0 +1,18 @@
+e2 classic s100 f0: PASS - stop=turn-end decisions=4 rejected=0 errors=0 checks=offered:y,noAttack:y,attackerStays:y,targetStays:y,ownLp:y,oppLp:y
+   own-turn plays: phase:Enter Battle Phase | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/8000
+e2 enhanced s100 f0: PASS - stop=turn-end decisions=4 rejected=0 errors=0 checks=offered:y,noAttack:y,attackerStays:y,targetStays:y,ownLp:y,oppLp:y
+   own-turn plays: phase:Enter Battle Phase | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/8000
+e3 classic s100 f0: FAIL - stop=turn-end decisions=4 rejected=0 errors=0 checks=offered:y,selectedAttack:N,targetDestroyed:N,attackerStays:y,ownLp:y,oppLp:y
+   own-turn plays: phase:Enter Battle Phase | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/8000
+e3 enhanced s100 f0: PASS - stop=turn-end decisions=13 rejected=0 errors=0 checks=offered:y,selectedAttack:y,targetDestroyed:y,attackerStays:y,ownLp:y,oppLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Scareclaw Kashtira | phase:Enter Main Phase 2 | phase:End turn targets=Blue-Eyes White Dragon
+   LP start/after: 8000/8000 -> 8000/8000
+e classic s100 f0: FAIL - stop=turn-end decisions=4 rejected=0 errors=0 checks=offered:y,selectedAttack:N,noPositionChange:y,attackerStays:y,damage:N,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/8000
+e enhanced s100 f0: PASS - stop=turn-end decisions=12 rejected=0 errors=0 checks=offered:y,selectedAttack:y,noPositionChange:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Scareclaw Kashtira | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/5400

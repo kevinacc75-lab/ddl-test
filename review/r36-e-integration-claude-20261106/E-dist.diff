@@ -1,0 +1,16 @@
+diff --git a/dist/ai/midgame-flags.mjs b/dist/ai/midgame-flags.mjs
+index b319ac9..4e5912e 100644
+--- a/dist/ai/midgame-flags.mjs
++++ b/dist/ai/midgame-flags.mjs
+@@ -12,8 +12,9 @@ export function setMidgame(flags={}){for(const k of KEYS)if(k in flags)MIDGAME[k
+ // removal follow-up). C (doctrine draft), T and Z stay off in both (held for review).
+ export const AI_MODES=Object.freeze({classic:Object.freeze({A:false,B:false,C:false,T:false,Z:false}),enhanced:Object.freeze({A:true,B:true,C:false,T:false,Z:false})});
+ export const aiModeOf=v=>v==='enhanced'?'enhanced':'classic';
+-// r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map (flag E is in neither recipe yet), so a dev/test
++// r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map, so a dev/test
+ // setting can never leak into a duel or think. setAiMode runs at each duel start (worker.mjs) and each think (ai-worker.mjs).
+-export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:false})});
++// RELAY-112 (6 Nov): flag E (engine-offered Defence Position attackers, DEF used when the card says so) joins Enhanced only.
++export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:true})});
+ export function setAiMode(mode){setS4(AI_S4[aiModeOf(mode)]);return setMidgame(AI_MODES[aiModeOf(mode)])}
+ export const midgameLabel=()=>KEYS.filter(k=>MIDGAME[k]).join('')||'off';

@@ -1,0 +1,16 @@
+ok 1 REPRO 1 (FAILED at bb4bc23: {score:812.5,status:complete}): MP2 leaf, nodesLeft:0, material flips shouldStop -> cutoff, no score
+ok 2 nodesLeft:0 alone (no stop) -> cutoff before material/planners run (material not called)
+ok 3 late expiry during material (budget left) -> cutoff "during material scoring", planners not run
+ok 4 late expiry inside the planners (stop fires on its 4th poll) -> cutoff, never complete
+ok 5 control: nothing expires, ample budget -> complete, and the score equals judgeParts without a budget (numeric-compatible)
+ok 6 planner allowance smaller than the planner needs (2 nodes) -> cutoff "node budget reached inside the ... planner"
+ok 7 planner overflow at its own fixed cap (NODE_LIMIT 2) -> cutoff "planner node cap reached (overflow)", even with unlimited nodesLeft
+ok 8 judgeParts without `work` is unchanged (Arms B/C, tools): a number total, no truncated flag
+ok 9 REPRO 2 (FAILED at bb4bc23: complete, macros 1): stop flips inside policy.base, the one response would move 16 -> 256 -> cutoff, response not sent
+ok 10 REPRO 2 through the judge: status cutoff, score 0, cost 0
+ok 11 stop flips inside sim.respond and that response leaves battle (16 -> 256) -> cutoff after 1 response, not complete
+ok 12 rollout uses the whole node allowance (2 macros, nodesLeft 2) -> no allowance left for scoring -> cutoff
+ok 13 rejected continuation keeps status rejected (not complete, not cutoff) when its scoring is truncated; score 0
+ok 14 rejected continuation with budget left is scored as before (rejected + a number score)
+ok 15 searchInfoSet with a tight budget: every leaf the judge reports complete had nodesLeft > 0 at entry; leaves at nodesLeft <= 0 are cutoff
+r36-midgame A1 late-expiry tests: 15 passed

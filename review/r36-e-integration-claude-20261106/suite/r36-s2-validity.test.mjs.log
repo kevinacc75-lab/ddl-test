@@ -1,0 +1,14 @@
+ok 1 b: a correct record PASSes (offer, attack, Fleurdelis target, destroyed, 300 damage, attacker stays)
+ok 2 b (RELAY-109 counterexample): no own action and an empty enemy field -> FAIL, not PASS
+ok 3 b: Fleurdelis gone without our attack (e.g. removed by an effect) -> FAIL (the attack is required)
+ok 4 b: attack aimed at another target -> FAIL
+ok 5 e: correct record (offer, attack, 2600 = DEF) PASSes
+ok 6 e (RELAY-109 counterexample): empty battleOffers and no attack -> FAIL, not vacuous PASS
+ok 7 e: attack taken but damage not DEF (e.g. ATK 1500) -> FAIL
+ok 8 a: correct record PASSes; a Defence switch FAILs
+ok 9 INVALID (RELAY-109): a passing record with injected errors / an error note / a rejected response / step bound / no own-turn start / setup failure is not judged
+ok 10 a "finished" stop (duel won inside the turn) is valid and judged
+ok 11 RELAY-110 counterexample: --only nonexistent --gate exits 2 with INVALID SELECTION and writes no records (also in screen mode)
+ok 12 unknown mode / duplicate mode / unknown S4 flag / bad --first / one unknown id among known ones -> exit 2
+ok 13 selectionErrors / requested: the default selection is the full nonempty matrix; filters give exactly the asked keys
+r36 S2 validity tests: 13 passed

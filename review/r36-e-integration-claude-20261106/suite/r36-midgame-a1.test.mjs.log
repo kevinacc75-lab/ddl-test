@@ -1,0 +1,13 @@
+ok 1 expired deadline: the judge plays NO response and returns cutoff (no score) for a Battle Phase leaf
+ok 2 expired deadline via searchInfoSet ctx.shouldStop is honoured the same way
+ok 3 deadline expiring mid-rollout stops at the next response: cutoff after exactly 2 responses (98400d6 ran all 48)
+ok 4 rejected continuation (sim.retries moved) -> status rejected, not a completed leaf (98400d6 returned an ordinary score)
+ok 5 exception in the rollout policy -> status error (not swallowed into a normal score)
+ok 6 response bound and node budget are cutoffs; a completed rollout charges its macro responses
+ok 7 a leaf outside our Battle Phase is judged without any response (complete, cost = planner work only)
+ok 8 rejected continuation in search: the "stay" candidate gets rejected=16 and leaf.rejected=16, scores below -50000; M2 wins
+ok 9 rollout cost is charged to the search node count (16 worlds x 2 candidates x 3 search macros + 16 x 3 rollout responses = 144)
+ok 10 node budget includes rollout work: budget 40 stops the search early (fewer visits) instead of overrunning
+ok 11 a cutoff leaf is not a visit: deadline mid-rollout on the "stay" branch leaves leaf.cutoff=1 and no score for that world
+skip reconstruction check: ../r35.11-base worktree not present
+r36-midgame A1 tests: 11 passed
