@@ -1,0 +1,5 @@
+exit 2 : --only nonexistent --gate : INVALID SELECTION: unknown puzzle id: nonexistent
+exit 2 : --only nonexistent : INVALID SELECTION: unknown puzzle id: nonexistent
+exit 2 : --modes bogus --gate : INVALID SELECTION: modes must be classic and/or enhanced: bogus
+exit 2 : --flags X --gate : INVALID SELECTION: unknown S4 flag: X
+exit 2 : --first 2 --gate : INVALID SELECTION: --first must be 0 or 1

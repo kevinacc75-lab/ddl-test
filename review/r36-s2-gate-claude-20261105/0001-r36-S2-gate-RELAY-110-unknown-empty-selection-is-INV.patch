@@ -1,0 +1,94 @@
+From fc23f995bfed4b4f1aa4186b0a135db938786a1e Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 17:38:34 +1100
+Subject: [PATCH] r36 S2 gate (RELAY-110): unknown/empty selection is INVALID
+ SELECTION (exit 2); executed records must equal the requested matrix;
+ negative tests
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tests/r36-s2-validity.test.mjs | 13 ++++++++++++-
+ tools/r36-s2-puzzles.mjs       | 18 +++++++++++++++---
+ 2 files changed, 27 insertions(+), 4 deletions(-)
+
+diff --git a/tests/r36-s2-validity.test.mjs b/tests/r36-s2-validity.test.mjs
+index 1a75aad..ec0f35b 100644
+--- a/tests/r36-s2-validity.test.mjs
++++ b/tests/r36-s2-validity.test.mjs
+@@ -1,7 +1,8 @@
+ // r36 S2 v2 validity and strict-predicate checks (Claude as builder, 5 Nov 2026; ChatGPT RELAY-109). ChatGPT's
+ // counterexamples must not PASS: (b) with no own action and an empty enemy field; (e) with no attack offered; any record
+ // with errors, notes, a rejected response, an abnormal stop or no own-turn start must be INVALID, not judged.
+-import assert from 'node:assert/strict';import {P,classify} from '../tools/r36-s2-puzzles.mjs';
++import assert from 'node:assert/strict';import {spawnSync} from 'node:child_process';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
++import {P,classify,selectionErrors,requested} from '../tools/r36-s2-puzzles.mjs';
+ let pass=0,fail=0;const ok=(n,f)=>{try{f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
+ const GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira';
+ const B=(lp,field=[],gy=[])=>({lp,field:field.map(name=>({name})),st:[],hand:0,gy});
+@@ -20,4 +21,14 @@ ok('a: correct record PASSes; a Defence switch FAILs',()=>{assert.equal(classify
+ ok('INVALID (RELAY-109): a passing record with injected errors / an error note / a rejected response / step bound / no own-turn start / setup failure is not judged',()=>{
+  for(const o of [{errors:['x']},{notes:['error: boom']},{rejected:1},{stop:'step-bound'},{stop:'no-prompt'},{stop:'own-turn-not-seat-0'},{boardStart:undefined},{stop:'setup-failed'},{notes:['rejected response (seat0) at turn 3']}]){const T=classify(aRec(o),P.a);assert.equal(T.outcome,'INVALID',JSON.stringify(o));assert.equal(T.result,null)}});
+ ok('a "finished" stop (duel won inside the turn) is valid and judged',()=>assert.equal(classify(aRec({stop:'finished'}),P.a).valid,true));
++// RELAY-110: a zero-run or unknown selection is INVALID SELECTION (exit 2), never a gate success.
++const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'s2sel-')),cli=args=>spawnSync(process.execPath,['tools/r36-s2-puzzles.mjs',tmp,...args],{encoding:'utf8'});
++ok('RELAY-110 counterexample: --only nonexistent --gate exits 2 with INVALID SELECTION and writes no records (also in screen mode)',()=>{
++ for(const g of [['--gate'],[]]){const r=cli(['--only','nonexistent',...g]);assert.equal(r.status,2,'exit '+r.status);assert.match(r.stdout,/INVALID SELECTION: unknown puzzle id: nonexistent/)}
++ assert.deepEqual(fs.readdirSync(tmp),[],'nothing written')});
++ok('unknown mode / duplicate mode / unknown S4 flag / bad --first / one unknown id among known ones -> exit 2',()=>{
++ for(const a of [['--modes','bogus'],['--modes','classic,classic'],['--flags','X'],['--first','2'],['--only','a,zz']]){const r=cli([...a,'--gate']);assert.equal(r.status,2,a.join(' '));assert.match(r.stdout,/INVALID SELECTION/)}});
++ok('selectionErrors / requested: the default selection is the full nonempty matrix; filters give exactly the asked keys',()=>{
++ const base={only:[],modes:['classic','enhanced'],extra:'',first:0};assert.deepEqual(selectionErrors(base),[]);assert.equal(requested(base).length,Object.keys(P).length*2);
++ assert.deepEqual(requested({...base,only:['e'],extra:'E'}),['e|classic+E','e|enhanced+E']);assert.ok(selectionErrors({...base,modes:[]}).length,'no modes is invalid')});
+ console.log('r36 S2 validity tests: '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;
+diff --git a/tools/r36-s2-puzzles.mjs b/tools/r36-s2-puzzles.mjs
+index 8557ad9..3e22515 100644
+--- a/tools/r36-s2-puzzles.mjs
++++ b/tools/r36-s2-puzzles.mjs
+@@ -11,7 +11,8 @@
+ // judged by its strict predicate (offer + selected attack + target + resolved result). Expected plays are PENDING
+ // Alexis (rulings) and Akiza (strategy).
+ // Usage: node tools/r36-s2-puzzles.mjs <outdir> [--search N] [--only a,b] [--modes classic,enhanced] [--flags E]
+-//        [--first 0|1] [--gate]    (--gate: exit 1 if any run is FAIL or INVALID; default screen mode exits 0)
++//        [--first 0|1] [--gate]    (--gate: exit 1 if any run is FAIL or INVALID; default screen mode exits 0.
++//        Either mode exits 2 on an INVALID SELECTION (unknown/empty) or if the executed records != the requested matrix.)
+ import fs from 'node:fs';import crypto from 'node:crypto';import {pathToFileURL} from 'node:url';
+ import {engine,stopEngine,db,scripts,labels,v19,code,M} from './s3-harness.mjs';
+ import {Duel} from '../dist/duel.mjs';
+@@ -21,7 +22,7 @@ import {setS4,S4} from '../dist/ai/s4-flags.mjs';
+ import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';
+ const argv=process.argv.slice(2),out=argv[0]||'s2-out',opt=(k,v)=>{const i=argv.indexOf('--'+k);return i>0?argv[i+1]:v};
+ const nodes=+opt('search',0),only=(opt('only','')||'').split(',').filter(Boolean),modes=opt('modes','classic,enhanced').split(','),extra=(opt('flags','')||'').toUpperCase(),first=+opt('first',0),gate=argv.includes('--gate');
+-if(![0,1].includes(first))throw Error('--first 0|1');const OWN=first===0?3:4,STEPS=3000;
++const OWN=first===0?3:4,STEPS=3000;
+ const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+ const IDENTITY={node:process.version,tool:sha(new URL(import.meta.url)),files:Object.fromEntries(['dist/tactics.mjs','dist/optimal-pilot.mjs','dist/ai/midgame-rules.mjs','dist/ai/midgame-flags.mjs','dist/ai/s4-flags.mjs','dist/duel.mjs','dist/cards.json.gz','dist/scripts.json.gz','dist/decks.json'].map(f=>[f,sha(f)]))};
+ // FILLER: Black Luster Soldier, a Ritual Monster with no Ritual Spell in these decks, so it can never be summoned or
+@@ -72,7 +73,15 @@ export function classify(T,pz){const valid=!!T.boardStart&&['turn-end','finished
+ async function pilotsFor(seed){if(!nodes)return createOptimalPilots({seed,searchEnabled:false});const ps=[];
+  for(const s of [0,1]){const core=await createSearchCore(db,scripts);ps[s]=createOptimalPilots({seed,nodeBudget:nodes,searchCore:core,worldPool:true,poolKey:'s2:'+seed+':'+s,poolSize:10,seatCapBytes:40*1048576,shouldStop:()=>false})[s]}return ps}
+ const MAIN=import.meta.url===pathToFileURL(process.argv[1]||'').href;
+-if(MAIN){fs.mkdirSync(out,{recursive:true});await engine();const rows=[];
++// RELAY-110: the requested matrix must be valid and nonempty BEFORE anything runs, and the executed records must equal
++// it exactly; a zero-run or unknown selection is INVALID SELECTION (exit 2 in every mode), never a success.
++export function selectionErrors({only,modes,extra,first}){const e=[],ids=Object.keys(P);
++ for(const x of only)if(!ids.includes(x))e.push('unknown puzzle id: '+x);if(!modes.length||modes.some(m=>!['classic','enhanced'].includes(m)))e.push('modes must be classic and/or enhanced: '+modes.join(','));
++ if(new Set(modes).size!==modes.length)e.push('duplicate mode');for(const k of extra)if(!(k in S4))e.push('unknown S4 flag: '+k);if(![0,1].includes(first))e.push('--first must be 0 or 1');
++ if(!(only.length?only:ids).length)e.push('empty selection');return e}
++export const requested=({only,modes,extra})=>(only.length?Object.keys(P).filter(id=>only.includes(id)):Object.keys(P)).flatMap(id=>modes.map(m=>id+'|'+m+(extra?'+'+extra:'')));
++if(MAIN){const selErr=selectionErrors({only,modes,extra,first});if(selErr.length){console.log('INVALID SELECTION: '+selErr.join('; '));process.exit(2)}
++ const want=requested({only,modes,extra});fs.mkdirSync(out,{recursive:true});await engine();const rows=[];
+ for(const [id,pz] of Object.entries(P)){if(only.length&&!only.includes(id))continue;
+  for(const mode of modes){setAiMode(mode);if(extra)setS4(Object.fromEntries([...extra].map(k=>[k,true])));const seed=7;
+   const T={puzzle:id,title:pz.title,fixture:'controlled synthetic',mode:mode+(extra?'+'+extra:''),s4:{...S4},search:nodes,seed,first,ownTurn:OWN,decks:pz.decks,placements:pz.place,identity:IDENTITY,own:[],targets:[],battleOffers:[],notes:[],rejected:0,decisions:0,stop:null};
+@@ -97,4 +106,7 @@ for(const [id,pz] of Object.entries(P)){if(only.length&&!only.includes(id))conti
+   rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}-f${first}.json`,JSON.stringify(T,null,1));try{d.stop?.()}catch{}}}
+ const sum=rows.map(T=>`${T.puzzle} ${T.mode} s${T.search} f${T.first}: ${T.outcome} - stop=${T.stop} decisions=${T.decisions} rejected=${T.rejected} errors=${T.errors?.length??'-'}${T.result?' checks='+Object.entries(T.result.checks).map(([k,v])=>k+':'+(v?'y':'N')).join(','):''}${T.notes.length?' notes='+T.notes.join('; '):''}\n   own-turn plays: ${T.own.map(x=>x.kind+':'+(x.label||'?')).join(' | ')}${T.targets.length?' targets='+T.targets.join(','):''}\n   LP start/after: ${T.boardStart?.map(b=>b.lp).join('/')} -> ${T.boardAfter?.map(b=>b.lp).join('/')}`);
+ fs.writeFileSync(`${out}/SUMMARY-s${nodes}-f${first}${extra?'-'+extra:''}.txt`,sum.join('\n')+'\n');console.log(sum.join('\n'));stopEngine();
++const got=rows.map(T=>T.puzzle+'|'+T.mode).sort(),matrixOk=JSON.stringify(got)===JSON.stringify([...want].sort());
++if(!matrixOk){console.log('INVALID RUN: executed records '+JSON.stringify(got)+' != requested '+JSON.stringify(want));process.exit(2)}
++console.log('matrix: '+rows.length+' runs = requested; '+['PASS','FAIL','INVALID'].map(o=>o+' '+rows.filter(T=>T.outcome===o).length).join(', '));
+ process.exit(gate&&rows.some(T=>T.outcome!=='PASS')?1:0);}
+-- 
+2.43.0
+

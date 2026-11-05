@@ -1,0 +1,6 @@
+0e062734a7af596ad12480fd2f9c37ec273eba0e400aadc66ab55745dbc74b8a  ./0001-r36-S2-gate-RELAY-110-unknown-empty-selection-is-INV.patch
+fdfe1ecddd57e44757132ff3a6db9ebdfa7e2558ca3d6eb4764f74c5292b9ada  ./README.md
+eae031abe728da362d41836c0e0e13d44d8b9ca7a04d7a605ba7a221de6c1c2a  ./tests/CLI-SELECTION.txt
+2dbb37b688599fff337853034d38a83b30bb61b9fdd95baac347ca76e6651cf5  ./tests/RESULTS.txt
+d28755e76a7e8d43eaeb310e347671d91d991f8ee438afa43726c2c27a2a5dfd  ./tests/r36-s2-validity.log
+07d9fb64c925b8a7c47ebe74bf0e2a4cad1fc93179bb9d12a3357d1b0142cc3e  ./tests/r36-s4-e.log
