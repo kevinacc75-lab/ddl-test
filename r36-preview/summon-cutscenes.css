@@ -1,0 +1,74 @@
+/* B2: original v3 geometry. Only .b2-hazard is striped. Animations use transform/opacity. */
+#summon-scene.b2-active>.scene-content,#summon-scene.b2-active>.scene-aura,#summon-scene.b2-active>.scene-rings,#summon-scene.b2-active>.scene-particles{display:none!important}
+#summon-scene.b2-active::after{display:none!important}
+#summon-scene.b2-active .b2-scene,#summon-scene.b2-active .b2-scene *{animation:none!important;box-sizing:border-box;transform:none}
+#summon-scene.b2-active .b2-scene{--b2-accent:var(--st-red,#e01b24);position:fixed;inset:64px 18px 104px;padding:12px;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px;border:3px solid #fff;background:#0b0b10;color:#fff;text-align:center;font-family:system-ui,sans-serif;isolation:isolate}
+#summon-scene.b2-active .b2-scene:is([data-deck-theme=mikanko],[data-deck-theme=kashtira]){--b2-accent:var(--st-yellow,#ffd21a)}
+#summon-scene.b2-active .b2-scene:is([data-deck-theme=luna],[data-deck-theme=blueeyes]){--b2-accent:var(--st-blue,#2b5fd9)}
+#summon-scene.b2-active .b2-hazard{justify-self:center;margin:0;padding:3px 30px;background:repeating-linear-gradient(130deg,#ffd21a 0 22px,#e8b900 22px 27px);color:#0b0b10;font:900 24px/1.2 system-ui}
+#summon-scene.b2-active .b2-summary{z-index:2;background:#0b0b10;color:#fff}
+#summon-scene.b2-active .b2-name{margin:0;white-space:normal;overflow-wrap:anywhere;overflow:visible;font:900 26px/1.2 system-ui;max-width:100%}
+#summon-scene.b2-active .b2-stats{margin:5px 0 0;font:800 20px/1.25 system-ui;color:#fff;font-variant-numeric:tabular-nums}
+#summon-scene.b2-active .b2-arena{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,220px);gap:14px;align-items:stretch}
+#summon-scene.b2-active .b2-effect{position:relative;min-width:0;min-height:0;display:grid;place-items:center;overflow:hidden}
+#summon-scene.b2-active .b2-materials{display:flex;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:8px;z-index:1;width:100%;min-width:0;max-height:100%;padding:6px;overflow-x:auto;overflow-y:hidden}
+#summon-scene.b2-active .b2-material{flex:0 0 200px;min-width:0;padding:8px;background:#192744;border:2px solid var(--b2-accent);color:#fff;font:700 18px/1.2 system-ui;text-align:center}
+#summon-scene.b2-active .b2-material-name{display:block;white-space:normal;overflow-wrap:anywhere;overflow:visible}
+#summon-scene.b2-active .b2-material[data-hidden=true]{border-color:#fff;background:#192744}
+#summon-scene.b2-active .b2-arrival{min-height:0;display:grid;place-items:center}
+#summon-scene.b2-active .b2-arrival .card-frame{display:grid;grid-template-rows:repeat(4,auto);gap:8px;align-content:center;align-items:start;justify-content:stretch;width:100%;height:100%;min-height:0;padding:8px!important;aspect-ratio:auto;border:2px solid #fff;background:#192744;color:#fff;overflow:visible}
+#summon-scene.b2-active .b2-arrival .card-frame>*{position:static;min-height:0;line-height:1.2;overflow-wrap:anywhere}
+#summon-scene.b2-active .b2-arrival .card-frame-name{font:800 18px/1.2 system-ui!important;white-space:normal!important;overflow-wrap:anywhere;overflow:visible!important}
+#summon-scene.b2-active .b2-arrival :is(.card-frame-kind,.card-frame-type){font:700 16px/1.2 system-ui!important;white-space:normal!important;color:#fff}
+#summon-scene.b2-active .b2-arrival .card-frame-stats{font:800 18px/1.2 system-ui!important;color:#fff;white-space:normal!important}
+#summon-scene.b2-active .b2-caption{margin:0;color:#fff;font:700 16px/1.25 system-ui}
+#summon-scene.b2-active .b2-fusion-swirl{position:absolute;width:min(26vw,190px);aspect-ratio:1;border:16px solid var(--b2-accent);border-top-color:transparent;border-left-color:transparent;border-radius:50%;box-shadow:inset 0 0 0 6px #fff}
+.b2-log{margin:6px 0;padding:10px;background:#0b0b10;border-left:4px solid #ffd21a;color:#fff;font:500 16px/1.45 system-ui;overflow-wrap:anywhere}
+@media(max-width:640px){#summon-scene.b2-active .b2-scene{inset:64px 8px 104px;padding:8px;gap:6px}#summon-scene.b2-active .b2-arena{grid-template-columns:minmax(0,1fr) minmax(110px,36%);gap:8px}#summon-scene.b2-active .b2-name{font-size:22px}#summon-scene.b2-active .b2-material{font-size:18px;min-width:70px}}
+body:is([data-graphics=smooth],[data-theme=contrast],.quiet-motion) #summon-scene.b2-active .b2-scene{display:none!important}
+@media(prefers-reduced-motion:reduce){#summon-scene.b2-active .b2-scene{display:none!important}}
+
+/* Synchro: one ring and one contained flash; the persistent name/stats never fade. */
+#summon-scene.b2-active .b2-synchro-ring{position:absolute;width:min(28vw,190px);aspect-ratio:1;border:8px solid var(--b2-accent);outline:2px solid #fff;outline-offset:-18px;border-radius:50%}
+#summon-scene.b2-active .b2-synchro-flash{position:absolute;inset:18%;border-radius:50%;background:#fff;opacity:0;pointer-events:none}
+#summon-scene.b2-active .b2-scene[data-kind=synchro] .b2-effect{grid-template-rows:minmax(0,1fr) auto;gap:6px}
+#summon-scene.b2-active .b2-material-role{display:block;color:#fff;font:900 16px/1.2 system-ui;margin-bottom:4px}
+#summon-scene.b2-active .b2-stars{position:relative;grid-row:2;justify-self:stretch;margin:0;padding:3px 6px;background:#0b0b10;color:#ffd21a;font:800 18px/1.25 system-ui}
+
+/* Xyz: original plain overlay units under the arriving card. */
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-arena{position:relative}
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-arrival{position:relative;z-index:2;padding-bottom:28px}
+#summon-scene.b2-active .b2-overlay-stack{position:absolute;right:36px;bottom:28px;width:130px;height:188px;max-height:85%;z-index:1;pointer-events:none}
+#summon-scene.b2-active .b2-overlay-unit{position:absolute;inset:0;border:3px solid #fff;border-radius:7px;background:#192744;box-shadow:0 0 0 2px #0b0b10}
+#summon-scene.b2-active .b2-overlay-unit::before{content:'';position:absolute;inset:7px;border:2px solid var(--b2-accent);border-radius:3px}
+#summon-scene.b2-active .b2-overlay-unit::after{content:'◇';position:absolute;inset:14px;display:grid;place-items:center;border:1px solid #56637b;color:#fff;font:900 44px/1 system-ui}
+#summon-scene.b2-active .b2-overlay-count{position:absolute;right:0;bottom:0;width:220px;max-width:45%;margin:0;z-index:3;background:#0b0b10;color:#ffd21a;border:2px solid #fff;padding:2px;font:900 18px/1.2 system-ui}
+
+/* Link: a fresh original grid; inactive arrows stay neutral, not lit. */
+#summon-scene.b2-active .b2-scene[data-kind=link] .b2-effect{display:grid;grid-template-columns:minmax(0,1fr) 140px;grid-template-areas:'materials arrows';gap:12px}
+#summon-scene.b2-active .b2-scene[data-kind=link] .b2-materials{grid-area:materials;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(140px,100%),1fr));align-content:center;max-height:none;overflow:visible}
+#summon-scene.b2-active .b2-link-grid{grid-area:arrows;position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:140px;aspect-ratio:1;padding:5px;border:2px solid #fff;background:#0b0b10}
+#summon-scene.b2-active .b2-link-arrow{display:grid;place-items:center;border:2px solid #56637b;background:#192744;color:#b5bed0;font:900 30px/1 system-ui}
+#summon-scene.b2-active .b2-link-arrow[data-lit=true]{color:#fff;background:#0b0b10;border-color:var(--b2-accent);outline:1px solid #fff;outline-offset:-5px}
+#summon-scene.b2-active .b2-link-center{display:grid;place-items:center;background:#0b0b10;color:#fff;font:900 16px/1 system-ui}
+/* Tablet reference: a single scrolling strip keeps full material names in view.
+   Content-based frame rows reserve separate space for name, kind, type and stats. */
+@media(max-height:650px){#summon-scene.b2-active .b2-material{font-size:16px;line-height:1.2;flex-basis:200px}#summon-scene.b2-active .b2-arrival .card-frame{gap:6px}#summon-scene.b2-active .b2-arrival .card-frame-name{font-size:16px!important}#summon-scene.b2-active .b2-arrival .card-frame-stats{font-size:16px!important}}
+@media(max-width:700px){#summon-scene.b2-active .b2-scene[data-kind=link] .b2-effect{grid-template-columns:minmax(0,1fr) 120px;gap:8px}#summon-scene.b2-active .b2-link-grid{width:120px}#summon-scene.b2-active .b2-link-arrow{font-size:24px}}
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-overlay-count{left:0;right:0;width:auto;max-width:none;box-sizing:border-box}
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-arrival{padding-bottom:36px}
+@media(max-width:640px){
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-overlay-stack{display:none}
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-arrival .card-frame{grid-template-rows:auto auto auto auto;align-content:center;overflow:hidden}
+}
+@media(max-height:480px){
+#summon-scene.b2-active .b2-scene{inset:64px 8px 8px;padding:6px;gap:4px}
+#summon-scene.b2-active .b2-hazard{font-size:16px;padding:1px 20px}
+#summon-scene.b2-active .b2-name{font-size:20px}
+#summon-scene.b2-active .b2-stats{font-size:15px;margin:2px 0 0}
+#summon-scene.b2-active .b2-caption{display:none}
+#summon-scene.b2-active .b2-arrival .card-frame{overflow:hidden}
+#summon-scene.b2-active .b2-arrival .card-frame>:is(.card-frame-kind,.card-frame-type){display:none}
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-overlay-stack{display:none}
+#summon-scene.b2-active .b2-scene[data-kind=xyz] .b2-arrival{padding-bottom:30px}
+}

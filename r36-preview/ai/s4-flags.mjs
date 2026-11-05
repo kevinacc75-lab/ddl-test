@@ -1,0 +1,9 @@
+// r36 S4 battle-planner flags (Claude as builder, 5 Nov 2026; plan item S4, found by S2 puzzle e). Kept out of
+// midgame-flags.mjs so the reviewed A/B/C/T/Z shape and the Classic/Enhanced recipes do not change. Default OFF and in no
+// recipe until reviewed:
+//   E = planBattle uses every attacker the ENGINE offers, including face-up Defence Position ones (e.g. Scareclaw
+//       Kashtira: "This card can attack while in face-up Defense Position. If it does, apply its DEF for damage
+//       calculation."), scored with DEF when its text says so.
+const env=String(globalThis.process?.env?.DDL_S4??globalThis.DDL_S4??'').toUpperCase();
+export const S4=Object.fromEntries(['E'].map(k=>[k,env.includes(k)]));
+export function setS4(flags={}){for(const k of Object.keys(S4))if(k in flags)S4[k]=!!flags[k];return {...S4}}
