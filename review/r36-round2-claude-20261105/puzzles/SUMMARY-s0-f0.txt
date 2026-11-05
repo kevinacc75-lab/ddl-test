@@ -1,0 +1,30 @@
+a classic s0 f0: PASS - stop=turn-end decisions=12 rejected=0 errors=0 checks=offered:y,selectedAttack:y,noPositionChange:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/5500
+a enhanced s0 f0: PASS - stop=turn-end decisions=12 rejected=0 errors=0 checks=offered:y,selectedAttack:y,noPositionChange:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/5500
+a2 classic s0 f0: PASS - stop=turn-end decisions=12 rejected=0 errors=0 checks=offered:y,selectedAttack:y,noPositionChange:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/5500
+a2 enhanced s0 f0: PASS - stop=turn-end decisions=12 rejected=0 errors=0 checks=offered:y,selectedAttack:y,noPositionChange:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Granguignol the Dusk Dragon | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/5500
+b classic s0 f0: PASS - stop=turn-end decisions=13 rejected=0 errors=0 checks=offered:y,selectedAttack:y,targetFleurdelis:y,fleurdelisDestroyed:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn targets=Dogmatika Fleurdelis, the Knighted
+   LP start/after: 8000/8000 -> 8000/7700
+b enhanced s0 f0: PASS - stop=turn-end decisions=13 rejected=0 errors=0 checks=offered:y,selectedAttack:y,targetFleurdelis:y,fleurdelisDestroyed:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn targets=Dogmatika Fleurdelis, the Knighted
+   LP start/after: 8000/8000 -> 8000/7700
+b2 classic s0 f0: PASS - stop=turn-end decisions=13 rejected=0 errors=0 checks=offered:y,selectedAttack:y,targetFleurdelis:y,fleurdelisDestroyed:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn targets=Dogmatika Fleurdelis, the Knighted
+   LP start/after: 8000/8000 -> 8000/7700
+b2 enhanced s0 f0: PASS - stop=turn-end decisions=13 rejected=0 errors=0 checks=offered:y,selectedAttack:y,targetFleurdelis:y,fleurdelisDestroyed:y,attackerStays:y,damage:y,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | attack:Attack · Dark Armed, the Dragon of Annihilation | phase:Enter Main Phase 2 | phase:End turn targets=Dogmatika Fleurdelis, the Knighted
+   LP start/after: 8000/8000 -> 8000/7700
+e classic s0 f0: FAIL - stop=turn-end decisions=4 rejected=0 errors=0 checks=offered:y,selectedAttack:N,noPositionChange:y,attackerStays:y,damage:N,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/8000
+e enhanced s0 f0: FAIL - stop=turn-end decisions=4 rejected=0 errors=0 checks=offered:y,selectedAttack:N,noPositionChange:y,attackerStays:y,damage:N,ownLp:y
+   own-turn plays: phase:Enter Battle Phase | phase:Enter Main Phase 2 | phase:End turn
+   LP start/after: 8000/8000 -> 8000/8000

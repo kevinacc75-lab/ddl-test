@@ -1,0 +1,136 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "crossMode": {
+   "switches": [
+    {
+     "after": 400,
+     "from": "enhanced",
+     "to": "classic",
+     "titleBefore": "Pilot A is choosing its next play"
+    },
+    {
+     "after": 1500,
+     "from": "classic",
+     "to": "enhanced",
+     "titleBefore": "Pilot A is choosing its next play"
+    },
+    {
+     "after": 700,
+     "from": "enhanced",
+     "to": "classic",
+     "titleBefore": "Pilot A is choosing its next play"
+    },
+    {
+     "after": 1200,
+     "from": "classic",
+     "to": "enhanced",
+     "titleBefore": "Pilot A is choosing its next play"
+    },
+    {
+     "after": 500,
+     "from": "enhanced",
+     "to": "classic",
+     "titleBefore": "Pilot B is choosing its next play"
+    },
+    {
+     "after": 900,
+     "from": "classic",
+     "to": "enhanced",
+     "titleBefore": "Pilot A is choosing its next play"
+    }
+   ],
+   "samples": [
+    {
+     "turn": "Crimson Abyss · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 1508302577
+    },
+    {
+     "turn": "Crimson Abyss · Turn 1",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 1490339706
+    },
+    {
+     "turn": "Sealed Horizon · Turn 2",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -1186276532
+    },
+    {
+     "turn": "Sealed Horizon · Turn 3",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 269018575
+    },
+    {
+     "turn": "Crimson Abyss · Turn 3",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -1371654913
+    },
+    {
+     "turn": "Sealed Horizon · Turn 4",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 978048064
+    }
+   ],
+   "finalMode": "enhanced",
+   "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "bannerMatches": true,
+   "distinctStates": 6,
+   "notices": [],
+   "errors": [
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139"
+   ],
+   "pass": false
+  }
+ },
+ "pass": false,
+ "errorKinds": {
+  "crossMode": [
+   "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto",
+   "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto"
+  ]
+ }
+}

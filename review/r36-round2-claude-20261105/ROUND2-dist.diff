@@ -1,0 +1,119 @@
+diff --git a/dist/ai/ai-worker.mjs b/dist/ai/ai-worker.mjs
+index 2837820..09a2cce 100644
+--- a/dist/ai/ai-worker.mjs
++++ b/dist/ai/ai-worker.mjs
+@@ -4,7 +4,7 @@ import {buildPlan} from '../pilot-notes.mjs';
+ import {createOptimalPilots} from '../optimal-pilot.mjs';
+ import {readCompressed} from '../load.mjs';
+ import {createSearchCore} from './engine-snapshot.mjs';
+-import {AI_MODES,aiModeOf,setMidgame} from './midgame-flags.mjs';
++import {aiModeOf,setAiMode} from './midgame-flags.mjs';
+ // Round 2b: persistent world pool (Seto ruling A; switched on 14 Oct). One pool per duel and seat, kept between thinks.
+ export const WORLD_POOL_ENABLED=true;
+ let cancelled=new Set(),resources;
+@@ -14,7 +14,7 @@ onmessage=async({data:x})=>{
+  const capMs=x.capMs??(x.nodeBudget<100?400:1500),deadline=performance.now()+Math.max(0,(x.deadlineAt?x.deadlineAt-Date.now():capMs-(Date.now()-(x.startedAt??Date.now())))-20),box=x.deadlineBox||null,shouldStop=()=>performance.now()>=deadline||(box!==null&&Atomics.load(box,0)===x.id&&Date.now()>=x.deadlineBase+Atomics.load(box,1)-20);
+  let d;try{const {db,scripts,core,searchCore}=await warm();if(cancelled.has(x.id))return;
+  const foundation=new Duel(core,db,scripts),context=x.seatContext,state=context.publicState;if(!state)throw Error('Sanitized root state missing');d=foundation;Object.assign(d,state);d.handle=null;d.seatContext=context;d.decks=context.decks;d.order=context.first===0?[0,1]:[1,0];d.fromEngine=p=>d.order[p];d.toEngine=p=>d.order.indexOf(p);d.lp=state.players.map(p=>p.lp);d.responseHistory=Array(context.history.length);d.instances=new Map();d.instanceSlots=new Map();d.attempts=new Map();d.stateKeys=new Map();d.actions=0;d.copyCounts=new Map();d.pendingIdentityEntries=new Set();d.log=[];d.events=[];d.knowledge=[0,1].map(view=>new Knowledge(view,d.decks,d.fromEngine));d.zone=(p,l)=>l===1?Array.from({length:state.players[p].deck},(_,sequence)=>({code:0,controller:p,location:l,sequence,hidden:true})):state.players[p].zones[l]||[];d.snapshot=()=>({...state,log:d.log});
+- setMidgame(AI_MODES[aiModeOf(x.aiMode)]);/* r36 AI selector: every think runs the duel's own mode (a stale think of an older duel is discarded by id/revision in worker.mjs) */
++ setAiMode(x.aiMode);/* r36 AI selector: every think runs the duel's own mode, A-Z and the complete S4 map (a stale think of an older duel is discarded by id/revision in worker.mjs) */
+  const pilot=createOptimalPilots({seed:x.seed,nodeBudget:x.nodeBudget,doctrine:x.doctrine,shouldStop,searchCore,worldPool:WORLD_POOL_ENABLED,poolKey:x.duelId!==undefined?'live:'+x.duelId:undefined,poolSize:x.poolSize,seatCapBytes:x.aiSeats?80*1048576/x.aiSeats:undefined})[x.seat];pilot.priorSearchRoots=x.priorSearchRoots;if(aiModeOf(x.aiMode)==='enhanced'&&x.pendingRemoval)pilot.pendingRemoval=x.pendingRemoval;/* r36 Finding B: carry the B1 removal follow-up into the fresh pilot (Enhanced only) */pilot.decisions=x.decisionCount||0;pilot.onProgress=stats=>{if(stats.aggregatedWorlds<8){postMessage({type:'progress',id:x.id,revision:x.revision,stats});return}postMessage({type:'progress',id:x.id,revision:x.revision,stats,response:stats.response,plan:{...buildPlan(d,stats.response,{rule:'Capped information-set search',reason:'Best sampled action aggregated over '+stats.aggregatedWorlds+' worlds',kind:'effect'}),revision:x.revision,search:stats}})};const before=d.log.length,plan=pilot.plan(d);plan.revision=x.revision;
+  if(!cancelled.has(x.id))postMessage({type:'decision',id:x.id,revision:x.revision,response:plan.response,explain:plan.reason,stats:plan.search||{nodes:0,determinizations:0},plan,guards:d.log.slice(before).filter(e=>e.kind==='guard')});
+  }catch(e){postMessage({type:'error',id:x.id,revision:x.revision,message:e.message})}finally{d?.stop()}
+diff --git a/dist/ai/midgame-flags.mjs b/dist/ai/midgame-flags.mjs
+index 0afdac4..b319ac9 100644
+--- a/dist/ai/midgame-flags.mjs
++++ b/dist/ai/midgame-flags.mjs
+@@ -1,4 +1,5 @@
+ // r36 midgame flags (see ai/midgame.mjs). Separate module so tactics.mjs can read them without an import cycle.
++import {setS4} from './s4-flags.mjs';
+ const env=String(globalThis.process?.env?.DDL_MIDGAME??globalThis.DDL_MIDGAME??'').toUpperCase();
+ // RELAY-075 B2: T and Z are separate policy changes HELD FOR REVIEW (default off, not part of arm B):
+ //   T = ahead/trade penalty (when ahead, a losing trade costs 600+ATK*.2 instead of 1200+ATK*.35), turn 3+, needs B.
+@@ -11,5 +12,8 @@ export function setMidgame(flags={}){for(const k of KEYS)if(k in flags)MIDGAME[k
+ // removal follow-up). C (doctrine draft), T and Z stay off in both (held for review).
+ export const AI_MODES=Object.freeze({classic:Object.freeze({A:false,B:false,C:false,T:false,Z:false}),enhanced:Object.freeze({A:true,B:true,C:false,T:false,Z:false})});
+ export const aiModeOf=v=>v==='enhanced'?'enhanced':'classic';
+-export function setAiMode(mode){return setMidgame(AI_MODES[aiModeOf(mode)])}
++// r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map (flag E is in neither recipe yet), so a dev/test
++// setting can never leak into a duel or think. setAiMode runs at each duel start (worker.mjs) and each think (ai-worker.mjs).
++export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:false})});
++export function setAiMode(mode){setS4(AI_S4[aiModeOf(mode)]);return setMidgame(AI_MODES[aiModeOf(mode)])}
+ export const midgameLabel=()=>KEYS.filter(k=>MIDGAME[k]).join('')||'off';
+diff --git a/dist/ai/midgame-rules.mjs b/dist/ai/midgame-rules.mjs
+index e3f7b02..a7a33af 100644
+--- a/dist/ai/midgame-rules.mjs
++++ b/dist/ai/midgame-rules.mjs
+@@ -253,24 +253,42 @@ function removalStageAt(d,seat,intent){
+  if(d.resolvingChain==null)return Math.max(0,...(d.chain||[]).map(c=>c.chain_size))===intent.link?'activate':null;
+  return d.resolvingChain===intent.link?'resolve':null;
+ }
+-// Binds the intent to the source instance of its own chain link the first time that link is seen while it is being
+-// activated (newest link, nothing resolving). Returns the (possibly) bound intent; pure.
++// r36 F1 lifecycle (RELAY-107 L1): an armed intent must BIND at its first own observation, or it EXPIRES. At that first
++// observation our activation's link must be in the current chain (the native engine creates it before any cost/target
++// prompt, after any zone choice for a card placed from the hand; it may already be behind an opponent's response, or resolving): our own unsolved link with the intent's link
++// number and code. Bind to that link's source instance; if there is no such link (activation rejected, cancelled,
++// negated and solved, or already resolved) the intent expires and can never bind later. Same-chain argument: between
++// the accepted activation and our next prompt no own action can start another chain whose link 1 is our same card.
++// Pure; returns the bound or expired intent.
+ export function removalBind(d,seat,intent){
+- if(!intent||intent.source||d.resolvingChain!=null)return intent;
+- const link=removalLink(d,seat,intent);if(!link||Math.max(0,...(d.chain||[]).map(c=>c.chain_size))!==intent.link)return intent;
+- return {...intent,source:linkSource(link)};
++ if(!intent||intent.source||intent.expired)return intent;
++ const link=removalLink(d,seat,intent);if(link)return {...intent,source:linkSource(link)};
++ // Not yet observable: the engine asks where to place our card (SELECT_PLACE, hint = the card's code) BEFORE it opens
++ // the activation's link. The intent waits; any other own observation without its link expires it. Safe: a later
++ // activation of the same card needs our Idle prompt first, which clears the intent (optimal-pilot.mjs).
++ if(d.prompt?.type===M.SELECT_PLACE&&d.hint===intent.code&&d.resolvingChain==null&&!(d.chain||[]).some(c=>c.chain_size>=intent.link))return intent;
++ return {...intent,expired:true};
+ }
+-// True when the intent can no longer apply: a different turn, or it was bound and its link is gone / solved / replaced
+-// (chain resolved or ended, activation negated and solved, a new chain's link 1 is another instance).
++// True when the intent can no longer apply: a different turn, expired unbound, or bound and its link is gone / solved /
++// replaced (chain resolved or ended, activation negated and solved, a new chain's link 1 is another instance).
+ export function removalDone(d,seat,intent){
+- if(!intent)return true;if(d.turn!==intent.turn)return true;
++ if(!intent)return true;if(d.turn!==intent.turn||intent.expired)return true;
+  return !!intent.source&&!removalLink(d,seat,intent);
+ }
++// r36 B1 worker-state integration (RELAY-108 section 2). A plan chosen by a route that does not carry removalIntent (the
++// worker's aggregate-cap progress plan) keeps the removal intent of the SAME prompt's baseline decision only when its
++// response is exactly that intent's activation, for the same seat. Any other response, a missing baseline intent or
++// another seat: the plan is returned unchanged. Pure.
++export function carryRemovalIntent(plan,baseline,seat){
++ const intent=baseline?.removalIntent;
++ if(!plan||plan.removalIntent||!intent||intent.seat!==seat||JSON.stringify(plan.response)!==JSON.stringify(intent.activation))return plan;
++ return {...plan,removalIntent:intent};
++}
+ const stringIndex=(v,code)=>{try{const n=BigInt(v||0);return n>>20n===BigInt(code)?Number(n&0xFFFFFn):null}catch{return null}};
+ export function removalFollowUp(d,seat,m,r,intent){
+  if(!intent||d.turn!==intent.turn)return null;
+  const src=d.currentEffect?.code||d.lastCard;if(src&&src!==intent.code)return null;
+- intent=removalBind(d,seat,intent);
++ intent=removalBind(d,seat,intent);if(intent.expired)return null;/* RELAY-107 L1 */
+  const stages=REMOVAL_STAGES[d.name(intent.code)]||[],at=removalStageAt(d,seat,intent);if(!at)return null;
+  if(m.type===M.SELECT_YESNO){
+   const st=stages.find(s=>s.at===at&&s.yesno!=null&&stringIndex(m.description,intent.code)===s.yesno);if(!st)return null;
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index 14309bc..c4acb0a 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -5,6 +5,7 @@ import {Duel,M} from './duel.mjs';
+ import {sumSelections} from './pilot.mjs';
+ import {createOptimalPilots as createPilots} from './optimal-pilot.mjs';
+ import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';
++import {carryRemovalIntent} from './ai/midgame-rules.mjs';
+ let aiMode='classic';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */
+ import {readCompressed} from './load.mjs';
+ import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
+@@ -61,7 +62,7 @@ function planned(){
+  const searchRoot=[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,priorSearchRoots=searchRoot?searchRoots[seat]++:searchRoots[seat];
+  thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});
+  const metric=stats=>postMessage({type:'ai-think-metric',preset:paceKind(),thinkMs:Date.now()-started,visibleWaitMs:presentationPending?0:Math.max(0,Date.now()-Math.max(started,presentationDoneAt)),capMs,seed:matchInfo.seed,decision:duel.responseHistory.length,seat,promptType:duel.prompt.type,isSearchRoot:[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,stats});
+- const fallback=()=>{if(thinking?.id!==id||duel.revision!==revision)return;cancelThink(false);plan=bestAggregated?.plan||publicDecision;if(bestAggregated){plan.search={...bestAggregated.stats,capped:true,status:(bestAggregated.stats.matchedWorlds??bestAggregated.stats.determinizations)>=16?'full':'reduced'};duel.record('think-cap: best action aggregated over '+bestAggregated.stats.aggregatedWorlds+' sampled worlds','guard')}else{duel.record('info-set fallback: fewer than eight aggregated worlds at '+capMs+'ms cap; public-information decision','guard');plan.search={...(lastProgress||{}),nodes:lastProgress?.nodes||0,determinizations:lastProgress?.determinizations||0,aggregatedWorlds:0,status:'fallback',capped:true}}if(duel.log.at(-1))duel.log.at(-1).reason=bestAggregated?'think-cap':'public-information fallback';metric(plan.search);send()};
++ const fallback=()=>{if(thinking?.id!==id||duel.revision!==revision)return;cancelThink(false);plan=bestAggregated?.plan||publicDecision;if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);/* r36 B1 worker-state (RELAY-108): the capped plan keeps the matching baseline intent */if(bestAggregated){plan.search={...bestAggregated.stats,capped:true,status:(bestAggregated.stats.matchedWorlds??bestAggregated.stats.determinizations)>=16?'full':'reduced'};duel.record('think-cap: best action aggregated over '+bestAggregated.stats.aggregatedWorlds+' sampled worlds','guard')}else{duel.record('info-set fallback: fewer than eight aggregated worlds at '+capMs+'ms cap; public-information decision','guard');plan.search={...(lastProgress||{}),nodes:lastProgress?.nodes||0,determinizations:lastProgress?.determinizations||0,aggregatedWorlds:0,status:'fallback',capped:true}}if(duel.log.at(-1))duel.log.at(-1).reason=bestAggregated?'think-cap':'public-information fallback';metric(plan.search);send()};
+  thinkWorker.onmessage=({data:x})=>{if(thinking?.id!==id||x.id!==id||x.revision!==revision||duel.revision!==revision)return;if(x.type==='progress'){lastProgress=x.stats;if(x.stats?.aggregatedWorlds>=8&&x.plan)bestAggregated=x;postMessage({type:'ai-progress',revision,stats:x.stats});return}if(x.type==='error'){fallback();return}if(x.type==='decision'){thinkTimes.push(Date.now()-started);thinkTimes=thinkTimes.slice(-15);for(const entry of x.guards||[])if(!duel.log.some(e=>e.kind==='guard'&&e.actionIndex===entry.actionIndex&&e.text===entry.text))duel.log.push(entry);plan=x.plan;metric(x.stats);cancelThink(false);send()}};
+  thinkWorker.onerror=fallback;thinking.fallback=fallback;thinkTimeout=setTimeout(fallback,Math.max(0,deadlineAt-Date.now()));
+  thinkWorker.postMessage({type:'think',id,revision,startedAt:started,seatContext:exportSeatContext(duel,seat),seed:matchInfo.seed,first:matchInfo.first,seat,capMs,deadlineAt,deadlineBox,deadlineBase,priorSearchRoots,duelId:duelSerial,aiSeats:mode==='watch'?2:1,poolSize:mode==='watch'?10:16/*Seto 14 Oct: Watch (both seats AI) 10 worlds (~35 MB of its 40 MB share); Play 16*/,nodeBudget:preset==='instant'?40:400,doctrine:matchInfo.doctrine,decisionCount:pilots[seat].decisions,aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});return null;

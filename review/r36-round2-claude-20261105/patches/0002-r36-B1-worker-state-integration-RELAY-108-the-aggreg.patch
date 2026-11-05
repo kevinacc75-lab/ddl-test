@@ -1,0 +1,211 @@
+From c75a2c1cb1e3ac18f534d0fd1f09eb660fc69551 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 14:46:55 +1100
+Subject: [PATCH 2/5] r36 B1 worker-state integration (RELAY-108): the
+ aggregate-cap plan keeps the same prompt's baseline removal intent only on an
+ exact activation match (Enhanced); setAiMode resets the complete S4 map,
+ ai-worker uses it each think (RELAY-109)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/ai/ai-worker.mjs        |  4 +--
+ dist/ai/midgame-flags.mjs    |  6 +++-
+ dist/ai/midgame-rules.mjs    |  9 ++++++
+ dist/worker.mjs              |  3 +-
+ tests/r36-ai-mode.test.mjs   | 11 ++++---
+ tests/r36-b1-worker.test.mjs | 57 ++++++++++++++++++++++++++++++++++++
+ 6 files changed, 82 insertions(+), 8 deletions(-)
+ create mode 100644 tests/r36-b1-worker.test.mjs
+
+diff --git a/dist/ai/ai-worker.mjs b/dist/ai/ai-worker.mjs
+index 2837820..09a2cce 100644
+--- a/dist/ai/ai-worker.mjs
++++ b/dist/ai/ai-worker.mjs
+@@ -4,7 +4,7 @@ import {buildPlan} from '../pilot-notes.mjs';
+ import {createOptimalPilots} from '../optimal-pilot.mjs';
+ import {readCompressed} from '../load.mjs';
+ import {createSearchCore} from './engine-snapshot.mjs';
+-import {AI_MODES,aiModeOf,setMidgame} from './midgame-flags.mjs';
++import {aiModeOf,setAiMode} from './midgame-flags.mjs';
+ // Round 2b: persistent world pool (Seto ruling A; switched on 14 Oct). One pool per duel and seat, kept between thinks.
+ export const WORLD_POOL_ENABLED=true;
+ let cancelled=new Set(),resources;
+@@ -14,7 +14,7 @@ onmessage=async({data:x})=>{
+  const capMs=x.capMs??(x.nodeBudget<100?400:1500),deadline=performance.now()+Math.max(0,(x.deadlineAt?x.deadlineAt-Date.now():capMs-(Date.now()-(x.startedAt??Date.now())))-20),box=x.deadlineBox||null,shouldStop=()=>performance.now()>=deadline||(box!==null&&Atomics.load(box,0)===x.id&&Date.now()>=x.deadlineBase+Atomics.load(box,1)-20);
+  let d;try{const {db,scripts,core,searchCore}=await warm();if(cancelled.has(x.id))return;
+  const foundation=new Duel(core,db,scripts),context=x.seatContext,state=context.publicState;if(!state)throw Error('Sanitized root state missing');d=foundation;Object.assign(d,state);d.handle=null;d.seatContext=context;d.decks=context.decks;d.order=context.first===0?[0,1]:[1,0];d.fromEngine=p=>d.order[p];d.toEngine=p=>d.order.indexOf(p);d.lp=state.players.map(p=>p.lp);d.responseHistory=Array(context.history.length);d.instances=new Map();d.instanceSlots=new Map();d.attempts=new Map();d.stateKeys=new Map();d.actions=0;d.copyCounts=new Map();d.pendingIdentityEntries=new Set();d.log=[];d.events=[];d.knowledge=[0,1].map(view=>new Knowledge(view,d.decks,d.fromEngine));d.zone=(p,l)=>l===1?Array.from({length:state.players[p].deck},(_,sequence)=>({code:0,controller:p,location:l,sequence,hidden:true})):state.players[p].zones[l]||[];d.snapshot=()=>({...state,log:d.log});
+- setMidgame(AI_MODES[aiModeOf(x.aiMode)]);/* r36 AI selector: every think runs the duel's own mode (a stale think of an older duel is discarded by id/revision in worker.mjs) */
++ setAiMode(x.aiMode);/* r36 AI selector: every think runs the duel's own mode, A-Z and the complete S4 map (a stale think of an older duel is discarded by id/revision in worker.mjs) */
+  const pilot=createOptimalPilots({seed:x.seed,nodeBudget:x.nodeBudget,doctrine:x.doctrine,shouldStop,searchCore,worldPool:WORLD_POOL_ENABLED,poolKey:x.duelId!==undefined?'live:'+x.duelId:undefined,poolSize:x.poolSize,seatCapBytes:x.aiSeats?80*1048576/x.aiSeats:undefined})[x.seat];pilot.priorSearchRoots=x.priorSearchRoots;if(aiModeOf(x.aiMode)==='enhanced'&&x.pendingRemoval)pilot.pendingRemoval=x.pendingRemoval;/* r36 Finding B: carry the B1 removal follow-up into the fresh pilot (Enhanced only) */pilot.decisions=x.decisionCount||0;pilot.onProgress=stats=>{if(stats.aggregatedWorlds<8){postMessage({type:'progress',id:x.id,revision:x.revision,stats});return}postMessage({type:'progress',id:x.id,revision:x.revision,stats,response:stats.response,plan:{...buildPlan(d,stats.response,{rule:'Capped information-set search',reason:'Best sampled action aggregated over '+stats.aggregatedWorlds+' worlds',kind:'effect'}),revision:x.revision,search:stats}})};const before=d.log.length,plan=pilot.plan(d);plan.revision=x.revision;
+  if(!cancelled.has(x.id))postMessage({type:'decision',id:x.id,revision:x.revision,response:plan.response,explain:plan.reason,stats:plan.search||{nodes:0,determinizations:0},plan,guards:d.log.slice(before).filter(e=>e.kind==='guard')});
+  }catch(e){postMessage({type:'error',id:x.id,revision:x.revision,message:e.message})}finally{d?.stop()}
+diff --git a/dist/ai/midgame-flags.mjs b/dist/ai/midgame-flags.mjs
+index 0afdac4..b319ac9 100644
+--- a/dist/ai/midgame-flags.mjs
++++ b/dist/ai/midgame-flags.mjs
+@@ -1,4 +1,5 @@
+ // r36 midgame flags (see ai/midgame.mjs). Separate module so tactics.mjs can read them without an import cycle.
++import {setS4} from './s4-flags.mjs';
+ const env=String(globalThis.process?.env?.DDL_MIDGAME??globalThis.DDL_MIDGAME??'').toUpperCase();
+ // RELAY-075 B2: T and Z are separate policy changes HELD FOR REVIEW (default off, not part of arm B):
+ //   T = ahead/trade penalty (when ahead, a losing trade costs 600+ATK*.2 instead of 1200+ATK*.35), turn 3+, needs B.
+@@ -11,5 +12,8 @@ export function setMidgame(flags={}){for(const k of KEYS)if(k in flags)MIDGAME[k
+ // removal follow-up). C (doctrine draft), T and Z stay off in both (held for review).
+ export const AI_MODES=Object.freeze({classic:Object.freeze({A:false,B:false,C:false,T:false,Z:false}),enhanced:Object.freeze({A:true,B:true,C:false,T:false,Z:false})});
+ export const aiModeOf=v=>v==='enhanced'?'enhanced':'classic';
+-export function setAiMode(mode){return setMidgame(AI_MODES[aiModeOf(mode)])}
++// r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map (flag E is in neither recipe yet), so a dev/test
++// setting can never leak into a duel or think. setAiMode runs at each duel start (worker.mjs) and each think (ai-worker.mjs).
++export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:false})});
++export function setAiMode(mode){setS4(AI_S4[aiModeOf(mode)]);return setMidgame(AI_MODES[aiModeOf(mode)])}
+ export const midgameLabel=()=>KEYS.filter(k=>MIDGAME[k]).join('')||'off';
+diff --git a/dist/ai/midgame-rules.mjs b/dist/ai/midgame-rules.mjs
+index d77128d..a7a33af 100644
+--- a/dist/ai/midgame-rules.mjs
++++ b/dist/ai/midgame-rules.mjs
+@@ -275,6 +275,15 @@ export function removalDone(d,seat,intent){
+  if(!intent)return true;if(d.turn!==intent.turn||intent.expired)return true;
+  return !!intent.source&&!removalLink(d,seat,intent);
+ }
++// r36 B1 worker-state integration (RELAY-108 section 2). A plan chosen by a route that does not carry removalIntent (the
++// worker's aggregate-cap progress plan) keeps the removal intent of the SAME prompt's baseline decision only when its
++// response is exactly that intent's activation, for the same seat. Any other response, a missing baseline intent or
++// another seat: the plan is returned unchanged. Pure.
++export function carryRemovalIntent(plan,baseline,seat){
++ const intent=baseline?.removalIntent;
++ if(!plan||plan.removalIntent||!intent||intent.seat!==seat||JSON.stringify(plan.response)!==JSON.stringify(intent.activation))return plan;
++ return {...plan,removalIntent:intent};
++}
+ const stringIndex=(v,code)=>{try{const n=BigInt(v||0);return n>>20n===BigInt(code)?Number(n&0xFFFFFn):null}catch{return null}};
+ export function removalFollowUp(d,seat,m,r,intent){
+  if(!intent||d.turn!==intent.turn)return null;
+diff --git a/dist/worker.mjs b/dist/worker.mjs
+index 14309bc..c4acb0a 100644
+--- a/dist/worker.mjs
++++ b/dist/worker.mjs
+@@ -5,6 +5,7 @@ import {Duel,M} from './duel.mjs';
+ import {sumSelections} from './pilot.mjs';
+ import {createOptimalPilots as createPilots} from './optimal-pilot.mjs';
+ import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';
++import {carryRemovalIntent} from './ai/midgame-rules.mjs';
+ let aiMode='classic';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */
+ import {readCompressed} from './load.mjs';
+ import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
+@@ -61,7 +62,7 @@ function planned(){
+  const searchRoot=[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,priorSearchRoots=searchRoot?searchRoots[seat]++:searchRoots[seat];
+  thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});
+  const metric=stats=>postMessage({type:'ai-think-metric',preset:paceKind(),thinkMs:Date.now()-started,visibleWaitMs:presentationPending?0:Math.max(0,Date.now()-Math.max(started,presentationDoneAt)),capMs,seed:matchInfo.seed,decision:duel.responseHistory.length,seat,promptType:duel.prompt.type,isSearchRoot:[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,stats});
+- const fallback=()=>{if(thinking?.id!==id||duel.revision!==revision)return;cancelThink(false);plan=bestAggregated?.plan||publicDecision;if(bestAggregated){plan.search={...bestAggregated.stats,capped:true,status:(bestAggregated.stats.matchedWorlds??bestAggregated.stats.determinizations)>=16?'full':'reduced'};duel.record('think-cap: best action aggregated over '+bestAggregated.stats.aggregatedWorlds+' sampled worlds','guard')}else{duel.record('info-set fallback: fewer than eight aggregated worlds at '+capMs+'ms cap; public-information decision','guard');plan.search={...(lastProgress||{}),nodes:lastProgress?.nodes||0,determinizations:lastProgress?.determinizations||0,aggregatedWorlds:0,status:'fallback',capped:true}}if(duel.log.at(-1))duel.log.at(-1).reason=bestAggregated?'think-cap':'public-information fallback';metric(plan.search);send()};
++ const fallback=()=>{if(thinking?.id!==id||duel.revision!==revision)return;cancelThink(false);plan=bestAggregated?.plan||publicDecision;if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);/* r36 B1 worker-state (RELAY-108): the capped plan keeps the matching baseline intent */if(bestAggregated){plan.search={...bestAggregated.stats,capped:true,status:(bestAggregated.stats.matchedWorlds??bestAggregated.stats.determinizations)>=16?'full':'reduced'};duel.record('think-cap: best action aggregated over '+bestAggregated.stats.aggregatedWorlds+' sampled worlds','guard')}else{duel.record('info-set fallback: fewer than eight aggregated worlds at '+capMs+'ms cap; public-information decision','guard');plan.search={...(lastProgress||{}),nodes:lastProgress?.nodes||0,determinizations:lastProgress?.determinizations||0,aggregatedWorlds:0,status:'fallback',capped:true}}if(duel.log.at(-1))duel.log.at(-1).reason=bestAggregated?'think-cap':'public-information fallback';metric(plan.search);send()};
+  thinkWorker.onmessage=({data:x})=>{if(thinking?.id!==id||x.id!==id||x.revision!==revision||duel.revision!==revision)return;if(x.type==='progress'){lastProgress=x.stats;if(x.stats?.aggregatedWorlds>=8&&x.plan)bestAggregated=x;postMessage({type:'ai-progress',revision,stats:x.stats});return}if(x.type==='error'){fallback();return}if(x.type==='decision'){thinkTimes.push(Date.now()-started);thinkTimes=thinkTimes.slice(-15);for(const entry of x.guards||[])if(!duel.log.some(e=>e.kind==='guard'&&e.actionIndex===entry.actionIndex&&e.text===entry.text))duel.log.push(entry);plan=x.plan;metric(x.stats);cancelThink(false);send()}};
+  thinkWorker.onerror=fallback;thinking.fallback=fallback;thinkTimeout=setTimeout(fallback,Math.max(0,deadlineAt-Date.now()));
+  thinkWorker.postMessage({type:'think',id,revision,startedAt:started,seatContext:exportSeatContext(duel,seat),seed:matchInfo.seed,first:matchInfo.first,seat,capMs,deadlineAt,deadlineBox,deadlineBase,priorSearchRoots,duelId:duelSerial,aiSeats:mode==='watch'?2:1,poolSize:mode==='watch'?10:16/*Seto 14 Oct: Watch (both seats AI) 10 worlds (~35 MB of its 40 MB share); Play 16*/,nodeBudget:preset==='instant'?40:400,doctrine:matchInfo.doctrine,decisionCount:pilots[seat].decisions,aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});return null;
+diff --git a/tests/r36-ai-mode.test.mjs b/tests/r36-ai-mode.test.mjs
+index 7fd8f92..c5f18d5 100644
+--- a/tests/r36-ai-mode.test.mjs
++++ b/tests/r36-ai-mode.test.mjs
+@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';import fs from 'node:fs';import path fro
+ import {engine,stopEngine,scenario,drive,M} from '../tools/s3-harness.mjs';
+ import {exportSeatContext} from '../dist/ai/knowledge.mjs';
+ import {AI_MODES,aiModeOf,setAiMode,MIDGAME} from '../dist/ai/midgame-flags.mjs';
+-import {OptimalPilot} from '../dist/optimal-pilot.mjs';
++import {OptimalPilot} from '../dist/optimal-pilot.mjs';import {S4,setS4} from '../dist/ai/s4-flags.mjs';
+ let pass=0,fail=0;const ok=async(n,f)=>{try{await f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
+ await ok('recipes: Classic = all off; Enhanced = A+B; C, T, Z off in both; unknown/missing mode = Classic',()=>{
+  assert.deepEqual({...AI_MODES.classic},{A:false,B:false,C:false,T:false,Z:false});assert.deepEqual({...AI_MODES.enhanced},{A:true,B:true,C:false,T:false,Z:false});
+@@ -21,7 +21,7 @@ await ok('recipes: Classic = all off; Enhanced = A+B; C, T, Z off in both; unkno
+ globalThis.fetch=async u=>new Response(fs.readFileSync(path.join('dist',path.basename(String(u)))));
+ const out=[];globalThis.postMessage=m=>out.push(m);globalThis.onmessage=null;
+ await import('../dist/ai/ai-worker.mjs');const handle=globalThis.onmessage;assert.equal(typeof handle,'function');
+-const seen=[];const base0=OptimalPilot.prototype.base;OptimalPilot.prototype.base=function(d,o){seen.push({midgame:{...MIDGAME},pending:this.pendingRemoval??null});return base0.call(this,d,o)};
++const seen=[];const base0=OptimalPilot.prototype.base;OptimalPilot.prototype.base=function(d,o){seen.push({midgame:{...MIDGAME},s4:{...S4},pending:this.pendingRemoval??null});return base0.call(this,d,o)};
+ await engine();
+ const d=scenario(['sky','branded'],[{name:'Sky Striker Mecha - Widow Anchor',location:2,owner:0},{name:'Sky Striker Ace - Kagari',location:4,sequence:5,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Albion the Shrouded Dragon',location:4,sequence:0,owner:1}],{first:0,seed:7});
+ const endTurn=d=>{const m=d.prompt;if(m.type===M.SELECT_IDLECMD&&d.turn<3){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){d.respond(c.response);return true}}return false};
+@@ -38,14 +38,17 @@ await ok('real ai-worker: same position, Classic think = the in-process Classic
+  const dec=await think({aiMode:'classic',nodeBudget:0});setAiMode('classic');const p=new OptimalPilot({seat:0,seed:7,searchEnabled:false});
+  const {safeView}=await import('../dist/ai/knowledge.mjs');const b=base0.call(p,safeView(d,0));assert.ok(dec.response&&b?.response);assert.deepEqual(dec.response,b.response,'ai-worker Classic decision = Classic baseline');assert.ok(!dec.plan?.removalIntent,'no removal intent in Classic');
+  setAiMode('enhanced');const e=base0.call(new OptimalPilot({seat:0,seed:7,searchEnabled:false}),safeView(d,0));setAiMode('classic');assert.ok(e.removalIntent,'control: the same position in Enhanced does arm the removal (the check can see a difference)')});
++await ok('S4 lifecycle (RELAY-109): setAiMode resets the complete S4 map; a real ai-worker think after setS4({E:true}) runs with E off in both modes',async()=>{
++ for(const m of ['enhanced','classic',undefined]){setS4({E:true});setAiMode(m);assert.deepEqual({...S4},{E:false},String(m))}
++ for(const m of ['enhanced','classic']){setS4({E:true});await think({aiMode:m});assert.ok(seen.length&&seen.every(x=>x.s4.E===false),m+': E off in every base() of the think')}});
+ OptimalPilot.prototype.base=base0;stopEngine();
+ // ---- 3. source isolation vs r35.12 ----
+ const r3512=f=>execFileSync('git',['show','d3177e0:'+f],{maxBuffer:64<<20}).toString();
+ const SEL={
+  'dist/app.mjs':[["doctrine:$('#doctrine-guidance').checked,aiMode:$('#ai-mode')?.value==='enhanced'?'enhanced':'classic',","doctrine:$('#doctrine-guidance').checked,"],["· Doctrine ${x.match.doctrine?'on':'off'} · AI ${x.match.aiMode==='enhanced'?'Enhanced (experimental)':'Classic'}</small>","· Doctrine ${x.match.doctrine?'on':'off'}</small>"]],
+  'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,'']],
+- 'dist/worker.mjs':[["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';\nlet aiMode='classic';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode='classic';setAiMode(aiMode);matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
+- 'dist/ai/ai-worker.mjs':[["\nimport {AI_MODES,aiModeOf,setMidgame} from './midgame-flags.mjs';",''],[/ setMidgame\(AI_MODES\[aiModeOf\(x\.aiMode\)\]\);\/\*.*?\*\/\n/s,''],[/if\(aiModeOf\(x\.aiMode\)==='enhanced'&&x\.pendingRemoval\)pilot\.pendingRemoval=x\.pendingRemoval;\/\*.*?\*\//s,'']]};
++ 'dist/worker.mjs':[["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';\nimport {carryRemovalIntent} from './ai/midgame-rules.mjs';\nlet aiMode='classic';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode='classic';setAiMode(aiMode);matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],["if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);/* r36 B1 worker-state (RELAY-108): the capped plan keeps the matching baseline intent */",''],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
++ 'dist/ai/ai-worker.mjs':[["\nimport {aiModeOf,setAiMode} from './midgame-flags.mjs';",''],[/ setAiMode\(x\.aiMode\);\/\*.*?\*\/\n/s,''],[/if\(aiModeOf\(x\.aiMode\)==='enhanced'&&x\.pendingRemoval\)pilot\.pendingRemoval=x\.pendingRemoval;\/\*.*?\*\//s,'']]};
+ for(const [f,reps] of Object.entries(SEL))await ok(f+' minus the selector lines = r35.12 (d3177e0) bytes',()=>{let s=fs.readFileSync(f,'utf8');for(const [a,b] of reps){const before=s;s=s.replace(a,b);assert.notEqual(s,before,'selector line present: '+String(a).slice(0,60))}assert.equal(s,r3512(f))});
+ // ---- 4. cold load ----
+ await ok('cold load = Classic: the select defaults to Classic and the choice is not stored or restored',()=>{
+diff --git a/tests/r36-b1-worker.test.mjs b/tests/r36-b1-worker.test.mjs
+new file mode 100644
+index 0000000..d6bb9f9
+--- /dev/null
++++ b/tests/r36-b1-worker.test.mjs
+@@ -0,0 +1,57 @@
++// r36 B1 worker-state integration (Claude as builder, 5 Nov 2026; ChatGPT RELAY-108 section 2). In the browser the
++// played plan can come from the worker's aggregate-cap route (ai-worker progress plan built with buildPlan, no
++// removalIntent). worker.mjs now passes that plan through carryRemovalIntent(plan, publicDecision, seat): the SAME
++// prompt's baseline intent is kept only when the capped response is exactly its activation (Enhanced only).
++// Native position: Widow Anchor in hand, Kagari in the EMZ, 3 Spells in GY vs Albion (as tools/r36-b1-native-trace.mjs),
++// both engine first-seat mappings. The persistent pilot plays the follow-up prompts after observing the played plan.
++import assert from 'node:assert/strict';import fs from 'node:fs';
++import {engine,stopEngine,scenario,drive,M} from '../tools/s3-harness.mjs';
++import {setAiMode} from '../dist/ai/midgame-flags.mjs';import {carryRemovalIntent} from '../dist/ai/midgame-rules.mjs';
++import {OptimalPilot} from '../dist/optimal-pilot.mjs';import {safeView} from '../dist/ai/knowledge.mjs';import {buildPlan} from '../dist/pilot-notes.mjs';
++let pass=0,fail=0;const ok=async(n,f)=>{try{await f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
++const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
++// ---- 1. the pure helper ----
++const I={code:98338152,activation:{type:1,action:5,index:1},seat:0,turn:3,link:1,effect:'control'};
++await ok('carryRemovalIntent: exact activation, same seat -> intent kept (a copy of the plan; input not mutated)',()=>{const p={response:{type:1,action:5,index:1}},c=carryRemovalIntent(p,{removalIntent:I},0);assert.equal(c.removalIntent,I);assert.equal(p.removalIntent,undefined)});
++await ok('carryRemovalIntent: different response / other seat / no baseline intent / plan already has one -> unchanged',()=>{
++ const p={response:{type:1,action:5,index:0}};assert.equal(carryRemovalIntent(p,{removalIntent:I},0),p);
++ const q={response:{type:1,action:5,index:1}};assert.equal(carryRemovalIntent(q,{removalIntent:I},1),q);assert.equal(carryRemovalIntent(q,{},0),q);assert.equal(carryRemovalIntent(q,null,0),q);
++ const r={response:{type:1,action:5,index:1},removalIntent:{...I,code:1}};assert.equal(carryRemovalIntent(r,{removalIntent:I},0),r)});
++// ---- 2. worker.mjs wiring (source) ----
++const W=fs.readFileSync('dist/worker.mjs','utf8');
++await ok('worker.mjs: the cap fallback carries only when an aggregated plan was chosen and the duel is Enhanced; observe only after an accepted response; stale ids/revisions dropped',()=>{
++ assert.equal(W.split('carryRemovalIntent(').length-1,1,'one call');assert.ok(W.includes("plan=bestAggregated?.plan||publicDecision;if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);"));
++ assert.ok(W.includes('const fallback=()=>{if(thinking?.id!==id||duel.revision!==revision)return;'),'stale fallback ignored');
++ assert.ok(W.includes('if(thinking?.id!==id||x.id!==id||x.revision!==revision||duel.revision!==revision)return;'),'stale/new-duel worker messages ignored');
++ assert.ok(W.includes('const before=duel.retries;duel.respond(decision.response);if(duel.retries===before)pilots[decision.seat].observe(decision);'),'rejected response never arms')});
++// ---- 3. native: played capped plan -> follow-up, both first-seat mappings ----
++await engine();
++function position(first){const d=scenario(['sky','branded'],[{name:'Sky Striker Mecha - Widow Anchor',location:2,owner:0},{name:'Sky Striker Ace - Kagari',location:4,sequence:5,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Upstart Goblin',location:16,owner:0},{name:'Albion the Shrouded Dragon',location:4,sequence:0,owner:1}],{first,seed:7});
++ const own=first===0?3:4,filler=[0,1].map(seat=>new OptimalPilot({seat,seed:7,searchEnabled:false}));
++ const endTurn=d=>{const m=d.prompt;if(d.turn>=own)return false;if(m.type===M.SELECT_IDLECMD){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){d.respond(c.response);return true}}
++  if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type))return false;const s=m.seat??m.player,p=filler[s].base(safeView(d,s),{log:false});if(!p)return false;d.respond(p.response);return true};/* passed turns: End Turn; other forced prompts (e.g. hand-size discard) by a pilot */
++ assert.ok(drive(d,{until:d=>d.turn>=own&&d.prompt?.type===M.SELECT_IDLECMD&&d.prompt.seat===0,onPrompt:endTurn,max:400}).stopped,'own turn '+own);return d}
++// Plays the chosen root plan exactly as worker.step() does, then answers seat 0's following prompts with the same persistent
++// pilot (seat 1 declines) until our next Idle/Battle prompt; returns the follow-up stats and the board result.
++function play(d,P,root){const before=d.retries;d.respond(root.response);if(d.retries===before)P.observe(root);const armed=!!P.pendingRemoval;
++ for(let i=0;i<80&&d.prompt;i++){const m=d.prompt,s=m.seat??m.player;if(s===0&&(m.type===M.SELECT_IDLECMD||m.type===M.SELECT_BATTLECMD))break;
++  if(s===1){const c=d.choices().find(o=>['Do not chain','No'].includes(o.label));d.respond(c?c.response:d.choices()[0].response);continue}
++  const p=P.plan(d);d.respond(p.response);P.observe(p)}
++ const st=P.midgameStats,follow=(st.removalVerified||0)+(st.removalOverride||0);
++ return {armed,follow,albionOurs:d.zone(0,4).some(c=>c&&d.name(c.code)==='Albion the Shrouded Dragon'),errors:d.errors}}
++for(const first of [0,1]){
++ await ok(`first=${first}: Enhanced - public baseline arms removal; capped plan with the SAME response WITHOUT carry loses it (RELAY-108 defect), WITH carry keeps it and the follow-up runs`,()=>{
++  setAiMode('enhanced');const d1=position(first),P1=new OptimalPilot({seat:0,seed:7,searchEnabled:false}),pub=P1.base(safeView(d1,0));assert.ok(pub?.removalIntent,'baseline removal intent');
++  const capped=buildPlan(d1,pub.response,{rule:'Capped information-set search',reason:'test'});assert.ok(!capped.removalIntent,'the cap route builds no intent');
++  const lost=play(d1,P1,{...capped,seat:0});assert.equal(lost.armed,false,'without carry: not armed');assert.equal(lost.follow,0,'without carry: no follow-up');
++  const d2=position(first),P2=new OptimalPilot({seat:0,seed:7,searchEnabled:false}),pub2=P2.base(safeView(d2,0)),capped2=buildPlan(d2,pub2.response,{rule:'Capped information-set search',reason:'test'});
++  const kept=play(d2,P2,carryRemovalIntent({...capped2,seat:0},pub2,0));assert.equal(kept.armed,true,'with carry: armed');assert.ok(kept.follow>=1,'with carry: follow-up verified/overrode the projected target');assert.deepEqual(kept.errors,[]);
++  const d3=position(first),P3=new OptimalPilot({seat:0,seed:7,searchEnabled:false}),pub3=P3.base(safeView(d3,0)),pf=play(d3,P3,{...pub3,seat:0});
++  assert.equal(pf.armed,true,'public fallback route arms');assert.equal(pf.follow,kept.follow,'cap+carry = public fallback (same follow-up count)');assert.equal(pf.albionOurs,kept.albionOurs,'same board result')});
++ await ok(`first=${first}: a capped plan with a DIFFERENT response is not given the intent`,()=>{
++  setAiMode('enhanced');const d=position(first),P=new OptimalPilot({seat:0,seed:7,searchEnabled:false}),pub=P.base(safeView(d,0));
++  const other=d.choices().find(o=>!same(o.response,pub.response));assert.ok(other,'another legal choice');const c=carryRemovalIntent({...buildPlan(d,other.response,{rule:'x',reason:'x'}),seat:0},pub,0);assert.ok(!c.removalIntent)});
++}
++await ok('Classic: the baseline arms no removal intent at the same position, so the carry has nothing to keep',()=>{setAiMode('classic');const d=position(0),pub=new OptimalPilot({seat:0,seed:7,searchEnabled:false}).base(safeView(d,0));assert.ok(!pub.removalIntent);const c={response:pub.response};assert.equal(carryRemovalIntent(c,pub,0),c)});
++setAiMode('classic');stopEngine();
++console.log('r36 B1 worker-state tests: '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;process.exit();
+-- 
+2.43.0
+

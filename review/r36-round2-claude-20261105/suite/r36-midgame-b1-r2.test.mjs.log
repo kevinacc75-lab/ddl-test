@@ -1,0 +1,19 @@
+ok 1 REPRO B1-1 (FAILED at bb4bc23: "Destroying Gabrion, the Timelord opens projected lethal"): 2000-ATK Albaz + Defense Position Dragoon vs Gabrion (3000 ATK synthetic), LP 2000 -> no lethal claim
+ok 2 control: the same board with an unprotected Albion the Shrouded Dragon -> Dragoon destroy claims lethal
+ok 3 Gabrion vs Afterburners! (Spell, targets) -> no claim
+ok 4 Gabrion real DB text: destroyProtected for Dragoon (monster, non-targeting) and Afterburners! (Spell, targeting); not a Droplet protection (halve/negate is not destruction)
+ok 5 phrase families (DB audit): battle-only, own-effects-only, one-battle/one-effect scoped -> not protected from our destroy
+ok 6 phrase families: card effects / opponent's / an opponent's / their opponent's / "battle or (by) card effects" / ", or banished," / "targeted or destroyed" / bare "cannot be destroyed" / "(by battle or card effect)" / ", except by battle" -> protected from both
+ok 7 phrase families: type-restricted and targeting-restricted protection
+ok 8 field-wide grant: a face-up opposing Continuous Trap "... monsters you control cannot be destroyed by card effects" (Centur-Ion Primera) protects their blocker from Dragoon (conservative: sub-type ignored)
+ok 9 REPRO B1-2 (FAILED at bb4bc23: halveNegate opens:true gain:1500 cost:null): Albaz 3800 via Double-Edged Sword vs Albion 3000, LP 2300, only Droplet in hand, only S/T = the equipped Sword -> no opens:true
+ok 10 control: same board plus a spare hand card (Branded Fusion) -> lethal claimed, cost = Branded Fusion (hand); the Sword is NOT an allowed cost
+ok 11 control: a face-down Set Spell/Trap is a representable free cost (no active effect) -> lethal claimed with cost kind setST
+ok 12 a face-up non-Equip Spell/Trap is also not a free cost (unrepresentable -> declined): only Droplet in hand, only S/T a face-up Continuous card, two 2000 attackers vs 3000 at 2500 LP -> no claim
+ok 13 follow-up: cost prompt [Sword (field), Branded Fusion (hand)] - a default pick of the Sword is replaced by the projected Branded Fusion (removalOverride)
+ok 14 follow-up: a default pick that is a projected-equivalent cost is kept (removalVerified); a 2-card pick is cut to the projected single cost
+ok 15 follow-up: target prompt among the opponent's monsters - wrong default target replaced by the projected Albion; projected target missing -> removalMismatch
+ok 16 follow-up: a selection for a different card's effect, or on a later turn, is left alone (null)
+ok 17 OptimalPilot: observe() arms pendingRemoval only for our own played removal activation; another seat's or a different response does not; an IDLECMD prompt clears it
+ok 18 newMidgameStats has the follow-up counters (removalVerified/removalOverride/removalMismatch)
+r36-midgame-b1 round-2 tests: 18 passed

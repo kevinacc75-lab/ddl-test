@@ -1,0 +1,3 @@
+{"D1":{"fixed":{"heroOnField":[40044918],"wonderInGy":true,"stratosInHand":true,"errors":[]},"bundled":{"heroOnField":[],"wonderInGy":true,"stratosInHand":true,"errors":[]}}}
+{"D2":{"fixedEmptyGy":"false","bundledEmptyGy":"true"}}
+{"node":"v22.22.2","overrides":{"c1948619.lua":["D1","D2"],"c52947044.lua":["D4"],"c19304410.lua":["K1"],"c75047173.lua":["D5"]},"ok":true}

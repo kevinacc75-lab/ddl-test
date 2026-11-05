@@ -1,0 +1,231 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "learning": {
+   "preset": {
+    "preset": "learning",
+    "watch": "learning"
+   },
+   "samples": [
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "◇DUEL LAB · NOTICEOffline duel files are ready. You can install the lab from your browser menu.×",
+     "learning": 0,
+     "view": 2080925177
+    },
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 1857771672
+    },
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -390376207
+    },
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 1437159827
+    },
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 2120998727
+    },
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -15285700
+    },
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -157661978
+    },
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -1423681645
+    },
+    {
+     "turn": "Crimson Abyss · Turn 1",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 1912039049
+    },
+    {
+     "turn": "Crimson Abyss · Turn 1",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -1154087923
+    },
+    {
+     "turn": "Crimson Abyss · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -1504248464
+    },
+    {
+     "turn": "Crimson Abyss · Turn 1",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -625886172
+    }
+   ],
+   "banner": "AI DUELSEED 71011Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "enhancedBanner": true,
+   "distinctStates": 12,
+   "notices": [
+    "◇DUEL LAB · NOTICEOffline duel files are ready. You can install the lab from your browser menu.×"
+   ],
+   "errors": [],
+   "pass": true
+  },
+  "crossMode": {
+   "switches": [
+    {
+     "after": 400,
+     "from": "enhanced",
+     "to": "classic",
+     "titleBefore": "Preparing the duel…"
+    },
+    {
+     "after": 1500,
+     "from": "classic",
+     "to": "enhanced",
+     "titleBefore": "Preparing the duel…"
+    },
+    {
+     "after": 700,
+     "from": "enhanced",
+     "to": "classic",
+     "titleBefore": "Preparing the duel…"
+    },
+    {
+     "after": 1200,
+     "from": "classic",
+     "to": "enhanced",
+     "titleBefore": "Preparing the duel…"
+    },
+    {
+     "after": 500,
+     "from": "enhanced",
+     "to": "classic",
+     "titleBefore": "Preparing the duel…"
+    },
+    {
+     "after": 900,
+     "from": "classic",
+     "to": "enhanced",
+     "titleBefore": "Preparing the duel…"
+    }
+   ],
+   "samples": [
+    {
+     "turn": "Sealed Horizon · Turn 1",
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "◇DUEL LAB · NOTICEOffline duel files are ready. You can install the lab from your browser menu.×",
+     "learning": 0,
+     "view": 481080362
+    },
+    {
+     "turn": "Crimson Abyss · Turn 1",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 1,
+     "view": -1530270550
+    },
+    {
+     "turn": "Sealed Horizon · Turn 2",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 935232556
+    },
+    {
+     "turn": "Crimson Abyss · Turn 2",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -576492819
+    },
+    {
+     "turn": "Crimson Abyss · Turn 3",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": 457480835
+    },
+    {
+     "turn": "Sealed Horizon · Turn 4",
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+     "notice": "",
+     "learning": 0,
+     "view": -247858628
+    }
+   ],
+   "finalMode": "enhanced",
+   "banner": "AI DUELSEED 71018Pilot A · Optimal / Pilot B · OptimalFresh hands + serious pilots · Optimal · bounded search · Doctrine on · AI Enhanced (experimental)",
+   "bannerMatches": true,
+   "distinctStates": 6,
+   "notices": [
+    "◇DUEL LAB · NOTICEOffline duel files are ready. You can install the lab from your browser menu.×"
+   ],
+   "errors": [
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139"
+   ],
+   "pass": false
+  }
+ },
+ "pass": false
+}

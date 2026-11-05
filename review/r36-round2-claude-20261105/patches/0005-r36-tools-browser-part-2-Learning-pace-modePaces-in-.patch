@@ -1,0 +1,55 @@
+From 1a246132c2aca4cae9ca4ad3bf5f2647bfa0fb97 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 15:50:20 +1100
+Subject: [PATCH 5/5] r36 tools: browser part 2 - Learning pace (modePaces) in
+ Enhanced; cross-mode new-duel switches while the AI thinks (pace and modes
+ selectable, runs on builds without the selector as a control)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tools/r36-ai-mode-browser2.mjs | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+ create mode 100644 tools/r36-ai-mode-browser2.mjs
+
+diff --git a/tools/r36-ai-mode-browser2.mjs b/tools/r36-ai-mode-browser2.mjs
+new file mode 100644
+index 0000000..790df93
+--- /dev/null
++++ b/tools/r36-ai-mode-browser2.mjs
+@@ -0,0 +1,32 @@
++// r36 AI selector browser checks, part 2 (Claude as builder, 5 Nov 2026; RELAY-105/108 open items). Chromium via the
++// pre-installed Playwright, desktop 1366x900, against a served dist/.
++//  A. Learning pace (stored preference modePaces.watch='learning', set before load and read back): a Watch duel in Enhanced starts, the banner
++//     says Enhanced, the duel view keeps changing (>=6 distinct samples of 12) and there are no page errors.
++//  B. Cross-mode stale-response control: with the Instant preset, start a duel and, while the AI is thinking, start a NEW
++//     duel in the other mode - six times, alternating Enhanced/Classic at 0.4-1.5 s. The final duel must show its own mode
++//     in the banner, keep progressing for 60 s, and the page must have no errors (a stale think of an older duel/mode
++//     applied to the new one would surface as a rejected/invalid response notice or an error).
++// Usage: node tools/r36-ai-mode-browser2.mjs <url> <outdir>
++import {createRequire} from 'node:module';import fs from 'node:fs';const require=createRequire(import.meta.url);
++const {chromium}=require('/opt/npm-tools/node_modules/playwright');
++const [url,out,partsArg='learning,crossMode',modesArg='enhanced,classic,enhanced,classic,enhanced,classic,enhanced',crossPace='instant']=process.argv.slice(2);const PARTS=partsArg.split(',');/* modesArg: e.g. classic,classic,... for a control on a build without the selector */fs.mkdirSync(out,{recursive:true});
++const browser=await chromium.launch();const report={url,parts:{}};
++const ready=p=>p.waitForFunction(()=>document.querySelector('#start')&&!document.querySelector('#start').disabled,null,{timeout:120000});
++const state=p=>p.evaluate(()=>({turn:document.querySelector('#turn-label')?.textContent||'',title:document.querySelector('#decision-title')?.textContent||'',banner:document.querySelector('#match-study')?.textContent||'',notice:(document.querySelector('#notice')&&!document.querySelector('#notice').hidden)?document.querySelector('#notice').textContent:'',learning:document.querySelectorAll('.learning-note,[class*=learning]').length,view:(()=>{const t=document.querySelector('#duel')?.innerText||'';let h=0;for(let i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return h})()}));
++const start=(p,ai,seed)=>p.evaluate(([ai,seed])=>{const $=s=>document.querySelector(s);$('#deck-a').value='kashtira';$('#deck-a').dispatchEvent(new Event('change'));$('#deck-b').value='branded';$('#deck-b').dispatchEvent(new Event('change'));$('#mode').value='watch';$('#mode').dispatchEvent(new Event('change'));if($('#ai-mode')){$('#ai-mode').value=ai;$('#ai-mode').dispatchEvent(new Event('change'))}$('#game-seed').value=seed;$('#first').value='0';$('#start').click()},[ai,seed]);
++const toNew=async p=>{await p.evaluate(()=>document.querySelector('#new')?.click());await ready(p)};
++async function page(preset){const ctx=await browser.newContext({viewport:{width:1366,height:900}});await ctx.addInitScript(pr=>{try{localStorage.setItem('doctrine-lab-media-v2',JSON.stringify({preset:pr,modePaces:{watch:pr,play:pr}}))}catch{}},preset);
++ const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await p.goto(url);await ready(p);return {p,errors,ctx}}
++// A
++if(PARTS.includes('learning')){const {p,errors,ctx}=await page('learning');const R=report.parts.learning={};R.preset=await p.evaluate(()=>{const x=JSON.parse(localStorage.getItem('doctrine-lab-media-v2')||'{}');return {preset:x.preset,watch:x.modePaces?.watch}});
++ await start(p,'enhanced','71011');const seen=new Set();R.samples=[];for(let i=0;i<12;i++){await p.waitForTimeout(10000);const s=await state(p);R.samples.push(s);seen.add(s.view)}
++ R.banner=R.samples.at(-1).banner;R.enhancedBanner=/AI Enhanced \(experimental\)/.test(R.banner);R.distinctStates=seen.size;R.notices=[...new Set(R.samples.map(s=>s.notice).filter(Boolean))];R.errors=errors;
++ await p.screenshot({path:out+'/learning-enhanced.png'});R.pass=R.enhancedBanner&&R.preset.watch==='learning'&&R.distinctStates>=6&&!errors.length&&!R.notices.some(n=>/rejected|help/i.test(n));await ctx.close()}
++// B
++if(PARTS.includes('crossMode')){const {p,errors,ctx}=await page(crossPace);const R=report.parts.crossMode={pace:crossPace};R.switches=[];const modes=modesArg.split(',');
++ await start(p,modes[0],'71012');for(let i=1;i<modes.length;i++){await p.waitForFunction(()=>/choosing/i.test(document.querySelector('#decision-title')?.textContent||''),null,{timeout:120000});const wait=[400,1500,700,1200,500,900][(i-1)%6];await p.waitForTimeout(wait);const before=await state(p);/* switch while the AI is thinking */await toNew(p);await start(p,modes[i],String(71012+i));R.switches.push({after:wait,from:modes[i-1],to:modes[i],titleBefore:before.title})}
++ const final=modes.at(-1);const seen=new Set();R.samples=[];for(let i=0;i<6;i++){await p.waitForTimeout(10000);const s=await state(p);R.samples.push(s);seen.add(s.view)}
++ R.finalMode=final;R.banner=R.samples.at(-1).banner;R.bannerMatches=final==='enhanced'?/AI Enhanced \(experimental\)/.test(R.banner):(/AI Classic/.test(R.banner)||!/AI (Enhanced|Classic)/.test(R.banner));R.distinctStates=seen.size;R.notices=[...new Set(R.samples.map(s=>s.notice).filter(Boolean))];R.errors=errors;
++ await p.screenshot({path:out+'/cross-mode-final.png'});R.pass=R.bannerMatches&&R.distinctStates>=4&&!errors.length&&!R.notices.some(n=>/rejected|help|stopped/i.test(n));await ctx.close()}
++report.pass=Object.values(report.parts).every(x=>x.pass);report.errorKinds=Object.fromEntries(Object.entries(report.parts).map(([k,x])=>[k,[...new Set(x.errors.map(e=>e.split('\n')[0]))]]));fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,1));
++console.log(JSON.stringify({pass:report.pass,parts:Object.fromEntries(Object.entries(report.parts).map(([k,x])=>[k,{pass:x.pass,banner:x.enhancedBanner??x.bannerMatches,states:x.distinctStates,errors:x.errors.length,switches:x.switches?.map(w=>w.titleBefore.slice(0,30))}])),errorKinds:report.errorKinds}));await browser.close();
+-- 
+2.43.0
+

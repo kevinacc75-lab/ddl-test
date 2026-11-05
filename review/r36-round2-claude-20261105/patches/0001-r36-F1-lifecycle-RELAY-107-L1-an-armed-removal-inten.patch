@@ -1,0 +1,99 @@
+From 78d98d41298c6596566347f5d739d4d2034d9357 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 14:44:30 +1100
+Subject: [PATCH 1/5] r36 F1 lifecycle (RELAY-107 L1): an armed removal intent
+ binds at its first own observation or expires (zone choice for our card
+ waits); expired intents never follow up
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ dist/ai/midgame-rules.mjs | 27 ++++++++++++++++++---------
+ tests/r36-f1.test.mjs     | 22 +++++++++++++++++++---
+ 2 files changed, 37 insertions(+), 12 deletions(-)
+
+diff --git a/dist/ai/midgame-rules.mjs b/dist/ai/midgame-rules.mjs
+index e3f7b02..d77128d 100644
+--- a/dist/ai/midgame-rules.mjs
++++ b/dist/ai/midgame-rules.mjs
+@@ -253,24 +253,33 @@ function removalStageAt(d,seat,intent){
+  if(d.resolvingChain==null)return Math.max(0,...(d.chain||[]).map(c=>c.chain_size))===intent.link?'activate':null;
+  return d.resolvingChain===intent.link?'resolve':null;
+ }
+-// Binds the intent to the source instance of its own chain link the first time that link is seen while it is being
+-// activated (newest link, nothing resolving). Returns the (possibly) bound intent; pure.
++// r36 F1 lifecycle (RELAY-107 L1): an armed intent must BIND at its first own observation, or it EXPIRES. At that first
++// observation our activation's link must be in the current chain (the native engine creates it before any cost/target
++// prompt, after any zone choice for a card placed from the hand; it may already be behind an opponent's response, or resolving): our own unsolved link with the intent's link
++// number and code. Bind to that link's source instance; if there is no such link (activation rejected, cancelled,
++// negated and solved, or already resolved) the intent expires and can never bind later. Same-chain argument: between
++// the accepted activation and our next prompt no own action can start another chain whose link 1 is our same card.
++// Pure; returns the bound or expired intent.
+ export function removalBind(d,seat,intent){
+- if(!intent||intent.source||d.resolvingChain!=null)return intent;
+- const link=removalLink(d,seat,intent);if(!link||Math.max(0,...(d.chain||[]).map(c=>c.chain_size))!==intent.link)return intent;
+- return {...intent,source:linkSource(link)};
++ if(!intent||intent.source||intent.expired)return intent;
++ const link=removalLink(d,seat,intent);if(link)return {...intent,source:linkSource(link)};
++ // Not yet observable: the engine asks where to place our card (SELECT_PLACE, hint = the card's code) BEFORE it opens
++ // the activation's link. The intent waits; any other own observation without its link expires it. Safe: a later
++ // activation of the same card needs our Idle prompt first, which clears the intent (optimal-pilot.mjs).
++ if(d.prompt?.type===M.SELECT_PLACE&&d.hint===intent.code&&d.resolvingChain==null&&!(d.chain||[]).some(c=>c.chain_size>=intent.link))return intent;
++ return {...intent,expired:true};
+ }
+-// True when the intent can no longer apply: a different turn, or it was bound and its link is gone / solved / replaced
+-// (chain resolved or ended, activation negated and solved, a new chain's link 1 is another instance).
++// True when the intent can no longer apply: a different turn, expired unbound, or bound and its link is gone / solved /
++// replaced (chain resolved or ended, activation negated and solved, a new chain's link 1 is another instance).
+ export function removalDone(d,seat,intent){
+- if(!intent)return true;if(d.turn!==intent.turn)return true;
++ if(!intent)return true;if(d.turn!==intent.turn||intent.expired)return true;
+  return !!intent.source&&!removalLink(d,seat,intent);
+ }
+ const stringIndex=(v,code)=>{try{const n=BigInt(v||0);return n>>20n===BigInt(code)?Number(n&0xFFFFFn):null}catch{return null}};
+ export function removalFollowUp(d,seat,m,r,intent){
+  if(!intent||d.turn!==intent.turn)return null;
+  const src=d.currentEffect?.code||d.lastCard;if(src&&src!==intent.code)return null;
+- intent=removalBind(d,seat,intent);
++ intent=removalBind(d,seat,intent);if(intent.expired)return null;/* RELAY-107 L1 */
+  const stages=REMOVAL_STAGES[d.name(intent.code)]||[],at=removalStageAt(d,seat,intent);if(!at)return null;
+  if(m.type===M.SELECT_YESNO){
+   const st=stages.find(s=>s.at===at&&s.yesno!=null&&stringIndex(m.description,intent.code)===s.yesno);if(!st)return null;
+diff --git a/tests/r36-f1.test.mjs b/tests/r36-f1.test.mjs
+index 75c0602..3977385 100644
+--- a/tests/r36-f1.test.mjs
++++ b/tests/r36-f1.test.mjs
+@@ -55,11 +55,27 @@ ok('F1 (FAILED before): rejected / cancelled activation - no chain link of ours
+  const {d,intent}=WAI();assert.equal(fu(tgt(d,[]),own0(),intent),null)});
+ ok('F1 (FAILED before): bound to S/T sequence 0; a NEW chain whose link 1 is another copy (S/T sequence 1) -> null, and removalDone',()=>{
+  const {d,intent}=WAI(),b=removalBind(tgt(d,[L(1,WA)]),0,intent),s=tgt(d,[L(1,WA,{sequence:1})]);assert.equal(fu(s,own0(),b),null);assert.equal(removalDone(s,0,b),true)});
+-ok('removalDone: unbound -> false; bound and link 1 present -> false; link solved / chain ended -> true; another turn -> true',()=>{
++ok('removalDone: unbound and not yet observed -> false; bound and link 1 present -> false; link solved / chain ended -> true; another turn -> true',()=>{
+  const {d,intent}=WAI(),b=removalBind(tgt(d,[L(1,WA)]),0,intent);assert.equal(removalDone(tgt(d,[]),0,intent),false);assert.equal(removalDone(tgt(d,[L(1,WA)]),0,b),false);
+  assert.equal(removalDone(tgt(d,[L(1,WA,{solved:true})]),0,b),true);assert.equal(removalDone(tgt(d,[]),0,b),true);assert.equal(removalDone(Object.assign(Object.create(d),{turn:6,chain:[L(1,WA)]}),0,b),true)});
+-ok('removalBind only binds while our link is the newest and nothing resolves; otherwise unchanged',()=>{
+- const {d,intent}=WAI();assert.equal(removalBind(tgt(d,[L(1,WA),L(2,LK)]),0,intent),intent);assert.equal(removalBind(yn(d,[L(1,WA)],1),0,intent),intent);assert.equal(removalBind(tgt(d,[]),0,intent),intent)});
++// RELAY-107 L1 lifecycle: an armed intent binds at its FIRST own observation or expires (the zone choice for a card placed
++// from the hand, before its link exists, waits).
++const place=(d,hintName)=>ctx(d,{type:M.SELECT_PLACE,hint:code(hintName),chain:[]});
++const resp=(d,chain)=>ctx(d,{type:M.SELECT_CHAIN,cards:[],chain,src:null});
++ok('L1 (RELAY-107 helper sequence): unbound intent + first observation with no link of ours -> expired; a later same-code link 1 never binds',()=>{
++ const {d,intent}=WAI(),e=removalBind(tgt(d,[]),0,intent);assert.equal(e.expired,true);assert.equal(e.source,undefined);assert.equal(removalDone(tgt(d,[]),0,e),true);
++ const later=tgt(d,[L(1,WA,{sequence:3})]);assert.equal(removalBind(later,0,e),e,'expired stays expired');assert.equal(fu(later,own0(),e),null,'no override of the later activation')});
++ok('L1: zone choice for our card (SELECT_PLACE, hint = its code, no link yet) waits; then the target prompt binds link 1',()=>{
++ const {d,intent}=WAI(),w=removalBind(place(d,WA),0,intent);assert.equal(w,intent,'unchanged');assert.equal(removalDone(place(d,WA),0,w),false);
++ const b=removalBind(tgt(d,[L(1,WA)]),0,w);assert.deepEqual(b.source,{location:8,sequence:0});assert.equal(fu(tgt(d,[L(1,WA)]),own0(),b)?.stat,'removalOverride')});
++ok('L1: a zone choice for ANOTHER card is an observation without our link -> expired',()=>{const {d,intent}=WAI();assert.equal(removalBind(place(d,LK),0,intent).expired,true)});
++ok('L1: first observation after an opponent response (our link 1 behind their link 2) binds link 1',()=>{
++ const {d,intent}=WAI(),b=removalBind(resp(d,[L(1,WA),L(2,'Ash Blossom & Joyous Spring',{controller:1,location:4})]),0,intent);assert.deepEqual(b.source,{location:8,sequence:0});assert.equal(removalDone(resp(d,[L(1,WA)]),0,b),false)});
++ok('L1: first observation while link 1 resolves binds it; "take control" No -> Yes',()=>{
++ const {d,intent}=WAI(),b=removalBind(yn(d,[L(1,WA)],1),0,intent);assert.ok(b.source);assert.equal(fu(yn(d,[L(1,WA)],1),{type:R.SELECT_YESNO,yes:false},b)?.stat,'removalOverride')});
++ok('L1: negated activation (our link 1 solved) at first observation -> expired; rejected/cancelled (empty chain) -> expired',()=>{
++ const {d,intent}=WAI();assert.equal(removalBind(resp(d,[L(1,WA,{solved:true})]),0,intent).expired,true);assert.equal(removalBind(resp(d,[]),0,intent).expired,true)});
++ok('L1: an opponent\'s same-code link 1 at first observation is not ours -> expired',()=>{const {d,intent}=WAI();assert.equal(removalBind(resp(d,[L(1,WA,{controller:1})]),0,intent).expired,true)});
+ ok('OptimalPilot: observe() still arms pendingRemoval with the intent (link kept); the bind/clear lifecycle in base() is shown natively by tools/r36-f1-native.mjs (pendingBefore/pendingAfter per prompt)',()=>{
+  const {intent}=WAI(),p=new OptimalPilot({seat:0,seed:1,searchEnabled:false});p.observe({response:intent.activation,removalIntent:intent});assert.equal(p.pendingRemoval,intent);assert.equal(p.pendingRemoval.link,1)});
+ console.log('r36 F1 tests: '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;
+-- 
+2.43.0
+

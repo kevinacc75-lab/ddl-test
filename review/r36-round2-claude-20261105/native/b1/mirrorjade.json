@@ -1,0 +1,412 @@
+{
+ "scenario": "mirrorjade",
+ "decks": [
+  "branded",
+  "branded"
+ ],
+ "placements": [
+  {
+   "name": "Mirrorjade the Iceblade Dragon",
+   "location": 4,
+   "sequence": 0,
+   "owner": 0
+  },
+  {
+   "name": "Albion the Shrouded Dragon",
+   "location": 4,
+   "sequence": 0,
+   "owner": 1
+  }
+ ],
+ "steps": [
+  {
+   "i": 0,
+   "seat": 0,
+   "type": "SELECT_CARD",
+   "hint": 504,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Mirrorjade the Iceblade Dragon",
+     "controller": 0
+    }
+   ],
+   "currentEffect": "Mirrorjade the Iceblade Dragon",
+   "min": 1,
+   "max": 1,
+   "cards": [
+    {
+     "name": "Alba-Lenatus the Abyss Dragon",
+     "controller": 0,
+     "location": 64,
+     "sequence": 9,
+     "position": 8
+    },
+    {
+     "name": "Albion the Sanctifire Dragon",
+     "controller": 0,
+     "location": 64,
+     "sequence": 8,
+     "position": 8
+    },
+    {
+     "name": "Rindbrumm the Striking Dragon",
+     "controller": 0,
+     "location": 64,
+     "sequence": 7,
+     "position": 8
+    },
+    {
+     "name": "Titaniklad the Ash Dragon",
+     "controller": 0,
+     "location": 64,
+     "sequence": 6,
+     "position": 8
+    },
+    {
+     "name": "The Dragon that Devours the Dogma",
+     "controller": 0,
+     "location": 64,
+     "sequence": 5,
+     "position": 8
+    },
+    {
+     "name": "The Dragon that Devours the Dogma",
+     "controller": 0,
+     "location": 64,
+     "sequence": 4,
+     "position": 8
+    },
+    {
+     "name": "Lubellion the Searing Dragon",
+     "controller": 0,
+     "location": 64,
+     "sequence": 1,
+     "position": 8
+    },
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "controller": 0,
+     "location": 64,
+     "sequence": 0,
+     "position": 8
+    }
+   ],
+   "description": null,
+   "labels": [],
+   "pilotResponse": {
+    "type": 5,
+    "indicies": [
+     7
+    ]
+   },
+   "pilotPicked": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "controller": 0,
+     "location": 64,
+     "sequence": 0,
+     "position": 8
+    }
+   ],
+   "followUpStats": {},
+   "mixedSides": false
+  },
+  {
+   "i": 1,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 504,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Mirrorjade the Iceblade Dragon",
+     "controller": 0
+    }
+   ],
+   "currentEffect": "Mirrorjade the Iceblade Dragon",
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  },
+  {
+   "i": 2,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 504,
+   "resolvingChain": null,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Mirrorjade the Iceblade Dragon",
+     "controller": 0
+    }
+   ],
+   "currentEffect": "Mirrorjade the Iceblade Dragon",
+   "cards": [
+    {
+     "name": "Bystial Saronir",
+     "controller": 0,
+     "location": 2,
+     "sequence": 0,
+     "position": 10
+    },
+    {
+     "name": "Super Polymerization",
+     "controller": 0,
+     "location": 2,
+     "sequence": 5,
+     "position": 10
+    }
+   ],
+   "description": null,
+   "labels": [
+    "Chain · Bystial Saronir",
+    "Chain · Super Polymerization",
+    "Do not chain"
+   ],
+   "pilotResponse": {
+    "type": 8,
+    "index": null
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "mixedSides": false
+  },
+  {
+   "i": 3,
+   "seat": 0,
+   "type": "SELECT_CARD",
+   "hint": 503,
+   "resolvingChain": 1,
+   "chain": [
+    {
+     "size": 1,
+     "card": "Mirrorjade the Iceblade Dragon",
+     "controller": 0
+    }
+   ],
+   "currentEffect": "Mirrorjade the Iceblade Dragon",
+   "min": 1,
+   "max": 1,
+   "cards": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "controller": 0,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    },
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "description": null,
+   "labels": [],
+   "pilotResponse": {
+    "type": 5,
+    "indicies": [
+     1
+    ]
+   },
+   "pilotPicked": [
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "followUpStats": {
+    "removalVerified": 1
+   },
+   "mixedSides": true,
+   "adversarialBaseline": {
+    "picked": {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "controller": 0,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    },
+    "followUp": {
+     "stat": "removalOverride",
+     "stage": "target",
+     "picked": [
+      {
+       "name": "Albion the Shrouded Dragon",
+       "controller": 1,
+       "location": 4,
+       "sequence": 0,
+       "position": 1
+      }
+     ]
+    }
+   }
+  },
+  {
+   "i": 4,
+   "seat": 0,
+   "type": "SELECT_CHAIN",
+   "hint": 503,
+   "resolvingChain": null,
+   "chain": [],
+   "currentEffect": null,
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "pilotResponse": {
+    "type": 8,
+    "index": null
+   },
+   "pilotPicked": [],
+   "followUpStats": {},
+   "mixedSides": false
+  },
+  {
+   "i": 5,
+   "seat": 1,
+   "type": "SELECT_CHAIN",
+   "hint": 503,
+   "resolvingChain": null,
+   "chain": [],
+   "currentEffect": null,
+   "cards": [],
+   "description": null,
+   "labels": [
+    "Do not chain"
+   ],
+   "seat1": "Do not chain"
+  }
+ ],
+ "notes": [
+  "the pilot plan at turn 3 was not the removal activation (Activate · Phara the Primordial Goddess); the trace FORCES the removal activation with the real removalFor intent and arms the pilot through observe()"
+ ],
+ "reachedTurn3": true,
+ "turn": 3,
+ "phase": 4,
+ "boardBefore": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "controller": 0,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "st": [],
+   "gy": [],
+   "banished": [],
+   "hand": 6
+  },
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Albion the Shrouded Dragon",
+     "controller": 1,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "st": [],
+   "gy": [],
+   "banished": [],
+   "hand": 6
+  }
+ ],
+ "removalFor": {
+  "card": "Mirrorjade the Iceblade Dragon",
+  "target": "Albion the Shrouded Dragon",
+  "effect": "banish",
+  "opens": false,
+  "gain": 2500,
+  "cost": null,
+  "costKind": "none",
+  "reason": "Banishing Albion the Shrouded Dragon adds 2500 projected damage; remove the blocker, then attack.",
+  "intent": {
+   "code": 44146295,
+   "effect": "banish",
+   "activation": {
+    "type": 1,
+    "action": 5,
+    "index": 3
+   },
+   "target": {
+    "code": 25451383,
+    "location": 4,
+    "sequence": 0,
+    "controller": 1
+   },
+   "costs": null,
+   "preferredCost": null,
+   "turn": 3,
+   "link": 1
+  }
+ },
+ "pilotPlan": {
+  "response": {
+   "type": 1,
+   "action": 5,
+   "index": 0
+  },
+  "rule": "Opening book R33-PHARA",
+  "reason": "Book line R33-PHARA: next step is activate Phara the Primordial Goddess. Played as written from the combo book.",
+  "removalIntent": false,
+  "label": "Activate · Phara the Primordial Goddess"
+ },
+ "activationLabel": "Activate · Mirrorjade the Iceblade Dragon",
+ "pendingArmed": true,
+ "boardAfter": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Mirrorjade the Iceblade Dragon",
+     "controller": 0,
+     "location": 4,
+     "sequence": 0,
+     "position": 1
+    }
+   ],
+   "st": [],
+   "gy": [
+    "Mirrorjade the Iceblade Dragon"
+   ],
+   "banished": [],
+   "hand": 6
+  },
+  {
+   "lp": 8000,
+   "field": [],
+   "st": [],
+   "gy": [],
+   "banished": [
+    "Albion the Shrouded Dragon"
+   ],
+   "hand": 6
+  }
+ ],
+ "afterPrompt": {
+  "type": "SELECT_IDLECMD",
+  "seat": 0
+ },
+ "errors": [],
+ "pendingClearedNext": true
+}

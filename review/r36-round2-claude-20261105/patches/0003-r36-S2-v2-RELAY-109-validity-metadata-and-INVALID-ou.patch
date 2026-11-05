@@ -1,0 +1,231 @@
+From 7d826168111c272d3cfe3e27d4e568cbdf65c24c Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 14:50:24 +1100
+Subject: [PATCH 3/5] r36 S2 v2 (RELAY-109): validity metadata and INVALID
+ outcome, strict predicates (offer + attack + target + result), deck lists and
+ identities saved, --first 0|1 seat mapping, --gate exit code; counterexample
+ tests
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tests/r36-s2-validity.test.mjs |  23 ++++++
+ tests/r36-s4-e.test.mjs        |  10 ++-
+ tools/r36-s2-puzzles.mjs       | 135 +++++++++++++++++++--------------
+ 3 files changed, 106 insertions(+), 62 deletions(-)
+ create mode 100644 tests/r36-s2-validity.test.mjs
+
+diff --git a/tests/r36-s2-validity.test.mjs b/tests/r36-s2-validity.test.mjs
+new file mode 100644
+index 0000000..1a75aad
+--- /dev/null
++++ b/tests/r36-s2-validity.test.mjs
+@@ -0,0 +1,23 @@
++// r36 S2 v2 validity and strict-predicate checks (Claude as builder, 5 Nov 2026; ChatGPT RELAY-109). ChatGPT's
++// counterexamples must not PASS: (b) with no own action and an empty enemy field; (e) with no attack offered; any record
++// with errors, notes, a rejected response, an abnormal stop or no own-turn start must be INVALID, not judged.
++import assert from 'node:assert/strict';import {P,classify} from '../tools/r36-s2-puzzles.mjs';
++let pass=0,fail=0;const ok=(n,f)=>{try{f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
++const GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira';
++const B=(lp,field=[],gy=[])=>({lp,field:field.map(name=>({name})),st:[],hand:0,gy});
++const rec=o=>({boardStart:[B(8000,[DA]),B(8000,[FL])],boardAfter:[B(8000,[DA]),B(7700,[],[FL])],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+DA}],targets:[FL],battleOffers:[['Attack · '+DA]],...o});
++ok('b: a correct record PASSes (offer, attack, Fleurdelis target, destroyed, 300 damage, attacker stays)',()=>assert.equal(classify(rec({}),P.b).outcome,'PASS'));
++ok('b (RELAY-109 counterexample): no own action and an empty enemy field -> FAIL, not PASS',()=>{
++ const T=classify(rec({own:[],targets:[],battleOffers:[],boardStart:[B(8000,[DA]),B(8000)],boardAfter:[B(8000,[DA]),B(8000)]}),P.b);assert.equal(T.outcome,'FAIL')});
++ok('b: Fleurdelis gone without our attack (e.g. removed by an effect) -> FAIL (the attack is required)',()=>{const T=classify(rec({own:[{kind:'phase',label:'End turn'}]}),P.b);assert.equal(T.outcome,'FAIL');assert.equal(T.result.checks.selectedAttack,false)});
++ok('b: attack aimed at another target -> FAIL',()=>assert.equal(classify(rec({targets:['Albion the Shrouded Dragon']}),P.b).outcome,'FAIL'));
++const eRec=o=>({boardStart:[B(8000,[SK]),B(8000)],boardAfter:[B(8000,[SK]),B(5400)],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+SK}],targets:[],battleOffers:[['Attack · '+SK]],...o});
++ok('e: correct record (offer, attack, 2600 = DEF) PASSes',()=>assert.equal(classify(eRec({}),P.e).outcome,'PASS'));
++ok('e (RELAY-109 counterexample): empty battleOffers and no attack -> FAIL, not vacuous PASS',()=>assert.equal(classify(eRec({battleOffers:[],own:[],boardAfter:[B(8000,[SK]),B(8000)]}),P.e).outcome,'FAIL'));
++ok('e: attack taken but damage not DEF (e.g. ATK 1500) -> FAIL',()=>assert.equal(classify(eRec({boardAfter:[B(8000,[SK]),B(6500)]}),P.e).outcome,'FAIL'));
++const aRec=o=>({boardStart:[B(8000,[GG]),B(8000)],boardAfter:[B(8000,[GG]),B(5500)],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+GG}],targets:[],battleOffers:[['Attack · '+GG]],...o});
++ok('a: correct record PASSes; a Defence switch FAILs',()=>{assert.equal(classify(aRec({}),P.a).outcome,'PASS');assert.equal(classify(aRec({own:[{kind:'position',label:'Change position · '+GG},{kind:'attack',label:'Attack · '+GG}]}),P.a).outcome,'FAIL')});
++ok('INVALID (RELAY-109): a passing record with injected errors / an error note / a rejected response / step bound / no own-turn start / setup failure is not judged',()=>{
++ for(const o of [{errors:['x']},{notes:['error: boom']},{rejected:1},{stop:'step-bound'},{stop:'no-prompt'},{stop:'own-turn-not-seat-0'},{boardStart:undefined},{stop:'setup-failed'},{notes:['rejected response (seat0) at turn 3']}]){const T=classify(aRec(o),P.a);assert.equal(T.outcome,'INVALID',JSON.stringify(o));assert.equal(T.result,null)}});
++ok('a "finished" stop (duel won inside the turn) is valid and judged',()=>assert.equal(classify(aRec({stop:'finished'}),P.a).valid,true));
++console.log('r36 S2 validity tests: '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;
+diff --git a/tests/r36-s4-e.test.mjs b/tests/r36-s4-e.test.mjs
+index 42c2ac1..d350635 100644
+--- a/tests/r36-s4-e.test.mjs
++++ b/tests/r36-s4-e.test.mjs
+@@ -10,8 +10,10 @@ assert.deepEqual(setS4({E:true}),{E:true});setS4({E:false});
+ const out=fs.mkdtempSync(path.join(os.tmpdir(),'s4e-'));
+ const run=f=>execFileSync(process.execPath,['tools/r36-s2-puzzles.mjs',out,'--only','e','--modes','classic,enhanced',...(f?['--flags',f]:[])],{encoding:'utf8'});
+ const off=run(''),on=run('E');
+-assert.match(off,/e classic s0: FAIL - engine offered Scareclaw Kashtira as an attacker: true; it attacked: false/,'E off, Classic: r35 behaviour');
+-assert.match(off,/e enhanced s0: FAIL - engine offered Scareclaw Kashtira as an attacker: true; it attacked: false/,'E off, Enhanced: unchanged');
+-assert.match(on,/e classic\+E s0: PASS .*it attacked: true/,'E on: attacks');assert.match(on,/e enhanced\+E s0: PASS .*it attacked: true/,'E on: attacks (Enhanced)');
+-const T=JSON.parse(fs.readFileSync(out+'/e-classic+E-s0.json','utf8'));assert.equal(T.boardAfter[1].lp,8000-2600,'damage = Scareclaw Kashtira DEF 2600');
++assert.match(off,/e classic s0 f0: FAIL - stop=turn-end .*checks=offered:y,selectedAttack:N/,'E off, Classic: r35 behaviour');
++assert.match(off,/e enhanced s0 f0: FAIL - stop=turn-end .*checks=offered:y,selectedAttack:N/,'E off, Enhanced: unchanged');
++assert.match(on,/e classic\+E s0 f0: PASS - stop=turn-end /,'E on: attacks');assert.match(on,/e enhanced\+E s0 f0: PASS - stop=turn-end /,'E on: attacks (Enhanced)');
++const gateRun=f=>{try{execFileSync(process.execPath,['tools/r36-s2-puzzles.mjs',out,'--only','e','--modes','classic','--gate',...(f?['--flags',f]:[])],{encoding:'utf8'});return 0}catch(e){return e.status}};
++assert.equal(gateRun(''),1,'--gate exits 1 when a run FAILs (E off)');assert.equal(gateRun('E'),0,'--gate exits 0 when every run PASSes (E on)');
++const T=JSON.parse(fs.readFileSync(out+'/e-classic+E-s0-f0.json','utf8'));assert.equal(T.boardAfter[1].lp,8000-2600,'damage = Scareclaw Kashtira DEF 2600');
+ console.log(JSON.stringify({test:'r36-s4-e',pass:true,node:process.version,selfVerified:true}));
+diff --git a/tools/r36-s2-puzzles.mjs b/tools/r36-s2-puzzles.mjs
+index 5d02082..8557ad9 100644
+--- a/tools/r36-s2-puzzles.mjs
++++ b/tools/r36-s2-puzzles.mjs
+@@ -1,81 +1,100 @@
+-// r36 S2 midgame puzzle suite, v1 (Claude as builder while Seto is out, 5 Nov 2026; plan item S2 in
+-// review/claude-midgame-diagnosis-2026-11-04). Engine-native positions: named cards are dealt to chosen zones at duel
+-// creation (tools/s3-harness.mjs scenario, 19 Oct lists), turns 1-2 are passed (End Turn; chains declined), and on turn 3
+-// seat 0's real OptimalPilot plays its whole turn. Seat 1 declines every chain/yes-no and otherwise uses its own pilot.
+-// Each puzzle runs per AI mode (classic, enhanced) and per search setting (off, or a node budget with NO clock, world
+-// pool on), so a run is deterministic on any host. The EXPECTED plays below are Claude's proposals and stay PENDING until
+-// Alexis confirms each one (rulings) and ChatGPT reviews; a FAIL is a lead, not a verdict.
+-// Usage: node tools/r36-s2-puzzles.mjs <outdir> [--search N] [--only a,b] [--modes classic,enhanced]
+-import fs from 'node:fs';
++// r36 S2 midgame puzzle suite, v2 (Claude as builder while Seto is out, 5 Nov 2026; plan item S2; ChatGPT RELAY-109
++// validity conditions). CONTROLLED SYNTHETIC FIXTURES: named cards are dealt to chosen zones at duel creation, and each
++// side's deck is only its placed cards plus unplayable filler (see FILLER). This isolates one question - "does the pilot
++// use this legal engine offer?" - and is NOT proof that the position is reachable from a legal real deck or that it has
++// a proper summon history; the filler is still a resource (cost/discard, hand size, deck knowledge).
++// Turns before the AI's own turn T (T=3 when the AI moves first, T=4 when it moves second) are passed (End Turn; chains
++// declined; any other forced prompt answered by a pilot). On turn T seat 0's real OptimalPilot plays its whole turn; seat
++// 1 declines every chain/yes-no (scripted declines: NOT adversarial coverage) and otherwise uses its own pilot.
++// Each run records validity metadata; a run is INVALID (not PASS/FAIL) on: setup failure, an exception, engine errors, a
++// rejected response, the step bound, a missing own-turn start, or a turn that did not end normally. Only a VALID run is
++// judged by its strict predicate (offer + selected attack + target + resolved result). Expected plays are PENDING
++// Alexis (rulings) and Akiza (strategy).
++// Usage: node tools/r36-s2-puzzles.mjs <outdir> [--search N] [--only a,b] [--modes classic,enhanced] [--flags E]
++//        [--first 0|1] [--gate]    (--gate: exit 1 if any run is FAIL or INVALID; default screen mode exits 0)
++import fs from 'node:fs';import crypto from 'node:crypto';import {pathToFileURL} from 'node:url';
+ import {engine,stopEngine,db,scripts,labels,v19,code,M} from './s3-harness.mjs';
+ import {Duel} from '../dist/duel.mjs';
+ import {createOptimalPilots} from '../dist/optimal-pilot.mjs';
+ import {setAiMode} from '../dist/ai/midgame-flags.mjs';
+-import {setS4} from '../dist/ai/s4-flags.mjs';
++import {setS4,S4} from '../dist/ai/s4-flags.mjs';
+ import {createSearchCore} from '../dist/ai/engine-snapshot.mjs';
+ const argv=process.argv.slice(2),out=argv[0]||'s2-out',opt=(k,v)=>{const i=argv.indexOf('--'+k);return i>0?argv[i+1]:v};
+-const nodes=+opt('search',0),only=(opt('only','')||'').split(',').filter(Boolean),modes=opt('modes','classic,enhanced').split(','),extra=(opt('flags','')||'').toUpperCase();/* --flags E: also switch these S4 flags on (dev screen only) */
+-fs.mkdirSync(out,{recursive:true});
+-// CONTROLLED decks: each side's deck is only its placed cards plus 40 minus that many copies of Black Luster Soldier, a
+-// Ritual Monster with no Ritual Spell in the deck, so it can never be played (it can only be a cost or discard). So hands
+-// and draws are dead and the position alone decides the turn. The deck keeps its real id (books and doctrine are keyed
+-// by it); book lines simply find their cards missing.
++const nodes=+opt('search',0),only=(opt('only','')||'').split(',').filter(Boolean),modes=opt('modes','classic,enhanced').split(','),extra=(opt('flags','')||'').toUpperCase(),first=+opt('first',0),gate=argv.includes('--gate');
++if(![0,1].includes(first))throw Error('--first 0|1');const OWN=first===0?3:4,STEPS=3000;
++const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
++const IDENTITY={node:process.version,tool:sha(new URL(import.meta.url)),files:Object.fromEntries(['dist/tactics.mjs','dist/optimal-pilot.mjs','dist/ai/midgame-rules.mjs','dist/ai/midgame-flags.mjs','dist/ai/s4-flags.mjs','dist/duel.mjs','dist/cards.json.gz','dist/scripts.json.gz','dist/decks.json'].map(f=>[f,sha(f)]))};
++// FILLER: Black Luster Soldier, a Ritual Monster with no Ritual Spell in these decks, so it can never be summoned or
++// activated; it can still be a cost or a discard. Decks keep their real ids (books and doctrine are keyed by them).
+ const FILLER=code('Black Luster Soldier'),EXTRA=0x40|0x2000|0x800000|0x4000000;
+-async function scenario(deckIds,placements,{first=0,seed=7}={}){const live=await engine(),core=live.core,orig=core.duelNewCard;
+- const decks=deckIds.map((id,o)=>{const mine=placements.filter(p=>p.owner===o).map(p=>code(p.name));const main=mine.filter(c=>!(db[c].type&EXTRA)),extra=mine.filter(c=>db[c].type&EXTRA);
+-  return {...v19(id),main:[...main,...Array(Math.max(0,40-main.length)).fill(FILLER)],extra,side:[]}});
++function deckLists(deckIds,placements){return deckIds.map((id,o)=>{const mine=placements.filter(p=>p.owner===o).map(p=>code(p.name));const main=mine.filter(c=>!(db[c].type&EXTRA)),extra=mine.filter(c=>db[c].type&EXTRA);
++ return {...v19(id),main:[...main,...Array(Math.max(0,40-main.length)).fill(FILLER)],extra,side:[]}})}
++async function scenario(decks,placements,{seed=7}={}){const live=await engine(),core=live.core,orig=core.duelNewCard;
+  const left=placements.map(p=>({...p,codes:new Set([code(p.name)])}));let d;
+  core.duelNewCard=(h,info)=>{const p=left.find(x=>!x.used&&x.codes.has(info.code)&&d.toEngine(x.owner)===info.team);if(p){p.used=true;info={...info,location:p.location,sequence:p.sequence??0,position:p.position??1}}return orig.call(core,h,info)};
+  d=new Duel(core,db,scripts);try{d.start(decks,{seed,first})}finally{core.duelNewCard=orig}
+  if(!left.every(p=>p.used))throw Error('not placed: '+left.filter(p=>!p.used).map(p=>p.name));if(d.errors?.length)throw Error('script errors: '+JSON.stringify(d.errors));return d}
+ const ATK=1,DEF=4,SET_ST=10;/* POS_FACEUP_ATTACK, POS_FACEUP_DEFENSE, POS_FACEDOWN (Spell/Trap Set) */
+-// Each puzzle: decks, placements (owner 0 = the AI under test, moving first), and expect(T) -> {pass, why}.
+-const P={
+- a:{title:'(a) attacker vs an empty board: attack, never switch to Defence',decks:['branded','sky'],
+-  place:[{name:'Granguignol the Dusk Dragon',location:4,sequence:2,owner:0,position:ATK},{name:'Sky Striker Mobilize - Engage!',location:8,sequence:2,owner:1,position:SET_ST}],
+-  expect:T=>{const g=T.own.filter(x=>/Granguignol/.test(x.label||''));const atk=g.some(x=>x.kind==='attack'),def=g.some(x=>x.kind==='position');
+-   return {pass:atk&&!def,why:'Granguignol attacked: '+atk+'; Granguignol position change: '+def}}},
+- b:{title:'(b) Dark Armed (2800) vs Fleurdelis (2500): take the trade',decks:['kashtira','branded'],
+-  place:[{name:'Dark Armed, the Dragon of Annihilation',location:4,sequence:2,owner:0,position:ATK},{name:'Dogmatika Fleurdelis, the Knighted',location:4,sequence:2,owner:1,position:ATK}],
+-  expect:T=>{const gone=!T.boardAfter[1].field.some(c=>/Fleurdelis/.test(c.name));const atk=T.own.some(x=>x.kind==='attack'&&/Dark Armed/.test(x.label||''));
+-   return {pass:gone,why:'Fleurdelis off the field at end of turn 3: '+gone+'; Dark Armed attacked: '+atk}}},
+- a2:{title:'(a2) as (a), but the opponent holds real cards (3 in hand + 2 set): still attack, never switch to Defence',decks:['branded','sky'],
+-  place:[{name:'Granguignol the Dusk Dragon',location:4,sequence:2,owner:0,position:ATK},{name:'Sky Striker Mobilize - Engage!',location:8,sequence:2,owner:1,position:SET_ST},{name:'Infinite Impermanence',location:8,sequence:1,owner:1,position:SET_ST},
++const stat=(n,k)=>db[code(n)][k];
++const GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira';
++// Strict predicates (only for VALID runs). Each returns {pass, checks:{...}}; pass = every check true.
++const judge=checks=>({pass:Object.values(checks).every(Boolean),checks});
++const offered=(T,n)=>T.battleOffers.some(o=>o.some(l=>l.includes(n)));
++const attacked=(T,n)=>T.own.some(x=>x.kind==='attack'&&(x.label||'').includes(n));
++const onField=(b,n)=>b.field.some(c=>c.name===n);
++const directOnly=(T,n,dmg)=>judge({offered:offered(T,n),selectedAttack:attacked(T,n),noPositionChange:!T.own.some(x=>x.kind==='position'&&(x.label||'').includes(n)),attackerStays:onField(T.boardAfter[0],n),damage:T.boardAfter[1].lp===T.boardStart[1].lp-dmg,ownLp:T.boardAfter[0].lp===T.boardStart[0].lp});
++export const P={
++ a:{title:'(a) attacker vs an empty board (+1 set card): attack directly, never switch to Defence',decks:['branded','sky'],
++  place:[{name:GG,location:4,sequence:2,owner:0,position:ATK},{name:'Sky Striker Mobilize - Engage!',location:8,sequence:2,owner:1,position:SET_ST}],
++  expect:T=>directOnly(T,GG,stat(GG,'attack'))},
++ a2:{title:'(a2) as (a), the opponent holds real cards (3 in hand + 2 set; scripted declines)',decks:['branded','sky'],
++  place:[{name:GG,location:4,sequence:2,owner:0,position:ATK},{name:'Sky Striker Mobilize - Engage!',location:8,sequence:2,owner:1,position:SET_ST},{name:'Infinite Impermanence',location:8,sequence:1,owner:1,position:SET_ST},
+    {name:'Ash Blossom & Joyous Spring',location:2,owner:1},{name:'Sky Striker Maneuver - Jamming Waves!',location:2,owner:1},{name:'Forbidden Droplet',location:2,owner:1}],
+-  expect:T=>{const g=T.own.filter(x=>/Granguignol/.test(x.label||''));const atk=g.some(x=>x.kind==='attack'),def=g.some(x=>x.kind==='position');
+-   return {pass:atk&&!def,why:'Granguignol attacked: '+atk+'; Granguignol position change: '+def}}},
+- b2:{title:'(b2) as (b), but the opponent holds real cards (3 in hand + 1 set): take the trade',decks:['kashtira','branded'],
+-  place:[{name:'Dark Armed, the Dragon of Annihilation',location:4,sequence:2,owner:0,position:ATK},{name:'Dogmatika Fleurdelis, the Knighted',location:4,sequence:2,owner:1,position:ATK},{name:'Branded Retribution',location:8,sequence:2,owner:1,position:SET_ST},
++  expect:T=>directOnly(T,GG,stat(GG,'attack'))},
++ b:{title:'(b) Dark Armed (2800) vs Fleurdelis (2500, ATK): attack Fleurdelis',decks:['kashtira','branded'],
++  place:[{name:DA,location:4,sequence:2,owner:0,position:ATK},{name:FL,location:4,sequence:2,owner:1,position:ATK}],
++  expect:T=>judge({offered:offered(T,DA),selectedAttack:attacked(T,DA),targetFleurdelis:T.targets.length===0||T.targets.some(t=>t.includes(FL)),fleurdelisDestroyed:T.boardAfter[1].gy.includes(FL)&&!onField(T.boardAfter[1],FL),attackerStays:onField(T.boardAfter[0],DA),damage:T.boardAfter[1].lp===T.boardStart[1].lp-(stat(DA,'attack')-stat(FL,'attack')),ownLp:T.boardAfter[0].lp===T.boardStart[0].lp})},
++ b2:{title:'(b2) as (b), the opponent holds real cards (3 in hand + 1 set; scripted declines)',decks:['kashtira','branded'],
++  place:[{name:DA,location:4,sequence:2,owner:0,position:ATK},{name:FL,location:4,sequence:2,owner:1,position:ATK},{name:'Branded Retribution',location:8,sequence:2,owner:1,position:SET_ST},
+    {name:'Ash Blossom & Joyous Spring',location:2,owner:1},{name:'Branded in Red',location:2,owner:1},{name:'Fallen of Albaz',location:2,owner:1}],
+-  expect:T=>{const gone=!T.boardAfter[1].field.some(c=>/Fleurdelis/.test(c.name));const atk=T.own.some(x=>x.kind==='attack'&&/Dark Armed/.test(x.label||''));
+-   return {pass:gone,why:'Fleurdelis off the field at end of turn 3: '+gone+'; Dark Armed attacked: '+atk}}},
+- e:{title:'(e) Scareclaw Kashtira in Defence vs an empty board: attack if the engine offers it',decks:['kashtira','branded'],
+-  place:[{name:'Scareclaw Kashtira',location:4,sequence:2,owner:0,position:DEF}],
+-  expect:T=>{const offered=T.battleOffers.some(o=>o.some(l=>/Scareclaw Kashtira/.test(l)));const atk=T.own.some(x=>x.kind==='attack'&&/Scareclaw Kashtira/.test(x.label||''));
+-   return {pass:!offered||atk,why:'engine offered Scareclaw Kashtira as an attacker: '+offered+'; it attacked: '+atk}}},
++  expect:T=>P.b.expect(T)},
++ e:{title:'(e) Scareclaw Kashtira in face-up Defence vs an empty board: the engine offers the attack; take it (DEF used)',decks:['kashtira','branded'],
++  place:[{name:SK,location:4,sequence:2,owner:0,position:DEF}],
++  expect:T=>directOnly(T,SK,stat(SK,'defense'))},
+ };
+ const kindOf=(type,label)=>type===M.SELECT_BATTLECMD&&/^Attack/i.test(label)?'attack':type===M.SELECT_IDLECMD&&/Defen[cs]e|Change position|position/i.test(label)?'position':type===M.SELECT_IDLECMD&&/Activate|Summon|Set|Special/i.test(label)?'play':/Battle Phase|End Turn|End phase|Main Phase 2/i.test(label)?'phase':'other';
+ const cardOf=(d,c)=>c?{name:d.name(c.code),position:c.position,sequence:c.sequence}:null;
+-const board=d=>[0,1].map(p=>({lp:d.lp[p],field:d.zone(p,4).filter(Boolean).map(c=>cardOf(d,c)),st:d.zone(p,8).filter(Boolean).map(c=>cardOf(d,c)),hand:d.zone(p,2).filter(Boolean).length,gy:d.zone(p,16).filter(Boolean).length}));
++const board=d=>[0,1].map(p=>({lp:d.lp[p],field:d.zone(p,4).filter(Boolean).map(c=>cardOf(d,c)),st:d.zone(p,8).filter(Boolean).map(c=>cardOf(d,c)),hand:d.zone(p,2).filter(Boolean).length,gy:d.zone(p,16).filter(Boolean).map(c=>d.name(c.code))}));
++// Validity first, then the strict predicate: INVALID on a missing own-turn start, an abnormal stop (setup failure, error,
++// step bound, rejected response, no prompt, wrong seat), engine errors, a rejected response or an error note.
++export function classify(T,pz){const valid=!!T.boardStart&&['turn-end','finished'].includes(T.stop)&&!(T.errors||[]).length&&!T.rejected&&!(T.notes||[]).some(x=>/^error|^setup|^rejected/.test(x));
++ T.valid=valid;if(valid){T.result=pz.expect(T);T.outcome=T.result.pass?'PASS':'FAIL'}else{T.result=null;T.outcome='INVALID'}return T}
+ async function pilotsFor(seed){if(!nodes)return createOptimalPilots({seed,searchEnabled:false});const ps=[];
+  for(const s of [0,1]){const core=await createSearchCore(db,scripts);ps[s]=createOptimalPilots({seed,nodeBudget:nodes,searchCore:core,worldPool:true,poolKey:'s2:'+seed+':'+s,poolSize:10,seatCapBytes:40*1048576,shouldStop:()=>false})[s]}return ps}
+-await engine();const rows=[];
++const MAIN=import.meta.url===pathToFileURL(process.argv[1]||'').href;
++if(MAIN){fs.mkdirSync(out,{recursive:true});await engine();const rows=[];
+ for(const [id,pz] of Object.entries(P)){if(only.length&&!only.includes(id))continue;
+- for(const mode of modes){setAiMode(mode);setS4(Object.fromEntries([...extra].map(k=>[k,true])));const seed=7;const T={puzzle:id,title:pz.title,mode:mode+(extra?'+'+extra:''),search:nodes,seed,decks:pz.decks,placements:pz.place,own:[],battleOffers:[],notes:[]};
+-  let d;try{d=await scenario(pz.decks,pz.place,{first:0,seed})}catch(e){T.notes.push('setup failed: '+e.message);rows.push(T);continue}
+-  const ps=await pilotsFor(seed);T.boardStart=board(d);let n=0;
+-  const pass=()=>{const c=d.choices().find(o=>['Do not chain','No'].includes(o.label));if(c){d.respond(c.response);return true}return false};
+-  try{while(d.prompt&&!d.finished&&n++<3000&&d.turn<=3){const m=d.prompt,s=m.seat??m.player;
+-    if(d.turn<3){if(m.type===M.SELECT_IDLECMD){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){d.respond(c.response);continue}}
+-     if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&pass())continue;const p=ps[s].plan(d);d.respond(p.response);continue}
+-    if(T.turn3Start==null){T.turn3Start=board(d)}
+-    if(s===1){if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&pass())continue;const p=ps[1].plan(d);d.respond(p.response);for(const x of ps)x.observe?.(p);continue}
++ for(const mode of modes){setAiMode(mode);if(extra)setS4(Object.fromEntries([...extra].map(k=>[k,true])));const seed=7;
++  const T={puzzle:id,title:pz.title,fixture:'controlled synthetic',mode:mode+(extra?'+'+extra:''),s4:{...S4},search:nodes,seed,first,ownTurn:OWN,decks:pz.decks,placements:pz.place,identity:IDENTITY,own:[],targets:[],battleOffers:[],notes:[],rejected:0,decisions:0,stop:null};
++  const lists=deckLists(pz.decks,pz.place);T.deckLists=lists.map(x=>({id:x.id,main:x.main,extra:x.extra,mainNames:Object.fromEntries([...new Set(x.main)].map(c=>[db[c].name,x.main.filter(y=>y===c).length]))}));
++  let d;try{d=await scenario(lists,pz.place,{seed})}catch(e){T.stop='setup-failed';T.notes.push('setup failed: '+e.message);T.outcome='INVALID';rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}-f${first}.json`,JSON.stringify(T,null,1));continue}
++  const ps=await pilotsFor(seed);let n=0;
++  const respond=(r,who)=>{const before=d.retries;d.respond(r);if(d.retries!==before){T.rejected++;T.notes.push('rejected response ('+who+') at turn '+d.turn)};return d.retries===before};
++  const decline=()=>{const c=d.choices().find(o=>['Do not chain','No'].includes(o.label));if(c){respond(c.response,'decline');return true}return false};
++  try{for(;;){if(d.finished){T.stop='finished';break}if(!d.prompt){T.stop='no-prompt';break}if(d.turn>OWN){T.stop='turn-end';break}if(++n>STEPS){T.stop='step-bound';break}if(T.rejected){T.stop='rejected';break}
++    const m=d.prompt,s=m.seat??m.player;
++    if(d.turn<OWN){if(m.type===M.SELECT_IDLECMD){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){respond(c.response,'pass-turn');continue}}
++     if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&decline())continue;const p=ps[s].plan(d);respond(p.response,'pre-turn');continue}
++    if(!T.boardStart){if(!(s===0&&d.active===0)){T.stop='own-turn-not-seat-0';break}T.boardStart=board(d);T.turnStart={turn:d.turn,phase:d.phase,active:d.active}}
++    if(s===1){if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&decline())continue;const p=ps[1].plan(d);if(respond(p.response,'seat1'))for(const x of ps)x.observe?.(p);continue}
+     const ls=labels(d);if(m.type===M.SELECT_BATTLECMD)T.battleOffers.push(ls.filter(l=>/^Attack/i.test(l)));
+     const p=ps[0].plan(d);const label=d.choices().find(o=>JSON.stringify(o.response)===JSON.stringify(p.response))?.label||null;
+     if(m.type===M.SELECT_IDLECMD||m.type===M.SELECT_BATTLECMD)T.own.push({phase:d.phase,type:m.type===M.SELECT_IDLECMD?'idle':'battle',label,kind:kindOf(m.type,label||''),rule:p.rule||p.book?.rule||null,reason:p.book?.reason||p.reason||null});
+-    d.respond(p.response);for(const x of ps)x.observe?.(p)}}catch(e){T.notes.push('error: '+e.message)}
+-  T.boardAfter=board(d);T.finished=!!d.finished;T.winner=d.finished?d.winner:null;T.errors=d.errors;T.stats=ps[0].midgameStats||null;
+-  T.result=pz.expect(T);rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}.json`,JSON.stringify(T,null,1));
+-  try{d.stop?.()}catch{}}}
+-const sum=rows.map(T=>`${T.puzzle} ${T.mode} s${T.search}: ${T.result?(T.result.pass?'PASS':'FAIL'):'NO RESULT'} - ${T.result?.why||T.notes.join('; ')}\n   turn 3 plays: ${T.own.map(x=>x.kind+':'+(x.label||'?')).join(' | ')}\n   LP after: ${T.boardAfter?.map(b=>b.lp).join('/')}${T.finished?' (duel over, winner '+T.winner+')':''}`);
+-fs.writeFileSync(`${out}/SUMMARY-s${nodes}${extra?'-'+extra:''}.txt`,sum.join('\n')+'\n');console.log(sum.join('\n'));stopEngine();process.exit(0);
++    if(m.type===M.SELECT_CARD&&d.hint===549/* HINTMSG_ATTACKTARGET */)T.targets.push(...(p.response.indicies||[]).map(j=>d.name((m.selects||[])[j]?.code)));
++    T.decisions++;if(respond(p.response,'seat0'))for(const x of ps)x.observe?.(p)}}catch(e){T.stop='error';T.notes.push('error: '+e.message)}
++  T.end={turn:d.turn,phase:d.phase,active:d.active,finished:!!d.finished,winner:d.finished?d.winner:null};T.boardAfter=board(d);T.errors=[...(d.errors||[])];T.stats=ps[0].midgameStats||null;
++  classify(T,pz);
++  rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}-f${first}.json`,JSON.stringify(T,null,1));try{d.stop?.()}catch{}}}
++const sum=rows.map(T=>`${T.puzzle} ${T.mode} s${T.search} f${T.first}: ${T.outcome} - stop=${T.stop} decisions=${T.decisions} rejected=${T.rejected} errors=${T.errors?.length??'-'}${T.result?' checks='+Object.entries(T.result.checks).map(([k,v])=>k+':'+(v?'y':'N')).join(','):''}${T.notes.length?' notes='+T.notes.join('; '):''}\n   own-turn plays: ${T.own.map(x=>x.kind+':'+(x.label||'?')).join(' | ')}${T.targets.length?' targets='+T.targets.join(','):''}\n   LP start/after: ${T.boardStart?.map(b=>b.lp).join('/')} -> ${T.boardAfter?.map(b=>b.lp).join('/')}`);
++fs.writeFileSync(`${out}/SUMMARY-s${nodes}-f${first}${extra?'-'+extra:''}.txt`,sum.join('\n')+'\n');console.log(sum.join('\n'));stopEngine();
++process.exit(gate&&rows.some(T=>T.outcome!=='PASS')?1:0);}
+-- 
+2.43.0
+
