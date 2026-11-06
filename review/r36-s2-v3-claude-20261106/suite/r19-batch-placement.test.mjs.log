@@ -1,0 +1,1 @@
+{"test":"r19-batch-placement","pass":true,"single":{"worlds":0,"attempts":37,"placed":0,"maxBatch":0,"pins":0},"batch":{"worlds":1,"attempts":31,"placed":11,"maxBatch":2,"pins":0}}

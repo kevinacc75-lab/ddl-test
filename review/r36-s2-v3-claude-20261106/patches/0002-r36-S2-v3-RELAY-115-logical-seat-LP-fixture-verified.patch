@@ -1,0 +1,179 @@
+From d9ec4123522a169f4e10151d860038e92d2a20c8 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 6 Nov 2026 18:40:16 +1100
+Subject: [PATCH 2/2] r36 S2 v3 (RELAY-115): logical-seat LP fixture verified
+ against native duelQueryField and synced before pilots (INVALID on mismatch;
+ non-default LP search-off only); chain activation evidence by card code;
+ puzzles d1 (Ohime at LP 2000), d2 (unequipped Hu-Li), f (lethal before
+ Upstart Goblin); negative tests
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tests/r36-s2-validity.test.mjs | 30 +++++++++++++++++---
+ tools/r36-s2-puzzles.mjs       | 50 ++++++++++++++++++++++++----------
+ 2 files changed, 62 insertions(+), 18 deletions(-)
+
+diff --git a/tests/r36-s2-validity.test.mjs b/tests/r36-s2-validity.test.mjs
+index ec0f35b..dcf5629 100644
+--- a/tests/r36-s2-validity.test.mjs
++++ b/tests/r36-s2-validity.test.mjs
+@@ -2,21 +2,21 @@
+ // counterexamples must not PASS: (b) with no own action and an empty enemy field; (e) with no attack offered; any record
+ // with errors, notes, a rejected response, an abnormal stop or no own-turn start must be INVALID, not judged.
+ import assert from 'node:assert/strict';import {spawnSync} from 'node:child_process';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
+-import {P,classify,selectionErrors,requested} from '../tools/r36-s2-puzzles.mjs';
++import {P,classify,selectionErrors,requested,checkLP,lpAgrees} from '../tools/r36-s2-puzzles.mjs';
+ let pass=0,fail=0;const ok=(n,f)=>{try{f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
+ const GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira';
+ const B=(lp,field=[],gy=[])=>({lp,field:field.map(name=>({name})),st:[],hand:0,gy});
+-const rec=o=>({boardStart:[B(8000,[DA]),B(8000,[FL])],boardAfter:[B(8000,[DA]),B(7700,[],[FL])],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+DA}],targets:[FL],battleOffers:[['Attack · '+DA]],...o});
++const rec=o=>({lpCheck:{requested:[8000,8000],setup:[8000,8000],start:{native:[8000,8000],wrapper:[8000,8000]},end:{native:[8000,8000],wrapper:[8000,8000]}},boardStart:[B(8000,[DA]),B(8000,[FL])],boardAfter:[B(8000,[DA]),B(7700,[],[FL])],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+DA}],targets:[FL],battleOffers:[['Attack · '+DA]],...o});
+ ok('b: a correct record PASSes (offer, attack, Fleurdelis target, destroyed, 300 damage, attacker stays)',()=>assert.equal(classify(rec({}),P.b).outcome,'PASS'));
+ ok('b (RELAY-109 counterexample): no own action and an empty enemy field -> FAIL, not PASS',()=>{
+  const T=classify(rec({own:[],targets:[],battleOffers:[],boardStart:[B(8000,[DA]),B(8000)],boardAfter:[B(8000,[DA]),B(8000)]}),P.b);assert.equal(T.outcome,'FAIL')});
+ ok('b: Fleurdelis gone without our attack (e.g. removed by an effect) -> FAIL (the attack is required)',()=>{const T=classify(rec({own:[{kind:'phase',label:'End turn'}]}),P.b);assert.equal(T.outcome,'FAIL');assert.equal(T.result.checks.selectedAttack,false)});
+ ok('b: attack aimed at another target -> FAIL',()=>assert.equal(classify(rec({targets:['Albion the Shrouded Dragon']}),P.b).outcome,'FAIL'));
+-const eRec=o=>({boardStart:[B(8000,[SK]),B(8000)],boardAfter:[B(8000,[SK]),B(5400)],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+SK}],targets:[],battleOffers:[['Attack · '+SK]],...o});
++const eRec=o=>({lpCheck:{requested:[8000,8000],setup:[8000,8000],start:{native:[8000,8000],wrapper:[8000,8000]},end:{native:[8000,8000],wrapper:[8000,8000]}},boardStart:[B(8000,[SK]),B(8000)],boardAfter:[B(8000,[SK]),B(5400)],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+SK}],targets:[],battleOffers:[['Attack · '+SK]],...o});
+ ok('e: correct record (offer, attack, 2600 = DEF) PASSes',()=>assert.equal(classify(eRec({}),P.e).outcome,'PASS'));
+ ok('e (RELAY-109 counterexample): empty battleOffers and no attack -> FAIL, not vacuous PASS',()=>assert.equal(classify(eRec({battleOffers:[],own:[],boardAfter:[B(8000,[SK]),B(8000)]}),P.e).outcome,'FAIL'));
+ ok('e: attack taken but damage not DEF (e.g. ATK 1500) -> FAIL',()=>assert.equal(classify(eRec({boardAfter:[B(8000,[SK]),B(6500)]}),P.e).outcome,'FAIL'));
+-const aRec=o=>({boardStart:[B(8000,[GG]),B(8000)],boardAfter:[B(8000,[GG]),B(5500)],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+GG}],targets:[],battleOffers:[['Attack · '+GG]],...o});
++const aRec=o=>({lpCheck:{requested:[8000,8000],setup:[8000,8000],start:{native:[8000,8000],wrapper:[8000,8000]},end:{native:[8000,8000],wrapper:[8000,8000]}},boardStart:[B(8000,[GG]),B(8000)],boardAfter:[B(8000,[GG]),B(5500)],stop:'turn-end',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+GG}],targets:[],battleOffers:[['Attack · '+GG]],...o});
+ ok('a: correct record PASSes; a Defence switch FAILs',()=>{assert.equal(classify(aRec({}),P.a).outcome,'PASS');assert.equal(classify(aRec({own:[{kind:'position',label:'Change position · '+GG},{kind:'attack',label:'Attack · '+GG}]}),P.a).outcome,'FAIL')});
+ ok('INVALID (RELAY-109): a passing record with injected errors / an error note / a rejected response / step bound / no own-turn start / setup failure is not judged',()=>{
+  for(const o of [{errors:['x']},{notes:['error: boom']},{rejected:1},{stop:'step-bound'},{stop:'no-prompt'},{stop:'own-turn-not-seat-0'},{boardStart:undefined},{stop:'setup-failed'},{notes:['rejected response (seat0) at turn 3']}]){const T=classify(aRec(o),P.a);assert.equal(T.outcome,'INVALID',JSON.stringify(o));assert.equal(T.result,null)}});
+@@ -31,4 +31,26 @@ ok('unknown mode / duplicate mode / unknown S4 flag / bad --first / one unknown
+ ok('selectionErrors / requested: the default selection is the full nonempty matrix; filters give exactly the asked keys',()=>{
+  const base={only:[],modes:['classic','enhanced'],extra:'',first:0};assert.deepEqual(selectionErrors(base),[]);assert.equal(requested(base).length,Object.keys(P).length*2);
+  assert.deepEqual(requested({...base,only:['e'],extra:'E'}),['e|classic+E','e|enhanced+E']);assert.ok(selectionErrors({...base,modes:[]}).length,'no modes is invalid')});
++// RELAY-115 LP fixture: validation, agreement and mapping (records), plus native runs via the CLI.
++ok('checkLP: default 8000/8000; rejects missing/extra values, zero, negative, fractional, non-numeric',()=>{assert.deepEqual(checkLP(),[8000,8000]);assert.deepEqual(checkLP([2000,8000]),[2000,8000]);
++ for(const bad of [[2000],[2000,8000,1],[0,8000],[-1,8000],[1.5,8000],['x',8000],'2000,8000'])assert.throws(()=>checkLP(bad),/invalid lp/,JSON.stringify(bad))});
++ok('LP disagreement makes a record INVALID before judging: start/end native != wrapper, missing check, setup != requested (incl. swapped seats), non-numeric native',()=>{
++ const L=o=>({requested:[2000,8000],setup:[2000,8000],start:{native:[2000,8000],wrapper:[2000,8000]},end:{native:[2000,8000],wrapper:[2000,8000]},...o});
++ assert.equal(lpAgrees({lpCheck:L({})}),true);
++ for(const o of [{start:{native:[2000,8000],wrapper:[8000,8000]}},{end:{native:[2000,8000],wrapper:[2000,7000]}},{setup:[8000,2000]},{start:undefined},{end:{native:null,wrapper:[2000,8000]}},{end:{native:[null,8000],wrapper:[null,8000]}}]){
++  assert.equal(lpAgrees({lpCheck:L(o)}),false,JSON.stringify(o));const T=classify(aRec({lpCheck:L(o)}),P.a);assert.equal(T.outcome,'INVALID',JSON.stringify(o))}
++ assert.equal(classify(aRec({lpCheck:undefined}),P.a).outcome,'INVALID','missing lpCheck')});
++const fRec=o=>({lpCheck:{requested:[8000,2500],setup:[8000,2500],start:{native:[8000,2500],wrapper:[8000,2500]},end:{native:[8000,0],wrapper:[8000,0]}},boardStart:[B(8000,[GG]),B(2500)],boardAfter:[B(8000,[GG]),B(0)],stop:'finished',errors:[],rejected:0,notes:[],own:[{kind:'attack',label:'Attack · '+GG}],targets:[],battleOffers:[['Attack · '+GG]],idleOffers:[70368879],activations:[],end:{finished:true,winner:0},...o});
++ok('f: correct record PASSes; wrong winner mapping (winner 1) FAILs; an Upstart activation by seat 0 FAILs (by code, not label); Upstart not offered FAILs; an opponent\'s Upstart does not count',()=>{
++ assert.equal(classify(fRec({}),P.f).outcome,'PASS');assert.equal(classify(fRec({end:{finished:true,winner:1}}),P.f).outcome,'FAIL');
++ assert.equal(classify(fRec({activations:[{code:70368879,controller:0,seq:1}]}),P.f).outcome,'FAIL');assert.equal(classify(fRec({idleOffers:[]}),P.f).outcome,'FAIL');
++ assert.equal(classify(fRec({activations:[{code:70368879,controller:1,seq:1}]}),P.f).outcome,'PASS')});
++ok('non-default-LP puzzles are search-off only until search-root LP is verified: --search 100 with d1/f is INVALID SELECTION (exit 2)',()=>{
++ assert.ok(selectionErrors({only:['d1'],modes:['classic'],extra:'',first:0,search:100}).length);assert.deepEqual(selectionErrors({only:['d2'],modes:['classic'],extra:'',first:0,search:100}),[]);
++ const r=cli(['--only','f','--search','100','--gate']);assert.equal(r.status,2);assert.match(r.stdout,/non-default LP fixture: search-off only/)});
++ok('native: d1 (requested LP 2000/8000 logical) and d2 (default) in ONE process, first=1 mapping: engine-verified setup LP per record, native = wrapper at start and end, no leakage into d2',()=>{
++ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'s2lp-')),r=spawnSync(process.execPath,['tools/r36-s2-puzzles.mjs',dir,'--only','d1,d2','--modes','classic','--first','1'],{encoding:'utf8'});assert.equal(r.status,0,r.stdout+r.stderr);
++ const d1=JSON.parse(fs.readFileSync(dir+'/d1-classic-s0-f1.json','utf8')),d2=JSON.parse(fs.readFileSync(dir+'/d2-classic-s0-f1.json','utf8'));
++ assert.deepEqual(d1.lpCheck.setup,[2000,8000],'logical seat 0 has 2000 under first=1');assert.deepEqual(d1.lpCheck.start.native,d1.lpCheck.start.wrapper);assert.deepEqual(d1.lpCheck.start.native,[2000,8000]);
++ assert.deepEqual(d2.lpCheck.setup,[8000,8000],'no leakage');assert.equal(d1.valid,true);assert.equal(d2.valid,true)});
+ console.log('r36 S2 validity tests: '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;
+diff --git a/tools/r36-s2-puzzles.mjs b/tools/r36-s2-puzzles.mjs
+index 02ed237..583ac6e 100644
+--- a/tools/r36-s2-puzzles.mjs
++++ b/tools/r36-s2-puzzles.mjs
+@@ -30,14 +30,24 @@ const IDENTITY={node:process.version,tool:sha(new URL(import.meta.url)),files:Ob
+ const FILLER=code('Black Luster Soldier'),EXTRA=0x40|0x2000|0x800000|0x4000000;
+ function deckLists(deckIds,placements){return deckIds.map((id,o)=>{const mine=placements.filter(p=>p.owner===o).map(p=>code(p.name));const main=mine.filter(c=>!(db[c].type&EXTRA)),extra=mine.filter(c=>db[c].type&EXTRA);
+  return {...v19(id),main:[...main,...Array(Math.max(0,40-main.length)).fill(FILLER)],extra,side:[]}})}
+-async function scenario(decks,placements,{seed=7}={}){const live=await engine(),core=live.core,orig=core.duelNewCard;
++// RELAY-115 LP fixture: lp:[p0,p1] in LOGICAL seats (default 8000/8000). core.createDuel's team startingLP is wrapped for
++// this one Duel.start (engine team i = logical seat order[i]) and restored with the placement wrapper on every route; the
++// engine's own LP (duelQueryField) is then read back, mapped to logical seats and must equal the request; only then is the
++// wrapper's d.lp synced FROM that verified engine state - before any pilot, seat context or search snapshot exists.
++export function checkLP(lp){if(lp==null)return [8000,8000];if(!Array.isArray(lp)||lp.length!==2||!lp.every(v=>Number.isInteger(v)&&v>0&&v<=1000000))throw Error('invalid lp '+JSON.stringify(lp)+' (need two positive integers, logical seats)');return [...lp]}
++export function nativeLP(core,d){const f=core.duelQueryField(d.handle),out=[null,null];(f?.players||[]).forEach((p,e)=>{out[d.fromEngine(e)]=Number(p.lp)});return out}
++async function scenario(decks,placements,{seed=7,lp=null}={}){const live=await engine(),core=live.core,orig=core.duelNewCard,origCreate=core.createDuel;
++ const want=checkLP(lp),order=first===0?[0,1]:[1,0];
+  const left=placements.map(p=>({...p,codes:new Set([code(p.name)])}));let d;
++ core.createDuel=function(o){return origCreate.call(core,{...o,team1:{...o.team1,startingLP:want[order[0]]},team2:{...o.team2,startingLP:want[order[1]]}})};
+  core.duelNewCard=(h,info)=>{const p=left.find(x=>!x.used&&x.codes.has(info.code)&&d.toEngine(x.owner)===info.team);if(p){p.used=true;info={...info,location:p.location,sequence:p.sequence??0,position:p.position??1}}return orig.call(core,h,info)};
+- d=new Duel(core,db,scripts);try{d.start(decks,{seed,first})}finally{core.duelNewCard=orig}
++ try{d=new Duel(core,db,scripts);d.start(decks,{seed,first})}finally{core.duelNewCard=orig;core.createDuel=origCreate}
++ if(core.createDuel!==origCreate||core.duelNewCard!==orig)throw Error('stale fixture wrapper');if(JSON.stringify(d.order)!==JSON.stringify(order))throw Error('seat mapping '+JSON.stringify(d.order)+' != '+JSON.stringify(order));
++ const nat=nativeLP(core,d);if(JSON.stringify(nat)!==JSON.stringify(want))throw Error('native LP '+JSON.stringify(nat)+' != requested '+JSON.stringify(want));d.lp[0]=nat[0];d.lp[1]=nat[1];
+  if(!left.every(p=>p.used))throw Error('not placed: '+left.filter(p=>!p.used).map(p=>p.name));if(d.errors?.length)throw Error('script errors: '+JSON.stringify(d.errors));return d}
+ const ATK=1,DEF=4,SET_ST=10;/* POS_FACEUP_ATTACK, POS_FACEUP_DEFENSE, POS_FACEDOWN (Spell/Trap Set) */
+ const stat=(n,k)=>db[code(n)][k];
+-const GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira',BE='Blue-Eyes White Dragon';
++const OH='Ohime the Manifested Mikanko',HL='Hu-Li the Jewel Mikanko',UPSTART=70368879,GG='Granguignol the Dusk Dragon',DA='Dark Armed, the Dragon of Annihilation',FL='Dogmatika Fleurdelis, the Knighted',SK='Scareclaw Kashtira',BE='Blue-Eyes White Dragon';
+ // Strict predicates (only for VALID runs). Each returns {pass, checks:{...}}; pass = every check true.
+ const judge=checks=>({pass:Object.values(checks).every(Boolean),checks});
+ const offered=(T,n)=>T.battleOffers.some(o=>o.some(l=>l.includes(n)));
+@@ -59,6 +69,15 @@ export const P={
+   place:[{name:DA,location:4,sequence:2,owner:0,position:ATK},{name:FL,location:4,sequence:2,owner:1,position:ATK},{name:'Branded Retribution',location:8,sequence:2,owner:1,position:SET_ST},
+    {name:'Ash Blossom & Joyous Spring',location:2,owner:1},{name:'Branded in Red',location:2,owner:1},{name:'Fallen of Albaz',location:2,owner:1}],
+   expect:T=>P.b.expect(T)},
++ d1:{title:'(d1) Granguignol 2500 ATK at OUR LP 2000 vs Ohime the Manifested Mikanko (0/0, ATK): Ohime is not destroyed by battle and our 2500 would be dealt to us instead - do not attack',decks:['branded','mikanko'],lp:[2000,8000],
++  place:[{name:GG,location:4,sequence:2,owner:0,position:ATK},{name:OH,location:4,sequence:2,owner:1,position:ATK}],
++  expect:T=>judge({offered:offered(T,GG),noAttack:!attacked(T,GG),attackerStays:onField(T.boardAfter[0],GG),ohimeStays:onField(T.boardAfter[1],OH),ownLp:T.boardAfter[0].lp===T.boardStart[0].lp,oppLp:T.boardAfter[1].lp===T.boardStart[1].lp})},
++ d2:{title:'(d2) Granguignol 2500 ATK vs UNEQUIPPED Hu-Li the Jewel Mikanko (0/0, ATK): no reflection and no battle protection without an Equip - attack and destroy it, no LP change',decks:['branded','mikanko'],
++  place:[{name:GG,location:4,sequence:2,owner:0,position:ATK},{name:HL,location:4,sequence:2,owner:1,position:ATK}],
++  expect:T=>judge({offered:offered(T,GG),selectedAttack:attacked(T,GG),targetHuLi:T.targets.length===0||T.targets.some(t=>t.includes(HL)),huLiDestroyed:T.boardAfter[1].gy.includes(HL)&&!onField(T.boardAfter[1],HL),attackerStays:onField(T.boardAfter[0],GG),ownLp:T.boardAfter[0].lp===T.boardStart[0].lp,oppLp:T.boardAfter[1].lp===T.boardStart[1].lp})},
++ f:{title:'(f) Granguignol 2500 ATK, Upstart Goblin in hand, opponent at 2500 LP with no monsters: take the direct lethal; no Upstart Goblin activation first (it would give them 1000 LP)',decks:['branded','sky'],lp:[8000,2500],
++  place:[{name:GG,location:4,sequence:2,owner:0,position:ATK},{name:'Upstart Goblin',location:2,owner:0}],
++  expect:T=>judge({upstartOffered:T.idleOffers.includes(UPSTART),attackOffered:offered(T,GG),selectedAttack:attacked(T,GG),noUpstartActivation:!T.activations.some(a=>a.code===UPSTART&&a.controller===0),finished:!!T.end?.finished,winnerSeat0:T.end?.winner===0,oppLpZero:T.boardAfter[1].lp===0,ownLp:T.boardAfter[0].lp===T.boardStart[0].lp})},
+  e2:{title:'(e2) Scareclaw Kashtira in face-up Defence (DEF 2600 used) vs Blue-Eyes White Dragon 3000 ATK: the attack would lose, so do not attack',decks:['kashtira','blueeyes'],
+   place:[{name:SK,location:4,sequence:2,owner:0,position:DEF},{name:BE,location:4,sequence:2,owner:1,position:ATK}],
+   expect:T=>judge({offered:offered(T,SK),noAttack:!attacked(T,SK),attackerStays:onField(T.boardAfter[0],SK),targetStays:onField(T.boardAfter[1],BE),ownLp:T.boardAfter[0].lp===T.boardStart[0].lp,oppLp:T.boardAfter[1].lp===T.boardStart[1].lp})},
+@@ -74,40 +93,43 @@ const cardOf=(d,c)=>c?{name:d.name(c.code),position:c.position,sequence:c.sequen
+ const board=d=>[0,1].map(p=>({lp:d.lp[p],field:d.zone(p,4).filter(Boolean).map(c=>cardOf(d,c)),st:d.zone(p,8).filter(Boolean).map(c=>cardOf(d,c)),hand:d.zone(p,2).filter(Boolean).length,gy:d.zone(p,16).filter(Boolean).map(c=>d.name(c.code))}));
+ // Validity first, then the strict predicate: INVALID on a missing own-turn start, an abnormal stop (setup failure, error,
+ // step bound, rejected response, no prompt, wrong seat), engine errors, a rejected response or an error note.
+-export function classify(T,pz){const valid=!!T.boardStart&&['turn-end','finished'].includes(T.stop)&&!(T.errors||[]).length&&!T.rejected&&!(T.notes||[]).some(x=>/^error|^setup|^rejected/.test(x));
++export const lpAgrees=T=>{const c=T.lpCheck;if(!c||!c.start||!c.end)return false;const eq=(a,b)=>Array.isArray(a)&&a.length===2&&a.every(v=>Number.isFinite(v))&&JSON.stringify(a)===JSON.stringify(b);return eq(c.start.native,c.start.wrapper)&&eq(c.end.native,c.end.wrapper)&&JSON.stringify(c.setup)===JSON.stringify(c.requested)};
++export function classify(T,pz){const valid=!!T.boardStart&&lpAgrees(T)&&['turn-end','finished'].includes(T.stop)&&!(T.errors||[]).length&&!T.rejected&&!(T.notes||[]).some(x=>/^error|^setup|^rejected/.test(x));
+  T.valid=valid;if(valid){T.result=pz.expect(T);T.outcome=T.result.pass?'PASS':'FAIL'}else{T.result=null;T.outcome='INVALID'}return T}
+ async function pilotsFor(seed){if(!nodes)return createOptimalPilots({seed,searchEnabled:false});const ps=[];
+  for(const s of [0,1]){const core=await createSearchCore(db,scripts);ps[s]=createOptimalPilots({seed,nodeBudget:nodes,searchCore:core,worldPool:true,poolKey:'s2:'+seed+':'+s,poolSize:10,seatCapBytes:40*1048576,shouldStop:()=>false})[s]}return ps}
+ const MAIN=import.meta.url===pathToFileURL(process.argv[1]||'').href;
+ // RELAY-110: the requested matrix must be valid and nonempty BEFORE anything runs, and the executed records must equal
+ // it exactly; a zero-run or unknown selection is INVALID SELECTION (exit 2 in every mode), never a success.
+-export function selectionErrors({only,modes,extra,first}){const e=[],ids=Object.keys(P);
++export function selectionErrors({only,modes,extra,first,search=0}){const e=[],ids=Object.keys(P);
++ for(const id of (only.length?only:ids))if(P[id]?.lp&&search>0)e.push('puzzle '+id+' has a non-default LP fixture: search-off only until search-root LP is verified (RELAY-115)');
+  for(const x of only)if(!ids.includes(x))e.push('unknown puzzle id: '+x);if(!modes.length||modes.some(m=>!['classic','enhanced'].includes(m)))e.push('modes must be classic and/or enhanced: '+modes.join(','));
+  if(new Set(modes).size!==modes.length)e.push('duplicate mode');for(const k of extra)if(!(k in S4))e.push('unknown S4 flag: '+k);if(![0,1].includes(first))e.push('--first must be 0 or 1');
+  if(!(only.length?only:ids).length)e.push('empty selection');return e}
+ export const requested=({only,modes,extra})=>(only.length?Object.keys(P).filter(id=>only.includes(id)):Object.keys(P)).flatMap(id=>modes.map(m=>id+'|'+m+(extra?'+'+extra:'')));
+-if(MAIN){const selErr=selectionErrors({only,modes,extra,first});if(selErr.length){console.log('INVALID SELECTION: '+selErr.join('; '));process.exit(2)}
+- const want=requested({only,modes,extra});fs.mkdirSync(out,{recursive:true});await engine();const rows=[];
++if(MAIN){const selErr=selectionErrors({only,modes,extra,first,search:nodes});if(selErr.length){console.log('INVALID SELECTION: '+selErr.join('; '));process.exit(2)}
++ const want=requested({only,modes,extra});fs.mkdirSync(out,{recursive:true});const CORE=(await engine()).core;const rows=[];
+ for(const [id,pz] of Object.entries(P)){if(only.length&&!only.includes(id))continue;
+  for(const mode of modes){setAiMode(mode);if(extra)setS4(Object.fromEntries([...extra].map(k=>[k,true])));const seed=7;
+-  const T={puzzle:id,title:pz.title,fixture:'controlled synthetic',mode:mode+(extra?'+'+extra:''),s4:{...S4},search:nodes,seed,first,ownTurn:OWN,decks:pz.decks,placements:pz.place,identity:IDENTITY,own:[],targets:[],battleOffers:[],notes:[],rejected:0,decisions:0,stop:null};
++  const T={puzzle:id,title:pz.title,fixture:'controlled synthetic',mode:mode+(extra?'+'+extra:''),s4:{...S4},search:nodes,seed,first,ownTurn:OWN,decks:pz.decks,placements:pz.place,identity:IDENTITY,own:[],targets:[],battleOffers:[],idleOffers:[],activations:[],seq:0,notes:[],rejected:0,decisions:0,stop:null,lpCheck:{requested:checkLP(pz.lp)}};
+   const lists=deckLists(pz.decks,pz.place);T.deckLists=lists.map(x=>({id:x.id,main:x.main,extra:x.extra,mainNames:Object.fromEntries([...new Set(x.main)].map(c=>[db[c].name,x.main.filter(y=>y===c).length]))}));
+-  let d;try{d=await scenario(lists,pz.place,{seed})}catch(e){T.stop='setup-failed';T.notes.push('setup failed: '+e.message);T.outcome='INVALID';rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}-f${first}.json`,JSON.stringify(T,null,1));continue}
++  let d;try{d=await scenario(lists,pz.place,{seed,lp:pz.lp});T.lpCheck.setup=nativeLP(CORE,d)}catch(e){T.stop='setup-failed';T.notes.push('setup failed: '+e.message);T.outcome='INVALID';rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}-f${first}.json`,JSON.stringify(T,null,1));continue}
+   const ps=await pilotsFor(seed);let n=0;
+-  const respond=(r,who)=>{const before=d.retries;d.respond(r);if(d.retries!==before){T.rejected++;T.notes.push('rejected response ('+who+') at turn '+d.turn)};return d.retries===before};
++  let chainLen=0;const trackChain=()=>{const ch=d.chain||[];if(ch.length<chainLen)chainLen=0;for(const c of ch.slice(chainLen))T.activations.push({seq:T.seq,turn:d.turn,code:c.code,controller:c.controller,link:c.chain_size});chainLen=ch.length};
++  const respond=(r,who)=>{const before=d.retries;T.seq++;d.respond(r);trackChain();if(d.retries!==before){T.rejected++;T.notes.push('rejected response ('+who+') at turn '+d.turn)};return d.retries===before};
+   const decline=()=>{const c=d.choices().find(o=>['Do not chain','No'].includes(o.label));if(c){respond(c.response,'decline');return true}return false};
+   try{for(;;){if(d.finished){T.stop='finished';break}if(!d.prompt){T.stop='no-prompt';break}if(d.turn>OWN){T.stop='turn-end';break}if(++n>STEPS){T.stop='step-bound';break}if(T.rejected){T.stop='rejected';break}
+     const m=d.prompt,s=m.seat??m.player;
+     if(d.turn<OWN){if(m.type===M.SELECT_IDLECMD){const c=d.choices().find(o=>/End Turn|End phase|End Phase/i.test(o.label));if(c){respond(c.response,'pass-turn');continue}}
+      if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&decline())continue;const p=ps[s].plan(d);respond(p.response,'pre-turn');continue}
+-    if(!T.boardStart){if(!(s===0&&d.active===0)){T.stop='own-turn-not-seat-0';break}T.boardStart=board(d);T.turnStart={turn:d.turn,phase:d.phase,active:d.active}}
++    if(!T.boardStart){if(!(s===0&&d.active===0)){T.stop='own-turn-not-seat-0';break}T.boardStart=board(d);T.lpCheck.start={native:nativeLP(CORE,d),wrapper:[...d.lp]};T.turnStart={turn:d.turn,phase:d.phase,active:d.active}}
+     if(s===1){if([M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(m.type)&&decline())continue;const p=ps[1].plan(d);if(respond(p.response,'seat1'))for(const x of ps)x.observe?.(p);continue}
+-    const ls=labels(d);if(m.type===M.SELECT_BATTLECMD)T.battleOffers.push(ls.filter(l=>/^Attack/i.test(l)));
++    const ls=labels(d);if(m.type===M.SELECT_IDLECMD)T.idleOffers.push(...d.choices().filter(o=>/^Activate/.test(o.label)).map(o=>o.code));if(m.type===M.SELECT_BATTLECMD)T.battleOffers.push(ls.filter(l=>/^Attack/i.test(l)));
+     const p=ps[0].plan(d);const label=d.choices().find(o=>JSON.stringify(o.response)===JSON.stringify(p.response))?.label||null;
+-    if(m.type===M.SELECT_IDLECMD||m.type===M.SELECT_BATTLECMD)T.own.push({phase:d.phase,type:m.type===M.SELECT_IDLECMD?'idle':'battle',label,kind:kindOf(m.type,label||''),rule:p.rule||p.book?.rule||null,reason:p.book?.reason||p.reason||null});
++    if(m.type===M.SELECT_IDLECMD||m.type===M.SELECT_BATTLECMD)T.own.push({seq:T.seq+1,phase:d.phase,type:m.type===M.SELECT_IDLECMD?'idle':'battle',label,kind:kindOf(m.type,label||''),rule:p.rule||p.book?.rule||null,reason:p.book?.reason||p.reason||null});
+     if(m.type===M.SELECT_CARD&&d.hint===549/* HINTMSG_ATTACKTARGET */)T.targets.push(...(p.response.indicies||[]).map(j=>d.name((m.selects||[])[j]?.code)));
+     T.decisions++;if(respond(p.response,'seat0'))for(const x of ps)x.observe?.(p)}}catch(e){T.stop='error';T.notes.push('error: '+e.message)}
+-  T.end={turn:d.turn,phase:d.phase,active:d.active,finished:!!d.finished,winner:d.finished?d.winner:null};T.boardAfter=board(d);T.errors=[...(d.errors||[])];T.stats=ps[0].midgameStats||null;
++  T.end={turn:d.turn,phase:d.phase,active:d.active,finished:!!d.finished,winner:d.finished?d.winner:null};T.boardAfter=board(d);try{T.lpCheck.end={native:nativeLP(CORE,d),wrapper:[...d.lp]}}catch(e){T.lpCheck.end={native:null,wrapper:[...d.lp],error:e.message}}T.errors=[...(d.errors||[])];T.stats=ps[0].midgameStats||null;
+   classify(T,pz);
+   rows.push(T);fs.writeFileSync(`${out}/${id}-${T.mode}-s${nodes}-f${first}.json`,JSON.stringify(T,null,1));try{d.stop?.()}catch{}}}
+ const sum=rows.map(T=>`${T.puzzle} ${T.mode} s${T.search} f${T.first}: ${T.outcome} - stop=${T.stop} decisions=${T.decisions} rejected=${T.rejected} errors=${T.errors?.length??'-'}${T.result?' checks='+Object.entries(T.result.checks).map(([k,v])=>k+':'+(v?'y':'N')).join(','):''}${T.notes.length?' notes='+T.notes.join('; '):''}\n   own-turn plays: ${T.own.map(x=>x.kind+':'+(x.label||'?')).join(' | ')}${T.targets.length?' targets='+T.targets.join(','):''}\n   LP start/after: ${T.boardStart?.map(b=>b.lp).join('/')} -> ${T.boardAfter?.map(b=>b.lp).join('/')}`);
+-- 
+2.43.0
+

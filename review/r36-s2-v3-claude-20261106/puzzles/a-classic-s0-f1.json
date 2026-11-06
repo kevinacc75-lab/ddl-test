@@ -1,0 +1,333 @@
+{
+ "puzzle": "a",
+ "title": "(a) attacker vs an empty board (+1 set card): attack directly, never switch to Defence",
+ "fixture": "controlled synthetic",
+ "mode": "classic",
+ "s4": {
+  "E": false
+ },
+ "search": 0,
+ "seed": 7,
+ "first": 1,
+ "ownTurn": 4,
+ "decks": [
+  "branded",
+  "sky"
+ ],
+ "placements": [
+  {
+   "name": "Granguignol the Dusk Dragon",
+   "location": 4,
+   "sequence": 2,
+   "owner": 0,
+   "position": 1
+  },
+  {
+   "name": "Sky Striker Mobilize - Engage!",
+   "location": 8,
+   "sequence": 2,
+   "owner": 1,
+   "position": 10
+  }
+ ],
+ "identity": {
+  "node": "v22.22.2",
+  "tool": "f9802b1eff2fcdbbd1ce75bfa82428cc824579b30680d88fbf633737d9e6b852",
+  "files": {
+   "dist/tactics.mjs": "d21ae4b3cffeae370b4c3eea6b7a18e69b37eed02282192fe08cf31b214e3f59",
+   "dist/optimal-pilot.mjs": "e1e90a901b45c40cc710fa800d59abc50b273310944bfda6c3e9ddc359b4aa46",
+   "dist/ai/midgame-rules.mjs": "e86143fb905c7e8406885e6a1245ca417784c7ca8438b7587d9dfc78478c28d5",
+   "dist/ai/midgame-flags.mjs": "723e48ef870142792b50b136d35bf1a1e51e122335dee330b244ec9ba8c70733",
+   "dist/ai/s4-flags.mjs": "5167373cebba5c027fb71f780c7147eb04c1b8846327f2f982f7a6b360b1ad4d",
+   "dist/duel.mjs": "f0a0718445dc4a8b47cc1349e0f6283fc1fc9d7a25f3b35f107cd68665fa1cb9",
+   "dist/cards.json.gz": "57ee238c0904fb9fbbf03074b9e8489626851e8470dde90961ffbb30a95f946e",
+   "dist/scripts.json.gz": "2c55b7207f18e4350ded907a3aea00266cb59c45de28ae0a501195ae158fdfc8",
+   "dist/decks.json": "8b72172f083fd8c137045a369e436a42ffd3fd85ef278d8e77d1d3174dfe4768"
+  }
+ },
+ "own": [
+  {
+   "seq": 13,
+   "phase": 4,
+   "type": "idle",
+   "label": "Enter Battle Phase",
+   "kind": "phase",
+   "rule": "Move to the next phase",
+   "reason": "The pilot has no remaining play it prefers and has a monster on the field, so it enters battle."
+  },
+  {
+   "seq": 15,
+   "phase": 8,
+   "type": "battle",
+   "label": "Attack · Granguignol the Dusk Dragon",
+   "kind": "attack",
+   "rule": "Plan the battle sequence",
+   "reason": "The planner compared 2 visible-board combat states. This line projects 2500 damage and 0 damage to this seat, prioritising lethal, useful removals and survival. Visible-board combat estimate; unseen responses, attack limits and unmodelled effects can change it."
+  },
+  {
+   "seq": 30,
+   "phase": 8,
+   "type": "battle",
+   "label": "Enter Main Phase 2",
+   "kind": "phase",
+   "rule": "Preserve the board",
+   "reason": "No positive battle sequence survived the visible-board risk checks. It moves to the next phase instead of committing a losing attack."
+  },
+  {
+   "seq": 32,
+   "phase": 256,
+   "type": "idle",
+   "label": "End turn",
+   "kind": "phase",
+   "rule": "Move to the next phase",
+   "reason": "The pilot has no remaining play it prefers, so it ends the turn."
+  }
+ ],
+ "targets": [],
+ "battleOffers": [
+  [
+   "Attack · Granguignol the Dusk Dragon"
+  ],
+  []
+ ],
+ "idleOffers": [],
+ "activations": [],
+ "seq": 34,
+ "notes": [],
+ "rejected": 0,
+ "decisions": 13,
+ "stop": "turn-end",
+ "lpCheck": {
+  "requested": [
+   8000,
+   8000
+  ],
+  "setup": [
+   8000,
+   8000
+  ],
+  "start": {
+   "native": [
+    8000,
+    8000
+   ],
+   "wrapper": [
+    8000,
+    8000
+   ]
+  },
+  "end": {
+   "native": [
+    8000,
+    5500
+   ],
+   "wrapper": [
+    8000,
+    5500
+   ]
+  }
+ },
+ "deckLists": [
+  {
+   "id": "branded",
+   "main": [
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694
+   ],
+   "extra": [
+    24915933
+   ],
+   "mainNames": {
+    "Black Luster Soldier": 40
+   }
+  },
+  {
+   "id": "sky",
+   "main": [
+    63166095,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694,
+    5405694
+   ],
+   "extra": [],
+   "mainNames": {
+    "Sky Striker Mobilize - Engage!": 1,
+    "Black Luster Soldier": 39
+   }
+  }
+ ],
+ "boardStart": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "position": 1,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 7,
+   "gy": []
+  },
+  {
+   "lp": 8000,
+   "field": [],
+   "st": [
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "position": 10,
+     "sequence": 2
+    }
+   ],
+   "hand": 6,
+   "gy": []
+  }
+ ],
+ "turnStart": {
+  "turn": 4,
+  "phase": 1,
+  "active": 0
+ },
+ "end": {
+  "turn": 5,
+  "phase": 1,
+  "active": 1,
+  "finished": false,
+  "winner": null
+ },
+ "boardAfter": [
+  {
+   "lp": 8000,
+   "field": [
+    {
+     "name": "Granguignol the Dusk Dragon",
+     "position": 1,
+     "sequence": 2
+    }
+   ],
+   "st": [],
+   "hand": 6,
+   "gy": [
+    "Black Luster Soldier"
+   ]
+  },
+  {
+   "lp": 5500,
+   "field": [],
+   "st": [
+    {
+     "name": "Sky Striker Mobilize - Engage!",
+     "position": 10,
+     "sequence": 2
+    }
+   ],
+   "hand": 7,
+   "gy": []
+  }
+ ],
+ "errors": [],
+ "stats": {
+  "lethalLock": 0,
+  "lethalNoSearch": 0,
+  "directNoSearch": 0,
+  "mp2BookOff": 0,
+  "readyHold": 0,
+  "targetHold": 0,
+  "removal": 0,
+  "bpInsteadOfEnd": 0,
+  "advisoryBook": 0,
+  "closeOutOptions": 0,
+  "bookAtTarget": 0,
+  "removalVerified": 0,
+  "removalOverride": 0,
+  "removalMismatch": 0
+ },
+ "valid": true,
+ "result": {
+  "pass": true,
+  "checks": {
+   "offered": true,
+   "selectedAttack": true,
+   "noPositionChange": true,
+   "attackerStays": true,
+   "damage": true,
+   "ownLp": true
+  }
+ },
+ "outcome": "PASS"
+}
