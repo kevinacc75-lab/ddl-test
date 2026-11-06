@@ -1,0 +1,25 @@
+ok 1 DB/script text: Command Knight "All Warrior monsters you control gain 400 ATK" = engine EFFECT_TYPE_FIELD EFFECT_UPDATE_ATTACK 400 on RACE_WARRIOR; Gearfried the Iron Knight is a Warrior
+ok 2 REPRO RELAY-077 B1-1 (8f7f321 returned opens:true gain:700 cost:Command Knight): Gearfried 2200 (1800+400) + Command Knight 1600, Albion 3000, LP 700, only Droplet in hand -> no opens:true claim
+ok 3 aura-loss reasons: paying Command Knight = its continuous effect on other cards; paying Gearfried = retained Command Knight has a conditional continuous effect
+ok 4 the real numbers: after paying Command Knight Gearfried is 1800 vs halved Albion 1500 = 300 < 700; after paying Gearfried Command Knight 1600 vs 1500 = 100 < 700 -> neither cost opens lethal (so declining is also the right answer, not just a safe one)
+ok 5 aura board + a spare hand card (Upstart Goblin): the hand cost keeps Command Knight, Gearfried 2200 vs 1500 = 700 -> lethal claimed with the HAND cost; no monster is an allowed cost
+ok 6 no-aura control: Gearfried 1800 + Celtic Guardian 1400 (Normal Monster, no script), Albion 3000, LP 300, only Droplet -> lethal claimed, cost = Celtic Guardian (monster)
+ok 7 no-aura control without the engine scripts (d.scripts missing) -> monster cost unreadable, claim declined
+ok 8 a paid monster with a leave/sent-to-GY event (Sangan, real script EVENT_TO_GRAVE) is not a representable cost -> declined
+ok 9 aura on the OPPONENT side counts too: a retained opposing Command Knight (conditional continuous effect) blocks the monster cost in the no-aura board
+ok 10 Mirrorjade intent (real removalFor): banish Albion opens lethal; stages from c44146295.lua: cost TOGRAVE from the Extra Deck (not modelled), resolution REMOVE over BOTH MZONEs
+ok 11 REPRO RELAY-077 B1-2 (8f7f321 returned null): resolution SELECT_CARD [our Mirrorjade, opp Albion] min=max=1, baseline index 0 -> corrected to index 1 (removalOverride, stage target)
+ok 12 Mirrorjade mixed list: baseline already index 1 -> removalVerified; index form (r.index) is corrected too
+ok 13 Mirrorjade mixed list without the projected Albion (our Mirrorjade + another opposing monster) -> removalMismatch, response unchanged
+ok 14 legal bounds kept: a mixed list whose bounds do not allow a single pick (min=max=2) -> removalMismatch, response unchanged (never an illegal 1-card answer)
+ok 15 Mirrorjade context: the Extra Deck cost prompt (TOGRAVE at activation) and a REMOVE prompt while NO link of Mirrorjade is resolving are not the target stage -> null
+ok 16 Afterburners! intent (real removalFor): destroy Albion opens lethal; c99550630.lua: SelectTarget(face-up, BOTH MZONEs) DESTROY at activation
+ok 17 Afterburners! mixed target list at activation [our Kagari, opp Albion], baseline our Kagari -> corrected to Albion
+ok 18 Afterburners! resolution: the optional Spell/Trap destroy (YesNo Stringid(id,0); DESTROY select over S/T on both fields) is not this projection's stage -> null for both
+ok 19 Widow Anchor intent (real removalFor, 3 Spells in GY): control of Albion opens lethal; c98338152.lua: SelectTarget(face-up Effect, BOTH MZONEs) TARGET at activation, YesNo Stringid(id,1) take control at resolution
+ok 20 Widow Anchor mixed target list [our Kagari, opp Albion], baseline our Kagari -> corrected to Albion
+ok 21 Widow Anchor optional control decision: "Take control of the target?" (Stringid(id,1)) while its link resolves - No -> Yes (removalOverride, stage control); Yes kept (removalVerified)
+ok 22 Widow Anchor: another YesNo (Stringid(id,0)), the control YesNo while no link resolves, or an intent that is not the control line -> null
+ok 23 Widow Anchor with only 2 Spells in GY: no control projection (no claim)
+ok 24 Droplet stages unchanged in kind: cost = TOGRAVE at activation (ours: hand/field), target = NEGATE while its link resolves (opponent's face-up Effect Monsters) - from c24299458.lua
+r36-midgame-b1 round-3 tests: 24 passed

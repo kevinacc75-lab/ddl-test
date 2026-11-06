@@ -1,0 +1,64 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "finish": {
+   "games": [
+    {
+     "seed": "71025",
+     "a": "mikanko",
+     "b": "kashtira",
+     "over": true,
+     "turn": 0,
+     "title": "Duel complete",
+     "dock": "RESOLVED",
+     "dockHidden": false,
+     "chain": 0,
+     "strip": true,
+     "visibleResolving": [],
+     "errors": [
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)"
+     ],
+     "pass": false
+    },
+    {
+     "seed": "71021",
+     "a": "sky",
+     "b": "mikanko",
+     "over": true,
+     "turn": 0,
+     "title": "Duel complete",
+     "dock": "RESOLVED",
+     "dockHidden": false,
+     "chain": 0,
+     "strip": true,
+     "visibleResolving": [],
+     "errors": [
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+      "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139"
+     ],
+     "pass": false
+    }
+   ],
+   "pass": false
+  }
+ },
+ "pass": false
+}

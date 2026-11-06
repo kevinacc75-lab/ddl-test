@@ -1,0 +1,130 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "cold": {
+   "desktop": {
+    "select": {
+     "value": "enhanced",
+     "options": [
+      "Enhanced",
+      "Classic (r35.12 AI)"
+     ],
+     "experimental": false,
+     "title": "TEST PHASE C r36",
+     "badge": "TEST PHASE C r36 · Enhanced AI default"
+    },
+    "s": {
+     "turn": 3,
+     "title": "Pilot B is choosing its next play",
+     "banner": "AI Enhanced",
+     "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+     "notice": "",
+     "over": false
+    },
+    "errors": [],
+    "pass": false
+   },
+   "tabletPortrait": {
+    "select": {
+     "value": "enhanced",
+     "options": [
+      "Enhanced",
+      "Classic (r35.12 AI)"
+     ],
+     "experimental": false,
+     "title": "TEST PHASE C r36",
+     "badge": "TEST PHASE C r36 · Enhanced AI default"
+    },
+    "s": {
+     "turn": 3,
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI Enhanced",
+     "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+     "notice": "",
+     "over": false
+    },
+    "errors": [],
+    "pass": false
+   },
+   "pass": false
+  },
+  "classic": {
+   "first": {
+    "turn": 2,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Enhanced",
+    "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+    "notice": "",
+    "over": false
+   },
+   "s": {
+    "turn": 2,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Classic",
+    "tag": "SPECTATOR · HANDS REVEALED · AI CLASSIC",
+    "notice": "",
+    "over": false
+   },
+   "errors": [],
+   "pass": false
+  },
+  "replay": {
+   "live": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Enhanced",
+    "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+    "notice": "",
+    "over": false
+   },
+   "saved": {
+    "aiMode": "enhanced",
+    "build": "ddl-test r36 2026-11-07-r36",
+    "responses": 393,
+    "version": "2.2.0-rc"
+   },
+   "explicit": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Enhanced",
+    "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+    "notice": "◇DUEL ENGINE · ATTENTIONCannot destructure 'object null' as it is null.×",
+    "over": false,
+    "dropdownAfter": "classic"
+   },
+   "legacy": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Classic",
+    "tag": "SPECTATOR · HANDS REVEALED · AI CLASSIC",
+    "notice": "◇DUEL LAB · NOTICESaved responses restored (AI Classic). Playback is paused at the saved position.×",
+    "over": false,
+    "dropdownAfter": "enhanced"
+   },
+   "bogus": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Classic",
+    "tag": "SPECTATOR · HANDS REVEALED · AI CLASSIC",
+    "notice": "◇DUEL ENGINE · ATTENTIONThis replay names an unknown AI mode.×",
+    "over": false,
+    "dropdownAfter": "enhanced"
+   },
+   "bogusStartedDuel": true,
+   "errors": [
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139",
+    "[presentation] scene error; continuing attack TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:248:151)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at Object.play (http://127.0.0.1:8761/presentation.mjs:327:906)\n    at Worker.receive (http://127.0.0.1:8761/app.mjs:149:3019)",
+    "[presentation] scene error; continuing draw TypeError: Failed to execute 'animate' on 'Element': duration must be non-negative or auto\n    at fly (http://127.0.0.1:8761/presentation.mjs:131:43)\n    at event (http://127.0.0.1:8761/presentation.mjs:249:148)\n    at next (http://127.0.0.1:8761/presentation.mjs:308:7)\n    at complete (http://127.0.0.1:8761/presentation.mjs:309:685)\n    at http://127.0.0.1:8761/presentation.mjs:287:139"
+   ],
+   "pass": false
+  }
+ },
+ "pass": false
+}

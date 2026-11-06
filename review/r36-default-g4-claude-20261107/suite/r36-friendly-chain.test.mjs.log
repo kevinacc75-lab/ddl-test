@@ -1,0 +1,7 @@
+ok 1 mode maps: F is Enhanced only (Classic stays r35.12)
+ok 2 fixture replays exactly on this build: 518 responses accepted, Sky (seat 0) wins 6200-0 on turn 8
+ok 3 the RELAY-117 prompt (response 127): open chain = our own Zero only; Ash and "Do not chain" offered
+ok 4 enemy control (response 306, turn 5): open chain = opponent's Ohime; the guard does NOT apply (Ash against the opponent stays available to search)
+ok 5 corrected branch resolves natively (RELAY-118): declining at 127 lets Zero summon Raye and Roze, Ash stays in hand, no rejected responses or script errors
+ok 6 pure guard: needs F, a chain prompt, only our open links, the base decline, and a negating card on offer
+r36 friendly-chain tests: 6 passed

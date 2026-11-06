@@ -1,0 +1,1 @@
+{"test":"r35.12-coin-dice-sfx","pass":true,"node":"v22.22.2","report":{"heads":119,"tails":110,"dice1":46,"steps":{"coin.flick":8,"coin.spin":56,"coin.land":39,"dice.throw":38,"dice.land":7,"dice.reveal":1},"multiples":{"dice1":44,"dice2":86,"coin1":108,"coin3":116},"mathRandomCalls":0}}

@@ -1,0 +1,73 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "cold": {
+   "desktop": {
+    "select": {
+     "value": "enhanced",
+     "options": [
+      "Enhanced",
+      "Classic (r35.12 AI)"
+     ],
+     "experimental": false,
+     "title": "TEST PHASE C r36",
+     "badge": "TEST PHASE C r36 · Enhanced AI default"
+    },
+    "s": {
+     "turn": 2,
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI Enhanced",
+     "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+     "notice": "",
+     "over": false
+    },
+    "errors": [],
+    "pass": true
+   },
+   "tabletPortrait": {
+    "select": {
+     "value": "enhanced",
+     "options": [
+      "Enhanced",
+      "Classic (r35.12 AI)"
+     ],
+     "experimental": false,
+     "title": "TEST PHASE C r36",
+     "badge": "TEST PHASE C r36 · Enhanced AI default"
+    },
+    "s": {
+     "turn": 2,
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI Enhanced",
+     "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+     "notice": "",
+     "over": false
+    },
+    "errors": [],
+    "pass": true
+   },
+   "pass": true
+  },
+  "classic": {
+   "first": {
+    "turn": 2,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Enhanced",
+    "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+    "notice": "",
+    "over": false
+   },
+   "s": {
+    "turn": 2,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Classic",
+    "tag": "SPECTATOR · HANDS REVEALED · AI CLASSIC",
+    "notice": "",
+    "over": false
+   },
+   "errors": [],
+   "pass": true
+  }
+ },
+ "pass": true
+}

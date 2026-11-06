@@ -1,0 +1,1 @@
+{"test":"r36-dtw-native5","pass":true,"node":"v22.22.2","results":{"AA":{"call":"right","offered":["Special Summon · Red-Eyes Black Dragon Exceed","Special Summon · Red-Eyes Black Dragon Exceed"]},"AB":{"offered":true,"turn":2},"AC":{"seed":31,"searches":1,"again":false,"control":true}}}
