@@ -1,0 +1,6 @@
+06038fce14d073ecece3a5041ff4e0d363252d7a3ecc8a38f78d1dc114b49cd3  SUPPLEMENT.md
+14a659737474f8bc05754621fcd3a326cc6039d167f8ab1347d4abef1e69168e  final-tests/r36-ai-mode.test.mjs
+296e4f5f4ef01d2145381fbe67c0512e168f82533e8d24cef95055e57ad9dfa4  final-tests/r36-enhanced-long-browser.mjs
+60b035aab2d53ae77b59332d8de9d359db17b889c7941141b386a160cc0e60b3  final-tests/r36-s2-puzzles.mjs
+cfaea54b410820ee2669c7a01845872fc8e17a0dec3943212c4fda2aba7ba18f  final-tests/r36-s4-e.test.mjs
+7bdee604ddf4c078776fadb16d15a0762f2647e717592500b830068f0086a761  patches-prereq/0001-r36-PREVIEW-follow-up-selector-isolation-test-lists-.patch

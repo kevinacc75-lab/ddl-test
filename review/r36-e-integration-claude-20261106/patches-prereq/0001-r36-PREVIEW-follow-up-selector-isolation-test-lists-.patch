@@ -1,0 +1,43 @@
+From 4d17d736898fba296a33a5c50981a46e39802425 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Fri, 6 Nov 2026 06:27:15 +1100
+Subject: [PATCH] r36 PREVIEW follow-up: selector isolation test lists the 2
+ exact preview label hunks; long-browser tool uses the container proxy for the
+ live https site
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01HYdavRJmQWYnZCPQsymeGW
+---
+ tests/r36-ai-mode.test.mjs          | 2 +-
+ tools/r36-enhanced-long-browser.mjs | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/r36-ai-mode.test.mjs b/tests/r36-ai-mode.test.mjs
+index c5f18d5..5f2e267 100644
+--- a/tests/r36-ai-mode.test.mjs
++++ b/tests/r36-ai-mode.test.mjs
+@@ -46,7 +46,7 @@ OptimalPilot.prototype.base=base0;stopEngine();
+ const r3512=f=>execFileSync('git',['show','d3177e0:'+f],{maxBuffer:64<<20}).toString();
+ const SEL={
+  'dist/app.mjs':[["doctrine:$('#doctrine-guidance').checked,aiMode:$('#ai-mode')?.value==='enhanced'?'enhanced':'classic',","doctrine:$('#doctrine-guidance').checked,"],["· Doctrine ${x.match.doctrine?'on':'off'} · AI ${x.match.aiMode==='enhanced'?'Enhanced (experimental)':'Classic'}</small>","· Doctrine ${x.match.doctrine?'on':'off'}</small>"]],
+- 'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,'']],
++ 'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,''],['<title>TEST PHASE C r36 PREVIEW</title>','<title>TEST PHASE C r35.12</title>'],['<span class="release">TEST PHASE C r36 PREVIEW · Enhanced AI experimental</span>','<span class="release">TEST PHASE C r35.12</span>']],/* + the 2 r36 PREVIEW label hunks (15b6b88, Kevy 6 Nov 03:17 AEDT) */
+  'dist/worker.mjs':[["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';\nimport {carryRemovalIntent} from './ai/midgame-rules.mjs';\nlet aiMode='classic';/* r36 AI selector: Classic (default) / Enhanced, fixed per duel */",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode='classic';setAiMode(aiMode);matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],["if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);/* r36 B1 worker-state (RELAY-108): the capped plan keeps the matching baseline intent */",''],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
+  'dist/ai/ai-worker.mjs':[["\nimport {aiModeOf,setAiMode} from './midgame-flags.mjs';",''],[/ setAiMode\(x\.aiMode\);\/\*.*?\*\/\n/s,''],[/if\(aiModeOf\(x\.aiMode\)==='enhanced'&&x\.pendingRemoval\)pilot\.pendingRemoval=x\.pendingRemoval;\/\*.*?\*\//s,'']]};
+ for(const [f,reps] of Object.entries(SEL))await ok(f+' minus the selector lines = r35.12 (d3177e0) bytes',()=>{let s=fs.readFileSync(f,'utf8');for(const [a,b] of reps){const before=s;s=s.replace(a,b);assert.notEqual(s,before,'selector line present: '+String(a).slice(0,60))}assert.equal(s,r3512(f))});
+diff --git a/tools/r36-enhanced-long-browser.mjs b/tools/r36-enhanced-long-browser.mjs
+index ed64e30..5eb134c 100644
+--- a/tools/r36-enhanced-long-browser.mjs
++++ b/tools/r36-enhanced-long-browser.mjs
+@@ -4,7 +4,7 @@
+ import {createRequire} from 'node:module';import fs from 'node:fs';const require=createRequire(import.meta.url);
+ const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+ const [url,out,minTurn='6',mins='40',seed='71007',a='branded',b='sky']=process.argv.slice(2);fs.mkdirSync(out,{recursive:true});
+-const browser=await chromium.launch();const ctx=await browser.newContext({viewport:{width:1366,height:900}});const p=await ctx.newPage();
++const browser=await chromium.launch(/^https:/.test(url)&&process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{});/* live site: through the container proxy */const ctx=await browser.newContext({viewport:{width:1366,height:900}});const p=await ctx.newPage();
+ const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+ const report={url,minTurn:+minTurn,minutes:+mins,seed:+seed,decks:[a,b],samples:[],errors};const t0=Date.now();
+ await p.goto(url);await p.waitForFunction(()=>document.querySelector('#start')&&!document.querySelector('#start').disabled,null,{timeout:120000});
+-- 
+2.43.0
+
