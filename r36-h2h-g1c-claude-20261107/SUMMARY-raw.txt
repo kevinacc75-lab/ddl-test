@@ -1,0 +1,16 @@
+games 96
+duplicates 0
+safety problems []
+tool sha set {'85c1387e3dfe7c321f62de17838bd7017c42aa0064b731ee9fbf13d9b3cb9c60'} dist set {('775e8efe5f8501997b58ac6c31951a603d47678a49b82a87dc9a24754e57c043', '775e8efe5f8501997b58ac6c31951a603d47678a49b82a87dc9a24754e57c043')} node {'v22.22.2'} deadline {1500}
+flags set {('classic off S4 {"E":false,"F":false}', 'enhanced AB S4 {"E":true,"F":true}'), ('enhanced AB S4 {"E":true,"F":true}', 'classic off S4 {"E":false,"F":false}')}
+decided 96 / 96 ends {'win reason 1': 94, 'win reason 2': 2}
+undecided []
+TOTAL {'classic': 43, 'enhanced': 53}
+sky-mikanko        E=10 C= 6 undecided=0 decided=16/16 valid=True result=E
+kashtira-branded   E= 7 C= 9 undecided=0 decided=16/16 valid=True result=C
+branded-sky        E=10 C= 6 undecided=0 decided=16/16 valid=True result=E
+blueeyes-branded   E=10 C= 6 undecided=0 decided=16/16 valid=True result=E
+mikanko-kashtira   E= 8 C= 8 undecided=0 decided=16/16 valid=True result=tie
+dtw-sky            E= 8 C= 8 undecided=0 decided=16/16 valid=True result=tie
+valid matchups 6 E wins/ties among valid 5
+pairs 48 deck-decided 39 Enhanced won both seatings 7 Classic won both seatings 2 other/undecided 0
