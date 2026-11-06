@@ -31,3 +31,4 @@ Raw traces in traces/ are unchanged. These corrections apply to the README summa
   - Hu-Li the Jewel Mikanko and Ha-Re the Sword Mikanko (only **while equipped**).
 - **What still stands:** the traced self-damage loss itself (observed). Its exact cause is unverified until the trace's board and equip state are rechecked.
 - **Follow-up:** the S2 d1/d2 puzzle proposals (Drive REVIEW REQUEST 6 Nov 15:45 AEDT) test the actual reflection conditions.
+- **Addendum (RELAY-115, ChatGPT):** equipping Water Arabesque (or any Equip Card) **to Hu-Li or Ha-Re** can satisfy *their* reflection condition. That is a different causal statement from "Water Arabesque reflects". Ohime and Uzuhime need no equip. The 4 Nov event's cause stays unverified until the exact target, the active effects and the attachment state at damage calculation are reconstructed from the trace. The synthetic S2 puzzles cannot establish that historical cause.
