@@ -1,0 +1,8 @@
+ok 1 mode maps: F is Enhanced only (Classic stays r35.12)
+ok 2 fixture replays exactly on this build: 518 responses accepted, Sky (seat 0) wins 6200-0 on turn 8
+ok 3 the RELAY-117 prompt (response 127): open chain = our own Zero only; Ash and "Do not chain" offered
+ok 4 friendly: Enhanced with search (100 nodes) now declines - "Do not chain", guard counted once
+ok 5 friendly, Classic with search (100 nodes): still chains its own Ash - the r35.12 defect, left unchanged by policy (Classic = r35.12)
+ok 6 enemy control (response 306, turn 5): open chain = opponent's Ohime; the guard does NOT apply (Ash against the opponent stays available to search)
+ok 7 pure guard: needs F, a chain prompt, only our open links, the base decline, and a negating card on offer
+r36 friendly-chain tests: 7 passed

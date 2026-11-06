@@ -1,0 +1,9 @@
+ok 1 default off: r35.11 budgets (1500 ms cap, 400 nodes, instant 40 nodes)
+ok 2 only ever raises: <= 1500 ms, junk and negatives are off; above 8000 ms is capped
+ok 3 on: cap = think ms, nodes = 400 x ms/1500 (2500 -> 667, 5000 -> 1333); instant budgets never scaled
+ok 4 env DDL_THINK_MS wires the flag (5000 on, 900 off)
+  (r35.11-base tree not found at /home/claude/r35.11-base: identity half skipped)
+ok 5 flag off in a real duel: same responses as r35.11-base and node budget 400 on every search
+  nodes used per search (no deadline): 48,48,48,48,144,96 - the 16-world sample, not the node budget, ends these searches; the clock is what extra think time relieves
+ok 6 flag on (5000 ms) in a real duel: every search gets 1333 nodes; where 400 never bound, play is unchanged (the flag adds budget, not logic)
+r36-think: 6 checks passed

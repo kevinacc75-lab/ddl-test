@@ -1,0 +1,66 @@
+diff --git a/dist/ai/midgame-flags.mjs b/dist/ai/midgame-flags.mjs
+index 4e5912e..2135e28 100644
+--- a/dist/ai/midgame-flags.mjs
++++ b/dist/ai/midgame-flags.mjs
+@@ -15,6 +15,6 @@ export const aiModeOf=v=>v==='enhanced'?'enhanced':'classic';
+ // r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map, so a dev/test
+ // setting can never leak into a duel or think. setAiMode runs at each duel start (worker.mjs) and each think (ai-worker.mjs).
+ // RELAY-112 (6 Nov): flag E (engine-offered Defence Position attackers, DEF used when the card says so) joins Enhanced only.
+-export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:true})});
++export const AI_S4=Object.freeze({classic:Object.freeze({E:false,F:false}),enhanced:Object.freeze({E:true,F:true})});/* F: RELAY-117 friendly-chain guard, Enhanced only */
+ export function setAiMode(mode){setS4(AI_S4[aiModeOf(mode)]);return setMidgame(AI_MODES[aiModeOf(mode)])}
+ export const midgameLabel=()=>KEYS.filter(k=>MIDGAME[k]).join('')||'off';
+diff --git a/dist/ai/midgame-rules.mjs b/dist/ai/midgame-rules.mjs
+index a7a33af..3567ee0 100644
+--- a/dist/ai/midgame-rules.mjs
++++ b/dist/ai/midgame-rules.mjs
+@@ -1,6 +1,7 @@
+ // r36 Arm B (generic battle rule) and Arm C (per-deck doctrine, ai/book/midgame-doctrine.mjs) decision helpers. Flags in ai/midgame-flags.mjs, all off by
+ // default. Called from optimal-pilot.mjs base()/plan()/search(). Public information only (own cards, public field, LP).
+ import {MIDGAME} from './midgame-flags.mjs';
++import {S4} from './s4-flags.mjs';/* r36 S4 flags (E: planBattle; F: friendly-chain guard) */
+ import {thisTurnBattle,MAIN1,MAIN2} from './midgame.mjs';
+ import {tacticalContext,planBattle} from '../tactics.mjs';
+ import {M,R} from '../duel.mjs';
+@@ -8,7 +9,7 @@ const R_IDLE=R.SELECT_IDLECMD;
+ import {doctrineFor} from './book/midgame-doctrine.mjs';
+ const faceUp=c=>!!(c.position&5);
+ export const midgameTurn=d=>d.turn>=3;
+-export const newMidgameStats=()=>({lethalLock:0,lethalNoSearch:0,directNoSearch:0,mp2BookOff:0,readyHold:0,targetHold:0,removal:0,bpInsteadOfEnd:0,advisoryBook:0,closeOutOptions:0,bookAtTarget:0,removalVerified:0,removalOverride:0,removalMismatch:0});
++export const newMidgameStats=()=>({friendlyChainNoSearch:0,lethalLock:0,lethalNoSearch:0,directNoSearch:0,mp2BookOff:0,readyHold:0,targetHold:0,removal:0,bpInsteadOfEnd:0,advisoryBook:0,closeOutOptions:0,bookAtTarget:0,removalVerified:0,removalOverride:0,removalMismatch:0});
+ const deckId=(d,seat)=>d.decks?.[seat]?.id||null;
+ const readyAttackers=(d,seat)=>d.zone(seat,4).filter(c=>c&&(c.position&1)&&(c.attack||0)>0&&d.name(c.code)!=='Lubellion the Searing Dragon');
+ // Arm C board target: at least `attackers` Attack Position monsters and the strongest at `atk` or more, or a lethal-ready board.
+@@ -311,7 +312,16 @@ export function removalFollowUp(d,seat,m,r,intent){
+  return null;
+ }
+ // Arm B: does this decision skip search? Found lethal (not uncertain), or a direct attack into an empty board.
+-export function battleNoSearch(d,seat,baseline){
++// r36 S4 flag F (RELAY-117): own effects only in the open chain + the base pilot's decline + a negating card on offer ->
++// the decline is played without search (search chose own Ash Blossom on own Zero in the live 71091 play-test). Pure.
++export function friendlyChainNoSearch(d,seat,baseline){
++ if(!S4.F||d.prompt?.type!==M.SELECT_CHAIN)return null;
++ const open=(d.chain||[]).filter(c=>!c.solved);if(!open.length||open.some(c=>c.controller!==seat))return null;
++ const ch=d.choices(),decline=ch.find(o=>o.label==='Do not chain');
++ if(!decline||JSON.stringify(baseline?.response)!==JSON.stringify(decline.response))return null;
++ return ch.some(o=>o!==decline&&/negate/i.test(d.db?.[o.code]?.desc||''))?'friendlyChainNoSearch':null;
++}
++export function battleNoSearch(d,seat,baseline){const friendly=friendlyChainNoSearch(d,seat,baseline);if(friendly)return friendly;
+  if(!MIDGAME.B||!midgameTurn(d)||d.active!==seat)return null;
+  const b=baseline.battle;if(b?.lethal&&!b.uncertain&&baseline.rule==='Pursue projected lethal')return 'lethalNoSearch';
+  if(d.prompt?.type===M.SELECT_BATTLECMD&&baseline.response?.action===1&&!d.zone(1-seat,4).some(Boolean))return 'directNoSearch';
+diff --git a/dist/ai/s4-flags.mjs b/dist/ai/s4-flags.mjs
+index 2d4b1bd..551cd05 100644
+--- a/dist/ai/s4-flags.mjs
++++ b/dist/ai/s4-flags.mjs
+@@ -4,6 +4,9 @@
+ //   E = planBattle uses every attacker the ENGINE offers, including face-up Defence Position ones (e.g. Scareclaw
+ //       Kashtira: "This card can attack while in face-up Defense Position. If it does, apply its DEF for damage
+ //       calculation."), scored with DEF when its text says so.
++//   F = friendly-chain guard (RELAY-117, ChatGPT live play-test 71091): when every open chain link is ours, the base
++//       pilot declined ("Do not chain") and an offered response is a card that negates, search may not override that
++//       decline - the pilot never negates its own effect (own Ash Blossom on own Sky Striker Ace = Zero).
+ const env=String(globalThis.process?.env?.DDL_S4??globalThis.DDL_S4??'').toUpperCase();
+-export const S4=Object.fromEntries(['E'].map(k=>[k,env.includes(k)]));
++export const S4=Object.fromEntries(['E','F'].map(k=>[k,env.includes(k)]));
+ export function setS4(flags={}){for(const k of Object.keys(S4))if(k in flags)S4[k]=!!flags[k];return {...S4}}
