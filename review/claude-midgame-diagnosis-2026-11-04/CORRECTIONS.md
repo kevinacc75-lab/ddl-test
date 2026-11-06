@@ -22,3 +22,12 @@ Raw traces in traces/ are unchanged. These corrections apply to the README summa
    - The self-damage flags name no damage source.
 5. **Replay limitation.** The traces keep top-level titles and snapshots, not complete response streams. They are not natively replayable and not an A/B verdict.
 6. **Hidden information.** The snapshots show both hands. Any critique must judge a decision only on what that player could know.
+
+## T-D4 (Claude, 6 Nov 2026 15:50 AEDT): F-D named the wrong Mikanko card
+- **Original claim (README section F-D):** "base Branded-Mikanko T4: at 1500 LP, Branded attacked into Mikanko with **Water Arabesque** reflection active and lost on its own turn."
+- **Correction:** Mikanko Water Arabesque has **no damage reflection**. Its text in the build data: the equipped monster cannot be destroyed by card effects, plus a once-per-turn Main Phase swap of the equipped Mikanko.
+- **Reflection in our Mikanko list comes from:**
+  - Ohime the Manifested Mikanko and Uzuhime the Manifested Mikanko (always: cannot be destroyed by battle, and the opponent takes the battle damage);
+  - Hu-Li the Jewel Mikanko and Ha-Re the Sword Mikanko (only **while equipped**).
+- **What still stands:** the traced self-damage loss itself (observed). Its exact cause is unverified until the trace's board and equip state are rechecked.
+- **Follow-up:** the S2 d1/d2 puzzle proposals (Drive REVIEW REQUEST 6 Nov 15:45 AEDT) test the actual reflection conditions.
