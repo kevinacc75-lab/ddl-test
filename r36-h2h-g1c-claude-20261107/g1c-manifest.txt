@@ -1,0 +1,13 @@
+G1-C manifest (written before any G1-C game; RELAY-119)
+2026-11-07T02:05:49+11:00
+machine: 2 CPU, 6.18.44-fc-v242; concurrency 2 batches (same as G1-S)
+node: v22.22.2
+enh dist tree (in-folder method): 6656dd355975d20e48b8a18292b8f4a30bdd4a2ba60d024faf5b521555f9f3ff  -
+cls dist tree (in-folder method): 6656dd355975d20e48b8a18292b8f4a30bdd4a2ba60d024faf5b521555f9f3ff  -
+tool r36-h2h.mjs: 85c1387e3dfe7c321f62de17838bd7017c42aa0064b731ee9fbf13d9b3cb9c60  /home/claude/r36-mid/tools/r36-h2h.mjs
+driver run-c.sh: 37310fb1733d1230524eee84119e4f4a0e94729057e4ce3100c23ae8cbeb7ab5 (adds --allow-proof-seeds, limited to the 24 RELAY-119 seeds; the tool's dev-seed guard refused them on the first start at 02:05, 0 games played, those empty logs deleted)
+engine tree /home/claude/r36-mid at 186ad5017d886effa6e613b293ea28cabeee547d
+deadline 1500 ms; max-turn 30; per seed: first 0/1 x EC/CE
+c1: sky:mikanko:916107 sky:mikanko:526608 kashtira:branded:636145 kashtira:branded:981973 branded:sky:438448 branded:sky:482097 blueeyes:branded:443067 blueeyes:branded:791146 mikanko:kashtira:381599 mikanko:kashtira:239198 dtw:sky:697233 dtw:sky:378053
+c2: sky:mikanko:957890 sky:mikanko:144868 kashtira:branded:236261 kashtira:branded:687028 branded:sky:711183 branded:sky:906685 blueeyes:branded:502269 blueeyes:branded:742909 mikanko:kashtira:630944 mikanko:kashtira:266674 dtw:sky:286510 dtw:sky:503468
+seed collision check: none in Drive (fullText), ddl-test, r36-mid, scratchpad or any ledger file under /home/claude
