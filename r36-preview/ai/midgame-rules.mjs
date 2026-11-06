@@ -1,6 +1,7 @@
 // r36 Arm B (generic battle rule) and Arm C (per-deck doctrine, ai/book/midgame-doctrine.mjs) decision helpers. Flags in ai/midgame-flags.mjs, all off by
 // default. Called from optimal-pilot.mjs base()/plan()/search(). Public information only (own cards, public field, LP).
 import {MIDGAME} from './midgame-flags.mjs';
+import {S4} from './s4-flags.mjs';/* r36 S4 flags (E: planBattle; F: friendly-chain guard) */
 import {thisTurnBattle,MAIN1,MAIN2} from './midgame.mjs';
 import {tacticalContext,planBattle} from '../tactics.mjs';
 import {M,R} from '../duel.mjs';
@@ -8,7 +9,7 @@ const R_IDLE=R.SELECT_IDLECMD;
 import {doctrineFor} from './book/midgame-doctrine.mjs';
 const faceUp=c=>!!(c.position&5);
 export const midgameTurn=d=>d.turn>=3;
-export const newMidgameStats=()=>({lethalLock:0,lethalNoSearch:0,directNoSearch:0,mp2BookOff:0,readyHold:0,targetHold:0,removal:0,bpInsteadOfEnd:0,advisoryBook:0,closeOutOptions:0,bookAtTarget:0,removalVerified:0,removalOverride:0,removalMismatch:0});
+export const newMidgameStats=()=>({friendlyChainNoSearch:0,lethalLock:0,lethalNoSearch:0,directNoSearch:0,mp2BookOff:0,readyHold:0,targetHold:0,removal:0,bpInsteadOfEnd:0,advisoryBook:0,closeOutOptions:0,bookAtTarget:0,removalVerified:0,removalOverride:0,removalMismatch:0});
 const deckId=(d,seat)=>d.decks?.[seat]?.id||null;
 const readyAttackers=(d,seat)=>d.zone(seat,4).filter(c=>c&&(c.position&1)&&(c.attack||0)>0&&d.name(c.code)!=='Lubellion the Searing Dragon');
 // Arm C board target: at least `attackers` Attack Position monsters and the strongest at `atk` or more, or a lethal-ready board.
@@ -311,7 +312,17 @@ export function removalFollowUp(d,seat,m,r,intent){
  return null;
 }
 // Arm B: does this decision skip search? Found lethal (not uncertain), or a direct attack into an empty board.
-export function battleNoSearch(d,seat,baseline){
+// r36 S4 flag F (RELAY-117): own effects only in the open chain + the base pilot's decline + a negating card on offer ->
+// the decline is played without search (search chose own Ash Blossom on own Zero in the live 71091 play-test). Narrow by
+// design: "negate" is a card-text heuristic; this preserves the base decline, it does not evaluate negation. Pure.
+export function friendlyChainNoSearch(d,seat,baseline){
+ if(!S4.F||d.prompt?.type!==M.SELECT_CHAIN)return null;
+ const open=(d.chain||[]).filter(c=>!c.solved);if(!open.length||open.some(c=>c.controller!==seat))return null;
+ const ch=d.choices(),decline=ch.find(o=>o.label==='Do not chain');
+ if(!decline||JSON.stringify(baseline?.response)!==JSON.stringify(decline.response))return null;
+ return ch.some(o=>o!==decline&&/negate/i.test(d.db?.[o.code]?.desc||''))?'friendlyChainNoSearch':null;
+}
+export function battleNoSearch(d,seat,baseline){const friendly=friendlyChainNoSearch(d,seat,baseline);if(friendly)return friendly;
  if(!MIDGAME.B||!midgameTurn(d)||d.active!==seat)return null;
  const b=baseline.battle;if(b?.lethal&&!b.uncertain&&baseline.rule==='Pursue projected lethal')return 'lethalNoSearch';
  if(d.prompt?.type===M.SELECT_BATTLECMD&&baseline.response?.action===1&&!d.zone(1-seat,4).some(Boolean))return 'directNoSearch';

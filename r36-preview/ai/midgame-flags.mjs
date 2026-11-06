@@ -15,6 +15,6 @@ export const aiModeOf=v=>v==='enhanced'?'enhanced':'classic';
 // r36 S4 (RELAY-109): every mode change also resets the COMPLETE S4 map, so a dev/test
 // setting can never leak into a duel or think. setAiMode runs at each duel start (worker.mjs) and each think (ai-worker.mjs).
 // RELAY-112 (6 Nov): flag E (engine-offered Defence Position attackers, DEF used when the card says so) joins Enhanced only.
-export const AI_S4=Object.freeze({classic:Object.freeze({E:false}),enhanced:Object.freeze({E:true})});
+export const AI_S4=Object.freeze({classic:Object.freeze({E:false,F:false}),enhanced:Object.freeze({E:true,F:true})});/* F: RELAY-117 friendly-chain guard, Enhanced only */
 export function setAiMode(mode){setS4(AI_S4[aiModeOf(mode)]);return setMidgame(AI_MODES[aiModeOf(mode)])}
 export const midgameLabel=()=>KEYS.filter(k=>MIDGAME[k]).join('')||'off';
