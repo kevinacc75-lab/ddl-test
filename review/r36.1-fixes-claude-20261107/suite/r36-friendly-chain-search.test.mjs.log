@@ -1,0 +1,3 @@
+ok 1 friendly: Enhanced with search (100 nodes) now declines - "Do not chain", guard counted once
+ok 2 friendly, Classic with search (100 nodes): still chains its own Ash - the r35.12 defect, left unchanged by policy (Classic = r35.12)
+r36 friendly-chain SEARCH controls: 2 passed

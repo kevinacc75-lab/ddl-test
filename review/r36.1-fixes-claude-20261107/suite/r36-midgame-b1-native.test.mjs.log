@@ -1,0 +1,6 @@
+ok 1 Mirrorjade: native REMOVE prompt while its link resolves offers BOTH fields [our Mirrorjade, opp Albion]; pilot ends on Albion; a wrong baseline (our Mirrorjade) is corrected; Albion banished; 0 script errors
+ok 2 Afterburners!: native SelectTarget at activation (DESTROY, no link resolving) offers [our Kagari, opp Albion]; pilot chose the removal itself; ends on Albion; wrong baseline corrected; Albion destroyed
+ok 3 Afterburners! with 3 Spells in GY: the optional S/T destroy at resolution (YesNo + mixed DESTROY list over S/T) is NOT treated as the target stage (follow-up null on a wrong baseline)
+ok 4 Widow Anchor: native SelectTarget (TARGET) offers [our Kagari, opp Albion]; ends on Albion; resolution YesNo Stringid(id,1) "Take control" answered Yes (a No baseline is overridden); Albion ends on our field
+ok 5 Forbidden Droplet: native cost prompt (TOGRAVE, activation, all ours) verified against the projected costs; resolution NEGATE prompt picks Albion
+r36-midgame-b1 native tests: 5 passed

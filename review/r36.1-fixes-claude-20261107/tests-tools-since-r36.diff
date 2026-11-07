@@ -1,0 +1,210 @@
+diff --git a/tests/fixtures/r36-pins/CANDIDATE.json b/tests/fixtures/r36-pins/CANDIDATE.json
+index eb49871..28ad0a1 100644
+--- a/tests/fixtures/r36-pins/CANDIDATE.json
++++ b/tests/fixtures/r36-pins/CANDIDATE.json
+@@ -1,6 +1,6 @@
+ {
+  "dist/app.mjs": "0d40e5e36247b4653f6e5b96725e573a5422ab18eaaa1eacb8a893245c2a10fa",
+- "dist/worker.mjs": "07000564f674cd21c110b9450690b3d69bf6b7ffb086da658257bd4b64d97011",
++ "dist/worker.mjs": "f6e5548fd226ca2ccf9c88425b19c15c84c4bcb54b91a25124663429dcc5e178",
+  "dist/optimal-pilot.mjs": "e1e90a901b45c40cc710fa800d59abc50b273310944bfda6c3e9ddc359b4aa46",
+- "dist/presentation.mjs": "0e7d9099823d769528aaa41cae466d0035bac62c99fc00dd5efddc9c481cbb9a"
++ "dist/presentation.mjs": "12b7fa8a8643c6856b8cf7e4cc0935dd16bf6467a47e6c3a0b75f7e16112d2ff"
+ }
+diff --git a/tests/fixtures/r36-pins/presentation.mjs.patch b/tests/fixtures/r36-pins/presentation.mjs.patch
+index fef8cd6..76d69bf 100644
+--- a/tests/fixtures/r36-pins/presentation.mjs.patch
++++ b/tests/fixtures/r36-pins/presentation.mjs.patch
+@@ -1,7 +1,16 @@
+ diff --git a/dist/presentation.mjs b/dist/presentation.mjs
+-index 1e72fce..8a92d86 100644
++index 1e72fce..b670e01 100644
+ --- a/dist/presentation.mjs
+ +++ b/dist/presentation.mjs
++@@ -128,7 +128,7 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
++   }
++   if(e.type==='attack'){pulse(from,'lunge',color);document.body.classList.add('battle-shake');setTimeout(()=>document.body.classList.remove('battle-shake'),500*timingScale)}
++   const run=generation,done=()=>{svg.remove();ghost.remove();arrive(to);if(e.type==='move'&&[4,8].includes(e.to?.location)&&!reduced)animate(to,[{transform:'scale(1.07)'},{transform:'scale(.985)',offset:.6},{transform:'scale(1)'}],{duration:180*timingScale,easing:'ease-out'});if(run===generation){pulse(to,e.type==='attack'?'damage':'arrival',color);if(e.type==='attack')impactSparks(b,color)}};
++-  if(ghost.animate){const animation=ghost.animate(frames,{duration:duration*timingScale,delay:at*timingScale,easing:'linear',fill:'forwards'});animations.add(animation);if(held)animation.pause();animation.finished.catch(()=>{}).finally(()=>{animations.delete(animation);done()})}else setTimeout(done,(at+duration)*timingScale);
+++  if(ghost.animate){const animation=ghost.animate(frames,{duration:Math.max(0,duration)*timingScale,/* r36.1: at Instant pace the callers' duration-20 can be negative, which made animate() throw and cut the scene short */delay:at*timingScale,easing:'linear',fill:'forwards'});animations.add(animation);if(held)animation.pause();animation.finished.catch(()=>{}).finally(()=>{animations.delete(animation);done()})}else setTimeout(done,(at+duration)*timingScale);
++   pulse(from,'effect',color);
++  }
++  function zoneWord(z){return ({1:'DECK',2:'HAND',4:'FIELD',8:'FIELD',16:'GRAVEYARD',32:'BANISHED',64:'EXTRA DECK',128:'XYZ MATERIAL',256:'FIELD'})[z?.location]||'FIELD'}
+ @@ -227,7 +227,7 @@ export function createPresentation({db,decks,view,isComputer=()=>false,duelists=
+    effectScene.resetReturn();closeChainLog();sceneToken++;fx23.clear(true);if(batch[0].type==='activate')chainBuilding=true;else if(['resolve','chainEnd'].includes(batch[0].type))chainBuilding=false;document.dispatchEvent(new window.CustomEvent('duel-presentation-event',{detail:batch[0]}));
+    const first=batch[0];if(first.type==='attack'){const node=point(first.from);first.code=Number(node?.dataset.card)||0;}if(!first.code&&chainVisual.has(first.chain))Object.assign(first,{code:chainVisual.get(first.chain).code,player:chainVisual.get(first.chain).player,source:chainVisual.get(first.chain).source});
+diff --git a/tests/fixtures/r36-pins/worker.mjs.patch b/tests/fixtures/r36-pins/worker.mjs.patch
+index 25f1e95..eb8815e 100644
+--- a/tests/fixtures/r36-pins/worker.mjs.patch
++++ b/tests/fixtures/r36-pins/worker.mjs.patch
+@@ -1,5 +1,5 @@
+ diff --git a/dist/worker.mjs b/dist/worker.mjs
+-index e5bec43..5012b57 100644
++index e5bec43..3bb8429 100644
+ --- a/dist/worker.mjs
+ +++ b/dist/worker.mjs
+ @@ -4,6 +4,10 @@ import {exportSeatContext,safeView} from './ai/knowledge.mjs';
+@@ -9,7 +9,7 @@ index e5bec43..5012b57 100644
+ +import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';
+ +import {carryRemovalIntent} from './ai/midgame-rules.mjs';
+ +let aiMode='classic';/* r36 AI selector: Enhanced (the page default since r36) / Classic, fixed per duel; a start or replay without a mode is Classic */
+-+const BUILD='ddl-test r36 2026-11-07-r36';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */
+++const BUILD='ddl-test r36.1 2026-11-07-r36.1';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */
+  import {readCompressed} from './load.mjs';
+  import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
+  // r35 item 8 (RELAY-046 Tap B, Seto 27 Oct 10:10): deck-shuffle capture on the one real duel (see shuffle-tap.mjs).
+@@ -26,6 +26,15 @@ index e5bec43..5012b57 100644
+  }
+  
+  function send(){
++@@ -77,7 +81,7 @@ function send(){
++  const message={type:'state',human,lastEventId:deliveredSeq,shuffle:shuffleTap.drain(),coin:coinTap.drain(),state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
++  schedule();
++ }
++-function schedule(){clearTimeout(timer);if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;const stepMs=delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay;timer=setTimeout(step,Math.max(stepMs,presentationUntil-Date.now(),humanWait(),addedWait(stepMs)))}}
+++function schedule(){clearTimeout(timer);if(!duel?.handle)return;/* r36.1: a stopped duel (New) has no engine handle; a settings message must not plan on it */if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&presentationPending)planned();if(duel?.prompt&&aiSeat(duel.prompt.seat)&&!paused&&!duel.finished&&!disabled&&!presentationPending){planned();if(thinking)return;const stepMs=delay<=700&&![M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO].includes(duel.prompt.type)?Math.min(delay,65):delay;timer=setTimeout(step,Math.max(stepMs,presentationUntil-Date.now(),humanWait(),addedWait(stepMs)))}}
++ 
++ function step(){
++  try{
+ @@ -95,7 +99,7 @@ onmessage=async ({data:x})=>{try{
+   if(x.type==='start'){shuffleTap.reset();coinTap.reset();interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
+    director.reset();preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;const run=++generation;clearTimeout(timer);disabled=false;paused=!!x.dealHand;dealHand=!!x.dealHand;replayHistory=[];view=x.view;mode=x.mode;study=x.study;delay=x.delay||2200;cinematics=x.cinematics!==false;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';learnHold=!!x.learnHold;thoughts=[];thoughtSeq=0;plan=null;deliveredSeq=0;presentationUntil=0;presentationPending=false;
+diff --git a/tests/r32-review-fixes.test.mjs b/tests/r32-review-fixes.test.mjs
+index cbf0389..166fa97 100644
+--- a/tests/r32-review-fixes.test.mjs
++++ b/tests/r32-review-fixes.test.mjs
+@@ -34,7 +34,7 @@ function timing({switchTo=null,compute=1500}={}){let now=1000+compute,scheduled=
+  const w=fs.readFileSync('dist/worker.mjs','utf8').replace(/^import .*;\s*$/gm,'').replace(/export /g,'');
+  const ctx=vm.createContext({HumanResponseBridge:class{},WorkerPauseOwners:class{},ChainDirector:class{},Date:{now:()=>now},M,postMessage(){},setTimeout:(f,ms)=>{scheduled.push(ms);return 1},clearTimeout(){},safeView:()=>({choices:()=>[1,2]})});
+  vm.runInContext(w,ctx);
+- vm.runInContext("duel={revision:1,prompt:{type:M.SELECT_IDLECMD,seat:0},finished:false};mode='watch';paused=false;disabled=false;presentationPending=false;presentationUntil=0;presentationDoneAt=1000;preset='duel';delay=75;plan={revision:1};thinking=null;humanPending={revision:1,started:1000,ms:1000,add:true,dueAt:null,cls:'big'};",ctx);
++ /* r36.1: the fake duel carries a live engine handle like every real running duel (schedule() now returns early for a stopped duel, which has none) */vm.runInContext("duel={revision:1,handle:1,prompt:{type:M.SELECT_IDLECMD,seat:0},finished:false};mode='watch';paused=false;disabled=false;presentationPending=false;presentationUntil=0;presentationDoneAt=1000;preset='duel';delay=75;plan={revision:1};thinking=null;humanPending={revision:1,started:1000,ms:1000,add:true,dueAt:null,cls:'big'};",ctx);
+  if(switchTo){vm.runInContext("preset='learning';delay=1;humanPending={revision:1,started:1000,ms:6000,add:false,dueAt:null,cls:'big'};",ctx);vm.runInContext("onmessage({data:{type:'cinematics',preset:'"+switchTo+"',value:false}})",ctx)}
+  vm.runInContext('schedule()',ctx);return scheduled.at(-1)}
+ assert.equal(timing(),1075,'Duel big decision after 1.5 s of thinking: 75 ms step + 1000 ms added');
+diff --git a/tests/r36-ai-mode.test.mjs b/tests/r36-ai-mode.test.mjs
+index d49aecf..2d7eae5 100644
+--- a/tests/r36-ai-mode.test.mjs
++++ b/tests/r36-ai-mode.test.mjs
+@@ -45,14 +45,14 @@ await ok('S4 lifecycle (RELAY-109/112): setAiMode sets the COMPLETE S4 map from
+  setAiMode('enhanced');setAiMode('classic');assert.equal(S4.E,false,'Classic after Enhanced');assert.equal(S4.F,false,'Classic after Enhanced (F)');
+  for(const [m,e] of [['enhanced',true],['classic',false],['enhanced',true],[undefined,false]]){setS4({E:!e,F:!e});await think({aiMode:m});assert.ok(seen.length&&seen.every(x=>x.s4.E===e&&x.s4.F===e),String(m)+': E=F='+e+' in every base() of the think')}
+  const W=fs.readFileSync('dist/worker.mjs','utf8');assert.ok(W.includes("aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);"),'import-replay sets the replay\'s own mode, missing = Classic (S4 included)');assert.ok(W.includes('aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);'),'duel start sets the mode (S4 included)')});
+-await ok('r36 (Enhanced default) index.html whole-file pin (PREVIEW 3 was 4b6db9b3, PREVIEW 2 0f23a7a6, PREVIEW e4399b3b): bc3fade4...',()=>assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/index.html')).digest('hex'),'bc3fade4d5000ee0c6b61a0ff939780a2ee336a5573e6a19804b12aaaa863ad6'));
++await ok('r36.1 index.html whole-file pin (r36 was bc3fade4, PREVIEW 3 4b6db9b3, PREVIEW 2 0f23a7a6, PREVIEW e4399b3b): 990399bf...',()=>assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/index.html')).digest('hex'),'990399bf400cb5e75e7267bbb211bc95a3e73f881daebf7303cb399db22ee7c1'));
+ OptimalPilot.prototype.base=base0;stopEngine();
+ // ---- 3. source isolation vs r35.12 ----
+ const r3512=f=>execFileSync('git',['show','d3177e0:'+f],{maxBuffer:64<<20}).toString();
+ const SEL={
+  'dist/app.mjs':[["$('#spectator-tag').hidden=true;$('#duel-controls-toggle').hidden=false;","$('#spectator-tag').hidden=mode!=='watch';$('#duel-controls-toggle').hidden=false;"],["$('#spectator-tag').hidden=false;$('#hand-title')","$('#spectator-tag').hidden=mode!=='watch';$('#hand-title')"],["function aiTag(ai){const t=$('#spectator-tag');if(!t)return;t.textContent=(mode==='watch'?'SPECTATOR · HANDS REVEALED · ':'')+'AI '+(ai==='enhanced'?'ENHANCED':'CLASSIC');t.hidden=false}/* r36 RELAY-117: the duel's active AI is always shown in the arena (Watch and Play) */\n",''],["if(!x.match)return;aiTag(x.match.aiMode);","if(!x.match)return;"],["doctrine:$('#doctrine-guidance').checked,aiMode:importedResponses?importedAiMode:$('#ai-mode')?.value==='classic'?'classic':'enhanced',/* r36 default (RELAY-119): Enhanced unless Classic is chosen; a saved replay runs its own mode */","doctrine:$('#doctrine-guidance').checked,"],["let importedResponses=null,importedAiMode='classic';","let importedResponses=null;"],["if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('This replay names an unknown AI mode.');/* r36 (RELAY-119): a replay without aiMode predates the selector and is Classic */",''],["importedResponses=r.responses;importedAiMode=r.aiMode==='enhanced'?'enhanced':'classic';$('#start').click();notify('Saved responses restored (AI '+(importedAiMode==='enhanced'?'Enhanced':'Classic')+'). Playback","importedResponses=r.responses;$('#start').click();notify('Saved responses restored. Playback"],["· Doctrine ${x.match.doctrine?'on':'off'} · AI ${x.match.aiMode==='enhanced'?'Enhanced':'Classic'}</small>","· Doctrine ${x.match.doctrine?'on':'off'}</small>"]],
+- 'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,''],['<title>TEST PHASE C r36</title>','<title>TEST PHASE C r35.12</title>'],['<span class="release">TEST PHASE C r36 · Enhanced AI default</span>','<span class="release">TEST PHASE C r35.12</span>']],/* + the 2 r36 PREVIEW label hunks (15b6b88, Kevy 6 Nov 03:17 AEDT) */
+- 'dist/worker.mjs':[["first:matchInfo.first,aiMode:matchInfo.aiMode,build:BUILD,responses:","first:matchInfo.first,responses:"],["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';\nimport {carryRemovalIntent} from './ai/midgame-rules.mjs';\nlet aiMode='classic';/* r36 AI selector: Enhanced (the page default since r36) / Classic, fixed per duel; a start or replay without a mode is Classic */\nconst BUILD='ddl-test r36 2026-11-07-r36';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);/* RELAY-119: explicit aiMode honoured; missing = Classic (pre-selector replays) */matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],["if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('Unsupported replay AI mode');",''],["if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);/* r36 B1 worker-state (RELAY-108): the capped plan keeps the matching baseline intent */",''],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
++ 'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,''],['<title>TEST PHASE C r36.1</title>','<title>TEST PHASE C r35.12</title>'],['<span class="release">TEST PHASE C r36.1 · Enhanced AI default</span>','<span class="release">TEST PHASE C r35.12</span>']],/* + the 2 r36 PREVIEW label hunks (15b6b88, Kevy 6 Nov 03:17 AEDT) */
++ 'dist/worker.mjs':[["first:matchInfo.first,aiMode:matchInfo.aiMode,build:BUILD,responses:","first:matchInfo.first,responses:"],["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';\nimport {carryRemovalIntent} from './ai/midgame-rules.mjs';\nlet aiMode='classic';/* r36 AI selector: Enhanced (the page default since r36) / Classic, fixed per duel; a start or replay without a mode is Classic */\nconst BUILD='ddl-test r36.1 2026-11-07-r36.1';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);/* RELAY-119: explicit aiMode honoured; missing = Classic (pre-selector replays) */matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],["if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('Unsupported replay AI mode');",''],["if(!duel?.handle)return;/* r36.1: a stopped duel (New) has no engine handle; a settings message must not plan on it */",''],["if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);/* r36 B1 worker-state (RELAY-108): the capped plan keeps the matching baseline intent */",''],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
+  'dist/ai/ai-worker.mjs':[["\nimport {aiModeOf,setAiMode} from './midgame-flags.mjs';",''],[/ setAiMode\(x\.aiMode\);\/\*.*?\*\/\n/s,''],[/if\(aiModeOf\(x\.aiMode\)==='enhanced'&&x\.pendingRemoval\)pilot\.pendingRemoval=x\.pendingRemoval;\/\*.*?\*\//s,'']]};
+ for(const [f,reps] of Object.entries(SEL))await ok(f+' minus the selector lines = r35.12 (d3177e0) bytes',()=>{let s=fs.readFileSync(f,'utf8');for(const [a,b] of reps){const before=s;s=s.replace(a,b);assert.notEqual(s,before,'selector line present: '+String(a).slice(0,60))}assert.equal(s,r3512(f))});
+ // ---- 4. cold load ----
+diff --git a/tests/r36-replay-mode.test.mjs b/tests/r36-replay-mode.test.mjs
+index 9284048..0cdf97f 100644
+--- a/tests/r36-replay-mode.test.mjs
++++ b/tests/r36-replay-mode.test.mjs
+@@ -19,7 +19,7 @@ await import(pathToFileURL(path.join(dist,'worker.mjs')).href);
+ const {MIDGAME,AI_MODES,AI_S4}=await import(pathToFileURL(path.join(dist,'ai/midgame-flags.mjs')).href);const {S4}=await import(pathToFileURL(path.join(dist,'ai/s4-flags.mjs')).href);
+ const send=data=>globalThis.onmessage({data});const tick=()=>new Promise(r=>setTimeout(r,0));
+ const waitFor=async(pred,ms=120000)=>{const t=Date.now();for(;;){const m=inbox.find(pred);if(m)return m;if(Date.now()-t>ms)throw Error('timeout waiting');await new Promise(r=>setTimeout(r,20))}};
+-const BUILD="ddl-test r36 2026-11-07-r36";
++const BUILD="ddl-test r36.1 2026-11-07-r36.1";
+ const recipe=m=>({midgame:{...MIDGAME},s4:{...S4},want:{midgame:{...AI_MODES[m]},s4:{...AI_S4[m]}}});
+ const isRecipe=m=>{const r=recipe(m);assert.deepEqual(r.midgame,r.want.midgame,m+' A-Z flags');assert.deepEqual(r.s4,r.want.s4,m+' S4 map')};
+ const lastMatch=()=>[...inbox].reverse().find(x=>x.type==='state'&&x.match)?.match;
+diff --git a/tests/r36-stopped-duel.test.mjs b/tests/r36-stopped-duel.test.mjs
+new file mode 100644
+index 0000000..0619639
+--- /dev/null
++++ b/tests/r36-stopped-duel.test.mjs
+@@ -0,0 +1,22 @@
++// r36.1 stopped-duel guard (Claude as builder, 7 Nov 2026; SELF-VERIFIED). Found in the r36 browser checks and also in
++// r35.12: after an Instant Watch duel, New -> Open saved replay showed "DUEL ENGINE · ATTENTION Cannot destructure 'object
++// null' as it is null". Stack (debug copy of the worker): onmessage('cinematics') -> schedule() -> planned() -> safeView ->
++// Duel.snapshot -> core.duelQueryCount on the duel that 'stop' had destroyed (handle null). schedule() now returns early
++// when the duel has no engine handle. The worker runs in a VM as in tests/r32-review-fixes.test.mjs.
++// Usage: node tests/r36-stopped-duel.test.mjs [worker.mjs path] (another path = control on an older build)
++import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';import {M} from '../dist/duel.mjs';
++const file=process.argv[2]||'dist/worker.mjs';let pass=0,fail=0;const ok=(n,f)=>{try{f();pass++;console.log('ok',pass+fail,n)}catch(e){fail++;console.log('not ok',pass+fail,n,'--',e.message.split('\n')[0])}};
++function run(duelInit,msg){const posted=[];let planned=0;
++ const w=fs.readFileSync(file,'utf8').replace(/^import .*;\s*$/gm,'').replace(/export /g,'');
++ const ctx=vm.createContext({HumanResponseBridge:class{},WorkerPauseOwners:class{},ChainDirector:class{},Date,M,postMessage:x=>posted.push(x),setTimeout:()=>1,clearTimeout(){},
++  safeView:d=>{planned++;if(!d.handle)throw TypeError("Cannot destructure 'object null' as it is null.");return {choices:()=>[1,2]}}});
++ vm.runInContext(w,ctx);vm.runInContext('shuffleTap={disarm(){}};coinTap={disarm(){}};resetHumanTransport=()=>{};send=()=>{};',ctx);/* the worker's own catch path needs these */
++ vm.runInContext(`duel=${duelInit};mode='watch';paused=false;disabled=false;presentationPending=false;presentationUntil=0;preset='instant';delay=1;plan=null;thinking=null;`,ctx);
++ try{vm.runInContext(`onmessage({data:${JSON.stringify(msg)}})`,ctx)}catch(e){posted.push({type:'thrown',message:e.message})}
++ return {posted,planned,disabled:vm.runInContext('disabled',ctx)}}
++const stopped="{revision:3,handle:null,prompt:{type:M.SELECT_IDLECMD,seat:0},finished:false}";
++ok('a settings message after stop (duel destroyed, handle null) plans nothing and posts no error',()=>{
++ const r=run(stopped,{type:'cinematics',preset:'instant',value:false});assert.equal(r.planned,0,'planned() not reached');assert.deepEqual(r.posted.filter(x=>x.type==='error'||x.type==='thrown'),[]);assert.equal(r.disabled,false)});
++ok('a live duel (engine handle present) still plans on the same message (the guard does not stop live play)',()=>{
++ const r=run("{revision:3,handle:1,prompt:{type:M.SELECT_IDLECMD,seat:0},finished:false}",{type:'cinematics',preset:'instant',value:false});assert.ok(r.planned>=1,'planned() reached')});
++console.log('r36 stopped-duel tests ('+file+'): '+pass+' passed'+(fail?', '+fail+' FAILED':''));if(fail)process.exitCode=1;
+diff --git a/tools/r36-default-browser.mjs b/tools/r36-default-browser.mjs
+new file mode 100644
+index 0000000..32e169b
+--- /dev/null
++++ b/tools/r36-default-browser.mjs
+@@ -0,0 +1,57 @@
++// r36 default-build browser checks (Claude as builder, 7 Nov 2026; ChatGPT RELAY-119 G4). Chromium via the pre-installed
++// Playwright against a served dist/. Parts (comma list, default all):
++//  cold     - desktop and tablet portrait: cold load selects Enhanced, the options are "Enhanced" / "Classic (r35.12 AI)",
++//             no "experimental" text on the page; a Watch duel started WITHOUT touching the selector shows "AI Enhanced"
++//             in the banner and "AI ENHANCED" in the arena tag and reaches turn >= minTurn with no page errors.
++//  classic  - Classic is one click away: New, choose Classic, start -> banner "AI Classic", tag "AI CLASSIC", progresses.
++//  replay   - "Save replay" during an Enhanced duel downloads JSON with aiMode "enhanced" and the build string; opening it
++//             with the dropdown on Classic replays as Enhanced; the same file without aiMode/build (a pre-selector replay)
++//             with the dropdown on Enhanced replays as Classic; aiMode "bogus" is refused with a notice and no duel.
++//  finish   - Instant pace, Watch duels to the end: after the end, the effect dock status is not "RESOLVING", the chain
++//             list and chain strip are empty, and every visible element's text is recorded if it still says RESOLVING.
++// Usage: node tools/r36-default-browser.mjs <url> <outdir> [parts] [minTurn=4] [finishSeeds=71025,71021]
++import {createRequire} from 'node:module';import fs from 'node:fs';const require=createRequire(import.meta.url);
++const {chromium,devices}=require('/opt/npm-tools/node_modules/playwright');
++const [url,out,partsArg='cold,classic,replay,finish',minTurn='4',finishArg='71025,71021']=process.argv.slice(2);const PARTS=partsArg.split(',');fs.mkdirSync(out,{recursive:true});
++const browser=await chromium.launch(/^https:/.test(url)&&process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{});const report={url,parts:{}};
++const ready=p=>p.waitForFunction(()=>document.querySelector('#start')&&!document.querySelector('#start').disabled,null,{timeout:180000});
++const setup=(p,{mode='watch',ai=null,seed,a='branded',b='sky'})=>p.evaluate(([mode,ai,seed,a,b])=>{const $=s=>document.querySelector(s);$('#deck-a').value=a;$('#deck-a').dispatchEvent(new Event('change'));$('#deck-b').value=b;$('#deck-b').dispatchEvent(new Event('change'));$('#mode').value=mode;$('#mode').dispatchEvent(new Event('change'));if(ai){$('#ai-mode').value=ai;$('#ai-mode').dispatchEvent(new Event('change'))}$('#game-seed').value=seed;$('#first').value='0'},[mode,ai,seed,a,b]);
++const start=p=>p.evaluate(()=>document.querySelector('#start').click());
++const st=p=>p.evaluate(()=>{const t=document.querySelector('#turn-label')?.textContent||'';const m=t.match(/(\d+)/);const tag=document.querySelector('#spectator-tag');const n=document.querySelector('#notice');
++ return {turn:m?+m[1]:0,title:document.querySelector('#decision-title')?.textContent||'',banner:(document.querySelector('#match-study')?.textContent||'').match(/AI (Enhanced|Classic)[^·]*$/)?.[0]?.trim()||'',tag:tag&&!tag.hidden?tag.textContent:'',notice:n&&!n.hidden?n.textContent:'',over:!!document.querySelector('#duel-summary')}});
++const toNew=async p=>{await p.evaluate(()=>document.querySelector('#new')?.click());await ready(p)};
++const waitTurn=async(p,n,ms=360000)=>{const end=Date.now()+ms;let s;for(;;){s=await st(p);if(s.turn>=n||s.over||Date.now()>end)return s;await p.waitForTimeout(1500)}};
++async function page(dev={viewport:{width:1366,height:900}},preset=null){const ctx=await browser.newContext({...dev,acceptDownloads:true});if(preset)await ctx.addInitScript(pr=>{try{localStorage.setItem('doctrine-lab-media-v2',JSON.stringify({preset:pr,modePaces:{watch:pr,play:pr}}))}catch{}},preset);
++ const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await p.goto(url);await ready(p);return {p,ctx,errors}}
++const run=async(name,f)=>{try{report.parts[name]=await f()}catch(e){report.parts[name]={pass:false,exception:e.message.split('\n')[0]}}console.log(name,JSON.stringify(report.parts[name]).slice(0,600))};
++if(PARTS.includes('cold'))await run('cold',async()=>{const R={};
++ for(const [name,dev] of Object.entries({desktop:{viewport:{width:1366,height:900}},tabletPortrait:devices['Galaxy Tab S4']})){const {p,ctx,errors}=await page(dev);const D=R[name]={};
++  D.select=await p.evaluate(()=>{const s=document.querySelector('#ai-mode');return {value:s.value,options:[...s.options].map(o=>o.textContent),experimental:/experimental/i.test(document.documentElement.outerHTML),title:document.title,badge:document.querySelector('.release')?.textContent}});
++  await setup(p,{seed:'71034'});await start(p);D.s=await waitTurn(p,+minTurn);D.errors=errors;await p.screenshot({path:`${out}/cold-${name}.png`});
++  D.pass=D.select.value==='enhanced'&&JSON.stringify(D.select.options)==='["Enhanced","Classic (r35.12 AI)"]'&&!D.select.experimental&&D.s.banner.startsWith('AI Enhanced')&&/AI ENHANCED$/.test(D.s.tag)&&(D.s.turn>=+minTurn||D.s.over)&&!errors.length;await ctx.close()}
++ R.pass=Object.values(R).every(d=>d.pass);return R});
++if(PARTS.includes('classic'))await run('classic',async()=>{const {p,ctx,errors}=await page();const R={};await setup(p,{seed:'71035'});await start(p);R.first=await waitTurn(p,2);await toNew(p);
++ await setup(p,{ai:'classic',seed:'71036'});await start(p);R.s=await waitTurn(p,+minTurn);R.errors=errors;await p.screenshot({path:`${out}/classic.png`});
++ R.pass=R.first.banner.startsWith('AI Enhanced')&&R.s.banner.startsWith('AI Classic')&&/AI CLASSIC$/.test(R.s.tag)&&(R.s.turn>=+minTurn||R.s.over)&&!errors.length;await ctx.close();return R});
++if(PARTS.includes('replay'))await run('replay',async()=>{const {p,ctx,errors}=await page(undefined,'instant');const R={};
++ await setup(p,{seed:'71037'});await start(p);R.live=await waitTurn(p,3);
++ const [dl]=await Promise.all([p.waitForEvent('download',{timeout:60000}),p.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent==='Save replay').click())]);
++ const file=out+'/replay-enhanced.json';await dl.saveAs(file);const rep=JSON.parse(fs.readFileSync(file,'utf8'));R.saved={aiMode:rep.aiMode,build:rep.build,responses:rep.responses?.length,version:rep.version};
++ const legacy={...rep};delete legacy.aiMode;delete legacy.build;fs.writeFileSync(out+'/replay-legacy.json',JSON.stringify(legacy));fs.writeFileSync(out+'/replay-bogus.json',JSON.stringify({...rep,aiMode:'bogus'}));
++ const openReplay=async(f,dropdown)=>{await toNew(p);await p.evaluate(ai=>{const s=document.querySelector('#ai-mode');s.value=ai;s.dispatchEvent(new Event('change'))},dropdown);
++  const input=await p.evaluateHandle(()=>[...document.querySelectorAll('input[type=file]')].find(i=>i.accept==='.json'));await input.asElement().setInputFiles(f);
++  await p.waitForFunction(()=>{const n=document.querySelector('#notice');return n&&!n.hidden&&/Saved responses restored|replay/i.test(n.textContent)},null,{timeout:120000}).catch(()=>{});
++  await p.waitForTimeout(4000);return {...await st(p),dropdownAfter:await p.evaluate(()=>document.querySelector('#ai-mode').value)}};
++ R.explicit=await openReplay(file,'classic');R.legacy=await openReplay(out+'/replay-legacy.json','enhanced');
++ const before=await st(p);R.bogus=await openReplay(out+'/replay-bogus.json','enhanced');R.bogusStartedDuel=R.bogus.banner!==''&&R.bogus.turn>0;
++ R.errors=errors.filter(e=>!/unknown AI mode/i.test(e));await p.screenshot({path:`${out}/replay.png`});
++ R.pass=R.saved.aiMode==='enhanced'&&R.saved.build===(process.env.R36_BUILD||'ddl-test r36.1 2026-11-07-r36.1')&&R.saved.responses>0&&R.explicit.banner.startsWith('AI Enhanced')&&/Enhanced/.test(R.explicit.notice)&&R.legacy.banner.startsWith('AI Classic')&&/Classic/.test(R.legacy.notice)&&/unknown AI mode/i.test(R.bogus.notice)&&!R.bogusStartedDuel&&!R.errors.length;await ctx.close();return R});
++if(PARTS.includes('finish'))await run('finish',async()=>{const R={games:[]};
++ for(const seed of finishArg.split(',')){const {p,ctx,errors}=await page(undefined,'instant');const decks=seed==='71025'?{a:'mikanko',b:'kashtira'}:{a:'sky',b:'mikanko'};
++  await setup(p,{seed,...decks});await start(p);const end=Date.now()+20*60000;let s;for(;;){s=await st(p);if(s.over||Date.now()>end)break;await p.waitForTimeout(2000)}
++  await p.waitForTimeout(6000);const after=await p.evaluate(()=>{const vis=n=>{const r=n.getBoundingClientRect();const cs=getComputedStyle(n);return r.width>0&&r.height>0&&cs.visibility!=='hidden'&&cs.display!=='none'};
++   const hits=[...document.querySelectorAll('body *')].filter(n=>n.children.length===0&&/RESOLVING/.test(n.textContent)&&vis(n)).map(n=>({id:n.id,cls:n.className,text:n.textContent.slice(0,60)}));
++   return {dock:document.querySelector('#effect-dock-status')?.textContent,dockHidden:document.querySelector('#effect-dock')?.hidden,chain:document.querySelector('#chain')?.innerHTML.length,strip:document.querySelector('#event-chain-strip')?.hidden,visibleResolving:hits}});
++  await p.screenshot({path:`${out}/finish-${seed}.png`});const G={seed,...decks,over:s.over,turn:s.turn,title:s.title,...after,errors};G.pass=s.over&&after.dock!=='RESOLVING'&&!after.chain&&after.strip!==false&&!after.visibleResolving.length&&!errors.length;R.games.push(G);await ctx.close()}
++ R.pass=R.games.every(g=>g.pass);return R});
++report.pass=Object.values(report.parts).every(x=>x.pass);fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,1));console.log(JSON.stringify({pass:report.pass,parts:Object.fromEntries(Object.entries(report.parts).map(([k,v])=>[k,v.pass]))}));await browser.close();

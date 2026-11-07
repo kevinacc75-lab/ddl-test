@@ -1,0 +1,154 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "cold": {
+   "desktop": {
+    "select": {
+     "value": "enhanced",
+     "options": [
+      "Enhanced",
+      "Classic (r35.12 AI)"
+     ],
+     "experimental": false,
+     "title": "TEST PHASE C r36.1",
+     "badge": "TEST PHASE C r36.1 · Enhanced AI default"
+    },
+    "s": {
+     "turn": 2,
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI Enhanced",
+     "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+     "notice": "",
+     "over": false
+    },
+    "errors": [],
+    "pass": true
+   },
+   "tabletPortrait": {
+    "select": {
+     "value": "enhanced",
+     "options": [
+      "Enhanced",
+      "Classic (r35.12 AI)"
+     ],
+     "experimental": false,
+     "title": "TEST PHASE C r36.1",
+     "badge": "TEST PHASE C r36.1 · Enhanced AI default"
+    },
+    "s": {
+     "turn": 2,
+     "title": "Pilot A is choosing its next play",
+     "banner": "AI Enhanced",
+     "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+     "notice": "",
+     "over": false
+    },
+    "errors": [],
+    "pass": true
+   },
+   "pass": true
+  },
+  "classic": {
+   "first": {
+    "turn": 2,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Enhanced",
+    "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+    "notice": "",
+    "over": false
+   },
+   "s": {
+    "turn": 2,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Classic",
+    "tag": "SPECTATOR · HANDS REVEALED · AI CLASSIC",
+    "notice": "",
+    "over": false
+   },
+   "errors": [],
+   "pass": true
+  },
+  "replay": {
+   "live": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Enhanced",
+    "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+    "notice": "",
+    "over": false
+   },
+   "saved": {
+    "aiMode": "enhanced",
+    "build": "ddl-test r36.1 2026-11-07-r36.1",
+    "responses": 389,
+    "version": "2.2.0-rc"
+   },
+   "explicit": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Enhanced",
+    "tag": "SPECTATOR · HANDS REVEALED · AI ENHANCED",
+    "notice": "◇DUEL LAB · NOTICESaved responses restored (AI Enhanced). Playback is paused at the saved position.×",
+    "over": false,
+    "dropdownAfter": "classic"
+   },
+   "legacy": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Classic",
+    "tag": "SPECTATOR · HANDS REVEALED · AI CLASSIC",
+    "notice": "◇DUEL LAB · NOTICESaved responses restored (AI Classic). Playback is paused at the saved position.×",
+    "over": false,
+    "dropdownAfter": "enhanced"
+   },
+   "bogus": {
+    "turn": 3,
+    "title": "Pilot A is choosing its next play",
+    "banner": "AI Classic",
+    "tag": "SPECTATOR · HANDS REVEALED · AI CLASSIC",
+    "notice": "◇DUEL ENGINE · ATTENTIONThis replay names an unknown AI mode.×",
+    "over": false,
+    "dropdownAfter": "enhanced"
+   },
+   "bogusStartedDuel": true,
+   "errors": [],
+   "pass": false
+  },
+  "finish": {
+   "games": [
+    {
+     "seed": "71025",
+     "a": "mikanko",
+     "b": "kashtira",
+     "over": true,
+     "turn": 0,
+     "title": "Duel complete",
+     "dock": "RESOLVED",
+     "dockHidden": false,
+     "chain": 0,
+     "strip": true,
+     "visibleResolving": [],
+     "errors": [],
+     "pass": true
+    },
+    {
+     "seed": "71021",
+     "a": "sky",
+     "b": "mikanko",
+     "over": true,
+     "turn": 0,
+     "title": "Duel complete",
+     "dock": "RESOLVED",
+     "dockHidden": false,
+     "chain": 0,
+     "strip": true,
+     "visibleResolving": [],
+     "errors": [],
+     "pass": true
+    }
+   ],
+   "pass": true
+  }
+ },
+ "pass": false
+}

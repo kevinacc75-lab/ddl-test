@@ -1,0 +1,20 @@
+ok 1 intent carries its chain link: removalFor at an open Main Phase -> link 1
+ok 2 control - original link 1 target at activation (link 1 newest, nothing resolving): wrong pick -> Albion (removalOverride)
+ok 3 control - original link 1 resolution YesNo "take control" No -> Yes; Yes kept
+ok 4 control - Forbidden Droplet cost at activation of link 1 still verified/overridden (cost stage)
+ok 5 F1 (FAILED before): a SECOND Widow Anchor activated as link 2 - its target prompt is NOT overridden by link 1's intent (null)
+ok 6 F1 (FAILED before): the second copy's link 2 resolving - its "take control" YesNo is NOT answered by link 1's intent
+ok 7 different-code link: Linkage! chained as link 2, its selections -> null
+ok 8 F1 (FAILED before): opponent's copy of Widow Anchor at link 1 (no link of ours) -> null
+ok 9 F1 (FAILED before): rejected / cancelled activation - no chain link of ours ever opened; a later same-code selection -> null
+ok 10 F1 (FAILED before): bound to S/T sequence 0; a NEW chain whose link 1 is another copy (S/T sequence 1) -> null, and removalDone
+ok 11 removalDone: unbound and not yet observed -> false; bound and link 1 present -> false; link solved / chain ended -> true; another turn -> true
+ok 12 L1 (RELAY-107 helper sequence): unbound intent + first observation with no link of ours -> expired; a later same-code link 1 never binds
+ok 13 L1: zone choice for our card (SELECT_PLACE, hint = its code, no link yet) waits; then the target prompt binds link 1
+ok 14 L1: a zone choice for ANOTHER card is an observation without our link -> expired
+ok 15 L1: first observation after an opponent response (our link 1 behind their link 2) binds link 1
+ok 16 L1: first observation while link 1 resolves binds it; "take control" No -> Yes
+ok 17 L1: negated activation (our link 1 solved) at first observation -> expired; rejected/cancelled (empty chain) -> expired
+ok 18 L1: an opponent's same-code link 1 at first observation is not ours -> expired
+ok 19 OptimalPilot: observe() still arms pendingRemoval with the intent (link kept); the bind/clear lifecycle in base() is shown natively by tools/r36-f1-native.mjs (pendingBefore/pendingAfter per prompt)
+r36 F1 tests: 19 passed

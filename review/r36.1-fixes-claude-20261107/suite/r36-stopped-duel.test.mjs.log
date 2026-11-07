@@ -1,0 +1,3 @@
+ok 1 a settings message after stop (duel destroyed, handle null) plans nothing and posts no error
+ok 2 a live duel (engine handle present) still plans on the same message (the guard does not stop live play)
+r36 stopped-duel tests (dist/worker.mjs): 2 passed
