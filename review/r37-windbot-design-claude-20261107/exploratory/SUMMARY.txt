@@ -1,0 +1,17 @@
+## PHASE 1 WindBot own lists (exploratory) 44 games {'windbot': 37, 'ours': 5, 'turn cap': 1, 'no response (ours)': 1}
+   SkyStriker {'windbot': 8, 'ours': 3, 'turn cap': 1}
+   Kashtira {'windbot': 8}
+   BE2025 {'windbot': 7, 'no response (ours)': 1}
+   Albaz {'windbot': 7, 'ours': 1}
+   Blue-Eyes {'windbot': 7, 'ours': 1}
+  pairs {'deck-decided': 5, 'AI-decided windbot': 15, 'incomplete': 2}
+   windbot wins: median turn 5 | won by turn 5: 20
+   ours wins: median turn 8 | won by turn 5: 2
+## PHASE 2 site TCG 19 Oct lists (exploratory) 32 games {'ours': 25, 'turn cap': 1, 'windbot': 6}
+   sky {'ours': 6, 'turn cap': 1, 'windbot': 1}
+   branded {'windbot': 5, 'ours': 3}
+   blueeyes {'ours': 8}
+   kashtira {'ours': 8}
+  pairs {'AI-decided ours': 11, 'incomplete': 1, 'AI-decided windbot': 2, 'deck-decided': 2}
+   windbot wins: median turn 8 | won by turn 5: 1
+   ours wins: median turn 7 | won by turn 5: 5
