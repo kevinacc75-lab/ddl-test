@@ -71,3 +71,22 @@ Kashtira runs 2 Arise-Heart, 3 Diablosis, Dimension Shifter, and more.
   2. Paired reading per (seed, first): the same AI won from both seats ("AI-decided") vs deck-decided. AI-decided pairs are counted for each side, with a two-sided sign test.
   3. Turns to win, and the share of games each AI wins on turns ≤ 5.
 - **Exploratory runs** (clearly labelled, not evidence) are running now on dev seeds 71001-71003. They check robustness across all five executors.
+
+## Corrections (8 Nov 2026, Claude; found while building the in-browser pilot)
+
+1. **Licence.** The ProjectIgnis fork, "WindBot Ignite", is **AGPL-3.0-or-later**. It builds on IceYGO's MIT-licensed original, but the fork itself is not MIT. Above I wrote "MIT licence", which was wrong. The site build ships WindBot's complete source, `wb/windbot-source.zip` (r37), and its licence, `licenses/windbot.txt`.
+2. **Executor name.** WindBot has no executor called `BlueEyes`; the real name is `Blue-Eyes`.
+   - When given an unknown name, WindBot loads a **random** script and only logs "Deck not found". So the 8 exploratory "BlueEyes" games (x1, 71001/71002) were played by a random script. **They are void.**
+   - `match.mjs` now refuses to run a game unless WindBot logs "Deck found, loading <name>". The five executors are SkyStriker, Kashtira, Blue-Eyes, BE2025 and Albaz.
+3. **Smoke table.** In the smoke table, the WindBot seat 0 / first 1 cell was played twice:
+   - in `smoke-1`, WindBot won in 18 turns;
+   - in `smoke-2`, ours won in 9 turns.
+
+   The table above shows only the second result. Under the rule that the first valid result counts, that cell is a **WindBot** win. Seat 1 did not win all 4 games; the paired reading for first=1 is "WindBot won from both seats".
+
+   This also shows that **native WindBot is not reproducible**. Its `Program.Rand` is unseeded, so the same deal can go either way. The browser build seeds it per duel.
+4. **Second engine-library parser bug: MSG_SELECT_SUM.** It also affects the site. The engine writes the must-select cards **first**, and each card with a full location (including a u32 position) before its sum value. The JS library read the selectable list first and skipped the position.
+   - With 2 or more cards, every value after the first card was garbage, so our pilot found no material set and stalled. This was the BE2025 "no response (ours)" game, which reproduced 3/3.
+   - Ritual summons by level total use this prompt (proc_ritual.lua `SelectWithSumEqual/Greater`).
+   - The fix and its behaviour test are in r37 (`tools/windbot/core-patch.mjs`, `tests/r37-windbot.test.mjs`).
+   - Also fixed in r37: MSG_SHUFFLE_SET_CARD now reads all previous locations, then all new ones (libduel.cpp). Before, it read them interleaved, which garbled the card positions but did not crash.

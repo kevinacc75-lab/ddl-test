@@ -1,0 +1,866 @@
+TAP version 13
+# {"test":"duplicate-copy-remap","seed":808,"decision":226,"proposalsUsed":1,"failures":4,"rootDiffers":0,"pass":true}
+# Subtest: tests/duplicate-copy-remap.test.mjs
+ok 1 - tests/duplicate-copy-remap.test.mjs
+  ---
+  duration_ms: 2703.75114
+  type: 'test'
+  ...
+# Known-draw native fixture PASS: seed 808, decision 220, seat 0; exact draw step and physical origin, unchanged live state and plain native replay.
+# Known-draw native fixture PASS: seed 4242, decision 36, seat 1; exact draw step and physical origin, unchanged live state and plain native replay.
+# Subtest: tests/known-draw-alignment.test.mjs
+ok 2 - tests/known-draw-alignment.test.mjs
+  ---
+  duration_ms: 3222.254706
+  type: 'test'
+  ...
+# {"test":"r18b-combo-book","pass":true,"results":{"a":{"monsters":["Aluber the Jester of Despia","Mirrorjade the Iceblade Dragon"],"book":["Opening book L-01","Opening book L-01"]},"aBookOff":{"monsters":["Aluber the Jester of Despia","Mirrorjade the Iceblade Dragon"]},"b":{"set":["The Fallen & The Virtuous"],"monsters":["Aluber the Jester of Despia","Guiding Quem, the Virtuous","Fallen of the White Dragon","Incredible Ecclesia, the Virtuous","Fallen of Albaz","Mirrorjade the Iceblade Dragon"],"hand":["Guiding Quem, the Virtuous"]},"hold":{"set":["Super Polymerization"],"hand":["Fallen of Albaz","Called by the Grave","Guiding Quem, the Virtuous","Mulcharmy Fuwalos"],"monsters":["Aluber the Jester of Despia","Mirrorjade the Iceblade Dragon"]},"c813":{"traps":["Ash Blossom & Joyous Spring"],"monsters":["Aluber the Jester of Despia","Mirrorjade the Iceblade Dragon"],"set":[],"book":["Opening book L-01","Opening book L-01"]},"c837":{"traps":["Ash Blossom & Joyous Spring","Infinite Impermanence"],"monsters":["Aluber the Jester of Despia"],"set":[],"book":["Opening book R33-PHARA","Opening book L-01"]},"e":{"s15":["Aluber the Jester of Despia","Mirrorjade the Iceblade Dragon"],"s11":{"monsters":["Aluber the Jester of Despia","Fallen of the White Dragon","Incredible Ecclesia, the Virtuous","Mirrorjade the Iceblade Dragon"],"set":["Branded Retribution"]}}}}
+# Subtest: tests/r18b-combo-book.test.mjs
+ok 3 - tests/r18b-combo-book.test.mjs
+  ---
+  duration_ms: 42440.492743
+  type: 'test'
+  ...
+# {"test":"r19-batch-placement","pass":true,"single":{"worlds":0,"attempts":37,"placed":0,"maxBatch":0,"pins":0},"batch":{"worlds":1,"attempts":31,"placed":11,"maxBatch":2,"pins":0}}
+# Subtest: tests/r19-batch-placement.test.mjs
+ok 4 - tests/r19-batch-placement.test.mjs
+  ---
+  duration_ms: 7803.558206
+  type: 'test'
+  ...
+# {"test":"r20-repair-refill","pass":true,"maintenance":{"discarded":4,"exactSwaps":4,"repaired":4,"created":1,"units":955}}
+# Subtest: tests/r20-repair-refill.test.mjs
+ok 5 - tests/r20-repair-refill.test.mjs
+  ---
+  duration_ms: 4908.852657
+  type: 'test'
+  ...
+# {"test":"r21-no-passive-search","pass":true,"openings":[{"seed":1,"opp":"sky","first":true,"searched":2,"passive":0},{"seed":2,"opp":"luna","first":false,"searched":5,"passive":0},{"seed":3,"opp":"mikanko","first":true,"searched":13,"passive":0},{"seed":4,"opp":"sky","first":false,"searched":25,"passive":0}]}
+# Subtest: tests/r21-no-passive-search.test.mjs
+ok 6 - tests/r21-no-passive-search.test.mjs
+  ---
+  duration_ms: 103361.073139
+  type: 'test'
+  ...
+# {"test":"r22-1-artwork","pass":true,"checked":671,"artFiles":315}
+# Subtest: tests/r22-1-artwork.test.mjs
+ok 7 - tests/r22-1-artwork.test.mjs
+  ---
+  duration_ms: 154.292193
+  type: 'test'
+  ...
+# {"node":"v22.22.2","T1-fixed":{"cards":32,"mismatches":0,"sample":[]},"T1-unfixed":{"cards":32,"mismatches":32,"sample":[{"name":"Salamangreat Almiraj","engine":"0/0/0","data":"4/0/0"},{"name":"S:P Little Knight","engine":"0/0/0","data":"40/0/0"},{"name":"Knightmare Phoenix","engine":"0/0/0","data":"160/0/0"}]},"T2-fixed":{"summoned":true,"offered":[{"player":0,"location":4,"sequence":1}],"field":[null,63288573,null,null,null,75147529,null]},"T2-unfixed":{"summoned":true,"offered":[{"player":0,"location":4,"sequence":5},{"player":0,"location":4,"sequence":6}],"field":[null,null,26077387,null,null,63288573,null]},"T3hayate-fixed":{"summoned":true,"offered":[{"player":0,"location":4,"sequence":0}],"field":[90673288,null,null,null,null,8491308,null]},"T4-fixed":"1,1,true","T3hayate-unfixed":{"summoned":true,"offered":[{"player":0,"location":4,"sequence":5},{"player":0,"location":4,"sequence":6}],"field":[null,null,null,37351133,null,90673288,null]},"T4-oneway":"1,0,true","T5-fixed":{"t5":{"zone":1,"wonderActivated":true,"polyInGy":false},"wrong":{"zone":3,"wonderActivated":false,"polyInGy":true},"empty":{"zone":1,"wonderActivated":false,"polyInGy":false}},"T5-unfixed":{"t5":{"zone":1,"wonderActivated":false,"polyInGy":true},"wrong":{"zone":3,"wonderActivated":false,"polyInGy":true},"empty":{"zone":1,"wonderActivated":false,"polyInGy":false}},"T6-fixed":{"atk":[3500,3000]},"T6-unfixed":{"atk":[2800,3000]},"T7-fixed-Lunalight Wolf-left":{"scales":"1/5","levels":[2,4]},"T7-fixed-Lunalight Tiger-left":{"scales":"5/1","levels":[2,4]},"T7-unfixed-Lunalight Wolf-left":{"scales":"1/0","levels":null},"T7-unfixed-Lunalight Tiger-left":{"scales":"5/0","levels":[2,4]},"T8":{"a":{"sort":[50720316,40044918],"retries":0,"bottom":"40044918,50720316","offered":[{"player":0,"location":4,"sequence":0},{"player":0,"location":4,"sequence":1},{"player":0,"location":4,"sequence":2},{"player":0,"location":4,"sequence":3},{"player":0,"location":4,"sequence":4},{"player":0,"location":4,"sequence":5},{"player":0,"location":4,"sequence":6}],"sunrise":true,"pilotPlan":null},"c":{"sort":[50720316,40044918],"retries":0,"bottom":"50720316,40044918","offered":[{"player":0,"location":4,"sequence":0},{"player":0,"location":4,"sequence":1},{"player":0,"location":4,"sequence":2},{"player":0,"location":4,"sequence":3},{"player":0,"location":4,"sequence":4},{"player":0,"location":4,"sequence":5},{"player":0,"location":4,"sequence":6}],"sunrise":true,"pilotPlan":null},"bad":{"sort":[50720316,40044918],"retries":1,"bottom":"50720316,40044918","offered":[{"player":0,"location":4,"sequence":0},{"player":0,"location":4,"sequence":1},{"player":0,"location":4,"sequence":2},{"player":0,"location":4,"sequence":3},{"player":0,"location":4,"sequence":4},{"player":0,"location":4,"sequence":5},{"player":0,"location":4,"sequence":6}],"sunrise":true,"pilotPlan":null},"unfixed":{"sort":[50720316,40044918],"retries":1,"bottom":"50720316,40044918","offered":null,"sunrise":false,"pilotPlan":null}},"T11-pilot":{"rule":"Order by card priority","order":[1,0]},"T10d-fixed":{"summoned":true,"offered":[{"player":0,"location":4,"sequence":0},{"player":0,"location":4,"sequence":3}],"field":[63288573,null,null,null,null,8491308,null]},"T10d-unfixed":{"summoned":true,"offered":[{"player":0,"location":4,"sequence":5}],"field":[null,null,26077387,null,null,63288573,null]}}
+# Subtest: tests/r22-engine-wrapper.test.mjs
+ok 8 - tests/r22-engine-wrapper.test.mjs
+  ---
+  duration_ms: 3894.963868
+  type: 'test'
+  ...
+# {"test":"r22-l5-deck-bottom","pass":true,"node":"v22.22.2","order":[2,0,1],"bottom":"30875635,27780618,18094166","seat1":{"decision":204,"worlds":2,"role":"opponent"},"seat0":{"decision":202,"worlds":3,"role":"sorter"}}
+# Subtest: tests/r22-l5-deck-bottom.test.mjs
+ok 9 - tests/r22-l5-deck-bottom.test.mjs
+  ---
+  duration_ms: 11010.720458
+  type: 'test'
+  ...
+# {"node":"v22.22.2","sorted":{"rule":"Order by card priority","order":[1,0]},"after":[{"seat":0,"worlds":null,"status":null},{"seat":0,"worlds":null,"status":null},{"seat":0,"worlds":null,"status":null},{"seat":1,"worlds":null,"status":null},{"seat":0,"worlds":0,"status":"fallback"},{"seat":0,"worlds":null,"status":null},{"seat":0,"worlds":null,"status":null},{"seat":1,"worlds":null,"status":null},{"seat":0,"worlds":0,"status":"fallback"},{"seat":0,"worlds":null,"status":null},{"seat":1,"worlds":null,"status":null},{"seat":0,"worlds":null,"status":null}]}
+# Subtest: tests/r22-sort-search.test.mjs
+ok 10 - tests/r22-sort-search.test.mjs
+  ---
+  duration_ms: 12674.777988
+  type: 'test'
+  ...
+# {"clauses":27,"presentation":4,"ok":true}
+# Subtest: tests/r22-tcg-highlights.test.mjs
+ok 11 - tests/r22-tcg-highlights.test.mjs
+  ---
+  duration_ms: 322.983478
+  type: 'test'
+  ...
+# {"test":"r22b-forced-battle","pass":true,"node":"v22.22.2","duels":[{"deck":"kashtira","opp":"sky","seed":9107,"forcedPrompts":2,"decisions":573},{"deck":"kashtira","opp":"mikanko","seed":9106,"forcedPrompts":0,"decisions":213},{"deck":"kashtira","opp":"luna","seed":9108,"forcedPrompts":0,"decisions":228},{"deck":"kashtira","opp":"sky","seed":9119,"forcedPrompts":1,"decisions":759},{"deck":"mikanko","opp":"kashtira","seed":9115,"forcedPrompts":0,"decisions":145},{"deck":"luna","opp":"kashtira","seed":9115,"forcedPrompts":1,"decisions":297}]}
+# Subtest: tests/r22b-forced-battle.test.mjs
+ok 12 - tests/r22b-forced-battle.test.mjs
+  ---
+  duration_ms: 3785.747753
+  type: 'test'
+  ...
+# [EffectScene] Unmapped clause; highlighting full text { code: 4, description: undefined, location: undefined }
+# {"test":"r23-fx","pass":true,"node":"v22.22.2"}
+# [sound] soundtrack files not used: Failed to parse URL from audio/soundtrack.json
+# [sound] rendered sfx not used: Failed to parse URL from audio/sfx/chain-1.mp3
+# Subtest: tests/r23-fx.test.mjs
+ok 13 - tests/r23-fx.test.mjs
+  ---
+  duration_ms: 1758.310842
+  type: 'test'
+  ...
+# [sound] track skipped z.mp3 bad audio
+# {"test":"r24-soundtrack","pass":true,"node":"v22.22.2","tracks":["Battle Groove","Buant Groove","Buoyant Groove","Card Duel Groove","Euphoric Groove","Pulse Élevé","Gods Awaken","Card Duel Groove II","Ritual of the Pharaoh","Ritual of the Pharaoh II"]}
+# Subtest: tests/r24-soundtrack.test.mjs
+ok 14 - tests/r24-soundtrack.test.mjs
+  ---
+  duration_ms: 2415.98119
+  type: 'test'
+  ...
+# {"test":"r26-branded-v53-book","pass":true,"node":"v22.22.2","list":"tcg-2026-10-19","selfVerified":true}
+# Subtest: tests/r26-branded-v53-book.test.mjs
+ok 15 - tests/r26-branded-v53-book.test.mjs
+  ---
+  duration_ms: 8909.565005
+  type: 'test'
+  ...
+# [EffectScene] Unmapped clause; highlighting full text { code: 8, description: undefined, location: undefined }
+# [summon] scene error; plain summon fusion Error: Original summon frame unavailable
+#     at SummonScene.show (file:///home/claude/r36-mid/dist/summon-cutscenes.mjs:49:52)
+#     at event (file:///home/claude/r36-mid/dist/presentation.mjs:239:94)
+#     at next (file:///home/claude/r36-mid/dist/presentation.mjs:308:7)
+#     at complete (file:///home/claude/r36-mid/dist/presentation.mjs:309:685)
+#     at Timeout.<anonymous> (file:///home/claude/r36-mid/dist/presentation.mjs:287:139)
+#     at listOnTimeout (node:internal/timers:585:17)
+#     at process.processTimers (node:internal/timers:521:7)
+# {"test":"r26-cutscenes","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r26-cutscenes.test.mjs
+ok 16 - tests/r26-cutscenes.test.mjs
+  ---
+  duration_ms: 1326.053414
+  type: 'test'
+  ...
+# [r27-deck-books] kashtira v sky seed 101 start 0s
+# [r27-deck-books] kashtira v luna seed 102 start 4s
+# [r27-deck-books] kashtira v mikanko seed 103 start 6s
+# [r27-deck-books] kashtira v branded seed 104 start 9s
+# [r27-deck-books] kashtira v sky seed 105 start 11s
+# [r27-deck-books] kashtira v luna seed 106 start 16s
+# [r27-deck-books] kashtira v mikanko seed 107 start 536s
+# [r27-deck-books] kashtira v branded seed 108 start 540s
+# [r27-deck-books] blueeyes v sky seed 101 start 552s
+# [r27-deck-books] blueeyes v luna seed 102 start 553s
+# [r27-deck-books] blueeyes v mikanko seed 103 start 564s
+# [r27-deck-books] blueeyes v branded seed 104 start 566s
+# [r27-deck-books] blueeyes v sky seed 105 start 568s
+# [r27-deck-books] blueeyes v luna seed 106 start 571s
+# [r27-deck-books] blueeyes v mikanko seed 107 start 574s
+# [r27-deck-books] blueeyes v branded seed 108 start 575s
+# {"test":"r27-deck-books","pass":true,"node":"v22.22.2","list":"tcg-2026-10-19","kashtiraShangriIra":"8/8","blueEyesSpiritDragon":"7/8","selfVerified":true}
+# Subtest: tests/r27-deck-books.test.mjs
+ok 17 - tests/r27-deck-books.test.mjs
+  ---
+  duration_ms: 577787.646696
+  type: 'test'
+  ...
+# [sound] soundtrack files not used: offline test
+# [sound] rendered sfx not used: offline test
+# {"test":"r28-learning-sfx-luna","pass":true,"node":"v22.22.2","sfx":28,"lunaLiger":"4/5","selfVerified":true}
+# Subtest: tests/r28-learning-sfx-luna.test.mjs
+ok 18 - tests/r28-learning-sfx-luna.test.mjs
+  ---
+  duration_ms: 50724.831808
+  type: 'test'
+  ...
+# {"test":"r29-human-pace","pass":true,"node":"v22.22.2","classes":["quick","big","auto","mechanical","pick","step"],"selfVerified":true}
+# Subtest: tests/r29-human-pace.test.mjs
+ok 19 - tests/r29-human-pace.test.mjs
+  ---
+  duration_ms: 3993.332613
+  type: 'test'
+  ...
+# {"test":"r30-book-trust","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r30-book-trust.test.mjs
+ok 20 - tests/r30-book-trust.test.mjs
+  ---
+  duration_ms: 66.634572
+  type: 'test'
+  ...
+# {"test":"r32-books-handtraps","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r32-books-handtraps.test.mjs
+ok 21 - tests/r32-books-handtraps.test.mjs
+  ---
+  duration_ms: 54.71401
+  type: 'test'
+  ...
+# r32-learning-captions: PASS
+# Subtest: tests/r32-learning-captions.test.mjs
+ok 22 - tests/r32-learning-captions.test.mjs
+  ---
+  duration_ms: 741.977807
+  type: 'test'
+  ...
+# {"test":"r32-mirrorjade-float","pass":true,"node":"v22.22.2","prompts":[{"location":16,"yes":true}],"selfVerified":true}
+# Subtest: tests/r32-mirrorjade-float.test.mjs
+ok 23 - tests/r32-mirrorjade-float.test.mjs
+  ---
+  duration_ms: 30734.348083
+  type: 'test'
+  ...
+# {"test":"r32-review-fixes","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r32-review-fixes.test.mjs
+ok 24 - tests/r32-review-fixes.test.mjs
+  ---
+  duration_ms: 75.517517
+  type: 'test'
+  ...
+# {"test":"r32-soundtrack","pass":true,"node":"v22.22.2","tracks":["Battle Groove","Buant Groove","Buoyant Groove","Card Duel Groove","Euphoric Groove","Pulse Élevé","Gods Awaken","Card Duel Groove II","Ritual of the Pharaoh","Ritual of the Pharaoh II"]}
+# Subtest: tests/r32-soundtrack.test.mjs
+ok 25 - tests/r32-soundtrack.test.mjs
+  ---
+  duration_ms: 2270.193688
+  type: 'test'
+  ...
+# {"test":"r33-1-review-fixes","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r33-1-review-fixes.test.mjs
+ok 26 - tests/r33-1-review-fixes.test.mjs
+  ---
+  duration_ms: 724.161708
+  type: 'test'
+  ...
+# {"test":"r33-deck-brain","pass":true,"brains":["branded","luna","mikanko","sky","blueeyes","kashtira","toon","hero","dtw"],"node":"v22.22.2","selfVerified":true}
+# {"test":"r33-deck-brain","part":"r34 Mikanko","pass":true}
+# {"test":"r33-deck-brain","part":"r34 Mikanko gating, Sky Striker","pass":true}
+# Subtest: tests/r33-deck-brain.test.mjs
+ok 27 - tests/r33-deck-brain.test.mjs
+  ---
+  duration_ms: 839.008151
+  type: 'test'
+  ...
+# {"test":"r33-deck-list","pass":true,"decks":9,"lists":2,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r33-deck-list.test.mjs
+ok 28 - tests/r33-deck-list.test.mjs
+  ---
+  duration_ms: 1152.48031
+  type: 'test'
+  ...
+# {"test":"r33-polish","pass":true,"routeCap":6,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r33-polish.test.mjs
+ok 29 - tests/r33-polish.test.mjs
+  ---
+  duration_ms: 3511.303986
+  type: 'test'
+  ...
+# {"test":"r34-book-additions","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r34-book-additions.test.mjs
+ok 30 - tests/r34-book-additions.test.mjs
+  ---
+  duration_ms: 313.841226
+  type: 'test'
+  ...
+# {"test":"r34-play-glow","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r34-play-glow.test.mjs
+ok 31 - tests/r34-play-glow.test.mjs
+  ---
+  duration_ms: 40.176651
+  type: 'test'
+  ...
+# {"test":"r35-cyclone-hu-li-native","pass":true,"node":"v22.22.2","oldControl":false,"results":{"a":{"block":"Cosmic Cyclone has no targetable opposing Spell/Trap","oldBlock":"(old not loaded)","pilotRule":"Opening book MK-E1","offer":["Mikanko Spiritwalk@0"]},"b":{"offer":["Mikanko Spiritwalk@0","Double-Edged Sword@1"],"pick":"Double-Edged Sword"},"c":{"offer":["Mikanko Spiritwalk@0","set card@1"]},"d":{"before":"Cosmic Cyclone has no targetable opposing Spell/Trap","offer":["Mikanko Spiritwalk@0","Mikanko Fire Dance@1"]}}}
+# Subtest: tests/r35-cyclone-hu-li-native.test.mjs
+ok 32 - tests/r35-cyclone-hu-li-native.test.mjs
+  ---
+  duration_ms: 1013.801309
+  type: 'test'
+  ...
+# {"test":"r35-cyclone-pin","pass":true,"blocks":3,"node":"v22.22.2"}
+# Subtest: tests/r35-cyclone-pin.test.mjs
+ok 33 - tests/r35-cyclone-pin.test.mjs
+  ---
+  duration_ms: 46.288115
+  type: 'test'
+  ...
+# {"test":"r35-cyclone-targetable","pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-cyclone-targetable.test.mjs
+ok 34 - tests/r35-cyclone-targetable.test.mjs
+  ---
+  duration_ms: 339.64396
+  type: 'test'
+  ...
+# {"test":"r35-effect-titles","pass":true,"records":406,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r35-effect-titles.test.mjs
+ok 35 - tests/r35-effect-titles.test.mjs
+  ---
+  duration_ms: 218.91073
+  type: 'test'
+  ...
+# {"test":"r35-firedance-native","pass":true,"node":"v22.22.2","results":{"N1":{"mode":"belle","usedSeat0":true,"usedSeat1":false,"secondOffered":1},"N2":{"mode":"none","usedSeat0":true,"usedSeat1":false,"secondOffered":0},"N3":{"mode":"imperm","usedSeat0":true,"usedSeat1":false,"secondOffered":0},"knownLimit":"ledger counts a negated activation as used (AI under-plays; never illegal)"}}
+# Subtest: tests/r35-firedance-native.test.mjs
+ok 36 - tests/r35-firedance-native.test.mjs
+  ---
+  duration_ms: 861.70974
+  type: 'test'
+  ...
+# {"test":"r35-hud-fit","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r35-hud-fit.test.mjs
+ok 37 - tests/r35-hud-fit.test.mjs
+  ---
+  duration_ms: 671.116197
+  type: 'test'
+  ...
+# {"test":"r35-kitt-revive","rev":5,"pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-kitt-revive.test.mjs
+ok 38 - tests/r35-kitt-revive.test.mjs
+  ---
+  duration_ms: 1870.461277
+  type: 'test'
+  ...
+# {"test":"r35-mikanko-plan","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r35-mikanko-plan.test.mjs
+ok 39 - tests/r35-mikanko-plan.test.mjs
+  ---
+  duration_ms: 63.437519
+  type: 'test'
+  ...
+# {"test":"r35-ohime-revive","pass":true,"node":"v22.22.2","offered":[{"name":"Sanaki the Mikanko Devotee","location":16}]}
+# Subtest: tests/r35-ohime-revive.test.mjs
+ok 40 - tests/r35-ohime-revive.test.mjs
+  ---
+  duration_ms: 592.481977
+  type: 'test'
+  ...
+# {"test":"r35-pile-glow","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r35-pile-glow.test.mjs
+ok 41 - tests/r35-pile-glow.test.mjs
+  ---
+  duration_ms: 755.055278
+  type: 'test'
+  ...
+# {"test":"r35-public-identity","pass":true,"moves":875,"logChecks":688,"categories":47,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r35-public-identity.test.mjs
+ok 42 - tests/r35-public-identity.test.mjs
+  ---
+  duration_ms: 5770.848436
+  type: 'test'
+  ...
+# {"test":"r35-s3-kashtira-native","pass":true,"node":"v22.22.2","results":{"K1":{"during":[],"after":["Kashtira Ogre","Kashtira Unicorn"]},"K2":{"during":["Kashtira Preparations"],"after":["Kashtira Preparations","Kashtira Preparations (trigger)"]},"K2b":{"during":["Kashtira Preparations"],"after":["Kashtira Preparations"]},"K3":{"negated":{"negate":true,"unicornOffered":true,"extraDeck":[15,15],"banished":0},"control":{"negate":false,"unicornOffered":true,"extraDeck":[15,14],"banished":1},"observation":"negated Unicorn's punish is offered and resolves with no effect (rules-correct, Alexis 28 Oct)"}}}
+# Subtest: tests/r35-s3-kashtira-native.test.mjs
+ok 43 - tests/r35-s3-kashtira-native.test.mjs
+  ---
+  duration_ms: 1131.335118
+  type: 'test'
+  ...
+# {"test":"r35-s3-kitt-guard","pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-s3-kitt-guard.test.mjs
+ok 44 - tests/r35-s3-kitt-guard.test.mjs
+  ---
+  duration_ms: 249.970964
+  type: 'test'
+  ...
+# {"test":"r35-s3-kitt-native","pass":true,"node":"v22.22.2","results":{"KT1":{"offered":["Chain · Ghost Belle & Haunted Mansion","Chain · Mulcharmy Fuwalos","Do not chain"],"ai":"Ghost Belle & Haunted Mansion","albazInGy":true},"KT2_search_false":{"offered":["Chain · Infinite Impermanence","Chain · Effect Veiler","Chain · Mulcharmy Fuwalos","Do not chain"],"ai":"Mulcharmy Fuwalos"},"KT2_search_true":{"offered":["Chain · Infinite Impermanence","Chain · Effect Veiler","Chain · Mulcharmy Fuwalos","Do not chain"],"ai":"Mulcharmy Fuwalos"},"KT3_reviveFrom":[16],"KT3_revive":"Fallen of Albaz","KT3_revivePosition":4,"KT3_albazLinkWindow":["Chain · Effect Veiler","Do not chain"],"KT3b_mourner":{"offered":["Yes","No"],"guard":null},"KT4_search_false":{"offered":["Chain · Effect Veiler","Chain · Infinite Impermanence","Chain · Mulcharmy Fuwalos","Do not chain"],"ai":"Mulcharmy Fuwalos"},"KT4_search_true":{"offered":["Chain · Effect Veiler","Chain · Infinite Impermanence","Chain · Mulcharmy Fuwalos","Do not chain"],"ai":"Mulcharmy Fuwalos"},"KT4_purulia":{"handBefore":5,"handAfter":6}}}
+# Subtest: tests/r35-s3-kitt-native.test.mjs
+ok 45 - tests/r35-s3-kitt-native.test.mjs
+  ---
+  duration_ms: 1681.351906
+  type: 'test'
+  ...
+# {"test":"r35-s3-sdp-native","pass":true,"node":"v22.22.2","results":{"a":{"windowsOnSdpChain":1,"offered":[["Do not chain"]]},"d":[{"type":12,"code":"Ghost Mourner & Moonlit Chill","labels":["Yes","No"]},{"type":16,"code":"Card details unavailable","labels":["Chain · Effect Veiler","Chain · Infinite Impermanence","Chain · Mulcharmy Fuwalos","Chain · Mulcharmy Fuwalos","Do not chain"]}],"c":{"handBeforeSdp":5,"handAfterSdp":7},"b":{"lp":[6000,8000],"extraDeck":15}}}
+# Subtest: tests/r35-s3-sdp-native.test.mjs
+ok 46 - tests/r35-s3-sdp-native.test.mjs
+  ---
+  duration_ms: 789.608646
+  type: 'test'
+  ...
+# {"test":"r35-shuffle-app-pin","pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-shuffle-app-pin.test.mjs
+ok 47 - tests/r35-shuffle-app-pin.test.mjs
+  ---
+  duration_ms: 43.530782
+  type: 'test'
+  ...
+# {"test":"r35-shuffle-native","pass":true,"node":"v22.22.2","results":{"first0":{"startRaw":1,"searchRaw":[{"kind":"hand","seat":0,"afterEventId":12},{"kind":"deck","seat":0,"afterEventId":12}],"captured":[{"id":1,"seat":0,"afterEventId":12}],"picked":"Branded in High Spirits","turn2DeckShuffles":0},"first1":{"startRaw":1,"searchRaw":[{"kind":"hand","seat":0,"afterEventId":18},{"kind":"deck","seat":0,"afterEventId":18}],"captured":[{"id":1,"seat":0,"afterEventId":18}],"picked":"Branded in High Spirits","turn2DeckShuffles":0}}}
+# Subtest: tests/r35-shuffle-native.test.mjs
+ok 48 - tests/r35-shuffle-native.test.mjs
+  ---
+  duration_ms: 978.750619
+  type: 'test'
+  ...
+# {"test":"r35-shuffle-overlay","pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-shuffle-overlay.test.mjs
+ok 49 - tests/r35-shuffle-overlay.test.mjs
+  ---
+  duration_ms: 46.426463
+  type: 'test'
+  ...
+# {"test":"r35-shuffle-skip","pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-shuffle-skip.test.mjs
+ok 50 - tests/r35-shuffle-skip.test.mjs
+  ---
+  duration_ms: 37.727464
+  type: 'test'
+  ...
+# {"test":"r35-shuffle-tap","pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-shuffle-tap.test.mjs
+ok 51 - tests/r35-shuffle-tap.test.mjs
+  ---
+  duration_ms: 40.051175
+  type: 'test'
+  ...
+# {"test":"r35-turn-ledger","rev":6,"pass":true,"node":"v22.22.2"}
+# Subtest: tests/r35-turn-ledger.test.mjs
+ok 52 - tests/r35-turn-ledger.test.mjs
+  ---
+  duration_ms: 186.193984
+  type: 'test'
+  ...
+# {"test":"r35.12-coin-dice-sfx","pass":true,"node":"v22.22.2","report":{"heads":119,"tails":110,"dice1":46,"steps":{"coin.flick":8,"coin.spin":56,"coin.land":39,"dice.throw":38,"dice.land":7,"dice.reveal":1},"multiples":{"dice1":44,"dice2":86,"coin1":108,"coin3":116},"mathRandomCalls":0}}
+# Subtest: tests/r35.12-coin-dice-sfx.test.mjs
+ok 53 - tests/r35.12-coin-dice-sfx.test.mjs
+  ---
+  duration_ms: 82.07947
+  type: 'test'
+  ...
+# ok 1 recipes: Classic = all off; Enhanced = A+B; C, T, Z off in both; unknown/missing mode = Classic
+# ok 2 real ai-worker: a Classic think runs with every switch off and ignores a carried pendingRemoval
+# ok 3 real ai-worker: an Enhanced think runs A+B and the fresh pilot starts with the carried pendingRemoval (Finding B)
+# ok 4 real ai-worker: the mode is per think - Enhanced then a think with no mode field runs Classic (a stale global never leaks)
+# ok 5 real ai-worker: same position, Classic think = the in-process Classic pilot's search-off baseline (no r36 rule reached the decision)
+# ok 6 S4 lifecycle (RELAY-109/112): setAiMode sets the COMPLETE S4 map from the recipe (Classic E=false, Enhanced E=true); Classic after Enhanced, cold/missing mode and a stray setS4 are all reset; real ai-worker thinks carry the recipe
+# ok 7 r36.2 index.html whole-file pin (r36.1 was 990399bf, r36 bc3fade4, PREVIEW 3 4b6db9b3, PREVIEW 2 0f23a7a6, PREVIEW e4399b3b): 2628c412... (r37: the served file minus exactly its reviewed r37 patch)
+# ok 8 dist/app.mjs minus the selector lines = r35.12 (d3177e0) bytes
+# ok 9 dist/index.html minus the selector lines = r35.12 (d3177e0) bytes
+# ok 10 dist/worker.mjs minus the selector lines = r35.12 (d3177e0) bytes
+# ok 11 dist/ai/ai-worker.mjs minus the selector lines = r35.12 (d3177e0) bytes
+# ok 12 cold load = Enhanced (RELAY-119 G4): the select defaults to Enhanced, Classic is the other option, and the choice is not stored or restored
+# r36 AI selector tests: 12 passed
+# Subtest: tests/r36-ai-mode.test.mjs
+ok 54 - tests/r36-ai-mode.test.mjs
+  ---
+  duration_ms: 2223.425967
+  type: 'test'
+  ...
+# ok 1 carryRemovalIntent: exact activation, same seat -> intent kept (a copy of the plan; input not mutated)
+# ok 2 carryRemovalIntent: different response / other seat / no baseline intent / plan already has one -> unchanged
+# ok 3 worker.mjs: the cap fallback carries only when an aggregated plan was chosen and the duel is Enhanced; observe only after an accepted response; stale ids/revisions dropped
+# ok 4 first=0: Enhanced - public baseline arms removal; capped plan with the SAME response WITHOUT carry loses it (RELAY-108 defect), WITH carry keeps it and the follow-up runs
+# ok 5 first=0: a capped plan with a DIFFERENT response is not given the intent
+# ok 6 first=1: Enhanced - public baseline arms removal; capped plan with the SAME response WITHOUT carry loses it (RELAY-108 defect), WITH carry keeps it and the follow-up runs
+# ok 7 first=1: a capped plan with a DIFFERENT response is not given the intent
+# ok 8 Classic: the baseline arms no removal intent at the same position, so the carry has nothing to keep
+# r36 B1 worker-state tests: 8 passed
+# Subtest: tests/r36-b1-worker.test.mjs
+ok 55 - tests/r36-b1-worker.test.mjs
+  ---
+  duration_ms: 2998.958896
+  type: 'test'
+  ...
+# {"test":"r36-coin-audio","pass":true,"node":"v22.22.2","sources":152,"late":32}
+# Subtest: tests/r36-coin-audio.test.mjs
+ok 56 - tests/r36-coin-audio.test.mjs
+  ---
+  duration_ms: 40.134798
+  type: 'test'
+  ...
+# {"test":"r36-coin-pin","pass":true,"node":"v22.22.2","files":["app.mjs","presentation.mjs","worker.mjs"]}
+# Subtest: tests/r36-coin-pin.test.mjs
+ok 57 - tests/r36-coin-pin.test.mjs
+  ---
+  duration_ms: 59.434374
+  type: 'test'
+  ...
+# {"test":"r36-coin","pass":true,"node":"v22.22.2","results":{"16/0":{"toss":{"id":1,"kind":"coin","seat":0,"results":[true],"call":"heads","code":40235813,"afterEventId":11},"line":"Dark Time Wizard · Coin: Heads (called Heads · right call)"},"11/0":{"toss":{"id":1,"kind":"coin","seat":0,"results":[false],"call":"heads","code":40235813,"afterEventId":11},"line":"Dark Time Wizard · Coin: Tails (called Heads · wrong call)"},"16/1":{"toss":{"id":1,"kind":"coin","seat":0,"results":[true],"call":"tails","code":40235813,"afterEventId":11},"line":"Dark Time Wizard · Coin: Heads (called Tails · wrong call)"},"dice":{"toss":{"id":1,"kind":"dice","seat":0,"results":[1,6],"call":null,"code":76630812,"afterEventId":10},"atk":[2100,700],"line":"Graceful & Skull Dice · Dice: 1 + 6 = 7"}}}
+# Subtest: tests/r36-coin.test.mjs
+ok 58 - tests/r36-coin.test.mjs
+  ---
+  duration_ms: 1166.625018
+  type: 'test'
+  ...
+# {"test":"r36-dtw-identity","pass":true,"node":"v22.22.2","added":{"cards":12,"scripts":11},"distinctNames":44}
+# Subtest: tests/r36-dtw-identity.test.mjs
+ok 59 - tests/r36-dtw-identity.test.mjs
+  ---
+  duration_ms: 784.888817
+  type: 'test'
+  ...
+# {"test":"r36-dtw-load","pass":true,"node":"v22.22.2","scripts":11,"mainDeck":40,"extra":2}
+# Subtest: tests/r36-dtw-load.test.mjs
+ok 60 - tests/r36-dtw-load.test.mjs
+  ---
+  duration_ms: 637.564147
+  type: 'test'
+  ...
+# {"test":"r36-dtw-native","pass":true,"node":"v22.22.2","results":{"A":{"field":["Alligator's Dragon Knight","Swiftwind Panther Warrior"],"hand":["Fisherman of Legend","Swiftwind Panther Warrior","Foolish Graverobber","Dark Time Wizard","Mystical Space Typhoon","K9-17 Izuna","Dark Time Wizard"],"gy":["Radiant Typhoon Eldam","M-X-Saber Invoker","Radiant Typhoon Swen","Mystical Space Typhoon"]},"B":{"barianAtk":4000,"eldamOffered":false,"oppHandBefore":7,"oppHandAfter":6},"C":{"calledRight":false,"ourField":["Red-Eyes Black Dragon Exceed","Swiftwind Panther Warrior"],"theirField":[]},"D":{"hand":["Dark Time Wizard","K9-17 Izuna","Reversal Box","Swiftwind Panther Warrior","Dark Time Wizard","Mystical Space Typhoon"]},"E":{"tokens":3,"offeredAfter":[]},"F":{"field":["K9-17 \\"Ripper\\"","CXyz Hope Chaos Barian Dragon"],"gy":["Ash Blossom & Joyous Spring","Radiant Typhoon Chant","Radiant Typhoon Swen","M-X-Saber Invoker","Radiant Typhoon Eldam","Graceful & Skull Dice","K9-17 Izuna","K9-ØØ Lupis","Alligator's Dragon Knight","Swiftwind Panther Warrior"],"bookRules":["Opening book DT-RT2","Opening book pick (Time Typhoon P3: Eldam adds the missing Level 3)","Opening book pick (Time Typhoon P3: Panther Tributes a spent body or a dead hand monster)","Opening book pick (Time Typhoon P3: Panther summons Alligator while its search is unused)","Opening book pick (Time Typhoon P3: Alligator adds Dark Time Wizard + Foolish Graverobber)","Opening book pick (Time Typhoon P3: Alligator discards Graceful & Skull Dice (its GY pop) or a dead card)","Opening book pick (Time Typhoon P3: Dark Time Wizard searches Reversal Box)","Opening book pick (Time Typhoon P5: CXyz Hope Chaos Barian Dragon gains ATK per material, so Attack Position)","Opening book pick (K9-17 \\"Ripper\\")","Opening book pick (Time Typhoon P4: Barian never detaches its Number C (the add-lock))"]},"G":{"detached":["K9-17 Izuna"],"materialsAfter":["N.As.H. Knight","CXyz N.As.Ch. Knight","Number C104: Umbral Horror Masquerade","Foolish Graverobber","Graceful & Skull Dice"],"atk":5000}}}
+# Subtest: tests/r36-dtw-native.test.mjs
+ok 61 - tests/r36-dtw-native.test.mjs
+  ---
+  duration_ms: 2807.873751
+  type: 'test'
+  ...
+# {"test":"r36-dtw-native2","pass":true,"node":"v22.22.2","results":{"H":{"burn":2050},"I":{"afterFirst":[]},"J":{"options":["Search 1 card that mentions \\"Dark Time Wizard\\""]},"K":{"secondCopy":["Your Spell / Trap zone 1","Your Spell / Trap zone 2","Your Spell / Trap zone 3","Your Spell / Trap zone 4","Your Spell / Trap zone 5"],"type":18},"L":{"tributeOptions":["Swiftwind Panther Warrior","Fisherman of Legend","K9-17 Izuna","Scapegoat Token","Scapegoat Token","Scapegoat Token","Scapegoat Token"]},"M":{"seed":32,"hand":["Radiant Typhoon Eldam","Mulcharmy Fuwalos","Alligator's Dragon Knight","Mystical Space Typhoon","Alligator's Dragon Knight","Ash Blossom & Joyous Spring"]},"R":{"materials":["K9-17 Izuna","N.As.H. Knight","CXyz N.As.Ch. Knight","Foolish Graverobber","Graceful & Skull Dice"],"eldamOffered":true}}}
+# Subtest: tests/r36-dtw-native2.test.mjs
+ok 62 - tests/r36-dtw-native2.test.mjs
+  ---
+  duration_ms: 1254.598737
+  type: 'test'
+  ...
+# {"test":"r36-dtw-native3","pass":true,"node":"v22.22.2","results":{"U":{"ourField":["Swiftwind Panther Warrior"],"ourGy":["Radiant Typhoon Swen"]},"Q":{"face-up Alligator":true,"set Reversal Box only":false},"O":{"ourField":["K9-17 Izuna"]},"N":{"attackers":[]},"P":{"12":{"counters":["1","2","3"],"right":false,"ourField":[],"eldamAtk":1300},"14":{"counters":["1","2","3","4","5"],"right":true,"ourField":["Swiftwind Panther Warrior"],"eldamAtk":0}},"S":{"ourField":["Red-Eyes Black Dragon Exceed"]}}}
+# Subtest: tests/r36-dtw-native3.test.mjs
+ok 63 - tests/r36-dtw-native3.test.mjs
+  ---
+  duration_ms: 1101.205904
+  type: 'test'
+  ...
+# {"test":"r36-dtw-native4","pass":true,"node":"v22.22.2","results":{"V":{"tokensBefore":4,"tokensAfter":3,"ourField":["Alligator's Dragon Knight","Scapegoat Token","Scapegoat Token","Scapegoat Token"]},"W":{"status":1033},"X":{"set":"Raigeki","position":10},"Y":{"ourHand":["Mystical Space Typhoon","Dark Time Wizard","K9-17 Izuna","Swiftwind Panther Warrior","\\"A Case for K9\\"","Fisherman of Legend","Alligator's Dragon Knight"],"theirField":[]},"Z":{"attackers":["Swiftwind Panther Warrior"],"ourGy":["Radiant Typhoon Swen","Reversal Box"]}}}
+# Subtest: tests/r36-dtw-native4.test.mjs
+ok 64 - tests/r36-dtw-native4.test.mjs
+  ---
+  duration_ms: 1035.406788
+  type: 'test'
+  ...
+# {"test":"r36-dtw-native5","pass":true,"node":"v22.22.2","results":{"AA":{"call":"right","offered":["Special Summon · Red-Eyes Black Dragon Exceed","Special Summon · Red-Eyes Black Dragon Exceed"]},"AB":{"offered":true,"turn":2},"AC":{"seed":31,"searches":1,"again":false,"control":true}}}
+# Subtest: tests/r36-dtw-native5.test.mjs
+ok 65 - tests/r36-dtw-native5.test.mjs
+  ---
+  duration_ms: 838.130706
+  type: 'test'
+  ...
+# {"test":"r36-dtw-position","pass":true,"node":"v22.22.2","base":1,"book":1}
+# Subtest: tests/r36-dtw-position.test.mjs
+ok 66 - tests/r36-dtw-position.test.mjs
+  ---
+  duration_ms: 665.485458
+  type: 'test'
+  ...
+# {"test":"r36-effect-titles","pass":true,"node":"v22.22.2","kept":17,"dropped":17}
+# Subtest: tests/r36-effect-titles.test.mjs
+ok 67 - tests/r36-effect-titles.test.mjs
+  ---
+  duration_ms: 132.553095
+  type: 'test'
+  ...
+# ok 1 intent carries its chain link: removalFor at an open Main Phase -> link 1
+# ok 2 control - original link 1 target at activation (link 1 newest, nothing resolving): wrong pick -> Albion (removalOverride)
+# ok 3 control - original link 1 resolution YesNo "take control" No -> Yes; Yes kept
+# ok 4 control - Forbidden Droplet cost at activation of link 1 still verified/overridden (cost stage)
+# ok 5 F1 (FAILED before): a SECOND Widow Anchor activated as link 2 - its target prompt is NOT overridden by link 1's intent (null)
+# ok 6 F1 (FAILED before): the second copy's link 2 resolving - its "take control" YesNo is NOT answered by link 1's intent
+# ok 7 different-code link: Linkage! chained as link 2, its selections -> null
+# ok 8 F1 (FAILED before): opponent's copy of Widow Anchor at link 1 (no link of ours) -> null
+# ok 9 F1 (FAILED before): rejected / cancelled activation - no chain link of ours ever opened; a later same-code selection -> null
+# ok 10 F1 (FAILED before): bound to S/T sequence 0; a NEW chain whose link 1 is another copy (S/T sequence 1) -> null, and removalDone
+# ok 11 removalDone: unbound and not yet observed -> false; bound and link 1 present -> false; link solved / chain ended -> true; another turn -> true
+# ok 12 L1 (RELAY-107 helper sequence): unbound intent + first observation with no link of ours -> expired; a later same-code link 1 never binds
+# ok 13 L1: zone choice for our card (SELECT_PLACE, hint = its code, no link yet) waits; then the target prompt binds link 1
+# ok 14 L1: a zone choice for ANOTHER card is an observation without our link -> expired
+# ok 15 L1: first observation after an opponent response (our link 1 behind their link 2) binds link 1
+# ok 16 L1: first observation while link 1 resolves binds it; "take control" No -> Yes
+# ok 17 L1: negated activation (our link 1 solved) at first observation -> expired; rejected/cancelled (empty chain) -> expired
+# ok 18 L1: an opponent's same-code link 1 at first observation is not ours -> expired
+# ok 19 OptimalPilot: observe() still arms pendingRemoval with the intent (link kept); the bind/clear lifecycle in base() is shown natively by tools/r36-f1-native.mjs (pendingBefore/pendingAfter per prompt)
+# r36 F1 tests: 19 passed
+# Subtest: tests/r36-f1.test.mjs
+ok 68 - tests/r36-f1.test.mjs
+  ---
+  duration_ms: 1349.957445
+  type: 'test'
+  ...
+# ok 1 friendly: Enhanced with search (100 nodes) now declines - "Do not chain", guard counted once
+# ok 2 friendly, Classic with search (100 nodes): still chains its own Ash - the r35.12 defect, left unchanged by policy (Classic = r35.12)
+# r36 friendly-chain SEARCH controls: 2 passed
+# Subtest: tests/r36-friendly-chain-search.test.mjs
+ok 69 - tests/r36-friendly-chain-search.test.mjs
+  ---
+  duration_ms: 2869.407191
+  type: 'test'
+  ...
+# ok 1 mode maps: F is Enhanced only (Classic stays r35.12)
+# ok 2 fixture replays exactly on this build: 518 responses accepted, Sky (seat 0) wins 6200-0 on turn 8
+# ok 3 the RELAY-117 prompt (response 127): open chain = our own Zero only; Ash and "Do not chain" offered
+# ok 4 enemy control (response 306, turn 5): open chain = opponent's Ohime; the guard does NOT apply (Ash against the opponent stays available to search)
+# ok 5 corrected branch resolves natively (RELAY-118): declining at 127 lets Zero summon Raye and Roze, Ash stays in hand, no rejected responses or script errors
+# ok 6 pure guard: needs F, a chain prompt, only our open links, the base decline, and a negating card on offer
+# r36 friendly-chain tests: 6 passed
+# Subtest: tests/r36-friendly-chain.test.mjs
+ok 70 - tests/r36-friendly-chain.test.mjs
+  ---
+  duration_ms: 1807.710378
+  type: 'test'
+  ...
+# ok 1 REPRO 1 (FAILED at bb4bc23: {score:812.5,status:complete}): MP2 leaf, nodesLeft:0, material flips shouldStop -> cutoff, no score
+# ok 2 nodesLeft:0 alone (no stop) -> cutoff before material/planners run (material not called)
+# ok 3 late expiry during material (budget left) -> cutoff "during material scoring", planners not run
+# ok 4 late expiry inside the planners (stop fires on its 4th poll) -> cutoff, never complete
+# ok 5 control: nothing expires, ample budget -> complete, and the score equals judgeParts without a budget (numeric-compatible)
+# ok 6 planner allowance smaller than the planner needs (2 nodes) -> cutoff "node budget reached inside the ... planner"
+# ok 7 planner overflow at its own fixed cap (NODE_LIMIT 2) -> cutoff "planner node cap reached (overflow)", even with unlimited nodesLeft
+# ok 8 judgeParts without `work` is unchanged (Arms B/C, tools): a number total, no truncated flag
+# ok 9 REPRO 2 (FAILED at bb4bc23: complete, macros 1): stop flips inside policy.base, the one response would move 16 -> 256 -> cutoff, response not sent
+# ok 10 REPRO 2 through the judge: status cutoff, score 0, cost 0
+# ok 11 stop flips inside sim.respond and that response leaves battle (16 -> 256) -> cutoff after 1 response, not complete
+# ok 12 rollout uses the whole node allowance (2 macros, nodesLeft 2) -> no allowance left for scoring -> cutoff
+# ok 13 rejected continuation keeps status rejected (not complete, not cutoff) when its scoring is truncated; score 0
+# ok 14 rejected continuation with budget left is scored as before (rejected + a number score)
+# ok 15 searchInfoSet with a tight budget: every leaf the judge reports complete had nodesLeft > 0 at entry; leaves at nodesLeft <= 0 are cutoff
+# r36-midgame A1 late-expiry tests: 15 passed
+# Subtest: tests/r36-midgame-a1-late.test.mjs
+ok 71 - tests/r36-midgame-a1-late.test.mjs
+  ---
+  duration_ms: 58.595459
+  type: 'test'
+  ...
+# ok 1 expired deadline: the judge plays NO response and returns cutoff (no score) for a Battle Phase leaf
+# ok 2 expired deadline via searchInfoSet ctx.shouldStop is honoured the same way
+# ok 3 deadline expiring mid-rollout stops at the next response: cutoff after exactly 2 responses (98400d6 ran all 48)
+# ok 4 rejected continuation (sim.retries moved) -> status rejected, not a completed leaf (98400d6 returned an ordinary score)
+# ok 5 exception in the rollout policy -> status error (not swallowed into a normal score)
+# ok 6 response bound and node budget are cutoffs; a completed rollout charges its macro responses
+# ok 7 a leaf outside our Battle Phase is judged without any response (complete, cost = planner work only)
+# ok 8 rejected continuation in search: the "stay" candidate gets rejected=16 and leaf.rejected=16, scores below -50000; M2 wins
+# ok 9 rollout cost is charged to the search node count (16 worlds x 2 candidates x 3 search macros + 16 x 3 rollout responses = 144)
+# ok 10 node budget includes rollout work: budget 40 stops the search early (fewer visits) instead of overrunning
+# ok 11 a cutoff leaf is not a visit: deadline mid-rollout on the "stay" branch leaves leaf.cutoff=1 and no score for that world
+# skip reconstruction check: ../r35.11-base worktree not present
+# r36-midgame A1 tests: 11 passed
+# Subtest: tests/r36-midgame-a1.test.mjs
+ok 72 - tests/r36-midgame-a1.test.mjs
+  ---
+  duration_ms: 88.553316
+  type: 'test'
+  ...
+# ok 1 Mirrorjade: native REMOVE prompt while its link resolves offers BOTH fields [our Mirrorjade, opp Albion]; pilot ends on Albion; a wrong baseline (our Mirrorjade) is corrected; Albion banished; 0 script errors
+# ok 2 Afterburners!: native SelectTarget at activation (DESTROY, no link resolving) offers [our Kagari, opp Albion]; pilot chose the removal itself; ends on Albion; wrong baseline corrected; Albion destroyed
+# ok 3 Afterburners! with 3 Spells in GY: the optional S/T destroy at resolution (YesNo + mixed DESTROY list over S/T) is NOT treated as the target stage (follow-up null on a wrong baseline)
+# ok 4 Widow Anchor: native SelectTarget (TARGET) offers [our Kagari, opp Albion]; ends on Albion; resolution YesNo Stringid(id,1) "Take control" answered Yes (a No baseline is overridden); Albion ends on our field
+# ok 5 Forbidden Droplet: native cost prompt (TOGRAVE, activation, all ours) verified against the projected costs; resolution NEGATE prompt picks Albion
+# r36-midgame-b1 native tests: 5 passed
+# Subtest: tests/r36-midgame-b1-native.test.mjs
+ok 73 - tests/r36-midgame-b1-native.test.mjs
+  ---
+  duration_ms: 150522.628345
+  type: 'test'
+  ...
+# ok 1 REPRO B1-1 (FAILED at bb4bc23: "Destroying Gabrion, the Timelord opens projected lethal"): 2000-ATK Albaz + Defense Position Dragoon vs Gabrion (3000 ATK synthetic), LP 2000 -> no lethal claim
+# ok 2 control: the same board with an unprotected Albion the Shrouded Dragon -> Dragoon destroy claims lethal
+# ok 3 Gabrion vs Afterburners! (Spell, targets) -> no claim
+# ok 4 Gabrion real DB text: destroyProtected for Dragoon (monster, non-targeting) and Afterburners! (Spell, targeting); not a Droplet protection (halve/negate is not destruction)
+# ok 5 phrase families (DB audit): battle-only, own-effects-only, one-battle/one-effect scoped -> not protected from our destroy
+# ok 6 phrase families: card effects / opponent's / an opponent's / their opponent's / "battle or (by) card effects" / ", or banished," / "targeted or destroyed" / bare "cannot be destroyed" / "(by battle or card effect)" / ", except by battle" -> protected from both
+# ok 7 phrase families: type-restricted and targeting-restricted protection
+# ok 8 field-wide grant: a face-up opposing Continuous Trap "... monsters you control cannot be destroyed by card effects" (Centur-Ion Primera) protects their blocker from Dragoon (conservative: sub-type ignored)
+# ok 9 REPRO B1-2 (FAILED at bb4bc23: halveNegate opens:true gain:1500 cost:null): Albaz 3800 via Double-Edged Sword vs Albion 3000, LP 2300, only Droplet in hand, only S/T = the equipped Sword -> no opens:true
+# ok 10 control: same board plus a spare hand card (Branded Fusion) -> lethal claimed, cost = Branded Fusion (hand); the Sword is NOT an allowed cost
+# ok 11 control: a face-down Set Spell/Trap is a representable free cost (no active effect) -> lethal claimed with cost kind setST
+# ok 12 a face-up non-Equip Spell/Trap is also not a free cost (unrepresentable -> declined): only Droplet in hand, only S/T a face-up Continuous card, two 2000 attackers vs 3000 at 2500 LP -> no claim
+# ok 13 follow-up: cost prompt [Sword (field), Branded Fusion (hand)] - a default pick of the Sword is replaced by the projected Branded Fusion (removalOverride)
+# ok 14 follow-up: a default pick that is a projected-equivalent cost is kept (removalVerified); a 2-card pick is cut to the projected single cost
+# ok 15 follow-up: target prompt among the opponent's monsters - wrong default target replaced by the projected Albion; projected target missing -> removalMismatch
+# ok 16 follow-up: a selection for a different card's effect, or on a later turn, is left alone (null)
+# ok 17 OptimalPilot: observe() arms pendingRemoval only for our own played removal activation; another seat's or a different response does not; an IDLECMD prompt clears it
+# ok 18 newMidgameStats has the follow-up counters (removalVerified/removalOverride/removalMismatch)
+# r36-midgame-b1 round-2 tests: 18 passed
+# Subtest: tests/r36-midgame-b1-r2.test.mjs
+ok 74 - tests/r36-midgame-b1-r2.test.mjs
+  ---
+  duration_ms: 804.058004
+  type: 'test'
+  ...
+# ok 1 DB/script text: Command Knight "All Warrior monsters you control gain 400 ATK" = engine EFFECT_TYPE_FIELD EFFECT_UPDATE_ATTACK 400 on RACE_WARRIOR; Gearfried the Iron Knight is a Warrior
+# ok 2 REPRO RELAY-077 B1-1 (8f7f321 returned opens:true gain:700 cost:Command Knight): Gearfried 2200 (1800+400) + Command Knight 1600, Albion 3000, LP 700, only Droplet in hand -> no opens:true claim
+# ok 3 aura-loss reasons: paying Command Knight = its continuous effect on other cards; paying Gearfried = retained Command Knight has a conditional continuous effect
+# ok 4 the real numbers: after paying Command Knight Gearfried is 1800 vs halved Albion 1500 = 300 < 700; after paying Gearfried Command Knight 1600 vs 1500 = 100 < 700 -> neither cost opens lethal (so declining is also the right answer, not just a safe one)
+# ok 5 aura board + a spare hand card (Upstart Goblin): the hand cost keeps Command Knight, Gearfried 2200 vs 1500 = 700 -> lethal claimed with the HAND cost; no monster is an allowed cost
+# ok 6 no-aura control: Gearfried 1800 + Celtic Guardian 1400 (Normal Monster, no script), Albion 3000, LP 300, only Droplet -> lethal claimed, cost = Celtic Guardian (monster)
+# ok 7 no-aura control without the engine scripts (d.scripts missing) -> monster cost unreadable, claim declined
+# ok 8 a paid monster with a leave/sent-to-GY event (Sangan, real script EVENT_TO_GRAVE) is not a representable cost -> declined
+# ok 9 aura on the OPPONENT side counts too: a retained opposing Command Knight (conditional continuous effect) blocks the monster cost in the no-aura board
+# ok 10 Mirrorjade intent (real removalFor): banish Albion opens lethal; stages from c44146295.lua: cost TOGRAVE from the Extra Deck (not modelled), resolution REMOVE over BOTH MZONEs
+# ok 11 REPRO RELAY-077 B1-2 (8f7f321 returned null): resolution SELECT_CARD [our Mirrorjade, opp Albion] min=max=1, baseline index 0 -> corrected to index 1 (removalOverride, stage target)
+# ok 12 Mirrorjade mixed list: baseline already index 1 -> removalVerified; index form (r.index) is corrected too
+# ok 13 Mirrorjade mixed list without the projected Albion (our Mirrorjade + another opposing monster) -> removalMismatch, response unchanged
+# ok 14 legal bounds kept: a mixed list whose bounds do not allow a single pick (min=max=2) -> removalMismatch, response unchanged (never an illegal 1-card answer)
+# ok 15 Mirrorjade context: the Extra Deck cost prompt (TOGRAVE at activation) and a REMOVE prompt while NO link of Mirrorjade is resolving are not the target stage -> null
+# ok 16 Afterburners! intent (real removalFor): destroy Albion opens lethal; c99550630.lua: SelectTarget(face-up, BOTH MZONEs) DESTROY at activation
+# ok 17 Afterburners! mixed target list at activation [our Kagari, opp Albion], baseline our Kagari -> corrected to Albion
+# ok 18 Afterburners! resolution: the optional Spell/Trap destroy (YesNo Stringid(id,0); DESTROY select over S/T on both fields) is not this projection's stage -> null for both
+# ok 19 Widow Anchor intent (real removalFor, 3 Spells in GY): control of Albion opens lethal; c98338152.lua: SelectTarget(face-up Effect, BOTH MZONEs) TARGET at activation, YesNo Stringid(id,1) take control at resolution
+# ok 20 Widow Anchor mixed target list [our Kagari, opp Albion], baseline our Kagari -> corrected to Albion
+# ok 21 Widow Anchor optional control decision: "Take control of the target?" (Stringid(id,1)) while its link resolves - No -> Yes (removalOverride, stage control); Yes kept (removalVerified)
+# ok 22 Widow Anchor: another YesNo (Stringid(id,0)), the control YesNo while no link resolves, or an intent that is not the control line -> null
+# ok 23 Widow Anchor with only 2 Spells in GY: no control projection (no claim)
+# ok 24 Droplet stages unchanged in kind: cost = TOGRAVE at activation (ours: hand/field), target = NEGATE while its link resolves (opponent's face-up Effect Monsters) - from c24299458.lua
+# r36-midgame-b1 round-3 tests: 24 passed
+# Subtest: tests/r36-midgame-b1-r3.test.mjs
+ok 75 - tests/r36-midgame-b1-r3.test.mjs
+  ---
+  duration_ms: 925.671829
+  type: 'test'
+  ...
+# ok 1 Droplet over-claim (FAILED before): 2000 vs a 3000 Effect Monster at 2000 LP; halved to 1500 the line is 500 damage, not lethal -> no pick
+# ok 2 Droplet passing case: 2000+2000 vs a 3000 Effect Monster at 2500 LP, spare hand card pays the cost -> halve to 1500, attack over it, then direct = lethal
+# ok 3 Droplet chooses Effect Monsters only (FAILED before): blocker is a Normal Monster (Dark Magician) -> no pick
+# ok 4 Droplet vs "Unaffected by your opponent's activated monster and Spell effects" (REBD Exceed) (FAILED before) -> no pick
+# ok 5 untargetable + "cannot be destroyed by card effects" blocker (Red-Eyes Dark Dragoon) vs Afterburners! (targets, destroys) (FAILED before) -> no pick
+# ok 6 same blocker vs Mirrorjade (banish, non-targeting, cost from the Extra Deck) -> pick, banish, lethal
+# ok 7 Dragoon destroy (non-targeting) on the untargetable+indestructible blocker -> no pick; on an unprotected one -> pick
+# ok 8 two blockers: only Albion is hittable by Afterburners! (Dragoon protected); Dragoon still walls the 2000 attacker -> no pick
+# ok 9 Droplet cost must come from an attacker (FAILED before): only Droplet in hand, no other S/T; 2000+2000 vs 3000 at 2500 LP -> worst-case cost drops an attacker, 500 damage, no pick
+# ok 10 Droplet cost from an attacker still leaves lethal: 2000+2000+2000 vs 3000 at 2500 LP -> pick, cost named
+# ok 11 Widow Anchor with fewer than 3 Spells in the GY is negation only (FAILED before) -> no pick; with 3 Spells -> take control (removal) pick
+# ok 12 flags off: no removal pick at all
+# r36-midgame-b1 tests: 12 passed
+# Subtest: tests/r36-midgame-b1.test.mjs
+ok 76 - tests/r36-midgame-b1.test.mjs
+  ---
+  duration_ms: 777.567527
+  type: 'test'
+  ...
+# ok 1 MG-02 (C draft): a Main Phase 1 book line continues while the board is below the Branded target and stops at the step where the target becomes met (persistent invariant, rechecked every IDLECMD)
+# ok 2 MG-02: a consumed entry prerequisite is not re-demanded - removing the line's starter from hand does not change the continuation verdict (B and C)
+# ok 3 MG-02 (B): over a found lethal the line stops (lethalLock); with no lethal it continues; turn 1-2 never gated
+# ok 4 MG-04: Main Phase 2 book follow-up allowed with our monsters on the field under B, C and BC (RELAY-075 B2), as with flags off
+# ok 5 MG-04: Main Phase 2 is never a hold phase - midgameHold only acts in Main Phase 1
+# ok 6 MG-09: two worlds differing only in hidden information (opponent hand; face-down monster identity/ATK) give identical B/C decisions (bookAllowed, targetMet, midgameHold, closeOutOptions, removalFor, endToBattle, thisTurnBattle) for every flag set
+# ok 7 MG-09 control: changing a PUBLIC fact (face-down -> face-up 3000) does change the view, so the paired check can detect a leak
+# ok 8 Arm C stays a draft: default off; with C off no close-out options and no target holds
+# r36-midgame-c tests: 8 passed
+# Subtest: tests/r36-midgame-c.test.mjs
+ok 77 - tests/r36-midgame-c.test.mjs
+  ---
+  duration_ms: 640.056756
+  type: 'test'
+  ...
+# ok 1 Luna T7 regression: flags off the book step is played over the projected lethal (r35.11 behaviour): Lunalight Gold Leo 0 / Opening book LU-01
+# ok 2 Luna T7 Arm B: a found lethal beats the book -> Battle Phase (Pursue projected lethal)
+# ok 3 Arm B lethal also skips search (plan-level)
+# ok 4 Turn 1-2 unchanged: the same board on turn 2 keeps the book under Arm B
+# ok 5 ChatGPT MG-01 control: with no closing line (opp at 8000 LP) the book starter stays eligible under Arm B
+# ok 6 RELAY-075 B2 / MG-04: Arm B (and C) keep the r35.11 book follow-up in Main Phase 2 from turn 3 (no blanket MP2 suppression)
+# ok 7 RELAY-075 B2: Arm C no longer blocks the Main Phase 2 book while we control a monster (MG-04 follow-up restored)
+# ok 8 Arm C: from turn 3 a book step is advice for search (not trusted); turn 1-2 still trusted
+# ok 9 Arm C: Luna target (2 attackers, top >= 2500) met with Cat Dancer + Sabre Dancer; close-out options include the Battle Phase
+# ok 10 Arm B: ready attackers with a damaging line -> hold Extra Deck summons and field-material Fusion; Branded Fusion (Deck material) not held
+# ok 11 Arm B hold is off on turn 2, in Main Phase 2 and with flags off
+# ok 12 Arm A: a visible lethal-now board scores above the same board without it; LP weight /6
+# ok 13 Arm A terminal dominance (pre-registration H): win > every non-final score > loss; sooner win > later; draw = 0
+# ok 14 Branded T5 Arm C: board target (2 attackers, top >= 2500) met -> Luluwalilith (Extra Deck) held until Main Phase 2
+# ok 15 Branded T5 Arm C: Mirrorjade / Super Polymerization are close-out cards, never held
+# ok 16 Branded T5 Arm B alone: no damaging line vs REBD Exceed 3400, so no ready-attacker hold (Arm B does not claim this fix)
+# ok 17 Arm B (RELAY-075 B1, Alexis): Forbidden Droplet does NOT pick on REBD Exceed - Exceed is "Unaffected by your opponent's activated monster and Spell effects" (Konami TCG text); the r36 v1 delete-the-blocker model wrongly claimed lethal here
+# ok 18 Branded T5 flags off: no hold
+# ok 19 RELAY-075 B2: the zero-damage direct-attack tie-break is policy Z (held for review): B alone passes with a 0-ATK attacker, B+Z attacks, off passes
+# ok 20 RELAY-075 B2: the ahead/trade penalty is policy T (held for review): ahead 2000+2000 vs one 2000 at 8000 LP - B alone does not make the even trade (not lethal), B+T trades then attacks direct
+# ok 21 even trade when ahead opens lethal: 2000+2000 vs one 2000 at 2000 LP -> trade then direct (off: no attack)
+# ok 22 a losing blocker trade is kept only if it reaches lethal: 1v1 even trade, not ahead -> no line
+# ok 23 Arm A judge is off on turns 1-2 (incl. the turn-2 Battle Phase), on from turn 3, own turn only (active===seat)
+# ok 24 ChatGPT MG-05: A 3000 + B 2000 vs X 3000 at 2000 LP -> A trades with X, B attacks directly (lethal); off: rejected
+# ok 25 negative-gain blocker trade kept only because it reaches lethal: A 4000 + B 2000 vs X 4000 at 2000 LP (trade gain < 0 even when ahead)
+# ok 26 ChatGPT MG-06: survival check kept -- no trade that takes own LP to 0; zero-damage attacks into monsters are not forced
+# ok 27 turn 2 planner unchanged under Arm B
+# ok 28 every close-out card name exists in that deck (main/extra/side, 19 Oct TCG list)
+# r36-midgame tests: 28 passed
+# Subtest: tests/r36-midgame.test.mjs
+ok 78 - tests/r36-midgame.test.mjs
+  ---
+  duration_ms: 877.191611
+  type: 'test'
+  ...
+# ok 1 Enhanced duel: match info and module state are the Enhanced recipe; the exported replay carries aiMode enhanced and the build string
+# ok 2 Classic duel (started right after Enhanced): Classic recipe, replay aiMode classic
+# ok 3 import honours explicit aiMode enhanced (after a Classic duel)
+# ok 4 legacy replay without aiMode (and without build) imports as Classic, right after an Enhanced import
+# ok 5 import honours explicit aiMode classic (after the Enhanced import path was used)
+# ok 6 an unknown aiMode is refused (no guess)
+# ok 7 a new Enhanced duel after a Classic import runs Enhanced again (no stale state either way)
+# ok 8 app.mjs: the replay file decides the mode (explicit enhanced/classic, missing = Classic, unknown refused); the dropdown is used only for new duels
+# r36 replay mode tests: 8 passed
+# Subtest: tests/r36-replay-mode.test.mjs
+ok 79 - tests/r36-replay-mode.test.mjs
+  ---
+  duration_ms: 8074.128326
+  type: 'test'
+  ...
+# ok 1 b: a correct record PASSes (offer, attack, Fleurdelis target, destroyed, 300 damage, attacker stays)
+# ok 2 b (RELAY-109 counterexample): no own action and an empty enemy field -> FAIL, not PASS
+# ok 3 b: Fleurdelis gone without our attack (e.g. removed by an effect) -> FAIL (the attack is required)
+# ok 4 b: attack aimed at another target -> FAIL
+# ok 5 e: correct record (offer, attack, 2600 = DEF) PASSes
+# ok 6 e (RELAY-109 counterexample): empty battleOffers and no attack -> FAIL, not vacuous PASS
+# ok 7 e: attack taken but damage not DEF (e.g. ATK 1500) -> FAIL
+# ok 8 a: correct record PASSes; a Defence switch FAILs
+# ok 9 INVALID (RELAY-109): a passing record with injected errors / an error note / a rejected response / step bound / no own-turn start / setup failure is not judged
+# ok 10 a "finished" stop (duel won inside the turn) is valid and judged
+# ok 11 RELAY-110 counterexample: --only nonexistent --gate exits 2 with INVALID SELECTION and writes no records (also in screen mode)
+# ok 12 unknown mode / duplicate mode / unknown S4 flag / bad --first / one unknown id among known ones -> exit 2
+# ok 13 selectionErrors / requested: the default selection is the full nonempty matrix; filters give exactly the asked keys
+# ok 14 checkLP: default 8000/8000; rejects missing/extra values, zero, negative, fractional, non-numeric
+# ok 15 LP disagreement makes a record INVALID before judging: start/end native != wrapper, missing check, setup != requested (incl. swapped seats), non-numeric native
+# ok 16 f: correct record PASSes; wrong winner mapping (winner 1) FAILs; an Upstart activation by seat 0 FAILs (by code, not label); Upstart not offered FAILs; an opponent's Upstart does not count
+# ok 17 non-default-LP puzzles are search-off only until search-root LP is verified: --search 100 with d1/f is INVALID SELECTION (exit 2)
+# ok 18 native: d1 (requested LP 2000/8000 logical) and d2 (default) in ONE process, first=1 mapping: engine-verified setup LP per record, native = wrapper at start and end, no leakage into d2
+# r36 S2 validity tests: 18 passed
+# Subtest: tests/r36-s2-validity.test.mjs
+ok 80 - tests/r36-s2-validity.test.mjs
+  ---
+  duration_ms: 5393.682362
+  type: 'test'
+  ...
+# {"test":"r36-s4-e","pass":true,"node":"v22.22.2","selfVerified":true}
+# Subtest: tests/r36-s4-e.test.mjs
+ok 81 - tests/r36-s4-e.test.mjs
+  ---
+  duration_ms: 4858.029312
+  type: 'test'
+  ...
+# ok 1 a settings message after stop (duel destroyed, handle null) plans nothing and posts no error
+# ok 2 a live duel (engine handle present) still plans on the same message (the guard does not stop live play)
+# r36 stopped-duel tests (dist/worker.mjs): 2 passed
+# Subtest: tests/r36-stopped-duel.test.mjs
+ok 82 - tests/r36-stopped-duel.test.mjs
+  ---
+  duration_ms: 70.934327
+  type: 'test'
+  ...
+# ok 1 default off: r35.11 budgets (1500 ms cap, 400 nodes, instant 40 nodes)
+# ok 2 only ever raises: <= 1500 ms, junk and negatives are off; above 8000 ms is capped
+# ok 3 on: cap = think ms, nodes = 400 x ms/1500 (2500 -> 667, 5000 -> 1333); instant budgets never scaled
+# ok 4 env DDL_THINK_MS wires the flag (5000 on, 900 off)
+#   (r35.11-base tree not found at /home/claude/r35.11-base: identity half skipped)
+# ok 5 flag off in a real duel: same responses as r35.11-base and node budget 400 on every search
+#   nodes used per search (no deadline): 48,48,48,48,144,96 - the 16-world sample, not the node budget, ends these searches; the clock is what extra think time relieves
+# ok 6 flag on (5000 ms) in a real duel: every search gets 1333 nodes; where 400 never bound, play is unchanged (the flag adds budget, not logic)
+# r36-think: 6 checks passed
+# Subtest: tests/r36-think.test.mjs
+ok 83 - tests/r36-think.test.mjs
+  ---
+  duration_ms: 23449.819484
+  type: 'test'
+  ...
+# ok 1 every token a preset deck can make shows the official card image (YGOPRODeck, unedited, hash-recorded) - plus Scapegoat's four Sheep Tokens; Scapegoat Token uses a Sheep Token image; all precached
+# ok 2 token-cards.json lists exactly the Token-type cards of cards.json.gz, and only tokens get art entries
+# ok 3 applyTokenArt: own image or the generic card for every token; cards with art and non-tokens untouched
+# ok 4 display only: cards.json.gz and scripts.json.gz are byte-identical to r36.1 (engine / AI / gate database unchanged)
+# ok 5 token-fx is loaded and precached; it listens only for summon presentation events and checks the token list
+# ok 6 token-fx timing: none at Instant, a short fade for reduced motion, full otherwise
+# r36 token card tests: 6 passed
+# Subtest: tests/r36-token-cards.test.mjs
+ok 84 - tests/r36-token-cards.test.mjs
+  ---
+  duration_ms: 604.021881
+  type: 'test'
+  ...
+# {"test":"r37-windbot","pass":true,"node":"v22.22.2","report":{"fixed":{"selects":7,"amount":8,"solutions":20,"maxSummoned":true},"unfixed":{"selects":0,"must":7,"mustCodes":[69247929,4,10,2,33555488,2746810368,262144],"solutions":0},"windbot":{"turn":4,"finished":true,"wbDecisions":111,"rejected":0,"stalled":0,"messagesToBot":19264,"executor":"[26-11-07 23:25:58] Deck found, loading AI_Albaz\\n"}}}
+# Subtest: tests/r37-windbot.test.mjs
+ok 85 - tests/r37-windbot.test.mjs
+  ---
+  duration_ms: 10878.796322
+  type: 'test'
+  ...
+# {"node":"v22.22.2","rows":[{"id":"branded","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"mikanko","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"sky","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"luna","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"blueeyes","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"kashtira","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"toon","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"hero","sep21":true,"oct19":true,"oct19Errors":[]},{"id":"dtw","sep21":true,"oct19":true,"oct19Errors":[]}]}
+# Subtest: tests/taskc-deck-legality.test.mjs
+ok 86 - tests/taskc-deck-legality.test.mjs
+  ---
+  duration_ms: 588.167799
+  type: 'test'
+  ...
+# {"D1":{"fixed":{"heroOnField":[40044918],"wonderInGy":true,"stratosInHand":true,"errors":[]},"bundled":{"heroOnField":[],"wonderInGy":true,"stratosInHand":true,"errors":[]}}}
+# {"D2":{"fixedEmptyGy":"false","bundledEmptyGy":"true"}}
+# {"node":"v22.22.2","overrides":{"c1948619.lua":["D1","D2"],"c52947044.lua":["D4"],"c19304410.lua":["K1"],"c75047173.lua":["D5"]},"ok":true}
+# Subtest: tests/taskc-hero-scripts.test.mjs
+ok 87 - tests/taskc-hero-scripts.test.mjs
+  ---
+  duration_ms: 896.126542
+  type: 'test'
+  ...
+1..87
+# tests 87
+# suites 0
+# pass 87
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 669204.604869

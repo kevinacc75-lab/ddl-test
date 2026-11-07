@@ -1,0 +1,1010 @@
+diff --git a/tests/fixtures/r36-pins/CANDIDATE.json b/tests/fixtures/r36-pins/CANDIDATE.json
+index 75b49e5..6b1f6f6 100644
+--- a/tests/fixtures/r36-pins/CANDIDATE.json
++++ b/tests/fixtures/r36-pins/CANDIDATE.json
+@@ -1,6 +1,7 @@
+ {
+- "dist/app.mjs": "0d40e5e36247b4653f6e5b96725e573a5422ab18eaaa1eacb8a893245c2a10fa",
+- "dist/worker.mjs": "a5db415bf3be940c513a55f11bc6010b58cd13ef8e730afb405592f3fd7e1ea5",
++ "dist/app.mjs": "edd6fc98a4dc75875b377b329275b4fcec63ab826ee71354a7628f8c6040809b",
++ "dist/worker.mjs": "b44e6b6d64e8d5cde591489457923acc85c7f80e61e37fad1cd3cc60f8f7e645",
+  "dist/optimal-pilot.mjs": "e1e90a901b45c40cc710fa800d59abc50b273310944bfda6c3e9ddc359b4aa46",
+- "dist/presentation.mjs": "12b7fa8a8643c6856b8cf7e4cc0935dd16bf6467a47e6c3a0b75f7e16112d2ff"
++ "dist/presentation.mjs": "12b7fa8a8643c6856b8cf7e4cc0935dd16bf6467a47e6c3a0b75f7e16112d2ff",
++ "dist/duel.mjs": "d0c1ac8147f46ed263580973273a999d2fc370dd3e054d17fe0ddb11c998ca01"
+ }
+diff --git a/tests/fixtures/r36-pins/app.mjs.patch b/tests/fixtures/r36-pins/app.mjs.patch
+index 5be6c8e..a5f80ba 100644
+--- a/tests/fixtures/r36-pins/app.mjs.patch
++++ b/tests/fixtures/r36-pins/app.mjs.patch
+@@ -1,8 +1,12 @@
+ diff --git a/dist/app.mjs b/dist/app.mjs
+-index f4b28c6..3f948cb 100644
++index f4b28c6..a696afe 100644
+ --- a/dist/app.mjs
+ +++ b/dist/app.mjs
+-@@ -4,7 +4,7 @@ import {HumanHolds} from './human-holds.mjs';
++@@ -1,10 +1,10 @@
++-import {installShell} from './app-shell.mjs';import {validateDeck,describeProblem} from './deck-validator.mjs';
+++import {pilotKinds} from './windbot/ui.mjs';import {installShell} from './app-shell.mjs';import {validateDeck,describeProblem} from './deck-validator.mjs';
++ import {readCompressed} from './load.mjs';import {expandYdk,PHASE,LOC,M,R} from './duel.mjs';import {Soundscape,createPresentation} from './presentation.mjs';import {effectFocus,effectMarkup} from './effect-focus.mjs';import {MECHANICS,PHASE_CUES} from './event-data.mjs';
++ import {HumanHolds} from './human-holds.mjs';
+  import {ShuffleOverlay} from './shuffle-overlay.mjs';// r35 item 8: deck-shuffle overlay (RELAY-046; decorative, never blocks or talks to the worker)
+  import {promptSignature,buildChainPromptModel,canAutoSkipEmptyOptionalChain,shouldAutoOpenDecision,renderChainChoicesHTML,HumanDecisionFlow} from './human-flow.mjs';
+  const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+@@ -16,7 +20,7 @@ index f4b28c6..3f948cb 100644
+  $('#import').onclick=()=>$('#file').click();$('#file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>65536)throw Error('Deck file is too large. Choose a .ydk file under 64 KB.');const d=expandYdk(await file.text(),db);d.name=file.name.replace(/\.ydk$/i,'').slice(0,60);decks.push(d);drawDecks();$('#deck-a').value=d.id;syncDeckSelection();saveImports();notify(deckWarning(d)||('Imported '+d.main.length+' Main / '+d.extra.length+' Extra / '+d.side.length+' Side.'),!!deckWarning(d))}catch(e){notify(e.message,true)}finally{$('#file').value=''}};
+  function saveImports(){try{localStorage.setItem('doctrine-lab-decks-v1',JSON.stringify(decks.filter(d=>d.id.startsWith('custom-'))))}catch{notify('Your browser could not save the imported deck. Export it to keep a copy.')}}
+ -$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=mode!=='watch';$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
+-+$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=true;$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,aiMode:importedResponses?importedAiMode:$('#ai-mode')?.value==='classic'?'classic':'enhanced',/* r36 default (RELAY-119): Enhanced unless Classic is chosen; a saved replay runs its own mode */dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
+++$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=true;$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,aiMode:importedResponses?importedAiMode:$('#ai-mode')?.value==='classic'?'classic':'enhanced',/* r36 default (RELAY-119): Enhanced unless Classic is chosen; a saved replay runs its own mode */dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked,pilots:importedResponses?['ai','ai']:pilotKinds()/* r37: Our AI or WindBot per deck */});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
+  function receive({data:x}){if(x.type==='human-reply-result'){if(x.clientSession!==humanClientSession)return;if(x.accepted)return;if(humanFlow.reject(x)){busy=false;notify(x.reason||'Choice changed; choose again.');$('#choices').querySelectorAll('button').forEach(n=>n.disabled=false);if(x.current)receive({data:x.current});if(latestDecisionMessage&&!pendingChainDecision)renderDecision(latestDecisionMessage);humanFlow.autoBlocked=true;syncHumanChoiceStatus()}return}if(x.type==='export-replay'){download(JSON.stringify(x.replay,null,2),'doctrine-replay.json');return}if(x.type==='load-progress'){$('#decision-note').textContent=x.message;return}if(x.type==='rewound'){resetHumanInteraction();presentation.reset();shuffleOverlay.reset();shell?.rewound();return}if(x.type==='export'){download('Duel Doctrine Lab\n'+duelDecks.map(d=>d.name).join(' vs ')+'\n\n'+x.text,'doctrine-duel-log.txt');return}if(x.type==='error'){shuffleOverlay.cancel();resetHumanInteraction();busy=false;disabled=true;notify(x.message,true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent=x.message;return}if(x.type==='notice'){notify(x.message);return}if(x.type!=='state')return;if(x.human?.protocol===2){if(x.human.clientSession!==humanClientSession||x.human.epoch<expectedHumanEpoch||x.human.stateSeq<=humanStateSeq)return;humanStateSeq=x.human.stateSeq;humanHolds.contextFrom(x.human)}latestDecisionMessage=x;const flowChanged=humanFlow.update(x);const decisionChanged=state?.revision!==x.state.revision,fieldChanged=decisionChanged||view!==x.view||mode!==x.mode||lastStudy!==x.study,decisionUIChanged=decisionChanged||fieldChanged||isAi!==x.ai||disabled!==x.disabled;lastStudy=x.study;computerPaused=x.paused;state=x.state;matchInfo=x.match;choices=x.choices;multi=x.multi;sums=x.sums;view=x.view;mode=x.mode;isAi=x.ai;disabled=x.disabled;busy=humanFlow.inFlight;if(decisionUIChanged)selected.clear();$('#pause').textContent=x.paused?'Resume computer':'Pause computer';$('#pause').disabled=mode==='manual'||disabled;$('#step').disabled=!x.ai||disabled;if(fieldChanged){const oldStats=new Map([...document.querySelectorAll('[data-slot] .card-stats')].map(n=>[n.closest('[data-slot]').dataset.slot,n.textContent]));renderState();if(preferences.cinematics!==false&&!preferences.motion)for(const e of x.events||[])if(e.type==='move'&&e.to&&[4,8].includes(e.to.location))document.querySelector(`[data-slot="${e.to.controller}:${e.to.location}:${e.to.sequence}"]`)?.classList.add('fx-arriving');for(const n of document.querySelectorAll('[data-slot] .card-stats'))if(oldStats.has(n.closest('[data-slot]').dataset.slot)&&oldStats.get(n.closest('[data-slot]').dataset.slot)!==n.textContent)n.classList.add('stat-changed');presentation.refreshField();}syncDuelControls();presentation.syncLifePoints(state.players.map(p=>p.lp),x.events);sound.updateState(state,duelDecks,x.coach?.intent?.battle?.lethal);shell?.state(x);renderCoach(x);renderCue(x);syncWakeLock();renderMatchStudy(x);updatePhaseControls();presentation.play((x.events||[]).map(e=>{const c=state.chain.find(c=>c.chain_size===(e.linkedChain??e.chain));return c?{...e,source:{controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence}}:e}),x.lastEventId,coinEpochOk(x.coin)?x.coin.tosses:[]);shuffleOverlay.viewChanged();shuffleOverlay.accept(x.shuffle);presentDecision(x,decisionUIChanged||flowChanged);wasAi=isAi;syncHumanChoiceStatus();queueMicrotask(()=>{drainHumanChoice();maybeAutoSkipEmptyChain()})}
+ -function renderMatchStudy(x){const target=$('#match-study');target.hidden=!x.match||mode==='play';if(!x.match)return;target.innerHTML=`<span class="eyebrow">AI DUEL</span><strong>SEED ${x.match.seed}</strong><span>${x.match.pilots.map(p=>esc(p.name)+' · '+esc(p.label)).join(' / ')}</span><small>Fresh hands + serious pilots · ${'Optimal · bounded search'} · Doctrine ${x.match.doctrine?'on':'off'}</small>`}
+ +function aiTag(ai){const t=$('#spectator-tag');if(!t)return;t.textContent=(mode==='watch'?'SPECTATOR · HANDS REVEALED · ':'')+'AI '+(ai==='enhanced'?'ENHANCED':'CLASSIC');t.hidden=false}/* r36 RELAY-117: the duel's active AI is always shown in the arena (Watch and Play) */
+@@ -33,7 +37,7 @@ index f4b28c6..3f948cb 100644
+  
+  function syncDeckSelection(){const ids=[$('#deck-a').value,$('#deck-b').value];if(db&&decks.length&&!$('#start').textContent.startsWith('Loading')){const bad=ids.map(id=>decks.find(d=>d.id===id)).find(d=>d&&deckWarning(d));$('#start').disabled=!!bad;$('#start').title=bad?bad.name+': '+deckWarning(bad):''}document.querySelectorAll('.deck-tile').forEach(n=>{const seats=ids.map((id,i)=>id===n.dataset.deck?String.fromCharCode(65+i):'').filter(Boolean);n.dataset.selected=String(!!seats.length);n.dataset.seats=seats.join(' / ')});for(const [i,id] of ids.entries())document.querySelectorAll('.matchup-panel .seat')[i].dataset.deckTheme=id}
+  for(const id of ['deck-a','deck-b'])$('#'+id).addEventListener('change',syncDeckSelection);
+-@@ -285,8 +286,8 @@ $('#pause').onclick=()=>humanHolds.manual(!computerPaused);$('#step').onclick=()
++@@ -285,13 +286,13 @@ $('#pause').onclick=()=>humanHolds.manual(!computerPaused);$('#step').onclick=()
+  function download(text,filename){const url=URL.createObjectURL(new Blob([text],{type:'text/plain'})),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+  $('#save-log').onclick=()=>state&&worker.postMessage({type:'export'});const replayButton=document.createElement('button');replayButton.textContent='Save replay';replayButton.onclick=()=>state&&worker.postMessage({type:'export-replay'});$('#save-log').after(replayButton);
+  const replayImport=document.createElement('input');replayImport.type='file';replayImport.accept='.json';replayImport.hidden=true;const importButton=document.createElement('button');importButton.textContent='Open saved replay';importButton.onclick=()=>replayImport.click();$('#game-seed').closest('label').after(importButton,replayImport);
+@@ -44,3 +48,9 @@ index f4b28c6..3f948cb 100644
+   }catch(e){importedResponses=null;notify(e.message,true)}finally{replayImport.value=''}};
+  
+  $('#help').onclick=()=>openModal('<p class="eyebrow">DUEL DOCTRINE LAB · 2.2.0-rc</p><h2>Watch. Pause. Understand.</h2><p>Choose your matchup and AI Watch, Deal a Hand, Play vs AI or Replay a Seed. Learning pace gives every resolving link four seconds, with extra time for longer text. Chains build quickly, then resolve from the top down. Tap to continue is optional. Skip FX skips only the current scene.</p><p>Open the gear for pace, five sound buses, spoken callouts, reduced motion and the coach. The coach explains each real decision. In the journal, tap a moment to rewind to that decision; bookmarks are saved on this device. Rewind pauses the duel so you can inspect it before resuming.</p><p>Long-press a field card to read its text; swipe up on your hand to spread it. Portrait offers an overview; landscape is recommended. Use your browser’s Install / Add to home screen for offline play after the offline download completes.</p><p>The Optimal pilot uses bounded engine-replayed search, resource preservation and a blunder guard. It cannot guarantee perfect play against hidden information. The native engine decides legality. Best-of-three siding is a later stage.</p>');
++ $('#preview-fx').onclick=()=>{if(state&&!state.finished){humanHolds.manual(true);shuffleOverlay.cancel();presentation.skip()}sound.unlock();openModal('<p class="eyebrow">FUSION ROOM · SOUND STUDIO</p><h2>Hear the duel.</h2><p>Metal chains, heavy impacts and energy swells. Tap a cue to hear it.</p><label class="studio-volume">Volume <input id="studio-volume" type="range" min="0" max="100" value="'+Math.round(preferences.volume*100)+'"></label><div class="sound-board">'+[...Object.entries(PHASE_CUES).map(([id,p])=>[p[1],p[0],p[2],'PHASE']),...Object.entries(MECHANICS).map(([cue,p])=>[cue,p[0],p[1],'MECHANIC']),...['ice','crimson','mikanko','striker','lunar'].map(theme=>['victory:'+theme,theme.toUpperCase()+' VICTORY','var(--palette-434)','DUEL RESULT']),...['ice','crimson','sanctifire','lunar','mikanko','striker'].map(theme=>['boss:'+theme,theme.toUpperCase()+' BOSS','var(--palette-435)','BOSS SUMMON'])].map(([cue,label,color,group])=>`<button class="sound-tile" data-audition="${cue}" style="--tile-color:${color}">${label}<small>${group}</small></button>`).join('')+'</div><p class="muted">Sound on enables previews. Each new audition replaces the previous sound. Opening the studio pauses computer play; resume when you are ready.</p>');$('#studio-volume').oninput=e=>{preferences.volume=Number(e.target.value)/100;applyPreferences()};$('#modal-body').querySelectorAll('[data-audition]').forEach(button=>button.onclick=()=>{sound.stop();sound.unlock();const [cue,theme]=button.dataset.audition.split(':');sound.play(cue,theme);button.classList.remove('audition');void button.offsetWidth;button.classList.add('audition')})};
++-$('#credits').onclick=()=>openModal('<p class="eyebrow">BUILT ON AN OPEN FOUNDATION</p><h2>Engine & source credits</h2><p>Duel Doctrine Lab is an independent personal practice app. It is not affiliated with Konami or YGO Lab.</p><p>The duel engine is <a href="https://github.com/edo9300/ygopro-core" target="_blank" rel="noreferrer">EDOPro / ygopro-core</a>, exposed through <a href="https://github.com/n1xx1/ocgcore-wasm" target="_blank" rel="noreferrer">ocgcore-wasm</a>. Card data and effect scripts come from <a href="https://github.com/ProjectIgnis/BabelCDB" target="_blank" rel="noreferrer">BabelCDB</a> and <a href="https://github.com/ProjectIgnis/CardScripts" target="_blank" rel="noreferrer">Project Ignis CardScripts</a>.</p><p>Artwork comes from the existing Doctrine projects and YGOPRODeck. Yu-Gi-Oh names and card imagery belong to their respective owners.</p><p><a href="source.zip" download>Download the lab source</a> · <a href="engine-source.zip" download>Engine source</a> · <a href="licenses/AGPL-3.0.txt" target="_blank">Engine licence</a> · <a href="licenses/wrapper.txt" target="_blank">Wrapper licence</a></p><p class="muted">This version provides engine-checked duels, sound effects, summon presentation and explanations of independent procedural pilots’ choices. It does not include tournament-strength deck pilots, a complete coaching system, between-game siding. Replay rewind is now available.</p>');
+++$('#credits').onclick=()=>openModal('<p class="eyebrow">BUILT ON AN OPEN FOUNDATION</p><h2>Engine & source credits</h2><p>Duel Doctrine Lab is an independent personal practice app. It is not affiliated with Konami or YGO Lab.</p><p>The duel engine is <a href="https://github.com/edo9300/ygopro-core" target="_blank" rel="noreferrer">EDOPro / ygopro-core</a>, exposed through <a href="https://github.com/n1xx1/ocgcore-wasm" target="_blank" rel="noreferrer">ocgcore-wasm</a>. Card data and effect scripts come from <a href="https://github.com/ProjectIgnis/BabelCDB" target="_blank" rel="noreferrer">BabelCDB</a> and <a href="https://github.com/ProjectIgnis/CardScripts" target="_blank" rel="noreferrer">Project Ignis CardScripts</a>.</p><p>The optional WindBot pilot is <a href="https://github.com/ProjectIgnis/windbot" target="_blank" rel="noreferrer">WindBot Ignite</a> (AGPL-3.0), compiled unmodified for the browser. Its complete source and build files: <a href="wb/windbot-source.zip" download>windbot-source.zip</a>.</p><p>Artwork comes from the existing Doctrine projects and YGOPRODeck. Yu-Gi-Oh names and card imagery belong to their respective owners.</p><p><a href="source.zip" download>Download the lab source</a> · <a href="engine-source.zip" download>Engine source</a> · <a href="licenses/AGPL-3.0.txt" target="_blank">Engine licence</a> · <a href="licenses/wrapper.txt" target="_blank">Wrapper licence</a></p><p class="muted">This version provides engine-checked duels, sound effects, summon presentation and explanations of independent procedural pilots’ choices. It does not include tournament-strength deck pilots, a complete coaching system, between-game siding. Replay rewind is now available.</p>');
++ shell=installShell({getDecision:()=>latestDecisionMessage,submit:reply,navigate:showScreen,inspect:dossier,preferences,applyPreferences,sound,presentation,getState:()=>state,getMatch:()=>matchInfo,getDecks:()=>duelDecks||[],getWorker:()=>worker,notify,openModal,beforeRewind:()=>{shuffleOverlay.reset();return invalidateHumanContext()}});
++ async function loadCardLibrary(){
++  const w=new Worker('library-worker.mjs',{type:'module'});
+diff --git a/tests/fixtures/r36-pins/duel.mjs.patch b/tests/fixtures/r36-pins/duel.mjs.patch
+new file mode 100644
+index 0000000..86f48da
+--- /dev/null
++++ b/tests/fixtures/r36-pins/duel.mjs.patch
+@@ -0,0 +1,24 @@
++diff --git a/dist/duel.mjs b/dist/duel.mjs
++index a9b71a6..50bd005 100644
++--- a/dist/duel.mjs
+++++ b/dist/duel.mjs
++@@ -79,7 +79,7 @@ export class Duel {
++   if((m.type===M.SELECT_OPTION||m.type===M.SELECT_YESNO)&&(m.type!==M.SELECT_YESNO||response.yes)){const n=BigInt(m.type===M.SELECT_OPTION?m.options[response.index]||0:m.description||0),code=decodeEffectId(n).code;if(this.db[code])chosen={code,description:String(n),controller:m.player,location:this.currentEffect?.location,effectLocation:this.currentEffect?.effectLocation}}
++   let selectedId=null;const before=this.retries,priorEffect=this.currentEffect,priorPending=this.pendingEffect,priorClauses=this.chain.map(c=>c.focusDescription);
++   if(chosen){const player=this.fromEngine(chosen.controller??m.player),location=chosen.location||0,position=chosen.position??([2,4,8,16,32,64].includes(location)?this.zone(player,location)[chosen.sequence]?.position:0)??0;this.lastCard=chosen.code;this.currentEffect={code:chosen.code,description:String(chosen.description||0),player,location,effectLocation:chosen.effectLocation??chosen.triggering_location??location,private:location===2||location===64||([4,8,32].includes(location)&&!(position&5))};if(m.type===M.SELECT_OPTION||m.type===M.SELECT_YESNO){const link=this.chain.find(c=>c.chain_size===this.resolvingChain&&c.code===chosen.code);if(link)link.focusDescription=this.currentEffect.description;else if(this.pendingEffect?.code===chosen.code)this.pendingEffect={...this.pendingEffect,focusDescription:this.currentEffect.description};}else this.pendingEffect={...this.currentEffect};this.event('effectChosen',{...this.currentEffect,chain:null,linkedChain:this.resolvingChain,option:m.type===M.SELECT_OPTION||m.type===M.SELECT_YESNO});selectedId=this.eventSeq}
++-  this._responding=true;const realAction=m.seat===this.active&&(m.type===M.SELECT_IDLECMD&&response.action<6||m.type===M.SELECT_BATTLECMD&&response.action<2);if(realAction)this.actions++;try{this.core.duelSetResponse(this.handle,response);this.advance()}catch(error){this._responding=false;if(selectedId)this.events=this.events.filter(e=>e.id!==selectedId);throw error}if(this.retries>before&&selectedId){this.events=this.events.filter(e=>e.id!==selectedId);this.currentEffect=priorEffect;this.pendingEffect=priorPending;this.chain.forEach((c,i)=>c.focusDescription=priorClauses[i]);}this._responding=false;if(this.retries===before){(this.responseHistory??=[]).push(structuredClone(response));for(const k of this.knowledge||[])k.accepted();if(realAction&&this.actions>60){const k=hashPublicState(this);this.stateKeys.set(k,(this.stateKeys.get(k)||0)+1)}}return this;
+++  this._responding=true;const realAction=m.seat===this.active&&(m.type===M.SELECT_IDLECMD&&response.action<6||m.type===M.SELECT_BATTLECMD&&response.action<2);if(realAction)this.actions++;try{this.core.duelSetResponse(this.handle,wireResponse(m,response));this.advance()}catch(error){this._responding=false;if(selectedId)this.events=this.events.filter(e=>e.id!==selectedId);throw error}if(this.retries>before&&selectedId){this.events=this.events.filter(e=>e.id!==selectedId);this.currentEffect=priorEffect;this.pendingEffect=priorPending;this.chain.forEach((c,i)=>c.focusDescription=priorClauses[i]);}this._responding=false;if(this.retries===before){(this.responseHistory??=[]).push(structuredClone(response));for(const k of this.knowledge||[])k.accepted();if(realAction&&this.actions>60){const k=hashPublicState(this);this.stateKeys.set(k,(this.stateKeys.get(k)||0)+1)}}return this;
++  }
++ 
++  slot(c){return [c.controller,c.location,c.sequence,c.overlay_sequence??''].join(':')}
++@@ -106,6 +106,10 @@ export class Duel {
++  }
++  title(){const m=this.prompt;if(!m)return this.finished?'Duel complete':'Waiting';if(m.type===M.SELECT_IDLECMD)return 'Choose your next play';if(m.type===M.SELECT_BATTLECMD)return 'Choose a battle action';if(m.type===M.SELECT_CHAIN)return m.forced?'Choose a mandatory chain link':'Your response window';if(m.type===M.SELECT_EFFECTYN)return 'Use '+this.name(m.code)+'’s effect?';if(m.type===M.SELECT_YESNO)return this.description(m.description);if(m.type===M.SELECT_POSITION)return 'Choose battle position';if(m.type===M.SELECT_PLACE)return 'Choose a field zone';if(m.type===M.SELECT_OPTION)return 'Choose an effect option';if(m.type===M.SORT_CHAIN)return 'Order your simultaneous triggers';if(m.type===M.SORT_CARD)return 'Order these cards';return HINT[this.hint]||'Choose the cards this effect needs'}
++ }
+++// r37 (with the core library's MSG_SELECT_SUM fix): our response objects index SELECT_SUM cards as [must cards..., selectable
+++// cards...] (pilot sumSelections, the human picker, semantic.mjs); the engine reads indices into the selectable list only
+++// (playerop.cpp parse_response_cards over select_cards; the must cards are always included). With no must cards the two agree.
+++export function wireResponse(m,response){const k=m?.type===M.SELECT_SUM&&Array.isArray(response?.indicies)?m.selects_must?.length||0:0;return k?{...response,indicies:response.indicies.filter(j=>j>=k).map(j=>j-k)}:response}
++ const PROMPTS=new Set([M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO,M.SELECT_OPTION,M.SELECT_CARD,M.SELECT_TRIBUTE,M.SELECT_SUM,M.SELECT_UNSELECT_CARD,M.SELECT_POSITION,M.SELECT_PLACE,M.SELECT_DISFIELD,M.SELECT_COUNTER,M.SORT_CHAIN,M.SORT_CARD,M.ANNOUNCE_CARD,M.ANNOUNCE_ATTRIB,M.ANNOUNCE_RACE,M.ANNOUNCE_NUMBER,M.ROCK_PAPER_SCISSORS]);
++ export function missingScripts(decks,db,scripts){return [...new Set(decks.flatMap(d=>[...d.main,...d.extra,...(d.side||[])]))].map(id=>db[id]).filter(c=>c&&(c.type&(32|2|4|16777216))&&!scripts['c'+(c.alias||c.code)+'.lua']&&!scripts['c'+c.code+'.lua'])}
++ // ProjectIgnis/DeltaUtopia strings.conf; Auxiliary.ToHandOrElse in bundled utility.lua.
+diff --git a/tests/fixtures/r36-pins/worker.mjs.patch b/tests/fixtures/r36-pins/worker.mjs.patch
+index d036d14..e5ae96e 100644
+--- a/tests/fixtures/r36-pins/worker.mjs.patch
++++ b/tests/fixtures/r36-pins/worker.mjs.patch
+@@ -1,19 +1,36 @@
+ diff --git a/dist/worker.mjs b/dist/worker.mjs
+-index e5bec43..dce0111 100644
++index e5bec43..8b76b91 100644
+ --- a/dist/worker.mjs
+ +++ b/dist/worker.mjs
+-@@ -4,6 +4,10 @@ import {exportSeatContext,safeView} from './ai/knowledge.mjs';
++@@ -4,6 +4,20 @@ import {exportSeatContext,safeView} from './ai/knowledge.mjs';
+  import {Duel,M} from './duel.mjs';
+  import {sumSelections} from './pilot.mjs';
+  import {createOptimalPilots as createPilots} from './optimal-pilot.mjs';
+ +import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';
+ +import {carryRemovalIntent} from './ai/midgame-rules.mjs';
+++import {WindBotPilot,loadWindBot,windBotFor} from './windbot/pilot.mjs';
+++// r37 (Kevy 7 Nov 21:57 AEDT): each AI seat can be piloted by our AI or by WindBot, the open-source scripted EDOPro bot
+++// (dist/windbot/pilot.mjs). WindBot gets every engine message the EDOPro way through the core's raw message hook.
+++let pilotKinds=['ai','ai'],windBots=[null,null];
+++function disarmWindBots(){for(const b of windBots)b?.close();windBots=[null,null];globalThis.__ocgRawHook=null}
+++async function armWindBots(decks,seed,first){disarmWindBots();const want=[0,1].filter(s=>pilotKinds[s]==='windbot'&&aiSeat(s)&&windBotFor(decks[s]?.id));if(!want.length)return;
+++ const exports=await loadWindBot(duel.db),counts=[0,1].map(t=>{const s=t===0?first:1-first;return [decks[s].main.length,decks[s].extra.length]});/* engine team 0 = the seat that goes first */
+++ for(const s of want){const p=new WindBotPilot({seat:s,seed,deck:decks[s],exports});await p.attach(duel,s===first?0:1);windBots[s]=p}
+++ globalThis.__ocgRawHook=(h,raw)=>{if(h!==duel?.handle)return;for(const p of windBots)p?.batch(duel,raw,counts)}}
+++const withWindBots=list=>list.map((p,s)=>windBots[s]||p);
+ +let aiMode='classic';/* r36 AI selector: Enhanced (the page default since r36) / Classic, fixed per duel; a start or replay without a mode is Classic */
+-+const BUILD='ddl-test r36.2 2026-11-07-r36.2';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */
+++const BUILD='ddl-test r37 2026-11-08-r37';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */
+  import {readCompressed} from './load.mjs';
+  import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
+  // r35 item 8 (RELAY-046 Tap B, Seto 27 Oct 10:10): deck-shuffle capture on the one real duel (see shuffle-tap.mjs).
+-@@ -59,10 +63,10 @@ function planned(){
++@@ -53,16 +67,17 @@ function cancelThink(terminate=true){clearTimeout(thinkTimeout);thinkWorker?.pos
++ function warmThinkWorker(){if(typeof Worker==='undefined')return Promise.resolve();if(thinkReady)return thinkReady;thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});thinkReady=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('AI worker preparation timed out')),15000);thinkWorker.onmessage=({data:x})=>{if(x.type==='ready'){clearTimeout(timeout);resolve()}else if(x.type==='error'){clearTimeout(timeout);reject(Error(x.message))}};thinkWorker.onerror=e=>{clearTimeout(timeout);reject(Error(e.message||'AI worker preparation failed'))};thinkWorker.postMessage({type:'warm'})});return thinkReady}
++ function planned(){
++  if(!duel?.prompt||disabled)return null;if(plan?.revision===duel.revision)return plan;
+++ if(pilots[duel.prompt.seat]?.kind==='windbot'){if(thinking)cancelThink(false);humanPending=newHumanHold();plan=pilots[duel.prompt.seat].plan(duel);return plan}/* r37: WindBot answers at once, in this worker */
++  if(typeof Worker==='undefined'){humanPending=newHumanHold();plan=pilots[duel.prompt.seat].plan(duel);return plan}
++  if(thinking?.revision===duel.revision)return null;if(thinking)cancelThink(false);
++  let bestAggregated=null,lastProgress=null;humanPending=newHumanHold();const publicDecision=pilots[duel.prompt.seat].base(safeView(duel,duel.prompt.seat));const id=++thinkId,revision=duel.revision,seat=duel.prompt.seat,started=Date.now(),deadlineAt=thinkDeadline(started),capMs=deadlineAt-started;thinking={id,revision,started,deadlineAt};if(deadlineBox){Atomics.store(deadlineBox,1,deadlineAt-deadlineBase);Atomics.store(deadlineBox,0,id)}
+   const searchRoot=[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,priorSearchRoots=searchRoot?searchRoots[seat]++:searchRoots[seat];
+   thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});
+   const metric=stats=>postMessage({type:'ai-think-metric',preset:paceKind(),thinkMs:Date.now()-started,visibleWaitMs:presentationPending?0:Math.max(0,Date.now()-Math.max(started,presentationDoneAt)),capMs,seed:matchInfo.seed,decision:duel.responseHistory.length,seat,promptType:duel.prompt.type,isSearchRoot:[M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN].includes(duel.prompt.type)&&safeView(duel,seat).choices().length>1,stats});
+@@ -26,7 +43,7 @@ index e5bec43..dce0111 100644
+  }
+  
+  function send(){
+-@@ -77,7 +81,7 @@ function send(){
++@@ -77,7 +92,7 @@ function send(){
+   const message={type:'state',human,lastEventId:deliveredSeq,shuffle:shuffleTap.drain(),coin:coinTap.drain(),state:{...snap,logBase:Math.max(0,duel.log.length-snap.log.length),prompt:isAi?null:m},events,match:matchInfo,title:isAi?pilots[m.seat].name+' is choosing its next play':duel.title(),description:!isAi&&m?.description?duel.description(m.description):'',choices:isAi?[]:duel.choices(),multi:!!multi,ai:isAi,paused,view,mode,study,disabled,sums:!isAi&&m?.type===M.SELECT_SUM?sumSelections(m):[],coach:mode==='watch'?{pilots:pilots.map(p=>p.info()),intent:isAi?planned():null,last:thoughts.at(-1)||null,history:thoughts.slice(-24),delay}:null};lastHumanState=message;postMessage(message);
+   schedule();
+  }
+@@ -35,23 +52,33 @@ index e5bec43..dce0111 100644
+  
+  function step(){
+   try{
+-@@ -95,7 +99,7 @@ onmessage=async ({data:x})=>{try{
++@@ -95,14 +110,15 @@ onmessage=async ({data:x})=>{try{
+   if(x.type==='start'){shuffleTap.reset();coinTap.reset();interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
+    director.reset();preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;const run=++generation;clearTimeout(timer);disabled=false;paused=!!x.dealHand;dealHand=!!x.dealHand;replayHistory=[];view=x.view;mode=x.mode;study=x.study;delay=x.delay||2200;cinematics=x.cinematics!==false;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';learnHold=!!x.learnHold;thoughts=[];thoughtSeq=0;plan=null;deliveredSeq=0;presentationUntil=0;presentationPending=false;
+    if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}shuffleTap.install(duel);coinTap.install(duel);await warmThinkWorker();
+ -  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',pilots:pilots.map(p=>p.info())};send();
+-+  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',aiMode,pilots:pilots.map(p=>p.info())};send();
+++  pilotKinds=[0,1].map(s=>x.pilots?.[s]==='windbot'?'windbot':'ai');try{await armWindBots(x.decks,x.seed,x.first)}catch(e){disarmWindBots();pilotKinds=['ai','ai'];postMessage({type:'notice',message:'WindBot could not start in this browser ('+e.message+'). Our AI pilots both seats.'})}
+++  if(run!==generation){disarmWindBots();return}duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=withWindBots(createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400}));matchInfo={seed:x.seed,first:x.first,styles:pilots.map(p=>p.kind==='windbot'?'windbot':'optimal'),variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',aiMode,pilots:pilots.map(p=>p.info())};send();
+   }else if(x.type==='reply'){
+    if(interactionProtocol===2){const checked=humanBridge.check(x,{prompt:duel?.prompt,choices:duel?.choices()||[],sums:duel?.prompt?.type===M.SELECT_SUM?sumSelections(duel.prompt):[]});if(!checked.ok){rejectHumanReply(x,checked.reason);return}if(pauseOwners.owners.size){humanBridge.used=null;rejectHumanReply(x,'Close the reading panel before submitting.');return}}
+    cancelThink();if(disabled)throw Error('This duel is stopped. Start a new duel.');const retries=duel.retries;duel.respond(x.response,x.revision);if(interactionProtocol===2)humanBridge.ack={requestId:x.human.requestId,accepted:duel.retries===retries};replayHistory=duel.responseHistory.slice();plan=null;send()
+-@@ -111,8 +115,8 @@ onmessage=async ({data:x})=>{try{
++  }
++  else if(x.type==='human-hold'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||!pauseOwners.change(x))return;paused=pauseOwners.paused;send()}
++  else if(x.type==='human-recover'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||x.epoch!==humanBridge.epoch)return;pauseOwners.releaseAll();paused=pauseOwners.paused;send()}
++- else if(x.type==='rewind'){cancelThink();clearTimeout(timer);shuffleTap.reset();coinTap.reset();const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400});for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}shuffleTap.arm();coinTap.arm();replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
+++ else if(x.type==='rewind'){cancelThink();clearTimeout(timer);shuffleTap.reset();coinTap.reset();const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;if(windBots.some(Boolean))await armWindBots(decks,matchInfo.seed,matchInfo.first);duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=withWindBots(createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400}));for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}shuffleTap.arm();coinTap.arm();replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
++  else if(x.type==='pause'){if(interactionProtocol===2){pauseOwners.manual(x.value);paused=pauseOwners.paused}else paused=x.value===undefined?!paused:!!x.value;send()}
++  else if(x.type==='step'){clearTimeout(timer);paused=true;resetHumanTransport();step()}
++  else if(x.type==='control'){clearTimeout(timer);view=x.seat;mode='play';paused=false;resetHumanTransport();send()}
++@@ -111,8 +127,8 @@ onmessage=async ({data:x})=>{try{
+   else if(x.type==='cinematics'){preset=x.preset||'learning';rehold();tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;pilots.forEach(p=>p.budget=p.nodeBudget=preset==='instant'?40:400);cinematics=x.value;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';schedule()}
+   else if(x.type==='learn'){learnHold=x.value;send()}
+   else if(x.type==='skip-scene'||x.type==='presentation-done'){if(x.eventId>=deliveredSeq){presentationUntil=0;presentationPending=false;presentationDoneAt=Date.now();if(thinking?.fallback&&paceKind()!=='instant'){const due=thinkDeadline(thinking.started);if(due<thinking.deadlineAt){thinking.deadlineAt=due;if(deadlineBox&&Atomics.load(deadlineBox,0)===thinking.id)Atomics.store(deadlineBox,1,due-deadlineBase);clearTimeout(thinkTimeout);thinkTimeout=setTimeout(thinking.fallback,Math.max(0,due-Date.now()))}}schedule()}}
+ - else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,responses:duel.responseHistory}})}
+ - else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();matchInfo={...matchInfo,seed:r.seed,first:r.first};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
+-+ else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,aiMode:matchInfo.aiMode,build:BUILD,responses:duel.responseHistory}})}
+-+ else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('Unsupported replay AI mode');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);/* RELAY-119: explicit aiMode honoured; missing = Classic (pre-selector replays) */matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
+++ else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,aiMode:matchInfo.aiMode,build:BUILD,pilots:matchInfo.styles/* r37: 'optimal' (our AI) or 'windbot' per seat; information only */,responses:duel.responseHistory}})}
+++ else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);disarmWindBots();pilotKinds=['ai','ai'];/* r37: a saved replay steps through its recorded choices; our AI takes over if it continues */const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('Unsupported replay AI mode');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);/* RELAY-119: explicit aiMode honoured; missing = Classic (pre-selector replays) */matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
+   else if(x.type==='export'){const extra=mode==='watch'?'\n\nINDEPENDENT PROCEDURAL PILOT CHOICES\n'+thoughts.map(t=>'Turn '+t.turn+' · '+duel.decks[t.seat].name+' · '+t.title+'\n'+t.rule+': '+t.reason+(t.doctrine?'\nDOCTRINE: '+t.doctrine.title+' · '+t.doctrine.status:'')).join('\n\n'):'';postMessage({type:'export',text:'GAME SEED '+matchInfo?.seed+' · FIRST SEAT '+matchInfo?.first+' · VARIATION '+matchInfo?.variation+' · PILOT '+matchInfo?.strategy+' · DOCTRINE '+(matchInfo?.doctrine?'ON':'OFF')+'\n'+pilots.map(p=>p.name+': '+p.info().label+' · seed '+p.seed).join('\n')+'\n\n'+(duel?.log.map(e=>e.text).join('\n')||'')+extra})}
+-  else if(x.type==='stop'){cancelThink();shuffleTap.disarm();coinTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
++- else if(x.type==='stop'){cancelThink();shuffleTap.disarm();coinTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
+++ else if(x.type==='stop'){cancelThink();disarmWindBots();shuffleTap.disarm();coinTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
+   }catch(e){disabled=true;paused=true;shuffleTap.disarm();coinTap.disarm();postMessage({type:'error',message:e.message});resetHumanTransport();if(duel?.handle)send()}};
+diff --git a/tests/fixtures/r37-pins/CANDIDATE.json b/tests/fixtures/r37-pins/CANDIDATE.json
+new file mode 100644
+index 0000000..516f5ac
+--- /dev/null
++++ b/tests/fixtures/r37-pins/CANDIDATE.json
+@@ -0,0 +1,6 @@
++{
++ "dist/app.mjs": "edd6fc98a4dc75875b377b329275b4fcec63ab826ee71354a7628f8c6040809b",
++ "dist/worker.mjs": "b44e6b6d64e8d5cde591489457923acc85c7f80e61e37fad1cd3cc60f8f7e645",
++ "dist/index.html": "15da35531f7cc8fb34db1abd0b6f8cac0fa64fe7e9f8e9077eedddb0165aabd6",
++ "dist/duel.mjs": "d0c1ac8147f46ed263580973273a999d2fc370dd3e054d17fe0ddb11c998ca01"
++}
+\ No newline at end of file
+diff --git a/tests/fixtures/r37-pins/app.mjs.patch b/tests/fixtures/r37-pins/app.mjs.patch
+new file mode 100644
+index 0000000..1f132d8
+--- /dev/null
++++ b/tests/fixtures/r37-pins/app.mjs.patch
+@@ -0,0 +1,28 @@
++diff --git a/dist/app.mjs b/dist/app.mjs
++index 3f948cb..a696afe 100644
++--- a/dist/app.mjs
+++++ b/dist/app.mjs
++@@ -1,4 +1,4 @@
++-import {installShell} from './app-shell.mjs';import {validateDeck,describeProblem} from './deck-validator.mjs';
+++import {pilotKinds} from './windbot/ui.mjs';import {installShell} from './app-shell.mjs';import {validateDeck,describeProblem} from './deck-validator.mjs';
++ import {readCompressed} from './load.mjs';import {expandYdk,PHASE,LOC,M,R} from './duel.mjs';import {Soundscape,createPresentation} from './presentation.mjs';import {effectFocus,effectMarkup} from './effect-focus.mjs';import {MECHANICS,PHASE_CUES} from './event-data.mjs';
++ import {HumanHolds} from './human-holds.mjs';
++ import {ShuffleOverlay} from './shuffle-overlay.mjs';// r35 item 8: deck-shuffle overlay (RELAY-046; decorative, never blocks or talks to the worker)
++@@ -145,7 +145,7 @@ function selectModePace(){const m=$('#mode').value;preferences.preset=preference
++ $('#mode').onchange=()=>{$('#seat').disabled=$('#mode').value!=='play';selectModePace()};selectModePace();
++ $('#import').onclick=()=>$('#file').click();$('#file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;if(file.size>65536)throw Error('Deck file is too large. Choose a .ydk file under 64 KB.');const d=expandYdk(await file.text(),db);d.name=file.name.replace(/\.ydk$/i,'').slice(0,60);decks.push(d);drawDecks();$('#deck-a').value=d.id;syncDeckSelection();saveImports();notify(deckWarning(d)||('Imported '+d.main.length+' Main / '+d.extra.length+' Extra / '+d.side.length+' Side.'),!!deckWarning(d))}catch(e){notify(e.message,true)}finally{$('#file').value=''}};
++ function saveImports(){try{localStorage.setItem('doctrine-lab-decks-v1',JSON.stringify(decks.filter(d=>d.id.startsWith('custom-'))))}catch{notify('Your browser could not save the imported deck. Export it to keep a copy.')}}
++-$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=true;$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,aiMode:importedResponses?importedAiMode:$('#ai-mode')?.value==='classic'?'classic':'enhanced',/* r36 default (RELAY-119): Enhanced unless Classic is chosen; a saved replay runs its own mode */dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
+++$('#start').onclick=()=>{sound.unlock();presentation.reset();shuffleOverlay.reset();shell?.rewound();$('#duel-summary')?.remove();showScreen('field');setTimeout(centerArena,100);$('#coach-content').innerHTML='<p class="muted">Preparing the computer pilots…</p>';duelDecks=[$('#deck-a').value,$('#deck-b').value].map(id=>decks.find(d=>d.id===id));const warnings=duelDecks.map(deckWarning).filter(Boolean);if(warnings.length){notify(warnings.join(' · '),true);return}$('#notice').hidden=true;clearTimeout(noticeTimer);view=Number($('#seat').value);const launchMode=$('#mode').value;mode=['hand','replay'].includes(launchMode)?'watch':launchMode;const entered=$('#game-seed').value.trim();if(launchMode==='replay'&&!entered){notify('Enter the game seed you want to replay.');return}if(entered&&(!/^\d+$/.test(entered)||Number(entered)<1||Number(entered)>4294967295)){notify('Use a seed from 1 to 4294967295, or leave it blank for a fresh game.',true);return}const seed=entered?Number(entered):crypto.getRandomValues(new Uint32Array(1))[0]||1;const first=$('#first').value==='random'?(seed^(seed>>>16))&1:Number($('#first').value);matchInfo=null;$('#match-study').hidden=true;$('#setup').hidden=true;$('#duel').hidden=false;document.body.classList.add('in-duel');sound.startMusic();$('#spectator-tag').hidden=true;$('#duel-controls-toggle').hidden=false;$('#decision-title').textContent='Preparing the duel…';$('#decision-note').textContent='Loading the effect scripts for the first duel. This may take a moment.';$('#choices').innerHTML='';$('#match-label').textContent=duelDecks.map(d=>d.name).join(' VS ');$('#turn-label').textContent='Opening hands';busy=true;disabled=false;state=null;worker??=new Worker('worker.mjs',{type:'module'});worker.onmessage=receive;worker.onerror=e=>{shuffleOverlay.reset();worker.terminate();worker=null;busy=false;disabled=true;notify('The duel engine could not run in this browser: '+(e.message||'unknown error'),true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent='Choose New matchup to try again.'};humanHolds.reset();cardHeld=false;humanFlow.reset();humanClientSession='ui-'+(++humanClientSerial);humanStateSeq=0;expectedHumanEpoch=0;worker.postMessage({type:'start',interactionProtocol:2,clientSession:humanClientSession,responses:importedResponses,decks:duelDecks,view,mode,first,seed,study:$('#study').checked,delay:Number($('#speed').value),cinematics:preferences.cinematics,skipCutins:!!preferences.skipCutins,motion:preferences.motion,pace:preferences.fxPace,effectPace:preferences.effectPace,preset:preferences.preset,tapToContinue:preferences.tapToContinue,chainFlow:preferences.chainFlow,chainView:preferences.chainView,styles:[$('#pilot-a').value,$('#pilot-b').value],variation:$('#variation').value,strategy:$('#pilot-strategy').value,doctrine:$('#doctrine-guidance').checked,aiMode:importedResponses?importedAiMode:$('#ai-mode')?.value==='classic'?'classic':'enhanced',/* r36 default (RELAY-119): Enhanced unless Classic is chosen; a saved replay runs its own mode */dealHand:launchMode==='hand',learnHold:$('#learn-hold').checked,pilots:importedResponses?['ai','ai']:pilotKinds()/* r37: Our AI or WindBot per deck */});importedResponses=null;window.scrollTo({top:0,behavior:'smooth'})};
++ function receive({data:x}){if(x.type==='human-reply-result'){if(x.clientSession!==humanClientSession)return;if(x.accepted)return;if(humanFlow.reject(x)){busy=false;notify(x.reason||'Choice changed; choose again.');$('#choices').querySelectorAll('button').forEach(n=>n.disabled=false);if(x.current)receive({data:x.current});if(latestDecisionMessage&&!pendingChainDecision)renderDecision(latestDecisionMessage);humanFlow.autoBlocked=true;syncHumanChoiceStatus()}return}if(x.type==='export-replay'){download(JSON.stringify(x.replay,null,2),'doctrine-replay.json');return}if(x.type==='load-progress'){$('#decision-note').textContent=x.message;return}if(x.type==='rewound'){resetHumanInteraction();presentation.reset();shuffleOverlay.reset();shell?.rewound();return}if(x.type==='export'){download('Duel Doctrine Lab\n'+duelDecks.map(d=>d.name).join(' vs ')+'\n\n'+x.text,'doctrine-duel-log.txt');return}if(x.type==='error'){shuffleOverlay.cancel();resetHumanInteraction();busy=false;disabled=true;notify(x.message,true);$('#decision-title').textContent='Duel stopped';$('#decision-note').textContent=x.message;return}if(x.type==='notice'){notify(x.message);return}if(x.type!=='state')return;if(x.human?.protocol===2){if(x.human.clientSession!==humanClientSession||x.human.epoch<expectedHumanEpoch||x.human.stateSeq<=humanStateSeq)return;humanStateSeq=x.human.stateSeq;humanHolds.contextFrom(x.human)}latestDecisionMessage=x;const flowChanged=humanFlow.update(x);const decisionChanged=state?.revision!==x.state.revision,fieldChanged=decisionChanged||view!==x.view||mode!==x.mode||lastStudy!==x.study,decisionUIChanged=decisionChanged||fieldChanged||isAi!==x.ai||disabled!==x.disabled;lastStudy=x.study;computerPaused=x.paused;state=x.state;matchInfo=x.match;choices=x.choices;multi=x.multi;sums=x.sums;view=x.view;mode=x.mode;isAi=x.ai;disabled=x.disabled;busy=humanFlow.inFlight;if(decisionUIChanged)selected.clear();$('#pause').textContent=x.paused?'Resume computer':'Pause computer';$('#pause').disabled=mode==='manual'||disabled;$('#step').disabled=!x.ai||disabled;if(fieldChanged){const oldStats=new Map([...document.querySelectorAll('[data-slot] .card-stats')].map(n=>[n.closest('[data-slot]').dataset.slot,n.textContent]));renderState();if(preferences.cinematics!==false&&!preferences.motion)for(const e of x.events||[])if(e.type==='move'&&e.to&&[4,8].includes(e.to.location))document.querySelector(`[data-slot="${e.to.controller}:${e.to.location}:${e.to.sequence}"]`)?.classList.add('fx-arriving');for(const n of document.querySelectorAll('[data-slot] .card-stats'))if(oldStats.has(n.closest('[data-slot]').dataset.slot)&&oldStats.get(n.closest('[data-slot]').dataset.slot)!==n.textContent)n.classList.add('stat-changed');presentation.refreshField();}syncDuelControls();presentation.syncLifePoints(state.players.map(p=>p.lp),x.events);sound.updateState(state,duelDecks,x.coach?.intent?.battle?.lethal);shell?.state(x);renderCoach(x);renderCue(x);syncWakeLock();renderMatchStudy(x);updatePhaseControls();presentation.play((x.events||[]).map(e=>{const c=state.chain.find(c=>c.chain_size===(e.linkedChain??e.chain));return c?{...e,source:{controller:c.controller,location:c.triggering_location??c.location,sequence:c.triggering_sequence??c.sequence}}:e}),x.lastEventId,coinEpochOk(x.coin)?x.coin.tosses:[]);shuffleOverlay.viewChanged();shuffleOverlay.accept(x.shuffle);presentDecision(x,decisionUIChanged||flowChanged);wasAi=isAi;syncHumanChoiceStatus();queueMicrotask(()=>{drainHumanChoice();maybeAutoSkipEmptyChain()})}
++ function aiTag(ai){const t=$('#spectator-tag');if(!t)return;t.textContent=(mode==='watch'?'SPECTATOR · HANDS REVEALED · ':'')+'AI '+(ai==='enhanced'?'ENHANCED':'CLASSIC');t.hidden=false}/* r36 RELAY-117: the duel's active AI is always shown in the arena (Watch and Play) */
++ function renderMatchStudy(x){const target=$('#match-study');target.hidden=!x.match||mode==='play';if(!x.match)return;aiTag(x.match.aiMode);target.innerHTML=`<span class="eyebrow">AI DUEL</span><strong>SEED ${x.match.seed}</strong><span>${x.match.pilots.map(p=>esc(p.name)+' · '+esc(p.label)).join(' / ')}</span><small>Fresh hands + serious pilots · ${'Optimal · bounded search'} · Doctrine ${x.match.doctrine?'on':'off'} · AI ${x.match.aiMode==='enhanced'?'Enhanced':'Classic'}</small>`}
++@@ -292,7 +292,7 @@ replayImport.onchange=async()=>{try{const file=replayImport.files[0];if(!file)re
++ 
++ $('#help').onclick=()=>openModal('<p class="eyebrow">DUEL DOCTRINE LAB · 2.2.0-rc</p><h2>Watch. Pause. Understand.</h2><p>Choose your matchup and AI Watch, Deal a Hand, Play vs AI or Replay a Seed. Learning pace gives every resolving link four seconds, with extra time for longer text. Chains build quickly, then resolve from the top down. Tap to continue is optional. Skip FX skips only the current scene.</p><p>Open the gear for pace, five sound buses, spoken callouts, reduced motion and the coach. The coach explains each real decision. In the journal, tap a moment to rewind to that decision; bookmarks are saved on this device. Rewind pauses the duel so you can inspect it before resuming.</p><p>Long-press a field card to read its text; swipe up on your hand to spread it. Portrait offers an overview; landscape is recommended. Use your browser’s Install / Add to home screen for offline play after the offline download completes.</p><p>The Optimal pilot uses bounded engine-replayed search, resource preservation and a blunder guard. It cannot guarantee perfect play against hidden information. The native engine decides legality. Best-of-three siding is a later stage.</p>');
++ $('#preview-fx').onclick=()=>{if(state&&!state.finished){humanHolds.manual(true);shuffleOverlay.cancel();presentation.skip()}sound.unlock();openModal('<p class="eyebrow">FUSION ROOM · SOUND STUDIO</p><h2>Hear the duel.</h2><p>Metal chains, heavy impacts and energy swells. Tap a cue to hear it.</p><label class="studio-volume">Volume <input id="studio-volume" type="range" min="0" max="100" value="'+Math.round(preferences.volume*100)+'"></label><div class="sound-board">'+[...Object.entries(PHASE_CUES).map(([id,p])=>[p[1],p[0],p[2],'PHASE']),...Object.entries(MECHANICS).map(([cue,p])=>[cue,p[0],p[1],'MECHANIC']),...['ice','crimson','mikanko','striker','lunar'].map(theme=>['victory:'+theme,theme.toUpperCase()+' VICTORY','var(--palette-434)','DUEL RESULT']),...['ice','crimson','sanctifire','lunar','mikanko','striker'].map(theme=>['boss:'+theme,theme.toUpperCase()+' BOSS','var(--palette-435)','BOSS SUMMON'])].map(([cue,label,color,group])=>`<button class="sound-tile" data-audition="${cue}" style="--tile-color:${color}">${label}<small>${group}</small></button>`).join('')+'</div><p class="muted">Sound on enables previews. Each new audition replaces the previous sound. Opening the studio pauses computer play; resume when you are ready.</p>');$('#studio-volume').oninput=e=>{preferences.volume=Number(e.target.value)/100;applyPreferences()};$('#modal-body').querySelectorAll('[data-audition]').forEach(button=>button.onclick=()=>{sound.stop();sound.unlock();const [cue,theme]=button.dataset.audition.split(':');sound.play(cue,theme);button.classList.remove('audition');void button.offsetWidth;button.classList.add('audition')})};
++-$('#credits').onclick=()=>openModal('<p class="eyebrow">BUILT ON AN OPEN FOUNDATION</p><h2>Engine & source credits</h2><p>Duel Doctrine Lab is an independent personal practice app. It is not affiliated with Konami or YGO Lab.</p><p>The duel engine is <a href="https://github.com/edo9300/ygopro-core" target="_blank" rel="noreferrer">EDOPro / ygopro-core</a>, exposed through <a href="https://github.com/n1xx1/ocgcore-wasm" target="_blank" rel="noreferrer">ocgcore-wasm</a>. Card data and effect scripts come from <a href="https://github.com/ProjectIgnis/BabelCDB" target="_blank" rel="noreferrer">BabelCDB</a> and <a href="https://github.com/ProjectIgnis/CardScripts" target="_blank" rel="noreferrer">Project Ignis CardScripts</a>.</p><p>Artwork comes from the existing Doctrine projects and YGOPRODeck. Yu-Gi-Oh names and card imagery belong to their respective owners.</p><p><a href="source.zip" download>Download the lab source</a> · <a href="engine-source.zip" download>Engine source</a> · <a href="licenses/AGPL-3.0.txt" target="_blank">Engine licence</a> · <a href="licenses/wrapper.txt" target="_blank">Wrapper licence</a></p><p class="muted">This version provides engine-checked duels, sound effects, summon presentation and explanations of independent procedural pilots’ choices. It does not include tournament-strength deck pilots, a complete coaching system, between-game siding. Replay rewind is now available.</p>');
+++$('#credits').onclick=()=>openModal('<p class="eyebrow">BUILT ON AN OPEN FOUNDATION</p><h2>Engine & source credits</h2><p>Duel Doctrine Lab is an independent personal practice app. It is not affiliated with Konami or YGO Lab.</p><p>The duel engine is <a href="https://github.com/edo9300/ygopro-core" target="_blank" rel="noreferrer">EDOPro / ygopro-core</a>, exposed through <a href="https://github.com/n1xx1/ocgcore-wasm" target="_blank" rel="noreferrer">ocgcore-wasm</a>. Card data and effect scripts come from <a href="https://github.com/ProjectIgnis/BabelCDB" target="_blank" rel="noreferrer">BabelCDB</a> and <a href="https://github.com/ProjectIgnis/CardScripts" target="_blank" rel="noreferrer">Project Ignis CardScripts</a>.</p><p>The optional WindBot pilot is <a href="https://github.com/ProjectIgnis/windbot" target="_blank" rel="noreferrer">WindBot Ignite</a> (AGPL-3.0), compiled unmodified for the browser. Its complete source and build files: <a href="wb/windbot-source.zip" download>windbot-source.zip</a>.</p><p>Artwork comes from the existing Doctrine projects and YGOPRODeck. Yu-Gi-Oh names and card imagery belong to their respective owners.</p><p><a href="source.zip" download>Download the lab source</a> · <a href="engine-source.zip" download>Engine source</a> · <a href="licenses/AGPL-3.0.txt" target="_blank">Engine licence</a> · <a href="licenses/wrapper.txt" target="_blank">Wrapper licence</a></p><p class="muted">This version provides engine-checked duels, sound effects, summon presentation and explanations of independent procedural pilots’ choices. It does not include tournament-strength deck pilots, a complete coaching system, between-game siding. Replay rewind is now available.</p>');
++ shell=installShell({getDecision:()=>latestDecisionMessage,submit:reply,navigate:showScreen,inspect:dossier,preferences,applyPreferences,sound,presentation,getState:()=>state,getMatch:()=>matchInfo,getDecks:()=>duelDecks||[],getWorker:()=>worker,notify,openModal,beforeRewind:()=>{shuffleOverlay.reset();return invalidateHumanContext()}});
++ async function loadCardLibrary(){
++  const w=new Worker('library-worker.mjs',{type:'module'});
+diff --git a/tests/fixtures/r37-pins/duel.mjs.patch b/tests/fixtures/r37-pins/duel.mjs.patch
+new file mode 100644
+index 0000000..86f48da
+--- /dev/null
++++ b/tests/fixtures/r37-pins/duel.mjs.patch
+@@ -0,0 +1,24 @@
++diff --git a/dist/duel.mjs b/dist/duel.mjs
++index a9b71a6..50bd005 100644
++--- a/dist/duel.mjs
+++++ b/dist/duel.mjs
++@@ -79,7 +79,7 @@ export class Duel {
++   if((m.type===M.SELECT_OPTION||m.type===M.SELECT_YESNO)&&(m.type!==M.SELECT_YESNO||response.yes)){const n=BigInt(m.type===M.SELECT_OPTION?m.options[response.index]||0:m.description||0),code=decodeEffectId(n).code;if(this.db[code])chosen={code,description:String(n),controller:m.player,location:this.currentEffect?.location,effectLocation:this.currentEffect?.effectLocation}}
++   let selectedId=null;const before=this.retries,priorEffect=this.currentEffect,priorPending=this.pendingEffect,priorClauses=this.chain.map(c=>c.focusDescription);
++   if(chosen){const player=this.fromEngine(chosen.controller??m.player),location=chosen.location||0,position=chosen.position??([2,4,8,16,32,64].includes(location)?this.zone(player,location)[chosen.sequence]?.position:0)??0;this.lastCard=chosen.code;this.currentEffect={code:chosen.code,description:String(chosen.description||0),player,location,effectLocation:chosen.effectLocation??chosen.triggering_location??location,private:location===2||location===64||([4,8,32].includes(location)&&!(position&5))};if(m.type===M.SELECT_OPTION||m.type===M.SELECT_YESNO){const link=this.chain.find(c=>c.chain_size===this.resolvingChain&&c.code===chosen.code);if(link)link.focusDescription=this.currentEffect.description;else if(this.pendingEffect?.code===chosen.code)this.pendingEffect={...this.pendingEffect,focusDescription:this.currentEffect.description};}else this.pendingEffect={...this.currentEffect};this.event('effectChosen',{...this.currentEffect,chain:null,linkedChain:this.resolvingChain,option:m.type===M.SELECT_OPTION||m.type===M.SELECT_YESNO});selectedId=this.eventSeq}
++-  this._responding=true;const realAction=m.seat===this.active&&(m.type===M.SELECT_IDLECMD&&response.action<6||m.type===M.SELECT_BATTLECMD&&response.action<2);if(realAction)this.actions++;try{this.core.duelSetResponse(this.handle,response);this.advance()}catch(error){this._responding=false;if(selectedId)this.events=this.events.filter(e=>e.id!==selectedId);throw error}if(this.retries>before&&selectedId){this.events=this.events.filter(e=>e.id!==selectedId);this.currentEffect=priorEffect;this.pendingEffect=priorPending;this.chain.forEach((c,i)=>c.focusDescription=priorClauses[i]);}this._responding=false;if(this.retries===before){(this.responseHistory??=[]).push(structuredClone(response));for(const k of this.knowledge||[])k.accepted();if(realAction&&this.actions>60){const k=hashPublicState(this);this.stateKeys.set(k,(this.stateKeys.get(k)||0)+1)}}return this;
+++  this._responding=true;const realAction=m.seat===this.active&&(m.type===M.SELECT_IDLECMD&&response.action<6||m.type===M.SELECT_BATTLECMD&&response.action<2);if(realAction)this.actions++;try{this.core.duelSetResponse(this.handle,wireResponse(m,response));this.advance()}catch(error){this._responding=false;if(selectedId)this.events=this.events.filter(e=>e.id!==selectedId);throw error}if(this.retries>before&&selectedId){this.events=this.events.filter(e=>e.id!==selectedId);this.currentEffect=priorEffect;this.pendingEffect=priorPending;this.chain.forEach((c,i)=>c.focusDescription=priorClauses[i]);}this._responding=false;if(this.retries===before){(this.responseHistory??=[]).push(structuredClone(response));for(const k of this.knowledge||[])k.accepted();if(realAction&&this.actions>60){const k=hashPublicState(this);this.stateKeys.set(k,(this.stateKeys.get(k)||0)+1)}}return this;
++  }
++ 
++  slot(c){return [c.controller,c.location,c.sequence,c.overlay_sequence??''].join(':')}
++@@ -106,6 +106,10 @@ export class Duel {
++  }
++  title(){const m=this.prompt;if(!m)return this.finished?'Duel complete':'Waiting';if(m.type===M.SELECT_IDLECMD)return 'Choose your next play';if(m.type===M.SELECT_BATTLECMD)return 'Choose a battle action';if(m.type===M.SELECT_CHAIN)return m.forced?'Choose a mandatory chain link':'Your response window';if(m.type===M.SELECT_EFFECTYN)return 'Use '+this.name(m.code)+'’s effect?';if(m.type===M.SELECT_YESNO)return this.description(m.description);if(m.type===M.SELECT_POSITION)return 'Choose battle position';if(m.type===M.SELECT_PLACE)return 'Choose a field zone';if(m.type===M.SELECT_OPTION)return 'Choose an effect option';if(m.type===M.SORT_CHAIN)return 'Order your simultaneous triggers';if(m.type===M.SORT_CARD)return 'Order these cards';return HINT[this.hint]||'Choose the cards this effect needs'}
++ }
+++// r37 (with the core library's MSG_SELECT_SUM fix): our response objects index SELECT_SUM cards as [must cards..., selectable
+++// cards...] (pilot sumSelections, the human picker, semantic.mjs); the engine reads indices into the selectable list only
+++// (playerop.cpp parse_response_cards over select_cards; the must cards are always included). With no must cards the two agree.
+++export function wireResponse(m,response){const k=m?.type===M.SELECT_SUM&&Array.isArray(response?.indicies)?m.selects_must?.length||0:0;return k?{...response,indicies:response.indicies.filter(j=>j>=k).map(j=>j-k)}:response}
++ const PROMPTS=new Set([M.SELECT_IDLECMD,M.SELECT_BATTLECMD,M.SELECT_CHAIN,M.SELECT_EFFECTYN,M.SELECT_YESNO,M.SELECT_OPTION,M.SELECT_CARD,M.SELECT_TRIBUTE,M.SELECT_SUM,M.SELECT_UNSELECT_CARD,M.SELECT_POSITION,M.SELECT_PLACE,M.SELECT_DISFIELD,M.SELECT_COUNTER,M.SORT_CHAIN,M.SORT_CARD,M.ANNOUNCE_CARD,M.ANNOUNCE_ATTRIB,M.ANNOUNCE_RACE,M.ANNOUNCE_NUMBER,M.ROCK_PAPER_SCISSORS]);
++ export function missingScripts(decks,db,scripts){return [...new Set(decks.flatMap(d=>[...d.main,...d.extra,...(d.side||[])]))].map(id=>db[id]).filter(c=>c&&(c.type&(32|2|4|16777216))&&!scripts['c'+(c.alias||c.code)+'.lua']&&!scripts['c'+c.code+'.lua'])}
++ // ProjectIgnis/DeltaUtopia strings.conf; Auxiliary.ToHandOrElse in bundled utility.lua.
+diff --git a/tests/fixtures/r37-pins/index.html.patch b/tests/fixtures/r37-pins/index.html.patch
+new file mode 100644
+index 0000000..0efc0fe
+--- /dev/null
++++ b/tests/fixtures/r37-pins/index.html.patch
+@@ -0,0 +1,16 @@
++diff --git a/dist/index.html b/dist/index.html
++index c2b3293..6a1be47 100644
++--- a/dist/index.html
+++++ b/dist/index.html
++@@ -1,9 +1,9 @@
++-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r36.2</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
+++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#120a2e"><title>TEST PHASE C r37</title><meta name="description" content="Your decks. Either side of the table. A personal Yu-Gi-Oh practice lab with a real rules engine, visible chains and bounded computer pilots and animated learning."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="arena.css"><link rel="stylesheet" href="mobile-motion.css"><link rel="stylesheet" href="vibrant.css"><link rel="stylesheet" href="master-duel.css"><link rel="stylesheet" href="lab-shell.css"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="apple-touch-icon" href="icon-192.png"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="pacing-impact.css">
++ <link rel="stylesheet" href="arenas.css">
++ <link rel="stylesheet" href="showtime.css"><link rel="stylesheet" href="fusion-materials.css"><link rel="stylesheet" href="summon-cutscenes.css"><link rel="stylesheet" href="coin-cutscene.css"><link rel="stylesheet" href="human-flow.css"><link rel="stylesheet" href="./play-flow.css">
++ <link rel="stylesheet" href="./fx-r23.css"><link rel="stylesheet" href="./token-fx.css"><link rel="stylesheet" href="./r26-panels.css"><link rel="stylesheet" href="./learning-routes.css"><link rel="stylesheet" href="./deck-list.css"><link rel="stylesheet" href="./r33-polish.css"><link rel="stylesheet" href="./r34-arena.css"><link rel="stylesheet" href="./r34-persona.css">
++ </head><body data-theme="vibrant">
++-<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r36.2 · Enhanced AI default · Token cards</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
+++<header class="topbar"><a class="brand" href="./"><span class="mark">D</span><span>DUEL DOCTRINE <b>LAB</b><small>KEVY’S PRACTICE ROOM</small></span></a><span class="release">TEST PHASE C r37 · Enhanced AI default · WindBot pilot</span><button id="sound" class="quiet" aria-pressed="true">Sound on</button><details class="media-settings"><summary>FX settings</summary><div class="settings-popover"><label>Theme<select id="visual-theme"><option value="vibrant">Vibrant</option><option value="classic">Classic dark</option><option value="contrast">High contrast</option><option value="showtime">Showtime (bold)</option></select></label><label>Sound volume <input id="volume" type="range" min="0" max="100" value="35"></label><label><input id="cinematics" type="checkbox" checked> Summon & victory cutscenes</label><div id="setup-pace-slot"></div><label>Chain view<select id="setup-chain-view"><option value="auto">Auto · on field for Broadcast</option><option value="full">Full scene</option><option value="field">On field</option></select></label><label class="legacy-pacing">Presentation pace <select id="fx-pace"><option value="0.28">Broadcast · faster duels</option><option value="1" selected>Epic · longer holds</option><option value="1.35">Study · extra reading time</option><option value="0.65">Compact</option></select></label><label><input id="quiet-motion" type="checkbox"> Reduced motion</label><p>Sound starts after you enter the room. Phases, effects and card mechanics each have a distinct cue. Skip FX advances only the current scene.</p><button id="preview-fx" class="quiet">Sound Studio ♫</button><button id="fx-settings-close" class="quiet">Close settings</button></div></details><button id="help" class="quiet">Help</button></header>
++ <main id="setup"><section class="intro"><div><p class="eyebrow"><span class="live-dot"></span> YOUR DUEL ROOM</p><h1>Your decks.<br><em>Either side</em> of the table.</h1><p class="lead">Learn the line. Face the interruption. Play it again.<br>Choose your deck, choose your rival, and take the seat you want.</p></div><div class="hero-art"><img src="art/44146295.jpg" alt="Mirrorjade the Iceblade Dragon"><span class="art-stamp">CRIMSON ABYSS<br><b>THE ICEBLADE DRAGON</b></span></div></section>
++ <div class="section-head"><div><p class="eyebrow">01 / CHOOSE YOUR DECKS</p><h2>Set the matchup</h2></div><button id="import" class="quiet">＋ Import .ydk</button><input id="file" type="file" accept=".ydk" hidden></div>
++ <div id="deck-grid" class="deck-grid" aria-label="Your deck collection"></div>
+diff --git a/tests/fixtures/r37-pins/worker.mjs.patch b/tests/fixtures/r37-pins/worker.mjs.patch
+new file mode 100644
+index 0000000..312ee91
+--- /dev/null
++++ b/tests/fixtures/r37-pins/worker.mjs.patch
+@@ -0,0 +1,62 @@
++diff --git a/dist/worker.mjs b/dist/worker.mjs
++index dce0111..8b76b91 100644
++--- a/dist/worker.mjs
+++++ b/dist/worker.mjs
++@@ -6,8 +6,18 @@ import {sumSelections} from './pilot.mjs';
++ import {createOptimalPilots as createPilots} from './optimal-pilot.mjs';
++ import {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';
++ import {carryRemovalIntent} from './ai/midgame-rules.mjs';
+++import {WindBotPilot,loadWindBot,windBotFor} from './windbot/pilot.mjs';
+++// r37 (Kevy 7 Nov 21:57 AEDT): each AI seat can be piloted by our AI or by WindBot, the open-source scripted EDOPro bot
+++// (dist/windbot/pilot.mjs). WindBot gets every engine message the EDOPro way through the core's raw message hook.
+++let pilotKinds=['ai','ai'],windBots=[null,null];
+++function disarmWindBots(){for(const b of windBots)b?.close();windBots=[null,null];globalThis.__ocgRawHook=null}
+++async function armWindBots(decks,seed,first){disarmWindBots();const want=[0,1].filter(s=>pilotKinds[s]==='windbot'&&aiSeat(s)&&windBotFor(decks[s]?.id));if(!want.length)return;
+++ const exports=await loadWindBot(duel.db),counts=[0,1].map(t=>{const s=t===0?first:1-first;return [decks[s].main.length,decks[s].extra.length]});/* engine team 0 = the seat that goes first */
+++ for(const s of want){const p=new WindBotPilot({seat:s,seed,deck:decks[s],exports});await p.attach(duel,s===first?0:1);windBots[s]=p}
+++ globalThis.__ocgRawHook=(h,raw)=>{if(h!==duel?.handle)return;for(const p of windBots)p?.batch(duel,raw,counts)}}
+++const withWindBots=list=>list.map((p,s)=>windBots[s]||p);
++ let aiMode='classic';/* r36 AI selector: Enhanced (the page default since r36) / Classic, fixed per duel; a start or replay without a mode is Classic */
++-const BUILD='ddl-test r36.2 2026-11-07-r36.2';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */
+++const BUILD='ddl-test r37 2026-11-08-r37';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */
++ import {readCompressed} from './load.mjs';
++ import {presentationBatches,visiblePresentationEvents,ChainDirector} from './event-data.mjs';
++ // r35 item 8 (RELAY-046 Tap B, Seto 27 Oct 10:10): deck-shuffle capture on the one real duel (see shuffle-tap.mjs).
++@@ -57,6 +67,7 @@ function cancelThink(terminate=true){clearTimeout(thinkTimeout);thinkWorker?.pos
++ function warmThinkWorker(){if(typeof Worker==='undefined')return Promise.resolve();if(thinkReady)return thinkReady;thinkWorker??=new Worker('ai/ai-worker.mjs',{type:'module'});thinkReady=new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('AI worker preparation timed out')),15000);thinkWorker.onmessage=({data:x})=>{if(x.type==='ready'){clearTimeout(timeout);resolve()}else if(x.type==='error'){clearTimeout(timeout);reject(Error(x.message))}};thinkWorker.onerror=e=>{clearTimeout(timeout);reject(Error(e.message||'AI worker preparation failed'))};thinkWorker.postMessage({type:'warm'})});return thinkReady}
++ function planned(){
++  if(!duel?.prompt||disabled)return null;if(plan?.revision===duel.revision)return plan;
+++ if(pilots[duel.prompt.seat]?.kind==='windbot'){if(thinking)cancelThink(false);humanPending=newHumanHold();plan=pilots[duel.prompt.seat].plan(duel);return plan}/* r37: WindBot answers at once, in this worker */
++  if(typeof Worker==='undefined'){humanPending=newHumanHold();plan=pilots[duel.prompt.seat].plan(duel);return plan}
++  if(thinking?.revision===duel.revision)return null;if(thinking)cancelThink(false);
++  let bestAggregated=null,lastProgress=null;humanPending=newHumanHold();const publicDecision=pilots[duel.prompt.seat].base(safeView(duel,duel.prompt.seat));const id=++thinkId,revision=duel.revision,seat=duel.prompt.seat,started=Date.now(),deadlineAt=thinkDeadline(started),capMs=deadlineAt-started;thinking={id,revision,started,deadlineAt};if(deadlineBox){Atomics.store(deadlineBox,1,deadlineAt-deadlineBase);Atomics.store(deadlineBox,0,id)}
++@@ -99,14 +110,15 @@ onmessage=async ({data:x})=>{try{
++  if(x.type==='start'){shuffleTap.reset();coinTap.reset();interactionProtocol=x.interactionProtocol===2?2:1;resetHumanTransport(typeof x.clientSession==='string'?x.clientSession:'');cancelThink();searchRoots=[0,0];presentationDoneAt=0;duelSerial++;humanFirsts=new Set();
++   director.reset();preset=x.preset||'learning';tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;const run=++generation;clearTimeout(timer);disabled=false;paused=!!x.dealHand;dealHand=!!x.dealHand;replayHistory=[];view=x.view;mode=x.mode;study=x.study;delay=x.delay||2200;cinematics=x.cinematics!==false;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';learnHold=!!x.learnHold;thoughts=[];thoughtSeq=0;plan=null;deliveredSeq=0;presentationUntil=0;presentationPending=false;
++   if(!duel){postMessage({type:'load-progress',message:'Loading native effect scripts…'});loading??=Promise.all([readCompressed('cards.json.gz'),readCompressed('scripts.json.gz')]).then(async([db,scripts])=>Duel.create(db,scripts)).catch(e=>{loading=null;throw e});duel=await loading}shuffleTap.install(duel);coinTap.install(duel);await warmThinkWorker();
++-  if(run!==generation)return;duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400});matchInfo={seed:x.seed,first:x.first,styles:['optimal','optimal'],variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',aiMode,pilots:pilots.map(p=>p.info())};send();
+++  pilotKinds=[0,1].map(s=>x.pilots?.[s]==='windbot'?'windbot':'ai');try{await armWindBots(x.decks,x.seed,x.first)}catch(e){disarmWindBots();pilotKinds=['ai','ai'];postMessage({type:'notice',message:'WindBot could not start in this browser ('+e.message+'). Our AI pilots both seats.'})}
+++  if(run!==generation){disarmWindBots();return}duel.start(x.decks,{seed:x.seed,first:x.first});if(Array.isArray(x.responses)){for(const r of x.responses){if(duel.finished)break;duel.respond(r);if(duel.retries)throw Error('Saved replay selection rejected')}paused=true;replayHistory=duel.responseHistory.slice();deliveredSeq=duel.eventSeq}shuffleTap.arm();coinTap.arm();aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=withWindBots(createPilots({seed:x.seed,doctrine:x.doctrine!==false,nodeBudget:preset==='instant'?40:400}));matchInfo={seed:x.seed,first:x.first,styles:pilots.map(p=>p.kind==='windbot'?'windbot':'optimal'),variation:'none',doctrine:x.doctrine!==false,strategy:'optimal',aiMode,pilots:pilots.map(p=>p.info())};send();
++  }else if(x.type==='reply'){
++   if(interactionProtocol===2){const checked=humanBridge.check(x,{prompt:duel?.prompt,choices:duel?.choices()||[],sums:duel?.prompt?.type===M.SELECT_SUM?sumSelections(duel.prompt):[]});if(!checked.ok){rejectHumanReply(x,checked.reason);return}if(pauseOwners.owners.size){humanBridge.used=null;rejectHumanReply(x,'Close the reading panel before submitting.');return}}
++   cancelThink();if(disabled)throw Error('This duel is stopped. Start a new duel.');const retries=duel.retries;duel.respond(x.response,x.revision);if(interactionProtocol===2)humanBridge.ack={requestId:x.human.requestId,accepted:duel.retries===retries};replayHistory=duel.responseHistory.slice();plan=null;send()
++  }
++  else if(x.type==='human-hold'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||!pauseOwners.change(x))return;paused=pauseOwners.paused;send()}
++  else if(x.type==='human-recover'){if(interactionProtocol!==2||x.clientSession!==humanBridge.clientSession||x.epoch!==humanBridge.epoch)return;pauseOwners.releaseAll();paused=pauseOwners.paused;send()}
++- else if(x.type==='rewind'){cancelThink();clearTimeout(timer);shuffleTap.reset();coinTap.reset();const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400});for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}shuffleTap.arm();coinTap.arm();replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
+++ else if(x.type==='rewind'){cancelThink();clearTimeout(timer);shuffleTap.reset();coinTap.reset();const index=Math.max(0,Math.min(Number(x.index)||0,replayHistory.length)),saved=replayHistory.slice(),decks=duel.decks;if(windBots.some(Boolean))await armWindBots(decks,matchInfo.seed,matchInfo.first);duel.start(decks,{seed:matchInfo.seed,first:matchInfo.first});pilots=withWindBots(createPilots({seed:matchInfo.seed,doctrine:matchInfo.doctrine,nodeBudget:preset==='instant'?40:400}));for(const r of saved.slice(0,index)){if(duel.finished)break;duel.respond(r)}shuffleTap.arm();coinTap.arm();replayHistory=saved;thoughts=thoughts.filter(t=>t.revision<=duel.revision);plan=null;paused=true;disabled=false;director.reset();deliveredSeq=duel.eventSeq;presentationUntil=0;presentationPending=false;resetHumanTransport();postMessage({type:'rewound',index});send()}
++  else if(x.type==='pause'){if(interactionProtocol===2){pauseOwners.manual(x.value);paused=pauseOwners.paused}else paused=x.value===undefined?!paused:!!x.value;send()}
++  else if(x.type==='step'){clearTimeout(timer);paused=true;resetHumanTransport();step()}
++  else if(x.type==='control'){clearTimeout(timer);view=x.seat;mode='play';paused=false;resetHumanTransport();send()}
++@@ -115,8 +127,8 @@ onmessage=async ({data:x})=>{try{
++  else if(x.type==='cinematics'){preset=x.preset||'learning';rehold();tapToContinue=!!x.tapToContinue;chainFlow=x.chainFlow!==false;chainView=x.chainView;pilots.forEach(p=>p.budget=p.nodeBudget=preset==='instant'?40:400);cinematics=x.value;skipCutins=!!x.skipCutins;motion=!!x.motion;pace=x.pace||1;effectPace=x.effectPace||'readable';schedule()}
++  else if(x.type==='learn'){learnHold=x.value;send()}
++  else if(x.type==='skip-scene'||x.type==='presentation-done'){if(x.eventId>=deliveredSeq){presentationUntil=0;presentationPending=false;presentationDoneAt=Date.now();if(thinking?.fallback&&paceKind()!=='instant'){const due=thinkDeadline(thinking.started);if(due<thinking.deadlineAt){thinking.deadlineAt=due;if(deadlineBox&&Atomics.load(deadlineBox,0)===thinking.id)Atomics.store(deadlineBox,1,due-deadlineBase);clearTimeout(thinkTimeout);thinkTimeout=setTimeout(thinking.fallback,Math.max(0,due-Date.now()))}}schedule()}}
++- else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,aiMode:matchInfo.aiMode,build:BUILD,responses:duel.responseHistory}})}
++- else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('Unsupported replay AI mode');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);/* RELAY-119: explicit aiMode honoured; missing = Classic (pre-selector replays) */matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
+++ else if(x.type==='export-replay'){postMessage({type:'export-replay',replay:{version:'2.2.0-rc',decks:duel.decks,seed:matchInfo.seed,first:matchInfo.first,aiMode:matchInfo.aiMode,build:BUILD,pilots:matchInfo.styles/* r37: 'optimal' (our AI) or 'windbot' per seat; information only */,responses:duel.responseHistory}})}
+++ else if(x.type==='import-replay'){cancelThink();shuffleTap.reset();coinTap.reset();searchRoots=[1,1];duelSerial++;clearTimeout(timer);disarmWindBots();pilotKinds=['ai','ai'];/* r37: a saved replay steps through its recorded choices; our AI takes over if it continues */const r=x.replay;if(r.version!=='2.2.0-rc'||!Array.isArray(r.responses)||r.responses.length>10000)throw Error('Unsupported replay file');if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('Unsupported replay AI mode');duel.start(r.decks,{seed:r.seed,first:r.first});for(const response of r.responses){if(duel.finished)break;duel.respond(response);if(duel.retries)throw Error('Replay response was rejected')}shuffleTap.arm();coinTap.arm();replayHistory=duel.responseHistory.slice();aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);/* RELAY-119: explicit aiMode honoured; missing = Classic (pre-selector replays) */matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};pilots=createPilots({seed:r.seed,nodeBudget:preset==='instant'?40:400});plan=null;paused=true;resetHumanTransport();director.reset();deliveredSeq=0;presentationUntil=0;presentationPending=false;send()}
++  else if(x.type==='export'){const extra=mode==='watch'?'\n\nINDEPENDENT PROCEDURAL PILOT CHOICES\n'+thoughts.map(t=>'Turn '+t.turn+' · '+duel.decks[t.seat].name+' · '+t.title+'\n'+t.rule+': '+t.reason+(t.doctrine?'\nDOCTRINE: '+t.doctrine.title+' · '+t.doctrine.status:'')).join('\n\n'):'';postMessage({type:'export',text:'GAME SEED '+matchInfo?.seed+' · FIRST SEAT '+matchInfo?.first+' · VARIATION '+matchInfo?.variation+' · PILOT '+matchInfo?.strategy+' · DOCTRINE '+(matchInfo?.doctrine?'ON':'OFF')+'\n'+pilots.map(p=>p.name+': '+p.info().label+' · seed '+p.seed).join('\n')+'\n\n'+(duel?.log.map(e=>e.text).join('\n')||'')+extra})}
++- else if(x.type==='stop'){cancelThink();shuffleTap.disarm();coinTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
+++ else if(x.type==='stop'){cancelThink();disarmWindBots();shuffleTap.disarm();coinTap.disarm();generation++;clearTimeout(timer);presentationUntil=0;presentationPending=false;duel?.stop();resetHumanTransport();postMessage({type:'stopped'})}
++  }catch(e){disabled=true;paused=true;shuffleTap.disarm();coinTap.disarm();postMessage({type:'error',message:e.message});resetHumanTransport();if(duel?.handle)send()}};
+diff --git a/tests/lib/r36-pins.mjs b/tests/lib/r36-pins.mjs
+index 6cb5d55..3c3a0cb 100644
+--- a/tests/lib/r36-pins.mjs
++++ b/tests/lib/r36-pins.mjs
+@@ -8,7 +8,7 @@
+ // a new reviewed patch and candidate hash here.
+ import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
+ const sha=s=>crypto.createHash('sha256').update(s).digest('hex');
+-export const R3512={'dist/app.mjs':'831386c3c97f4ded44b0dc483f47decde970f9dd6bf519ae87b9dc9958c64212','dist/worker.mjs':'12f0070b744ed1e0a3fcc3dbd27b828cf44f26282908ccffb684ce46845b2560','dist/optimal-pilot.mjs':'ed03a478d999605e6089898ac5d97cc7c102494e160853776aaa1a3dea490948','dist/presentation.mjs':'a6088b5a44f7105bb2997874c712d34227ccc5bb87dc1060575aa56912d5c67b'/* r36 default build: finished-duel dock line (RELAY-119) */};
++export const R3512={'dist/app.mjs':'831386c3c97f4ded44b0dc483f47decde970f9dd6bf519ae87b9dc9958c64212','dist/worker.mjs':'12f0070b744ed1e0a3fcc3dbd27b828cf44f26282908ccffb684ce46845b2560','dist/optimal-pilot.mjs':'ed03a478d999605e6089898ac5d97cc7c102494e160853776aaa1a3dea490948','dist/presentation.mjs':'a6088b5a44f7105bb2997874c712d34227ccc5bb87dc1060575aa56912d5c67b'/* r36 default build: finished-duel dock line (RELAY-119) */,'dist/duel.mjs':'f0a0718445dc4a8b47cc1349e0f6283fc1fc9d7a25f3b35f107cd68665fa1cb9'/* r37: SELECT_SUM index conversion for the core parser fix */};
+ export const CANDIDATE=JSON.parse(fs.readFileSync(new URL('../fixtures/r36-pins/CANDIDATE.json',import.meta.url),'utf8'));
+ function reverseApply(text,patch,file){
+  const cur=text.split('\n'),out=[];let at=0,hunks=0;const lines=patch.split('\n');
+@@ -22,3 +22,9 @@ export function historical(file,text=fs.readFileSync(file,'utf8')){
+  assert.ok(CANDIDATE[file]&&R3512[file],file+': has a reviewed r36 patch');assert.equal(sha(text),CANDIDATE[file],file+' = the reviewed candidate bytes (whole file)');
+  const base=reverseApply(text,fs.readFileSync(new URL('../fixtures/r36-pins/'+file.split('/').pop()+'.patch',import.meta.url),'utf8'),file);
+  assert.equal(sha(base),R3512[file],file+' minus exactly its reviewed r36 patch = r35.12 (d3177e0) bytes');return base}
++// r37 (Claude, 8 Nov 2026): files r37 changes on top of r36.2 (5de815c) carry a second reviewed patch,
++// tests/fixtures/r37-pins/<file>.patch = `git diff --no-color 5de815c -- <file>`, checked the same way (whole-file r37 hash,
++// exact reverse-apply). r36.2(file) returns the r36.2 bytes so the r36 tests keep testing exactly what they tested.
++export const R37=JSON.parse(fs.readFileSync(new URL('../fixtures/r37-pins/CANDIDATE.json',import.meta.url),'utf8'));
++export function r36_2(file,text=fs.readFileSync(file,'utf8')){assert.ok(R37[file],file+': has a reviewed r37 patch');assert.equal(sha(text),R37[file],file+' = the reviewed r37 candidate bytes (whole file)');
++ return reverseApply(text,fs.readFileSync(new URL('../fixtures/r37-pins/'+file.split('/').pop()+'.patch',import.meta.url),'utf8'),file)}
+diff --git a/tests/r36-ai-mode.test.mjs b/tests/r36-ai-mode.test.mjs
+index 6df82f6..d21535e 100644
+--- a/tests/r36-ai-mode.test.mjs
++++ b/tests/r36-ai-mode.test.mjs
+@@ -8,7 +8,7 @@
+ //     selector lines listed here (each file minus those lines = the r35.12 bytes).
+ //  4. Cold load = Enhanced (r36 default build, RELAY-119 G4; PREVIEW builds were Classic): the select's default is Enhanced and
+ //     nothing stores the choice. Replays: see tests/r36-replay-mode.test.mjs.
+-import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';import path from 'node:path';import {execFileSync} from 'node:child_process';
++import {R37,r36_2} from './lib/r36-pins.mjs';import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';import path from 'node:path';import {execFileSync} from 'node:child_process';
+ import {engine,stopEngine,scenario,drive,M} from '../tools/s3-harness.mjs';
+ import {exportSeatContext} from '../dist/ai/knowledge.mjs';
+ import {AI_MODES,AI_S4,aiModeOf,setAiMode,MIDGAME} from '../dist/ai/midgame-flags.mjs';
+@@ -45,7 +45,7 @@ await ok('S4 lifecycle (RELAY-109/112): setAiMode sets the COMPLETE S4 map from
+  setAiMode('enhanced');setAiMode('classic');assert.equal(S4.E,false,'Classic after Enhanced');assert.equal(S4.F,false,'Classic after Enhanced (F)');
+  for(const [m,e] of [['enhanced',true],['classic',false],['enhanced',true],[undefined,false]]){setS4({E:!e,F:!e});await think({aiMode:m});assert.ok(seen.length&&seen.every(x=>x.s4.E===e&&x.s4.F===e),String(m)+': E=F='+e+' in every base() of the think')}
+  const W=fs.readFileSync('dist/worker.mjs','utf8');assert.ok(W.includes("aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);"),'import-replay sets the replay\'s own mode, missing = Classic (S4 included)');assert.ok(W.includes('aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);'),'duel start sets the mode (S4 included)')});
+-await ok('r36.2 index.html whole-file pin (r36.1 was 990399bf, r36 bc3fade4, PREVIEW 3 4b6db9b3, PREVIEW 2 0f23a7a6, PREVIEW e4399b3b): 2628c412...',()=>assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/index.html')).digest('hex'),'2628c41252218a31e72031a085739b54a07cd46e9c667e8d64bc90ca5a443bcb'));
++await ok('r36.2 index.html whole-file pin (r36.1 was 990399bf, r36 bc3fade4, PREVIEW 3 4b6db9b3, PREVIEW 2 0f23a7a6, PREVIEW e4399b3b): 2628c412... (r37: the served file minus exactly its reviewed r37 patch)',()=>assert.equal(crypto.createHash('sha256').update(r36_2('dist/index.html')).digest('hex'),'2628c41252218a31e72031a085739b54a07cd46e9c667e8d64bc90ca5a443bcb'));
+ OptimalPilot.prototype.base=base0;stopEngine();
+ // ---- 3. source isolation vs r35.12 ----
+ const r3512=f=>execFileSync('git',['show','d3177e0:'+f],{maxBuffer:64<<20}).toString();
+@@ -54,7 +54,7 @@ const SEL={
+  'dist/index.html':[[/<label class="doctrine-toggle ai-mode-toggle">.*?<\/label>/s,''],['<link rel="stylesheet" href="./token-fx.css">',''],['<script type="module" src="token-fx.mjs"></script>',''],['<title>TEST PHASE C r36.2</title>','<title>TEST PHASE C r35.12</title>'],['<span class="release">TEST PHASE C r36.2 · Enhanced AI default · Token cards</span>','<span class="release">TEST PHASE C r35.12</span>']],/* + the 2 r36 PREVIEW label hunks (15b6b88, Kevy 6 Nov 03:17 AEDT) */
+  'dist/worker.mjs':[["first:matchInfo.first,aiMode:matchInfo.aiMode,build:BUILD,responses:","first:matchInfo.first,responses:"],["\nimport {AI_MODES,aiModeOf,setAiMode} from './ai/midgame-flags.mjs';\nimport {carryRemovalIntent} from './ai/midgame-rules.mjs';\nlet aiMode='classic';/* r36 AI selector: Enhanced (the page default since r36) / Classic, fixed per duel; a start or replay without a mode is Classic */\nconst BUILD='ddl-test r36.2 2026-11-07-r36.2';/* replay build identity = the sw.js cache name of this publish; the review manifest maps it to the served tree hash */",''],["aiMode=aiModeOf(x.aiMode);setAiMode(aiMode);pilots=createPilots(","pilots=createPilots("],["strategy:'optimal',aiMode,pilots:","strategy:'optimal',pilots:"],["aiMode=aiModeOf(r.aiMode);setAiMode(aiMode);/* RELAY-119: explicit aiMode honoured; missing = Classic (pre-selector replays) */matchInfo={...matchInfo,seed:r.seed,first:r.first,aiMode};","matchInfo={...matchInfo,seed:r.seed,first:r.first};"],["if(r.aiMode!==undefined&&r.aiMode!=='classic'&&r.aiMode!=='enhanced')throw Error('Unsupported replay AI mode');",''],["if(!duel?.handle)return;/* r36.1: a stopped duel (New) has no engine handle; a settings message must not plan on it */",''],["if(bestAggregated&&aiMode==='enhanced')plan=carryRemovalIntent(plan,publicDecision,seat);/* r36 B1 worker-state (RELAY-108): the capped plan keeps the matching baseline intent */",''],[",aiMode,midgame:AI_MODES[aiMode],pendingRemoval:aiMode==='enhanced'?pilots[seat].pendingRemoval??null:null});","});"]],
+  'dist/ai/ai-worker.mjs':[["\nimport {aiModeOf,setAiMode} from './midgame-flags.mjs';",''],[/ setAiMode\(x\.aiMode\);\/\*.*?\*\/\n/s,''],[/if\(aiModeOf\(x\.aiMode\)==='enhanced'&&x\.pendingRemoval\)pilot\.pendingRemoval=x\.pendingRemoval;\/\*.*?\*\//s,'']]};
+-for(const [f,reps] of Object.entries(SEL))await ok(f+' minus the selector lines = r35.12 (d3177e0) bytes',()=>{let s=fs.readFileSync(f,'utf8');for(const [a,b] of reps){const before=s;s=s.replace(a,b);assert.notEqual(s,before,'selector line present: '+String(a).slice(0,60))}assert.equal(s,r3512(f))});
++for(const [f,reps] of Object.entries(SEL))await ok(f+' minus the selector lines = r35.12 (d3177e0) bytes',()=>{let s=R37[f]?r36_2(f):fs.readFileSync(f,'utf8');/* r37: start from the r36.2 bytes (reviewed r37 patch undone exactly) */for(const [a,b] of reps){const before=s;s=s.replace(a,b);assert.notEqual(s,before,'selector line present: '+String(a).slice(0,60))}assert.equal(s,r3512(f))});
+ // ---- 4. cold load ----
+ await ok('cold load = Enhanced (RELAY-119 G4): the select defaults to Enhanced, Classic is the other option, and the choice is not stored or restored',()=>{
+  const html=fs.readFileSync('dist/index.html','utf8');assert.match(html,/<select id="ai-mode"[^>]*><option value="enhanced" selected>Enhanced<\/option><option value="classic">Classic \(r35\.12 AI\)<\/option><\/select>/);assert.ok(!/experimental/i.test(html),'no experimental label left');
+diff --git a/tests/r36-replay-mode.test.mjs b/tests/r36-replay-mode.test.mjs
+index 989ad43..b0f065a 100644
+--- a/tests/r36-replay-mode.test.mjs
++++ b/tests/r36-replay-mode.test.mjs
+@@ -19,7 +19,7 @@ await import(pathToFileURL(path.join(dist,'worker.mjs')).href);
+ const {MIDGAME,AI_MODES,AI_S4}=await import(pathToFileURL(path.join(dist,'ai/midgame-flags.mjs')).href);const {S4}=await import(pathToFileURL(path.join(dist,'ai/s4-flags.mjs')).href);
+ const send=data=>globalThis.onmessage({data});const tick=()=>new Promise(r=>setTimeout(r,0));
+ const waitFor=async(pred,ms=120000)=>{const t=Date.now();for(;;){const m=inbox.find(pred);if(m)return m;if(Date.now()-t>ms)throw Error('timeout waiting');await new Promise(r=>setTimeout(r,20))}};
+-const BUILD="ddl-test r36.2 2026-11-07-r36.2";
++const BUILD="ddl-test r37 2026-11-08-r37";/* r37 build string (r36.2 was "ddl-test r36.2 2026-11-07-r36.2") */
+ const recipe=m=>({midgame:{...MIDGAME},s4:{...S4},want:{midgame:{...AI_MODES[m]},s4:{...AI_S4[m]}}});
+ const isRecipe=m=>{const r=recipe(m);assert.deepEqual(r.midgame,r.want.midgame,m+' A-Z flags');assert.deepEqual(r.s4,r.want.s4,m+' S4 map')};
+ const lastMatch=()=>[...inbox].reverse().find(x=>x.type==='state'&&x.match)?.match;
+diff --git a/tests/r37-windbot.test.mjs b/tests/r37-windbot.test.mjs
+new file mode 100644
+index 0000000..08010d0
+--- /dev/null
++++ b/tests/r37-windbot.test.mjs
+@@ -0,0 +1,78 @@
++// r37 WindBot pilot + engine-library fixes (Claude as builder, 8 Nov 2026). SELF-VERIFIED until reviewed.
++//  A. MSG_SELECT_SUM parser fix, as a behaviour test on the real engine (same method as the r21c/r22 wrapper fixes): a Ritual
++//     Summon by level total (Chaos Form -> Blue-Eyes Chaos MAX Dragon, two Level 4 monsters on the field). Fixed library: the
++//     prompt lists the two monsters with their levels, the pilot finds the material set, the engine accepts it and MAX is
++//     summoned. The library as shipped before r37 (fix reverted in a temporary copy): garbage after the first card and no
++//     material set at all (the pilot stalls: "This pilot needs help").
++//  B. MSG_SHUFFLE_SET_CARD parser fix: source form (u8 count, all previous then all new locations; engine libduel.cpp).
++//  C. dist/windbot/edo.mjs unit checks: SELECT_SUM answer mapping (WindBot -> our index space -> engine), EDOPro hiding
++//     rules for the bot (opponent's drawn / moved-to-hand codes zeroed, own kept), and the raw hook is a no-op when unset.
++//  D. WindBot (the browser build in dist/wb) plays the opening turns of a real duel against our pilot in Node, through the
++//     same WindBotPilot class the duel worker uses: its script loads by name, it answers every prompt, nothing is rejected.
++import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import {pathToFileURL} from 'node:url';
++import {loadBuild,scenario,toIdle,answer,code,db,scripts,LOC,POS} from './lib/engine-scenario.mjs';
++import {sumSelections} from '../dist/pilot.mjs';import {wireResponse} from '../dist/duel.mjs';
++import {decodeResponse,EdoRouter,MSG} from '../dist/windbot/edo.mjs';
++const report={};
++// ---------- A ----------
++const CF=code('Chaos Form'),MAX=code('Blue-Eyes Chaos MAX Dragon'),W4=code('Gene-Warped Warwolf');
++const pack=main=>({id:'t',name:'t',main,extra:[]});
++async function ritualPrompt(build){const deckA=pack([CF,MAX,W4,W4,...Array(36).fill(W4)]),deckB=pack(Array(40).fill(W4));
++ const d=scenario(build,{decks:[deckA,deckB],first:0,seed:11,place:[{p:0,code:CF,location:LOC.HAND},{p:0,code:MAX,location:LOC.HAND},{p:0,code:W4,location:LOC.MZONE,sequence:0},{p:0,code:W4,location:LOC.MZONE,sequence:1}]});
++ toIdle(build,d,0);const act=d.choices().find(c=>c.code===CF&&/Activate/.test(c.label||''))||d.choices().find(c=>c.code===CF);assert.ok(act,'Chaos Form can be activated');d.respond(act.response);
++ for(let i=0;i<10&&d.prompt&&d.prompt.type!==build.M.SELECT_SUM;i++)d.respond(answer(build,d));return d}
++{const build=await loadBuild(true),d=await ritualPrompt(build),m=d.prompt;assert.equal(m?.type,build.M.SELECT_SUM,'the ritual reaches a SELECT_SUM prompt');
++ assert.equal(m.selects_must.length,0,'no must-select cards');assert.ok(m.selects.length>=2,'two or more selectable monsters (field + hand)');
++ assert.ok(m.selects.every(c=>c.code===W4&&(c.amount&0xffff)===4&&[LOC.MZONE,LOC.HAND].includes(c.location)),'each listed with its code, location and Level 4');
++ assert.equal(m.selects.filter(c=>c.location===LOC.MZONE&&c.position===POS.ATK).length,2,'the two field monsters, face-up Attack Position');
++ const sols=sumSelections(m);assert.ok(sols.length>0,'the pilot finds a material set');const before=d.retries;d.respond({type:build.R.SELECT_SUM,indicies:sols[0]});
++ for(let i=0;i<10&&d.prompt&&d.prompt.type!==build.M.SELECT_IDLECMD;i++)d.respond(answer(build,d));
++ assert.equal(d.retries,before,'the engine accepts the material set');assert.ok(d.zone(0,LOC.MZONE).some(c=>c?.code===MAX),'Blue-Eyes Chaos MAX Dragon is on the field');
++ report.fixed={selects:m.selects.length,amount:m.amount,solutions:sols.length,maxSummoned:true};d.stop()}
++{// the pre-r37 library: SELECT_SUM fix reverted in a temporary copy of dist (the raw hook stays; it is inert)
++ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'ddl-r37-unfixed-'));for(const f of fs.readdirSync('dist'))if(/\.(mjs|js)$/.test(f))fs.copyFileSync(path.join('dist',f),path.join(dir,f));
++ for(const sub of ['ai','core'])fs.cpSync(path.join('dist',sub),path.join(dir,sub),{recursive:true});
++ const fixed='()=>({code:e.u32(),controller:e.u8(),location:e.u8(),sequence:e.u32(),position:e.u32(),amount:e.u32()})',old='()=>({code:e.u32(),controller:e.u8(),location:e.u8(),sequence:e.u32(),amount:e.u32()})';
++ let s=fs.readFileSync(path.join(dir,'core/index.js'),'utf8');const a='selects_must:Array.from({length:e.u32()},'+fixed+'),selects:Array.from({length:e.u32()},'+fixed+')}';assert.equal(s.split(a).length,2,'fixed SELECT_SUM parser present');
++ s=s.replace(a,'selects:Array.from({length:e.u32()},'+old+'),selects_must:Array.from({length:e.u32()},'+old+')}');fs.writeFileSync(path.join(dir,'core/index.js'),s);
++ const m0=await import(pathToFileURL(path.join(dir,'duel.mjs')).href);const live=await m0.Duel.create(db,scripts);const build={...m0,live};
++ const d=await ritualPrompt(build),m=d.prompt;assert.equal(m?.type,build.M.SELECT_SUM);
++ const garbled=!(m.selects.length>=2&&m.selects.every(c=>c.code===W4));const sols=sumSelections(m);
++ assert.ok(garbled,'pre-r37 parser: the selectable cards are misread');assert.equal(sols.length,0,'pre-r37 parser: no material set is found (the pilot stalls)');
++ report.unfixed={selects:m.selects.length,must:m.selects_must.length,mustCodes:m.selects_must.map(c=>c.code),solutions:sols.length};d.stop();fs.rmSync(dir,{recursive:true,force:true})}
++// ---------- B ----------
++{const s=fs.readFileSync('dist/core/index.js','utf8');assert.ok(s.includes('case 36:{let l=e.u8(),n=e.u8(),f=Array.from({length:n},()=>p(e)),g=Array.from({length:n},()=>p(e));return{type:t,location:l,cards:f.map((x,i)=>({from:x,to:g[i]}))}}'),'SHUFFLE_SET_CARD: u8 count, previous locations then new locations');
++ assert.ok(!s.includes('cards:Array.from({length:e.u32()},()=>({from:p(e),to:p(e)}))'),'old u32 / interleaved form gone');
++ assert.equal(s.split('globalThis.__ocgRawHook').length-1,2,'raw hook: one check, one call');assert.ok(s.includes('duelQueryLocationRaw(')&&s.includes('duelQueryRaw('),'raw queries')}
++// ---------- C ----------
++{const M={type:23,selects_must:[{code:1}],selects:[{code:2},{code:3},{code:4}]};
++ // WindBot's SELECT_SUM answer: card-list type 2 (u8), count = must + chosen, chosen indices into the selectable list, then a placeholder per must card
++ const wb=Uint8Array.from([2,0,0,0,3,0,0,0,0,2,0]);const r=decodeResponse(MSG.SELECT_SUM,wb,M);assert.deepEqual(r,{type:14,indicies:[0,1,3]},'WindBot -> [must..., selectable+1...]');
++ assert.deepEqual(wireResponse(M,r),{type:14,indicies:[0,2]},'our index space -> the engine (selectable list only)');
++ assert.deepEqual(wireResponse({type:23,selects_must:[],selects:[1,2]},{type:14,indicies:[1]}),{type:14,indicies:[1]},'no must cards: unchanged');
++ assert.deepEqual(wireResponse({type:15},{type:5,indicies:[1]}),{type:5,indicies:[1]},'other prompts: unchanged');
++ const sent=[],core={duelQueryLocationRaw:()=>new Uint8Array(0),duelQueryRaw:()=>new Uint8Array(0)},router=new EdoRouter(core,1,0,b=>sent.push(b));
++ const draw=(player,codes)=>{const b=new Uint8Array(6+8*codes.length),v=new DataView(b.buffer);b[0]=MSG.DRAW;b[1]=player;v.setUint32(2,codes.length,true);codes.forEach((c,i)=>{v.setUint32(6+8*i,c,true);v.setUint32(10+8*i,0xA,true)});return b};
++ router.route(draw(1,[1234,5678]));router.route(draw(0,[1111]));const dv=b=>new DataView(b.buffer,b.byteOffset);
++ assert.deepEqual([dv(sent[0]).getUint32(6,true),dv(sent[0]).getUint32(14,true)],[0,0],'opponent draws: codes hidden from the bot');assert.equal(dv(sent[1]).getUint32(6,true),1111,'own draw: code kept');
++ const hint=(type,player)=>{const b=new Uint8Array(11);b[0]=MSG.HINT;b[1]=type;b[2]=player;return b};sent.length=0;router.route(hint(3,1));router.route(hint(3,0));assert.equal(sent.length,1,'a select hint for the other player is not sent');
++ assert.equal(globalThis.__ocgRawHook??null,null,'no hook set by default')}
++// ---------- D ----------
++{const {WindBotPilot,loadWindBot}=await import('../dist/windbot/pilot.mjs');const build=await loadBuild(true),{Duel,M,live}=build;
++ const exports=await loadWindBot(db,pathToFileURL(path.resolve('dist/wb')+'/'),fs.readFileSync('dist/wb/default.json','utf8'));
++ const decks=JSON.parse(fs.readFileSync('dist/decks.json')).decks.map(d=>d.banlistVariants?.['tcg-2026-10-19']?{...d,...d.banlistVariants['tcg-2026-10-19']}:d),pair=[decks.find(d=>d.id==='blueeyes'),decks.find(d=>d.id==='branded')];
++ const {createOptimalPilots}=await import('../dist/optimal-pilot.mjs');const {safeView}=await import('../dist/ai/knowledge.mjs');
++ const logs=[],real=console.log,realWrite=process.stdout.write.bind(process.stdout);console.log=(...a)=>logs.push(a.join(' '));process.stdout.write=(c,...r)=>{logs.push(String(c));return true};let out;/* WindBot's own log lines (.NET Console) */
++ try{const d=new Duel(live.core,db,scripts),seed=71077,first=1,wbSeat=1,ours=createOptimalPilots({seed,searchEnabled:false})[0];
++  const bot=new WindBotPilot({seat:wbSeat,seed,deck:pair[wbSeat],exports});await bot.attach(d,wbSeat===first?0:1);
++  const counts=[0,1].map(t=>{const s=t===0?first:1-first;return [pair[s].main.length,pair[s].extra.length]});globalThis.__ocgRawHook=(h,raw)=>{if(h===d.handle)bot.batch(d,raw,counts)};
++  d.start(pair,{seed,first});let wbDecisions=0,rejected=0,stalled=0,n=0;
++  while(d.prompt&&!d.finished&&d.turn<=4&&n<3000){n++;const m=d.prompt,before=d.retries;
++   if(m.seat===wbSeat){const plan=bot.plan(d);if(!plan){stalled++;break}d.respond(plan.response);if(d.retries===before){bot.observe(plan);wbDecisions++}else rejected++}
++   else{const plan=ours.base(safeView(d,m.seat));d.respond(plan.response);ours.observe(plan)}}
++  out={turn:d.turn,finished:d.finished,wbDecisions,rejected,stalled,messagesToBot:bot.router.count,executor:logs.find(l=>/Deck (not )?found/.test(l))||null};d.stop();bot.close()}
++ finally{console.log=real;process.stdout.write=realWrite;globalThis.__ocgRawHook=null}
++ assert.match(out.executor||'',/Deck found, loading AI_Albaz/,'WindBot loads its Branded (Albaz) script by name');
++ assert.equal(out.stalled,0,'WindBot answers every prompt');assert.equal(out.rejected,0,'no WindBot answer is rejected');assert.ok(out.wbDecisions>=10,'WindBot makes its own decisions ('+out.wbDecisions+')');
++ assert.ok(out.finished||out.turn>4,'the duel reaches turn 5 or ends');report.windbot=out}
++console.log(JSON.stringify({test:'r37-windbot',pass:true,node:process.version,report}));
+diff --git a/tools/r36-default-browser.mjs b/tools/r36-default-browser.mjs
+index 5748885..c518fbf 100644
+--- a/tools/r36-default-browser.mjs
++++ b/tools/r36-default-browser.mjs
+@@ -45,7 +45,7 @@ if(PARTS.includes('replay'))await run('replay',async()=>{const {p,ctx,errors}=aw
+  R.explicit=await openReplay(file,'classic');R.legacy=await openReplay(out+'/replay-legacy.json','enhanced');
+  const before=await st(p);R.bogus=await openReplay(out+'/replay-bogus.json','enhanced');R.bogusStartedDuel=R.bogus.banner!==''&&R.bogus.turn>0;
+  R.errors=errors.filter(e=>!/unknown AI mode/i.test(e));await p.screenshot({path:`${out}/replay.png`});
+- R.pass=R.saved.aiMode==='enhanced'&&R.saved.build===(process.env.R36_BUILD||'ddl-test r36.2 2026-11-07-r36.2')&&R.saved.responses>0&&R.explicit.banner.startsWith('AI Enhanced')&&/Enhanced/.test(R.explicit.notice)&&R.legacy.banner.startsWith('AI Classic')&&/Classic/.test(R.legacy.notice)&&/unknown AI mode/i.test(R.bogus.notice)&&!R.bogusStartedDuel&&!R.errors.length;await ctx.close();return R});
++ R.pass=R.saved.aiMode==='enhanced'&&R.saved.build===(process.env.R36_BUILD||'ddl-test r37 2026-11-08-r37')&&R.saved.responses>0&&R.explicit.banner.startsWith('AI Enhanced')&&/Enhanced/.test(R.explicit.notice)&&R.legacy.banner.startsWith('AI Classic')&&/Classic/.test(R.legacy.notice)&&/unknown AI mode/i.test(R.bogus.notice)&&!R.bogusStartedDuel&&!R.errors.length;await ctx.close();return R});
+ if(PARTS.includes('finish'))await run('finish',async()=>{const R={games:[]};
+  for(const seed of finishArg.split(',')){const {p,ctx,errors}=await page(undefined,'instant');const decks=seed==='71025'?{a:'mikanko',b:'kashtira'}:{a:'sky',b:'mikanko'};
+   await setup(p,{seed,...decks});await start(p);const end=Date.now()+20*60000;let s;for(;;){s=await st(p);if(s.over||Date.now()>end)break;await p.waitForTimeout(2000)}
+diff --git a/tools/r36-token-browser.mjs b/tools/r36-token-browser.mjs
+index 7acea04..105449a 100644
+--- a/tools/r36-token-browser.mjs
++++ b/tools/r36-token-browser.mjs
+@@ -5,10 +5,11 @@
+ //  instant  - the same broadcast at Instant pace plays nothing.
+ //  real     - [deckA,deckB,seed,first] a real Watch duel at Duel pace until a token is summoned by the engine: the overlay
+ //             appears on its own, and the field card then shows the token card image (not the text-only placeholder).
+-// Usage: node tools/r36-token-browser.mjs <url> <outdir> [parts=play,instant,real] [real=dtw,branded,71040,0]
++// Usage: node tools/r36-token-browser.mjs <url> <outdir> [parts=play,instant,real] [real=deckA,deckB,seed,first[,pace,minutes][;next...]]
++// (real tries each game in turn until one summons a token)
+ import {createRequire} from 'node:module';import fs from 'node:fs';const require=createRequire(import.meta.url);
+ const {chromium}=require('/opt/npm-tools/node_modules/playwright');
+-const [url,out,partsArg='play,instant,real',realArg='dtw,branded,71040,0']=process.argv.slice(2);const PARTS=partsArg.split(',');fs.mkdirSync(out,{recursive:true});
++const [url,out,partsArg='play,instant,real',realArg='sky,branded,71040,1']=process.argv.slice(2);const PARTS=partsArg.split(',');fs.mkdirSync(out,{recursive:true});
+ const browser=await chromium.launch(/^https:/.test(url)&&process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{});const report={url,parts:{}};
+ async function page(preset){const ctx=await browser.newContext({viewport:{width:1366,height:900}});await ctx.addInitScript(pr=>{try{localStorage.setItem('doctrine-lab-media-v2',JSON.stringify({preset:pr,modePaces:{watch:pr,play:pr}}))}catch{}},preset);
+  const p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await p.goto(url);
+@@ -24,12 +25,12 @@ if(PARTS.includes('play'))await run('play',async()=>{const {p,ctx,errors}=await
+  R.pass=R.during.length===4&&R.during.every(x=>x.img==='art/73915052.jpg'&&x.tag==='TOKEN'&&x.ms==='1000ms')&&R.after===0&&R.nonToken===0&&!errors.length;await ctx.close();return R});
+ if(PARTS.includes('instant'))await run('instant',async()=>{const {p,ctx,errors}=await page('instant');const R={};await start(p,'branded','sky','71034');await fieldReady(p);
+  await fire(p,52340445,[0,1]);await p.waitForTimeout(250);R.during=(await fx(p)).length;R.errors=errors.filter(e=>!/animate/.test(e));R.pass=R.during===0;await ctx.close();return R});
+-if(PARTS.includes('real'))await run('real',async()=>{const [a,b,seed,first]=realArg.split(',');const {p,ctx,errors}=await page('duel');const R={a,b,seed,first};
++if(PARTS.includes('real'))for(const one of realArg.split(';')){if(report.parts.real?.pass)break;await run('real',async()=>{const [a,b,seed,first,pace='duel',mins='25']=one.split(',');const {p,ctx,errors}=await page(pace);const R={a,b,seed,first,pace};
+  await p.evaluate(()=>{window.__tok=[];new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.classList?.contains('token-fx'))window.__tok.push({t:Date.now(),img:n.querySelector('.tf-card img')?.getAttribute('src')})}).observe(document.body,{childList:true})});
+- await start(p,a,b,seed,+first);const end=Date.now()+25*60000;let shot=false;
++ await start(p,a,b,seed,+first);const end=Date.now()+(+mins)*60000;let shot=false;
+  for(;;){const n=await p.evaluate(()=>window.__tok.length);if(n&&!shot){await p.waitForTimeout(350);await p.screenshot({path:out+'/token-real-spawn.png'});shot=true;await p.waitForTimeout(3500);break}
+   if(Date.now()>end||await p.evaluate(()=>!!document.querySelector('#duel-summary')))break;await p.waitForTimeout(150)}
+  R.spawns=await p.evaluate(()=>window.__tok);R.fieldTokenImgs=await p.evaluate(()=>[...document.querySelectorAll('[data-slot] img')].map(i=>i.getAttribute('src')).filter(s=>/token-generic|3129528|52340445|27204312|28674153|13935002|7391505/.test(s)));
+  R.textOnlyTokens=await p.evaluate(()=>[...document.querySelectorAll('[data-slot] .text-card')].map(n=>n.textContent).filter(t=>/Token/.test(t)));
+- if(shot)await p.screenshot({path:out+'/token-real-field.png'});R.errors=errors;R.pass=R.spawns.length>0&&R.fieldTokenImgs.length>0&&!R.textOnlyTokens.length&&!errors.length;await ctx.close();return R});
++ if(shot)await p.screenshot({path:out+'/token-real-field.png'});R.errors=errors;R.turnAtEnd=await p.evaluate(()=>document.querySelector('#turn-label')?.textContent);R.pass=R.spawns.length>0&&R.fieldTokenImgs.length>0&&!R.textOnlyTokens.length&&!errors.length;await ctx.close();return R})}
+ report.pass=Object.values(report.parts).every(x=>x.pass);fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,1));console.log(JSON.stringify({pass:report.pass,parts:Object.fromEntries(Object.entries(report.parts).map(([k,v])=>[k,v.pass]))}));await browser.close();
+diff --git a/tools/r37-core-patch.mjs b/tools/r37-core-patch.mjs
+new file mode 100644
+index 0000000..53b0e30
+--- /dev/null
++++ b/tools/r37-core-patch.mjs
+@@ -0,0 +1,3 @@
++// r37: apply tools/windbot/core-patch.mjs (raw hook + MSG_SHUFFLE_SET_CARD and MSG_SELECT_SUM parser fixes) to dist/core/index.js in place.
++import fs from 'node:fs';import {patchCore} from './windbot/core-patch.mjs';
++const f=new URL('../dist/core/index.js',import.meta.url);const s=fs.readFileSync(f,'utf8');if(s.includes('__ocgRawHook'))throw Error('already patched');fs.writeFileSync(f,patchCore(s));console.log('patched',f.pathname);
+diff --git a/tools/r37-repin.mjs b/tools/r37-repin.mjs
+new file mode 100644
+index 0000000..6b2dea5
+--- /dev/null
++++ b/tools/r37-repin.mjs
+@@ -0,0 +1,13 @@
++// r37 bounded pin refresh (Claude as builder, 8 Nov 2026), same method as the r36 pins (ChatGPT RELAY-107/108): each pinned
++// file keeps its historical r35.12 (d3177e0) hash; its reviewed patch tests/fixtures/r36-pins/<file>.patch is the exact
++// `git diff --no-color d3177e0 -- <file>` and CANDIDATE.json holds the whole-file hash of the new candidate.
++// r37 adds dist/duel.mjs (the SELECT_SUM index conversion that goes with the core-library parser fix).
++import fs from 'node:fs';import crypto from 'node:crypto';import {execFileSync} from 'node:child_process';
++const sha=b=>crypto.createHash('sha256').update(b).digest('hex'),BASE='d3177e0';
++const files=['dist/app.mjs','dist/worker.mjs','dist/optimal-pilot.mjs','dist/presentation.mjs','dist/duel.mjs'];
++const cand={};for(const f of files){const patch=execFileSync('git',['diff','--no-color',BASE,'--',f],{encoding:'utf8',maxBuffer:1<<28});if(!patch)throw Error(f+': no change from '+BASE);
++ fs.writeFileSync('tests/fixtures/r36-pins/'+f.split('/').pop()+'.patch',patch);cand[f]=sha(fs.readFileSync(f))}
++fs.writeFileSync('tests/fixtures/r36-pins/CANDIDATE.json',JSON.stringify(cand,null,1).replace(/\n /g,'\n ')+'\n');
++const lib='tests/lib/r36-pins.mjs';let s=fs.readFileSync(lib,'utf8');const h=sha(execFileSync('git',['show',BASE+':dist/duel.mjs']));
++if(!s.includes("'dist/duel.mjs'"))s=s.replace("/* r36 default build: finished-duel dock line (RELAY-119) */};","/* r36 default build: finished-duel dock line (RELAY-119) */,'dist/duel.mjs':'"+h+"'/* r37: SELECT_SUM index conversion for the core parser fix */};");
++fs.writeFileSync(lib,s);console.log(JSON.stringify({cand,duelR3512:h}))
+diff --git a/tools/r37-windbot-browser.mjs b/tools/r37-windbot-browser.mjs
+new file mode 100644
+index 0000000..e132202
+--- /dev/null
++++ b/tools/r37-windbot-browser.mjs
+@@ -0,0 +1,29 @@
++// r37 browser check: a real Watch duel on the site with WindBot piloting one seat (Claude as builder, 8 Nov 2026).
++// Usage: node tools/r37-windbot-browser.mjs <url> <outdir> [deckA,deckB,seed,first,pilotA,pilotB,preset,minutes]
++// Reports: the pilot labels shown, how the duel ended (winner / turn / LP from the page), WindBot's decision count, the
++// notices and page errors, and screenshots at the start, mid-duel and the end.
++import {createRequire} from 'node:module';import fs from 'node:fs';const require=createRequire(import.meta.url);
++const {chromium}=require(process.env.PLAYWRIGHT||'/opt/npm-tools/node_modules/playwright');
++const [url,out,spec='sky,branded,71011,0,ai,windbot,instant,20']=process.argv.slice(2);fs.mkdirSync(out,{recursive:true});
++const [a,b,seed,first,pa,pb,preset,mins]=spec.split(',');
++const browser=await chromium.launch(/^https:/.test(url)&&process.env.HTTPS_PROXY?{proxy:{server:process.env.HTTPS_PROXY}}:{});
++const ctx=await browser.newContext({viewport:{width:1366,height:900}});await ctx.addInitScript(pr=>{try{localStorage.setItem('doctrine-lab-media-v2',JSON.stringify({preset:pr,modePaces:{watch:pr,play:pr}}))}catch{}},preset);
++const p=await ctx.newPage();const errors=[],notices=[],consoleWb=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{const t=m.text();if(m.type()==='error')errors.push(t);if(/Deck (not )?found|WindBot/.test(t))consoleWb.push(t.slice(0,200))});
++await p.goto(url);await p.waitForFunction(()=>document.querySelector('#start')&&!document.querySelector('#start').disabled,null,{timeout:180000});
++const R={url,spec};
++R.panel=await p.evaluate(([a,b,first,pa,pb,seed])=>{const $=s=>document.querySelector(s),set=(s,v)=>{$(s).value=v;$(s).dispatchEvent(new Event('change',{bubbles:true}))};
++ set('#deck-a',a);set('#deck-b',b);set('#mode','watch');set('#pilot-kind-a',pa);set('#pilot-kind-b',pb);$('#game-seed').value=seed;$('#first').value=String(first);
++ return {a:$('#pilot-kind-a').value,b:$('#pilot-kind-b').value,note:$('.wb-note')?.hidden?null:$('.wb-note')?.textContent,options:[...$('#pilot-kind-a').options].map(o=>o.textContent+(o.disabled?' (disabled)':''))}},[a,b,first,pa,pb,seed]);
++await p.screenshot({path:out+'/r37-panel.png'});
++await p.evaluate(()=>{const $=s=>document.querySelector(s);const o=new MutationObserver(()=>{const n=$('#notice');if(n&&!n.hidden&&n.textContent)window.__notices=[...(window.__notices||[]),n.textContent.trim()]});o.observe(document.body,{subtree:true,childList:true,attributes:true});document.querySelector('#start').click()});
++const t0=Date.now(),end=t0+(+mins)*60000;let mid=false;
++for(;;){await p.waitForTimeout(1000);const s=await p.evaluate(()=>({sum:!!document.querySelector('#duel-summary'),turn:document.querySelector('#turn-label')?.textContent,status:document.querySelector('#field-status')?.textContent,title:document.querySelector('#decision-title')?.textContent}));
++ if(!mid&&Date.now()-t0>25000){await p.screenshot({path:out+'/r37-mid.png'});mid=true}
++ if(s.sum||/COMPLETE|STOPPED/.test(s.status||'')||Date.now()>end){R.last=s;break}
++ if(/PAUSED/.test(s.status||'')){await p.evaluate(()=>{const b=[...document.querySelectorAll('button')].find(b=>/^(Resume|Play)$/i.test(b.textContent.trim()));b?.click()})}}
++R.wallSec=Math.round((Date.now()-t0)/1000);await p.waitForTimeout(1500);await p.screenshot({path:out+'/r37-end.png'});
++R.coach=await p.evaluate(()=>[...document.querySelectorAll('.pilot-pair [data-pilot]')].map(n=>n.textContent.trim().slice(0,160)));
++R.summary=await p.evaluate(()=>document.querySelector('#duel-summary')?.textContent.replace(/\s+/g,' ').slice(0,400)||null);
++R.notices=await p.evaluate(()=>window.__notices||[]);R.errors=errors;R.windbotConsole=consoleWb.slice(0,6);
++R.pass=!!R.summary&&!errors.length&&R.coach.some(t=>/WindBot/.test(t))&&R.windbotConsole.some(t=>/^.*Deck found, loading/.test(t))&&!R.windbotConsole.some(t=>/Deck not found/.test(t));
++fs.writeFileSync(out+'/r37-windbot-browser.json',JSON.stringify(R,null,1));console.log(JSON.stringify(R,null,1).slice(0,3000));await browser.close();
+diff --git a/tools/windbot/bridge.mjs b/tools/windbot/bridge.mjs
+new file mode 100644
+index 0000000..89d37e2
+--- /dev/null
++++ b/tools/windbot/bridge.mjs
+@@ -0,0 +1,56 @@
++// r37 WindBot bridge (Claude as builder, 7 Nov 2026; Kevy 21:53/21:57 AEDT: "have our AI vs a scripted AI bot to see which
++// wins more"). Lets the unmodified open-source WindBot (ProjectIgnis fork, AGPL-3.0-or-later; per-deck scripted "executors") play one seat
++// of a duel run by OUR engine (dist/duel.mjs + the same ocgcore WASM build the site uses), while our AI plays the other seat.
++//
++// WindBot normally connects to an EDOPro server over TCP. This file is a minimal EDOPro-compatible host for exactly one
++// WindBot: the lobby handshake (join -> deck -> position -> ready), then every core message routed the way EDOPro's
++// gframe/generic_duel.cpp does it - same "who may see this" rules (codes of hidden cards zeroed for the bot when EDOPro would
++// zero them), same MSG_UPDATE_DATA / MSG_UPDATE_CARD refreshes before and after the same messages, with the same query flags
++// and the same public/private query filtering (gframe/core_utils.cpp). WindBot's binary responses are decoded into our
++// engine's response objects and given to Duel.respond like any other answer, so the engine, the rules, the logs and our AI's
++// knowledge of public actions are exactly those of a normal duel.
++//
++// The raw core bytes come from a bridge-only copy of the engine tree whose core/index.js gets three read-only additions
++// (raw message hook, raw location/card queries). The shipped dist/ is never changed.
++import fs from 'node:fs';import path from 'node:path';import net from 'node:net';import {spawn} from 'node:child_process';import {pathToFileURL} from 'node:url';import {patchCore} from './core-patch.mjs';
++
++// ---------- bridge tree: dist/ hard-linked, core/index.js patched (raw hook + raw queries) ----------
++export function makeBridgeTree(srcRoot,outRoot){
++ const src=path.join(srcRoot,'dist'),dst=path.join(outRoot,'dist');fs.rmSync(outRoot,{recursive:true,force:true});fs.mkdirSync(dst,{recursive:true});
++ const walk=(a,b)=>{for(const e of fs.readdirSync(a,{withFileTypes:true})){const s=path.join(a,e.name),t=path.join(b,e.name);if(e.isDirectory()){fs.mkdirSync(t);walk(s,t)}else fs.linkSync(s,t)}};walk(src,dst);
++ const f=path.join(dst,'core/index.js');let s=fs.readFileSync(f,'utf8');fs.unlinkSync(f);
++ // the shipped core already carries the raw hook and the two parser fixes (r37); the bridge copy adds only the parse audit
++ s=patchCore(s,{hook:!s.includes('__ocgRawHook'),fixes:!s.includes('position:e.u32(),amount:e.u32()'),audit:true});
++ fs.writeFileSync(f,s);return outRoot}
++
++// ---------- the protocol pieces are shared with the site (dist/windbot/edo.mjs): one source of truth ----------
++import {STOC,CTOS,MSG,PROMPT_MSGS,EdoRouter,decodeResponse,lobby,cardRows,parseYdk,WasmWindBot} from '../../dist/windbot/edo.mjs';
++export {PROMPT_MSGS,EdoRouter,decodeResponse,cardRows};
++const frame=(id,body=Buffer.alloc(0))=>{const h=Buffer.alloc(3);h.writeUInt16LE(body.length+1,0);h[2]=id;return Buffer.concat([h,Buffer.from(body)])};
++class PacketReader{constructor(){this.buf=Buffer.alloc(0)}push(d){this.buf=Buffer.concat([this.buf,d]);const out=[];for(;;){if(this.buf.length<2)break;const n=this.buf.readUInt16LE(0);if(this.buf.length<2+n)break;out.push(this.buf.subarray(2,2+n));this.buf=this.buf.subarray(2+n)}return out}}
++
++// ---------- one WindBot seat ----------
++export class WindBotSeat{
++ constructor({windbotDir,dotnet,executor,deckFile,name='WindBot',log=()=>{}}){Object.assign(this,{windbotDir,dotnet,executor,deckFile,name,log});this.waiters=[];this.inbox=[];this.sent=0;this.received=0;this.stderr=''}
++ async connect(port=0){this.server=net.createServer();await new Promise(r=>this.server.listen(port,'127.0.0.1',r));const p=this.server.address().port;
++  const conn=new Promise(r=>this.server.once('connection',r));
++  this.proc=spawn(this.dotnet,[path.join(this.windbotDir,'WindBot.dll'),'Name='+this.name,'Deck='+this.executor,'DeckFile='+this.deckFile,'Host=127.0.0.1','Port='+p,'Version=0','Hand=0','Dialog=default','Debug=false','Chat=false'],{cwd:this.windbotDir,env:{...process.env,DOTNET_CLI_TELEMETRY_OPTOUT:'1'}});
++  this.stdout='';this.proc.stdout.on('data',d=>{this.stdout+=d;this.log('[wb] '+String(d).trim())});this.proc.stderr.on('data',d=>{this.stderr+=d;this.log('[wb!] '+String(d).trim())});this.exited=new Promise(r=>this.proc.once('exit',c=>{this.exitCode=c;r(c)}));
++  this.sock=await Promise.race([conn,new Promise((_,j)=>setTimeout(()=>j(Error('WindBot did not connect within 60 s: '+this.stderr.slice(-400))),60000))]);this.sock.setNoDelay(true);
++  const rd=new PacketReader();this.sock.on('data',d=>{for(const p of rd.push(d))this.onPacket(p)});this.sock.on('error',e=>this.log('[sock] '+e.message));this.sock.on('close',()=>{this.closed=true;for(const w of this.waiters.splice(0))w.reject(Error('WindBot connection closed'))})}
++ onPacket(p){this.received++;this.inbox.push(p);const w=this.waiters.find(w=>w.id===p[0]);if(w){this.waiters.splice(this.waiters.indexOf(w),1);this.inbox.splice(this.inbox.indexOf(p),1);w.resolve(p.subarray(1))}}
++ next(id,ms=120000){const i=this.inbox.findIndex(p=>p[0]===id);if(i>=0){const p=this.inbox.splice(i,1)[0];return Promise.resolve(p.subarray(1))}
++  return new Promise((resolve,reject)=>{const w={id,resolve,reject};this.waiters.push(w);setTimeout(()=>{const k=this.waiters.indexOf(w);if(k>=0){this.waiters.splice(k,1);reject(Error('WindBot sent no packet 0x'+id.toString(16)+' within '+ms+' ms'))}},ms)})}
++ send(id,body){if(!this.closed){this.sock.write(frame(id,body));this.sent++}}
++ gameMsg(bytes){this.send(STOC.GAME_MSG,Buffer.from(bytes))}
++ lobby(o){return lobby(this,o)}
++ async close(){try{this.send(STOC.DUEL_END)}catch{}try{this.sock?.end()}catch{}const t=setTimeout(()=>{try{this.proc.kill('SIGKILL')}catch{}},3000);await this.exited;clearTimeout(t);this.server.close()}}
++
++// ---------- ydk ----------
++export const readYdk=file=>parseYdk(fs.readFileSync(file,'utf8'));
++export const importTree=(root,f)=>import(pathToFileURL(path.join(root,'dist',f)).href);
++
++// ---------- the same bot compiled for the browser (tools/windbot/web), run in-process instead of over TCP ----------
++// Packets go straight into WindBot's own GameBehavior; whatever it sends back is queued exactly as the TCP seat queues it.
++export class WasmWindBotSeat extends WasmWindBot{
++ static async load(frameworkDir,db){return WasmWindBot.load(pathToFileURL(path.join(frameworkDir,'dotnet.js')).href,db)}}
+diff --git a/tools/windbot/core-patch.mjs b/tools/windbot/core-patch.mjs
+new file mode 100644
+index 0000000..d343580
+--- /dev/null
++++ b/tools/windbot/core-patch.mjs
+@@ -0,0 +1,33 @@
++// r37 engine-library patch for dist/core/index.js (Claude as builder, 7-8 Nov 2026). SELF-VERIFIED until reviewed.
++// The core library (ocgcore-wasm wrapper, built into core/index.js) parses the engine's binary messages into objects.
++// Changes, each anchored on text that must occur exactly once:
++//  1. RAW HOOK (additive, no effect unless globalThis.__ocgRawHook is set): duelGetMessage hands each raw message batch to
++//     the hook; duelQueryLocationRaw / duelQueryRaw return raw query buffers. Used by the WindBot seat (dist/windbot/edo.mjs),
++//     which needs the bytes exactly as an EDOPro server would forward them.
++//  2. FIX MSG_SHUFFLE_SET_CARD (36): the engine writes the count as a u8, then all previous locations, then all new
++//     locations (libduel.cpp shuffle_setcard; EDOPro duelclient.cpp reads it that way). The library read a u32 count and
++//     interleaved pairs, so it read past the end and threw 'eof', which stopped the duel.
++//  3. FIX MSG_SELECT_SUM (23): the engine writes the MUST-select cards first, then the selectable ones, and each card with a
++//     full location (controller u8, location u8, sequence u32, POSITION u32) before its sum value (playerop.cpp
++//     SelectSum; EDOPro and WindBot read it that way). The library read the selectable list first and skipped the position,
++//     so with two or more cards every value after the first was garbage and no legal material set could be found
++//     (the pilot stalled: "This pilot needs help with this choice"). Ritual summons by level total use this prompt.
++//  audit (bridge/test trees only): records any message whose parse leaves bytes unread, to catch other layout mistakes.
++export function patchCore(s,{hook=true,fixes=true,audit=false}={}){
++ const rep=(a,b)=>{if(s.split(a).length!==2)throw Error('core patch anchor not unique or missing: '+a.slice(0,80));s=s.replace(a,b)};
++ if(hook){
++  rep('duelGetMessage({[D]:o}){let s=e.stackSave(),r=e.stackAlloc(4),O=e._ocgapiDuelGetMessage(o,r),c=e.getValue(r,"i32");e.stackRestore(s);',
++      'duelGetMessage(__h){let o=__h[D];let s=e.stackSave(),r=e.stackAlloc(4),O=e._ocgapiDuelGetMessage(o,r),c=e.getValue(r,"i32");e.stackRestore(s);let __raw=globalThis.__ocgRawHook?e.HEAPU8.slice(O,O+c):null;globalThis.__ocgLastRaw=__raw;');
++  rep('E.push(R)}return E},duelSetResponse({[D]:o},s){',
++      'E.push(R)}if(__raw)globalThis.__ocgRawHook(__h,__raw);return E},'+
++      'duelQueryLocationRaw({[D]:o},s){let r=new H(24,!0);r.u32(s.flags),r.u8(s.controller),r.u32(s.location),r.u32(0),r.u32(0);let O=e.stackSave();try{let c=r.get(4),a=e.stackAlloc(c.byteLength);e.HEAP8.set(c,a);let E=e.stackAlloc(4),i=e._ocgapiDuelQueryLocation(o,E,a),T=e.getValue(E,"i32");return e.HEAPU8.slice(i,i+T)}finally{e.stackRestore(O)}},'+
++      'duelQueryRaw({[D]:o},s){let r=new H(24,!0);r.u32(s.flags),r.u8(s.controller),r.u32(s.location),r.u32(s.sequence),r.u32(0);let O=e.stackSave();try{let c=r.get(4),a=e.stackAlloc(c.byteLength);e.HEAP8.set(c,a);let E=e.stackAlloc(4),i=e._ocgapiDuelQuery(o,E,a),T=e.getValue(E,"i32");return e.HEAPU8.slice(i,i+T)}finally{e.stackRestore(O)}},'+
++      'duelSetResponse({[D]:o},s){')}
++ if(fixes){
++  rep('case 36:return{type:t,location:e.u8(),cards:Array.from({length:e.u32()},()=>({from:p(e),to:p(e)}))};',
++      'case 36:{let l=e.u8(),n=e.u8(),f=Array.from({length:n},()=>p(e)),g=Array.from({length:n},()=>p(e));return{type:t,location:l,cards:f.map((x,i)=>({from:x,to:g[i]}))}}');
++  const card='()=>({code:e.u32(),controller:e.u8(),location:e.u8(),sequence:e.u32(),amount:e.u32()})',fixed='()=>({code:e.u32(),controller:e.u8(),location:e.u8(),sequence:e.u32(),position:e.u32(),amount:e.u32()})';
++  rep('selects:Array.from({length:e.u32()},'+card+'),selects_must:Array.from({length:e.u32()},'+card+')}',
++      'selects_must:Array.from({length:e.u32()},'+fixed+'),selects:Array.from({length:e.u32()},'+fixed+')}')}
++ if(audit)rep('R=te(T);if(!R){','R=te(T);if(R&&T.avail>0)(globalThis.__ocgParseLeftover??=[]).push({type:R.type,left:T.avail});if(!R){');
++ return s}
+diff --git a/tools/windbot/match.mjs b/tools/windbot/match.mjs
+new file mode 100644
+index 0000000..414e80b
+--- /dev/null
++++ b/tools/windbot/match.mjs
+@@ -0,0 +1,56 @@
++// r37 our AI vs WindBot - one duel (Claude as builder, 7 Nov 2026; Kevy 21:53/21:57 AEDT). SELF-VERIFIED.
++// Seat `--wb-seat` is played by the unmodified WindBot (its scripted executor for the deck) through tools/windbot/bridge.mjs;
++// the other seat is played by OUR AI (OptimalPilot, the same pilots and search settings as tools/r36-h2h.mjs: search on,
++// world pool, node budget 400, per-decision deadline, Enhanced or Classic recipe). Both seats use WindBot's own decklist for
++// that executor (mirror match), so neither side plays a list its logic was not written for. Writes ONE JSONL row.
++// Usage: node tools/windbot/match.mjs --executor SkyStriker --ydk AI_SkyStriker --wb-seat 1 --first 0 --seed 71001
++//          [--mode enhanced] [--deadline-ms 1500] [--max-turn 30] [--out rows.jsonl] [--log]
++//        environment: WINDBOT_DIR (built WindBot + cards.cdb + Decks), DOTNET (dotnet executable), BRIDGE_TREE (scratch dir)
++import fs from 'node:fs';import zlib from 'node:zlib';import path from 'node:path';import crypto from 'node:crypto';import {fileURLToPath,pathToFileURL} from 'node:url';
++import {makeBridgeTree,WindBotSeat,WasmWindBotSeat,EdoRouter,decodeResponse,readYdk,importTree} from './bridge.mjs';
++const arg=(k,v)=>{const i=process.argv.indexOf('--'+k);return i>0?process.argv[i+1]:v},flag=k=>process.argv.includes('--'+k);
++const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
++const WB=process.env.WINDBOT_DIR,DOTNET=process.env.DOTNET||'dotnet',TREE=process.env.BRIDGE_TREE;if(!WB||!TREE)throw Error('set WINDBOT_DIR and BRIDGE_TREE');
++const executor=arg('executor','SkyStriker'),ydk=arg('ydk','AI_'+executor),wbSeat=+arg('wb-seat',1),first=+arg('first',0),seed=+arg('seed',71001),mode=arg('mode','enhanced'),deadlineMs=+arg('deadline-ms',1500),maxTurn=+arg('max-turn',30),out=arg('out',null);
++const ourSeat=1-wbSeat,sha=b=>crypto.createHash('sha256').update(b).digest('hex'),log=flag('log')?(...a)=>console.error(...a):()=>{};
++if(!fs.existsSync(path.join(TREE,'dist/core/index.js'))||flag('rebuild-tree'))makeBridgeTree(repo,TREE);
++const {Duel,M}=await importTree(TREE,'duel.mjs');const {setAiMode,midgameLabel}=await importTree(TREE,'ai/midgame-flags.mjs');const {S4}=await importTree(TREE,'ai/s4-flags.mjs');
++setAiMode(mode);const modeLabel=mode+' '+midgameLabel()+' S4 '+JSON.stringify({...S4});
++const db=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(TREE,'dist/cards.json.gz')))),scripts=JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(TREE,'dist/scripts.json.gz'))));
++// --site-deck <id>: both seats play the SITE's list (decks.json, TCG 19 Oct 2026 variant) instead of WindBot's own list; it is
++// written to WindBot's Decks folder as DDL_<id>.ydk so the bot submits the same cards.
++const siteDeck=arg('site-deck',null);if(siteDeck){const all=JSON.parse(fs.readFileSync(path.join(repo,'dist/decks.json'),'utf8')).decks,dk=all.find(x=>x.id===siteDeck);if(!dk)throw Error('no site deck '+siteDeck);const v=dk.banlistVariants?.['tcg-2026-10-19']||dk;
++ const {toYdk}=await import('../../dist/windbot/edo.mjs');fs.writeFileSync(path.join(WB,'Decks','DDL_'+siteDeck+'.ydk'),toYdk({main:v.main,extra:v.extra,side:[]}))}
++const ydkName=siteDeck?'DDL_'+siteDeck:ydk;
++const list=readYdk(path.join(WB,'Decks',ydkName+'.ydk')),deck=(name)=>({id:'wb-'+executor,name,main:[...list.main],extra:[...list.extra]});
++const missing=[...list.main,...list.extra].filter(c=>!db[c]);if(missing.length)throw Error('cards not in the engine database: '+missing);
++let deadline=Infinity;const shouldStop=()=>performance.now()>=deadline;
++const {createOptimalPilots}=await importTree(TREE,'optimal-pilot.mjs'),{createSearchCore}=await importTree(TREE,'ai/engine-snapshot.mjs');
++const pilot=createOptimalPilots({seed,nodeBudget:400,searchCore:await createSearchCore(db,scripts),worldPool:true,poolKey:'wb:'+seed+':'+ourSeat,poolSize:10,seatCapBytes:40*1048576,shouldStop})[ourSeat];
++const row={tool:'r37-windbot-match',seed,first,executor,ydk,wbSeat,ourSeat,mode:modeLabel,deadlineMs,maxTurn,node:process.version,siteDeck,ydkSha256:sha(fs.readFileSync(path.join(WB,'Decks',ydkName+'.ydk'))),
++ windbotDllSha256:sha(fs.readFileSync(path.join(WB,'WindBot.dll'))),bridgeSha256:sha(fs.readFileSync(path.join(repo,'tools/windbot/bridge.mjs'))),matchSha256:sha(fs.readFileSync(fileURLToPath(import.meta.url)))};
++// --wasm: the browser build of the same WindBot (tools/windbot/web), in-process, Program.Rand seeded with the duel seed
++const wasmDir=arg('wasm',null),wasmExports=wasmDir?await WasmWindBotSeat.load(wasmDir,db):null;row.engineOfBot=wasmDir?'wasm':'native';
++let wasmOut='';const realLog=console.log;if(wasmDir)console.log=(...a)=>{wasmOut+=a.join(' ')+'\n'};
++const t0=Date.now(),wb=wasmDir?new WasmWindBotSeat({exports:wasmExports,executor,deckName:ydkName,ydk:fs.readFileSync(path.join(WB,'Decks',ydkName+'.ydk'),'utf8'),dialog:fs.readFileSync(path.join(WB,'Dialogs/default.json'),'utf8'),seed}):new WindBotSeat({windbotDir:WB,dotnet:DOTNET,executor,deckFile:ydkName,log});let d=null,router=null,decisions=[0,0],wbRetries=0,end='running',err=null,wbDeck=null;
++try{
++ await wb.connect();d=await Duel.create(db,scripts);
++ // the bot's engine team: the engine's team 0 moves first
++ const W=wbSeat===first?0:1,{D}=await importTree(TREE,'core/index.js').then(m=>({D:m.OcgDuelMode}));
++ const flags=D.MODE_MR5|(D.TCG_SEGOC_NONPUBLIC||0n)|(D.TCG_SEGOC_FIRSTTRIGGER||0n);
++ wbDeck=await wb.lobby({duelFlags:flags,position:W});{const said=(wasmDir?wasmOut:wb.stdout||'').match(/Deck (not )?found, loading[^\n]*/)?.[0]||'(no executor line)';row.executorLoaded=said;if(!/^Deck found, loading /.test(said))throw Error('WindBot did not load executor '+executor+': '+said)}row.wbDeckMatchesYdk=JSON.stringify(wbDeck.cards)===JSON.stringify([...list.main,...list.extra]);
++ globalThis.__ocgRawHook=(h,raw)=>{if(!d||h!==d.handle)return;if(!router){router=new EdoRouter(d.core,h,W,b=>wb.gameMsg(b));router.startCounts=[[list.main.length,list.extra.length],[list.main.length,list.extra.length]];
++   router.begin([[list.main.length,list.extra.length],[list.main.length,list.extra.length]])}
++  router.batch(raw)};
++ const decks=[deck(wbSeat===0?'WindBot':'Our AI'),deck(wbSeat===1?'WindBot':'Our AI')];d.start(decks,{seed,first});if(d.toEngine(wbSeat)!==W)throw Error('seat mapping mismatch');
++ while(d.prompt&&!d.finished){if(d.turn>maxTurn){end='turn cap';break}if(wb.closed){end='windbot disconnected';break}
++  const m=d.prompt,s=m.seat;decisions[s]++;
++  if(s===ourSeat){deadline=performance.now()+deadlineMs;const plan=pilot.plan(d);deadline=Infinity;if(!plan?.response){end='no response (ours)';row.noResponse={type:m.type,turn:d.turn,phase:d.phase??null,plan:plan?Object.keys(plan):null,prompt:JSON.stringify(m,(k,v)=>typeof v==='bigint'?String(v):v).slice(0,1500),lastRawBatch:globalThis.__ocgLastRaw?Buffer.from(globalThis.__ocgLastRaw).toString('hex').slice(0,4000):null};break}const before=d.retries;d.respond(plan.response);if(d.retries===before)pilot.observe(plan)}
++  else{const raw=await wb.next(1,120000)/* wasm: already queued by the prompt */,resp=decodeResponse(m.type,raw,m),before=d.retries;d.respond(resp);
++   if(d.retries>before){wbRetries++;log('[retry] windbot response rejected',m.type,JSON.stringify(resp,(k,v)=>typeof v==='bigint'?String(v):v));if(wbRetries>5){end='windbot retries';break}if(router.lastPrompt)wb.gameMsg(router.lastPrompt)}}}
++ if(end==='running')end=d.finished?(d.winReason!=null?'win reason '+d.winReason:'finished'):'stopped';
++}catch(e){err=String(e?.stack||e).split('\n').slice(0,4).join(' | ');end='error';console.error('[match error] '+(e?.stack||e)+'\n[last prompt type] '+d?.prompt?.type+'\n[last raw batch] '+(()=>{const b=globalThis.__ocgLastRaw?Buffer.from(globalThis.__ocgLastRaw):null;if(!b)return 'none';const out=[];let o=0;while(o+4<=b.length){const n=b.readUInt32LE(o);out.push(b[o+4]+':'+b.subarray(o+4,o+4+n).toString('hex'));o+=4+n}return out.join(' ')})())}
++finally{globalThis.__ocgRawHook=null;try{d?.stop()}catch{}await wb.close().catch(()=>{})}
++Object.assign(row,{winner:d?.finished&&d.winner!=null?(d.winner===wbSeat?'windbot':'ours'):null,end,turns:d?.turn??null,lp:d?.lp??null,decisions:{ours:decisions[ourSeat],windbot:decisions[wbSeat]},
++ safety:{ourRetries:(d?.retries??0)-wbRetries,wbRetries,errors:d?.errors??[],error:err},messagesToWindbot:router?.count??0,parseLeftovers:(globalThis.__ocgParseLeftover||[]).reduce((o,x)=>(o[x.type]=(o[x.type]||0)+1,o),{}),packetsFromWindbot:wb.received,wbExit:wb.exitCode??null,wallSec:Math.round((Date.now()-t0)/1000)});
++console.log=realLog;const line=JSON.stringify(row);if(out)fs.appendFileSync(out,line+'\n');console.log(line);process.exit(0);
+diff --git a/tools/windbot/web/.gitignore b/tools/windbot/web/.gitignore
+new file mode 100644
+index 0000000..c6e49ef
+--- /dev/null
++++ b/tools/windbot/web/.gitignore
+@@ -0,0 +1,2 @@
++obj/
++bin/
+diff --git a/tools/windbot/web/WebBot.cs b/tools/windbot/web/WebBot.cs
+new file mode 100644
+index 0000000..3a738e3
+--- /dev/null
++++ b/tools/windbot/web/WebBot.cs
+@@ -0,0 +1,170 @@
++// r37 WindBot in the browser: the JavaScript-facing entry point and the desktop replacements (Claude as builder, 7 Nov 2026).
++// WindBot's own GameBehavior (unchanged) receives each server packet exactly as it would from a TCP socket, and whatever it
++// would have sent back is collected and returned to JavaScript. Nothing in WindBot's decision code is touched.
++using System;
++using System.Collections.Generic;
++using System.Data;
++using System.IO;
++using System.Runtime.InteropServices.JavaScript;
++using WindBot.Game;
++using YGOSharp.Network.Enums;
++using YGOSharp.Network.Utils;
++using YGOSharp.OCGWrapper;
++
++namespace WindBot
++{
++    public static class Program
++    {
++        public static string AssetPath = "/wb/";
++        // WindBot's executors call Program.Rand for random choices. Desktop WindBot seeds it from the clock; here it is seeded
++        // per duel (WebBot.Create) so a watched duel can be replayed exactly.
++        public static Random Rand = new Random(1);
++    }
++
++    public static partial class WebBot
++    {
++        private static readonly Dictionary<int, GameClient> Bots = new Dictionary<int, GameClient>();
++        private static int _next = 1;
++        private static bool _cardsLoaded;
++
++        // rows: one card per line, tab-separated: id ot alias setcode type level race attribute atk def name
++        [JSExport]
++        public static int LoadCards(string rows)
++        {
++            var table = new DataTable();
++            foreach (var (n, t) in new (string, Type)[] { ("id", typeof(int)), ("ot", typeof(int)), ("alias", typeof(int)), ("setcode", typeof(long)), ("type", typeof(long)), ("level", typeof(long)), ("race", typeof(long)), ("attribute", typeof(long)), ("atk", typeof(int)), ("def", typeof(int)), ("name", typeof(string)), ("desc", typeof(string)) })
++                table.Columns.Add(n, t);
++            foreach (var line in rows.Split('\n'))
++            {
++                if (line.Length == 0) continue;
++                var f = line.Split('\t');
++                table.Rows.Add(int.Parse(f[0]), int.Parse(f[1]), int.Parse(f[2]), long.Parse(f[3]), long.Parse(f[4]), long.Parse(f[5]), long.Parse(f[6]), long.Parse(f[7]), int.Parse(f[8]), int.Parse(f[9]), f[10], "");
++            }
++            using (var reader = table.CreateDataReader())
++                while (reader.Read()) { CardsManager.Add(reader); NamedCardsManager.Add(reader); }
++            _cardsLoaded = true;
++            return table.Rows.Count;
++        }
++
++        // Creates one bot. ydk = the deck file text; dialog = the Dialogs/default.json text. Returns the bot id.
++        [JSExport]
++        public static int Create(string executor, string deckName, string ydk, string dialog, int seed)
++        {
++            if (!_cardsLoaded) throw new Exception("LoadCards first");
++            Directory.CreateDirectory(Program.AssetPath + "Decks");
++            Directory.CreateDirectory(Program.AssetPath + "Dialogs");
++            File.WriteAllText(Program.AssetPath + "Decks/" + deckName + ".ydk", ydk);
++            File.WriteAllText(Program.AssetPath + "Dialogs/default.json", dialog);
++            Program.Rand = new Random(seed);
++            DecksManager.Init();
++            var client = new GameClient(executor, deckName);
++            int id = _next++;
++            Bots[id] = client;
++            return id;
++        }
++
++        // One server packet in (STOC id byte + body, no length prefix); every packet the bot sends back, each with its u16 length.
++        [JSExport]
++        public static byte[] Packet(int id, byte[] packet)
++        {
++            var client = Bots[id];
++            client.Connection.Out.Clear();
++            using (var reader = new BinaryReader(new MemoryStream(packet)))
++                client.Behavior.OnPacket(reader);
++            var ms = new MemoryStream();
++            foreach (var p in client.Connection.Out)
++            {
++                ms.WriteByte((byte)(p.Length & 0xff)); ms.WriteByte((byte)(p.Length >> 8)); ms.Write(p, 0, p.Length);
++            }
++            return ms.ToArray();
++        }
++
++        // What the bot sends when it connects (PLAYER_INFO + JOIN_GAME), framed like Packet's output.
++        [JSExport]
++        public static byte[] Hello(int id)
++        {
++            var client = Bots[id];
++            client.Connection.Out.Clear();
++            client.SendHello();
++            var ms = new MemoryStream();
++            foreach (var p in client.Connection.Out) { ms.WriteByte((byte)(p.Length & 0xff)); ms.WriteByte((byte)(p.Length >> 8)); ms.Write(p, 0, p.Length); }
++            return ms.ToArray();
++        }
++
++        [JSExport]
++        public static void Dispose(int id) { Bots.Remove(id); }
++
++        public static void Main() { }
++    }
++}
++
++namespace YGOSharp.Network
++{
++    // Replaces the TCP client: GameBehavior calls Send(...) exactly as before; the bytes are kept for JavaScript.
++    public class YGOClient
++    {
++        public readonly List<byte[]> Out = new List<byte[]>();
++        public bool Closed;
++        public bool IsConnected => !Closed;
++        public void Send(byte[] packet) { Out.Add(packet); }
++        public void Send(BinaryWriter writer) { Send(((MemoryStream)writer.BaseStream).ToArray()); }
++        public void Send(CtosMessage message) { using (var w = new BinaryWriter(new MemoryStream())) { w.Write((byte)message); Send(w); } }
++        public void Send(CtosMessage message, byte value) { using (var w = new BinaryWriter(new MemoryStream())) { w.Write((byte)message); w.Write(value); Send(w); } }
++        public void Send(CtosMessage message, int value) { using (var w = new BinaryWriter(new MemoryStream())) { w.Write((byte)message); w.Write(value); Send(w); } }
++        public void Send(CtosMessage message, long value) { using (var w = new BinaryWriter(new MemoryStream())) { w.Write((byte)message); w.Write(value); Send(w); } }
++        public void Close(Exception error = null) { Closed = true; }
++    }
++}
++
++namespace WindBot.Game
++{
++    // Replaces the desktop GameClient (sockets, DNS): the same members GameBehavior uses.
++    public class GameClient
++    {
++        public YGOSharp.Network.YGOClient Connection { get; private set; }
++        public GameBehavior Behavior { get; private set; }
++        public string Username = "WindBot";
++        public string Deck, DeckFile, Dialog = "default";
++        public int Hand = 0;
++        public bool Debug = false, _chat = false;
++        public GameClient(string executor, string deckFile)
++        {
++            Deck = executor; DeckFile = deckFile;
++            Connection = new YGOSharp.Network.YGOClient();
++            Behavior = new GameBehavior(this);
++        }
++        public void SendHello()
++        {
++            var packet = GamePacketFactory.Create(CtosMessage.PlayerInfo);
++            packet.WriteUnicode(Username, 20);
++            Connection.Send(packet);
++            packet = GamePacketFactory.Create(CtosMessage.JoinGame);
++            packet.Write((short)0); packet.Write(new byte[] { 0xAA, 0xBB }); packet.Write(0); packet.WriteUnicode("", 20); packet.Write(0);
++            Connection.Send(packet);
++        }
++        public void Chat(string message, bool forced) { }
++        public void Surrender() { Connection.Send(CtosMessage.Surrender); }
++        public void Log(string message, int type) { if (type == 0 || Debug) Logger.WriteLine(message); }
++    }
++}
++
++namespace YGOSharp.OCGWrapper
++{
++    // Replaces the SQLite readers: the rows come from the site's card data (WebBot.LoadCards), same column order as the cdb query.
++    internal static class CardsManager
++    {
++        private static readonly Dictionary<int, Card> _cards = new Dictionary<int, Card>();
++        internal static void Init(string unused) { }
++        internal static void Add(IDataRecord r) { var c = new Card(r); _cards[c.Id] = c; }
++        internal static Card GetCard(int id) { return _cards.TryGetValue(id, out var c) ? c : null; }
++    }
++    public static class NamedCardsManager
++    {
++        private static readonly Dictionary<long, NamedCard> _cards = new Dictionary<long, NamedCard>();
++        public static void SetThreadSafe() { }
++        public static void LoadDatabase(string unused) { }
++        internal static void Add(IDataRecord r) { var c = new NamedCard(r); _cards[c.Id] = c; }
++        internal static NamedCard GetCard(long id) { return _cards.TryGetValue(id, out var c) ? c : null; }
++        public static IList<NamedCard> GetAllCards() { return new List<NamedCard>(_cards.Values); }
++    }
++}
+diff --git a/tools/windbot/web/WindBotWeb.csproj b/tools/windbot/web/WindBotWeb.csproj
+new file mode 100644
+index 0000000..87c5842
+--- /dev/null
++++ b/tools/windbot/web/WindBotWeb.csproj
+@@ -0,0 +1,43 @@
++<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
++  <!-- r37 WindBot in the browser (Claude as builder, 7 Nov 2026; Kevy: pick our AI for Deck A and WindBot for Deck B and watch
++       it live). Compiles the UNMODIFIED WindBot game logic + executors (ProjectIgnis/windbot, AGPL-3.0-or-later) for .NET browser-wasm.
++       Only the parts that need a desktop are replaced: the TCP client (packets go to/from JavaScript instead), the SQLite card
++       database (the site's own card data is loaded instead), and the Program statics. Build:
++       dotnet publish tools/windbot/web/WindBotWeb.csproj -c Release -p:WindBotSrc=<path to windbot checkout> -->
++  <PropertyGroup>
++    <TargetFramework>net8.0</TargetFramework>
++    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
++    <Nullable>disable</Nullable>
++    <ImplicitUsings>enable</ImplicitUsings>
++    <InvariantGlobalization>true</InvariantGlobalization>
++    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
++    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
++    <RootNamespace>WindBot</RootNamespace>
++    <AssemblyName>WindBotWeb</AssemblyName>
++    <OutputType>Exe</OutputType>
++    <WasmEnableThreads>false</WasmEnableThreads>
++    <PublishTrimmed>true</PublishTrimmed>
++    <TrimMode>partial</TrimMode>
++    <NoWarn>CS0414;CS0168;CS0219;CS0162;CS0649;CS0169;CS8632</NoWarn>
++  </PropertyGroup>
++  <ItemGroup>
++    <!-- executors are found by reflection (DeckAttribute), so the trimmer must keep them -->
++    <TrimmerRootAssembly Include="WindBotWeb" />
++  </ItemGroup>
++  <ItemGroup>
++    <Compile Include="*.cs" />
++    <Compile Include="$(WindBotSrc)/ExecutorBase/Game/**/*.cs" />
++    <Compile Include="$(WindBotSrc)/ExecutorBase/YGOSharp.OCGWrapper.Enums/*.cs" />
++    <Compile Include="$(WindBotSrc)/ExecutorBase/YGOSharp.OCGWrapper/Card.cs" />
++    <Compile Include="$(WindBotSrc)/ExecutorBase/YGOSharp.OCGWrapper/NamedCard.cs" />
++    <Compile Include="$(WindBotSrc)/Game/AI/Deck.cs" />
++    <Compile Include="$(WindBotSrc)/Game/AI/Decks/*.cs" />
++    <Compile Include="$(WindBotSrc)/Game/DecksManager.cs" />
++    <Compile Include="$(WindBotSrc)/Game/GameBehavior.cs" />
++    <Compile Include="$(WindBotSrc)/Game/GamePacketFactory.cs" />
++    <Compile Include="$(WindBotSrc)/Game/Room.cs" />
++    <Compile Include="$(WindBotSrc)/Logger.cs" />
++    <Compile Include="$(WindBotSrc)/YGOSharp.Network/Enums/*.cs" />
++    <Compile Include="$(WindBotSrc)/YGOSharp.Network/Utils/BinaryExtensions.cs" />
++  </ItemGroup>
++</Project>

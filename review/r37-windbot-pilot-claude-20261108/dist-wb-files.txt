@@ -1,0 +1,43 @@
+ .../_framework/System.Collections.Concurrent.wasm  | Bin 0 -> 18709 bytes
+ .../_framework/System.Collections.NonGeneric.wasm  | Bin 0 -> 12565 bytes
+ .../_framework/System.Collections.Specialized.wasm | Bin 0 -> 11029 bytes
+ dist/wb/_framework/System.Collections.wasm         | Bin 0 -> 34069 bytes
+ .../System.ComponentModel.Primitives.wasm          | Bin 0 -> 11029 bytes
+ .../System.ComponentModel.TypeConverter.wasm       | Bin 0 -> 112405 bytes
+ dist/wb/_framework/System.ComponentModel.wasm      | Bin 0 -> 4373 bytes
+ dist/wb/_framework/System.Console.wasm             | Bin 0 -> 14101 bytes
+ dist/wb/_framework/System.Data.Common.wasm         | Bin 0 -> 485141 bytes
+ .../System.Diagnostics.DiagnosticSource.wasm       | Bin 0 -> 20245 bytes
+ .../_framework/System.Diagnostics.TraceSource.wasm | Bin 0 -> 8469 bytes
+ dist/wb/_framework/System.Drawing.Primitives.wasm  | Bin 0 -> 34581 bytes
+ dist/wb/_framework/System.Drawing.wasm             | Bin 0 -> 4373 bytes
+ dist/wb/_framework/System.Linq.Expressions.wasm    | Bin 0 -> 343317 bytes
+ dist/wb/_framework/System.Linq.wasm                | Bin 0 -> 45845 bytes
+ dist/wb/_framework/System.Net.Http.wasm            | Bin 0 -> 134421 bytes
+ dist/wb/_framework/System.Net.Primitives.wasm      | Bin 0 -> 6421 bytes
+ dist/wb/_framework/System.ObjectModel.wasm         | Bin 0 -> 5397 bytes
+ dist/wb/_framework/System.Private.CoreLib.wasm     | Bin 0 -> 1754389 bytes
+ .../System.Private.DataContractSerialization.wasm  | Bin 0 -> 399637 bytes
+ dist/wb/_framework/System.Private.Uri.wasm         | Bin 0 -> 72981 bytes
+ dist/wb/_framework/System.Private.Xml.Linq.wasm    | Bin 0 -> 34581 bytes
+ dist/wb/_framework/System.Private.Xml.wasm         | Bin 0 -> 1215253 bytes
+ .../System.Runtime.InteropServices.JavaScript.wasm | Bin 0 -> 38165 bytes
+ dist/wb/_framework/System.Runtime.Numerics.wasm    | Bin 0 -> 85269 bytes
+ .../System.Runtime.Serialization.Formatters.wasm   | Bin 0 -> 5909 bytes
+ .../System.Runtime.Serialization.Json.wasm         | Bin 0 -> 3861 bytes
+ .../System.Runtime.Serialization.Primitives.wasm   | Bin 0 -> 6933 bytes
+ .../System.Runtime.Serialization.Xml.wasm          | Bin 0 -> 3861 bytes
+ dist/wb/_framework/System.Runtime.wasm             | Bin 0 -> 6933 bytes
+ .../_framework/System.Security.Cryptography.wasm   | Bin 0 -> 17173 bytes
+ .../_framework/System.Text.RegularExpressions.wasm | Bin 0 -> 136981 bytes
+ dist/wb/_framework/System.Xml.Linq.wasm            | Bin 0 -> 3861 bytes
+ dist/wb/_framework/System.wasm                     | Bin 0 -> 3861 bytes
+ dist/wb/_framework/WindBotWeb.wasm                 | Bin 0 -> 1712405 bytes
+ dist/wb/_framework/blazor.boot.json                |  56 ++++++++++++++++
+ dist/wb/_framework/dotnet.js                       |   4 ++
+ .../_framework/dotnet.native.8.0.33.lt7zkvdfh6.js  |  17 +++++
+ dist/wb/_framework/dotnet.native.wasm              | Bin 0 -> 1401522 bytes
+ .../_framework/dotnet.runtime.8.0.33.uxdu3a7byn.js |   4 ++
+ dist/wb/default.json                               |  74 +++++++++++++++++++++
+ dist/wb/windbot-source.zip                         | Bin 0 -> 2021889 bytes
+ 42 files changed, 155 insertions(+)
