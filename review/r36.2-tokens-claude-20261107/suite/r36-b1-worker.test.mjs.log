@@ -1,0 +1,9 @@
+ok 1 carryRemovalIntent: exact activation, same seat -> intent kept (a copy of the plan; input not mutated)
+ok 2 carryRemovalIntent: different response / other seat / no baseline intent / plan already has one -> unchanged
+ok 3 worker.mjs: the cap fallback carries only when an aggregated plan was chosen and the duel is Enhanced; observe only after an accepted response; stale ids/revisions dropped
+ok 4 first=0: Enhanced - public baseline arms removal; capped plan with the SAME response WITHOUT carry loses it (RELAY-108 defect), WITH carry keeps it and the follow-up runs
+ok 5 first=0: a capped plan with a DIFFERENT response is not given the intent
+ok 6 first=1: Enhanced - public baseline arms removal; capped plan with the SAME response WITHOUT carry loses it (RELAY-108 defect), WITH carry keeps it and the follow-up runs
+ok 7 first=1: a capped plan with a DIFFERENT response is not given the intent
+ok 8 Classic: the baseline arms no removal intent at the same position, so the carry has nothing to keep
+r36 B1 worker-state tests: 8 passed

@@ -1,0 +1,50 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "play": {
+   "during": [
+    {
+     "img": "art/73915052.jpg",
+     "tag": "TOKEN",
+     "ms": "1000ms"
+    },
+    {
+     "img": "art/73915052.jpg",
+     "tag": "TOKEN",
+     "ms": "1000ms"
+    },
+    {
+     "img": "art/73915052.jpg",
+     "tag": "TOKEN",
+     "ms": "1000ms"
+    },
+    {
+     "img": "art/73915052.jpg",
+     "tag": "TOKEN",
+     "ms": "1000ms"
+    }
+   ],
+   "after": 0,
+   "nonToken": 0,
+   "errors": [],
+   "pass": true
+  },
+  "instant": {
+   "during": 0,
+   "errors": [],
+   "pass": true
+  },
+  "real": {
+   "a": "sky",
+   "b": "branded",
+   "seed": "71040",
+   "first": "1",
+   "spawns": [],
+   "fieldTokenImgs": [],
+   "textOnlyTokens": [],
+   "errors": [],
+   "pass": false
+  }
+ },
+ "pass": false
+}

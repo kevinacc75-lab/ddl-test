@@ -1,0 +1,7 @@
+ok 1 every token a preset deck can make shows the official card image (YGOPRODeck, unedited, hash-recorded) - plus Scapegoat's four Sheep Tokens; Scapegoat Token uses a Sheep Token image; all precached
+ok 2 token-cards.json lists exactly the Token-type cards of cards.json.gz, and only tokens get art entries
+ok 3 applyTokenArt: own image or the generic card for every token; cards with art and non-tokens untouched
+ok 4 display only: cards.json.gz and scripts.json.gz are byte-identical to r36.1 (engine / AI / gate database unchanged)
+ok 5 token-fx is loaded and precached; it listens only for summon presentation events and checks the token list
+ok 6 token-fx timing: none at Instant, a short fade for reduced motion, full otherwise
+r36 token card tests: 6 passed

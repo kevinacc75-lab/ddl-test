@@ -1,0 +1,9 @@
+ok 1 Enhanced duel: match info and module state are the Enhanced recipe; the exported replay carries aiMode enhanced and the build string
+ok 2 Classic duel (started right after Enhanced): Classic recipe, replay aiMode classic
+ok 3 import honours explicit aiMode enhanced (after a Classic duel)
+ok 4 legacy replay without aiMode (and without build) imports as Classic, right after an Enhanced import
+ok 5 import honours explicit aiMode classic (after the Enhanced import path was used)
+ok 6 an unknown aiMode is refused (no guess)
+ok 7 a new Enhanced duel after a Classic import runs Enhanced again (no stale state either way)
+ok 8 app.mjs: the replay file decides the mode (explicit enhanced/classic, missing = Classic, unknown refused); the dropdown is used only for new duels
+r36 replay mode tests: 8 passed

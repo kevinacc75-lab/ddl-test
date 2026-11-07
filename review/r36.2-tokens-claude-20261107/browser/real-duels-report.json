@@ -1,0 +1,19 @@
+{
+ "url": "http://127.0.0.1:8761/index.html",
+ "parts": {
+  "real": {
+   "a": "sky",
+   "b": "luna",
+   "seed": "71045",
+   "first": "0",
+   "pace": "broadcast",
+   "spawns": [],
+   "fieldTokenImgs": [],
+   "textOnlyTokens": [],
+   "errors": [],
+   "turnAtEnd": "Moonlit Hunt wins",
+   "pass": false
+  }
+ },
+ "pass": false
+}

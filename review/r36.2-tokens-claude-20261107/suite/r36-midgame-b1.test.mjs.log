@@ -1,0 +1,13 @@
+ok 1 Droplet over-claim (FAILED before): 2000 vs a 3000 Effect Monster at 2000 LP; halved to 1500 the line is 500 damage, not lethal -> no pick
+ok 2 Droplet passing case: 2000+2000 vs a 3000 Effect Monster at 2500 LP, spare hand card pays the cost -> halve to 1500, attack over it, then direct = lethal
+ok 3 Droplet chooses Effect Monsters only (FAILED before): blocker is a Normal Monster (Dark Magician) -> no pick
+ok 4 Droplet vs "Unaffected by your opponent's activated monster and Spell effects" (REBD Exceed) (FAILED before) -> no pick
+ok 5 untargetable + "cannot be destroyed by card effects" blocker (Red-Eyes Dark Dragoon) vs Afterburners! (targets, destroys) (FAILED before) -> no pick
+ok 6 same blocker vs Mirrorjade (banish, non-targeting, cost from the Extra Deck) -> pick, banish, lethal
+ok 7 Dragoon destroy (non-targeting) on the untargetable+indestructible blocker -> no pick; on an unprotected one -> pick
+ok 8 two blockers: only Albion is hittable by Afterburners! (Dragoon protected); Dragoon still walls the 2000 attacker -> no pick
+ok 9 Droplet cost must come from an attacker (FAILED before): only Droplet in hand, no other S/T; 2000+2000 vs 3000 at 2500 LP -> worst-case cost drops an attacker, 500 damage, no pick
+ok 10 Droplet cost from an attacker still leaves lethal: 2000+2000+2000 vs 3000 at 2500 LP -> pick, cost named
+ok 11 Widow Anchor with fewer than 3 Spells in the GY is negation only (FAILED before) -> no pick; with 3 Spells -> take control (removal) pick
+ok 12 flags off: no removal pick at all
+r36-midgame-b1 tests: 12 passed
