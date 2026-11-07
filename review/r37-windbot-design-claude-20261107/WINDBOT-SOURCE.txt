@@ -1,0 +1,9 @@
+ProjectIgnis/windbot bffe6b62679c8b2fafea8f59740e03a132517da4
+ed2e7d83f3a93d87cfd09e45b23ae7947c22232d31361e0893e206de60532bde  windbot-bin/WindBot.dll
+26b49de9002cee5300c8e45e291dfb08ba13c858e3d1ebaa4ba2112464167a16  windbot-bin/cards.cdb
+ad4e49d894501dc305f57f71a23371fced2882d3c4a615bd6d7a0b793caf78c2  Decks/AI_SkyStriker.ydk
+467e21e3646ca8f6eb6b8a8846a36b6ea4fbe7b71866b5633c6f376ed9a437a1  Decks/AI_Kashtira.ydk
+592c765a10758ddfcae20fec40ccea7eea42bb1e12fdf2a827165597fa059a71  Decks/AI_BlueEyes.ydk
+e8f40b6fef35658b18d17703bde6225c073034d8c1dca96bd16963413df95872  Decks/AI_BE2025.ydk
+18bb3aa3dc7fff106b73387a480bd773e82e5ddd2b26b583b2439a7011b724ab  Decks/AI_Albaz.ydk
+built: dotnet 8.0.427, net8/WindBot.csproj -c Release -p:PublishAot=false; cards.cdb = raw.githubusercontent.com/ProjectIgnis/BabelCDB/master/cards.cdb (7 Nov)
