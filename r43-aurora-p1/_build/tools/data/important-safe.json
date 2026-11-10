@@ -1,0 +1,590 @@
+[
+{
+"id": 4271,
+"src": "body.in-duel #duel{padding:0!important}"
+},
+{
+"id": 5156,
+"src": "#event-stage[data-spotlight=true] .event-copy{min-width:0!important}"
+},
+{
+"id": 5336,
+"src": "body.in-duel.tablet-stage #duel .duel-table{max-width:none!important}"
+},
+{
+"id": 5337,
+"src": "body.in-duel.tablet-stage #duel .duel-table{width:100%!important}"
+},
+{
+"id": 5338,
+"src": "body.in-duel.tablet-stage #duel .duel-table{height:100%!important}"
+},
+{
+"id": 5340,
+"src": "body.in-duel.tablet-stage #duel #arena-scroll{overflow:visible!important}"
+},
+{
+"id": 5348,
+"src": "body.in-duel.tablet-stage #duel .pile-col{grid-row:1!important}"
+},
+{
+"id": 5353,
+"src": "body.in-duel.tablet-stage #duel .player-bar{max-width:none!important}"
+},
+{
+"id": 5379,
+"src": "body.in-duel.tablet-stage #duel .opponent-hand{height:100px!important}"
+},
+{
+"id": 5386,
+"src": "body.in-duel.tablet-stage #duel .phase-tracker span{font-size:16px!important}"
+},
+{
+"id": 5391,
+"src": "body.in-duel.tablet-stage #duel .chain-panel{width:155px!important}"
+},
+{
+"id": 5395,
+"src": "body.in-duel.tablet-stage #duel .field-cue{padding:14px!important}"
+},
+{
+"id": 5399,
+"src": "body.in-duel.tablet-stage #duel .decision-column{inset:100px 105px 175px 175px!important}"
+},
+{
+"id": 5400,
+"src": "body.in-duel.tablet-stage #duel .decision-column{padding:25px!important}"
+},
+{
+"id": 5461,
+"src": "#event-stage[data-compact=true] .event-card-wrap{height:auto!important}"
+},
+{
+"id": 5465,
+"src": "#event-stage[data-compact=true] #event-art{max-height:190px!important}"
+},
+{
+"id": 5482,
+"src": "#event-ribbon{max-width:80vw!important}"
+},
+{
+"id": 5486,
+"src": "#summon-scene .scene-kicker{white-space:normal!important}"
+},
+{
+"id": 5539,
+"src": "body.portrait-overview.tablet-stage #duel .field-cue{font-size:13px!important}"
+},
+{
+"id": 5571,
+"src": "body.in-duel.tablet-stage:not(.portrait-overview) .field-chain-coin{font-size:calc(12px / var(--stage-scale))!important}"
+},
+{
+"id": 5670,
+"src": "body.in-duel.tablet-stage #duel .phase-tracker{position:absolute!important}"
+},
+{
+"id": 5674,
+"src": "body.in-duel.tablet-stage #duel .arena-surface{width:100%!important}"
+},
+{
+"id": 5679,
+"src": "body.in-duel #duel .player-identity{max-width:none!important}"
+},
+{
+"id": 5682,
+"src": "body.in-duel #duel .player-identity :is(b,small){white-space:normal!important}"
+},
+{
+"id": 5687,
+"src": "body.in-duel.tablet-stage #duel .duelist-title{font-size:17px!important}"
+},
+{
+"id": 5694,
+"src": "#event-stage[data-compact=true]{width:auto!important}"
+},
+{
+"id": 5724,
+"src": "body.in-duel.tablet-stage #duel #arena-scroll{width:auto!important}"
+},
+{
+"id": 5725,
+"src": "body.in-duel.tablet-stage #duel #arena-scroll{height:auto!important}"
+},
+{
+"id": 5726,
+"src": "body.in-duel.tablet-stage #duel #arena-scroll{padding:0!important}"
+},
+{
+"id": 5727,
+"src": "body.in-duel.tablet-stage #duel .arena-surface{height:100%!important}"
+},
+{
+"id": 5730,
+"src": "body.in-duel.tablet-stage #duel .arena-surface{padding:8px 12px!important}"
+},
+{
+"id": 5732,
+"src": "body.in-duel.tablet-stage #duel .half{width:100%!important}"
+},
+{
+"id": 5733,
+"src": "body.in-duel.tablet-stage #duel .half{height:100%!important}"
+},
+{
+"id": 5734,
+"src": "body.in-duel.tablet-stage #duel .half{margin:0!important}"
+},
+{
+"id": 5743,
+"src": "body.in-duel.tablet-stage #duel .zone-row{margin:0!important}"
+},
+{
+"id": 5744,
+"src": "body.in-duel.tablet-stage #duel .zone-row{grid-template-columns:repeat(5,minmax(0,1fr))!important}"
+},
+{
+"id": 5745,
+"src": "body.in-duel.tablet-stage #duel .zone{height:100%!important}"
+},
+{
+"id": 5746,
+"src": "body.in-duel.tablet-stage #duel .zone{aspect-ratio:auto!important}"
+},
+{
+"id": 5753,
+"src": "body.in-duel.tablet-stage #duel .zone>img{opacity:1!important}"
+},
+{
+"id": 5772,
+"src": "body.in-duel.tablet-stage #duel .player-bar{position:absolute!important}"
+},
+{
+"id": 5774,
+"src": "body.in-duel.tablet-stage #duel .shared-emz{margin:0 auto!important}"
+},
+{
+"id": 5775,
+"src": "body.in-duel.tablet-stage #duel .shared-emz{width:54%!important}"
+},
+{
+"id": 5776,
+"src": "body.in-duel.tablet-stage #duel .shared-emz{height:100%!important}"
+},
+{
+"id": 5787,
+"src": "body.in-duel.tablet-stage #duel .field-cue p{margin:0!important}"
+},
+{
+"id": 5803,
+"src": "body.in-duel.tablet-stage #duel .zone>.back{inset:3px!important}"
+},
+{
+"id": 5804,
+"src": "body.in-duel.tablet-stage #duel .zone>.back{width:calc(100% - 6px)!important}"
+},
+{
+"id": 5805,
+"src": "body.in-duel.tablet-stage #duel .zone>.back{height:calc(100% - 6px)!important}"
+},
+{
+"id": 5806,
+"src": "body.in-duel.tablet-stage #duel .zone>.back{transform:none!important}"
+},
+{
+"id": 5813,
+"src": "#chain .chain-thumb::before{float:none!important}"
+},
+{
+"id": 5830,
+"src": "body.in-duel.tablet-stage #duel .field-cue .eyebrow{margin:0!important}"
+},
+{
+"id": 5833,
+"src": "body.in-duel.tablet-stage #duel .field-cue button{margin:0!important}"
+},
+{
+"id": 6425,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-title{overflow-wrap:normal!important}"
+},
+{
+"id": 6428,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] .event-bars{position:fixed!important}"
+},
+{
+"id": 6434,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] .event-bars{width:auto!important}"
+},
+{
+"id": 6435,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] .event-bars{height:56px!important}"
+},
+{
+"id": 6437,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] .event-bars{margin:0!important}"
+},
+{
+"id": 6438,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] .event-bars{padding:0!important}"
+},
+{
+"id": 6439,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] .event-bars{opacity:1!important}"
+},
+{
+"id": 6443,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] .event-bars{background:repeating-linear-gradient(-45deg,#FFD21A 0 20px,#0B0B10 20px 40px)!important}"
+},
+{
+"id": 6449,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip:not([hidden]){justify-content:flex-end!important}"
+},
+{
+"id": 6450,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip:not([hidden]){height:auto!important}"
+},
+{
+"id": 6452,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip:not([hidden]){position:absolute!important}"
+},
+{
+"id": 6477,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip .chain-thumb img{width:30px!important}"
+},
+{
+"id": 6488,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip .chain-thumb>span{background:transparent!important}"
+},
+{
+"id": 6490,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-chain-strip .chain-thumb>span{border:0!important}"
+},
+{
+"id": 6546,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect{position:absolute!important}"
+},
+{
+"id": 6564,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text{overflow:hidden!important}"
+},
+{
+"id": 6565,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text{max-height:none!important}"
+},
+{
+"id": 6670,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #scene-chain-coin{max-width:none!important}"
+},
+{
+"id": 6671,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #scene-chain-coin{padding:4px 12px!important}"
+},
+{
+"id": 6674,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #scene-chain-coin{background:var(--st-yellow)!important}"
+},
+{
+"id": 6675,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #scene-chain-coin{color:#0B0B10!important}"
+},
+{
+"id": 6677,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #scene-chain-coin{font:italic 900 13px/1.1 var(--st-head)!important}"
+},
+{
+"id": 6770,
+"src": "body[data-theme=showtime] #summon-scene[open] .scene-content{max-height:100dvh!important}"
+},
+{
+"id": 6773,
+"src": "body[data-theme=showtime] #summon-scene[open] .scene-card img{max-height:min(40dvh,330px)!important}"
+},
+{
+"id": 6774,
+"src": "body[data-theme=showtime] #summon-scene[open] .scene-card img{width:auto!important}"
+},
+{
+"id": 6926,
+"src": "#summon-scene.b2-active::after{display:none!important}"
+},
+{
+"id": 7407,
+"src": ".sr-only{position:absolute!important}"
+},
+{
+"id": 7451,
+"src": ".chain-prompt .choice .choice-text{overflow:visible!important}"
+},
+{
+"id": 7452,
+"src": ".chain-prompt .choice .choice-text{white-space:normal!important}"
+},
+{
+"id": 7454,
+"src": ".chain-prompt .choice .choice-text b,.chain-prompt .choice .choice-text small{white-space:normal!important}"
+},
+{
+"id": 7457,
+"src": ".chain-prompt .choice .choice-text b,.chain-prompt .choice .choice-text small{-webkit-line-clamp:unset!important}"
+},
+{
+"id": 7459,
+"src": ".chain-prompt .choice .choice-text b,.chain-prompt .choice .choice-text small{max-height:none!important}"
+},
+{
+"id": 7460,
+"src": ".chain-prompt .choice .choice-text b,.chain-prompt .choice .choice-text small{height:auto!important}"
+},
+{
+"id": 8006,
+"src": "#summon-scene.b2-active .b2-scene{inset:0!important}"
+},
+{
+"id": 8007,
+"src": "#summon-scene.b2-active .b2-scene{padding:clamp(10px,3vh,28px) clamp(12px,3vw,40px)!important}"
+},
+{
+"id": 8008,
+"src": "#summon-scene.b2-active .b2-scene{border:0!important}"
+},
+{
+"id": 8009,
+"src": "#summon-scene.b2-active .b2-scene{background:radial-gradient(ellipse at 62% 55%,color-mix(in srgb,var(--b2-kind) 34%,#06070f) 0,#06070f 62%)!important}"
+},
+{
+"id": 8011,
+"src": "#summon-scene.b2-active .b2-scene{gap:clamp(6px,1.4vh,14px)!important}"
+},
+{
+"id": 8027,
+"src": "#summon-scene.b2-active .b2-hazard{padding:6px 60px!important}"
+},
+{
+"id": 8033,
+"src": "#summon-scene.b2-active .b2-summary{background:transparent!important}"
+},
+{
+"id": 8077,
+"src": "#summon-scene.b2-active .b2-material{padding:6px!important}"
+},
+{
+"id": 8082,
+"src": "#summon-scene.b2-active .b2-material{font:700 clamp(12px,1.7vh,15px)/1.2 Inter,system-ui!important}"
+},
+{
+"id": 8140,
+"src": "#summon-scene.b2-active .b2-material-art{width:auto!important}"
+},
+{
+"id": 8213,
+"src": ".fx26-cut{position:fixed!important}"
+},
+{
+"id": 8217,
+"src": ".fx26-cut{translate:none!important}"
+},
+{
+"id": 8218,
+"src": ".fx26-cut{transform:none!important}"
+},
+{
+"id": 8219,
+"src": ".fx26-cut{padding:0!important}"
+},
+{
+"id": 8220,
+"src": ".fx26-cut{border-radius:0!important}"
+},
+{
+"id": 8221,
+"src": ".fx26-cut{background:none!important}"
+},
+{
+"id": 8441,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-seal{color:var(--p26-gold)!important}"
+},
+{
+"id": 8445,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-seal{font-style:italic!important}"
+},
+{
+"id": 8447,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-kicker{padding:4px 14px!important}"
+},
+{
+"id": 8448,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-kicker{background:var(--p26-red)!important}"
+},
+{
+"id": 8449,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-kicker{color:var(--p26-white)!important}"
+},
+{
+"id": 8458,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-type-line{font:700 15px/1.3 var(--p26-head)!important}"
+},
+{
+"id": 8459,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-type-line{color:#d6d9e3!important}"
+},
+{
+"id": 8467,
+"src": "#event-stage[data-compact=true] #event-chain-strip{min-width:0!important}"
+},
+{
+"id": 8485,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage[data-compact=true] #event-chain-strip .chain-thumb small{color:#d6d9e3!important}"
+},
+{
+"id": 8492,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-caption{width:auto!important}"
+},
+{
+"id": 8493,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-caption{padding:4px 12px!important}"
+},
+{
+"id": 8497,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-caption{background:var(--p26-gold)!important}"
+},
+{
+"id": 8500,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-label{color:var(--p26-white)!important}"
+},
+{
+"id": 8503,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text{color:#e9ebf2!important}"
+},
+{
+"id": 8504,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text .effect-context{font-size:.9em!important}"
+},
+{
+"id": 8505,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]) #event-stage.live[data-kind=resolve] #event-effect-text .effect-context{color:#c3c7d4!important}"
+},
+{
+"id": 8530,
+"src": "#summon-scene.b2-active .b2-hazard{border:5px solid var(--p26-white)!important}"
+},
+{
+"id": 8550,
+"src": "#summon-scene.b2-active .b2-material-name{font:italic 900 14px/1.2 var(--p26-head)!important}"
+},
+{
+"id": 8551,
+"src": "#summon-scene.b2-active .b2-material-name{color:var(--p26-white)!important}"
+},
+{
+"id": 9019,
+"src": "body.in-duel.tablet-stage #duel .zone.occupied>img{inset:2px!important}"
+},
+{
+"id": 9024,
+"src": "body.in-duel.tablet-stage #duel .zone.occupied>img{background:none!important}"
+},
+{
+"id": 9027,
+"src": "body.in-duel.tablet-stage #duel .zone.occupied .card-stats{position:absolute!important}"
+},
+{
+"id": 9034,
+"src": "body.in-duel.tablet-stage #duel .zone.occupied .card-stats{margin:0!important}"
+},
+{
+"id": 9050,
+"src": "body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw])::before,\nbody[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind="
+},
+{
+"id": 9059,
+"src": "body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) .event-copy{max-width:none!important}"
+},
+{
+"id": 9060,
+"src": "body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) .event-copy{margin:0!important}"
+},
+{
+"id": 9075,
+"src": "body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) #event-title{margin:0!important}"
+},
+{
+"id": 9076,
+"src": "body[data-pace]:not([data-pace=learning]) #event-stage.live:is([data-kind=phase],[data-kind=draw]) #event-title{padding:0!important}"
+},
+{
+"id": 9093,
+"src": "body[data-human-decision=false] #duel .zone.legal-target{outline:none!important}"
+},
+{
+"id": 9095,
+"src": "body[data-human-decision=false] #duel .zone.legal-target{animation:none!important}"
+},
+{
+"id": 9167,
+"src": "body[data-graphics=balanced] #duel .player-bar{background:rgba(9,12,28,.92)!important}"
+},
+{
+"id": 9233,
+"src": "body[data-theme=showtime].in-duel #duel .phase-tracker{gap:7px!important}"
+},
+{
+"id": 9234,
+"src": "body[data-theme=showtime].in-duel #duel .phase-tracker span{background:none!important}"
+},
+{
+"id": 9235,
+"src": "body[data-theme=showtime].in-duel #duel .phase-tracker span{border:0!important}"
+},
+{
+"id": 9237,
+"src": "body[data-theme=showtime].in-duel #duel .phase-tracker span{overflow:visible!important}"
+},
+{
+"id": 9247,
+"src": "body[data-theme=showtime].in-duel #duel .phase-tracker button{padding:12px 4px!important}"
+},
+{
+"id": 9283,
+"src": "body[data-theme=showtime].in-duel #event-log-panel summary{padding:6px 10px 8px!important}"
+},
+{
+"id": 9290,
+"src": "body[data-theme=showtime].in-duel #event-log-panel summary .eyebrow{color:var(--ph-paper)!important}"
+},
+{
+"id": 9296,
+"src": "body[data-theme=showtime].in-duel #event-log-turn{color:#fff!important}"
+},
+{
+"id": 9297,
+"src": "body[data-theme=showtime].in-duel #event-log-turn{font:italic 900 12px/1.2 var(--st-head,var(--font-display))!important}"
+},
+{
+"id": 9332,
+"src": "body[data-theme=showtime].in-duel #chain :is(.chain-thumb,.chain-link){background:var(--ph-ink)!important}"
+},
+{
+"id": 9342,
+"src": "body[data-theme=showtime].in-duel #chain .chain-thumb::after{background:var(--ph-red)!important}"
+},
+{
+"id": 9343,
+"src": "body[data-theme=showtime].in-duel #chain .chain-thumb::after{color:#fff!important}"
+},
+{
+"id": 9344,
+"src": "body[data-theme=showtime].in-duel #chain .chain-thumb::after{border-radius:0!important}"
+},
+{
+"id": 9361,
+"src": "body[data-theme=showtime].in-duel #event-log .event-log-turn{font:italic 900 10.5px/1.25 var(--st-head,var(--font-display))!important}"
+},
+{
+"id": 9371,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]):has(#event-stage.live[data-kind=resolve]) #chain-log-pop>b{color:#fff!important}"
+},
+{
+"id": 9380,
+"src": "body[data-theme=showtime]:not([data-graphics=smooth]):has(#event-stage.live[data-kind=resolve]) #chain-log-pop li[data-state=resolving] :is(b,small){color:var(--ph-ink)!important}"
+}
+]

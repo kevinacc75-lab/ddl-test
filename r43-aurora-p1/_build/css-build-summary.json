@@ -1,0 +1,133 @@
+{
+ "legacyImportantBefore": 910,
+ "dropped": 147,
+ "legacyImportantAfter": 763,
+ "pctDropped": 16.2,
+ "bundles": {
+  "tokens.css": 0,
+  "aurora.css": 68,
+  "base.css": 349,
+  "theme-showtime.css": 110,
+  "duel.css": 111,
+  "panels.css": 213,
+  "fx.css": 5
+ },
+ "totalImportantShipped": 856,
+ "perFile": {
+  "style": {
+   "before": 21,
+   "removed": 0,
+   "after": 21
+  },
+  "arena": {
+   "before": 0,
+   "removed": 0,
+   "after": 0
+  },
+  "mobile-motion": {
+   "before": 2,
+   "removed": 0,
+   "after": 2
+  },
+  "vibrant": {
+   "before": 15,
+   "removed": 0,
+   "after": 15
+  },
+  "master-duel": {
+   "before": 124,
+   "removed": 2,
+   "after": 122
+  },
+  "lab-shell": {
+   "before": 140,
+   "removed": 18,
+   "after": 122
+  },
+  "pacing-impact": {
+   "before": 90,
+   "removed": 31,
+   "after": 59
+  },
+  "arenas": {
+   "before": 0,
+   "removed": 0,
+   "after": 0
+  },
+  "showtime": {
+   "before": 133,
+   "removed": 25,
+   "after": 108
+  },
+  "fusion-materials": {
+   "before": 14,
+   "removed": 0,
+   "after": 14
+  },
+  "summon-cutscenes": {
+   "before": 15,
+   "removed": 1,
+   "after": 14
+  },
+  "coin-cutscene": {
+   "before": 2,
+   "removed": 0,
+   "after": 2
+  },
+  "human-flow": {
+   "before": 10,
+   "removed": 7,
+   "after": 3
+  },
+  "play-flow": {
+   "before": 14,
+   "removed": 0,
+   "after": 14
+  },
+  "fx-r23": {
+   "before": 66,
+   "removed": 10,
+   "after": 56
+  },
+  "token-fx": {
+   "before": 1,
+   "removed": 0,
+   "after": 1
+  },
+  "r26-panels": {
+   "before": 121,
+   "removed": 25,
+   "after": 96
+  },
+  "learning-routes": {
+   "before": 7,
+   "removed": 0,
+   "after": 7
+  },
+  "deck-list": {
+   "before": 0,
+   "removed": 0,
+   "after": 0
+  },
+  "r33-polish": {
+   "before": 2,
+   "removed": 0,
+   "after": 2
+  },
+  "r34-arena": {
+   "before": 76,
+   "removed": 12,
+   "after": 64
+  },
+  "r34-persona": {
+   "before": 53,
+   "removed": 16,
+   "after": 37
+  },
+  "dl-fx": {
+   "before": 4,
+   "removed": 0,
+   "after": 4
+  }
+ }
+}
