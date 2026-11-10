@@ -1,0 +1,63 @@
+// r34 deck brain: HERO (Mask & Vision), TCG 19 Oct 2026 list. Claude, 23 Oct 2026. STATUS: DRAFT, Akiza review pending.
+// Same format as branded-brain.mjs. Every line was read against the printed card text.
+export default {
+ deck: 'hero',
+ status: 'DRAFT (Claude, 23 Oct 2026). Akiza review pending.',
+ plan: 'Three engines that feed each other. Destiny HERO: Fusion Destiny makes Destroyer Phoenix Enforcer from the hand or Deck, and Malicious keeps summoning itself from the Deck. Mask Change turns a DARK HERO into Masked HERO Dark Law, which banishes cards from their hand when they search. Vision HERO: Faris, Vyon and Increase fill the GY and field. End with Enforcer (destroys a card on either turn), Dark Law and Contrast HERO Chaos (negates a card) when possible.',
+ roles: {starter: 'Opens a route; the route lists anything else it needs (discards, materials)', extender: 'Adds to a combo that has started', payoff: 'The board the combo builds to', interruption: 'Stops the opponent on their turn', handtrap: 'Used from the hand on the opponent\'s turn', utility: 'Fills a gap: material, card draw or recovery'},
+ cards: {
+  'Elemental HERO Neos': {role: 'utility', does: 'A Level 7 Normal HERO: material for Fusions, and EN Shuffle\'s draw.'},
+  'Elemental HERO Stratos': {role: 'starter', does: 'Normal or Special Summon: add a HERO monster from the Deck (Vyon, Shadow Mist or Malicious), or destroy Spells/Traps.', links: {search: ['Vision HERO Vyon', 'Elemental HERO Shadow Mist', 'Destiny HERO - Malicious', 'Vision HERO Faris', 'Masked HERO Furnace']}},
+  'Elemental HERO Shadow Mist': {role: 'extender', does: 'If Special Summoned: add a "Change" Quick-Play Spell (Mask Change). If sent to the GY: add a HERO other than Shadow Mist. Only one of these per turn - after searching Mask Change it cannot also search a HERO that turn.', links: {search: ['Mask Change']}},
+  'Masked HERO Dusk Crow': {role: 'extender', does: 'Banish a HERO from the GY to Special Summon it from the hand. Summoned: add another Masked HERO from the Deck or GY (Furnace or Fountain). DARK, so Mask Change makes Dark Law.', links: {search: ['Masked HERO Furnace', 'Masked HERO Fountain']}},
+  'Masked HERO Furnace': {role: 'starter', does: 'Reveal it: add Mask Change or Polymerization, then discard 1 (discard Malicious). Only HERO monsters from the Extra Deck that turn. Comes back when you Special Summon a non-FIRE HERO Fusion.', links: {search: ['Mask Change', 'Polymerization']}},
+  'Masked HERO Fountain': {role: 'extender', does: 'Reveal it: Special Summon a HERO from the hand in Defense Position. Sent to the GY by an effect or as a cost: Set Mask Change from the Deck or GY.'},
+  'Vision HERO Faris': {role: 'starter', does: 'Discard another HERO (Malicious) to Special Summon it from the hand. Summoned: place Vision HERO Increase from the Deck as a Continuous Trap. Only HERO monsters from the Extra Deck that turn.', links: {summon: ['Vision HERO Increase']}},
+  'Vision HERO Vyon': {role: 'starter', does: 'Summoned: send a HERO from the Deck to the GY (Malicious, which then summons another Malicious). Banish a HERO from the GY: add Polymerization.', links: {send: ['Destiny HERO - Malicious', 'Elemental HERO Shadow Mist'], search: ['Polymerization']}},
+  'Vision HERO Increase': {role: 'extender', does: 'As a Continuous Trap (Faris places it): Tribute a HERO to Special Summon it, then Special Summon a Level 4 or lower Vision HERO (Vyon) from the Deck. Returns to the Spell/Trap Zone when you take damage.', links: {summon: ['Vision HERO Vyon']}},
+  'Destiny HERO - Malicious': {role: 'extender', does: 'Banish it from the GY: Special Summon another Malicious from the Deck. Level 6 DARK: Enforcer material, and a body for Mask Change.'},
+  'Destiny HERO - Denier': {role: 'utility', does: 'Summoned: put a Destiny HERO from the Deck, GY or face-up banishment on top of the Deck (once per turn). Once per Duel, with another Destiny HERO on our field or in our GY, it revives itself.'},
+  'Miracle Ejector': {role: 'starter', does: 'Send Neo-Spacian Aqua Dolphin from the Deck to Special Summon it. Summoned: add a Spell/Trap that names Elemental HERO Neos (EN Shuffle or Favorite Contact; cards that only say "Elemental HERO" in general, like A Hero Lives, do not count). Counts as an Elemental HERO.', links: {search: ['EN Shuffle', 'Favorite Contact']}},
+  'Neo-Spacian Aqua Dolphin': {role: 'utility', does: 'Ejector\'s cost. Discard 1 to look at their hand and destroy a weaker monster.'},
+  'Ash Blossom & Joyous Spring': {role: 'handtrap', does: 'Negates a search, a Special Summon from the Deck or a send from the Deck on their turn.'},
+  'Mulcharmy Fuwalos': {role: 'handtrap', does: 'With no cards on our field (Quick Effect): discard it, then each time they Special Summon from the Deck and/or Extra Deck this turn we draw 1. Once in that End Phase, if our hand is bigger than the number of cards they control + 6, we shuffle random cards from our hand into the Deck until it is exactly that number. Only 1 other Mulcharmy effect can be used that turn.'},
+  'Droll & Lock Bird': {role: 'handtrap', does: 'After the opponent adds a card from the Main Deck to the hand outside the Draw Phase: send it from the hand to the GY; neither player can add cards from the Main Deck to the hand for the rest of that turn.'},
+  'Forbidden Droplet': {role: 'interruption', does: 'Quick-Play Spell (a board breaker): send any number of other cards from our hand or field to the GY to negate that many of their Effect Monsters and halve their ATK until the end of the turn; they cannot respond with cards of the sent card types. Once per turn. Played from the hand on our turn, or Set first to use on theirs.'},
+  'A Hero Lives': {role: 'starter', does: 'With no face-up monsters: pay half your LP to Special Summon a Level 4 or lower Elemental HERO from the Deck (Shadow Mist for Mask Change, else Stratos).', links: {summon: ['Elemental HERO Shadow Mist', 'Elemental HERO Stratos']}},
+  'Fusion Destiny': {role: 'starter', does: 'Fusion Summon a Fusion that names a Destiny HERO using the hand or Deck (Malicious + a Level 6+ HERO for Destroyer Phoenix Enforcer). It is destroyed at the end of the next turn, and only DARK HEROs can be Special Summoned for the rest of this turn.', links: {fusion: ['Destiny HERO - Destroyer Phoenix Enforcer']}},
+  'Polymerization': {role: 'extender', does: 'Fusion Summon a HERO Fusion from the hand or field (Contrast HERO Chaos from two Masked HEROs).'},
+  'Miracle Fusion': {role: 'extender', does: 'Fusion Summon an Elemental HERO Fusion by banishing materials from the field or GY.'},
+  'Mask Change': {role: 'interruption', does: 'Quick-Play: send your HERO to the GY and Special Summon a Masked HERO of its Attribute from the Extra Deck (DARK: Dark Law). Usable on their turn.', links: {summon: ['Masked HERO Dark Law']}},
+  'E - Emergency Call': {role: 'starter', does: 'Add an Elemental HERO from the Deck (Stratos).', links: {search: ['Elemental HERO Stratos', 'Elemental HERO Shadow Mist']}},
+  'EN Shuffle': {role: 'extender', does: 'Shuffle an Elemental HERO / Neo-Spacian you control into the Deck to Special Summon a different one (Ejector into Shadow Mist or Stratos).', links: {summon: ['Elemental HERO Shadow Mist', 'Elemental HERO Stratos']}},
+  'Favorite Contact': {role: 'extender', does: 'Trap: Special Summon a HERO Fusion that mentions a HERO as material by putting its listed materials from our hand, field, GY or our banished cards (face-up or face-down) on the bottom of the Deck (a Special Summon, not a Fusion Summon).'},
+  'Foolish Burial': {role: 'starter', does: 'Send Malicious (or Shadow Mist) from the Deck to the GY.', links: {send: ['Destiny HERO - Malicious', 'Elemental HERO Shadow Mist']}},
+  'Destiny HERO - Destroyer Phoenix Enforcer': {role: 'payoff', does: 'Their monsters lose 200 ATK per HERO card in your GY. Quick Effect: destroy one of your cards and one card on the field. If destroyed, a Destiny HERO returns next Standby.'},
+  'Elemental HERO Flame Wingman - Infernal Rage': {role: 'utility', does: 'Fusion: adds a "Favorite" card on summon.'},
+  'Elemental HERO Sunrise': {role: 'payoff', does: 'Fusion of two HEROs with different Attributes: adds Miracle Fusion; destroys a card when your HERO is attacked or attacks.'},
+  'Elemental HERO Thunder Giant - Voltic Thunder': {role: 'utility', does: 'Fusion: if they have more cards, destroys everything else on summon.'},
+  'Elemental HERO Shining Neos Wingman': {role: 'payoff', does: 'Neos + a Wingman Fusion: destroys cards on summon; cannot be destroyed by effects.'},
+  'Contrast HERO Chaos': {role: 'payoff', does: 'Fusion of two Masked HEROs: on either turn, negate a face-up card.'},
+  'Masked HERO Dark Law': {role: 'payoff', does: 'Mask Change into it from a DARK HERO. While it is on the field, cards sent to their GY are banished instead. Once per turn, after they add a card from the Deck to the hand (not during the Draw Phase or the Damage Step), banish a random card from their hand.'},
+  'Xtra HERO Cross Crusader': {role: 'extender', does: 'Link 2: revive a Destiny HERO; Tribute a Destiny HERO to add a HERO.'},
+  'Xtra HERO Infernal Devicer': {role: 'extender', does: 'Link 2 from HEROs. Reveal a HERO Fusion and add up to 2 different monsters that it names as materials from the Deck (only cards named exactly, e.g. Neos for Shining Neos). HERO-only Special Summons for the whole turn it is used, so it cannot be used after a non-HERO Special Summon that turn. It removes nothing from their field.'},
+  'Xtra HERO Wonder Driver': {role: 'extender', does: 'Link 2: when a HERO is summoned where it points, Set a Polymerization, Fusion or Change Spell from the GY.'},
+  'Wake Up Your Elemental HERO': {role: 'payoff', does: 'Fusion of an Elemental HERO Fusion + Warriors: attacks many times and burns.'},
+  'Vision HERO Trinity': {role: 'payoff', does: 'Fusion of 3 HEROs. When Fusion Summoned its ATK doubles that turn; it can attack monsters up to three times each Battle Phase, but never directly.'}
+ },
+ routes: [
+  {id: 'HE-FD', from: ['Fusion Destiny'], steps: ['Fusion Destiny: Malicious + a Level 6+ HERO from the hand or Deck for Destroyer Phoenix Enforcer', 'Malicious in the GY summons another Malicious later'], ends: 'Enforcer (destroys a card on their turn)'},
+  {id: 'HE-FURN', from: ['Masked HERO Furnace', 'Destiny HERO - Malicious'], steps: ['Reveal Furnace: add Mask Change, discard Malicious', 'Malicious in the GY banishes itself to summon another Malicious from the Deck', 'Mask Change sends that Malicious and summons Masked HERO Dark Law', 'A further Malicious body needs that second copy banished from the GY for the third one'], ends: 'Dark Law (plus Malicious only with the extra step)'},
+  {id: 'HE-FARIS', from: ['Vision HERO Faris'], steps: ['Discard Malicious: Special Summon Faris and place Vision HERO Increase', 'Increase: Tribute a HERO for itself and Vyon from the Deck', 'Vyon sends Malicious; Malicious summons Malicious'], ends: 'A full field of HEROs for Fusions or Mask Change'},
+  {id: 'HE-AHL', from: ['A Hero Lives'], steps: ['Empty field: pay half LP, A Hero Lives summons Shadow Mist (adds Mask Change) or Stratos (adds a HERO)', 'Shadow Mist (DARK) can then Mask Change into Dark Law; Stratos is WIND, so Dark Law needs a separate DARK HERO plus Mask Change'], ends: 'Dark Law from the Shadow Mist branch'},
+  {id: 'HE-VYON', from: ['Vision HERO Vyon'], steps: ['Vyon sends Malicious; Malicious brings a second Malicious', 'Two bodies for Links or Fusion Destiny\'s follow-up'], ends: 'Vyon + Malicious bodies'},
+  {id: 'HE-EJ', from: ['Miracle Ejector'], steps: ['Ejector sends Aqua Dolphin to summon itself, adds EN Shuffle', 'EN Shuffle turns Ejector into Shadow Mist or Stratos'], ends: 'Shadow Mist + Mask Change'}
+ ],
+ locks: [
+  {card: 'Fusion Destiny', lock: 'only DARK HERO monsters can be Special Summoned for the rest of the turn; the Fusion is destroyed at the end of the next turn', advice: 'play it after non-DARK summons'},
+  {card: 'Vision HERO Faris', lock: 'only HERO monsters from the Extra Deck after its summon effect', advice: ''},
+  {card: 'Masked HERO Furnace', lock: 'only HERO monsters from the Extra Deck the turn you reveal it', advice: ''},
+  {card: 'Xtra HERO Cross Crusader', lock: 'only HERO monsters the turn you use its effects', advice: ''}
+ ],
+ endPhase: ['Destroyer Phoenix Enforcer from Fusion Destiny is destroyed at the end of the next turn (and then revives a Destiny HERO)', 'Furnace summoned by its own effect is banished when it leaves']
+};
