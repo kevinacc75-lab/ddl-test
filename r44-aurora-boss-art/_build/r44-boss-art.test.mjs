@@ -8,9 +8,9 @@ const dist=f=>new URL('../dist/'+f,import.meta.url);
 const read=f=>fs.readFileSync(dist(f),'utf8');
 const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(dist(f))).digest('hex');
 const r43=JSON.parse(fs.readFileSync(new URL('./fixtures/r43-served-hashes.json',import.meta.url)));
-test('(R44-1) only app.mjs, css/aurora.css and identity files differ from r43; engine, AI, rules, decks.json, art and emblems byte-identical',()=>{
+test('(R44-1) only app.mjs, css/aurora.css, identity files and the Super Poly policy file differ from r43; engine, rest of AI, rules, decks.json, art and emblems byte-identical',()=>{
  const changed=Object.keys(r43).filter(f=>sha(f)!==r43[f]).sort();
- assert.deepEqual(changed,['app.mjs','css/aurora.css','index.html','release-notes.md','sw.js','worker.mjs']);
+ assert.deepEqual(changed,['ai/book/branded-nov08.mjs','app.mjs','css/aurora.css','index.html','release-notes.md','sw.js','worker.mjs']);/* the one AI file is the Super Poly own-face-down fix, pinned by r44-superpoly.test.mjs */
  for(const f of Object.keys(r43))assert.ok(fs.existsSync(dist(f)),'r43 file missing: '+f);
  const w=read('worker.mjs').split('\n'),w0=fs.readFileSync('/workspace/ddl-test-r39/r43-aurora-p1/worker.mjs','utf8').split('\n');const d=w.map((l,i)=>l===w0[i]?null:i).filter(i=>i!==null);assert.equal(d.length,1);assert.match(w[d[0]],/^const BUILD='ddl-test r44 /);
  const h=read('index.html'),h0=fs.readFileSync('/workspace/ddl-test-r39/r43-aurora-p1/index.html','utf8');assert.equal(h.replace(/TEST r44/g,'TEST r43'),h0);

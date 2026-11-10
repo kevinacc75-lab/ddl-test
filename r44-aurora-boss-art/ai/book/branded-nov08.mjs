@@ -153,10 +153,14 @@ export function brandedNov08SpecialBlock(d,seat,c){
  if(championsSummonHold(d,seat,c))return 'Branded 41: hold the Three Champions Synchro: no worthwhile opposing target.';
  return null;
 }
-const albazOnAField=d=>[0,1].some(s=>d.zone(s,FIELD).some(c=>faceUp(c)&&(c.code===ALBAZ||c.code===WHITE||d.name(c.code)==='Fallen of Albaz')));
-const albazCount=d=>[0,1].reduce((n,s)=>n+d.zone(s,FIELD).filter(c=>faceUp(c)&&(c.code===ALBAZ||c.code===WHITE)).length,0);/* Albaz + White: White is the Dragon */
-const lightSpellcasterOnAField=d=>[0,1].some(s=>d.zone(s,FIELD).some(c=>{const i=d.db[c?.code];return faceUp(c)&&(c.attribute??i?.attribute)&0x10&&Number(c.race??i?.race)&0x2}));
-const dragonOnAField=d=>[0,1].some(s=>d.zone(s,FIELD).some(c=>{const i=d.db[c?.code];return faceUp(c)&&c.code!==ALBAZ&&c.code!==WHITE&&!NOV08_EXTRA.notMaterial.includes(c.code)&&Number(c.race??i?.race)&0x2000}));
+/* r44 (RELAY-135, Kevy 11 Nov 01:58 AEDT): Super Polymerization may use our OWN face-down monsters (their codes are
+   ours to know); the opponent's monsters only face-up. With a seat, a material counts if it is face-up on either field or
+   on our own field in any position. Without a seat the r42 face-up-only reading is kept. No hidden opponent card is read. */
+const matOk=(s,c,seat)=>Boolean(c)&&(faceUp(c)||(seat!==undefined&&s===seat&&c.code>0));
+const albazOnAField=(d,seat)=>[0,1].some(s=>d.zone(s,FIELD).some(c=>matOk(s,c,seat)&&(c.code===ALBAZ||c.code===WHITE||d.name(c.code)==='Fallen of Albaz')));
+const albazCount=(d,seat)=>[0,1].reduce((n,s)=>n+d.zone(s,FIELD).filter(c=>matOk(s,c,seat)&&(c.code===ALBAZ||c.code===WHITE)).length,0);/* Albaz + White: White is the Dragon */
+const lightSpellcasterOnAField=(d,seat)=>[0,1].some(s=>d.zone(s,FIELD).some(c=>{const i=d.db[c?.code];return matOk(s,c,seat)&&(c.attribute||i?.attribute)&0x10&&Number(c.race||i?.race)&0x2}));
+const dragonOnAField=(d,seat)=>[0,1].some(s=>d.zone(s,FIELD).some(c=>{const i=d.db[c?.code];return matOk(s,c,seat)&&c.code!==ALBAZ&&c.code!==WHITE&&!NOV08_EXTRA.notMaterial.includes(c.code)&&Number(c.race||i?.race)&0x2000}));
 // r42: Super Polymerization uses monsters on the fields only. Sanctifire / Alba-Lenatus are Super Poly targets only with a
 // Fallen of Albaz (or White, treated as Albaz) face-up on a field plus their second material on a field. Never an
 // opponent-only answer.
@@ -165,7 +169,7 @@ const dragonOnAField=d=>[0,1].some(s=>d.zone(s,FIELD).some(c=>{const i=d.db[c?.c
 const SANCTIFIRE_REVIVE=[ALBAZ,QUEM,ECCLESIA,CARTESIA,WHITE,DOG_ECCLESIA,62962630,KITT,19096726];
 const reviveValue=(d,seat,c)=>{const i=SANCTIFIRE_REVIVE.indexOf(c.code);return owner(d,c)===seat&&i>=0?10000-i*100:Number(c.attack??d.db[c.code]?.attack??0)+((d.db[c.code]?.type&32)?500:0)};
 export const sanctifireReviveLive=(d,seat)=>d.zone(seat,GY).some(c=>c&&SANCTIFIRE_REVIVE.includes(c.code));
-export const superPolyTargetOk=(d,code)=>code===SANCTIFIRE?albazOnAField(d)&&lightSpellcasterOnAField(d):code===LENATUS?albazOnAField(d)&&(dragonOnAField(d)||albazCount(d)>1):true;
+export const superPolyTargetOk=(d,code,seat)=>code===SANCTIFIRE?albazOnAField(d,seat)&&lightSpellcasterOnAField(d,seat):code===LENATUS?albazOnAField(d,seat)&&(dragonOnAField(d,seat)||albazCount(d,seat)>1):true;
 export function brandedNov08Option(d,seat,text,R){
  if(!isBrandedNov08(d.decks?.[seat])||d.currentEffect?.code!==30271097)return null;
  const haveTarget=publicTargets(d,seat).length>0;
@@ -240,8 +244,8 @@ export function brandedNov08RoutePick(d,seat,m,response,M,R){
  const pickIndex=(i,rule)=>i<0?null:{response:{...response,indicies:[i]},rule,card:d.name(cards[i].code)};
  const select=(code,rule,keep=false)=>{const i=cards.findIndex(c=>c.code===code);return i===response.indicies[0]&&!keep?null:pickIndex(i,rule)};
  const source=d.currentEffect?.code;
- if(source===SUPER_POLY&&d.hint===509&&!superPolyTargetOk(d,cards[response.indicies[0]]?.code)){
-  const ok=cards.map((c,i)=>({c,i})).filter(x=>superPolyTargetOk(d,x.c.code));const i=(ok.find(x=>x.c.code===MIRRORJADE)||ok[0])?.i??-1;
+ if(source===SUPER_POLY&&d.hint===509&&!superPolyTargetOk(d,cards[response.indicies[0]]?.code,seat)){
+  const ok=cards.map((c,i)=>({c,i})).filter(x=>superPolyTargetOk(d,x.c.code,seat));const i=(ok.find(x=>x.c.code===MIRRORJADE)||ok[0])?.i??-1;
   if(i>=0)return pickIndex(i,'Super Polymerization: Sanctifire / Alba-Lenatus need Albaz and their other material on a field.');
  }
  // r42: Sanctifire and Alba-Lenatus cannot be Fusion Material: never keep one as a material pick (the engine also refuses).

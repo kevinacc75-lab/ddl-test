@@ -10,14 +10,16 @@ const read=f=>fs.readFileSync(dist(f),'utf8');
 const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(dist(f))).digest('hex');
 const r42=JSON.parse(fs.readFileSync(new URL('./fixtures/r42-served-hashes.json',import.meta.url)));
 const LEGACY=['style','arena','mobile-motion','vibrant','master-duel','lab-shell','pacing-impact','arenas','showtime','fusion-materials','summon-cutscenes','coin-cutscene','human-flow','play-flow','fx-r23','token-fx','r26-panels','learning-routes','deck-list','r33-polish','r34-arena','r34-persona','dl-fx'];
-const ALLOWED_CHANGED=['app.mjs','deck-list.mjs','decks.json','index.html','offline-assets.json','release-notes.md','sw.js','worker.mjs'].sort();
+/* r44: + ai/book/branded-nov08.mjs, the Super Polymerization own-face-down fix (RELAY-135; Kevy 11 Nov 01:58 AEDT), pinned by tests/r44-superpoly.test.mjs */
+const R44_AI_FIX='ai/book/branded-nov08.mjs';
+const ALLOWED_CHANGED=['app.mjs','deck-list.mjs','decks.json','index.html','offline-assets.json','release-notes.md','sw.js','worker.mjs',R44_AI_FIX].sort();
 
 test('(R43-1) only shell/presentation files differ from r42; engine, AI, rules, prompt timing, decks logic and every legacy stylesheet are byte-identical',()=>{
  const changed=Object.keys(r42).filter(f=>sha(f)!==r42[f]).sort();
  assert.deepEqual(changed,ALLOWED_CHANGED);
  for(const f of Object.keys(r42))assert.ok(fs.existsSync(dist(f)),'r42 file missing: '+f);
  for(const f of ['human-flow.mjs','play-flow.mjs','human-holds.mjs','presentation.mjs','duel.mjs','random.mjs','deck-validator.mjs','windbot/edo.mjs','optimal-pilot.mjs','pilot.mjs','cards.json.gz','scripts.json.gz','dl-fx.mjs','coin-cutscene.mjs'])assert.equal(sha(f),r42[f],f);
- for(const f of Object.keys(r42).filter(f=>/^(ai|core|windbot|wb|art|banlists|audio)\//.test(f)))assert.equal(sha(f),r42[f],f);
+ for(const f of Object.keys(r42).filter(f=>/^(ai|core|windbot|wb|art|banlists|audio)\//.test(f)&&f!==R44_AI_FIX))assert.equal(sha(f),r42[f],f);
  for(const n of LEGACY)assert.equal(sha(n+'.css'),r42[n+'.css'],n+'.css kept unchanged for comparison');
 });
 test('(R43-2) worker.mjs differs from r42 only in the BUILD identity line',()=>{

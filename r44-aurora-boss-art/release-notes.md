@@ -4,6 +4,7 @@ Built on r43 (same engine, rules data, decks, AI, randomness, prompt timing and 
 
 - Deck select: every deck tile now shows its boss monster's card art (the same official card image used on cards), with a blurred copy as the tile background under an Aurora gradient so the name and description stay readable. Bosses come from each deck's existing boss entry: Branded Mirrorjade the Iceblade Dragon, Borrowed Bosses Uzuhime the Manifested Mikanko, Zero Protocol Sky Striker Ace - Kagari, Moonlit Hunt Lunalight Liger Dancer, Azure Sovereign Blue-Eyes White Dragon, Sealed Horizon Kashtira Shangri-Ira, Ink Riot Toon Dark Magician, HERO Contrast HERO Chaos, Time Typhoon Red-Eyes Black Dragon Exceed. A deck without boss art (for example an imported one) keeps its original emblem.
 - The home banner crest, LP plate avatars and victory frame keep the original r43 emblems.
+- AI fix (RELAY-135, Kevy approved 11 Nov 2026, 01:58 AEDT): Super Polymerization can use our own face-down monsters as material. The AI's Super Poly check only counted face-up monsters, so it refused a legal Albion the Sanctifire Dragon (our face-up Fallen of Albaz + our face-down Incredible Ecclesia) and could swap it for Mirrorjade. It now counts our own monsters in any position and the opponent's only face-up. The other guards stay: Sanctifire and Alba-Lenatus are never Fusion Material, and Alba-Lenatus still needs Albaz plus a real Dragon. Nothing hidden on the opponent's side is read.
 - Safety holds B1 to B4 are unchanged.
 
 ---
