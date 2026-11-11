@@ -6,3 +6,4 @@ This repository hosts **TEST builds** of Duel Doctrine Lab, a personal Yu-Gi-Oh 
 - No lab source, gate files or credentials are stored here.
 - The duel engine is EDOPro / ygopro-core via ocgcore-wasm (AGPL-3.0); its source is offered in each build as `engine-source.zip`, with licences in `licenses/`.
 - Not affiliated with Konami. Yu-Gi-Oh names and card imagery belong to their respective owners.
+- From 12 Nov 2026 only the two most recent builds are served (Kevy's request). Every earlier build (r17 to r46) is kept unchanged in the `archive-2026-11-12-all-builds` branch.
