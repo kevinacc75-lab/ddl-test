@@ -1,0 +1,606 @@
+{
+ "_meta": {
+  "built": "2026-10-21",
+  "by": "tools/merge-text-overrides.mjs (TASK c)",
+  "inputs": [
+   {
+    "file": "tcg-text-overrides-substitutes-2026-10-20.json",
+    "sha256": "bcf821aa86d2a9cf120c094b98a6aa05d27e0e50ee682df0920f848674f22959",
+    "entries": 21
+   },
+   {
+    "file": "tcg-text-overrides-ehero-2026-10-20.json",
+    "sha256": "22abff836201c1360381c0087ca8ab6faa818b6e4d21b2ec9d779c4488498c37",
+    "entries": 24
+   },
+   {
+    "file": "tcg-text-overrides-v5.3-candidate.json",
+    "sha256": "ed7dc0c3c109a9ca7a4b0fb12ed821b777a8acd0516a10550cef36a7e6545cfb",
+    "entries": 34
+   }
+  ],
+  "entries": 70,
+  "sharedIdentical": [
+   "14558128",
+   "27204311",
+   "27204313",
+   "42141493",
+   "73642296",
+   "73642297",
+   "84192580"
+  ],
+  "conflicts": 0,
+  "use": "UI card text only (library-worker.mjs). Engine, AI and gate use the bundled card data."
+ },
+ "cards": {
+  "1948619": {
+   "name": "Xtra HERO Wonder Driver",
+   "desc": "2 \"HERO\" monsters\nIf a \"HERO\" monster is Normal or Special Summoned to your zone this card points to: Target 1 \"Polymerization\" Spell, 1 \"Fusion\" Spell, or 1 \"Change\" Quick-Play Spell in your GY; Set that target. You can only activate this effect of \"Xtra HERO Wonder Driver\" once per turn. If this card is destroyed by battle and sent to the GY, or if this card in your possession is destroyed by an opponent's card effect and sent to your GY: Special Summon 1 \"HERO\" monster from your hand.",
+   "source": "Konami Neuron cid=13543",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "1984618": {
+   "name": "Nadir Servant",
+   "desc": "Send 1 monster from your Extra Deck to the GY, then add 1 \"Dogmatika\" monster or \"Fallen of Albaz\" from your Deck or GY to your hand, that has ATK less than or equal to that sent monster in the GY, also, for the rest of this turn after this card resolves, you cannot Special Summon from the Extra Deck. You can only activate 1 \"Nadir Servant\" per turn.",
+   "source": "Konami Neuron cid=15286",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "3410461": {
+   "name": "Alba-Lenatus the Abyss Dragon",
+   "desc": "\"Fallen of Albaz\" + 1+ Dragon monsters\nCannot be used as Fusion Material. Must be either Fusion Summoned, or Special Summoned by sending the above cards from any Monster Zones to the GY. Can attack monsters a number of times each Battle Phase, up to the number of materials used for it. Once per turn, during the End Phase, if this card is in the GY because it was sent there this turn: You can add 1 \"Polymerization\" Normal Spell or \"Fusion\" Normal Spell from your Deck to your hand.",
+   "source": "Konami Neuron cid=17146",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "6498706": {
+   "name": "Fusion Deployment",
+   "desc": "Reveal 1 Fusion Monster in your Extra Deck and Special Summon, from your hand or Deck, 1 of the Fusion Materials whose name is mentioned on that monster, also you cannot Special Summon from the Extra Deck, except Fusion Monsters, the turn you activate this card. You can only activate 1 \"Fusion Deployment\" per turn.",
+   "source": "Konami Neuron cid=15057",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "6498707": {
+   "name": "Fusion Deployment",
+   "desc": "Reveal 1 Fusion Monster in your Extra Deck and Special Summon, from your hand or Deck, 1 of the Fusion Materials whose name is mentioned on that monster, also you cannot Special Summon from the Extra Deck, except Fusion Monsters, the turn you activate this card. You can only activate 1 \"Fusion Deployment\" per turn.",
+   "source": "Konami Neuron cid=15057",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "10045474": {
+   "name": "Infinite Impermanence",
+   "desc": "Target 1 face-up monster your opponent controls; negate its effects (until the end of this turn), then if this card was Set before activation and is on the field at resolution, for the rest of this turn all other Spell/Trap effects in this column are negated. If you control no cards, you can activate this card from your hand.",
+   "source": "Konami Neuron cid=13631",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "12067160": {
+   "name": "Gorgon of Zilofthonia",
+   "desc": "2+ Effect Monsters\nYou cannot Summon/Set monsters to a zone(s) this card points to. Monsters this card points to cannot attack, also their activated effects are negated. Gains ATK equal to the total original ATK of monsters this card points to. Cannot be destroyed by battle or monster effects, while this card points to no monsters.",
+   "source": "Konami Neuron cid=21461",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "12580477": {
+   "name": "Raigeki",
+   "desc": "Destroy all monsters your opponent controls.",
+   "source": "Konami Neuron cid=4343",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "12580478": {
+   "name": "Raigeki",
+   "desc": "Destroy all monsters your opponent controls.",
+   "source": "Konami Neuron cid=4343",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "13935001": {
+   "name": "Lunalight Serenade Dance",
+   "desc": "When a Fusion Monster(s) is Fusion Summoned to your field (except during the Damage Step): You can target 1 of those monsters; apply these effects in sequence.\n●Special Summon 1 \"Lunalight Token\" (Beast-Warrior/DARK/Level 4/ATK 2000/DEF 2000) to your opponent's field.\n●That target gains 500 ATK for each monster your opponent controls (even if this card leaves the field).\nDuring your Main Phase: You can banish this card from your GY; send 1 card from your hand to the GY, and if you do, Special Summon 1 \"Lunalight\" monster from your Deck. You can only use this effect of \"Lunalight Serenade Dance\" once per turn.",
+   "source": "Konami Neuron cid=14189",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "14532163": {
+   "name": "Lightning Storm",
+   "desc": "If you control no face-up cards: Activate 1 of these effects;\n●Destroy all Attack Position monsters your opponent controls.\n●Destroy all Spells and Traps your opponent controls.\nYou can only activate 1 \"Lightning Storm\" per turn.",
+   "source": "Konami Neuron cid=14876",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "14532164": {
+   "name": "Lightning Storm",
+   "desc": "If you control no face-up cards: Activate 1 of these effects;\n●Destroy all Attack Position monsters your opponent controls.\n●Destroy all Spells and Traps your opponent controls.\nYou can only activate 1 \"Lightning Storm\" per turn.",
+   "source": "Konami Neuron cid=14876",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "14558127": {
+   "name": "Ash Blossom & Joyous Spring",
+   "desc": "When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that effect.\n●Add a card from the Deck to the hand.\n●Special Summon from the Deck.\n●Send a card from the Deck to the GY.\nYou can only use this effect of \"Ash Blossom & Joyous Spring\" once per turn.",
+   "source": "Konami Neuron cid=12950",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "14558128": {
+   "name": "Ash Blossom & Joyous Spring",
+   "desc": "When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that effect.\n●Add a card from the Deck to the hand.\n●Special Summon from the Deck.\n●Send a card from the Deck to the GY.\nYou can only use this effect of \"Ash Blossom & Joyous Spring\" once per turn.",
+   "source": "Konami Neuron cid=12950",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json",
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "19324993": {
+   "name": "Xtra HERO Infernal Devicer",
+   "desc": "2 \"HERO\" monsters\nIf this card is Link Summoned: You can reveal 1 \"HERO\" Fusion Monster in your Extra Deck, and if you do, add up to 2 of the Fusion Materials mentioned on that card, with different names, from your Deck to your hand. You cannot Special Summon monsters the turn you activate this effect, except \"HERO\" monsters. You can only use this effect of \"Xtra HERO Infernal Devicer\" once per turn. Fiend monsters this card points to gain ATK/DEF equal to its Level x 100.",
+   "source": "Konami Neuron cid=14936",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "22908820": {
+   "name": "Elemental HERO Sunrise",
+   "desc": "2 \"HERO\" monsters with different Attributes\nMust be Fusion Summoned. Monsters you control gain 200 ATK for each different Attribute you control. You can only use each of the following effects of \"Elemental HERO Sunrise\" once per turn.\n●If this card is Special Summoned: You can add 1 \"Miracle Fusion\" from your Deck to your hand.\n●When an attack is declared involving another \"HERO\" monster you control: You can target 1 card on the field; destroy it.",
+   "source": "Konami Neuron cid=14910",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "24094653": {
+   "name": "Polymerization",
+   "desc": "Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters from your hand or field.",
+   "source": "Konami Neuron cid=4837",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "24094654": {
+   "name": "Polymerization",
+   "desc": "Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters from your hand or field.",
+   "source": "Konami Neuron cid=4837",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "24094655": {
+   "name": "Polymerization",
+   "desc": "Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters from your hand or field.",
+   "source": "Konami Neuron cid=4837",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "25451383": {
+   "name": "Albion the Shrouded Dragon",
+   "desc": "This card's name becomes \"Fallen of Albaz\" while on the field or in the GY. If this card is in your hand or GY: You can send 1 \"Fallen of Albaz\" or 1 \"Branded\" Spell/Trap from your hand or Deck to the GY; apply the following effect based on where you sent it from.\n●Hand: Special Summon this card.\n●Deck: Place this card on the bottom of the Deck, then if you placed this card from your hand, draw 1 card.\nYou can only use this effect of \"Albion the Shrouded Dragon\" once per turn.",
+   "source": "Konami Neuron cid=16197",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "25733157": {
+   "name": "Sky Striker Mecha - Eagle Booster",
+   "desc": "If you control no monsters in your Main Monster Zone: Target 1 face-up monster on the field; that target is unaffected by card effects this turn, except its own, and if you have 3 or more Spells in your GY, it cannot be destroyed by battle this turn.",
+   "source": "Konami Neuron cid=13676",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "25955749": {
+   "name": "Sky Striker Maneuver - Jamming Waves!",
+   "desc": "If you control no monsters in your Main Monster Zone: Target 1 Set Spell/Trap on the field; destroy it, then, if you have 3 or more Spells in your GY, you can destroy 1 monster on the field.",
+   "source": "Konami Neuron cid=13673",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "26847978": {
+   "name": "Tri-Brigade Ferrijit the Barren Blossom",
+   "desc": "2 Beast, Beast-Warrior, and/or Winged Beast monsters\nDuring your Main Phase: You can Special Summon 1 Level 4 or lower Beast, Beast-Warrior, or Winged Beast monster from your hand, also you cannot use monsters as Link Material for the rest of this turn, except Beast, Beast-Warrior, or Winged Beast monsters. If this card is sent to the GY: You can draw 1 card, then place 1 card from your hand on the bottom of the Deck. You can only use each effect of \"Tri-Brigade Ferrijit the Barren Blossom\" once per turn.",
+   "source": "Konami Neuron cid=15525",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "27204311": {
+   "name": "Nibiru, the Primal Being",
+   "desc": "During the Main Phase, if your opponent Normal or Special Summoned 5 or more monsters this turn (Quick Effect): You can Tribute as many face-up monsters on the field as possible, and if you do, Special Summon this card from your hand, then Special Summon 1 \"Primal Being Token\" (Rock/LIGHT/Level 11/ATK ?/DEF ?) to your opponent's field (this Token's ATK/DEF become the combined original ATK/DEF of the Tributed monsters). You can only use this effect of \"Nibiru, the Primal Being\" once per turn.",
+   "source": "Konami Neuron cid=14741",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json",
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "27204313": {
+   "name": "Nibiru, the Primal Being",
+   "desc": "During the Main Phase, if your opponent Normal or Special Summoned 5 or more monsters this turn (Quick Effect): You can Tribute as many face-up monsters on the field as possible, and if you do, Special Summon this card from your hand, then Special Summon 1 \"Primal Being Token\" (Rock/LIGHT/Level 11/ATK ?/DEF ?) to your opponent's field (this Token's ATK/DEF become the combined original ATK/DEF of the Tributed monsters). You can only use this effect of \"Nibiru, the Primal Being\" once per turn.",
+   "source": "Konami Neuron cid=14741",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json",
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "27847700": {
+   "name": "Polymerization",
+   "desc": "Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters from your hand or field.",
+   "source": "Konami Neuron cid=4837",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "29301450": {
+   "name": "S:P Little Knight",
+   "desc": "2 Effect Monsters\nIf this card is Link Summoned using a Fusion, Synchro, Xyz, or Link Monster as material: You can target 1 card on the field or in either GY; banish it, also your monsters cannot attack directly this turn. When your opponent activates a card or effect (Quick Effect): You can target 2 face-up monsters on the field, including a monster you control; banish both until the End Phase. You can only use each effect of \"S:P Little Knight\" once per turn.",
+   "source": "Konami Neuron cid=19188",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "29301451": {
+   "name": "S:P Little Knight",
+   "desc": "2 Effect Monsters\nIf this card is Link Summoned using a Fusion, Synchro, Xyz, or Link Monster as material: You can target 1 card on the field or in either GY; banish it, also your monsters cannot attack directly this turn. When your opponent activates a card or effect (Quick Effect): You can target 2 face-up monsters on the field, including a monster you control; banish both until the End Phase. You can only use each effect of \"S:P Little Knight\" once per turn.",
+   "source": "Konami Neuron cid=19188",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "29948294": {
+   "name": "Branded in High Spirits",
+   "desc": "Reveal 1 monster in your hand and send 1 Level 8 Fusion Monster from your Extra Deck to the GY with the same Type that has 2500 ATK or DEF, then you can apply this effect.\n●Discard the revealed monster, and if you do, add 1 \"Fallen of Albaz\", or 1 monster that mentions it, from your Deck to your hand.\nDuring the End Phase, if a Fusion Monster was sent to your GY this turn: You can add this card from the GY to your hand. You can only use 1 \"Branded in High Spirits\" effect per turn, and only once that turn.",
+   "source": "Konami Neuron cid=16541",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "30271097": {
+   "name": "The Fallen & The Virtuous",
+   "desc": "(This card is always treated as a \"Branded\" and \"Dogmatika\" card.)\nActivate 1 of these effects;\n●Send 1 monster that mentions \"Fallen of Albaz\" from your Extra Deck to the GY, then target 1 face-up card on the field; destroy it.\n●If you have an \"Ecclesia\" monster in your field or GY: Target 1 monster in either GY; Special Summon it to your field.\nYou can only activate 1 \"The Fallen & The Virtuous\" per turn.",
+   "source": "Konami Neuron cid=22089",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "32828466": {
+   "name": "Wake Up Your Elemental HERO",
+   "desc": "1 \"Elemental HERO\" Fusion Monster + 1+ Warrior monsters\nMust be Fusion Summoned. Gains 300 ATK for each material used for its Summon. Can make a number of attacks on monsters each Battle Phase, up to the number of Fusion Monsters used as material for its Summon. After damage calculation, if this card battled a monster: Destroy that monster, and if you do, inflict damage to your opponent equal to its original ATK. If this Fusion Summoned card is destroyed: Special Summon 1 Warrior monster from your hand or Deck.",
+   "source": "Konami Neuron cid=17247",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "36637374": {
+   "name": "Branded Opening",
+   "desc": "Discard 1 card, then take 1 \"Despia\" monster from your Deck, and either add it to your hand or Special Summon it in Defense Position, also for the rest of this turn after this card resolves, you cannot Special Summon from the Extra Deck, except Fusion Monsters. If a Fusion Monster(s) you control would be destroyed by card effect, you can banish this card from your GY instead. You can only use each effect of \"Branded Opening\" once per turn.",
+   "source": "Konami Neuron cid=16243",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "38811586": {
+   "name": "Albion the Sanctifire Dragon",
+   "desc": "\"Fallen of Albaz\" + 1 LIGHT Spellcaster monster\nCannot be used as Fusion Material. Your opponent cannot target this card with card effects. You can only use each of the following effects of \"Albion the Sanctifire Dragon\" once per turn. During your opponent's turn (Quick Effect): You can target 2 monsters in any GY(s); Special Summon both monsters, 1 to each field. If this card is in your GY: You can Tribute 4 monsters, the 2 in the Extra Monster Zones and the 2 in the center Main Monster Zones, and if you do, Special Summon this card.",
+   "source": "Konami Neuron cid=18498",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "40044918": {
+   "name": "Elemental HERO Stratos",
+   "desc": "When this card is Normal or Special Summoned: You can activate 1 of these effects;\n●Destroy Spells/Traps on the field, up to the number of \"HERO\" monsters you control, except this card.\n●Add 1 \"HERO\" monster from your Deck to your hand.",
+   "source": "Konami Neuron cid=6784",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "40044919": {
+   "name": "Elemental HERO Stratos",
+   "desc": "When this card is Normal or Special Summoned: You can activate 1 of these effects;\n●Destroy Spells/Traps on the field, up to the number of \"HERO\" monsters you control, except this card.\n●Add 1 \"HERO\" monster from your Deck to your hand.",
+   "source": "Konami Neuron cid=6784",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "42141493": {
+   "name": "Mulcharmy Fuwalos",
+   "desc": "If you control no cards (Quick Effect): You can discard this card; apply these effects this turn.\n●Each time your opponent Special Summons a monster(s) from the Deck and/or Extra Deck, immediately draw 1 card.\n●Once, during this End Phase, if the number of cards in your hand is more than the number of cards your opponent controls +6, you must randomly shuffle cards from your hand into the Deck so the number in your hand equals the number your opponent controls +6.\nYou can only activate 1 other \"Mulcharmy\" monster effect, the turn you activate this effect.",
+   "source": "Konami Neuron cid=20500",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json",
+    "tcg-text-overrides-ehero-2026-10-20.json",
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "44146295": {
+   "name": "Mirrorjade the Iceblade Dragon",
+   "desc": "\"Fallen of Albaz\" + 1 Fusion, Synchro, Xyz, or Link Monster\nYou can only control 1 \"Mirrorjade the Iceblade Dragon\". Once per turn (Quick Effect): You can send 1 Fusion Monster from your Extra Deck to the GY that mentions \"Fallen of Albaz\" as material; banish 1 monster on the field, also this card cannot use this effect next turn. If this Fusion Summoned card in its owner's control leaves the field by an opponent's card: You can destroy all monsters your opponent controls during the End Phase of this turn.",
+   "source": "Konami Neuron cid=17069",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "44362883": {
+   "name": "Branded Fusion",
+   "desc": "Fusion Summon 1 Fusion Monster that mentions \"Fallen of Albaz\" as material from your Extra Deck, using 2 monsters from your hand, Deck, or field. You cannot Special Summon from the Extra Deck, except Fusion Monsters, the turn you activate this card. You can only activate 1 \"Branded Fusion\" per turn.",
+   "source": "Konami Neuron cid=17066",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "45484331": {
+   "name": "Springans Kitt",
+   "desc": "If you have a Fusion Monster that mentions \"Fallen of Albaz\" as material in your field or GY: You can Special Summon this card from your hand. If this card is Normal or Special Summoned: You can add to your hand, 1 of your \"Branded\" Spells/Traps that is banished or in your Deck or GY, then place 1 card from your hand on the bottom of the Deck. You can only use each effect of \"Springans Kitt\" once per turn.",
+   "source": "Konami Neuron cid=17063",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "46759931": {
+   "name": "Vision HERO Trinity",
+   "desc": "3 \"HERO\" monsters\nAfter this card is Fusion Summoned, for the rest of this turn, this card's ATK becomes double its original ATK. This Fusion Summoned card can make up to 3 attacks during each Battle Phase. Cannot attack directly.",
+   "source": "Konami Neuron cid=9196",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "48130397": {
+   "name": "Super Polymerization",
+   "desc": "Discard 1 card; Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters from either field. Neither player can activate cards or effects in response to this card's activation.",
+   "source": "Konami Neuron cid=7445",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "52947044": {
+   "name": "Fusion Destiny",
+   "desc": "Fusion Summon 1 Fusion Monster from your Extra Deck that mentions a \"Destiny HERO\" monster as material, using monsters from your hand or Deck as Fusion Material, but destroy it during the End Phase of the next turn, also for the rest of this turn after this card resolves, you cannot Special Summon monsters, except DARK \"HERO\" monsters. You can only activate 1 \"Fusion Destiny\" per turn.",
+   "source": "Konami Neuron cid=14304",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "53094821": {
+   "name": "Toon Terror",
+   "desc": "When a Spell/Trap Card, or monster effect, is activated, while you control both \"Toon World\" and a Toon monster(s): Negate the activation, and if you do, destroy that card. You can only activate 1 \"Toon Terror\" per turn.",
+   "source": "Konami Neuron cid=15474",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "55273560": {
+   "name": "Incredible Ecclesia, the Virtuous",
+   "desc": "If your opponent controls more monsters than you do, you can Special Summon this card (from your hand). You can only Special Summon \"Incredible Ecclesia, the Virtuous\" once per turn this way. You can only use each of the following effects of \"Incredible Ecclesia, the Virtuous\" once per turn. During the Main Phase (Quick Effect): You can Tribute this card; Special Summon 1 \"Swordsoul\" monster or 1 \"Fallen of Albaz\" from your hand or Deck. During the End Phase, if a Fusion Monster(s) was sent to your GY this turn: You can add this card from the GY to your hand.",
+   "source": "Konami Neuron cid=16493",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "55273561": {
+   "name": "Incredible Ecclesia, the Virtuous",
+   "desc": "If your opponent controls more monsters than you do, you can Special Summon this card (from your hand). You can only Special Summon \"Incredible Ecclesia, the Virtuous\" once per turn this way. You can only use each of the following effects of \"Incredible Ecclesia, the Virtuous\" once per turn. During the Main Phase (Quick Effect): You can Tribute this card; Special Summon 1 \"Swordsoul\" monster or 1 \"Fallen of Albaz\" from your hand or Deck. During the End Phase, if a Fusion Monster(s) was sent to your GY this turn: You can add this card from the GY to your hand.",
+   "source": "Konami Neuron cid=16493",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "55273562": {
+   "name": "Incredible Ecclesia, the Virtuous",
+   "desc": "If your opponent controls more monsters than you do, you can Special Summon this card (from your hand). You can only Special Summon \"Incredible Ecclesia, the Virtuous\" once per turn this way. You can only use each of the following effects of \"Incredible Ecclesia, the Virtuous\" once per turn. During the Main Phase (Quick Effect): You can Tribute this card; Special Summon 1 \"Swordsoul\" monster or 1 \"Fallen of Albaz\" from your hand or Deck. During the End Phase, if a Fusion Monster(s) was sent to your GY this turn: You can add this card from the GY to your hand.",
+   "source": "Konami Neuron cid=16493",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "60303245": {
+   "name": "Salamangreat Almiraj",
+   "desc": "1 Normal Summoned monster with 1000 or less ATK\n(Quick Effect): You can Tribute this card, then target 1 monster you control; it cannot be destroyed by your opponent's card effects this turn. When a Normal Summoned monster you control is destroyed by battle, while this card is in your GY: You can Special Summon this card. You can only use this effect of \"Salamangreat Almiraj\" once per turn.",
+   "source": "Konami Neuron cid=14338",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "63941210": {
+   "name": "Jizukiru, the Star Destroying Kaiju",
+   "desc": "You can Special Summon this card (from your hand) to your opponent's field in Attack Position, by Tributing 1 monster they control. If your opponent controls a \"Kaiju\" monster, you can Special Summon this card (from your hand) in Attack Position. You can only control 1 \"Kaiju\" monster. When a card or effect is activated that targets 1 card (and no other cards) (Quick Effect): You can remove 3 Kaiju Counters from anywhere on the field; negate that effect, and if you do, you can destroy 1 card on the field.",
+   "source": "Konami Neuron cid=12249",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "64116319": {
+   "name": "Toon Harpie Lady",
+   "desc": "Cannot attack the turn it is Summoned. If you control \"Toon World\": You can Special Summon this card from your hand, then, if you control another Toon monster, you can destroy 1 Spell/Trap your opponent controls. You can only use this effect of \"Toon Harpie Lady\" once per turn. While you control \"Toon World\" and your opponent controls no Toon monsters, this card can attack directly.",
+   "source": "Konami Neuron cid=15471",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "68468459": {
+   "name": "Fallen of Albaz",
+   "desc": "If this card is Normal or Special Summoned (except during the Damage Step): You can discard 1 card; Fusion Summon 1 Fusion Monster from your Extra Deck using monsters on either field, including this card, but you cannot use other monsters you control as material. You can only use this effect of \"Fallen of Albaz\" once per turn.",
+   "source": "Konami Neuron cid=15245",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "68468460": {
+   "name": "Fallen of Albaz",
+   "desc": "If this card is Normal or Special Summoned (except during the Damage Step): You can discard 1 card; Fusion Summon 1 Fusion Monster from your Extra Deck using monsters on either field, including this card, but you cannot use other monsters you control as material. You can only use this effect of \"Fallen of Albaz\" once per turn.",
+   "source": "Konami Neuron cid=15245",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "68468461": {
+   "name": "Fallen of Albaz",
+   "desc": "If this card is Normal or Special Summoned (except during the Damage Step): You can discard 1 card; Fusion Summon 1 Fusion Monster from your Extra Deck using monsters on either field, including this card, but you cannot use other monsters you control as material. You can only use this effect of \"Fallen of Albaz\" once per turn.",
+   "source": "Konami Neuron cid=15245",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "69946549": {
+   "name": "Predaplant Dragostapelia",
+   "desc": "1 Fusion Monster + 1 DARK monster\nOnce per turn (Quick Effect): You can target 1 face-up monster your opponent controls; place 1 Predator Counter on it, and if it is Level 2 or higher, it becomes Level 1 as long as it has a Predator Counter. Negate the activated effects of your opponent's monsters that have Predator Counters.",
+   "source": "Konami Neuron cid=12870",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "70534340": {
+   "name": "Lubellion the Searing Dragon",
+   "desc": "1 DARK monster + \"Fallen of Albaz\"\nIf this card is Fusion Summoned: You can discard 1 card; Fusion Summon 1 Level 8 or lower Fusion Monster from your Extra Deck, except \"Lubellion the Searing Dragon\", by shuffling Fusion Materials mentioned on it into the Deck, from your monsters on the field, GY, and/or face-up banished cards. For the rest of this turn, this card cannot attack, also you cannot Special Summon from the Extra Deck, except Fusion Monsters. You can only use this effect of \"Lubellion the Searing Dragon\" once per turn.",
+   "source": "Konami Neuron cid=17070",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "73628505": {
+   "name": "Terraforming",
+   "desc": "Add 1 Field Spell from your Deck to your hand.",
+   "source": "Konami Neuron cid=5537",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "73642296": {
+   "name": "Ghost Belle & Haunted Mansion",
+   "desc": "When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that activation.\n●Add a card(s) from the GY to the hand, Deck, and/or Extra Deck.\n●Special Summon a Monster Card(s) from the GY.\n●Banish a card(s) from the GY.\nYou can only use this effect of \"Ghost Belle & Haunted Mansion\" once per turn.",
+   "source": "Konami Neuron cid=13587",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json",
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "73642297": {
+   "name": "Ghost Belle & Haunted Mansion",
+   "desc": "When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that activation.\n●Add a card(s) from the GY to the hand, Deck, and/or Extra Deck.\n●Special Summon a Monster Card(s) from the GY.\n●Banish a card(s) from the GY.\nYou can only use this effect of \"Ghost Belle & Haunted Mansion\" once per turn.",
+   "source": "Konami Neuron cid=13587",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json",
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "75047173": {
+   "name": "Favorite Contact",
+   "desc": "Special Summon 1 Fusion Monster from your Extra Deck that mentions a \"HERO\" monster as material, ignoring its Summoning conditions, by placing the Fusion Materials mentioned on it on the bottom of the Deck in any order, from among cards in your hand, field, GY, and/or your banished cards. If you placed \"Elemental HERO Neos\" into the Deck, neither player can return the monster Special Summoned by this effect to the Extra Deck. You can only activate 1 \"Favorite Contact\" per turn.",
+   "source": "Konami Neuron cid=17471",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  },
+  "79447365": {
+   "name": "Toon Mask",
+   "desc": "If you control \"Toon World\": Target 1 face-up monster your opponent controls; Special Summon 1 Toon monster from your hand or Deck, whose Level is less than or equal to the Level/Rank of that monster, ignoring its Summoning conditions.",
+   "source": "Konami Neuron cid=11905",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "82738008": {
+   "name": "Branded in Red",
+   "desc": "Target 1 \"Despia\" monster or \"Fallen of Albaz\" in your GY; add it to your hand, then you can apply the following effect.\n●Fusion Summon 1 Level 8 or higher Fusion Monster from your Extra Deck, by banishing Fusion Materials mentioned on it from your hand or field, but it cannot attack directly this turn.\nYou can only activate 1 \"Branded in Red\" per turn.",
+   "source": "Konami Neuron cid=16543",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "83629030": {
+   "name": "Toon Cyber Dragon",
+   "desc": "If only your opponent controls a monster, you can Special Summon this card (from your hand). Cannot attack the turn it is Summoned. While you control \"Toon World\" and your opponent controls no Toon monsters, this card can attack directly.",
+   "source": "Konami Neuron cid=11827",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "84192580": {
+   "name": "Mulcharmy Purulia",
+   "desc": "If you control no cards (Quick Effect): You can discard this card; apply these effects this turn.\n●Each time your opponent Normal or Special Summons a monster(s) from the hand, immediately draw 1 card.\n●Once, during this End Phase, if the number of cards in your hand is more than the number of cards your opponent controls +6, you must randomly shuffle cards from your hand into the Deck so the number in your hand equals the number your opponent controls +6.\nYou can only activate 1 other \"Mulcharmy\" monster effect, the turn you activate this effect.",
+   "source": "Konami Neuron cid=20206",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json",
+    "tcg-text-overrides-ehero-2026-10-20.json",
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "85692042": {
+   "name": "Primathmech Alembertian",
+   "desc": "2+ Level 4 monsters\nYou can Tribute 1 monster; Special Summon 1 Level 4 \"Mathmech\" monster from your hand or GY. If this card is Xyz Summoned: You can detach 2 to 4 materials from this card, then activate the appropriate effect;\n●2: Add 1 \"Mathmech\" card from your Deck to your hand.\n●3: Add 1 Level 4 monster from your Deck to your hand.\n●4: Add 1 Spell/Trap from your Deck to your hand.\nYou can only use each effect of \"Primathmech Alembertian\" once per turn.",
+   "source": "Konami Neuron cid=14800",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "95515789": {
+   "name": "Blazing Cartesia, the Virtuous",
+   "desc": "If you have \"Fallen of Albaz\" in your field or GY: You can Special Summon this card from your hand. During the Main Phase (Quick Effect): You can Fusion Summon 1 Level 8 or higher Fusion Monster from your Extra Deck, using monsters from your hand or field. During the End Phase, if a Fusion Monster(s) was sent to your GY this turn: You can add this card from the GY to your hand. You can only use each effect of \"Blazing Cartesia, the Virtuous\" once per turn.",
+   "source": "Konami Neuron cid=17767",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "95515790": {
+   "name": "Blazing Cartesia, the Virtuous",
+   "desc": "If you have \"Fallen of Albaz\" in your field or GY: You can Special Summon this card from your hand. During the Main Phase (Quick Effect): You can Fusion Summon 1 Level 8 or higher Fusion Monster from your Extra Deck, using monsters from your hand or field. During the End Phase, if a Fusion Monster(s) was sent to your GY this turn: You can add this card from the GY to your hand. You can only use each effect of \"Blazing Cartesia, the Virtuous\" once per turn.",
+   "source": "Konami Neuron cid=17767",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "97268402": {
+   "name": "Effect Veiler",
+   "desc": "During your opponent's Main Phase (Quick Effect): You can send this card from your hand to the GY, then target 1 Effect Monster your opponent controls; negate the effects of that face-up monster your opponent controls, until the end of this turn.",
+   "source": "Konami Neuron cid=8933",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "97268403": {
+   "name": "Effect Veiler",
+   "desc": "During your opponent's Main Phase (Quick Effect): You can send this card from your hand to the GY, then target 1 Effect Monster your opponent controls; negate the effects of that face-up monster your opponent controls, until the end of this turn.",
+   "source": "Konami Neuron cid=8933",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "97268404": {
+   "name": "Effect Veiler",
+   "desc": "During your opponent's Main Phase (Quick Effect): You can send this card from your hand to the GY, then target 1 Effect Monster your opponent controls; negate the effects of that face-up monster your opponent controls, until the end of this turn.",
+   "source": "Konami Neuron cid=8933",
+   "from": [
+    "tcg-text-overrides-substitutes-2026-10-20.json"
+   ]
+  },
+  "98127546": {
+   "name": "Underworld Goddess of the Closed World",
+   "desc": "4+ Effect Monsters\nYou can also use 1 monster your opponent controls as material to Link Summon this card. If this card is Link Summoned: You can negate the effects of all face-up monsters your opponent currently controls. This Link Summoned card is unaffected by your opponent's activated effects, unless they target this card. Once per turn, when your opponent activates a card or effect that Special Summons a monster(s) from the GY (Quick Effect): You can negate the activation.",
+   "source": "Konami Neuron cid=15741",
+   "from": [
+    "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "98829635": {
+   "name": "Forbidden Crown",
+   "desc": "Apply these effects to 1 face-up monster on the field, until the end of this turn.\n●Negate its effects.\n●Cannot attack.\n●Cannot be destroyed by battle or card effects.\n●Unaffected by activated card effects, except its own.\n●Cannot be Tributed.\n●Cannot be used as material for a Fusion, Synchro, Xyz, or Link Summon.\nNeither player can activate monster effects in response to this card's activation. You can only activate 1 \"Forbidden Crown\" per turn.",
+   "source": "Konami Neuron cid=22169",
+   "from": [
+    "tcg-text-overrides-ehero-2026-10-20.json"
+   ]
+  }
+ }
+}
