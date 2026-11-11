@@ -1,8 +1,0 @@
-e3-classic-desktop.json checks 19 {'art-url(r42 DOM only)': 26} other 0
-e3-contrast-desktop.json checks 19 {'art-url(r42 DOM only)': 26} other 0
-e3-showtime-desktop.json checks 19 {'art-url(r42 DOM only)': 26} other 0
-e3-showtime-play.json checks 22 {'art-url(r42 DOM only)': 32} other 0
-e3-showtime-portrait.json checks 19 {'art-url(r42 DOM only)': 26} other 0
-e3-showtime-rm.json checks 17 {'art-url(r42 DOM only)': 22} other 0
-e3-vibrant-desktop.json checks 19 {'art-url(r42 DOM only)': 26} other 0
-e3-vibrant-landscape.json checks 19 {'art-url(r42 DOM only)': 26} other 0
