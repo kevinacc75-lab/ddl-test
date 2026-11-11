@@ -1,0 +1,21 @@
+/* r36.2 token summon animation (token-fx.mjs). Original effect: hologram materialise + ring + sparks + TOKEN ribbon. */
+.token-fx{position:fixed;width:0;height:0;pointer-events:none;z-index:45;--tf-c:#bfe9ff}
+.token-fx>*{position:absolute;left:0;top:0;animation-duration:var(--tf-ms);animation-delay:var(--tf-delay);animation-fill-mode:both;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+.tf-card{width:var(--tf-w);height:var(--tf-h);margin:calc(var(--tf-h)/-2) 0 0 calc(var(--tf-w)/-2);border-radius:6px;overflow:hidden;transform:rotate(var(--tf-rot));animation-name:tf-card;
+ box-shadow:0 0 0 2px rgba(255,255,255,.85),0 0 24px 6px rgba(160,220,255,.75)}
+.tf-card img{width:100%;height:100%;object-fit:cover;display:block}
+.tf-card:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(190,235,255,.55) 0 2px,transparent 2px 6px);mix-blend-mode:screen;animation:tf-scan var(--tf-ms) var(--tf-delay) linear both}
+.tf-ring{width:calc(var(--tf-w)*1.6);height:calc(var(--tf-w)*1.6);margin:calc(var(--tf-w)*-.8) 0 0 calc(var(--tf-w)*-.8);border-radius:50%;border:3px solid var(--tf-c);box-shadow:0 0 18px var(--tf-c),inset 0 0 18px var(--tf-c);animation-name:tf-ring}
+.tf-ring2{animation-delay:calc(var(--tf-delay) + var(--tf-ms)*.12);border-width:2px}
+.tf-spark{width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px var(--tf-c);animation-name:tf-spark}
+.tf-tag{transform:translate(-50%,calc(var(--tf-vh)*.5 + 6px));padding:2px 10px;border-radius:999px;background:linear-gradient(90deg,#e9eef6,#ffffff,#e9eef6);color:#2b3344;
+ font:800 11px/1.4 Orbitron,system-ui,sans-serif;letter-spacing:.18em;box-shadow:0 0 0 1px #4a5160,0 0 12px rgba(160,220,255,.9);white-space:nowrap;animation-name:tf-tag}
+@keyframes tf-card{0%{opacity:0;transform:rotate(var(--tf-rot)) scale(.35);filter:brightness(3) saturate(0) blur(3px)}35%{opacity:1;transform:rotate(var(--tf-rot)) scale(1.08);filter:brightness(1.8) saturate(.4)}
+ 60%{transform:rotate(var(--tf-rot)) scale(1);filter:brightness(1.1) saturate(1)}85%{opacity:1}100%{opacity:0;transform:rotate(var(--tf-rot)) scale(1)}}
+@keyframes tf-scan{0%{opacity:.9;background-position:0 0}70%{opacity:.25}100%{opacity:0;background-position:0 40px}}
+@keyframes tf-ring{0%{opacity:0;transform:scale(.2)}20%{opacity:1}100%{opacity:0;transform:scale(1.25)}}
+@keyframes tf-spark{0%{opacity:0;transform:rotate(var(--a)) translateX(0) scale(.5)}25%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateX(calc(var(--tf-w)*.95)) scale(.2)}}
+@keyframes tf-tag{0%,20%{opacity:0;transform:translate(-50%,calc(var(--tf-vh)*.5 + 16px))}40%,80%{opacity:1;transform:translate(-50%,calc(var(--tf-vh)*.5 + 6px))}100%{opacity:0}}
+.token-fx-reduced .tf-ring,.token-fx-reduced .tf-spark{display:none}
+.token-fx-reduced>*{animation-name:tf-fade!important}
+@keyframes tf-fade{0%{opacity:0}30%,70%{opacity:1}100%{opacity:0}}

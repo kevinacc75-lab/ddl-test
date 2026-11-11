@@ -1,0 +1,112 @@
+{
+ "_note": "r36.2 token card images (Kevy 7 Nov 20:04 AEDT: use the official card art from the YGOPRODeck database, the same source and method as every other art file). Display only. Scapegoat Token (3129528, Sleepy Scapegoats) has no card in YGOPRODeck, so it is shown with the first Sheep Token image (73915052). Any other token shows art/token-generic.webp (tools/r37-token-art.mjs).",
+ "official": {
+  "52340445": {
+   "name": "Sky Striker Ace Token",
+   "file": "art/52340445.jpg",
+   "sha256": "95586aa354d0fe8ae6e56627f657c228dab5f22d3c2b8a096cb84caa5a8b6201",
+   "bytes": 119132,
+   "size": [
+    813,
+    1185
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/52340445.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  },
+  "73915052": {
+   "name": "Sheep Token",
+   "file": "art/73915052.jpg",
+   "sha256": "143689d7482bd8bb5a6692345b38f61f9ae5c1b3f71d13d082e84f8924dcb48f",
+   "bytes": 105808,
+   "size": [
+    813,
+    1185
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/73915052.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  },
+  "73915053": {
+   "name": "Sheep Token",
+   "file": "art/73915053.jpg",
+   "sha256": "dff2311731125e3cc67488fe923f99c41f4de89402087abb7d0514afffef5528",
+   "bytes": 107171,
+   "size": [
+    813,
+    1185
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/73915053.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  },
+  "73915054": {
+   "name": "Sheep Token",
+   "file": "art/73915054.jpg",
+   "sha256": "d54be749642eabbf217559d2bddaa9b39d605855fe3e364be5d9a26b28ed75f6",
+   "bytes": 108663,
+   "size": [
+    813,
+    1185
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/73915054.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  },
+  "73915055": {
+   "name": "Sheep Token",
+   "file": "art/73915055.jpg",
+   "sha256": "1db3a2230eef9b31ec55211fe21283921221694b132b18b35ef856898d9c59d4",
+   "bytes": 105247,
+   "size": [
+    813,
+    1185
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/73915055.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  },
+  "27204312": {
+   "name": "Primal Being Token",
+   "file": "art/27204312.jpg",
+   "sha256": "b6e7fa5874ce5ee9b644de8efbcfad7605fad1422e24e13bff92b62e07b05e38",
+   "bytes": 60400,
+   "size": [
+    421,
+    614
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/27204312.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  },
+  "28674153": {
+   "name": "Radian Token",
+   "file": "art/28674153.jpg",
+   "sha256": "bfd4276d734679a2e0e646e78e9ba72838ce21ead82cd0b0e3a939f9b365253c",
+   "bytes": 140055,
+   "size": [
+    813,
+    1185
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/28674153.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  },
+  "13935002": {
+   "name": "Lunalight Token",
+   "file": "art/13935002.jpg",
+   "sha256": "19467e0ba01dff51f4a58c9820aa91f0594c77b133f216a089bab7448ad5a4c1",
+   "bytes": 52698,
+   "size": [
+    421,
+    614
+   ],
+   "source": "https://images.ygoprodeck.com/images/cards/13935002.jpg",
+   "downloaded": "2026-11-07 (Australia/Sydney)",
+   "unedited": true
+  }
+ },
+ "shownWith": {
+  "3129528": "art/73915052.jpg"
+ }
+}
