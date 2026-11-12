@@ -52,8 +52,9 @@ test('(R43-5) tokens: type 12/14/16/20/28/40, radius 8/14/20, motion 120/220/400
  const t=read('css/tokens.css');for(const v of [12,14,16,20,28,40])assert.match(t,new RegExp(`--ddl-fs-${v}:${v}px`));
  for(const [k,v] of [['sm',8],['md',14],['lg',20]])assert.match(t,new RegExp(`--ddl-r-${k}:${v}px`));for(const [k,v] of [['fast',120],['mid',220],['slow',400]])assert.match(t,new RegExp(`--ddl-dur-${k}:${v}ms`));
  const html=read('index.html');assert.match(html,/<body data-theme="aurora">/);
- for(const id of ['visual-theme','controls-theme']){const sel=html.match(new RegExp(`<select id="${id}">(.*?)</select>`))[1];assert.deepEqual([...sel.matchAll(/value="(\w+)"/g)].map(m=>m[1]),['aurora','vibrant','classic','contrast','showtime'])}
- const app=read('app.mjs');assert.match(app,/theme:'aurora',preset:'duel'/);assert.match(app,/\['aurora','vibrant','classic','contrast','showtime'\]\.includes\(preferences\.theme\)\?preferences\.theme:'aurora'/);
+ /* r50 (Kevy 13 Nov 07:13 AEDT): Lapis & Gold is the new default, layered on the Aurora layout; Aurora and every other theme stay selectable */
+ for(const id of ['visual-theme','controls-theme']){const sel=html.match(new RegExp(`<select id="${id}">(.*?)</select>`))[1];assert.deepEqual([...sel.matchAll(/value="(\w+)"/g)].map(m=>m[1]),['egypt','aurora','vibrant','classic','contrast','showtime'])}
+ const app=read('app.mjs');assert.match(app,/theme:'egypt',preset:'duel'/);assert.match(app,/\['egypt','aurora','vibrant','classic','contrast','showtime'\]\.includes\(preferences\.theme\)\?preferences\.theme:'egypt';document\.body\.dataset\.theme=preferences\.theme==='egypt'\?'aurora':preferences\.theme;/);
  assert.ok(read('css/aurora.css').startsWith('/* Aurora (default theme)'));
 });
 test('(R43-6, r44 scope) decorative art is original: hero, LP avatars, victory frame; deck tiles use boss card art; card images stay on cards',()=>{
@@ -64,8 +65,8 @@ test('(R43-6, r44 scope) decorative art is original: hero, LP avatars, victory f
  assert.match(read('deck-list.mjs'),/<img src="\$\{esc\(c\.art\)\}" alt="\$\{esc\(name\)\}"/);
 });
 test('(R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only',()=>{
- const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r49\.1<\/span>/);/* r46-adapted */
- assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r49\.1/);/* r46-adapted */
+ const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r51<\/span>/);/* r46-adapted */
+ assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r51/);/* r46-adapted */
  const ui=read('ui-polish.mjs').replace(/^\/\/.*$/mg,'');assert.doesNotMatch(ui,/import |postMessage|Worker|Math\.random|setTimeout|setInterval|duel|respond/);assert.match(ui,/setProperty\('--pop-shift'/);
  assert.match(html,/<script type="module" src="ui-polish\.mjs"><\/script><\/body>/);
 });

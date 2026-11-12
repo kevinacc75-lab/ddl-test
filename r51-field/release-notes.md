@@ -1,3 +1,22 @@
+# Duel Doctrine Lab · r51 TEST · Standard field layout · 13 November 2026
+
+Kevy, 13 Nov 2026, 08:53 AEDT: "Can you check a standard Yu-Gi-Oh TCG field. Where does graveyard, main deck, extra deck and banish zones go? I think our layout is different?" He was right: our piles were mirrored. Built and self-verified by Claude; independent review requested. Layout of the piles only: engine, rules, decks, AI and the Play flow files are r50.
+
+- Seen from each player's own seat, as on the official mat: on the left, the Field Zone (front row) and the Extra Deck (back row); on the right, the Graveyard (front row) and the Main Deck (back row). Banished cards have no zone on the official mat; they sit beside the Graveyard on the right, as Master Duel shows them. The opponent's side is the same layout turned to face them, so their Graveyard and Deck appear on your left.
+- Phone held upright: the pile labels no longer get cut off (short labels GY, BAN, DECK, EXTRA; the full names are still read out by screen readers).
+- Source: Konami's rulebook (zones, no banished zone on the mat) and the usual Master Duel placement (Deck bottom right, Graveyard above it, banished above that, Extra Deck bottom left).
+
+# Duel Doctrine Lab · r50 TEST · Lapis & Gold (Egyptian look) · 13 November 2026
+
+Kevy, 13 Nov 2026, 07:13 AEDT: "Seems fine on both devices. Go ahead and import the Egyptian style." From the design draft he reviewed on 13 Nov ("Looks pretty good"). Built and self-verified by Claude; independent review requested. Colours, fonts and card backs only: engine, rules, decks, AI, layout sizes and the Play flow files are r49.1.
+
+- New default look "Lapis & Gold": night lapis background, carved gold frames and double borders on panels and buttons, a sandstone duel slab with gold-lined zones, cartouche-shaped player plates (turquoise ring for you, carnelian for the opponent), gold phase marker, gold primary buttons, and an original winged-sun card back. No franchise symbols; official card art appears where it did before.
+- Display font Cinzel (SIL Open Font License, bundled in fonts/ with licenses/cinzel-OFL.txt, works offline); Inter stays for reading.
+- FX settings · Theme: "Lapis & Gold (Egyptian, default)" is new; Aurora and the other looks are still there. Anyone on Aurora is moved to Lapis & Gold once; other choices are kept.
+- Chain setting wording: "Ask me" / "Pass this turn" / "Pass optional responses" (was Auto / Pass this turn / Pass all; same behaviour).
+
+Known, not changed here: the Deck/Extra/Graveyard/Banish pile icons keep their own colours; on a phone held upright the Deck and Extra Deck pile labels are clipped by the narrow column (as in r49).
+
 # Duel Doctrine Lab · r49.1 TEST · Gold Sarcophagus art · 13 November 2026
 
 Kevy, 13 Nov 2026, 00:05 AEDT: "I noticed we are missing card art for Gold Sarcophagus." The image was already in art/ but the card library listed the card without art, so the hand showed its name on a plain tile. New file art-additions.json, applied by library-worker.mjs only to cards with no art. A check of every card in all nine preset decks (all banlist variants) found Gold Sarcophagus was the only one affected. Nothing else changed from r49.

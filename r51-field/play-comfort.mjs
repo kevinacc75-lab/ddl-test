@@ -9,7 +9,7 @@
 //  3. Auto-place (default ON): a single zone choice on your own field is made for you (Extra Monster Zone first, then the
 //     centre outwards). OFF = you pick the zone as before. Multi-zone choices and the opponent's field always ask.
 //  4. Gold aura on the cards you can Summon, Set, activate or attack with right now.
-const KEY='ddl-r48-play-comfort',CHAIN=['auto','turn','off'],CHAIN_LABEL={auto:'Chain: Auto',turn:'Chain: Pass this turn',off:'Chain: Pass all'};
+const KEY='ddl-r48-play-comfort',CHAIN=['auto','turn','off'],CHAIN_LABEL={auto:'Chain: Ask me',turn:'Chain: Pass this turn',off:'Chain: Pass optional'};
 const CHAIN_HELP={auto:'Asks whenever you can respond.',turn:'Passes every optional response until this turn ends, then returns to Auto.',off:'Passes every optional response until you switch it back.'};
 export const prefs={chain:'auto',autoPlace:true,aura:true};
 try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v&&typeof v==='object'){if(typeof v.autoPlace==='boolean')prefs.autoPlace=v.autoPlace;if(typeof v.aura==='boolean')prefs.aura=v.aura}}catch{}
@@ -68,7 +68,7 @@ export function installPlayComfort({M,R,name}){
  chainBtn.onclick=()=>setChain(CHAIN[(CHAIN.indexOf(prefs.chain)+1)%CHAIN.length]);
  // settings inside the Duel controls dialog
  {const host=$('#duel-controls .controls-actions')||$('#duel-controls');if(host){const box=document.createElement('div');box.className='pc-row';box.id='pc-settings';
-   box.innerHTML='<label>Chain responses <select id="pc-chain-select"><option value="auto">Auto · ask when I can respond</option><option value="turn">Pass this turn</option><option value="off">Pass all</option></select></label><label><input id="pc-autoplace" type="checkbox"> Auto-place cards</label><label><input id="pc-aura" type="checkbox"> Gold aura on playable cards</label>';
+   box.innerHTML='<label>Chain responses <select id="pc-chain-select"><option value="auto">Ask me · whenever I can respond</option><option value="turn">Pass this turn</option><option value="off">Pass optional responses</option></select></label><label><input id="pc-autoplace" type="checkbox"> Auto-place cards</label><label><input id="pc-aura" type="checkbox"> Gold aura on playable cards</label>';
    host.after(box);$('#pc-chain-select').onchange=e=>setChain(e.target.value);const ap=$('#pc-autoplace'),au=$('#pc-aura');ap.checked=prefs.autoPlace;au.checked=prefs.aura;
    ap.onchange=()=>{prefs.autoPlace=ap.checked;save();say('Auto-place '+(prefs.autoPlace?'on':'off'));act()};au.onchange=()=>{prefs.aura=au.checked;save();paint()}}}
  syncChain();
