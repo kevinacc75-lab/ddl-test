@@ -34,6 +34,9 @@ export const R46={
  //   text changes the battle (reflect / indestructible / battle effect) or while we control an Equip Card, and leaves an
  //   equal-ATK trade to the policy.
  w1Proactive:true,
- w12Battle:true
+ w12Battle:true,
+ // r48 S1: a monster Special Summoned on the opponent's turn with 2000 or less ATK, or under a monster with at least its
+ // ATK, takes Defense Position (off = r47).
+ posGuard:true
 };
 export const setR46=(patch={})=>{for(const [k,v] of Object.entries(patch))R46[k]=v&&typeof v==='object'&&!Array.isArray(v)?{...R46[k],...v}:v;return R46};

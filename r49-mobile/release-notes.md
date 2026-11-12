@@ -1,3 +1,41 @@
+# Duel Doctrine Lab · r49 TEST · Mobile layout · 12 November 2026
+
+Kevy, 12 Nov 2026, 19:45 AEDT: "Let's optimize so it runs and looks right on mobile devices. For example I use a Google Pixel 9 Pro, then my Samsung tablet. You mentioned it's a bit clunky, let's fix that interface." Built and self-verified by Claude; independent review requested. Layout only: engine, rules, decks, AI and the Play flow files are r48.1.
+
+New file css/r49-mobile.css (loaded last) and small additions to play-comfort.mjs:
+- Phone held upright (checked at 412 x 790, the Pixel 9 Pro's width): the duel has its own layout. Opponent strip at the top, the field across the full width, your Life Points strip, your hand as a row you can swipe sideways (cards about 86 px wide so four fit), and one bottom bar: the Chain setting on the left, and "View actions" or "No response" beside it. The list of choices opens as a sheet from the bottom that fits the screen (in r48.1 it was wider than the screen and cut off), with compact rows. The "rotate your phone" card is skipped on phones.
+- Tablet held upright (checked at 800 x 1200): the choices list was wider than the screen; it is now a centred sheet. The Chain setting and "No response" sit in the free strip beside the opponent's panel.
+- Tablet on its side (checked at 1280 x 740): the Chain setting is top left, "No response" top centre; nothing sits over your hand any more.
+- Every size, in Play: the old floating "Skip unusable / Auto-pass until relevant" bar is hidden (one response control now: the Chain button); its action is a button in Duel controls ("Auto-pass until I can respond"). The floating Pause / One action pair and the pace switch are hidden in Play (all three are in Duel controls; they still show in Watch). Notices appear compact at the top instead of over your hand, and the "offline files are ready" notice is dismissed when a duel is on.
+
+Known, not changed here: a phone held on its side still shows the scaled-down table (small text; upright is the better way to play on a phone); the gold aura does not yet mark Graveyard / Extra Deck / banished piles; attack by tapping attacker then target is not built yet.
+
+# Duel Doctrine Lab · r48.1 TEST · Play comfort retry fix · 12 November 2026
+
+r48 with one fix, found by ChatGPT's independent review (RELAY-147, R48-01): if you pressed "No response" (or a Pass setting or auto-place answered for you) while the screen was still showing an animation, the answer waited in the queue; if you then cancelled it to think again, r48 quietly queued the same answer again. Now an automatic answer is offered to the page once: as soon as the page accepts it, the add-on stops, and a cancelled answer stays cancelled. The "No response" button comes back so you can still use it. Nothing else changed: engine, rules, decks, AI and visuals are r48.
+
+ChatGPT's review of r48 also confirmed: a conceded game saved to a replay file and opened again shows as finished (served site, Chrome); the benchmark recount 100-28 = 100-28 (no gain from the S1 position rule; it stays a candidate).
+
+Known, not changed here: the gold aura covers hand and field cards, not yet Graveyard / Extra Deck / banished piles; two chain-related controls (the old "Auto-pass until relevant" bar and the new Chain setting) still sit side by side; phone layout is crowded.
+
+# Duel Doctrine Lab · r48 TEST · Play comfort · 12 November 2026
+
+Built on r47 (same engine, rules data, decks, card art, Aurora visuals, randomness). Kevy approved on 12 Nov 2026, 10:58 AEDT ("I approve all of the above ... auto card placement on as default and auto chain on by default but have these options as a toggle feature for the player"). Built and self-verified by Claude; independent review requested.
+
+Play comfort (new file play-comfort.mjs; it only presses choices the duel engine already offers; the Play flow files are unchanged):
+- "No response" button: whenever you can chain a card, a gold button at the bottom of the screen says which cards you could chain. Tap it, or press Space, to decline and play on. The normal list of choices is still there.
+- Chain setting (small button bottom right, and in Duel controls): Auto (asks whenever you can respond; the default), Pass this turn, Pass all. A pass made for you is announced on screen ("Passed · you could have chained ..."). Mandatory effects always ask. Every visit starts on Auto.
+- Auto-place (default ON, switch in Duel controls): when a card needs one zone on your own field it is placed for you (Extra Monster Zone first, then the centre outwards). OFF: you choose the zone as before. Zones on the opponent's field and multi-zone choices always ask.
+- Gold aura: the cards you can Summon, Set, activate or attack with right now glow gold (switch in Duel controls).
+
+Also:
+- A concession is now kept in a saved replay (seat and the point in the duel) and restored when the replay is opened, so a conceded game reopens as finished. Fixes ChatGPT's RELAY-142 finding.
+- AI rule S1: a monster Special Summoned on the opponent's turn with 2000 or less ATK, or under a monster with at least its ATK, takes Defense Position (seen in Sky Striker losses: Roze and Raye brought out in Attack Position under a 3000 ATK dragon). Benchmark, same machine and 128 seeded games vs WindBot: r47 100-28, with S1 100-28 (Sky Striker vs WindBot Branded 6-10 -> 7-9, Branded mirror 24-8 -> 23-9). No overall gain; kept ON as a candidate, switch R46.posGuard.
+- W1 note (RELAY-142/144/145): Called by the Grave is Forbidden on the 19 Oct 2026 list and in none of our lists, so no exception was added. W1 stays a tactical restriction: on our own chain link only monster negates are allowed, and only against an opposing face-up Effect Monster.
+- The r47 notes below said Sky Striker 5-11; the figure for that run is 6-10. Corrected.
+
+Not in this build: a full Master Duel / Duel Links style pass over the Play screen layout, Egyptian-style art direction.
+
 # Duel Doctrine Lab · r47 TEST · AI battle + chain rule fix, Concede · 12 November 2026
 
 Built on r46 (same engine, rules data, decks, card art, Aurora visuals, randomness and prompt timing). Kevy approved the build on 11 Nov 2026, 17:18 AEDT ("Yes let's carry on and build"). It answers ChatGPT's RELAY-140 review of r46. Built and self-verified by Claude; independent review requested.
@@ -5,7 +43,7 @@ Built on r46 (same engine, rules data, decks, card art, Aurora visuals, randomne
 - Attack rule (W12) corrected: it now uses the monster's real battle value (DEF when it attacks from Defense Position, e.g. Scareclaw Kashtira), never holds back a monster whose own text changes the battle (Ohime the Manifested Mikanko reflecting damage, monsters that cannot be destroyed by battle or have a battle effect) or while we control an Equip Card, and leaves an equal-ATK trade to the AI's normal judgement. Hopeless attacks are still held back.
 - Hand-trap rule (W1) corrected: Infinite Impermanence, Effect Veiler, Forbidden Droplet, Widow Anchor and Ghost Mourner may again be chained to our own card when the opponent has a face-up Effect Monster to use them on (e.g. our Droplet on our own Branded Fusion against their Lubellion). Ash Blossom and the other "answer" hand traps are still never chained to our own cards.
 - Concede button (Play mode): ⚙ Duel controls → Concede, two taps. The duel ends, the opponent's victory screen shows, end reason "Conceded".
-- Benchmark, same machine, same 128 seeded games vs WindBot: r45 97-31, r47 100-28 (Branded mirror 21-11 -> 24-8; Blue-Eyes vs WindBot Branded 12-4 both; Sky Striker vs WindBot Branded 5-11 both). A small gain, mostly from the mirror; not an independent holdout.
+- Benchmark, same machine, same 128 seeded games vs WindBot: r45 97-31, r47 100-28 (Branded mirror 21-11 -> 24-8; Blue-Eyes vs WindBot Branded 12-4 both; Sky Striker vs WindBot Branded 6-10 both (corrected 12 Nov: this line first said 5-11, which was Seto's earlier figure, not this run)). A small gain, mostly from the mirror; not an independent holdout.
 - Not runnable on the build machine (reference files only on Seto's box): the four older deck-list test files and one stylesheet-bundle test. r47 changes no decklist or stylesheet bundle order.
 
 # Duel Doctrine Lab · r46 TEST · AI WindBot port + victory boss art · 11 November 2026

@@ -102,3 +102,17 @@ export function wbAttackBlock(d,seat,c){
  if(foes.some(x=>power(x)<val||(!legacy&&(x.position&1)&&power(x)===val)))return null;
  return 'W12 (WindBot OnBattle): '+d.name(c.code)+' ('+val+(legacy||val===Number(mine.attack??info.attack??0)?' ATK':' DEF, attacking from Defense Position')+') cannot destroy any visible target';
 }
+
+// r48 S1 (Claude, 12 Nov 2026; benchmark logs sky-1126433173-f1, sky-684167468-f1: on the opponent's turn Sky Striker Ace = Zero
+// brought Roze and Raye out in Attack Position under a 3000 ATK Mirrorjade / Sanctifire and both were run over for damage).
+// WindBot scripts pick Defense for small bodies summoned under a bigger monster (e.g. its OnSelectPosition overrides). Rule:
+// when a monster is Special Summoned on the OPPONENT's turn and both positions are legal, it goes to face-up Defense if its
+// ATK is 2000 or less, or if they control a face-up monster with ATK at least as high. Monsters whose text changes the battle
+// (reflect / indestructible) are left alone. Our own turn is unchanged. Switch: R46.posGuard (off = r47).
+export function wbPosition(d,seat,m,response,M,R){
+ if(!R46.on||!R46.posGuard||m?.type!==M.SELECT_POSITION||!response||response.position!==1||!(m.positions&1)||!(m.positions&4))return null;
+ if(d.active===seat||d.active==null)return null;
+ const info=d.db[m.code]||{};if(BATTLE_TEXT.test(info.desc||'')||/Mikanko/.test(d.name(m.code)))return null;
+ const atk=Number(info.attack||0),top=Math.max(-1,...d.zone(1-seat,FIELD).filter(x=>x&&faceUp(x)).map(x=>Number(x.attack??0)));
+ if(!(atk<=2000||top>=atk))return null;
+ return {response:{type:R.SELECT_POSITION,position:4},rule:'S1 (WindBot position): summoned on the opponent\'s turn with '+atk+' ATK'+(top>=atk?' under their '+top+' ATK monster':'')+', so Defense Position',card:d.name(m.code)}}

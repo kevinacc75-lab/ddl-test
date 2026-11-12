@@ -1,6 +1,6 @@
 import {isBrandedNov08,brandedNov08Book,brandedNov08ActivationBlock,brandedNov08BystialPick,brandedNov08Idle,brandedNov08RoutePick,brandedNov08Option,brandedNov08SpecialBlock,brandedV4LenatusMaterial} from './branded-nov08.mjs';
 import {V4} from '../v4-flags.mjs';/* r45 v4 */
-import {wbActivationBlock,wbPick,wbGhostOgre} from './windbot-port.mjs';import {R46} from '../r46-flags.mjs';/* r46 WindBot port */
+import {wbActivationBlock,wbPick,wbGhostOgre,wbPosition} from './windbot-port.mjs';import {R46} from '../r46-flags.mjs';/* r46 WindBot port */
 // r18b (TASK a2): opening book + "never pass with a live hand" + spell/trap set/hold/activate rules.
 // The book never forces a move and never bypasses legality: it only reorders what the base policy offers first.
 // r30: with book-trust on (the default for decks with a book), a book step is played as written; search still decides
@@ -321,6 +321,7 @@ export function oppValue(d,c){const card=d.db[c.code]||{},desc=card.desc||'';let
 // Card picks inside the book's own effects (search target, Fusion target, materials). Never adds an illegal pick.
 export function bookPick(d,seat,m,response){
  {const wb=wbPick(d,seat,m,response,M,R);if(wb)return wb}/* r46 W4 */
+ {const ps=wbPosition(d,seat,m,response,M,R);if(ps)return ps}/* r48 S1 */
  if(isBrandedNov08(d.decks?.[seat])&&m?.type===M.SELECT_EFFECTYN&&response?.yes===false&&[45484331,73819701].includes(m.code)&&m.location===4)
    return {response:{type:R.SELECT_EFFECTYN,yes:true},rule:'Take our on-summon Branded search or Ecclesia recruit',card:d.name(m.code)};
  {const lm=brandedV4LenatusMaterial(d,seat,m,M,R);if(lm&&JSON.stringify(lm.response)!==JSON.stringify(response))return lm}/* r45 v4 */
