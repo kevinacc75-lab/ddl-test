@@ -1,3 +1,11 @@
+# Duel Doctrine Lab · r48.1 TEST · Play comfort retry fix · 12 November 2026
+
+r48 with one fix, found by ChatGPT's independent review (RELAY-147, R48-01): if you pressed "No response" (or a Pass setting or auto-place answered for you) while the screen was still showing an animation, the answer waited in the queue; if you then cancelled it to think again, r48 quietly queued the same answer again. Now an automatic answer is offered to the page once: as soon as the page accepts it, the add-on stops, and a cancelled answer stays cancelled. The "No response" button comes back so you can still use it. Nothing else changed: engine, rules, decks, AI and visuals are r48.
+
+ChatGPT's review of r48 also confirmed: a conceded game saved to a replay file and opened again shows as finished (served site, Chrome); the benchmark recount 100-28 = 100-28 (no gain from the S1 position rule; it stays a candidate).
+
+Known, not changed here: the gold aura covers hand and field cards, not yet Graveyard / Extra Deck / banished piles; two chain-related controls (the old "Auto-pass until relevant" bar and the new Chain setting) still sit side by side; phone layout is crowded.
+
 # Duel Doctrine Lab · r48 TEST · Play comfort · 12 November 2026
 
 Built on r47 (same engine, rules data, decks, card art, Aurora visuals, randomness). Kevy approved on 12 Nov 2026, 10:58 AEDT ("I approve all of the above ... auto card placement on as default and auto chain on by default but have these options as a toggle feature for the player"). Built and self-verified by Claude; independent review requested.

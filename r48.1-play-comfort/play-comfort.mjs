@@ -30,6 +30,15 @@ export function playable(prompt,M){
  if(!prompt||![M.SELECT_IDLECMD,M.SELECT_BATTLECMD].includes(prompt.type))return [];
  const out=new Map();for(const k of ['summons','special_summons','monster_sets','spell_sets','activates','attacks'])for(const c of prompt[k]||[])if(c&&c.location!=null)out.set(c.controller+':'+c.location+':'+c.sequence,c);
  return [...out.values()]}
+// r48.1 (ChatGPT RELAY-147 R48-01): one automatic answer is offered to the page until the page ACCEPTS it, then never again.
+// reply() reports 'queued' (taken into the human-flow queue), 'sent' (given to the duel), 'wait' (page busy: try again) or
+// 'refused'. On anything but 'wait' the retry stops, so a choice the player cancels from the queue is not queued a second
+// time. alive() ends it when the decision changes.
+export function makeSender({every=(f,ms)=>setInterval(f,ms),stop=id=>clearInterval(id),limit=2400}={}){
+ let id=null,n=0;const halt=()=>{if(id!=null)stop(id);id=null};
+ return {active:()=>id!=null,halt,start(reply,alive,done){halt();n=0;
+  const go=()=>{if(!alive()||n++>=limit){halt();return true}const r=reply();if(r!=='wait'){halt();done?.(r);return true}return false};
+  if(!go())id=every(go,150)}}}
 export function installPlayComfort({M,R,name}){
  const $=s=>document.querySelector(s);
  const style=document.createElement('style');style.textContent=`
@@ -52,7 +61,7 @@ export function installPlayComfort({M,R,name}){
  const chainBtn=document.createElement('button');chainBtn.id='pc-chain';chainBtn.type='button';chainBtn.hidden=true;
  const toast=document.createElement('div');toast.id='pc-toast';toast.setAttribute('role','status');toast.setAttribute('aria-live','polite');
  document.body.append(bar,chainBtn,toast);
- let cur=null,timer=0,toastTimer=0,turnMark=null;
+ let cur=null,toastTimer=0,turnMark=null;
  const say=t=>{toast.textContent=t;toast.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('on'),2600)};
  const syncChain=()=>{chainBtn.textContent=CHAIN_LABEL[prefs.chain];chainBtn.dataset.mode=prefs.chain;chainBtn.title=CHAIN_HELP[prefs.chain];chainBtn.setAttribute('aria-label',CHAIN_LABEL[prefs.chain]+'. '+CHAIN_HELP[prefs.chain]+' Press to change.');const s=$('#pc-chain-select');if(s)s.value=prefs.chain};
  const setChain=(v,quiet)=>{prefs.chain=v;turnMark=v==='turn'?cur?.state?.turn??null:null;save();syncChain();if(!quiet)say(CHAIN_LABEL[v]+' · '+CHAIN_HELP[v]);act()};
@@ -63,13 +72,13 @@ export function installPlayComfort({M,R,name}){
    host.after(box);$('#pc-chain-select').onchange=e=>setChain(e.target.value);const ap=$('#pc-autoplace'),au=$('#pc-aura');ap.checked=prefs.autoPlace;au.checked=prefs.aura;
    ap.onchange=()=>{prefs.autoPlace=ap.checked;save();say('Auto-place '+(prefs.autoPlace?'on':'off'));act()};au.onchange=()=>{prefs.aura=au.checked;save();paint()}}}
  syncChain();
- const send=(response,key)=>{clearInterval(timer);let n=0;const go=()=>{if(!cur||cur.key!==key||n++>60){clearInterval(timer);return}cur.reply(response)};go();timer=setInterval(go,150)};
+ const sender=makeSender();const send=(response,key)=>sender.start(()=>cur.reply(response),()=>!!cur&&cur.human&&cur.key===key,r=>{if(cur&&cur.key===key)cur.answered=r});
  const passNow=()=>{if(!cur?.chain)return;const k=cur.key,c=cur.chain;bar.hidden=true;send(c.pass.response,k)};
  $('#pc-pass').onclick=passNow;
  document.addEventListener('keydown',e=>{if(e.code!=='Space'||bar.hidden||e.repeat||e.ctrlKey||e.metaKey||e.altKey)return;const t=document.activeElement;if(t&&(/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)||t.closest?.('#choices')))return;/* typing, or choosing a chain card with the keyboard */if(document.querySelector('dialog[open]'))return;e.preventDefault();passNow()});
  function paint(){document.querySelectorAll('.pc-playable').forEach(n=>n.classList.remove('pc-playable'));if(!cur||!prefs.aura||!cur.human)return;
   for(const c of playable(cur.state.prompt,M)){let n=null;if(c.location===2){n=[...document.querySelectorAll('.hand-card[data-hand-sequence="'+c.sequence+'"]')].find(x=>Number(x.dataset.card)===c.code&&!x.querySelector('.hand-back'))}else if(c.location===4||c.location===8){n=document.querySelector('[data-slot="'+cur.slot(c)+'"]')}n?.classList.add('pc-playable')}}
- function act(){clearInterval(timer);bar.hidden=true;if(!cur||!cur.human){paint();return}
+ function act(){sender.halt();bar.hidden=true;if(!cur||!cur.human){paint();return}
   const {state,choices}=cur,m=state.prompt;
   if(prefs.chain==='turn'&&turnMark!=null&&state.turn!==turnMark)setChain('auto',true);
   paint();
@@ -79,7 +88,7 @@ export function installPlayComfort({M,R,name}){
    bar.querySelector('small').textContent=names?'You can chain: '+names:'';bar.hidden=false;return}
   if(prefs.autoPlace){const p=pickPlace(m,choices,M);if(p)send(p.response,cur.key)}}
  window.addEventListener('duel-human-decision',e=>{const d=e.detail||{};const show=!!d.inDuel;chainBtn.hidden=!show;
-  if(!d.human||!d.state?.prompt){cur=d.state?{...d,human:false,key:null}:null;clearInterval(timer);bar.hidden=true;paint();return}
-  const key=d.state.revision+':'+d.state.prompt.type;if(cur&&cur.key===key&&cur.human){cur={...cur,...d,key};paint();return}
+  if(!d.human||!d.state?.prompt){cur=d.state?{...d,human:false,key:null}:null;sender.halt();bar.hidden=true;paint();return}
+  const key=d.state.revision+':'+d.state.prompt.type+':'+(d.flow||'');if(cur&&cur.key===key&&cur.human){cur={...cur,...d,key};paint();/* same decision drawn again (for example after the player cancelled a queued choice): nothing is answered for them a second time; the No response button comes back if nothing is queued */if(!sender.active())bar.hidden=!(cur.chain&&!cur.chain.auto&&!d.pending);return}
   cur={...d,key};act()});
 }
