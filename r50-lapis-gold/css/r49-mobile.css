@@ -1,0 +1,90 @@
+/* r49 (Claude as lead/builder, 12 Nov 2026; Kevy 19:45 AEDT: "optimize so it runs and looks right on mobile devices ... Google
+   Pixel 9 Pro ... Samsung tablet ... fix that interface"). Layout only: no game logic. Loaded last so it wins.
+   body[data-pc-play] is set by play-comfort.mjs while a duel with a human seat is on screen. */
+
+/* ---- every screen size, Play ---- */
+/* one response control: the Chain button replaces the old floating status bar (its action stays in Duel controls) */
+body[data-pc-play] #play-response-status{display:none!important}
+/* a notice never sits on the hand or the decision: it goes to the top and stays compact */
+body.in-duel #notice{top:calc(8px + env(safe-area-inset-top))!important;bottom:auto!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:min(520px,calc(100vw - 84px))!important;max-height:96px;padding:8px 10px!important;gap:8px!important;z-index:70!important;overflow:hidden}
+body.in-duel #notice #notice-text{font-size:13px;line-height:1.3;margin:0}
+body.in-duel #notice #notice-label{font-size:10px;margin:0}
+/* in Play the floating Pause / One action pair is not needed (both are in Duel controls) */
+body[data-pc-play] #duel-quickbar{display:none!important}
+/* the response bar: Chain setting on the left, No response beside it, bottom centre, above nothing important */
+body #pc-chain{left:auto;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));min-height:44px}
+body #pc-bar{bottom:calc(8px + env(safe-area-inset-bottom))}
+
+/* ---- tablets and desktop: the response bar sits at the top, clear of the hand and of "View actions" ---- */
+body[data-pc-play] #quick-pace{display:none!important}                       /* pace is in Duel controls */
+@media (min-width:601px){
+ body #pc-bar{bottom:auto;top:calc(6px + env(safe-area-inset-top))}
+ body #pc-chain{right:auto;left:8px;bottom:auto;top:calc(8px + env(safe-area-inset-top))}
+ body #pc-pass{min-height:52px}
+}
+/* ---- tablet held upright (Samsung tablet portrait): the free strip beside the opponent's panel ---- */
+@media (min-width:601px) and (orientation:portrait){
+ body #pc-chain{left:346px;top:calc(12px + env(safe-area-inset-top));height:48px}
+ body #pc-bar{left:462px;right:auto;transform:none;top:calc(8px + env(safe-area-inset-top));max-width:calc(100vw - 462px - 74px)}
+ body #pc-pass{padding:6px 14px;font-size:15px}
+ /* the decision list was wider than the screen: it is a centred sheet now */
+ body.in-duel:not(#_):not(#_) #duel .decision-column{top:auto!important;left:4vw!important;right:4vw!important;bottom:calc(130px + env(safe-area-inset-bottom))!important;width:auto!important;max-width:92vw!important;height:auto!important;max-height:62vh!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box;border-radius:16px!important}
+ body.in-duel:not(#_):not(#_) #duel .decision-column .play-pane{width:auto!important;max-width:100%!important;box-sizing:border-box}
+ body.in-duel:not(#_):not(#_) #duel .decision-column button{min-height:48px!important}
+ body.in-duel:not(#_):not(#_) #duel .decision-column button.choice{min-height:64px!important;height:auto!important}
+ body.in-duel:not(#_):not(#_) #duel .decision-column .inspect{min-height:44px!important;min-width:44px!important;height:44px!important;display:inline-flex!important;align-items:center;justify-content:center;flex:none}
+ body.in-duel:not(#_):not(#_) #duel .decision-column button.pane-close{min-height:44px!important;height:44px!important;width:auto!important;padding:0 12px!important}
+ body.in-duel:not(#_):not(#_) #arena-return{top:auto!important;left:auto!important;right:4vw!important;bottom:calc(72px + env(safe-area-inset-bottom))!important;width:auto!important;height:48px!important;min-height:48px!important;padding:0 16px!important;z-index:64!important;border-radius:12px;white-space:nowrap}
+}
+
+/* ---- phone, portrait (Pixel 9 Pro is 412 wide) ---- */
+@media (max-width:600px) and (orientation:portrait){
+ body.in-duel:not(#_):not(#_) #duel-controls-toggle{top:calc(6px + env(safe-area-inset-top))!important;right:6px!important;width:44px!important;height:44px!important;min-width:44px}
+ /* top strip: opponent */
+ body.in-duel:not(#_):not(#_) .player-bar.opponent{top:calc(6px + env(safe-area-inset-top))!important;left:6px!important;right:58px!important;bottom:auto!important;width:auto!important;height:44px!important;min-height:0!important;padding:4px 8px!important}
+ body.in-duel:not(#_):not(#_) #opp-hand{top:calc(54px + env(safe-area-inset-top))!important;bottom:auto!important;height:54px!important;left:50%!important;right:auto!important;transform:translateX(-50%) scale(.62);transform-origin:top center}
+ /* field: full width between the strips */
+ body.in-duel:not(#_):not(#_) #arena-scroll{top:calc(96px + env(safe-area-inset-top))!important;left:4px!important;right:4px!important;bottom:calc(252px + env(safe-area-inset-bottom))!important}
+ /* own strip, hand, bottom bar */
+ body.in-duel:not(#_):not(#_) .player-bar.own{top:auto!important;bottom:calc(204px + env(safe-area-inset-bottom))!important;left:6px!important;right:6px!important;width:auto!important;height:44px!important;min-height:0!important;padding:4px 8px!important}
+ body.in-duel:not(#_):not(#_) #my-hand{top:auto!important;bottom:calc(64px + env(safe-area-inset-bottom))!important;left:0!important;right:0!important;width:auto!important;height:136px!important;padding:4px 8px!important;gap:6px!important;align-items:flex-end!important;justify-content:flex-start;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch}
+ body.in-duel:not(#_):not(#_) #my-hand .hand-card{flex:0 0 86px!important;width:86px!important;min-width:86px!important;max-width:86px!important;height:125px!important;min-height:0!important;margin:0!important;transform:none!important}
+ body.in-duel:not(#_):not(#_) #my-hand .hand-card img,body.in-duel:not(#_):not(#_) #my-hand .hand-card .hand-art{width:100%!important;height:100%!important;object-fit:cover}
+ body.in-duel:not(#_):not(#_) #my-hand .hand-card.pc-playable{transform:translateY(-4px)!important}
+ body.in-duel:not(#_):not(#_) .player-bar{overflow:hidden}
+ body.in-duel:not(#_):not(#_) .player-bar .avatar,body.in-duel:not(#_):not(#_) .player-bar img{max-height:34px}
+ /* the cue becomes one bottom bar: text on the left, View actions on the right */
+ body.in-duel:not(#_):not(#_) .field-cue{top:auto!important;left:8px!important;right:8px!important;bottom:calc(8px + env(safe-area-inset-bottom))!important;width:auto!important;height:48px!important;min-height:0!important;padding:0 0 0 124px!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;background:none!important;border:0!important;box-shadow:none!important}
+ body.in-duel:not(#_):not(#_) .field-cue>div{flex:1;min-width:0;overflow:hidden}
+ body.in-duel:not(#_):not(#_) .field-cue #cue-owner{display:block;font-size:10px;white-space:nowrap}
+ body.in-duel:not(#_):not(#_) .field-cue #cue-text{margin:0;font-size:12px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ body.in-duel:not(#_):not(#_) .field-cue #cue-open{flex:none;min-height:48px;height:48px;padding:0 14px;font-size:14px;white-space:nowrap;width:auto}
+ body #pc-chain{left:8px;right:auto;bottom:calc(8px + env(safe-area-inset-bottom));width:112px;height:48px;padding:4px 6px;font-size:11px;line-height:1.15;border-radius:12px;z-index:62}
+ body #pc-bar{left:128px;right:8px;transform:none;max-width:none;bottom:calc(8px + env(safe-area-inset-bottom));z-index:63}
+ body #pc-pass{width:100%;min-height:48px;height:48px;padding:4px 10px;font-size:15px;border-radius:12px}
+ body #pc-pass small{font-size:10px;margin-top:1px;max-width:none}
+ body #pc-toast{top:calc(104px + env(safe-area-inset-top))}
+ /* the decision list is a bottom sheet over the hand, never wider than the screen */
+ body.in-duel:not(#_):not(#_) #duel .decision-column{top:auto!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;max-width:100vw!important;height:auto!important;max-height:min(68vh,calc(100vh - 110px))!important;padding:12px 10px calc(72px + env(safe-area-inset-bottom))!important;border-radius:16px 16px 0 0!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box;z-index:61!important}
+ body.in-duel:not(#_):not(#_) #duel .decision-column .play-pane{width:auto!important;max-width:100%!important;padding:0!important;box-sizing:border-box}
+ body.in-duel:not(#_):not(#_) #duel .decision-column #choices{max-width:100%;overflow:visible!important}
+ body.in-duel:not(#_):not(#_) #duel .decision-column #choices button{max-width:100%;box-sizing:border-box}
+ body.in-duel:not(#_):not(#_) #duel .decision-column h2,body.in-duel:not(#_):not(#_) #duel .decision-column #decision-title{font-size:18px;overflow-wrap:anywhere}
+ body.in-duel:not(#_):not(#_) #duel .decision-column button{min-height:48px!important}
+ body.in-duel:not(#_):not(#_) #duel .decision-column button.choice{min-height:60px!important;height:auto!important;padding:8px 10px!important;gap:8px}
+ body.in-duel:not(#_):not(#_) #duel .decision-column .inspect{min-height:44px!important;min-width:44px!important;height:44px!important;display:inline-flex!important;align-items:center;justify-content:center;flex:none}
+ body.in-duel:not(#_):not(#_) #duel .decision-column button.pane-close{min-height:44px!important;height:44px!important;width:auto!important;padding:0 12px!important}
+ body.in-duel:not(#_):not(#_) #duel .decision-column p{margin:6px 0;font-size:14px;line-height:1.35}
+ body.in-duel:not(#_):not(#_) .player-bar #my-name b,body.in-duel:not(#_):not(#_) .player-bar .player-identity b{display:block;font-size:12px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42vw}
+ body.in-duel:not(#_):not(#_) .player-bar .duelist-title{display:block;font-size:12px;line-height:1.1;white-space:nowrap}
+ body.in-duel:not(#_):not(#_) #arena-return{top:auto!important;left:auto!important;right:8px!important;bottom:calc(8px + env(safe-area-inset-bottom))!important;width:auto!important;height:48px!important;min-height:48px;padding:0 14px!important;z-index:64!important;border-radius:12px;white-space:nowrap}
+ body.in-duel:not(#_):not(#_) #duel[data-screen=play] .field-cue{display:none!important}
+ body.in-duel:not(#_):not(#_):has(#duel[data-screen=play]) #pc-bar{right:150px}
+}
+/* ---- phone held sideways: keep the response bar small and out of the field ---- */
+@media (max-height:480px) and (orientation:landscape){
+ body #pc-bar{top:auto;bottom:calc(4px + env(safe-area-inset-bottom))}
+ body #pc-pass{min-height:44px;padding:4px 16px;font-size:14px}
+ body #pc-chain{top:auto;left:8px;right:auto;bottom:calc(4px + env(safe-area-inset-bottom))}
+ body.in-duel #notice{max-height:64px}
+}

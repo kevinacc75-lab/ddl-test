@@ -5,11 +5,11 @@ export const R45_AI_CHANGED=['ai/book/book.mjs','ai/book/branded-nov08.mjs','ai/
 export const R45_NEW=['ai/v4-flags.mjs','ai/book/v4-plan.mjs',...['ai/r46-flags.mjs','ai/book/windbot-port.mjs','victory-boss.mjs']/* r46-adapted: r46 new files */];
 export const R45_DISPLAY=['decks.json'];/* Branded display name only: "Kevy's Branded Deck" (ids, keys, lists, format unchanged) */
 export const R45_BUILD=/^const BUILD='ddl-test r47 /;/* r46-adapted: the current build identity */
-export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-12-r48.1-play-comfort'/;/* r46-adapted */
+export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-13-r50-lapis-gold'/;/* r46-adapted */
 export const R45_NAME="Kevy's Branded Deck";
 // r46 (Kevy 11 Nov 2026 14:54 AEDT): WindBot port (ai/book/book.mjs, optimal-pilot.mjs hooks; new ai/r46-flags.mjs, ai/book/windbot-port.mjs)
 // and victory boss art (new victory-boss.mjs, css/aurora.css append, index.html script tag). Identity is now r46.
-export const R46_TITLE='<title>TEST r48.1 — Duel Doctrine Lab · Aurora · Play comfort</title>';
+export const R46_TITLE='<title>TEST r50 — Duel Doctrine Lab · Lapis & Gold</title>';
 export const R46_SCRIPT='<script type="module" src="victory-boss.mjs"></script>';
 
 // r47 (Claude, 11 Nov 2026): the Concede button is the only r47 change outside the AI rule files, app.mjs and css/aurora.css.
@@ -20,5 +20,12 @@ export const R47_CONCEDE_WORKER="\n else if(x.type==='concede'){/* r47: Play mod
 // character edits r48 -> r47 are in tests/fixtures/r48-worker-undo.json and only apply to the exact r48 worker text (sha256).
 import fs48 from 'node:fs';import {createHash as h48} from 'node:crypto';
 const R48_UNDO=JSON.parse(fs48.readFileSync(new URL('../fixtures/r48-worker-undo.json',import.meta.url),'utf8'));
-export function r48Undo(file,text){if(file!=='worker.mjs')return text;if(h48('sha256').update(text).digest('hex')!==R48_UNDO.sha256)throw Error('worker.mjs is not the r48 text the undo fixture was made for');let out=text;for(const [a,b,r] of [...R48_UNDO.ops].reverse())out=out.slice(0,a)+r+out.slice(b);return out}
+export const R49_LINK='<link rel="stylesheet" href="./css/r49-mobile.css">';
+// r49.1: library-worker.mjs gained art-additions.json loading. The exact r49.1 text maps back to the r49 text (fixture).
+const R491_LW=JSON.parse(fs48.readFileSync(new URL('../fixtures/r49_1-library-worker-undo.json',import.meta.url),'utf8'));
+export function r48Undo(file,text){if(file==='library-worker.mjs'){if(text!==R491_LW.from)throw Error('library-worker.mjs is not the r49.1 text');return R491_LW.to}if(file==='index.html'){let t=text;/* r50: the look sheet link and the new default theme option come out first, each exactly once */
+  const R50_LINK='<link rel="stylesheet" href="./css/r50-egypt.css">',EG='<option value="egypt">Lapis &amp; Gold (Egyptian, default)</option><option value="aurora">Aurora</option>';
+  if(t.split(R50_LINK).length!==2)throw Error('r50 stylesheet link not found exactly once');t=t.replace(R50_LINK,'');
+  if(t.split(EG).length!==3)throw Error('r50 theme options not found exactly twice');t=t.split(EG).join('<option value="aurora">Aurora (default)</option>');
+  if(t.split(R49_LINK).length!==2)throw Error('r49 stylesheet link not found exactly once');return t.replace(R49_LINK,'')}if(file!=='worker.mjs')return text;if(h48('sha256').update(text).digest('hex')!==R48_UNDO.sha256)throw Error('worker.mjs is not the r48 text the undo fixture was made for');let out=text;for(const [a,b,r] of [...R48_UNDO.ops].reverse())out=out.slice(0,a)+r+out.slice(b);return out}
 export function r47Undo(file,text0){const text=r48Undo(file,text0);const cut=file==='worker.mjs'?R47_CONCEDE_WORKER:file==='index.html'?R47_CONCEDE_HTML:null;if(!cut)return text;if(text.split(cut).length!==2)throw Error('r47 concede insertion not found exactly once in '+file);return text.replace(cut,'')}

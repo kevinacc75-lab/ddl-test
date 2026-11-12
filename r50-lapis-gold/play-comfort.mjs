@@ -9,7 +9,7 @@
 //  3. Auto-place (default ON): a single zone choice on your own field is made for you (Extra Monster Zone first, then the
 //     centre outwards). OFF = you pick the zone as before. Multi-zone choices and the opponent's field always ask.
 //  4. Gold aura on the cards you can Summon, Set, activate or attack with right now.
-const KEY='ddl-r48-play-comfort',CHAIN=['auto','turn','off'],CHAIN_LABEL={auto:'Chain: Auto',turn:'Chain: Pass this turn',off:'Chain: Pass all'};
+const KEY='ddl-r48-play-comfort',CHAIN=['auto','turn','off'],CHAIN_LABEL={auto:'Chain: Ask me',turn:'Chain: Pass this turn',off:'Chain: Pass optional'};
 const CHAIN_HELP={auto:'Asks whenever you can respond.',turn:'Passes every optional response until this turn ends, then returns to Auto.',off:'Passes every optional response until you switch it back.'};
 export const prefs={chain:'auto',autoPlace:true,aura:true};
 try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v&&typeof v==='object'){if(typeof v.autoPlace==='boolean')prefs.autoPlace=v.autoPlace;if(typeof v.aura==='boolean')prefs.aura=v.aura}}catch{}
@@ -68,10 +68,16 @@ export function installPlayComfort({M,R,name}){
  chainBtn.onclick=()=>setChain(CHAIN[(CHAIN.indexOf(prefs.chain)+1)%CHAIN.length]);
  // settings inside the Duel controls dialog
  {const host=$('#duel-controls .controls-actions')||$('#duel-controls');if(host){const box=document.createElement('div');box.className='pc-row';box.id='pc-settings';
-   box.innerHTML='<label>Chain responses <select id="pc-chain-select"><option value="auto">Auto · ask when I can respond</option><option value="turn">Pass this turn</option><option value="off">Pass all</option></select></label><label><input id="pc-autoplace" type="checkbox"> Auto-place cards</label><label><input id="pc-aura" type="checkbox"> Gold aura on playable cards</label>';
+   box.innerHTML='<label>Chain responses <select id="pc-chain-select"><option value="auto">Ask me · whenever I can respond</option><option value="turn">Pass this turn</option><option value="off">Pass optional responses</option></select></label><label><input id="pc-autoplace" type="checkbox"> Auto-place cards</label><label><input id="pc-aura" type="checkbox"> Gold aura on playable cards</label>';
    host.after(box);$('#pc-chain-select').onchange=e=>setChain(e.target.value);const ap=$('#pc-autoplace'),au=$('#pc-aura');ap.checked=prefs.autoPlace;au.checked=prefs.aura;
    ap.onchange=()=>{prefs.autoPlace=ap.checked;save();say('Auto-place '+(prefs.autoPlace?'on':'off'));act()};au.onchange=()=>{prefs.aura=au.checked;save();paint()}}}
  syncChain();
+ // r49: the "offline files are ready" notice is not allowed to sit over a duel: it is dismissed when a human decision arrives
+ const quietNotice=()=>{const n=$('#notice'),t=$('#notice-text');if(n&&!n.hidden&&/Offline duel files are ready/.test(t?.textContent||''))$('#dismiss-notice')?.click()};
+ // r49: on a phone held upright the duel now has its own layout, so the "rotate your phone" card is skipped there
+ const skipRotateHint=()=>{try{if(!matchMedia('(max-width:600px) and (orientation:portrait)').matches)return}catch{return}const h=$('#rotate-hint');if(h&&!h.hidden)$('#portrait-continue')?.click()};
+ // r49: the old floating "Auto-pass until relevant" bar is hidden in Play; its button is reachable from Duel controls
+ {const box=$('#pc-settings');if(box){const b=document.createElement('button');b.type='button';b.id='pc-autopass';b.className='quiet';b.textContent='Auto-pass until I can respond';b.title='Skips ahead through windows where you have nothing to chain (the earlier control, moved here).';b.onclick=()=>{const o=document.querySelector('#play-response-status button');if(o&&!o.disabled){o.click();say('Auto-pass until you can respond')}else say('Nothing to skip right now')};box.append(b)}}
  const sender=makeSender();const send=(response,key)=>sender.start(()=>cur.reply(response),()=>!!cur&&cur.human&&cur.key===key,r=>{if(cur&&cur.key===key)cur.answered=r});
  const passNow=()=>{if(!cur?.chain)return;const k=cur.key,c=cur.chain;bar.hidden=true;send(c.pass.response,k)};
  $('#pc-pass').onclick=passNow;
@@ -87,8 +93,8 @@ export function installPlayComfort({M,R,name}){
    if(ch.auto){say('Passed · you could have chained '+names+' ('+CHAIN_LABEL[prefs.chain]+')');send(ch.pass.response,cur.key);return}
    bar.querySelector('small').textContent=names?'You can chain: '+names:'';bar.hidden=false;return}
   if(prefs.autoPlace){const p=pickPlace(m,choices,M);if(p)send(p.response,cur.key)}}
- window.addEventListener('duel-human-decision',e=>{const d=e.detail||{};const show=!!d.inDuel;chainBtn.hidden=!show;
+ window.addEventListener('duel-human-decision',e=>{const d=e.detail||{};const show=!!d.inDuel;chainBtn.hidden=!show;if(show)setTimeout(quietNotice,400);skipRotateHint();if(show)document.body.dataset.pcPlay='1';else delete document.body.dataset.pcPlay;/* r49: css/r49-mobile.css lays Play out around this */
   if(!d.human||!d.state?.prompt){cur=d.state?{...d,human:false,key:null}:null;sender.halt();bar.hidden=true;paint();return}
   const key=d.state.revision+':'+d.state.prompt.type+':'+(d.flow||'');if(cur&&cur.key===key&&cur.human){cur={...cur,...d,key};paint();/* same decision drawn again (for example after the player cancelled a queued choice): nothing is answered for them a second time; the No response button comes back if nothing is queued */if(!sender.active())bar.hidden=!(cur.chain&&!cur.chain.auto&&!d.pending);return}
-  cur={...d,key};act()});
+  cur={...d,key};quietNotice();act()});
 }

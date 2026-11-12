@@ -1,3 +1,30 @@
+# Duel Doctrine Lab · r50 TEST · Lapis & Gold (Egyptian look) · 13 November 2026
+
+Kevy, 13 Nov 2026, 07:13 AEDT: "Seems fine on both devices. Go ahead and import the Egyptian style." From the design draft he reviewed on 13 Nov ("Looks pretty good"). Built and self-verified by Claude; independent review requested. Colours, fonts and card backs only: engine, rules, decks, AI, layout sizes and the Play flow files are r49.1.
+
+- New default look "Lapis & Gold": night lapis background, carved gold frames and double borders on panels and buttons, a sandstone duel slab with gold-lined zones, cartouche-shaped player plates (turquoise ring for you, carnelian for the opponent), gold phase marker, gold primary buttons, and an original winged-sun card back. No franchise symbols; official card art appears where it did before.
+- Display font Cinzel (SIL Open Font License, bundled in fonts/ with licenses/cinzel-OFL.txt, works offline); Inter stays for reading.
+- FX settings · Theme: "Lapis & Gold (Egyptian, default)" is new; Aurora and the other looks are still there. Anyone on Aurora is moved to Lapis & Gold once; other choices are kept.
+- Chain setting wording: "Ask me" / "Pass this turn" / "Pass optional responses" (was Auto / Pass this turn / Pass all; same behaviour).
+
+Known, not changed here: the Deck/Extra/Graveyard/Banish pile icons keep their own colours; on a phone held upright the Deck and Extra Deck pile labels are clipped by the narrow column (as in r49).
+
+# Duel Doctrine Lab · r49.1 TEST · Gold Sarcophagus art · 13 November 2026
+
+Kevy, 13 Nov 2026, 00:05 AEDT: "I noticed we are missing card art for Gold Sarcophagus." The image was already in art/ but the card library listed the card without art, so the hand showed its name on a plain tile. New file art-additions.json, applied by library-worker.mjs only to cards with no art. A check of every card in all nine preset decks (all banlist variants) found Gold Sarcophagus was the only one affected. Nothing else changed from r49.
+
+# Duel Doctrine Lab · r49 TEST · Mobile layout · 12 November 2026
+
+Kevy, 12 Nov 2026, 19:45 AEDT: "Let's optimize so it runs and looks right on mobile devices. For example I use a Google Pixel 9 Pro, then my Samsung tablet. You mentioned it's a bit clunky, let's fix that interface." Built and self-verified by Claude; independent review requested. Layout only: engine, rules, decks, AI and the Play flow files are r48.1.
+
+New file css/r49-mobile.css (loaded last) and small additions to play-comfort.mjs:
+- Phone held upright (checked at 412 x 790, the Pixel 9 Pro's width): the duel has its own layout. Opponent strip at the top, the field across the full width, your Life Points strip, your hand as a row you can swipe sideways (cards about 86 px wide so four fit), and one bottom bar: the Chain setting on the left, and "View actions" or "No response" beside it. The list of choices opens as a sheet from the bottom that fits the screen (in r48.1 it was wider than the screen and cut off), with compact rows. The "rotate your phone" card is skipped on phones.
+- Tablet held upright (checked at 800 x 1200): the choices list was wider than the screen; it is now a centred sheet. The Chain setting and "No response" sit in the free strip beside the opponent's panel.
+- Tablet on its side (checked at 1280 x 740): the Chain setting is top left, "No response" top centre; nothing sits over your hand any more.
+- Every size, in Play: the old floating "Skip unusable / Auto-pass until relevant" bar is hidden (one response control now: the Chain button); its action is a button in Duel controls ("Auto-pass until I can respond"). The floating Pause / One action pair and the pace switch are hidden in Play (all three are in Duel controls; they still show in Watch). Notices appear compact at the top instead of over your hand, and the "offline files are ready" notice is dismissed when a duel is on.
+
+Known, not changed here: a phone held on its side still shows the scaled-down table (small text; upright is the better way to play on a phone); the gold aura does not yet mark Graveyard / Extra Deck / banished piles; attack by tapping attacker then target is not built yet.
+
 # Duel Doctrine Lab · r48.1 TEST · Play comfort retry fix · 12 November 2026
 
 r48 with one fix, found by ChatGPT's independent review (RELAY-147, R48-01): if you pressed "No response" (or a Pass setting or auto-place answered for you) while the screen was still showing an animation, the answer waited in the queue; if you then cancelled it to think again, r48 quietly queued the same answer again. Now an automatic answer is offered to the page once: as soon as the page accepts it, the add-on stops, and a cancelled answer stays cancelled. The "No response" button comes back so you can still use it. Nothing else changed: engine, rules, decks, AI and visuals are r48.
