@@ -1,0 +1,1 @@
+{"note":"r49.1 (12-13 Nov 2026): card art shipped in art/ but missing from the art field of cards.json.gz. Applied only to a card that has no art. Kevy spotted Gold Sarcophagus showing as text in hand.","art":{"75500286":"art/75500286.jpg"}}

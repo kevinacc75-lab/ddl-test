@@ -14,7 +14,7 @@ const LEGACY=['style','arena','mobile-motion','vibrant','master-duel','lab-shell
 /* r44: + ai/book/branded-nov08.mjs, the Super Polymerization own-face-down fix (RELAY-135; Kevy 11 Nov 01:58 AEDT), pinned by tests/r44-superpoly.test.mjs */
 const R44_AI_FIX='ai/book/branded-nov08.mjs';
 /* r45: + the AI v4 files listed in lib/r45-scope.mjs */
-const ALLOWED_CHANGED=[...new Set(['app.mjs','deck-list.mjs','decks.json','index.html','offline-assets.json','release-notes.md','sw.js','worker.mjs',R44_AI_FIX,...R45_AI_CHANGED])].sort();
+const ALLOWED_CHANGED=[...new Set(['app.mjs','deck-list.mjs','decks.json','index.html','offline-assets.json','release-notes.md','sw.js','worker.mjs','library-worker.mjs'/* r49.1: art-additions.json loading */,R44_AI_FIX,...R45_AI_CHANGED])].sort();
 
 test('(R43-1) only shell/presentation files differ from r42; engine, AI, rules, prompt timing, decks logic and every legacy stylesheet are byte-identical',()=>{
  const changed=Object.keys(r42).filter(f=>sha(f)!==r42[f]).sort();
@@ -64,8 +64,8 @@ test('(R43-6, r44 scope) decorative art is original: hero, LP avatars, victory f
  assert.match(read('deck-list.mjs'),/<img src="\$\{esc\(c\.art\)\}" alt="\$\{esc\(name\)\}"/);
 });
 test('(R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only',()=>{
- const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r49<\/span>/);/* r46-adapted */
- assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r49/);/* r46-adapted */
+ const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r49\.1<\/span>/);/* r46-adapted */
+ assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r49\.1/);/* r46-adapted */
  const ui=read('ui-polish.mjs').replace(/^\/\/.*$/mg,'');assert.doesNotMatch(ui,/import |postMessage|Worker|Math\.random|setTimeout|setInterval|duel|respond/);assert.match(ui,/setProperty\('--pop-shift'/);
  assert.match(html,/<script type="module" src="ui-polish\.mjs"><\/script><\/body>/);
 });

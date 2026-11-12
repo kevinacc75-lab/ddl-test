@@ -18,7 +18,7 @@ const R41_CHANGED=[...new Set([...R41_CHANGED_R41,...R45_AI_CHANGED.filter(f=>f!
 const R43_CHANGED=['deck-list.mjs'];
 test('r40 display only (r41-adapted): engine, rules data and random are byte-identical to r39; only the listed r41 AI/deck files differ',()=>{
  const changed=Object.keys(r39).filter(f=>fs.existsSync(dist(f))&&sha(f)!==r39[f]).sort();
- assert.deepEqual(changed,['app.mjs','index.html','offline-assets.json','presentation.mjs','release-notes.md','SOUND_CREDITS.md','sw.js','worker.mjs',...R41_CHANGED,...R43_CHANGED,'optimal-pilot.mjs'].sort());
+ assert.deepEqual(changed,['app.mjs','index.html','offline-assets.json','presentation.mjs','release-notes.md','SOUND_CREDITS.md','sw.js','worker.mjs','library-worker.mjs'/* r49.1: art-additions.json loading */,...R41_CHANGED,...R43_CHANGED,'optimal-pilot.mjs'].sort());
  for(const f of Object.keys(r39))assert.ok(fs.existsSync(dist(f)),'r39 file missing: '+f);
  for(const f of Object.keys(r39).filter(f=>(f.startsWith('ai/')&&!R41_CHANGED.includes(f))||f.startsWith('core/')||f.startsWith('windbot/')||f.startsWith('wb/')||f.startsWith('art/')))assert.equal(sha(f),r39[f],f);
  for(const f of ['duel.mjs','random.mjs','cards.json.gz','scripts.json.gz','optimal-pilot.mjs','pilot.mjs','pilot-agent.mjs','coin-tap.mjs','coin-cutscene.mjs','event-data.mjs','deck-cards.json'].filter(f=>!R45_AI_CHANGED.includes(f)))assert.equal(sha(f),r39[f],f);/* r45: optimal-pilot.mjs is an AI v4 file */

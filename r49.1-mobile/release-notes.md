@@ -1,3 +1,7 @@
+# Duel Doctrine Lab · r49.1 TEST · Gold Sarcophagus art · 13 November 2026
+
+Kevy, 13 Nov 2026, 00:05 AEDT: "I noticed we are missing card art for Gold Sarcophagus." The image was already in art/ but the card library listed the card without art, so the hand showed its name on a plain tile. New file art-additions.json, applied by library-worker.mjs only to cards with no art. A check of every card in all nine preset decks (all banlist variants) found Gold Sarcophagus was the only one affected. Nothing else changed from r49.
+
 # Duel Doctrine Lab · r49 TEST · Mobile layout · 12 November 2026
 
 Kevy, 12 Nov 2026, 19:45 AEDT: "Let's optimize so it runs and looks right on mobile devices. For example I use a Google Pixel 9 Pro, then my Samsung tablet. You mentioned it's a bit clunky, let's fix that interface." Built and self-verified by Claude; independent review requested. Layout only: engine, rules, decks, AI and the Play flow files are r48.1.
