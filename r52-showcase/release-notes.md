@@ -1,3 +1,23 @@
+# Duel Doctrine Lab · r52 TEST · Boss showcase, pile effect menu, polish · 13 November 2026
+
+Kevy, 13 Nov 2026: "I want it to have more Yu-Gi-Oh artwork and design" (12:48), "Each decks boss monster works" (12:52), "I want a more polished and modern looking game" (12:56). Pile menu from ChatGPT's r52 acceptance checklist (RELAY-162 T3 group A) and offer mapping (RELAY-164 T7). Built and self-verified by Claude; independent review requested. Engine, rules, decks and AI are unchanged (the AI is the same as r51).
+
+- Title page: the crest panel is now a slowly turning fan of each deck's boss monster card (official card art, as on the boss tiles and victory screen) in gold frames, over a blurred copy of the art. Tap a side card or a dot to jump; it pauses while you point at it or use the keyboard (arrow keys), and does not turn by itself if your device asks for reduced motion. No Yu-Gi-Oh logo or lettering is drawn.
+- Tap a glowing Graveyard, Banish or Extra Deck pile on your turn: a small menu lists each effect the duel engine offers from that pile right now, with the effect's own wording where it is known (otherwise a plain "Effect option 1 of 2", never a guessed title). Choosing one sends exactly that offered choice once; Escape, Close or tapping elsewhere sends nothing; a menu left open when the duel moves on is closed and can no longer send. "View all cards" still opens the pile list.
+- The pile badge now counts cards, not effects: one card with two usable effects shows 1, two copies show 2. Summoning from the Extra Deck is not an effect and stays in the normal choices list.
+- The "can be used now" hint no longer appears in chain windows (the chain prompt already names the card, and the hint covered its Yes/No buttons) and fades after 5 seconds.
+- Polish (Lapis & Gold look): buttons press in slightly, deck tiles lift on hover, the card action and pile menus are glass panels in gold, menus pop in gently. Reduced-motion settings turn all of this off.
+- Checked in a browser at 412 x 790 (phone upright), 915 x 380 (phone sideways), 800 x 1200 (tablet upright), 1280 x 740 (tablet sideways) and 1440 x 900 (desktop). Pile menu proven in a real duel (Moonlit Hunt vs Azure Sovereign, seed 71055, turn 3): Luna Light Perfume in the Graveyard -> menu "Banish Perfume; discard: add a Lunalight" -> the engine then asked for the discard as normal; no refused choice, no page errors.
+- Already in place before r52 (found while building, so not rebuilt): tapping a card on the field or in your hand opens its own actions; choosing Attack then tapping the target the engine offers; the phase buttons (Battle, Main 2, End turn) only work when the engine offers that step.
+
+# Duel Doctrine Lab · r51 TEST · Standard field layout · 13 November 2026
+
+Kevy, 13 Nov 2026, 08:53 AEDT: "Can you check a standard Yu-Gi-Oh TCG field. Where does graveyard, main deck, extra deck and banish zones go? I think our layout is different?" He was right: our piles were mirrored. Built and self-verified by Claude; independent review requested. Layout of the piles only: engine, rules, decks, AI and the Play flow files are r50.
+
+- Seen from each player's own seat, as on the official mat: on the left, the Field Zone (front row) and the Extra Deck (back row); on the right, the Graveyard (front row) and the Main Deck (back row). Banished cards have no zone on the official mat; they sit beside the Graveyard on the right, as Master Duel shows them. The opponent's side is the same layout turned to face them, so their Graveyard and Deck appear on your left.
+- Phone held upright: the pile labels no longer get cut off (short labels GY, BAN, DECK, EXTRA; the full names are still read out by screen readers).
+- Source: Konami's rulebook (zones, no banished zone on the mat) and the usual Master Duel placement (Deck bottom right, Graveyard above it, banished above that, Extra Deck bottom left).
+
 # Duel Doctrine Lab · r50 TEST · Lapis & Gold (Egyptian look) · 13 November 2026
 
 Kevy, 13 Nov 2026, 07:13 AEDT: "Seems fine on both devices. Go ahead and import the Egyptian style." From the design draft he reviewed on 13 Nov ("Looks pretty good"). Built and self-verified by Claude; independent review requested. Colours, fonts and card backs only: engine, rules, decks, AI, layout sizes and the Play flow files are r49.1.

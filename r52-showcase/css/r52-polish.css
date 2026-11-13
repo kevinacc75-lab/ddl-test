@@ -1,0 +1,79 @@
+/* r52 (Claude, 13 Nov 2026). Kevy 12:48/12:52: boss-monster art on the title page; 12:56: "a more polished and modern
+   looking game". 1) Title showcase (title-showcase.mjs): each deck's boss card fanned in gold frames over a blurred copy of
+   the art. 2) Pile effect menu (pile-glow.mjs). 3) A light modern polish: softer glass panels, pressable buttons, calmer
+   focus rings. Lapis & Gold palette from r50; works on Aurora too. Official card art only; no franchise logos. */
+:root{--r52-gold:#D9B25B;--r52-gold-hi:#F2D48A;--r52-cream:#FFF1C9;--r52-ink:#070D1F;--r52-glass:rgba(11,19,43,.72);--r52-ease:cubic-bezier(.2,.8,.2,1)}
+
+/* ---------- 1. Title showcase ---------- */
+#setup .intro.r52-intro{position:relative;isolation:isolate;overflow:hidden;border-radius:22px;padding:28px 28px 34px;margin-top:6px;border:1px solid rgba(217,178,91,.35);box-shadow:0 30px 70px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,241,201,.08)}
+#setup .intro.r52-intro>div:first-child{position:relative;z-index:2}
+.r52-backdrop{position:absolute;inset:0;z-index:0;pointer-events:none;background:#070D1F}
+.r52-backdrop i{position:absolute;inset:-40px;background-size:150% auto;background-position:50% 30%;filter:blur(26px) saturate(1.25) brightness(.55);opacity:0;transition:opacity 1.4s var(--r52-ease);transform:scale(1.05)}
+.r52-backdrop i.on{opacity:1}
+.r52-backdrop:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,13,31,.94) 0%,rgba(7,13,31,.72) 42%,rgba(7,13,31,.35) 100%),radial-gradient(80% 60% at 75% 45%,transparent 0%,rgba(7,13,31,.55) 100%)}
+#setup .intro .hero-art.r52-showcase{position:relative;z-index:1;width:440px;height:390px;flex-shrink:0;clip-path:none;border:0;border-radius:0;background:none;box-shadow:none;overflow:visible;opacity:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:10px;transform:none;right:auto;top:auto}
+#setup .intro .hero-art.r52-showcase:after{display:none}
+.r52-fan{position:relative;width:100%;flex:1;perspective:1100px}
+.r52-card{position:absolute;left:50%;top:50%;width:178px;aspect-ratio:813/1185;margin:0;border-radius:9px;overflow:hidden;background:#0B132B;
+ box-shadow:0 0 0 2px var(--r52-gold),0 0 0 4px rgba(7,13,31,.9),0 0 0 5px rgba(217,178,91,.45),0 22px 40px rgba(0,0,0,.6);
+ transform:translate(-50%,-50%) scale(.6);opacity:0;transition:transform .9s var(--r52-ease),opacity .9s var(--r52-ease),filter .9s var(--r52-ease);cursor:pointer;will-change:transform}
+.r52-card img{display:block;width:100%;height:100%;object-fit:cover;opacity:1!important;transform:none!important;filter:none!important}
+.r52-card[data-pos="0"]{transform:translate(-50%,-50%) translateZ(0) scale(1);opacity:1;z-index:3;cursor:default;box-shadow:0 0 0 2px var(--r52-gold-hi),0 0 0 4px rgba(7,13,31,.9),0 0 0 5px rgba(242,212,138,.6),0 0 38px 6px rgba(242,212,138,.35),0 26px 50px rgba(0,0,0,.65)}
+.r52-card[data-pos="1"]{transform:translate(-50%,-50%) translateX(118px) rotateY(-24deg) rotate(6deg) scale(.8);opacity:.85;z-index:2;filter:brightness(.62) saturate(.9)}
+.r52-card[data-pos="-1"]{transform:translate(-50%,-50%) translateX(-118px) rotateY(24deg) rotate(-6deg) scale(.8);opacity:.85;z-index:2;filter:brightness(.62) saturate(.9)}
+.r52-card[data-pos="2"]{transform:translate(-50%,-50%) translateX(190px) rotateY(-34deg) rotate(10deg) scale(.64);opacity:.4;z-index:1;filter:brightness(.4)}
+.r52-card[data-pos="-2"]{transform:translate(-50%,-50%) translateX(-190px) rotateY(34deg) rotate(-10deg) scale(.64);opacity:.4;z-index:1;filter:brightness(.4)}
+.r52-caption{margin:0;text-align:center;line-height:1.25;min-height:2.6em;text-shadow:0 2px 8px #000}
+.r52-caption b{display:block;font-family:'Cinzel',Georgia,serif;font-weight:700;font-size:16px;letter-spacing:.04em;color:var(--r52-gold-hi)}
+.r52-caption span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#CDBB93}
+.r52-dots{display:flex;gap:2px;justify-content:center;flex-wrap:wrap}
+#setup .r52-dots button{width:28px;height:28px;min-width:0;min-height:0;padding:0;border:0!important;background:none!important;box-shadow:none!important;border-radius:6px;cursor:pointer;display:grid;place-items:center}
+.r52-dots button:before{content:'';width:7px;height:7px;border-radius:50%;background:rgba(242,212,138,.35);transition:all .3s var(--r52-ease)}
+.r52-dots button[aria-current=true]:before{width:20px;border-radius:4px;background:var(--r52-gold-hi);box-shadow:0 0 8px rgba(242,212,138,.7)}
+.r52-dots button:focus-visible{outline:2px solid var(--r52-cream);outline-offset:-2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){.r52-card,.r52-backdrop i{transition:none}}
+/* tablet portrait / narrow desktop */
+@media (max-width:900px){#setup .intro .hero-art.r52-showcase{width:340px;height:340px}.r52-card{width:150px}.r52-card[data-pos="1"]{transform:translate(-50%,-50%) translateX(96px) rotateY(-24deg) rotate(6deg) scale(.8)}.r52-card[data-pos="-1"]{transform:translate(-50%,-50%) translateX(-96px) rotateY(24deg) rotate(-6deg) scale(.8)}.r52-card[data-pos="2"],.r52-card[data-pos="-2"]{opacity:0}}
+/* phone: showcase sits above the heading, full width */
+@media (max-width:600px){
+ #setup .intro.r52-intro{display:flex;flex-direction:column-reverse;align-items:stretch;gap:6px;padding:14px 16px 22px;border-radius:18px}
+ .r52-backdrop:after{background:linear-gradient(180deg,rgba(7,13,31,.35) 0%,rgba(7,13,31,.7) 45%,rgba(7,13,31,.95) 100%)}
+ #setup .intro .hero-art.r52-showcase{position:relative;width:100%;height:300px;opacity:1;right:auto;top:auto}
+ .r52-card{width:132px}
+ .r52-card[data-pos="1"]{transform:translate(-50%,-50%) translateX(88px) rotateY(-24deg) rotate(6deg) scale(.78)}
+ .r52-card[data-pos="-1"]{transform:translate(-50%,-50%) translateX(-88px) rotateY(24deg) rotate(-6deg) scale(.78)}
+ .r52-card[data-pos="2"],.r52-card[data-pos="-2"]{opacity:0}
+ .r52-caption b{font-size:14px}
+}
+
+/* ---------- 2. Pile effect menu ---------- */
+#pile-action-menu{position:fixed;z-index:66;box-sizing:border-box;display:grid;gap:6px;padding:10px;max-height:min(70vh,420px);overflow:auto;overscroll-behavior:contain;
+ background:linear-gradient(180deg,#1a2350f2,#0B132Bf5);color:var(--r52-cream);border:1.5px solid var(--r52-gold);border-radius:14px;
+ box-shadow:0 0 0 1px rgba(7,13,31,.8),0 18px 40px rgba(0,0,0,.6),0 0 24px rgba(242,212,138,.18);font:14px/1.3 Inter,system-ui,sans-serif;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+ animation:r52-pop .18s var(--r52-ease)}
+#pile-action-menu[hidden]{display:none!important}
+#pile-action-menu>strong{font-family:'Cinzel',Georgia,serif;font-size:13px;letter-spacing:.06em;color:var(--r52-gold-hi);padding:2px 4px 4px}
+#pile-action-menu button{min-height:44px;text-align:left;font:inherit;color:inherit;cursor:pointer;border-radius:10px;padding:8px 12px;border:1px solid rgba(217,178,91,.45);background:rgba(242,212,138,.06);transition:background .15s,transform .1s}
+#pile-action-menu button:hover{background:rgba(242,212,138,.14)}
+#pile-action-menu button:active{transform:scale(.98)}
+#pile-action-menu button:focus-visible{outline:2px solid var(--r52-cream);outline-offset:2px}
+#pile-action-menu .pam-act{border-color:var(--r52-gold-hi);background:linear-gradient(180deg,rgba(242,212,138,.18),rgba(201,154,62,.08));box-shadow:0 0 12px rgba(242,212,138,.18)}
+#pile-action-menu .pam-name{display:block;font-weight:700}
+#pile-action-menu small{display:block;font-size:12px;color:#CDBB93;margin-top:2px}
+#pile-action-menu .pam-view,#pile-action-menu .pam-cancel{text-align:center;color:#CDBB93}
+#pile-ready-hint button[data-act=show]{display:none}
+@keyframes r52-pop{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#pile-action-menu{animation:none}}
+
+/* ---------- 3. Modern polish (look only; no layout sizes changed) ---------- */
+body[data-look=egypt] button,body[data-look=egypt] .choice{transition:transform .12s var(--r52-ease),box-shadow .2s var(--r52-ease),background-color .2s,filter .2s}
+body[data-look=egypt] button:not(:disabled):active,body[data-look=egypt] .choice:not(:disabled):active{transform:translateY(1px) scale(.985)}
+body[data-look=egypt] :focus-visible{outline-color:var(--r52-cream)}
+body[data-look=egypt] .choice:not(:disabled):hover{filter:brightness(1.08)}
+body[data-look=egypt] .deck-tile{transition:transform .25s var(--r52-ease),box-shadow .25s var(--r52-ease)}
+@media (hover:hover){body[data-look=egypt] .deck-tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.45),0 0 0 1px rgba(242,212,138,.6)}}
+body[data-look=egypt] #modal,body[data-look=egypt] #card-action-menu,body[data-look=egypt] #pc-toast{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+body[data-look=egypt] #card-action-menu{background:linear-gradient(180deg,#1a2350f2,#0B132Bf5);border-color:var(--r52-gold);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.6),0 0 24px rgba(242,212,138,.18);animation:r52-pop .18s var(--r52-ease)}
+body[data-look=egypt] #card-action-menu button{background:rgba(242,212,138,.08);border-color:rgba(217,178,91,.55);border-radius:10px;color:var(--r52-cream)}
+body[data-look=egypt] #card-action-menu button:hover{background:rgba(242,212,138,.16)}
+@media (prefers-reduced-motion:reduce){body[data-look=egypt] #card-action-menu{animation:none}body[data-look=egypt] button,body[data-look=egypt] .choice,body[data-look=egypt] .deck-tile{transition:none}}

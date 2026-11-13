@@ -10,7 +10,7 @@ const r39=JSON.parse(fs.readFileSync(new URL('./fixtures/r39-served-hashes.json'
 const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(dist(f))).digest('hex');
 
 // r41 adaptation: the r40-vs-r39 identity now allows exactly the r41 files (RELAY-131 teaching/policy, decks, FX fixes).
-import {R45_AI_CHANGED,R45_DISPLAY,R45_BUILD,R45_CACHE,R45_NAME,r47Undo} from './lib/r45-scope.mjs';/* r45-adapted */
+import {R45_AI_CHANGED,R45_DISPLAY,R45_BUILD,R45_CACHE,R45_NAME,r47Undo,R52_CHANGED} from './lib/r45-scope.mjs';/* r45-adapted */
 const R41_CHANGED_R41=['ai/book/book.mjs','ai/book/branded-nov08.mjs','ai/brain/branded-brain.mjs','decks.json'];/* r45: + the listed r45 AI v4 files (lib/r45-scope.mjs) */
 const R41_CHANGED_IGNORED=['ai/book/book.mjs','ai/book/branded-nov08.mjs','ai/brain/branded-brain.mjs','decks.json'];
 // r43 adaptation (P1 visual system): deck-list.mjs gains image alt text; no other r39 file changes.
@@ -18,7 +18,7 @@ const R41_CHANGED=[...new Set([...R41_CHANGED_R41,...R45_AI_CHANGED.filter(f=>f!
 const R43_CHANGED=['deck-list.mjs'];
 test('r40 display only (r41-adapted): engine, rules data and random are byte-identical to r39; only the listed r41 AI/deck files differ',()=>{
  const changed=Object.keys(r39).filter(f=>fs.existsSync(dist(f))&&sha(f)!==r39[f]).sort();
- assert.deepEqual(changed,['app.mjs','index.html','offline-assets.json','presentation.mjs','release-notes.md','SOUND_CREDITS.md','sw.js','worker.mjs','library-worker.mjs'/* r49.1: art-additions.json loading */,...R41_CHANGED,...R43_CHANGED,'optimal-pilot.mjs'].sort());
+ assert.deepEqual(changed,['app.mjs','index.html','offline-assets.json','presentation.mjs','release-notes.md','SOUND_CREDITS.md','sw.js','worker.mjs','library-worker.mjs'/* r49.1: art-additions.json loading */,...R41_CHANGED,...R43_CHANGED,'optimal-pilot.mjs',...R52_CHANGED/* r52 */].sort());
  for(const f of Object.keys(r39))assert.ok(fs.existsSync(dist(f)),'r39 file missing: '+f);
  for(const f of Object.keys(r39).filter(f=>(f.startsWith('ai/')&&!R41_CHANGED.includes(f))||f.startsWith('core/')||f.startsWith('windbot/')||f.startsWith('wb/')||f.startsWith('art/')))assert.equal(sha(f),r39[f],f);
  for(const f of ['duel.mjs','random.mjs','cards.json.gz','scripts.json.gz','optimal-pilot.mjs','pilot.mjs','pilot-agent.mjs','coin-tap.mjs','coin-cutscene.mjs','event-data.mjs','deck-cards.json'].filter(f=>!R45_AI_CHANGED.includes(f)))assert.equal(sha(f),r39[f],f);/* r45: optimal-pilot.mjs is an AI v4 file */

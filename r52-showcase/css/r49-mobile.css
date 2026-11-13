@@ -88,3 +88,18 @@ body[data-pc-play] #quick-pace{display:none!important}                       /* 
  body #pc-chain{top:auto;left:8px;right:auto;bottom:calc(4px + env(safe-area-inset-bottom))}
  body.in-duel #notice{max-height:64px}
 }
+
+/* ---- r51: standard pile positions (app.mjs board): the Graveyard side now holds three piles (Banish, Graveyard, Deck) ---- */
+body.in-duel #duel .pile-col.gy-side .pile{height:30%}
+body.in-duel #duel .pile-col.field-side .pile{height:35%}
+@media (max-width:600px) and (orientation:portrait){
+ /* the column is too narrow for the full words: short labels, full names stay in each pile's spoken label */
+ body.in-duel:not(#_):not(#_) #duel .pile-col .pile{font-size:0!important;letter-spacing:0!important;padding:2px 1px!important;display:flex!important;flex-direction:column;align-items:center;justify-content:flex-end}
+ body.in-duel:not(#_):not(#_) #duel .pile-col .pile b{font-size:11px}
+ body.in-duel:not(#_):not(#_) #duel .pile-col .pile .pile-symbol{display:none}
+ body.in-duel:not(#_):not(#_) #duel .pile-col .pile::after{font:700 8px/1.1 Inter,system-ui,sans-serif;letter-spacing:.02em;color:#EADBB8;text-shadow:0 1px 2px #000}
+ body.in-duel:not(#_):not(#_) #duel .pile-col .zone-grave::after{content:'GY'}
+ body.in-duel:not(#_):not(#_) #duel .pile-col .zone-banish::after{content:'BAN'}
+ body.in-duel:not(#_):not(#_) #duel .pile-col .zone-deck::after{content:'DECK'}
+ body.in-duel:not(#_):not(#_) #duel .pile-col .zone-extra::after{content:'EXTRA'}
+}
