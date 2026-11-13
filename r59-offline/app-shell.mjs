@@ -39,6 +39,19 @@ export function installShell({preferences,applyPreferences,sound,presentation,ge
  const api={play,sync(){play.sync();for(const [id,key] of [['lab-tap','tapToContinue'],['lab-chain-flow','chainFlow'],['lab-stage','tabletStage'],['lab-voice','voice']])$('#'+id).checked=!!preferences[key];{const el=$('#lab-auto-skip-chain');if(el)el.checked=preferences.autoSkipEmptyChain!==false}document.body.dataset.chainFlow=String(preferences.chainFlow!==false);document.body.dataset.pace=preferences.preset||'learning';/* r34 arena: pace-aware presentation (r34-arena.css) */$('#lab-pace').value=preferences.preset||'learning';for(const id of ['lab-chain-view','setup-chain-view'])$('#'+id).value=preferences.chainView||'auto';for(const b of ['master','music','sfx','ui','voice'])$('#bus-'+b).value=100*(b==='master'?preferences.volume:preferences.buses?.[b]??sound.levels[b]);resize()},state(x){play.state(x);chainGlow.state(x);pileGlow.state(x);hudFit.state(x);summary(x);captions.state(x);resize()},rewound(){lastSummary=-1;captions.reset()},rewind};api.sync();
  /* r58.2: register the offline worker only after the card library has loaded, so its download never competes with the
     first load on a phone (Kevy 13 Nov 23:06). */
- const registerOffline=()=>{if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').then(async registration=>{await navigator.serviceWorker.ready;if(registration.active)notify('Offline duel files are ready. You can install the lab from your browser menu.');}).catch(()=>notify('Offline installation is unavailable in this browser. Online duels still work.'));};if(document.body?.dataset.libraryReady==='1')registerOffline();else document.addEventListener('ddl-library-ready',registerOffline,{once:true});
+ /* r59 (Seto team RELAY-206 MED-1/2/3): register after the card library loads; ask the worker to save the offline core only
+    once the first duel has loaded its scripts, or after 45 s idle, and never on Data Saver or 2g/3g; say "ready" only when the
+    worker confirms every core file is saved. */
+ const askWorker=(type,timeout=600000)=>new Promise(res=>{const sw=navigator.serviceWorker?.controller;if(!sw)return res(null);const ch=new MessageChannel();const t=setTimeout(()=>res(null),timeout);ch.port1.onmessage=e=>{clearTimeout(t);res(e.data)};sw.postMessage({type},[ch.port2])});
+ const slowLine=()=>{const c=navigator.connection;return !!c&&(c.saveData||/(^|-)(2g|3g)$/.test(c.effectiveType||''))};
+ let duelLoading=false,duelReady=false,offlineAsked=false;document.querySelector('#start')?.addEventListener('click',()=>{duelLoading=true});window.addEventListener('duel-state',()=>{duelReady=true},{once:true});
+ const offlineWhenQuiet=()=>new Promise(res=>{if(duelReady)return res();const t=setTimeout(()=>{if(!duelLoading||duelReady){window.removeEventListener('duel-state',ok);res()}},45000);function ok(){clearTimeout(t);res()}window.addEventListener('duel-state',ok,{once:true})});
+ const registerOffline=()=>{if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('./sw.js').then(async()=>{await navigator.serviceWorker.ready;
+   if(!navigator.serviceWorker.controller)await new Promise(r=>navigator.serviceWorker.addEventListener('controllerchange',r,{once:true}));
+   if(slowLine()){const st=await askWorker('offline-status',15000);if(!st?.ready)notify('Offline files will be saved as you play (Data Saver or a slow connection is on).');else notify('Offline duel files are ready. You can install the lab from your browser menu.');return}
+   await offlineWhenQuiet();if(offlineAsked)return;offlineAsked=true;const st=await askWorker('offline-fill');
+   if(st?.ready)notify('Offline duel files are ready. You can install the lab from your browser menu.');else notify('Some offline files couldn’t be saved yet. They’ll be saved as you play online.');
+  }).catch(()=>notify('Offline installation is unavailable in this browser. Online duels still work.'))};
+ if(document.body?.dataset.libraryReady==='1')registerOffline();else document.addEventListener('ddl-library-ready',registerOffline,{once:true});
  return api;
 }

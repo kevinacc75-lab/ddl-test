@@ -7,8 +7,25 @@
 // the files needed to duel offline (about 12 MB); card art, tutor sheets and music are saved the first time they are used;
 // a cache name carries its build folder, and activation removes only older caches of the same folder plus the old
 // full-download caches. The page registers this worker only after the card library has loaded (app-shell.mjs).
-const CACHE_PREFIX='ddl-test-r21-',SCOPE=new URL(self.registration.scope).pathname,CACHE=CACHE_PREFIX+'2026-11-13-r58-2-mobile'+'@'+SCOPE,OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
+// r59 (Seto team RELAY-206 MED-1/2/3): the core list now comes from the real module graph (tools/module-graph.mjs), the
+// worker heals itself (any same-origin file it serves is saved; a missing core file is fetched again when the page asks),
+// it reports honestly whether every core file is saved, and the core download starts only when the page asks for it (after
+// the first duel has loaded, or after the player has been idle; never on Data Saver or a 2g/3g connection).
+const CACHE_PREFIX='ddl-test-r21-',SCOPE=new URL(self.registration.scope).pathname,CACHE=CACHE_PREFIX+'2026-11-14-r59-offline'+'@'+SCOPE,OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
 const LAZY=path=>/\.mp3$/i.test(path)||path.startsWith('./art/')||path.startsWith('./learn/tutors/');
-self.addEventListener('install',event=>event.waitUntil((async()=>{const manifest=await fetch('./offline-assets.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Offline manifest unavailable');return r.json()});const core=manifest.filter(f=>!LAZY(f)),cache=await caches.open(CACHE);for(let i=0;i<core.length;i+=6)await cache.addAll(core.slice(i,i+6));await self.skipWaiting()})()));
+const SKIP=path=>path.startsWith('./wb/')||path.startsWith('./_build/');
+async function coreList(cache){try{const r=await fetch('./offline-assets.json',{cache:'no-store'});if(r.ok){await cache.put('./offline-assets.json',r.clone());return (await r.json()).filter(f=>!LAZY(f))}}catch{}
+ const saved=await cache.match('./offline-assets.json');return saved?(await saved.json()).filter(f=>!LAZY(f)):null}
+let filling=null;
+async function coreStatus(fill){const cache=await caches.open(CACHE),list=await coreList(cache);if(!list)return {ready:false,missing:-1,total:0};
+ const missing=[];for(const f of list)if(!await cache.match(f))missing.push(f);
+ if(fill&&missing.length){for(let i=0;i<missing.length;i+=4){try{await cache.addAll(missing.slice(i,i+4))}catch{for(const f of missing.slice(i,i+4))try{await cache.add(f)}catch{}}}return coreStatus(false)}
+ return {ready:missing.length===0,missing:missing.length,total:list.length}}
+self.addEventListener('install',event=>event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const key of await caches.keys())if(key!==CACHE&&OLD_PREFIXES.some(prefix=>key.startsWith(prefix))&&(!key.includes('@')||key.endsWith('@'+SCOPE)))await caches.delete(key);await self.clients.claim()})()));
-self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==self.location.origin)return;event.respondWith((async()=>{const cache=await caches.open(CACHE);if(event.request.mode==='navigate'){try{const response=await fetch(event.request);if(response.ok){await cache.put('./',response.clone());return response}}catch{}return await cache.match('./')||await cache.match('./index.html')||Response.error()}const hit=await cache.match(event.request);if(hit)return hit;const response=await fetch(event.request);const rel='./'+url.pathname.slice(SCOPE.length);if(response.status===200&&response.type==='basic'&&LAZY(rel))cache.put(event.request,response.clone()).catch(()=>{});return response})())});
+self.addEventListener('message',event=>{const type=event.data?.type,port=event.ports?.[0];if(type!=='offline-status'&&type!=='offline-fill')return;
+ const job=type==='offline-fill'?(filling||=coreStatus(true).finally(()=>{filling=null})):coreStatus(false);event.waitUntil(job.then(st=>port?.postMessage(st)).catch(()=>port?.postMessage({ready:false,missing:-1,total:0})))});
+self.addEventListener('fetch',event=>{const url=new URL(event.request.url);if(event.request.method!=='GET'||url.origin!==self.location.origin||!url.pathname.startsWith(SCOPE))return;event.respondWith((async()=>{const cache=await caches.open(CACHE);
+ if(event.request.mode==='navigate'){try{const response=await fetch(event.request);if(response.ok){await cache.put('./',response.clone());return response}}catch{}return await cache.match('./')||await cache.match('./index.html')||Response.error()}
+ const hit=await cache.match(event.request);if(hit)return hit;const response=await fetch(event.request);const rel='./'+url.pathname.slice(SCOPE.length);
+ if(response.status===200&&response.type==='basic'&&!SKIP(rel))cache.put(event.request,response.clone()).catch(()=>{});return response})())});

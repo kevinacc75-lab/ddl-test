@@ -50,10 +50,8 @@
 #learn [data-studio="temple"] details.lr-text:not([open])>summary::after{content:'▸'}
 #learn [data-studio="temple"] details.lr-text .lr-text-head{justify-content:flex-end;margin-top:4px}
 #learn .lr-ruling[data-studio="temple"]{overflow:auto}
-/* Short screens (landscape phone, large text): keep ChatGPT's page-scroll fallback, but pin a compact footer so Next and the
-   C1 choice stay reachable without scrolling; badges stay visible on one scrollable line (nothing hidden). */
-@media(max-height:640px){#learn .lr-play[data-studio="temple"] .lr-footer{position:sticky;bottom:0;z-index:3;padding-bottom:6px;gap:4px}
- #learn .lr-play[data-studio="temple"] .lr-footer .lr-badges{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
- #learn .lr-play[data-studio="temple"] .lr-footer .lr-flag{min-height:24px}
- #learn .lr-play[data-studio="temple"] .lr-footer .lr-controls button{min-height:40px}}
+/* r59 (ChatGPT RELAY-205 §3, Seto team RELAY-206 MED-5): on short screens the footer stays in normal flow (ChatGPT's
+   original fallback), so it can never cover the tutor's sentence; Next and the choices are reached by ordinary scrolling.
+   (r58.2-r58.3 pinned it, which covered 29 px of RD-001 s6's caption at 844x390.) */
+@media(max-height:640px){#learn .lr-play[data-studio="temple"] .lr-footer{position:static}}
 @media(max-height:640px){#learn [data-studio="temple"] .lr-choice>div{grid-template-columns:auto 1fr 1fr;margin-top:4px}#learn [data-studio="temple"] .lr-choice>div>[data-act="back"]{grid-column:auto}#learn [data-studio="temple"] .lr-choice button[data-branch]{min-height:40px;padding:6px 10px}}

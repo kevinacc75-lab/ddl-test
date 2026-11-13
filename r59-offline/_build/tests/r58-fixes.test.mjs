@@ -13,8 +13,8 @@ test('(R58-1) RELAY-200 MED-1: each CP-001 branch shows its own true board after
 });
 test('(R58-2) rules badge per lesson revision; engine badge says source-led on SOURCE-LED steps; tooltip names the lesson’s own tests',()=>{
  const want={'RD-001':'RELAY-190','RD-002':'RELAY-190','RD-003':'RELAY-190','RD-004':'RELAY-199','RD-005':'RELAY-199'};
- for(const l of LESSONS)assert.equal(l.rulesCheck,want[l.id],l.id);assert.equal(cp.rulesCheck,'RELAY-200');
- assert.equal(rulesBadge(cp),'<span class="lr-badge rules ok">Rules: checked by Seto team (RELAY-200)</span>');assert.match(rulesBadge({}),/Rules: pending Seto team check/);
+ for(const l of LESSONS)assert.equal(l.rulesCheck.relay,want[l.id],l.id);assert.equal(cp.rulesCheck.relay,'RELAY-200');/* r59: {relay,revision} */
+ assert.equal(rulesBadge({...cp,revision:1}),'<span class="lr-badge rules ok">Rules: checked by Seto team (RELAY-200)</span>');/* r59: only r1 was checked */assert.match(rulesBadge({}),/Rules: pending Seto team check/);
  const s=read('dist/learn/learn.mjs');assert.match(s,/srcLed\?'<span class="lr-badge engnone">Engine: not replayed for this step \(source-led\)<\/span>':engineBadge\(l\)/);
  assert.match(s,/title="\$\{esc\(\(l\.engineTests\|\|\[\]\)\.join\(', '\)\+' \('\+ENGINE_EVIDENCE\.log\+'\)'\)\}"/);
 });

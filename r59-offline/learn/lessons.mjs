@@ -38,7 +38,7 @@ const RISE=31149212,BIGBANG=33925864,VEILER=97268402,GB=73642296,ENGAGE=63166095
 const E=()=>[null,null,null,null,null];
 const FD=80044027,HARE=18377261,HULI=6327734;
 export const LESSONS=[
- {id:'RD-001',rulesCheck:'RELAY-190',revision:2,level:'Beginner',minutes:4,title:'Why won’t Engage! activate?',decks:'Sky Striker',
+ {id:'RD-001',rulesCheck:{relay:'RELAY-190',revision:2},revision:2,level:'Beginner',minutes:4,title:'Why won’t Engage! activate?',decks:'Sky Striker',
   engineTests:['RD-001','RD-001 control'],
   beats:[
    {say:'Engage is available while your Main Monster Zones are empty. Let’s watch what changes.',mood:'neutral',sfx:'paw',verdict:'observation',tags:['CONDITION TO ACTIVATE'],
@@ -58,7 +58,7 @@ export const LESSONS=[
   ],
   ruling:'A monster in your Main Monster Zone stops Engage’s activation condition from being met. Normal Summoning Ghost Belle is legal here, but costly. A monster only in an Extra Monster Zone does not occupy a Main Monster Zone.',
   sources:[{label:'Engage! (cid 13671)',url:cid(13671)},{label:'Ghost Belle (cid 13587)',url:cid(13587)},{label:'Raye (cid 13670)',url:cid(13670)},{label:'Kagari (cid 13668)',url:cid(13668)},RULES2021]},
- {id:'RD-002',rulesCheck:'RELAY-190',revision:3,level:'Beginner',minutes:4,title:'Fenrir’s summon and search are different',/* r55: ChatGPT RELAY-183 author caution: the old title was broader than the lesson */decks:'Kashtira',
+ {id:'RD-002',rulesCheck:{relay:'RELAY-190',revision:3},revision:3,level:'Beginner',minutes:4,title:'Fenrir’s summon and search are different',/* r55: ChatGPT RELAY-183 author caution: the old title was broader than the lesson */decks:'Kashtira',
   engineTests:['RD-002'],
   beats:[
    {say:'You control no monsters, so Fenrir can use its own Special Summon procedure.',mood:'neutral',sfx:'paw',verdict:'observation',tags:['SUMMON PROCEDURE'],
@@ -76,7 +76,7 @@ export const LESSONS=[
   ],
   ruling:'Fenrir’s hand Special Summon procedure does not start a Chain, so Ash cannot answer it. Fenrir’s later Deck-search effect does start a Chain and can be answered by Ash. Other cards may interact with summons in different windows.',
   sources:[{label:'Kashtira Fenrir (cid 17768)',url:cid(17768)},{label:'Ash Blossom (cid 12950)',url:cid(12950)},RULEBOOK]},
- {id:'RD-003',rulesCheck:'RELAY-190',revision:2,level:'Beginner',minutes:3,title:'Last added, first resolved',decks:'Lunalight',
+ {id:'RD-003',rulesCheck:{relay:'RELAY-190',revision:2},revision:2,level:'Beginner',minutes:3,title:'Last added, first resolved',decks:'Lunalight',
   engineTests:['RD-003','RD-003 control'],
   beats:[
    {say:'Tenki was activated as Chain Link 1. Its search hasn’t happened yet.',mood:'neutral',sfx:'tick',verdict:'observation',tags:['CHAIN LINK 1'],
@@ -94,7 +94,7 @@ export const LESSONS=[
   ],
   ruling:'Chain Links resolve in reverse order. Ash resolves before Tenki and negates its search effect. That does not destroy Tenki or negate its card activation. In this example Tenki stays face-up and its separate continuous ATK effect remains.',
   sources:[{label:'Fire Formation - Tenki (cid 10418)',url:cid(10418)},{label:'Ash Blossom (cid 12950)',url:cid(12950)},{label:'Lunalight Gold Leo (cid 21416)',url:cid(21416)},RULEBOOK]},
- {id:'RD-004',rulesCheck:'RELAY-199',revision:2,/* r55: ChatGPT RELAY-192 author r2 (s6 wording, from Seto team RELAY-190 B1) */level:'Intermediate',minutes:4,title:'A cost is paid before the answer',decks:'Kashtira',
+ {id:'RD-004',rulesCheck:{relay:'RELAY-199',revision:2},revision:2,/* r55: ChatGPT RELAY-192 author r2 (s6 wording, from Seto team RELAY-190 B1) */level:'Intermediate',minutes:4,title:'A cost is paid before the answer',decks:'Kashtira',
   engineTests:['RD-004','RD-004 control'],
   beats:[
    {say:'Riseheart was Normal Summoned this turn. Its Deck-banish effect is available in your Main Phase.',mood:'neutral',sfx:'paw',verdict:'observation',tags:['CONDITION'],
@@ -116,7 +116,7 @@ export const LESSONS=[
  // (apostrophes typeset). Mood 'pointing' is drawn with the tutors' presenting pose ('notlegal' frame): art only, no verdict.
  // Title kept without its closing full stop, like every other lesson title. s06 is SOURCE-LED: no engine arm negates only the effect.
  // Engine: tests/r56-lessons-engine.test.mjs, narrowed fixtures (named cards + vanilla filler, not full presets).
- {id:'RD-005',rulesCheck:'RELAY-199',revision:2,level:'Intermediate',minutes:4,title:'A negated activation and a negated effect are different',decks:'Mikanko',
+ {id:'RD-005',rulesCheck:{relay:'RELAY-199',revision:2},revision:2,level:'Intermediate',minutes:4,title:'A negated activation and a negated effect are different',decks:'Mikanko',
   engineTests:['RD-005 A','RD-005 B'],
   beats:[
    {say:'Fire Dance says you can only activate 1 per turn. Watch exactly what Ghost Belle negates.',mood:'neutral',sfx:'paw',verdict:'observation',tags:['ACTIVATION LIMIT'],

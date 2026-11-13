@@ -1,3 +1,56 @@
+# Duel Doctrine Lab · r59 TEST · offline fix + review fixes · 14 November 2026
+
+Closes Seto team RELAY-206 MED-1, MED-2, MED-4 (with ChatGPT's RELAY-207 wording), MED-5 (ChatGPT's RELAY-205 §3 direction), LOW-1, LOW-2, LOW-3, LOW-4 and LOW-5. MED-3 is handled by design but could not be measured directly; see below. Built and self-verified by Claude; independent review requested.
+
+- **Correction to r58.2/r58.3 (RELAY-204):**
+  - "An offline reload loads the library" was only true while the browser's own short-lived cache still held the files.
+  - The offline list was missing 11 program files, so with that cache cleared an offline launch hung on "Preparing your practice room."
+  - Visiting r45 also wiped r58.x's offline files, and they did not come back.
+- **Offline fixed:**
+  - The offline list is now checked against the real module graph (tools/module-graph.mjs, plus a test), and the 11 missing files are added.
+  - The offline worker saves any file it serves, so it repairs itself.
+  - When the page asks, the worker fetches any missing core file again.
+  - "Offline duel files are ready" appears only after the worker confirms every core file is saved (183 files).
+  - The core download no longer happens at install. It starts after your first duel has loaded, or after 45 s of not using the lab, and never with Data Saver on or on a 2g/3g connection.
+- **Offline browser checks:**
+  - With the HTTP cache cleared and the network off, the card library loaded and a duel reached decisions.
+  - After a visit to r45 wiped the files (161 of 183 missing), the next online visit repaired them (0 missing), and the offline launch worked again.
+- **MED-3 (first duel on a slow line):**
+  - The offline download now waits until the first duel has loaded, so it no longer competes with it.
+  - Measuring this directly wasn't possible: browser throttling doesn't apply to requests that go through the offline worker.
+  - Without the worker, at 1.5 Mbps: Learn continued at 46 s and the first decision came at 133 s. scripts.json.gz is 4.9 MB, and since r58.2 it is no longer cut off at 15 s.
+- **Short screens (MED-5):** the footer is back in normal page flow on short screens, as ChatGPT directed, so it never covers the tutor's sentence. RD-001 step 6 at 844 x 390 is now fully readable, and you scroll to Next.
+- **Rules credit (LOW-1/LOW-2):**
+  - A lesson shows "Rules: checked by Seto team (RELAY-xxx)" only for the exact revision the team checked.
+  - The ruling screen then says "Authored by ChatGPT · rules checked by Seto team (RELAY-xxx)".
+  - A revised lesson shows "pending" in both places.
+- **CP-001 is now r1.1 (RELAY-207, F0 only):**
+  - The Pass branch says Ash stayed live at Lode's declaration and at Sage's search, and that this replay passed both, with two new chips.
+  - The ending answer and the ruling note say the same.
+  - The engine test now records Ash offered at both later windows and the pass.
+  - Rules: pending until the Seto team re-checks.
+- **Lock check (LOW-3):** the CP-001 engine test now shows Spirit Dragon's Tribute effect is not offered under Lode's lock, with a LIGHT Dragon Synchro target (Lightstorm Dragon, from the Blue-Eyes preset Extra Deck) present. As a control, the opponent is offered it on the next turn once the lock is gone.
+- **Loading (LOW-4/LOW-5):**
+  - There is no overall time limit on the card library now. A stalled download still stops after 30 s with no data.
+  - Each "waiting for the library" in Learn uses one pair of listeners, and whichever fires first removes both.
+- **Browser checks:** all 44 lesson steps at 412 x 915, 390 x 844, 1280 x 900, 853 x 600 and 844 x 390.
+  - The tutor's sentence is fully in view and never under the footer.
+  - The buttons are in view on every screen taller than 640 px.
+  - The C1 options are identical, with focus on the question.
+  - Focus is kept after picking a tutor, and Escape works.
+  - No page errors.
+  - Screenshots for ChatGPT's design check are in RELAY-208.
+- Tests 210/211 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r59.txt.
+
+# Duel Doctrine Lab · r58.3 TEST · keeps the "still loading" label · 13 November 2026
+
+r58.2 plus one small fix found in the live check of r58.2:
+
+- **Problem:** while Guided Duel was waiting for the card library, a late screen refresh (when the music check finished) put the button back to "Set up a Guided Duel". Tapping it then did nothing.
+- **Fix:** the button now keeps saying "Loading the card library… I'll continue when it's ready" until the library is ready.
+- **Checked:** with a slow library plus a slow music check, the label held and Learn still continued by itself.
+- Tests 205/206 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r58.3.txt.
+
 # Duel Doctrine Lab · r58.2 TEST · phone loading fix · 13 November 2026
 
 Kevy, 23:06: "it stalls when I asked for guided lesson". On his phone, the page stayed on "Loading card library… / Preparing your practice room." This build is r58.1 plus the fixes below. Lessons, tutors, design and AI are unchanged. Built and self-verified by Claude; independent review requested.
