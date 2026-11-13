@@ -65,8 +65,8 @@ test('(R43-6, r44 scope) decorative art is original: hero, LP avatars, victory f
  assert.match(read('deck-list.mjs'),/<img src="\$\{esc\(c\.art\)\}" alt="\$\{esc\(name\)\}"/);
 });
 test('(R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only',()=>{
- const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r52<\/span>/);/* r46-adapted */
- assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r52/);/* r46-adapted */
+ const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r54<\/span>/);/* r46-adapted */
+ assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r54/);/* r46-adapted */
  const ui=read('ui-polish.mjs').replace(/^\/\/.*$/mg,'');assert.doesNotMatch(ui,/import |postMessage|Worker|Math\.random|setTimeout|setInterval|duel|respond/);assert.match(ui,/setProperty\('--pop-shift'/);
  assert.match(html,/<script type="module" src="ui-polish\.mjs"><\/script><\/body>/);
 });

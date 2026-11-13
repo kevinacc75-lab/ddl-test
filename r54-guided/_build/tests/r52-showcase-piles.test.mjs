@@ -56,7 +56,7 @@ test('(R52-8) title showcase: one boss per deck, matching decks.json, art files 
  assert.match(css,/prefers-reduced-motion:reduce/);
 });
 test('(R52-9) wiring: stylesheet after r50, showcase script, offline list, About text',()=>{
- const h=read('index.html');assert.ok(h.indexOf('css/r50-egypt.css')<h.indexOf('css/r52-polish.css'));assert.match(h,/<script type="module" src="title-showcase\.mjs"><\/script>/);
+ const h=read('index.html');assert.ok(h.indexOf('css/r50-egypt.css')<h.indexOf('css/r52-polish.css'));assert.match(h,/<script type="module" src="title-showcase\.mjs"><\/script>/);/* r53: learn script follows it */
  const a=JSON.parse(read('offline-assets.json'));for(const f of ['./title-showcase.mjs','./css/r52-polish.css'])assert.ok(a.includes(f),f);
  assert.match(read('app-shell.mjs'),/installPileGlow\(\{navigate,submit,getDecision,getDb\}\)/);
  assert.match(read('app.mjs'),/getDb:\(\)=>db,/);

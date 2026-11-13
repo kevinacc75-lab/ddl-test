@@ -1,3 +1,34 @@
+# Duel Doctrine Lab · r54 TEST · Guided Duel, Lapawri, Learn music, AI-1 · 13 November 2026
+
+Kevy, 13 Nov 2026: "plonk our AI and just have the mascot explain card interactions ... so it's different each time" (13:33), "Lapawri is sounds good to me" (14:58), "a new audio track for the learning mode ... Exposed Grove ... inject to the learning mode as the background music" (15:03). Built and self-verified by Claude; independent review requested.
+
+- The Guide is now named Lapawri (ChatGPT's suggestion, RELAY-178). It is a display name only.
+- Guided Duel (Learn · Guided Duel): turn the Lapawri coach on, choose how much it explains (Explain everything / New things / Quiet), then "Set up a Guided Duel" switches setup to Play mode. In a Play duel against the AI, Lapawri pops up beside the board and explains what just happened in this game. It covers Chain Links and the order they resolve in, summons, face-down banishment, battle damage, effect damage and LP costs. "Why?" shows what it is based on; "Flag this" saves it to the Fact-check queue.
+- Safety rules from the Seto team (RELAY-180):
+  - Only explanations the engine's events can actually back up are switched on. None of the rules-heavy ones are on until they are checked.
+  - A negation is never described as "activation" vs "effect" (this build cannot tell them apart). Lapawri says it needs more detail, and saves it for a fact check.
+  - Fisherman of Legend is on the "not sure" list: Lapawri says so, never guesses.
+  - The coach reads only events already accepted and visible to you, and never plays for you.
+  - On a phone held upright it sits at the top, so it never covers your choices.
+- Background music in Learn: Kevy's track "Exposed Groove" (learn/music.mp3; cover image removed, audio untouched), looping quietly, only while Learn is open. It has its own music button next to the sound-effects button.
+- AI-1 (Ghost Belle fix): the AI's own "never Normal Summon this" rules (for example a hand trap in Sky Striker) now also apply during its deeper search. ChatGPT found the same route independently (RELAY-164).
+  - Benchmark: 2 x 128 games per arm, same machine, run one after the other. Fix: 101-27 and 100-28 = 201-55. Unchanged AI: 99-29 and 100-28 = 199-57.
+  - That is within normal luck, so no strength gain is claimed. It is kept because it is not worse and it follows the deck rules correctly.
+  - The ledgers are in _build/bench.
+- Checked in a browser (412 x 790 Guided Duel: Lunalight vs Blue-Eyes, 10 coach lines; Learn music and toggle), no page errors. Tests 171/172 (1 needs the CSS builder).
+
+# Duel Doctrine Lab · r53 TEST · Learning mode (Ruling Desk) · 13 November 2026
+
+Kevy, 13 Nov 2026: "Can we do the same? ... I want to invest in this" (13:18, the Ruling Desk reel), "an original spynx cat as our mascot ... a speech bubble" (13:24), "all the visual cues and sound fx ... immersive and vibrant and guided" (13:29), "a fail safe that it will admit it needs to fact check" (13:33), "Let's run with the anime design you just made" (14:35). Lessons authored by ChatGPT (RELAY-175) with every Seto-team fix from RELAY-180 applied. Built and self-verified by Claude; independent review requested. Duels, rules engine, decks and AI are unchanged.
+
+- New Learn button in the top bar opens Learning mode: a home screen with your Guide (an original sphinx cat, anime style) and three beginner Ruling Desk lessons: "Why won't Engage! activate?" (Sky Striker), "You can't respond to that summon" (Kashtira), "Last added, first resolved" (Lunalight).
+- Each lesson is paced step by step: a mini board with real card art (cards slide in, the problem card glows red, a stamp like "CAN'T ACTIVATE" or "SEARCH NEGATED" lands), the official card text with the key words highlighted, rule tags, the Guide in 7 moods with a speech bubble, Back / Replay / Next (arrow keys work too), and a closing "THE RULING" card with links to Konami's card database, the rulebook and the 2021 rules update.
+- Two separate trust badges on every step: "Engine outcome reproduced" (each lesson's outcome is played out in the real rules engine by tests/r53-lessons-engine.test.mjs: 5 fixtures, all passing) and "Rules: pending Seto team check". There is no single "verified" stamp.
+- "Something look wrong? Flag this step" saves the step to a Fact-check queue on your device, and says so only if the save really worked. The queue can be exported as a file for Seto's team.
+- Small synthesized sound cues (paw tap, card slide, chain tick, paper, chime, soft thud), with a mute button; reduced-motion settings turn off all movement.
+- Guided Duel (the live coach in a real game) is shown as "Coming next build".
+- Checked in a browser at 412 x 790, 800 x 1200 and 1440 x 900: every step, the ruling card, flagging, the queue, keyboard and Escape; no page errors.
+
 # Duel Doctrine Lab · r52 TEST · Boss showcase, pile effect menu, polish · 13 November 2026
 
 Kevy, 13 Nov 2026: "I want it to have more Yu-Gi-Oh artwork and design" (12:48), "Each decks boss monster works" (12:52), "I want a more polished and modern looking game" (12:56). Pile menu from ChatGPT's r52 acceptance checklist (RELAY-162 T3 group A) and offer mapping (RELAY-164 T7). Built and self-verified by Claude; independent review requested. Engine, rules, decks and AI are unchanged (the AI is the same as r51).
