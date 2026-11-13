@@ -22,6 +22,7 @@ test('(R58-3) RELAY-199 MED-1 and RELAY-200 LOW-4: tutor focus selector, Escape 
  const s=read('dist/learn/learn.mjs');
  assert.match(s,/draw\('button\[data-tutor="'\+t\.dataset\.tutor\+'"\]'\)/);assert.match(s,/document\.addEventListener\('keydown',e=>\{if\(e\.key==='Escape'&&!e\.defaultPrevented&&!el\.hidden&&!el\.contains\(e\.target\)\)/,'one Escape never acts twice');
  assert.match(s,/data-branch="\$\{esc\(o\.branch\)\}">/,'no option-specific class');assert.doesNotMatch(s,/data-branch="\$\{esc\(o\.branch\)\}" class=/);
+ assert.match(s,/musicReady\(\)\.then\(ok=>\{if\(ok\)\{draw\(keepFocus\(\)\)/,'the late music redraw keeps focus');
  assert.match(s,/id="lr-choice-label" tabindex="-1"/);assert.match(s,/el\.querySelector\('#lr-choice-label,\.primary/);
 });
 test('(R58-4) learn-temple-r1 contract: tutor above the board in DOM order, workspace, footer; zones labelled; card text folds',()=>{

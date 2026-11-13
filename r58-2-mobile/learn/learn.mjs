@@ -59,7 +59,7 @@ export function installLearn(root=document){
  const el=document.createElement('section');el.id='learn';el.hidden=true;el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Learn');document.body.append(el);
  const btn=document.createElement('button');btn.id='learn-open';btn.type='button';btn.className='learn-open';btn.innerHTML='<span aria-hidden="true">✦</span> Learn';
  {const anchor=root.querySelector('header.topbar #sound');if(anchor)anchor.before(btn);else document.body.append(btn)}
- let view='home',lesson=null,beat=0,branch=null,lastFocus=null,toastT=0;
+ let view='home',lesson=null,beat=0,branch=null,lastFocus=null,toastT=0,waitingLib=false;
  let textOpen=!(typeof matchMedia==='function'&&matchMedia('(max-width:480px)').matches);/* phone: card text starts folded; the reader's open/close choice is kept */
  const beatsOf=l=>isCP(l)?cpBeats(l,branch):l.beats;
  const branchLabel=l=>l.beats.find(x=>x.choice)?.choice.options.find(o=>o.branch===branch)?.label||'';
@@ -115,6 +115,9 @@ ${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow"
   if(view==='play'){const w=el.querySelector('.lr-workspace');if(w)w.scrollTop=0;el.querySelector('.lr-bubble')?.scrollIntoView({block:'nearest',behavior:'auto'});
    el.querySelector('details.lr-text')?.addEventListener('toggle',e=>{textOpen=e.target.open})}}
  function go(v,focus){view=v;draw(focus)}
+ // r58: selector for the element that has focus now, so a redraw that is not caused by the user keeps their place.
+ function keepFocus(){const a=document.activeElement;if(!a||!el.contains(a))return null;const d=a.dataset||{};
+  for(const k of ['tutor','branch','lesson','act','level'])if(d[k]!==undefined)return `${a.tagName.toLowerCase()}[data-${k}="${CSS.escape(d[k])}"]`;return a.id?'#'+CSS.escape(a.id):null}
  // r54 music slot (Kevy 14:58: a Suno track "for the learning mode exclusively"): plays only while Learn is open, if learn/music.mp3 exists.
  let music=null,musicChecked=false;
  async function musicReady(){if(musicChecked)return !!music;musicChecked=true;try{const r=await fetch(MUSIC,{method:'HEAD'});if(!r.ok)return false;music=new Audio(MUSIC);music.loop=true;music.volume=0.22;return true}catch{return false}}
@@ -122,7 +125,7 @@ ${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow"
  let inerted=[];
  // r55 (ChatGPT RELAY-189 R53-I1): while Learn is open the rest of the page is inert and Tab stays inside Learn.
  function setInert(on){if(on){inerted=[...document.body.children].filter(n=>n!==el&&!n.inert&&n.tagName!=='SCRIPT');for(const n of inerted)n.inert=true}else{for(const n of inerted)n.inert=false;inerted=[]}}
- function open(){lastFocus=document.activeElement;setInert(true);el.hidden=false;document.body.classList.add('learn-open');go('home');cue('paw',prefs.sound);musicReady().then(ok=>{if(ok){draw();syncMusic()}})}
+ function open(){lastFocus=document.activeElement;setInert(true);el.hidden=false;document.body.classList.add('learn-open');go('home');cue('paw',prefs.sound);musicReady().then(ok=>{if(ok){draw(keepFocus())/* r58: this late redraw must not steal focus (found in the live check) */;syncMusic()}})}
  function close(){el.hidden=true;setInert(false);document.body.classList.remove('learn-open');syncMusic();lastFocus?.focus?.({preventScroll:true})}
  function playBeat(){const l=ALL[lesson],b=beatsOf(l)[beat];prefs.progress[l.id]={...prefs.progress[l.id],beat,...(isCP(l)?{branch}:{})};save();go('play');cue(b.sfx,prefs.sound)}
  btn.onclick=open;
@@ -142,7 +145,13 @@ ${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow"
   if(a==='guided')return go('guided','[data-act=setup]');
   if(t.dataset.level){prefs.coachLevel=t.dataset.level;save();draw('[data-level='+t.dataset.level+']');cue('paw',prefs.sound);return}
   if(a==='coach'){prefs.coach=!prefs.coach;save();draw('[data-act=coach]');cue('paw',prefs.sound);return}
-  if(a==='setup'){prefs.coach=true;save();const m=document.querySelector('#mode');if(m&&[...m.options].some(o=>o.value==='play')){m.value='play';m.dispatchEvent(new Event('change',{bubbles:true}))}close();const s=document.querySelector('#start');s?.scrollIntoView({block:'center',behavior:reduced()?'auto':'smooth'});s?.focus({preventScroll:true});return}
+  if(a==='setup'){prefs.coach=true;save();
+   /* r58.2 (Kevy 13 Nov 23:06): on a slow phone connection the card library may still be loading. Say so, and continue
+      by itself once it is ready, instead of dropping the player on a "Loading card library…" button. */
+   const ready=()=>document.body.dataset.libraryReady==='1'||document.querySelector('#start')?.disabled===false;
+   if(!ready()){if(!waitingLib){waitingLib=true;t.disabled=true;t.textContent='Loading the card library… I’ll continue when it’s ready';toast('The card library is still loading on this connection. I’ll take you to the duel setup as soon as it’s ready.');
+     document.addEventListener('ddl-library-failed',()=>{if(!waitingLib)return;waitingLib=false;const s=el.querySelector('[data-act=setup]');if(s){s.disabled=false;s.textContent='Set up a Guided Duel'}toast('The card library couldn’t load. Close Learn and tap “Retry card library”, then try again.')},{once:true});document.addEventListener('ddl-library-ready',()=>{waitingLib=false;const s=el.querySelector('[data-act=setup]');if(s){s.disabled=false;s.textContent='Set up a Guided Duel'}if(!el.hidden&&view==='guided')s?.click()},{once:true})}return}
+   const m=document.querySelector('#mode');if(m&&[...m.options].some(o=>o.value==='play')){m.value='play';m.dispatchEvent(new Event('change',{bubbles:true}))}close();const s=document.querySelector('#start');s?.scrollIntoView({block:'center',behavior:reduced()?'auto':'smooth'});s?.focus({preventScroll:true});return}
   if(a==='flag'){const l=ALL[lesson],b=beatsOf(l)[beat];const ok=queueAdd({lesson:l.id,revision:l.revision,beat,...(isCP(l)?{branch:branch||'before choice'}:{}),said:b.say,build:ENGINE_EVIDENCE.build,review:REVIEW.status});toast(ok?FAILSAFE.saved:FAILSAFE.failed);cue('paper',prefs.sound);return}
   if(a==='export'){const blob=new Blob([JSON.stringify({kind:'ddl-factcheck-export',build:ENGINE_EVIDENCE.build,exported:new Date().toISOString(),entries:queueList()},null,1)],{type:'application/json'});const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='ddl-factcheck-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('Exported. Send the file to Seto’s team.');return}
  });

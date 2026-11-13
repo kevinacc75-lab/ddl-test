@@ -1,3 +1,31 @@
+# Duel Doctrine Lab · r58.2 TEST · phone loading fix · 13 November 2026
+
+Kevy, 23:06: "it stalls when I asked for guided lesson". On his phone, the page stayed on "Loading card library… / Preparing your practice room." This build is r58.1 plus the fixes below. Lessons, tutors, design and AI are unchanged. Built and self-verified by Claude; independent review requested.
+
+- **What was wrong (three things that add up on a phone):**
+  1. **Offline files.** The first visit to each build downloaded all 547 offline files (110 MB, including 13 music tracks and every card image) in the background. That download started while the card library was still loading. Each build's offline worker also deleted every other build's saved files, so each build Kevy opened today on his phone started another 110 MB download.
+  2. **A hard 15-second limit.** The card library had to finish downloading within 15 seconds. cards.json.gz is 1.6 MB, so a weak phone connection (or one busy with item 1) failed or stalled.
+  3. **Guided Duel didn't wait.** "Set up a Guided Duel" sent you straight to the duel button even while the library was still loading.
+- **Fixes:**
+  1. **Offline files are now small and start late.** The offline worker now saves only the files needed to duel offline (171 files, about 12 MB). Card art, tutor sheets and music are saved the first time they are used. Offline files only start downloading after the card library has loaded. Each build keeps its own saved files and clears only its own old copies, plus the old 110 MB copies.
+  2. **Downloads stop only when stuck.** A download now stops only if no data arrives for 30 seconds, and it never fails just for being slow. After 15 seconds the page says "Still loading the card library — this connection is slow. Please wait…". The last-resort limit is 3 minutes.
+  3. **Guided Duel waits for the library.** If the library is still loading, Learn says "The card library is still loading on this connection. I'll take you to the duel setup as soon as it's ready." It then continues by itself when the library is ready. If loading fails, it tells you to tap "Retry card library".
+- **Checked in a phone-sized browser:**
+  - **Slow library:** with the card library delayed by 15 s, Learn waited, then closed by itself and put you on "Enter the duel room →" in Play mode.
+  - **Slow connection:** throttled to 600 kbps, the library loaded in about 70 s, where before it would have failed at 15 s.
+  - **Offline:** the offline cache held 171 files (no music or art at install), and an offline reload loaded the card library.
+  - All 44 lesson steps were re-checked at 5 sizes. The Guided Duel coach still works, and there were no page errors.
+- Tests 205/206 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r58.2.txt.
+
+# Duel Doctrine Lab · r58.1 TEST · focus fix found in the live check · 13 November 2026
+
+r58 as published, plus one fix found while checking r58 on the live site. The r58 folder is kept until the next build.
+
+- **Live-only bug:** on the live site, picking a tutor could lose the keyboard focus a moment later. When the background-music check finished (it is slower live than locally), Learn redrew and moved focus to the close button.
+- **Fix:** that late redraw now keeps focus where you were.
+- **Reproduced and verified fixed** by delaying the music request in a local browser test.
+- Tests 202/203 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r58.1.txt. The browser checks from r58 were re-run on this build: all 44 steps at 5 sizes, both C1 options equal, and focus kept after picking a tutor.
+
 # Duel Doctrine Lab · r58 TEST · Learn design by ChatGPT + Seto team review fixes · 13 November 2026
 
 Design by ChatGPT, lead designer (learn-temple-r1, RELAY-202), integrated by Claude. Fixes are from the Seto team's reviews (RELAY-199 and RELAY-200). Duels, AI and decks are unchanged, except one text-only deck-viewer note and one code comment. Built and self-verified by Claude; independent review requested.
@@ -33,7 +61,7 @@ Design by ChatGPT, lead designer (learn-temple-r1, RELAY-202), integrated by Cla
   - Tab never left Learn in 40 presses; the tutor pick is saved; the Guided Duel coach still works.
   - At C1 both options are styled identically and focus is on the question.
   - No page errors.
-- Tests 202/203 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r58.txt.
+- Tests 202/203 (1 needs the CSS builder).
 
 # Duel Doctrine Lab · r57 TEST · Choke Point Lab (CP-001) · 13 November 2026
 
