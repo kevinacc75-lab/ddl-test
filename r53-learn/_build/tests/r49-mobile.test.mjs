@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';import {test} from 'node:test';import fs
 const read=f=>fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8');
 test('(R49-1) the mobile sheet is the last stylesheet, is listed for offline use, and only styles (no script, no url)',()=>{
  const html=read('index.html'),links=[...html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map(m=>m[1]);
- assert.deepEqual(links.slice(-2),['./css/r49-mobile.css','./css/r50-egypt.css'],'r50: the layout sheet, then the look sheet (colours only)');assert.equal(links.filter(x=>x.includes('r49-mobile')).length,1);
+ assert.deepEqual(links.slice(-4),['./css/r49-mobile.css','./css/r50-egypt.css','./css/r52-polish.css','./css/r53-learn.css'],'r50: the layout sheet, then the look sheet (colours only); r52: then the showcase/polish sheet');assert.equal(links.filter(x=>x.includes('r49-mobile')).length,1);
  assert.ok(JSON.parse(read('offline-assets.json')).assets?.includes?.('./css/r49-mobile.css')??read('offline-assets.json').includes('"./css/r49-mobile.css"'));
  const css=read('css/r49-mobile.css');assert.doesNotMatch(css,/url\(|@import|expression\(/i);
  let depth=0;for(const ch of css.replace(/\/\*[^]*?\*\//g,'')){if(ch==='{')depth++;if(ch==='}')depth--;assert.ok(depth>=0)}assert.equal(depth,0,'balanced braces')});

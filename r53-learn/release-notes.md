@@ -1,3 +1,27 @@
+# Duel Doctrine Lab · r53 TEST · Learning mode (Ruling Desk) · 13 November 2026
+
+Kevy, 13 Nov 2026: "Can we do the same? ... I want to invest in this" (13:18, the Ruling Desk reel), "an original spynx cat as our mascot ... a speech bubble" (13:24), "all the visual cues and sound fx ... immersive and vibrant and guided" (13:29), "a fail safe that it will admit it needs to fact check" (13:33), "Let's run with the anime design you just made" (14:35). Lessons authored by ChatGPT (RELAY-175) with every Seto-team fix from RELAY-180 applied. Built and self-verified by Claude; independent review requested. Duels, rules engine, decks and AI are unchanged.
+
+- New Learn button in the top bar opens Learning mode: a home screen with your Guide (an original sphinx cat, anime style) and three beginner Ruling Desk lessons: "Why won't Engage! activate?" (Sky Striker), "You can't respond to that summon" (Kashtira), "Last added, first resolved" (Lunalight).
+- Each lesson is paced step by step: a mini board with real card art (cards slide in, the problem card glows red, a stamp like "CAN'T ACTIVATE" or "SEARCH NEGATED" lands), the official card text with the key words highlighted, rule tags, the Guide in 7 moods with a speech bubble, Back / Replay / Next (arrow keys work too), and a closing "THE RULING" card with links to Konami's card database, the rulebook and the 2021 rules update.
+- Two separate trust badges on every step: "Engine outcome reproduced" (each lesson's outcome is played out in the real rules engine by tests/r53-lessons-engine.test.mjs: 5 fixtures, all passing) and "Rules: pending Seto team check". There is no single "verified" stamp.
+- "Something look wrong? Flag this step" saves the step to a Fact-check queue on your device, and says so only if the save really worked. The queue can be exported as a file for Seto's team.
+- Small synthesized sound cues (paw tap, card slide, chain tick, paper, chime, soft thud), with a mute button; reduced-motion settings turn off all movement.
+- Guided Duel (the live coach in a real game) is shown as "Coming next build".
+- Checked in a browser at 412 x 790, 800 x 1200 and 1440 x 900: every step, the ruling card, flagging, the queue, keyboard and Escape; no page errors.
+
+# Duel Doctrine Lab · r52 TEST · Boss showcase, pile effect menu, polish · 13 November 2026
+
+Kevy, 13 Nov 2026: "I want it to have more Yu-Gi-Oh artwork and design" (12:48), "Each decks boss monster works" (12:52), "I want a more polished and modern looking game" (12:56). Pile menu from ChatGPT's r52 acceptance checklist (RELAY-162 T3 group A) and offer mapping (RELAY-164 T7). Built and self-verified by Claude; independent review requested. Engine, rules, decks and AI are unchanged (the AI is the same as r51).
+
+- Title page: the crest panel is now a slowly turning fan of each deck's boss monster card (official card art, as on the boss tiles and victory screen) in gold frames, over a blurred copy of the art. Tap a side card or a dot to jump; it pauses while you point at it or use the keyboard (arrow keys), and does not turn by itself if your device asks for reduced motion. No Yu-Gi-Oh logo or lettering is drawn.
+- Tap a glowing Graveyard, Banish or Extra Deck pile on your turn: a small menu lists each effect the duel engine offers from that pile right now, with the effect's own wording where it is known (otherwise a plain "Effect option 1 of 2", never a guessed title). Choosing one sends exactly that offered choice once; Escape, Close or tapping elsewhere sends nothing; a menu left open when the duel moves on is closed and can no longer send. "View all cards" still opens the pile list.
+- The pile badge now counts cards, not effects: one card with two usable effects shows 1, two copies show 2. Summoning from the Extra Deck is not an effect and stays in the normal choices list.
+- The "can be used now" hint no longer appears in chain windows (the chain prompt already names the card, and the hint covered its Yes/No buttons) and fades after 5 seconds.
+- Polish (Lapis & Gold look): buttons press in slightly, deck tiles lift on hover, the card action and pile menus are glass panels in gold, menus pop in gently. Reduced-motion settings turn all of this off.
+- Checked in a browser at 412 x 790 (phone upright), 915 x 380 (phone sideways), 800 x 1200 (tablet upright), 1280 x 740 (tablet sideways) and 1440 x 900 (desktop). Pile menu proven in a real duel (Moonlit Hunt vs Azure Sovereign, seed 71055, turn 3): Luna Light Perfume in the Graveyard -> menu "Banish Perfume; discard: add a Lunalight" -> the engine then asked for the discard as normal; no refused choice, no page errors.
+- Already in place before r52 (found while building, so not rebuilt): tapping a card on the field or in your hand opens its own actions; choosing Attack then tapping the target the engine offers; the phase buttons (Battle, Main 2, End turn) only work when the engine offers that step.
+
 # Duel Doctrine Lab · r51 TEST · Standard field layout · 13 November 2026
 
 Kevy, 13 Nov 2026, 08:53 AEDT: "Can you check a standard Yu-Gi-Oh TCG field. Where does graveyard, main deck, extra deck and banish zones go? I think our layout is different?" He was right: our piles were mirrored. Built and self-verified by Claude; independent review requested. Layout of the piles only: engine, rules, decks, AI and the Play flow files are r50.

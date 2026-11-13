@@ -1,0 +1,102 @@
+// r53 Learning mode v1 (Claude, 13 Nov 2026). Kevy 13 Nov: "I want to invest in this" (13:18), "an original sphinx cat
+// as our mascot" with "a speech bubble" (13:24), "all the visual cues and sound fx ... immersive and vibrant and guided"
+// (13:29), "a fail safe that it will admit it needs to fact check" (13:33), the anime Guide (14:35).
+// Ruling Desk lessons (scripted, paced) from learn/lessons.mjs, the Guide (learn/guide.mjs), a local Fact-check queue
+// with export, and two separate trust badges (engine outcome vs rules review; RELAY-180 HIGH 1). Presentation only: it
+// never touches a duel. Guided Duel arrives in r54.
+import {LESSONS,CARDS,ENGINE_CHECK} from './lessons.mjs';import {guideSVG} from './guide.mjs';
+const SPK='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"></path>',SPK_ON=SPK+'<path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"></path></svg>',SPK_OFF=SPK+'<path d="M16 9l5 6M21 9l-5 6"></path></svg>';
+const KEY='ddl-r53-learn',QKEY='ddl-r53-factcheck';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const load=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k)||'null');return v??d}catch{return d}};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}};
+const reduced=()=>{try{return matchMedia('(prefers-reduced-motion: reduce)').matches}catch{return false}};
+export const GUIDE_NAME='Guide';/* Kevy picks the name (RELAY-178 ideas); display only, never part of any id */
+export const REVIEW={status:'pending',label:'Rules: pending Seto team check',authored:'Authored by ChatGPT — pending Seto/team fact check'};
+// RELAY-177 exact fail-safe wording; "saved" only after the write really succeeded.
+export const FAILSAFE={saved:'Thanks. I’ve saved this step for a fact check.',failed:'This needs a fact check. I couldn’t save the note.',unsure:'I’m not sure how this interaction works. I’ve saved it for a fact check.'};
+// ---------- sound: small synthesized cues (no files); one at a time, never overlapping ----------
+let ctx=null,last=0;
+export function cue(name,on=true){if(!on)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();const t=ctx.currentTime;if(t-last<0.05)return;last=t;
+ const g=ctx.createGain();g.connect(ctx.destination);const o=ctx.createOscillator();o.connect(g);
+ const set=(type,f0,f1,dur,vol)=>{o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);o.start(t);o.stop(t+dur+0.02)};
+ ({paw:()=>set('sine',660,520,0.08,0.06),tick:()=>set('triangle',1200,900,0.06,0.05),slide:()=>set('sawtooth',300,140,0.16,0.025),paper:()=>set('triangle',900,500,0.12,0.03),
+   chime:()=>{set('sine',880,1320,0.35,0.07);const o2=ctx.createOscillator(),g2=ctx.createGain();o2.connect(g2);g2.connect(ctx.destination);o2.frequency.value=1760;g2.gain.setValueAtTime(0.03,t+0.08);g2.gain.exponentialRampToValueAtTime(0.0001,t+0.5);o2.start(t+0.08);o2.stop(t+0.52)},
+   thud:()=>set('sine',140,60,0.22,0.12)})[name]?.()}catch{}}
+// ---------- fact-check queue (local only until the player exports it) ----------
+export function queueAdd(entry,write=store){const q=load(QKEY,[]);const e={...entry,at:new Date().toISOString(),state:'local_saved'};const ok=write(QKEY,[...q,e].slice(-200));return ok?e:null}
+export const queueList=()=>load(QKEY,[]);
+function card(code,cls=''){const c=CARDS[code];return c?`<figure class="lr-card ${cls}" data-code="${code}"><img src="${esc(c.art)}" alt="${esc(c.name)}" loading="lazy"><figcaption>${esc(c.name)}</figcaption></figure>`:''}
+export function boardHTML(b={}){const mark=c=>(b.bad||[]).includes(c)?'bad':(b.off||[]).includes(c)?'off':(b.good||[]).includes(c)?'good':'';
+ const slots=(arr,label)=>`<div class="lr-row"><span class="lr-label">${label}</span><div class="lr-slots">${arr.map(c=>`<div class="lr-slot">${c?card(c,mark(c)):''}</div>`).join('')}</div></div>`;
+ return `${(b.opp||[]).length?`<div class="lr-row lr-opp"><span class="lr-label">OPPONENT’S HAND · shown for this lesson</span><div class="lr-line">${b.opp.map(c=>card(c,mark(c))).join('')}</div></div>`:''}
+${b.emz!==undefined?`<div class="lr-row"><span class="lr-label">EXTRA MONSTER ZONE</span><div class="lr-slots lr-emz"><div class="lr-slot">${b.emz?card(b.emz,'good'):''}</div></div></div>`:''}
+${slots(b.mmz||[null,null,null,null,null],'YOUR MAIN MONSTER ZONES')}
+${(b.st||[]).length?slots([null,null,...b.st,null,null].slice(0,5),'SPELL &amp; TRAP ZONE'):''}
+${(b.hand||[]).length?`<div class="lr-row"><span class="lr-label">YOUR HAND</span><div class="lr-line">${b.hand.map(c=>card(c,mark(c))).join('')}</div></div>`:''}
+${(b.chain||[]).length?`<div class="lr-chain" aria-label="Chain"><span class="lr-label">CHAIN · resolves from the top</span>${[...b.chain].map((l,i)=>({...l,n:i+1})).reverse().map(l=>`<div class="lr-link ${l.who}${b.resolving&&l.n===b.chain.length?' resolving':''}"><b>${l.n}</b>${CARDS[l.code]?`<img src="${esc(CARDS[l.code].art)}" alt="">`:''}<span>${esc(CARDS[l.code]?.name||'')}<small>${l.who==='you'?'You':'Opponent'}</small></span></div>`).join('')}</div>`:''}
+${b.stamp?`<div class="lr-stamp ${b.stamp.kind}" role="status">${esc(b.stamp.text)}</div>`:''}`}
+export function textHTML(t){const c=CARDS[t?.code];if(!c?.text)return '';const i=c.text.indexOf(t.hl);const body=i<0?esc(c.text):esc(c.text.slice(0,i))+'<mark>'+esc(t.hl)+'</mark>'+esc(c.text.slice(i+t.hl.length));
+ return `<div class="lr-text"><div class="lr-text-head"><b>${esc(c.name)}</b><a href="https://www.db.yugioh-card.com/yugiohdb/card_search.action?cid=${c.cid}&amp;ope=2&amp;request_locale=en" target="_blank" rel="noopener">official text</a></div><p>${body.replace(/\n/g,'<br>')}</p></div>`}
+export function installLearn(root=document){
+ if(root.getElementById('learn'))return null;
+ const prefs={sound:true,...load(KEY,{})};prefs.progress=prefs.progress||{};
+ const save=()=>store(KEY,prefs);
+ const el=document.createElement('section');el.id='learn';el.hidden=true;el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Learn');document.body.append(el);
+ const btn=document.createElement('button');btn.id='learn-open';btn.type='button';btn.className='learn-open';btn.innerHTML='<span aria-hidden="true">✦</span> Learn';
+ {const anchor=root.querySelector('header.topbar #sound');if(anchor)anchor.before(btn);else document.body.append(btn)}
+ let view='home',lesson=null,beat=0,lastFocus=null,toastT=0;
+ const toast=t=>{let n=el.querySelector('.lr-toast');if(!n)return;n.textContent=t;n.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>n.classList.remove('on'),3200)};
+ const soundBtn=()=>`<button type="button" class="lr-icon" data-act="sound" aria-pressed="${prefs.sound}" aria-label="Sound effects ${prefs.sound?'on':'off'}">${prefs.sound?SPK_ON:SPK_OFF}</button>`;
+ function home(){const q=queueList();
+  return `<div class="lr-screen lr-home"><div class="lr-top"><button type="button" class="lr-icon" data-act="close" aria-label="Close Learn">✕</button><span class="lr-eyebrow">LEARN</span>${soundBtn()}</div>
+<div class="lr-hero"><div class="lr-guide lr-guide-big">${guideSVG('proud')}</div><div><span class="lr-eyebrow">YOUR ${esc(GUIDE_NAME.toUpperCase())}</span><h2>Learn with your ${esc(GUIDE_NAME)}</h2><p>Rulings and combos, one step at a time.</p></div></div>
+<div class="lr-modes"><button type="button" class="lr-mode gold" data-act="list">Ruling Desk<small>Short, paced lessons</small></button><button type="button" class="lr-mode teal" disabled>Guided Duel<small>Coming next build</small></button></div>
+<div class="lr-sec"><span class="lr-eyebrow">BEGINNER LESSONS</span><span>${LESSONS.filter(l=>prefs.progress[l.id]?.done).length} of ${LESSONS.length} done</span></div>
+<ol class="lr-list">${LESSONS.map((l,i)=>{const p=prefs.progress[l.id];return `<li><button type="button" data-lesson="${i}" class="${p?.done?'done':''}"><span class="lr-num">${p?.done?'✓':i+1}</span><span><b>${esc(l.title)}</b><small>${esc(l.decks)} · ${l.minutes} min · ${p?.done?'done':p?'continue':'new'}</small></span></button></li>`}).join('')}</ol>
+<button type="button" class="lr-queue" data-act="queue"><span class="lr-num q">?</span><span>Fact-check queue</span><b>${q.length} saved</b></button>
+<p class="lr-note">${esc(REVIEW.authored)}. Engine outcomes are reproduced in tests for this build.</p><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
+ function player(){const l=LESSONS[lesson],b=l.beats[beat],last=beat===l.beats.length-1;
+  return `<div class="lr-screen lr-play" data-mood="${b.mood}"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back to lessons">‹</button><div class="lr-titles"><span class="lr-eyebrow">RULING DESK · ${esc(l.id)}</span><b>${esc(l.title)}</b></div>${soundBtn()}</div>
+<div class="lr-progress" aria-label="Step ${beat+1} of ${l.beats.length}">${l.beats.map((_,i)=>`<span class="${i<beat?'past':i===beat?'now':''}"></span>`).join('')}</div>
+<div class="lr-board" data-beat="${beat}">${boardHTML(b.board)}</div>
+${textHTML(b.text)}
+${(b.tags||[]).length?`<div class="lr-tags">${b.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
+<div class="lr-talk"><div class="lr-guide">${guideSVG(b.mood)}</div><div class="lr-bubble" aria-live="polite"><p>${esc(b.say)}</p>${b.caption?`<p class="lr-caption">${esc(b.caption)}</p>`:''}</div></div>
+<div class="lr-badges"><span class="lr-badge eng" title="${esc(ENGINE_CHECK.tests)}">✓ Engine outcome reproduced</span><span class="lr-badge rules">${esc(REVIEW.label)}</span>${b.strategy?`<span class="lr-badge strat">Good play · reviewed by ${esc(b.strategy.reviewer)}</span>`:''}</div>
+<button type="button" class="lr-flag" data-act="flag">Something look wrong? Flag this step</button>
+<div class="lr-controls"><button type="button" data-act="back" ${beat===0?'disabled':''}>Back</button><button type="button" class="lr-icon" data-act="replay" aria-label="Replay this step">↺</button><button type="button" class="primary" data-act="${last?'ruling':'next'}">${last?'The ruling':'Next'}</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
+ function ruling(){const l=LESSONS[lesson],next=LESSONS[lesson+1];
+  return `<div class="lr-screen lr-ruling"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back to lessons">‹</button><div class="lr-titles"><span class="lr-eyebrow">RULING DESK · ${esc(l.id)}</span><b>${esc(l.title)}</b></div>${soundBtn()}</div>
+<div class="lr-card-ruling"><h3>✦ THE RULING</h3><p>${esc(l.ruling)}</p><span class="lr-eyebrow">SOURCES</span><ul>${l.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('')}</ul></div>
+<div class="lr-talk"><div class="lr-guide">${guideSVG('proud')}</div><div class="lr-bubble"><p>Nicely done. That’s ${esc(l.id)} complete.</p></div></div>
+<div class="lr-badges"><span class="lr-badge eng">✓ Engine outcome reproduced</span><span class="lr-badge rules">${esc(REVIEW.label)}</span></div><p class="lr-note">${esc(REVIEW.authored)}.</p>
+<div class="lr-controls"><button type="button" data-act="restart">Replay lesson</button><button type="button" class="primary" data-act="${next?'nextlesson':'home'}">${next?'Next lesson':'Back to lessons'}</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
+ function queue(){const q=queueList();
+  return `<div class="lr-screen lr-qscreen"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back">‹</button><div class="lr-titles"><span class="lr-eyebrow">FACT-CHECK QUEUE</span><b>${q.length} saved on this device</b></div>${soundBtn()}</div>
+<p class="lr-note">Notes stay on this device until you export them for Seto’s team. They hold the lesson, the step and what the ${esc(GUIDE_NAME)} said: nothing private.</p>
+<ul class="lr-qlist">${q.slice().reverse().map(e=>`<li><b>${esc(e.lesson)} · step ${e.beat+1}</b><span>${esc(e.said)}</span><small>${esc(e.at.slice(0,16).replace('T',' '))} · ${esc(e.state)}</small></li>`).join('')||'<li class="empty">Nothing saved yet.</li>'}</ul>
+<div class="lr-controls"><button type="button" data-act="export" ${q.length?'':'disabled'}>Export for review</button><button type="button" class="primary" data-act="home">Done</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
+ function draw(focusSel){el.innerHTML=view==='home'?home():view==='play'?player():view==='ruling'?ruling():queue();el.dataset.view=view;el.dataset.motion=reduced()?'reduced':'full';
+  const f=focusSel&&el.querySelector(focusSel)||el.querySelector('.primary,[data-act=list],[data-act=close]');f?.focus({preventScroll:true})}
+ function go(v,focus){view=v;draw(focus)}
+ function open(){lastFocus=document.activeElement;el.hidden=false;document.body.classList.add('learn-open');go('home');cue('paw',prefs.sound)}
+ function close(){el.hidden=true;document.body.classList.remove('learn-open');lastFocus?.focus?.({preventScroll:true})}
+ function playBeat(){const b=LESSONS[lesson].beats[beat];prefs.progress[LESSONS[lesson].id]={...prefs.progress[LESSONS[lesson].id],beat};save();go('play');cue(b.sfx,prefs.sound)}
+ btn.onclick=open;
+ el.addEventListener('click',e=>{const t=e.target.closest('button');if(!t||t.disabled)return;const a=t.dataset.act;
+  if(t.dataset.lesson!==undefined){lesson=Number(t.dataset.lesson);beat=0;playBeat();return}
+  if(a==='close')return close();if(a==='home'||a==='list')return go('home',a==='list'?'[data-lesson]':null);
+  if(a==='sound'){prefs.sound=!prefs.sound;save();draw('[data-act=sound]');cue('paw',prefs.sound);return}
+  if(a==='next'){beat++;return playBeat()}if(a==='back'&&beat>0){beat--;return playBeat()}if(a==='replay'){return playBeat()}
+  if(a==='ruling'){prefs.progress[LESSONS[lesson].id]={done:true,beat};save();go('ruling');cue('chime',prefs.sound);return}
+  if(a==='restart'){beat=0;return playBeat()}if(a==='nextlesson'){lesson++;beat=0;return playBeat()}
+  if(a==='queue')return go('queue');
+  if(a==='flag'){const l=LESSONS[lesson],b=l.beats[beat];const ok=queueAdd({lesson:l.id,revision:l.revision,beat,said:b.say,build:'r53',review:REVIEW.status});toast(ok?FAILSAFE.saved:FAILSAFE.failed);cue('paper',prefs.sound);return}
+  if(a==='export'){const blob=new Blob([JSON.stringify({kind:'ddl-factcheck-export',build:'r53',exported:new Date().toISOString(),entries:queueList()},null,1)],{type:'application/json'});const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='ddl-factcheck-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('Exported. Send the file to Seto’s team.');return}
+ });
+ el.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();return view==='home'?close():go('home')}if(view!=='play'||e.target.closest('input,select,textarea'))return;
+  if(e.key==='ArrowRight'){e.preventDefault();el.querySelector('[data-act=next],[data-act=ruling]')?.click()}if(e.key==='ArrowLeft'){e.preventDefault();el.querySelector('[data-act=back]')?.click()}});
+ return {open,close,get state(){return {view,lesson,beat}}};
+}
+if(typeof document!=='undefined'){const go=()=>installLearn();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go,{once:true});else go()}
