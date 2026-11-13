@@ -1,3 +1,31 @@
+# Duel Doctrine Lab · r58.3 TEST · keeps the "still loading" label · 13 November 2026
+
+r58.2 plus one small fix found in the live check of r58.2:
+
+- **Problem:** while Guided Duel was waiting for the card library, a late screen refresh (when the music check finished) put the button back to "Set up a Guided Duel". Tapping it then did nothing.
+- **Fix:** the button now keeps saying "Loading the card library… I'll continue when it's ready" until the library is ready.
+- **Checked:** with a slow library plus a slow music check, the label held and Learn still continued by itself.
+- Tests 205/206 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r58.3.txt.
+
+# Duel Doctrine Lab · r58.2 TEST · phone loading fix · 13 November 2026
+
+Kevy, 23:06: "it stalls when I asked for guided lesson". On his phone, the page stayed on "Loading card library… / Preparing your practice room." This build is r58.1 plus the fixes below. Lessons, tutors, design and AI are unchanged. Built and self-verified by Claude; independent review requested.
+
+- **What was wrong (three things that add up on a phone):**
+  1. **Offline files.** The first visit to each build downloaded all 547 offline files (110 MB, including 13 music tracks and every card image) in the background. That download started while the card library was still loading. Each build's offline worker also deleted every other build's saved files, so each build Kevy opened today on his phone started another 110 MB download.
+  2. **A hard 15-second limit.** The card library had to finish downloading within 15 seconds. cards.json.gz is 1.6 MB, so a weak phone connection (or one busy with item 1) failed or stalled.
+  3. **Guided Duel didn't wait.** "Set up a Guided Duel" sent you straight to the duel button even while the library was still loading.
+- **Fixes:**
+  1. **Offline files are now small and start late.** The offline worker now saves only the files needed to duel offline (171 files, about 12 MB). Card art, tutor sheets and music are saved the first time they are used. Offline files only start downloading after the card library has loaded. Each build keeps its own saved files and clears only its own old copies, plus the old 110 MB copies.
+  2. **Downloads stop only when stuck.** A download now stops only if no data arrives for 30 seconds, and it never fails just for being slow. After 15 seconds the page says "Still loading the card library — this connection is slow. Please wait…". The last-resort limit is 3 minutes.
+  3. **Guided Duel waits for the library.** If the library is still loading, Learn says "The card library is still loading on this connection. I'll take you to the duel setup as soon as it's ready." It then continues by itself when the library is ready. If loading fails, it tells you to tap "Retry card library".
+- **Checked in a phone-sized browser:**
+  - **Slow library:** with the card library delayed by 15 s, Learn waited, then closed by itself and put you on "Enter the duel room →" in Play mode.
+  - **Slow connection:** throttled to 600 kbps, the library loaded in about 70 s, where before it would have failed at 15 s.
+  - **Offline:** the offline cache held 171 files (no music or art at install), and an offline reload loaded the card library.
+  - All 44 lesson steps were re-checked at 5 sizes. The Guided Duel coach still works, and there were no page errors.
+- Tests 205/206 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r58.2.txt.
+
 # Duel Doctrine Lab · r58.1 TEST · focus fix found in the live check · 13 November 2026
 
 r58 as published, plus one fix found while checking r58 on the live site. The r58 folder is kept until the next build.

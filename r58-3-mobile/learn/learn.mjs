@@ -59,7 +59,7 @@ export function installLearn(root=document){
  const el=document.createElement('section');el.id='learn';el.hidden=true;el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Learn');document.body.append(el);
  const btn=document.createElement('button');btn.id='learn-open';btn.type='button';btn.className='learn-open';btn.innerHTML='<span aria-hidden="true">✦</span> Learn';
  {const anchor=root.querySelector('header.topbar #sound');if(anchor)anchor.before(btn);else document.body.append(btn)}
- let view='home',lesson=null,beat=0,branch=null,lastFocus=null,toastT=0;
+ let view='home',lesson=null,beat=0,branch=null,lastFocus=null,toastT=0,waitingLib=false;
  let textOpen=!(typeof matchMedia==='function'&&matchMedia('(max-width:480px)').matches);/* phone: card text starts folded; the reader's open/close choice is kept */
  const beatsOf=l=>isCP(l)?cpBeats(l,branch):l.beats;
  const branchLabel=l=>l.beats.find(x=>x.choice)?.choice.options.find(o=>o.branch===branch)?.label||'';
@@ -104,7 +104,7 @@ ${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow"
 <div class="lr-sec"><span class="lr-eyebrow">HOW MUCH I EXPLAIN</span></div><div class="lr-seg" role="group" aria-label="How much the coach explains">${opt('all','Explain everything')}${opt('new','New things')}${opt('quiet','Quiet')}</div>
 <button type="button" class="lr-toggle" data-act="coach" aria-pressed="${!!prefs.coach}">${esc(guideName())} coach in Play duels: <b>${prefs.coach?'On':'Off'}</b></button>
 <p class="lr-note">The coach only reads what has already happened in the duel and what you are allowed to see. It never plays for you. Lines are authored by ChatGPT and pending Seto/team fact check; rules-heavy explanations stay off until checked.</p>
-<div class="lr-controls"><button type="button" class="primary" data-act="setup">Set up a Guided Duel</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
+<div class="lr-controls"><button type="button" class="primary" data-act="setup"${waitingLib?' disabled':''}>${waitingLib?'Loading the card library… I’ll continue when it’s ready':'Set up a Guided Duel'}</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
  function queue(){const q=queueList();
   return `<div class="lr-screen lr-qscreen"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back">‹</button><div class="lr-titles"><span class="lr-eyebrow">FACT-CHECK QUEUE</span><b>${q.length} saved on this device</b></div>${soundBtn()}</div>
 <p class="lr-note">Notes stay on this device until you export them for Seto’s team. They hold the lesson, the step and what your tutor said: nothing private.</p>
@@ -145,7 +145,13 @@ ${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow"
   if(a==='guided')return go('guided','[data-act=setup]');
   if(t.dataset.level){prefs.coachLevel=t.dataset.level;save();draw('[data-level='+t.dataset.level+']');cue('paw',prefs.sound);return}
   if(a==='coach'){prefs.coach=!prefs.coach;save();draw('[data-act=coach]');cue('paw',prefs.sound);return}
-  if(a==='setup'){prefs.coach=true;save();const m=document.querySelector('#mode');if(m&&[...m.options].some(o=>o.value==='play')){m.value='play';m.dispatchEvent(new Event('change',{bubbles:true}))}close();const s=document.querySelector('#start');s?.scrollIntoView({block:'center',behavior:reduced()?'auto':'smooth'});s?.focus({preventScroll:true});return}
+  if(a==='setup'){prefs.coach=true;save();
+   /* r58.2 (Kevy 13 Nov 23:06): on a slow phone connection the card library may still be loading. Say so, and continue
+      by itself once it is ready, instead of dropping the player on a "Loading card library…" button. */
+   const ready=()=>document.body.dataset.libraryReady==='1'||document.querySelector('#start')?.disabled===false;
+   if(!ready()){if(!waitingLib){waitingLib=true;t.disabled=true;t.textContent='Loading the card library… I’ll continue when it’s ready';toast('The card library is still loading on this connection. I’ll take you to the duel setup as soon as it’s ready.');
+     document.addEventListener('ddl-library-failed',()=>{if(!waitingLib)return;waitingLib=false;const s=el.querySelector('[data-act=setup]');if(s){s.disabled=false;s.textContent='Set up a Guided Duel'}toast('The card library couldn’t load. Close Learn and tap “Retry card library”, then try again.')},{once:true});document.addEventListener('ddl-library-ready',()=>{waitingLib=false;const s=el.querySelector('[data-act=setup]');if(s){s.disabled=false;s.textContent='Set up a Guided Duel'}if(!el.hidden&&view==='guided')s?.click()},{once:true})}return}
+   const m=document.querySelector('#mode');if(m&&[...m.options].some(o=>o.value==='play')){m.value='play';m.dispatchEvent(new Event('change',{bubbles:true}))}close();const s=document.querySelector('#start');s?.scrollIntoView({block:'center',behavior:reduced()?'auto':'smooth'});s?.focus({preventScroll:true});return}
   if(a==='flag'){const l=ALL[lesson],b=beatsOf(l)[beat];const ok=queueAdd({lesson:l.id,revision:l.revision,beat,...(isCP(l)?{branch:branch||'before choice'}:{}),said:b.say,build:ENGINE_EVIDENCE.build,review:REVIEW.status});toast(ok?FAILSAFE.saved:FAILSAFE.failed);cue('paper',prefs.sound);return}
   if(a==='export'){const blob=new Blob([JSON.stringify({kind:'ddl-factcheck-export',build:ENGINE_EVIDENCE.build,exported:new Date().toISOString(),entries:queueList()},null,1)],{type:'application/json'});const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='ddl-factcheck-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('Exported. Send the file to Seto’s team.');return}
  });
