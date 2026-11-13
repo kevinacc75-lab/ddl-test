@@ -7,15 +7,15 @@
 // Engine outcomes are reproduced by tests/r53-lessons-engine.test.mjs (5 fixtures). Rules status stays PENDING until the
 // Seto team re-checks v1.1 (RELAY-181 T11a). Text quotes are copied exactly from the bundled cards.json.gz.
 export const VERDICTS=['legal_action','condition_not_met','effect_negated','activation_negated','summon_negated','observation','needs_review','none'];
-export const ENGINE_CHECK={tests:'tests/r53-lessons-engine.test.mjs + tests/r55-lessons-engine.test.mjs'};
+export const ENGINE_CHECK={tests:'tests/r53-lessons-engine.test.mjs + tests/r55-lessons-engine.test.mjs + tests/r56-lessons-engine.test.mjs'};
 // r55 per-lesson evidence (ChatGPT RELAY-192 A10, RELAY-189): a lesson shows "Engine outcome reproduced" only if EVERY test in its
 // engineTests passed in this build's recorded run (learn/engine-evidence.mjs, generated from _build/tests-r55.txt). Missing or
 // empty evidence is NOT RUN; any failure is a visible needs-review state. The rules badge is separate and never inherited.
 import {ENGINE_EVIDENCE} from './engine-evidence.mjs';
 export function engineState(l,ev=ENGINE_EVIDENCE){const ids=l?.engineTests||[];if(!ids.length)return 'notrun';const r=ids.map(id=>ev?.results?.[id]);if(r.some(x=>x==='fail'))return 'failed';return r.every(x=>x==='pass')?'reproduced':'notrun'}
-const A=c=>({33925864:'art/33925864.jpg',97268402:'art/97268402.jpg',73642296:'art/73642296.jpg',63166095:'art/63166095.jpg',26077387:'art/26077387.jpg',63288573:'art/63288573.jpg',32909498:'art/32909498.jpg',31149212:'art/31149212.jpg',14558127:'art/14558127.jpg',57103969:'art/57103969.webp',8379983:'art/8379983.webp'})[c];
+const A=c=>({33925864:'art/33925864.jpg',97268402:'art/97268402.jpg',73642296:'art/73642296.jpg',63166095:'art/63166095.jpg',26077387:'art/26077387.jpg',63288573:'art/63288573.jpg',32909498:'art/32909498.jpg',31149212:'art/31149212.jpg',14558127:'art/14558127.jpg',57103969:'art/57103969.webp',8379983:'art/8379983.webp',80044027:'art/80044027.jpg',18377261:'art/18377261.jpg',6327734:'art/6327734.jpg'})[c];
 export const CARDS={
- 73642296:{name:'Ghost Belle & Haunted Mansion',cid:13587},
+ 73642296:{name:'Ghost Belle & Haunted Mansion',cid:13587,text:"When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that activation.\r\n● Add a card(s) from the GY to the hand, Deck, and/or Extra Deck.\r\n● Special Summon a Monster Card(s) from the GY.\r\n● Banish a card(s) from the GY.\r\nYou can only use this effect of \"Ghost Belle & Haunted Mansion\" once per turn."},/* r56: text added for RD-005 */
  63166095:{name:'Sky Striker Mobilize - Engage!',cid:13671,text:'If you control no monsters in your Main Monster Zone: Add 1 "Sky Striker" card from your Deck to your hand, except "Sky Striker Mobilize - Engage!", then, if you have 3 or more Spells in your GY, you can draw 1 card.'},
  26077387:{name:'Sky Striker Ace - Raye',cid:13670},
  63288573:{name:'Sky Striker Ace - Kagari',cid:13668},
@@ -25,7 +25,10 @@ export const CARDS={
  97268402:{name:'Effect Veiler',cid:8933,text:"During your opponent's Main Phase (Quick Effect): You can send this card from your hand to the GY, then target 1 Effect Monster your opponent controls; negate the effects of that face-up monster your opponent controls, until the end of this turn."},
  14558127:{name:'Ash Blossom & Joyous Spring',cid:12950,text:'When a card or effect is activated that includes any of these effects (Quick Effect): You can discard this card; negate that effect.\n●Add a card from the Deck to the hand.\n●Special Summon from the Deck.\n●Send a card from the Deck to the GY.\nYou can only use this effect of "Ash Blossom & Joyous Spring" once per turn.'},
  57103969:{name:'Fire Formation - Tenki',cid:10418,text:'When this card is activated: You can add 1 Level 4 or lower Beast-Warrior monster from your Deck to your hand. All Beast-Warrior monsters you control gain 100 ATK. You can only activate 1 "Fire Formation - Tenki" per turn.'},
- 8379983:{name:'Lunalight Gold Leo',cid:21416}
+ 8379983:{name:'Lunalight Gold Leo',cid:21416},
+ 80044027:{name:'Mikanko Fire Dance',cid:18020,text:"Special Summon 1 \"Mikanko\" monster from your hand or GY, and if you do, equip it with this card, then you can Special Summon 1 monster from your opponent's GY to their field, but negate its effects. The equipped monster cannot be destroyed by card effects. You can only activate 1 \"Mikanko Fire Dance\" per turn."},
+ 18377261:{name:'Ha-Re the Sword Mikanko',cid:18015},
+ 6327734:{name:'Hu-Li the Jewel Mikanko',cid:18482}
 };
 for(const [c,v] of Object.entries(CARDS))v.art=A(Number(c));
 const cid=c=>`https://www.db.yugioh-card.com/yugiohdb/card_search.action?cid=${c}&ope=2&request_locale=en`;
@@ -33,6 +36,7 @@ const RULEBOOK={label:'Official Rulebook v10 (Chains pp. 44–47; ‘Actions whi
 const RULES2021={label:'Konami 2021 rules update (zones)',url:'https://www.yugioh-card.com/en/play/2021_rules_update/'};
 const RISE=31149212,BIGBANG=33925864,VEILER=97268402,GB=73642296,ENGAGE=63166095,RAYE=26077387,KAGARI=63288573,FENRIR=32909498,ASH=14558127,TENKI=57103969,LEO=8379983;
 const E=()=>[null,null,null,null,null];
+const FD=80044027,HARE=18377261,HULI=6327734;
 export const LESSONS=[
  {id:'RD-001',revision:2,level:'Beginner',minutes:4,title:'Why won’t Engage! activate?',decks:'Sky Striker',
   engineTests:['RD-001','RD-001 control'],
@@ -107,5 +111,29 @@ export const LESSONS=[
     board:{mmz:[null,null,RISE,null,null],banished:[BIGBANG],good:[RISE],stamp:{text:'LEVEL 7',kind:'good'}}}
   ],
   ruling:'Riseheart pays its Deck-banish cost when activated. Negating its effect does not refund that cost. In this scene Veiler stops the opponent-Deck banish and the Level change. Big Bang cannot activate here without a Kashtira Xyz target.',
-  sources:[{label:'Kashtira Riseheart (cid 18151)',url:cid(18151)},{label:'Kashtira Big Bang (cid 18220)',url:cid(18220)},{label:'Effect Veiler (cid 8933)',url:cid(8933)},RULEBOOK]}
+  sources:[{label:'Kashtira Riseheart (cid 18151)',url:cid(18151)},{label:'Kashtira Big Bang (cid 18220)',url:cid(18220)},{label:'Effect Veiler (cid 8933)',url:cid(8933)},RULEBOOK]},
+ // r56 RD-005 r2: ChatGPT RELAY-192 (supersedes the disputed r1; ruling corrected by the Seto team, RELAY-190). Bubbles exact
+ // (apostrophes typeset). Mood 'pointing' is drawn with the tutors' presenting pose ('notlegal' frame): art only, no verdict.
+ // Title kept without its closing full stop, like every other lesson title. s06 is SOURCE-LED: no engine arm negates only the effect.
+ // Engine: tests/r56-lessons-engine.test.mjs, narrowed fixtures (named cards + vanilla filler, not full presets).
+ {id:'RD-005',revision:2,level:'Intermediate',minutes:4,title:'A negated activation and a negated effect are different',decks:'Mikanko',
+  engineTests:['RD-005 A','RD-005 B'],
+  beats:[
+   {say:'Fire Dance says you can only activate 1 per turn. Watch exactly what Ghost Belle negates.',mood:'neutral',sfx:'paw',verdict:'observation',tags:['ACTIVATION LIMIT'],
+    board:{mmz:E(),hand:[FD,FD],gy:[HARE],opp:[GB]},text:{code:FD,hl:'You can only activate 1 "Mikanko Fire Dance" per turn.'}},
+   {say:'Fire Dance can Special Summon from the GY, so Ghost Belle can answer its activation.',mood:'notlegal',sfx:'slide',verdict:'observation',tags:['CHAIN LINK 2'],
+    board:{mmz:E(),hand:[FD],gy:[HARE],chain:[{code:FD,who:'you'},{code:GB,who:'opp'}]},text:{code:GB,hl:'● Special Summon a Monster Card(s) from the GY.'}},
+   {say:'Ghost Belle negates the activation. That is different from negating only an effect.',mood:'thinking',sfx:'thud',verdict:'activation_negated',tags:['ACTIVATION NEGATED'],
+    board:{mmz:E(),hand:[FD],gy:[HARE,FD],chain:[{code:FD,who:'you'},{code:GB,who:'opp'}],resolving:1,stamp:{text:'ACTIVATION NEGATED',kind:'bad'}},text:{code:GB,hl:'negate that activation.'}},
+   {say:'A negated activation doesn’t use up Fire Dance’s limit, so your second copy can still be activated.',mood:'legal',sfx:'chime',verdict:'legal_action',tags:['LIMIT NOT USED'],
+    board:{mmz:E(),hand:[FD],gy:[HARE,FD],good:[FD],stamp:{text:'STILL OFFERED',kind:'good'}}},
+   {say:'Reset: let the first Fire Dance resolve. Now the limit is used, so the second copy can’t be activated this turn.',mood:'thinking',sfx:'paper',verdict:'condition_not_met',tags:['CONTROL','LIMIT USED'],
+    board:{mmz:[null,null,HARE,null,null],st:[FD],hand:[FD],gy:[HULI],handOff:[FD]/* only the hand copy is greyed; the equipped one is not */,stamp:{text:'LIMIT USED',kind:'bad'}},caption:'A separate replay: Ha-Re revived and equipped; Hu-Li is still a valid GY monster.'},
+   {say:'If only Fire Dance’s effect were negated, the activation would still count: no second copy that turn.',mood:'neutral',sfx:'paper',verdict:'observation',tags:['SOURCE-LED'],
+    board:{mmz:E(),hand:[FD],off:[FD]},caption:'From the sources only: this build has no engine replay of an effect-only negation.'}
+  ],
+  ruling:'Fire Dance limits activations, not uses. If its card activation is negated, it doesn’t count, so another Fire Dance can be activated that turn. If the activation resolves, even with its effect negated, the limit is used.',
+  sources:[{label:'Mikanko Fire Dance (cid 18020)',url:cid(18020)},{label:'Ha-Re the Sword Mikanko (cid 18015)',url:cid(18015)},{label:'Hu-Li the Jewel Mikanko (cid 18482)',url:cid(18482)},{label:'Ghost Belle & Haunted Mansion (cid 13587)',url:cid(13587)},
+   {label:'Konami Libromancer Manual, section 3 (TCG rules example on identical wording)',url:'https://img.yugioh-card.com/en/downloads/rivalry_of_warlords/Libromancer-Manual.pdf'},
+   {label:'Fire Dance supplement (OCG supplement; no exception)',url:'https://www.db.yugioh-card.com/yugiohdb/faq_search.action?cid=18020&ope=4&request_locale=ja'}]}
 ];

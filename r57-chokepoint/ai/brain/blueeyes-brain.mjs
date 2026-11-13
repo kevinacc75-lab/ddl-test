@@ -48,7 +48,7 @@ export default {
   {card: 'Primite Lordly Lode', lock: 'after its declaration resolves, NO Special Summoned monster on the field can activate effects for the rest of the turn (earlier activations and Normal Summoned monsters are fine; Synchro Summons are still allowed)', advice: 'declare last: Spirit with Eyes of Blue and Ether Beryl first'},
   {card: 'Roar of the Blue-Eyed Dragons', lock: 'only Dragons from the Extra Deck for the rest of the turn after it resolves', advice: 'Spirit Dragon and Ultimate are Dragons'},
   {card: 'Blue-Eyes Spirit Dragon', lock: 'nobody can Special Summon 2+ monsters at once while it is out', advice: 'it limits you too'},
-  {card: 'True Light', lock: 'if this face-up card is sent to the GY, destroy all your monsters (not if banished or bounced)', advice: 'protect it'}
+  {card: 'True Light', lock: 'if this face-up card is sent to the GY, destroy all your monsters (not if banished or bounced)', advice: 'protect it. Destruction protection does not stop a negate-and-destroy of True Light\'s activation (fid23488)'/* r56: ChatGPT RELAY-192 optional clarification, adopted; text only */}
  ],
  endPhase: ['Ether Beryl returns from the GY in your Standby Phase if a Normal Monster is in your field or GY', 'Spirit Dragon\'s replacement Synchro is destroyed in the End Phase']
 };

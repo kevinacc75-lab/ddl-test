@@ -6,9 +6,9 @@ test('(R55-E1) the engine badge needs a recorded pass for EVERY listed test; mis
  const l={engineTests:['A','B']};
  assert.equal(engineState(l,{results:{A:'pass',B:'pass'}}),'reproduced');assert.equal(engineState(l,{results:{A:'pass'}}),'notrun');
  assert.equal(engineState(l,{results:{A:'pass',B:'fail'}}),'failed');assert.equal(engineState({engineTests:[]},{results:{}}),'notrun');assert.equal(engineState(l,undefined),'notrun');
- const titles=read('tests/r53-lessons-engine.test.mjs')+read('tests/r55-lessons-engine.test.mjs');
+ const titles=read('tests/r53-lessons-engine.test.mjs')+read('tests/r55-lessons-engine.test.mjs')+read('tests/r56-lessons-engine.test.mjs')/* r56 */+read('tests/r57-chokepoint-engine.test.mjs')/* r57 */;
  for(const x of LESSONS)for(const id of x.engineTests)assert.ok(titles.includes(`test('(${id})`),x.id+': '+id+' is a real engine test');
- assert.match(ENGINE_EVIDENCE.build,/^r55/);assert.ok(Object.values(ENGINE_EVIDENCE.results).every(v=>v==='pass'||v==='fail'));
+ assert.equal(ENGINE_EVIDENCE.build,read('dist/index.html').match(/>TEST (r\d+)</)[1],'evidence is from THIS build');assert.ok(Object.values(ENGINE_EVIDENCE.results).every(v=>v==='pass'||v==='fail'));
  const src=read('dist/learn/learn.mjs');assert.equal((src.match(/✓ Engine outcome reproduced/g)||[]).length,1,'one place draws the success badge, behind engineState');
 });
 test('(R55-E2) RELAY-192 content: RD-004 r2 s6 wording, exact Rulebook label, RD-002 r3 title',()=>{

@@ -4,7 +4,10 @@
 // Ruling Desk lessons (scripted, paced) from learn/lessons.mjs, the Guide (learn/tutors.mjs from r55; learn/guide.mjs is the archived r53 sphinx), a local Fact-check queue
 // with export, and two separate trust badges (engine outcome vs rules review; RELAY-180 HIGH 1). Presentation only: it
 // never touches a duel. Guided Duel arrives in r54.
-import {LESSONS,CARDS,ENGINE_CHECK,engineState} from './lessons.mjs';import {guideSVG,TUTORS,getSelectedTutor,selectTutor,guideName} from './tutors.mjs';import {installCoach} from './coach.mjs';
+import {LESSONS,CARDS as RD_CARDS,ENGINE_CHECK,engineState} from './lessons.mjs';import {CHOKEPOINTS,CP_CARDS,cpBeats} from './chokepoints.mjs';import {ENGINE_EVIDENCE} from './engine-evidence.mjs';
+// r57: Ruling Desk lessons and Choke Point Lab lessons share one player; indexes 0..n-1 are the Ruling Desk (unchanged).
+const ALL=[...LESSONS,...CHOKEPOINTS];const CARDS={...CP_CARDS,...RD_CARDS};
+const isCP=l=>l?.kind==='choke_point';import {guideSVG,TUTORS,getSelectedTutor,selectTutor,guideName} from './tutors.mjs';import {installCoach} from './coach.mjs';
 const SPK='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"></path>',SPK_ON=SPK+'<path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"></path></svg>',SPK_OFF=SPK+'<path d="M16 9l5 6M21 9l-5 6"></path></svg>';
 const MUSIC='learn/music.mp3';
 const KEY='ddl-r53-learn',QKEY='ddl-r53-factcheck';
@@ -32,12 +35,15 @@ export const queueList=()=>load(QKEY,[]);
 function card(code,cls=''){const c=CARDS[code];return c?`<figure class="lr-card ${cls}" data-code="${code}"><img src="${esc(c.art)}" alt="${esc(c.name)}" loading="lazy"><figcaption>${esc(c.name)}</figcaption></figure>`:''}
 export function boardHTML(b={}){const mark=c=>(b.bad||[]).includes(c)?'bad':(b.off||[]).includes(c)?'off':(b.good||[]).includes(c)?'good':'';
  const slots=(arr,label)=>`<div class="lr-row"><span class="lr-label">${label}</span><div class="lr-slots">${arr.map(c=>`<div class="lr-slot">${c?card(c,mark(c)):''}</div>`).join('')}</div></div>`;
- return `${(b.opp||[]).length?`<div class="lr-row lr-opp"><span class="lr-label">OPPONENT’S HAND · shown for this lesson</span><div class="lr-line">${b.opp.map(c=>card(c,mark(c))).join('')}</div></div>`:''}
+ return `${(b.opp||[]).length?`<div class="lr-row lr-opp"><span class="lr-label">${esc(b.oppLabel||'OPPONENT’S HAND · shown for this lesson')}</span><div class="lr-line">${b.opp.map(c=>card(c,mark(c))).join('')}</div></div>`:''}
+${(b.oppSt||[]).length?`<div class="lr-row lr-oppf"><span class="lr-label">OPPONENT’S SPELL &amp; TRAP ZONE</span><div class="lr-slots">${[null,null,...b.oppSt,null,null].slice(0,5).map(c=>`<div class="lr-slot">${c?card(c,mark(c)):''}</div>`).join('')}</div></div>`:''}
+${(b.oppMmz||[]).length?`<div class="lr-row lr-oppf"><span class="lr-label">OPPONENT’S MONSTER ZONES</span><div class="lr-slots">${b.oppMmz.map(c=>`<div class="lr-slot">${c?card(c,mark(c)):''}</div>`).join('')}</div></div>`:''}
 ${b.emz!==undefined?`<div class="lr-row"><span class="lr-label">EXTRA MONSTER ZONE</span><div class="lr-slots lr-emz"><div class="lr-slot">${b.emz?card(b.emz,'good'):''}</div></div></div>`:''}
-${slots(b.mmz||[null,null,null,null,null],'YOUR MAIN MONSTER ZONES')}
+${b.mmz||!(b.oppMmz||b.oppSt)?slots(b.mmz||[null,null,null,null,null],'YOUR MAIN MONSTER ZONES'):''}
 ${(b.st||[]).length?slots([null,null,...b.st,null,null].slice(0,5),'SPELL &amp; TRAP ZONE'):''}
 ${(b.banished||[]).length?`<div class="lr-row"><span class="lr-label">YOUR BANISHED CARDS · face-up</span><div class="lr-line">${b.banished.map(c=>card(c,mark(c))).join('')}</div></div>`:''}
-${(b.hand||[]).length?`<div class="lr-row"><span class="lr-label">YOUR HAND</span><div class="lr-line">${b.hand.map(c=>card(c,mark(c))).join('')}</div></div>`:''}
+${(b.gy||[]).length?`<div class="lr-row"><span class="lr-label">YOUR GRAVEYARD</span><div class="lr-line">${b.gy.map(c=>card(c,mark(c))).join('')}</div></div>`:''}
+${(b.hand||[]).length?`<div class="lr-row"><span class="lr-label">YOUR HAND</span><div class="lr-line">${b.hand.map(c=>card(c,(b.handOff||[]).includes(c)?'off':mark(c))).join('')}</div></div>`:''}
 ${(b.chain||[]).length?`<div class="lr-chain" aria-label="Chain"><span class="lr-label">CHAIN · resolves from the top</span>${[...b.chain].map((l,i)=>({...l,n:i+1})).reverse().map(l=>`<div class="lr-link ${l.who}${b.resolving&&l.n===b.chain.length?' resolving':''}"><b>${l.n}</b>${CARDS[l.code]?`<img src="${esc(CARDS[l.code].art)}" alt="">`:''}<span>${esc(CARDS[l.code]?.name||'')}<small>${l.who==='you'?'You':'Opponent'}</small></span></div>`).join('')}</div>`:''}
 ${b.stamp?`<div class="lr-stamp ${b.stamp.kind}" role="status">${esc(b.stamp.text)}</div>`:''}`}
 // r55 per-lesson engine badge (RELAY-192 A10): reproduced only on this build's recorded pass for every listed test.
@@ -51,7 +57,9 @@ export function installLearn(root=document){
  const el=document.createElement('section');el.id='learn';el.hidden=true;el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','Learn');document.body.append(el);
  const btn=document.createElement('button');btn.id='learn-open';btn.type='button';btn.className='learn-open';btn.innerHTML='<span aria-hidden="true">✦</span> Learn';
  {const anchor=root.querySelector('header.topbar #sound');if(anchor)anchor.before(btn);else document.body.append(btn)}
- let view='home',lesson=null,beat=0,lastFocus=null,toastT=0;
+ let view='home',lesson=null,beat=0,branch=null,lastFocus=null,toastT=0;
+ const beatsOf=l=>isCP(l)?cpBeats(l,branch):l.beats;
+ const branchLabel=l=>l.beats.find(x=>x.choice)?.choice.options.find(o=>o.branch===branch)?.label||'';
  const toast=t=>{let n=el.querySelector('.lr-toast');if(!n)return;n.textContent=t;n.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>n.classList.remove('on'),3200)};
  const soundBtn=()=>(music?`<button type="button" class="lr-icon" data-act="music" aria-pressed="${prefs.music!==false}" aria-label="Music ${prefs.music!==false?'on':'off'}">${prefs.music!==false?'♪':'<s>♪</s>'}</button>`:'')+`<button type="button" class="lr-icon" data-act="sound" aria-pressed="${prefs.sound}" aria-label="Sound effects ${prefs.sound?'on':'off'}">${prefs.sound?SPK_ON:SPK_OFF}</button>`;
  function home(){const q=queueList(),T=getSelectedTutor();
@@ -59,27 +67,32 @@ export function installLearn(root=document){
 <div class="lr-hero" style="--tutor-accent:${T.accent}"><div class="lr-hero-art"><img class="lr-hero-card" src="${esc(T.cardArt)}" alt="" loading="lazy"><div class="lr-guide lr-guide-big">${guideSVG('proud')}</div></div><div><span class="lr-eyebrow">YOUR TUTOR</span><h2>Learn with ${esc(guideName())}</h2><p>Rulings and combos, one step at a time.</p></div></div>
 <div class="lr-sec"><span class="lr-eyebrow">CHOOSE YOUR TUTOR</span><span>Same lessons, your pick</span></div>
 <div class="lr-tutors" role="group" aria-label="Choose your tutor">${TUTORS.map(t=>`<button type="button" data-tutor="${t.id}" aria-pressed="${t.id===T.id}" aria-label="${esc(t.name)}" style="--tutor-accent:${t.accent}"><span class="lr-tcard" style="background-image:url('${esc(t.cardArt)}')"></span><span class="lr-tmini">${guideSVG(t.id===T.id?'legal':'neutral',{tutor:t.id,motion:t.id===T.id})}</span><b>${esc(t.shortName)}</b><small>${esc(t.theme)}</small></button>`).join('')}</div>
-<div class="lr-modes"><button type="button" class="lr-mode gold" data-act="list">Ruling Desk<small>Short, paced lessons</small></button><button type="button" class="lr-mode teal" data-act="guided">Guided Duel<small>${prefs.coach?'Coach on · ':''}Play our AI with ${esc(guideName())} explaining</small></button></div>
+<div class="lr-modes"><button type="button" class="lr-mode gold" data-act="list">Ruling Desk<small>Short, paced lessons</small></button><button type="button" class="lr-mode teal" data-act="guided">Guided Duel<small>${prefs.coach?'Coach on · ':''}Play our AI with ${esc(guideName())} explaining</small></button><button type="button" class="lr-mode rose" data-act="cplist">Choke Point Lab<small>Pause at a real response window. Choose, then compare.</small></button></div>
 <div class="lr-sec"><span class="lr-eyebrow">RULING DESK LESSONS</span><span>${LESSONS.filter(l=>prefs.progress[l.id]?.done).length} of ${LESSONS.length} done</span></div>
 <ol class="lr-list">${LESSONS.map((l,i)=>{const p=prefs.progress[l.id];return `<li><button type="button" data-lesson="${i}" class="${p?.done?'done':''}"><span class="lr-num">${p?.done?'✓':i+1}</span><span><b>${esc(l.title)}</b><small>${esc(l.level)} · ${esc(l.decks)} · ${l.minutes} min · ${p?.done?'done':p?'continue':'new'}</small></span></button></li>`}).join('')}</ol>
+<div class="lr-sec" id="lr-cp"><span class="lr-eyebrow">CHOKE POINT LAB</span><span>${CHOKEPOINTS.filter(l=>prefs.progress[l.id]?.done).length} of ${CHOKEPOINTS.length} done</span></div>
+<ol class="lr-list lr-cplist">${CHOKEPOINTS.map((l,j)=>{const i=LESSONS.length+j,p=prefs.progress[l.id];return `<li><button type="button" data-lesson="${i}" class="${p?.done?'done':''}"><span class="lr-num cp">${p?.done?'✓':'C'+(j+1)}</span><span><b>${esc(l.title)}</b><small>${esc(l.level)} · ${esc(l.decks)} · ${l.minutes} min · ${p?.done?'done':p?'continue':'new'}</small></span></button></li>`}).join('')}</ol>
 <button type="button" class="lr-queue" data-act="queue"><span class="lr-num q">?</span><span>Fact-check queue</span><b>${q.length} saved</b></button>
 <p class="lr-note">${esc(REVIEW.authored)}. Each lesson shows its own engine check from this build’s recorded test run.</p><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
- function player(){const l=LESSONS[lesson],b=l.beats[beat],last=beat===l.beats.length-1;
-  return `<div class="lr-screen lr-play" data-mood="${b.mood}"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back to lessons">‹</button><div class="lr-titles"><span class="lr-eyebrow">RULING DESK · ${esc(l.id)}</span><b>${esc(l.title)}</b></div>${soundBtn()}</div>
-<div class="lr-progress" aria-label="Step ${beat+1} of ${l.beats.length}">${l.beats.map((_,i)=>`<span class="${i<beat?'past':i===beat?'now':''}"></span>`).join('')}</div>
+ function player(){const l=ALL[lesson],seq=beatsOf(l),b=seq[beat],choosing=!!(b.choice&&!branch),last=!choosing&&beat===seq.length-1,cp=isCP(l);
+  return `<div class="lr-screen lr-play" data-mood="${b.mood}"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back to lessons">‹</button><div class="lr-titles"><span class="lr-eyebrow">${cp?'CHOKE POINT LAB':'RULING DESK'} · ${esc(l.id)}${cp&&branch?' · '+esc(branchLabel(l)):''}</span><b>${esc(l.title)}</b></div>${soundBtn()}</div>
+<div class="lr-progress" aria-label="Step ${beat+1} of ${seq.length}${choosing?' so far':''}">${seq.map((_,i)=>`<span class="${i<beat?'past':i===beat?'now':''}"></span>`).join('')}${choosing?'<span class="lr-more" aria-hidden="true"></span>':''}</div>
 <div class="lr-board" data-beat="${beat}">${boardHTML(b.board)}</div>
 ${textHTML(b.text)}
 ${(b.tags||[]).length?`<div class="lr-tags">${b.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
+${(b.chips||[]).length?`<div class="lr-chips">${b.chips.map(c=>`<span class="lr-chip ${esc(c.kind)}">${esc(c.text)}</span>`).join('')}</div>`:''}
+${b.catch?`<div class="lr-catch" role="note"><b>THE CATCH</b><p>${esc(b.catch)}</p></div>`:''}
 <div class="lr-talk"><div class="lr-guide">${guideSVG(b.mood)}</div><div class="lr-bubble" aria-live="polite"><span class="lr-who">${esc(guideName())}</span><p>${esc(b.say)}</p>${b.caption?`<p class="lr-caption">${esc(b.caption)}</p>`:''}</div></div>
-<div class="lr-badges">${engineBadge(l)}<span class="lr-badge rules">${esc(REVIEW.label)}</span>${b.strategy?`<span class="lr-badge strat">Good play · reviewed by ${esc(b.strategy.reviewer)}</span>`:''}</div>
+<div class="lr-badges">${engineBadge(l)}<span class="lr-badge rules">${esc(REVIEW.label)}</span>${b.strategy?`<span class="lr-badge strat">Good play · reviewed by ${esc(b.strategy.reviewer)}</span>`:''}${cp?'<span class="lr-badge strat">Candidate window · not a “best play” claim</span>':''}</div>
 <button type="button" class="lr-flag" data-act="flag">Something look wrong? Flag this step</button>
-<div class="lr-controls"><button type="button" data-act="back" ${beat===0?'disabled':''}>Back</button><button type="button" class="lr-icon" data-act="replay" aria-label="Replay this step">↺</button><button type="button" class="primary" data-act="${last?'ruling':'next'}">${last?'The ruling':'Next'}</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
- function ruling(){const l=LESSONS[lesson],next=LESSONS[lesson+1];
-  return `<div class="lr-screen lr-ruling"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back to lessons">‹</button><div class="lr-titles"><span class="lr-eyebrow">RULING DESK · ${esc(l.id)}</span><b>${esc(l.title)}</b></div>${soundBtn()}</div>
-<div class="lr-card-ruling"><h3>✦ THE RULING</h3><p>${esc(l.ruling)}</p><span class="lr-eyebrow">SOURCES</span><ul>${l.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('')}</ul></div>
+${choosing?`<div class="lr-controls lr-choice" role="group" aria-label="${esc(b.choice.prompt)}: your choice"><span class="lr-eyebrow">${esc(b.choice.prompt)} · your choice</span><div><button type="button" data-act="back">Back</button>${b.choice.options.map(o=>`<button type="button" data-branch="${esc(o.branch)}" class="${o.code?'primary':''}">${esc(o.label)}</button>`).join('')}</div></div>`:`<div class="lr-controls"><button type="button" data-act="back" ${beat===0?'disabled':''}>Back</button><button type="button" class="lr-icon" data-act="replay" aria-label="Replay this step">↺</button><button type="button" class="primary" data-act="${last?'ruling':'next'}">${last?(cp?'Compare and ruling':'The ruling'):'Next'}</button></div>`}<div class="lr-toast" role="status" aria-live="polite"></div></div>`}
+ function ruling(){const l=ALL[lesson],next=ALL[lesson+1],cp=isCP(l),other=cp&&l.beats.find(x=>x.choice)?.choice.options.find(o=>o.branch!==branch);
+  return `<div class="lr-screen lr-ruling"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back to lessons">‹</button><div class="lr-titles"><span class="lr-eyebrow">${cp?'CHOKE POINT LAB':'RULING DESK'} · ${esc(l.id)}</span><b>${esc(l.title)}</b></div>${soundBtn()}</div>
+${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow">YOUR QUESTION</span><b>${esc(l.question.ask)}</b><small>Tap to reveal the answer for this exact line</small></summary><p>${esc(l.question.answer)}</p></details>`:''}
+<div class="lr-card-ruling"><h3>✦ THE RULING</h3><p>${esc(l.ruling)}</p><span class="lr-eyebrow">SOURCES</span><ul>${l.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('')}</ul>${l.provenance?`<span class="lr-chip prov">${esc(l.provenance)}</span>`:''}</div>
 <div class="lr-talk"><div class="lr-guide">${guideSVG('proud')}</div><div class="lr-bubble"><span class="lr-who">${esc(guideName())}</span><p>Nicely done. That’s ${esc(l.id)} complete.</p></div></div>
 <div class="lr-badges">${engineBadge(l)}<span class="lr-badge rules">${esc(REVIEW.label)}</span></div><p class="lr-note">${esc(REVIEW.authored)}.</p>
-<div class="lr-controls"><button type="button" data-act="restart">Replay lesson</button><button type="button" class="primary" data-act="${next?'nextlesson':'home'}">${next?'Next lesson':'Back to lessons'}</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
+<div class="lr-controls">${other?`<button type="button" data-act="otherbranch">Try “${esc(other.label)}”</button>`:`<button type="button" data-act="restart">Replay lesson</button>`}<button type="button" class="primary" data-act="${next?'nextlesson':'home'}">${next?'Next lesson':'Back to lessons'}</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
  function guided(){const lv=prefs.coachLevel||'all',opt=(v,t)=>`<button type="button" data-level="${v}" aria-pressed="${lv===v}">${t}</button>`;
   return `<div class="lr-screen lr-guided"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back">‹</button><div class="lr-titles"><span class="lr-eyebrow">GUIDED DUEL</span><b>Play our AI with ${esc(guideName())} beside you</b></div>${soundBtn()}</div>
 <div class="lr-talk"><div class="lr-guide">${guideSVG('thinking')}</div><div class="lr-bubble"><span class="lr-who">${esc(guideName())}</span><p>Every game is different. I’ll explain chains, summons and damage as they happen. If I’m not sure about something, I’ll say so and save it for a fact check.</p></div></div>
@@ -104,24 +117,27 @@ ${(b.tags||[]).length?`<div class="lr-tags">${b.tags.map(t=>`<span>${esc(t)}</sp
  function setInert(on){if(on){inerted=[...document.body.children].filter(n=>n!==el&&!n.inert&&n.tagName!=='SCRIPT');for(const n of inerted)n.inert=true}else{for(const n of inerted)n.inert=false;inerted=[]}}
  function open(){lastFocus=document.activeElement;setInert(true);el.hidden=false;document.body.classList.add('learn-open');go('home');cue('paw',prefs.sound);musicReady().then(ok=>{if(ok){draw();syncMusic()}})}
  function close(){el.hidden=true;setInert(false);document.body.classList.remove('learn-open');syncMusic();lastFocus?.focus?.({preventScroll:true})}
- function playBeat(){const b=LESSONS[lesson].beats[beat];prefs.progress[LESSONS[lesson].id]={...prefs.progress[LESSONS[lesson].id],beat};save();go('play');cue(b.sfx,prefs.sound)}
+ function playBeat(){const l=ALL[lesson],b=beatsOf(l)[beat];prefs.progress[l.id]={...prefs.progress[l.id],beat,...(isCP(l)?{branch}:{})};save();go('play');cue(b.sfx,prefs.sound)}
  btn.onclick=open;
  el.addEventListener('click',e=>{const t=e.target.closest('button');if(!t||t.disabled)return;const a=t.dataset.act;
-  if(t.dataset.lesson!==undefined){lesson=Number(t.dataset.lesson);beat=0;playBeat();return}
+  if(t.dataset.lesson!==undefined){lesson=Number(t.dataset.lesson);beat=0;branch=null;playBeat();return}
+  if(t.dataset.branch){branch=t.dataset.branch;beat++;cue('chime',prefs.sound);return playBeat()}
   if(a==='close')return close();if(a==='home'||a==='list')return go('home',a==='list'?'[data-lesson]':null);
+  if(a==='cplist'){go('home','.lr-cplist [data-lesson]');el.querySelector('#lr-cp')?.scrollIntoView({block:'start',behavior:reduced()?'auto':'smooth'});return}
+  if(a==='otherbranch'){const l=ALL[lesson],ci=l.beats.filter(x=>!x.branch).findIndex(x=>x.choice),o=l.beats.find(x=>x.choice).choice.options.find(x=>x.branch!==branch);branch=o.branch;beat=ci+1;return playBeat()}
   if(a==='music'){prefs.music=prefs.music===false;save();syncMusic();draw('[data-act=music]');return}
   if(a==='sound'){prefs.sound=!prefs.sound;save();draw('[data-act=sound]');cue('paw',prefs.sound);return}
-  if(a==='next'){beat++;return playBeat()}if(a==='back'&&beat>0){beat--;return playBeat()}if(a==='replay'){return playBeat()}
-  if(a==='ruling'){prefs.progress[LESSONS[lesson].id]={done:true,beat};save();go('ruling');cue('chime',prefs.sound);return}
-  if(a==='restart'){beat=0;return playBeat()}if(a==='nextlesson'){lesson++;beat=0;return playBeat()}
+  if(a==='next'){beat++;return playBeat()}if(a==='back'&&beat>0){beat--;if(isCP(ALL[lesson])&&beatsOf(ALL[lesson])[beat]?.choice)branch=null;return playBeat()}if(a==='replay'){return playBeat()}
+  if(a==='ruling'){prefs.progress[ALL[lesson].id]={done:true,beat,...(isCP(ALL[lesson])?{branch}:{})};save();go('ruling');cue('chime',prefs.sound);return}
+  if(a==='restart'){beat=0;branch=null;return playBeat()}if(a==='nextlesson'){lesson++;beat=0;branch=null;return playBeat()}
   if(t.dataset.tutor){const r=selectTutor(t.dataset.tutor);draw('[data-tutor='+t.dataset.tutor+']');toast(r.tutor.shortName+(r.persisted?' will be your tutor.':' will be your tutor this session.'));cue('chime',prefs.sound);return}
   if(a==='queue')return go('queue');
   if(a==='guided')return go('guided','[data-act=setup]');
   if(t.dataset.level){prefs.coachLevel=t.dataset.level;save();draw('[data-level='+t.dataset.level+']');cue('paw',prefs.sound);return}
   if(a==='coach'){prefs.coach=!prefs.coach;save();draw('[data-act=coach]');cue('paw',prefs.sound);return}
   if(a==='setup'){prefs.coach=true;save();const m=document.querySelector('#mode');if(m&&[...m.options].some(o=>o.value==='play')){m.value='play';m.dispatchEvent(new Event('change',{bubbles:true}))}close();const s=document.querySelector('#start');s?.scrollIntoView({block:'center',behavior:reduced()?'auto':'smooth'});s?.focus({preventScroll:true});return}
-  if(a==='flag'){const l=LESSONS[lesson],b=l.beats[beat];const ok=queueAdd({lesson:l.id,revision:l.revision,beat,said:b.say,build:'r53',review:REVIEW.status});toast(ok?FAILSAFE.saved:FAILSAFE.failed);cue('paper',prefs.sound);return}
-  if(a==='export'){const blob=new Blob([JSON.stringify({kind:'ddl-factcheck-export',build:'r53',exported:new Date().toISOString(),entries:queueList()},null,1)],{type:'application/json'});const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='ddl-factcheck-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('Exported. Send the file to Seto’s team.');return}
+  if(a==='flag'){const l=ALL[lesson],b=beatsOf(l)[beat];const ok=queueAdd({lesson:l.id,revision:l.revision,beat,...(isCP(l)?{branch:branch||'before choice'}:{}),said:b.say,build:ENGINE_EVIDENCE.build,review:REVIEW.status});toast(ok?FAILSAFE.saved:FAILSAFE.failed);cue('paper',prefs.sound);return}
+  if(a==='export'){const blob=new Blob([JSON.stringify({kind:'ddl-factcheck-export',build:ENGINE_EVIDENCE.build,exported:new Date().toISOString(),entries:queueList()},null,1)],{type:'application/json'});const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='ddl-factcheck-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);toast('Exported. Send the file to Seto’s team.');return}
  });
  el.addEventListener('keydown',e=>{if(e.key==='Tab'){const f=[...el.querySelectorAll('button:not([disabled]),a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(n=>n.offsetParent!==null||n===document.activeElement);if(f.length){const first=f[0],lastEl=f[f.length-1];if(e.shiftKey&&(document.activeElement===first||!el.contains(document.activeElement))){e.preventDefault();lastEl.focus()}else if(!e.shiftKey&&document.activeElement===lastEl){e.preventDefault();first.focus()}}return}
   if(e.key==='Escape'){e.preventDefault();return view==='home'?close():go('home')}if(view!=='play'||e.target.closest('input,select,textarea'))return;

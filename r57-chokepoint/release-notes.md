@@ -1,3 +1,43 @@
+# Duel Doctrine Lab · r57 TEST · Choke Point Lab (CP-001) · 13 November 2026
+
+Format and first lesson authored by ChatGPT (RELAY-193, T13); built by Claude. The team picked the points to teach in RELAY-194; those lessons come next, once ChatGPT writes them. Built and self-verified by Claude; independent review requested. Duels, AI and tutors are unchanged. The layout uses the existing Learn style; ChatGPT, now lead designer, will do the design pass.
+
+- New in Learn: **Choke Point Lab**. A lesson pauses at a real response window and you choose: chain your hand trap, or pass. Then you see what your choice stopped and what still worked. At the end you can try the other choice and compare.
+- **CP-001, "Stopped the search. Did we stop the line?"** (Blue-Eyes vs Sky Striker):
+  - The opponent's revealed hand is Lordly Lode + Sage, and you hold Ash Blossom.
+  - With Ash, Lode's search is negated and no Ether Beryl is added. But Lode's separate summon effect, Sage and Spirit Dragon still happen.
+  - Lesson: one negated effect isn't the same as stopping a deck. This is a candidate window, not a "best play" claim.
+- **Engine check:** tests/r57-chokepoint-engine.test.mjs plays both branches in the real rules engine, choosing only options the engine actually offered.
+  - With Ash: Ash is offered, its cost is paid first, the chain is Lode then Ash, no Beryl is added, and Lode stays face-up. The declaration still summons Blue-Eyes in Defense, Sage adds Maiden, and Spirit Dragon is Synchro Summoned.
+  - With Pass: Beryl is added, then the same line plays out.
+  - The opponent's moves are a scripted illustration of the AI's BE-SAGE book line, not a recording of the AI playing. The fixtures are narrowed: named cards plus vanilla filler.
+- On screen:
+  - Outcome, cost and lock chips appear only after the event they describe.
+  - A "The catch" card explains what survived.
+  - Your choice sits in the bottom bar, so it's always in reach on a phone.
+  - The question at the end reveals its answer when tapped.
+  - A source chip shows where the ruling comes from.
+- Fact-check flags now record the lesson branch and the real build number. Before this, flags from r53 to r56 all said "r53".
+- **Fix:** learn/engine-evidence.mjs was missing from the offline file list in r55 and r56, so Learn could fail when used offline. It is now listed.
+- Tests 196/197 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r57.txt. Checked in a browser on a 412 px phone and at 1280 x 900: both branches end to end, "try the other choice", the question reveal and a flag; no page errors.
+
+# Duel Doctrine Lab · r56 TEST · Fire Dance lesson (RD-005) · 13 November 2026
+
+Lesson authored by ChatGPT (RELAY-192, revision 2), on the Seto team's corrected ruling (RELAY-190). Built and self-verified by Claude; independent review requested. Duels and AI are unchanged; deck-viewer text has one addition, and the tutors and design are as in r55.
+
+- New Ruling Desk lesson RD-005, "A negated activation and a negated effect are different" (Mikanko Fire Dance, Ghost Belle, Ha-Re, Hu-Li):
+  - Ghost Belle negates Fire Dance's activation, so the second Fire Dance can still be activated that turn.
+  - In a separate replay, the first Fire Dance resolves and the second one can't be activated.
+  - Step 6, an effect-only negation, is marked SOURCE-LED: no engine replay covers it.
+- Engine check: tests/r56-lessons-engine.test.mjs plays both scenes in the real rules engine:
+  - Scene A: Belle is offered and chained, Ha-Re stays in the GY, and the second Fire Dance is still offered.
+  - Scene B: Ha-Re is revived and equipped, Hu-Li is still in the GY, and the second copy is not offered.
+  - These are narrowed fixtures (named cards plus vanilla filler), not full deck presets.
+- Lessons can now show your Graveyard. A card in your hand can be greyed out without greying the same card on the field.
+- Blue-Eyes deck viewer: True Light's "Watch the locks" note adds that destruction protection doesn't stop a negate-and-destroy of its activation (ChatGPT RELAY-192). This is text only.
+- Riseheart's cost pick: already prefers Fenrir, Unicorn or Ogre (Level 7) first, which covers the RELAY-192 "when Birth is available" case. No AI change, so no new benchmark.
+- Tests 190/191 (1 needs the CSS builder); learn/engine-evidence.mjs is generated from _build/tests-r56.txt. Checked in a browser on a 412 px phone and at 1280 x 900: all six RD-005 steps and the ruling; no page errors.
+
 # Duel Doctrine Lab · r55 TEST · Learn tutors, deck brains v1.1, RD-004 · 13 November 2026
 
 Kevy, 13 Nov 2026: "I approve all of them and authorize you to implement them ... toggle options to pick your tutor" (16:09), "Let's retire lawpri or put in archive. Chatgpts animations are so good" (16:20), "Let's use the official arts, use the animations based on the card monsters and Yu-Gi-Oh characters" (16:22). Tutor art and animation by ChatGPT (RELAY-195, "Duel Lab Chibi Tutors v0.2"). From 16:30 ChatGPT is lead designer and creative artist. Built and self-verified by Claude; independent review requested.
