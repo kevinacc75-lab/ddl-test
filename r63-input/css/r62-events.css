@@ -1,0 +1,59 @@
+/* r62 (Claude, 14 Nov 2026), ChatGPT Duel-screen-declutter-r1 step 2 ("one event representation") and r2 addendum.
+   Play mode only (body[data-pc-play="1"]). Presentation only: event order, timing, engine choices and answers unchanged.
+   Landscape (the scaled 1600×1000 stage): the right-hand column is reserved for the rail at all times, so the board never
+   jumps; a resolving/activating card scene is shown IN that rail (card thumbnail, title, fully readable text with the active
+   clause highlighted) instead of a full-screen spotlight that dimmed and blurred the board. */
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]{
+ --rail-w:clamp(280px,30vw,360px);--rail-s:min(100vw / 1600,100vh / 1000);--rail-top:calc(50vh - 330 * var(--rail-s))}
+/* the board keeps the rail's column free whether or not the rail is showing (r61 did this only while a decision was open) */
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"] #duel #arena-scroll{
+ right:calc((1600px - 100vw / var(--stage-scale)) / 2 + (16px + var(--rail-w)) / var(--stage-scale))!important}
+
+/* the scene as a rail panel */
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true]{
+ inset:auto!important;top:var(--rail-top)!important;right:8px!important;width:var(--rail-w)!important;height:auto!important;
+ max-height:calc(100vh - var(--rail-top) - 12px)!important;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:flex-start!important;align-content:flex-start!important;
+ justify-content:flex-start!important;gap:8px!important;grid-template-columns:none!important;grid-template-rows:none!important;
+ padding:12px!important;overflow:auto!important;background:#0b1226!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+ border:1px solid #dab77d66!important;border-radius:14px!important;box-shadow:0 10px 30px #0009!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] :is(.event-sweep,.event-orbit,.event-bars,#event-seal,#card-live-effect,#card-clause-glow,#scene-chain-coin){display:none!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] .event-card-wrap{
+ position:relative!important;inset:auto!important;transform:none!important;width:84px!important;height:auto!important;margin:0!important;flex:0 0 84px!important;grid-area:auto!important;animation:none!important;order:0}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] .event-card-wrap img{
+ width:84px!important;max-height:124px!important;height:auto!important;animation:none!important;box-shadow:none!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] .event-copy{
+ position:static!important;inset:auto!important;flex:1 1 150px!important;min-width:0!important;width:auto!important;margin:0!important;padding:0!important;
+ background:none!important;border:0!important;box-shadow:none!important;clip-path:none!important;animation:none!important;transform:none!important;grid-area:auto!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-kicker{font-size:11px!important;letter-spacing:.08em!important;margin:0 0 2px!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-title{font-size:16px!important;line-height:1.25!important;margin:0 0 4px!important;letter-spacing:0!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-line{font-size:14px!important;margin:0!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-type-line{font-size:12px!important;margin:0!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] :is(#event-effect,#effect-sequence,#event-chain-strip){
+ position:static!important;inset:auto!important;flex:1 1 100%!important;width:auto!important;max-width:none!important;height:auto!important;margin:0!important;transform:none!important;grid-area:auto!important;animation:none!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-effect{padding:10px!important;max-height:none!important;overflow:visible!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-effect-text{font-size:14px!important;line-height:1.5!important;max-height:none!important;overflow:visible!important}
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-effect-text mark[data-active-clause]{padding:8px 10px!important}
+@media (max-height:520px){
+ body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true]{padding:8px!important;gap:6px!important}
+ body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] .event-card-wrap{flex-basis:56px!important;width:56px!important}
+ body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] .event-card-wrap img{width:56px!important;max-height:82px!important}
+ body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] #event-title{font-size:13px!important}
+ body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] :is(#event-effect-text,#event-line){font-size:12px!important}
+}
+
+/* One caption per card movement (r1 "an event gets one caption"): the flight keeps its own label ("TO FIELD · EXTRA DECK →
+   FIELD"); the duplicate FROM/TO ring tags, the "RESOLVE n" stamp and the "RESOLVING · CL n" tag on the board are dropped in
+   Play, because the scene panel already names the chain link being resolved. The CL coins on the field stay. */
+body.in-duel[data-pc-play="1"] #fx-layer .flight-ring>span,
+body.in-duel[data-pc-play="1"] #fx-layer .fx23-chain-stamp,
+body.in-duel[data-pc-play="1"] .dlfx-chain>.dlfx-tag{display:none!important}
+/* no second picture of the card in the rail: the card itself is on the board (or flying), and the title names it */
+body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(#_) #event-stage[data-spotlight=true] .event-card-wrap{display:none!important}
+/* r2: no large empty "Pilot B is choosing" sheet in Play; the small YOUR DECISION / COMPUTER CHOICE card is the status line */
+body.in-duel[data-pc-play="1"][data-decider=ai]:not(#_):not(#_):not(#_) #duel .decision-column{display:none!important}
+body.in-duel[data-pc-play="1"] #choices .open-window-context{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.02em;color:#dab77d}
+/* r63 grouped copies r1 (ChatGPT spec): the ×n count sits right after the name inside .choice-text; Inspect is a sibling */
+body.in-duel[data-pc-play="1"] #choices .choice-row{display:flex;align-items:stretch;gap:6px}
+body.in-duel[data-pc-play="1"] #choices .choice-row>.choice{flex:1 1 auto;min-height:44px}
+body.in-duel[data-pc-play="1"] #choices .choice-row>.inspect{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+body.in-duel[data-pc-play="1"] #choices .choice-copy-count{margin-inline-start:.4em;color:var(--gold,#dab77d);font-weight:600;white-space:nowrap}
