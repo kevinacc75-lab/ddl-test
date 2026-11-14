@@ -1,0 +1,15 @@
+/* r60 (Claude, 14 Nov 2026). Kevy 15:30 AEDT: "can we have it that the card text is just highlighted instead? instead of
+   being blurred?" The rest of the card text used to be dimmed to half opacity and greyed; now every word is fully readable
+   and only the clause in use carries the highlight. Applies to the event stage, the live text on the card, the effect dock
+   and the Showtime resolve view. Loaded last. */
+#event-effect-text .effect-context,
+body[data-theme] #event-stage #event-effect-text .effect-context{opacity:1!important;filter:none!important;color:#eef1f8!important;font-size:1em!important}
+#effect-dock-text .effect-context{opacity:1!important;filter:none!important;color:var(--text,#eef1f8)!important}
+#card-live-effect .effect-context{opacity:1!important;filter:none!important}
+#event-effect-text .effect-cost{color:inherit}
+/* r60 (ChatGPT RELAY-211 option a; Seto team RELAY-210 LOW-1): Learn short-screen cue under the tutor bubble. Its own row,
+   a 44 px target, underlined, visible focus. Shown by learn.mjs only while the footer controls are out of view. */
+#learn .lr-jumprow{display:flex;justify-content:flex-end;margin:2px 0 4px}
+#learn .lr-jumprow:has(.lr-jump[hidden]){display:none}
+#learn .lr-jump{min-height:44px;min-width:44px;padding:0 12px;border:0;background:none;color:var(--lt-gold,#dab77d);font:600 15px/1 var(--font-ui,system-ui);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+#learn .lr-jump:focus-visible{outline:2px solid var(--lt-ivory,#f4e9d0);outline-offset:2px;border-radius:6px}
