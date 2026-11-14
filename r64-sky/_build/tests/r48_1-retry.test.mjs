@@ -29,7 +29,7 @@ test('(R48.1-2) a busy page is retried until it takes the answer, then never aga
  n=0;s.start(()=>{n++;return 'refused'},()=>true,r=>done=r);assert.equal(done,'refused');assert.equal(s.active(),false);tick();assert.equal(n,1)});
 test('(R48.1-3) the page adapter reports queued / sent / wait / refused and the add-on uses only makeSender',()=>{
  const a=fs.readFileSync('dist/app.mjs','utf8'),p=fs.readFileSync('dist/play-comfort.mjs','utf8');
- assert.ok(a.includes("if(humanFlow.current){if(humanFlow.pending)return 'refused';reply(r,true);return humanFlow.pending?'queued':'wait'}if(busy||fxBusy)return 'wait';reply(r,true);return busy?'sent':'wait'}"));
+ assert.ok(a.includes("if(humanFlow.current){if(humanFlow.pending)return 'refused';reply(r,'addon');return humanFlow.pending?'queued':'wait'}if(busy||fxBusy)return 'wait';reply(r,'addon');return busy?'sent':'wait'}"));/* r63: the add-on's answers are labelled 'addon' (still automatic=truthy, so the same path) for the reply audit */
  assert.ok(a.includes("flow:humanFlow.current?.key||''"),'the decision key carries session, epoch and token');
  assert.equal(/setInterval\(go/.test(p.replace(/export function makeSender[^]*?\n export function|export function makeSender[^]*?\nexport function installPlayComfort/,'')),false,'no other retry loop');
  assert.ok(p.includes("const sender=makeSender();const send=(response,key)=>sender.start(()=>cur.reply(response),()=>!!cur&&cur.human&&cur.key===key,"))});

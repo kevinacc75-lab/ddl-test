@@ -52,3 +52,8 @@ body.in-duel.tablet-stage:not(.portrait-overview)[data-pc-play="1"]:not(#_):not(
 /* r2: no large empty "Pilot B is choosing" sheet in Play; the small YOUR DECISION / COMPUTER CHOICE card is the status line */
 body.in-duel[data-pc-play="1"][data-decider=ai]:not(#_):not(#_):not(#_) #duel .decision-column{display:none!important}
 body.in-duel[data-pc-play="1"] #choices .open-window-context{margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.02em;color:#dab77d}
+/* r63 grouped copies r1 (ChatGPT spec): the ×n count sits right after the name inside .choice-text; Inspect is a sibling */
+body.in-duel[data-pc-play="1"] #choices .choice-row{display:flex;align-items:stretch;gap:6px}
+body.in-duel[data-pc-play="1"] #choices .choice-row>.choice{flex:1 1 auto;min-height:44px}
+body.in-duel[data-pc-play="1"] #choices .choice-row>.inspect{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+body.in-duel[data-pc-play="1"] #choices .choice-copy-count{margin-inline-start:.4em;color:var(--gold,#dab77d);font-weight:600;white-space:nowrap}

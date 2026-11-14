@@ -13,6 +13,8 @@ const {chromium}=require('playwright');const [url,deckA,deckB,seed,vpName,secs]=
   const placeholder=t=>/^(Get ready…|Continuing…|Preparing the duel…)$/.test(t||'');
   const shown=()=>{const t=document.querySelector('#decision-title')?.textContent;if(placeholder(t))return false;const bar=document.querySelector('#pc-bar');const barVis=!!bar&&!bar.hidden&&bar.getClientRects().length>0;
    const btn=[...document.querySelectorAll('#choices button')].some(x=>!x.disabled&&x.getClientRects().length>0&&getComputedStyle(x).visibility!=='hidden');return barVis||btn};
+  /* a click on a visible decision control is itself proof the prompt was on screen (the 20 ms sampler can lag a busy main thread) */
+  document.addEventListener('click',e=>{if(e.isTrusted!==false&&e.target.closest?.('#choices button,#confirm')&&shown()&&W.__lastRev!=null)W.__drawn.add(W.__lastRev)},true);
   setInterval(()=>{const t=document.querySelector('#decision-title')?.textContent;
    if(W.__lastRev!=null&&shown())W.__drawn.add(W.__lastRev);
    if(placeholder(t)&&t!=='Preparing the duel…'){W.__stray.space++;document.dispatchEvent(new KeyboardEvent('keydown',{code:'Space',key:' ',bubbles:true}));const p=document.querySelector('#pc-pass');if(p){W.__stray.bar++;p.click()}}
