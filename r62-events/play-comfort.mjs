@@ -81,7 +81,7 @@ export function installPlayComfort({M,R,name}){
  const sender=makeSender();const send=(response,key)=>sender.start(()=>cur.reply(response),()=>!!cur&&cur.human&&cur.key===key,r=>{if(cur&&cur.key===key)cur.answered=r});
  const passNow=()=>{if(!cur?.chain)return;const k=cur.key,c=cur.chain;bar.hidden=true;send(c.pass.response,k)};
  $('#pc-pass').onclick=passNow;
- document.addEventListener('keydown',e=>{if(e.code!=='Space'||bar.hidden||e.repeat||e.ctrlKey||e.metaKey||e.altKey)return;const t=document.activeElement;if(t&&(/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)||t.closest?.('#choices')))return;/* typing, or choosing a chain card with the keyboard */if(document.querySelector('dialog[open]'))return;e.preventDefault();passNow()});
+ document.addEventListener('keydown',e=>{if(e.code!=='Space'||bar.hidden||!bar.getClientRects().length/* r62 (ChatGPT RELAY-216 r61 review): the bar can be hidden by the stylesheet while the decision sheet is open; a bar you cannot see must not answer */||e.repeat||e.ctrlKey||e.metaKey||e.altKey)return;const t=document.activeElement;if(t&&(/^(INPUT|SELECT|TEXTAREA|BUTTON|A|SUMMARY)$/.test(t.tagName)/* r62: Space on a focused control presses that control, never the quick pass */||t.closest?.('#choices')))return;/* typing, or choosing a chain card with the keyboard */if(document.querySelector('dialog[open]'))return;e.preventDefault();passNow()});
  function paint(){document.querySelectorAll('.pc-playable').forEach(n=>n.classList.remove('pc-playable'));if(!cur||!prefs.aura||!cur.human)return;
   for(const c of playable(cur.state.prompt,M)){let n=null;if(c.location===2){n=[...document.querySelectorAll('.hand-card[data-hand-sequence="'+c.sequence+'"]')].find(x=>Number(x.dataset.card)===c.code&&!x.querySelector('.hand-back'))}else if(c.location===4||c.location===8){n=document.querySelector('[data-slot="'+cur.slot(c)+'"]')}n?.classList.add('pc-playable')}}
  function act(){sender.halt();bar.hidden=true;if(!cur||!cur.human){paint();return}
@@ -91,7 +91,7 @@ export function installPlayComfort({M,R,name}){
   const ch=chainPass(m,choices,prefs.chain,M,R);cur.chain=ch;
   if(ch){const names=[...new Set((m.selects||[]).map(c=>name(c.code)).filter(Boolean))].slice(0,3).join(', ');
    if(ch.auto){say('Passed · you could have chained '+names+' ('+CHAIN_LABEL[prefs.chain]+')');send(ch.pass.response,cur.key);return}
-   bar.querySelector('small').textContent=names?'You can chain: '+names:'';bar.hidden=false;return}
+   bar.querySelector('small').textContent=names?(state.chain?.length?'You can chain: ':'You can activate: ')/* r62 (Seto RELAY-213 LOW, ChatGPT J1-02): nothing on the chain yet means activate, not chain */+names:'';bar.hidden=false;return}
   if(prefs.autoPlace){const p=pickPlace(m,choices,M);if(p)send(p.response,cur.key)}}
  window.addEventListener('duel-human-decision',e=>{const d=e.detail||{};const show=!!d.inDuel;chainBtn.hidden=!show;if(show)setTimeout(quietNotice,400);skipRotateHint();if(show)document.body.dataset.pcPlay='1';else delete document.body.dataset.pcPlay;/* r49: css/r49-mobile.css lays Play out around this */
   if(!d.human||!d.state?.prompt){cur=d.state?{...d,human:false,key:null}:null;sender.halt();bar.hidden=true;paint();return}

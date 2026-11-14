@@ -14,7 +14,7 @@ test('(R58.2-1) a slow download that keeps arriving is not cut off at 15 s; a st
 });
 test('(R58.2-2) the offline worker installs only the duel files; art, tutor sheets and music are saved on first use; caches are per build folder',()=>{
  const s=read('sw.js');assert.match(s,/const LAZY=path=>\/\\\.mp3\$\/i\.test\(path\)\|\|path\.startsWith\('\.\/art\/'\)\|\|path\.startsWith\('\.\/learn\/tutors\/'\);/);
- assert.match(s,/\.filter\(f=>!LAZY\(f\)\)/,'r59: the core list still leaves art, tutor sheets and music to first use');assert.match(s,/CACHE=CACHE_PREFIX\+'2026-11-14-r60-1-safe'\+'@'\+SCOPE/);
+ assert.match(s,/\.filter\(f=>!LAZY\(f\)\)/,'r59: the core list still leaves art, tutor sheets and music to first use');assert.match(s,/CACHE=CACHE_PREFIX\+'2026-11-14-r62-events'\+'@'\+SCOPE/);
  assert.match(s,/\(!key\.includes\('@'\)\|\|key\.endsWith\('@'\+SCOPE\)\)/,'only this folder’s old caches and the old full-download caches are removed');
  assert.match(s,/response\.status===200&&response\.type==='basic'&&!SKIP\(rel\)/,'r59: only full (200) responses are saved, so partial (206) music responses are never cached');
  const a=JSON.parse(read('offline-assets.json')),core=a.filter(f=>!(/\.mp3$/i.test(f)||f.startsWith('./art/')||f.startsWith('./learn/tutors/')));

@@ -11,7 +11,7 @@
 // worker heals itself (any same-origin file it serves is saved; a missing core file is fetched again when the page asks),
 // it reports honestly whether every core file is saved, and the core download starts only when the page asks for it (after
 // the first duel has loaded, or after the player has been idle; never on Data Saver or a 2g/3g connection).
-const CACHE_PREFIX='ddl-test-r21-',SCOPE=new URL(self.registration.scope).pathname,CACHE=CACHE_PREFIX+'2026-11-14-r60-1-safe'+'@'+SCOPE,OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
+const CACHE_PREFIX='ddl-test-r21-',SCOPE=new URL(self.registration.scope).pathname,CACHE=CACHE_PREFIX+'2026-11-14-r62-events'+'@'+SCOPE,OLD_PREFIXES=[CACHE_PREFIX,'duel-lab-'];
 const LAZY=path=>/\.mp3$/i.test(path)||path.startsWith('./art/')||path.startsWith('./learn/tutors/');
 const SKIP=path=>path.startsWith('./wb/')||path.startsWith('./_build/');
 async function coreList(cache){try{const r=await fetch('./offline-assets.json',{cache:'no-store'});if(r.ok){await cache.put('./offline-assets.json',r.clone());return (await r.json()).filter(f=>!LAZY(f))}}catch{}

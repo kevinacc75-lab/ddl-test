@@ -1,3 +1,26 @@
+# Duel Doctrine Lab · r62 TEST · calmer chain scenes · 14 November 2026
+
+Step 2 of ChatGPT's Duel-screen-declutter-r1 ("one event representation") plus parts of the r2 addendum and the RELAY-216 r61 review. Built and self-verified by Claude; pending ChatGPT's integration review and the Seto team (offline until 20 Nov). Presentation only: event order, timing, engine choices and answers are unchanged.
+
+- **Chain scenes in the side panel (Play, landscape).** The full-screen resolution scene dimmed and blurred the whole board. In Play on tablets, desktop and sideways phones it now shows in the same right-hand panel as decisions: "Chain Link n resolves", the card name, and the full card text with the active part highlighted. The board stays clear and bright, and its right column is now always kept free for that panel, so the board no longer changes size between events. (css/r62-events.css)
+- **One label per moving card.** The extra FROM/TO ring tags, the "RESOLVE n" stamp and the "RESOLVING · CL n" tag on the board are dropped in Play; the flight keeps its own label (for example "TO FIELD · EXTRA DECK → FIELD"), and the CL coins on the field stay.
+- **No empty "Pilot B is choosing" sheet** in Play: the small status card says the computer is choosing.
+- **Phase on response windows** with nothing on the chain, e.g. "Draw Phase · response window · nothing is on the chain" (Akiza: Draw/Standby prompts had no context).
+- **Phones held upright open straight into the portrait duel** instead of the "Rotate for the duel field" wall.
+- **RELAY-216 (r61 review, MED):** the quick-pass Space shortcut now does nothing when its bar is not visible (r61 hides it while the decision sheet is open), and Space on a focused control presses that control, not the quick pass. The quick bar says "You can activate:" when nothing is on the chain (ChatGPT J1-02 / Seto LOW).
+- **J1-01 evidence:** new tools/browser/route-check.cjs counts a prompt as drawn only when its controls are on screen, fires thousands of stray Space/No-response inputs during scene waits, and records every reply. Sky v Branded seed 3003: 0 unseen manual answers at 1280×900 and 412×915; the only undrawn replies are auto-placement zone picks (intended automation).
+- Not in r62: grouping identical search copies, the persistent cost → resolve stepper (Droplet), the opponent-turn cue and Set log wording, portrait scene panel, notice slot.
+
+# Duel Doctrine Lab · r61 TEST · one decision area · 14 November 2026
+
+Step 1 of ChatGPT's Duel-screen-declutter-r1 (RELAY-213, Drive 19pg9A0E…), answering Kevy's "so much going on the screen" (14 Nov 15:30). Built and self-verified by Claude; pending ChatGPT's integration review and the Seto team (offline until 20 Nov). CSS only (css/r61-decide.css, loaded last); engine choices, timing and answers are unchanged.
+
+- **One route per question.** While the decision sheet is open in Play, the duplicate routes to the same question hide: the "View actions" card, the floating "No response" bar and "Return to field". The sheet keeps its own No and Close buttons. (ChatGPT's live sample found three routes for one Yes/No.)
+- **Landscape (tablets, desktop, phones held sideways): a right-hand rail.** The sheet used to be a large, mostly empty panel over the whole board. It is now a rail at the right, as tall as its content, drawn at real pixel size (counter-scaled against the stage scale, so its text is never shrunk), and the board narrows to sit beside it. 1280×900: rail 360 px, board fully visible. 844×390: rail 280 px with 13 px text and 44 px rows.
+- **Phone portrait: a shorter bottom sheet** (at most 46% of the screen, scrolling inside), with the Confirm row kept in view while a long list scrolls. The chain-setting button steps aside while the sheet is open.
+- **Less chrome inside the sheet:** one title (the "YOUR DECISION" eyebrow and the nested frame are gone), Close in the title row, a solid background so the board never shows through.
+- Not in this step: the chain/event presentation (one event representation), the flight labels, notices and watch transport (step 2), and ChatGPT's r2 addendum (Akiza's playtest).
+
 # Duel Doctrine Lab · r60.1 TEST · response-window safety fix · 14 November 2026
 
 From the Seto team's RELAY-213 handover (A-1 HIGH, present since r59). Built and self-verified by Claude; the Seto team is offline until 20 Nov, so this is pending their review.
