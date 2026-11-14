@@ -6,11 +6,11 @@ export const R45_NEW=['ai/v4-flags.mjs','ai/book/v4-plan.mjs',...['ai/r46-flags.
 export const R52_CHANGED=['app-shell.mjs','pile-glow.mjs',/* r55 deck brains v1.1 (Seto team RELAY-179 fixes, ChatGPT RELAY-185 deltas): */'ai/book/dtw-plan.mjs','ai/book/hero-lines.mjs','ai/book/kashtira-lines.mjs','ai/book/mikanko-lines.mjs','ai/book/toon-lines.mjs','ai/brain/blueeyes-brain.mjs'/* r56 text only */,'ai/book/branded-lines.mjs'/* r58 comment only */,'load.mjs'/* r58.2 slow-connection download */,'ai/brain/dtw-brain.mjs','ai/brain/toon-brain.mjs'];/* r52: pile effect menu (pile-glow.mjs) wired with submit/getDecision/getDb (app-shell.mjs) */
 export const R45_DISPLAY=['decks.json'];/* Branded display name only: "Kevy's Branded Deck" (ids, keys, lists, format unchanged) */
 export const R45_BUILD=/^const BUILD='ddl-test r47 /;/* r46-adapted: the current build identity */
-export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-14-r63-input'/;/* r46-adapted */
+export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-15-r65-ident'/;/* r46-adapted */
 export const R45_NAME="Kevy's Branded Deck";
 // r46 (Kevy 11 Nov 2026 14:54 AEDT): WindBot port (ai/book/book.mjs, optimal-pilot.mjs hooks; new ai/r46-flags.mjs, ai/book/windbot-port.mjs)
 // and victory boss art (new victory-boss.mjs, css/aurora.css append, index.html script tag). Identity is now r46.
-export const R46_TITLE='<title>TEST r63 — Duel Doctrine Lab · Answer checks + grouped copies</title>';
+export const R46_TITLE='<title>TEST r65 — Duel Doctrine Lab · Answer checks tightened</title>';
 export const R46_SCRIPT='<script type="module" src="victory-boss.mjs"></script>';
 
 // r47 (Claude, 11 Nov 2026): the Concede button is the only r47 change outside the AI rule files, app.mjs and css/aurora.css.

@@ -8,8 +8,9 @@ const read=f=>fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8');
 test('(R63-1) every manual answer must be for the rendered prompt; waiting, a new duel and a rewind clear it; answers are audited',()=>{
  const a=read('app.mjs');
  assert.match(a,/function manualAllowed\(\)\{return !!rendered&&!!state&&rendered\.rev===state\.revision&&rendered\.key===\(humanFlow\.current\?\.key\?\?null\)\}/);
- assert.match(a,/function reply\(response,automatic=false\)\{const route=automatic==='addon'\?'addon\/'\+replyRoute\(\):automatic\?'automatic':replyRoute\(\);if\(!automatic&&!manualAllowed\(\)\)\{auditReply\(\{route,ok:false,why:'not the rendered prompt'\}\);return\}/);
- assert.match(a,/function renderDecision\(x\)\{const shownKey=humanFlow\.current\?\.key\?\?null,shownRev=state\?\.revision;if\(!isAi&&!disabled&&state&&!state\.finished&&mode!=='watch'\)markRendered\(\);else clearRendered\(\);/);
+ // r65 (RELAY-220 MED-R63-1): the r63 forms were replaced; tests/r65-input.test.mjs checks the new central check and render order
+ assert.match(a,/else if\(!manualAllowed\(\)\)why='not the rendered prompt';/);
+ assert.match(a,/function renderDecision\(x\)\{const shownKey=humanFlow\.current\?\.key\?\?null,shownRev=state\?\.revision;clearRendered\(\);/);
  assert.match(a,/clearRendered\(\);\/\* r63 \*\/\n  window\.dispatchEvent\(new CustomEvent\('duel-human-decision',\{detail:\{inDuel:/,'waiting behind a scene clears it');
  assert.match(a,/humanFlow\.reset\(\);clearRendered\(\);\/\* r63 \*\//,'a new duel clears it');
  assert.match(a,/function invalidateHumanContext\(\)\{clearRendered\(\);/,'a rewind clears it');
@@ -18,9 +19,9 @@ test('(R63-1) every manual answer must be for the rendered prompt; waiting, a ne
 });
 test('(R63-2) grouped copies r1: one-card own-Deck search under an allowlisted effect only; original index sent; ×n inside .choice-text',()=>{
  const a=read('app.mjs');
- assert.match(a,/const GROUP_SEARCH_ALLOW=new Set\(\['Sky Striker Mobilize - Engage!','Reinforcement of the Army'\]\);/);
+ assert.match(a,/const GROUP_SEARCH_ALLOW=new Map\(\[\[63166095,'Sky Striker Mobilize - Engage!'\],\[32807846,'Reinforcement of the Army'\]\]\)/,'r65: by passcode');
  assert.match(a,/if\(m\.type!==M\.SELECT_CARD\|\|m\.min!==1\|\|m\.max!==1\|\|!Array\.isArray\(cards\)\|\|cards\.length<2\)return null;/);
- assert.match(a,/if\(!c\.code\|\|c\.location!==1\|\|c\.controller!==ctl\|\|!Number\.isInteger\(c\.sequence\)\)return null;const p=c\.location\+':'\+c\.sequence;if\(phys\.has\(p\)\)return null;/,'unknown, non-Deck, mixed-controller or duplicate references: no grouping');
+ assert.match(a,/if\(!c\.code\|\|c\.location!==1\|\|!Number\.isInteger\(c\.controller\)\|\|c\.controller!==ctl\|\|!Number\.isInteger\(c\.sequence\)\)return null;const p=c\.location\+':'\+c\.sequence;if\(phys\.has\(p\)\)return null;/,'unknown, non-Deck, undefined or mixed-controller, or duplicate references: no grouping (r65 adds the defined-controller check)');
  assert.match(a,/<span class="choice-name">\$\{esc\(nm\)\}<\/span>\$\{g\.length>1\?`<span class="choice-copy-count" aria-hidden="true">×\$\{g\.length\}<\/span>`:''\}<small>/);
  assert.match(a,/if\(indexes\.length!==1\|\|!groups\.some\(g=>g\[0\]===indexes\[0\]\)\)return;reply\(\{type:R\.SELECT_CARD,indicies:indexes\}\)/,'sends the original native index of the representative');
  assert.doesNotMatch(a.slice(a.indexOf('const groups=copyGroups')),/^.{0,400}auto-?confirm/);

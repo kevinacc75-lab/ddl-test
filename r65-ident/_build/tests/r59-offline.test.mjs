@@ -15,7 +15,7 @@ test('(R59-2) MED-2/3: the worker saves what it serves, heals a missing core on 
  const s=read('sw.js');assert.match(s,/self\.addEventListener\('install',event=>event\.waitUntil\(self\.skipWaiting\(\)\)\);/,'no download at install');
  assert.match(s,/response\.status===200&&response\.type==='basic'&&!SKIP\(rel\)/,'any served same-origin file is saved (self-heal)');
  assert.match(s,/type==='offline-fill'\?\(filling\|\|=coreStatus\(true\)/);assert.match(s,/return \{ready:missing\.length===0,missing:missing\.length,total:list\.length\}/);
- assert.match(s,/CACHE=CACHE_PREFIX\+'2026-11-14-r63-input'\+'@'\+SCOPE/);
+ assert.match(s,/CACHE=CACHE_PREFIX\+'2026-11-15-r65-ident'\+'@'\+SCOPE/);
  const a=read('app-shell.mjs');assert.match(a,/if\(st\?\.ready\)notify\('Offline duel files are ready\./,'"ready" only when the worker confirms');assert.doesNotMatch(a,/if\(registration\.active\)notify\('Offline duel files are ready/);
  assert.match(a,/c\.saveData\|\|\/\(\^\|-\)\(2g\|3g\)\$\/\.test/);assert.match(a,/window\.addEventListener\('duel-state',\(\)=>\{duelReady=true\},\{once:true\}\)/);assert.match(a,/},45000\)/);
 });

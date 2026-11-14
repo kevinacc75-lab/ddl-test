@@ -1,0 +1,82 @@
+// r65 route check v3 (ChatGPT RELAY-220 §3). v1/v2 kept as route-check-v1.cjs / route-check-v2.cjs. Changes from v2:
+//  - a hit counts only if elementFromPoint returns the control or something inside it (never an ancestor); ancestors'
+//    opacity/visibility/inert are checked; the click coordinates are recorded;
+//  - every app audit entry is copied as it appears (no 60-entry window), and each worker reply is paired CAUSALLY: the
+//    app's 'sent' audit entry for that reply → its 'attempted' entry (same id) → the input with the same event
+//    timeStamp; manual replies are PASS only with a hit-tested input on the rendered prompt; anything else is
+//    FAIL or UNKNOWN, and both must be zero for a safety claim;
+//  - Space with a sheet open: the number of app audit entries from Space (any stage) is reported;
+//  - routes exercised on purpose: sheet, card-tap/card-menu, quick bar by pointer and by a real Space press (after closing
+//    the sheet with its Close button), phase buttons;
+//  - pairing is exact: the app records the user event's timeStamp with each answer, the probe records it with each input.
+// Original v2 header follows.
+// Oracle: the decision is identified at INPUT time, synchronously, by a capture-phase listener on every click/keydown:
+//   - which control was hit (route: sheet / card-menu / quick-bar / phase / card-tap / Space / other),
+//   - whether that control was hit-testable at that instant (in the viewport, not inert, not disabled, and the element at
+//     its centre is the control or inside it: catches off-screen, hidden, covered or inert controls),
+//   - the rendered prompt identity the page reports (body[data-rendered-rev], set by app.mjs when it draws a human prompt).
+// Every worker reply is paired with the app's own reply audit entry (window.__ddlReplyAudit: route, ok, revision, rendered
+// revision) and with the last input. An answer is UNSEEN if it is manual and either (a) its revision was not the rendered
+// revision at input time, or (b) the control was not hit-testable. Automatic and add-on answers are listed by label.
+// Stray inputs: during "Get ready…/Continuing…" a Space keydown + #pc-pass click every 20 ms; while a sheet is open, Space
+// with body focus, asserting that it changes neither the reply count nor the rendered revision.
+// Raw logs (inputs, replies, audit) are written to <out>.json. The picker clicks with a real pointer at the control's
+// position (page.mouse.click), so the browser's own hit-testing applies.
+// Usage: node route-check.cjs <url> <deckA> <deckB> <seed> <phone|tab> <seconds> <out>
+const VERSION='route-check v3 (r65)';
+const {chromium}=require('playwright');const fs=require('fs');const [url,deckA,deckB,seed,vpName,secs,out]=process.argv.slice(2);
+(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:vpName==='phone'?{width:412,height:915}:{width:1280,height:900},hasTouch:vpName==='phone',isMobile:vpName==='phone'});
+ await ctx.addInitScript(()=>{const W=window;W.__inputs=[];W.__sent=[];W.__spaceOpen={n:0,changed:0};
+  const placeholder=t=>/^(Get ready…|Continuing…|Preparing the duel…)$/.test(t||'');
+  const hit=(el,x,y)=>{if(!el)return {ok:false,why:'none'};if(el.disabled)return {ok:false,why:'disabled'};if(el.closest('[inert]'))return {ok:false,why:'inert'};const r=el.getBoundingClientRect();if(!r.width||!r.height)return {ok:false,why:'no box'};
+   if(r.bottom<=0||r.right<=0||r.top>=innerHeight||r.left>=innerWidth)return {ok:false,why:'off-screen'};const cx=x??Math.min(Math.max(r.left+r.width/2,0),innerWidth-1),cy=y??Math.min(Math.max(r.top+r.height/2,0),innerHeight-1);const at=document.elementFromPoint(cx,cy);
+   if(!at||!(at===el||el.contains(at)))return {ok:false,why:'hit '+(at?.id||String(at?.className||'').slice(0,40)||at?.tagName)+' instead',x:cx,y:cy};
+   for(let n=el;n&&n!==document.documentElement;n=n.parentElement){const cs=getComputedStyle(n);if(cs.visibility==='hidden'||+cs.opacity<.05||cs.display==='none')return {ok:false,why:'invisible ('+(n.id||n.tagName)+')'}}return {ok:true,x:cx,y:cy}};
+  const route=t=>!t?.closest?'other':t.closest('#choices,#selection-bar')?'sheet':t.closest('#card-action-menu')?'card-menu':t.closest('#pc-bar')?'quick-bar':t.closest('#phase-tracker')?'phase':t.closest('[data-slot],#my-hand')?'card-tap':(t.id||t.tagName);
+  const rec=(type,t,extra={})=>{const ctl=t?.closest?.('button,[role=button],[data-slot],[data-hand-sequence]')||t;W.__inputs.push({t:performance.now(),type,trusted:extra.trusted,route:route(t),rendered:document.body.dataset.renderedRev??null,title:document.querySelector('#decision-title')?.textContent,hit:type==='keydown'?{ok:null}:hit(ctl),...extra});if(W.__inputs.length>20000)W.__inputs.shift()};
+  W.__audit=[];const seenA=new WeakSet();setInterval(()=>{for(const a of (W.__ddlReplyAudit||[]))if(!seenA.has(a)){seenA.add(a);W.__audit.push(a)}},5);
+  const grab=()=>{for(const a of (W.__ddlReplyAudit||[]))if(!seenA.has(a)){seenA.add(a);W.__audit.push(a)}};
+  document.addEventListener('click',e=>{const ctl=e.target?.closest?.('button,[role=button],[data-slot],[data-hand-sequence]')||e.target;W.__inputs.push({id:W.__inputs.length+1,t:performance.now(),ts:e.timeStamp,type:'click',trusted:e.isTrusted,route:route(e.target),rendered:document.body.dataset.renderedRev??null,title:document.querySelector('#decision-title')?.textContent,hit:e.isTrusted&&e.clientX!=null?hit(ctl,e.clientX,e.clientY):hit(ctl)})},true);
+  document.addEventListener('keydown',e=>{if(e.code==='Space')W.__inputs.push({id:W.__inputs.length+1,t:performance.now(),ts:e.timeStamp,type:'keydown',key:'Space',trusted:e.isTrusted,route:route(document.activeElement),barVisible:(()=>{const b=document.querySelector('#pc-bar');if(!b||b.hidden||!b.getClientRects().length)return false;for(let n=b;n&&n!==document.documentElement;n=n.parentElement){const cs=getComputedStyle(n);if(+cs.opacity<.95||cs.visibility==='hidden'||cs.display==='none')return false}return true})(),sheetOpen:document.querySelector('#duel')?.dataset.screen!=='field',rendered:document.body.dataset.renderedRev??null,title:document.querySelector('#decision-title')?.textContent,hit:{ok:null,why:'keyboard: no pointer hit'}})},true);
+  setInterval(()=>{const t=document.querySelector('#decision-title')?.textContent;
+   if(placeholder(t)&&t!=='Preparing the duel…'){document.dispatchEvent(new KeyboardEvent('keydown',{code:'Space',key:' ',bubbles:true}));document.querySelector('#pc-pass')?.click()}
+   else if(document.querySelector('#duel')?.dataset.screen==='play'&&[...document.querySelectorAll('#choices button')].some(x=>!x.disabled&&x.getClientRects().length)){
+    document.activeElement?.blur?.();const before=W.__sent.length,rev=document.body.dataset.renderedRev;W.__spaceOpen.n++;document.dispatchEvent(new KeyboardEvent('keydown',{code:'Space',key:' ',bubbles:true}));
+    setTimeout(()=>{if(W.__sent.length!==before)W.__spaceOpen.changed++},0)/* counts only answers sent right after the Space (a new prompt arriving is not a change caused by Space) */}},20);
+  const pm=Worker.prototype.postMessage;Worker.prototype.postMessage=function(m,...a){try{if(m&&m.type==='reply'){grab();const audit=W.__audit.filter(x=>x.stage==='sent').at(-1)||null;const inp=W.__inputs.at(-1)||null;
+   W.__sent.push({t:performance.now(),rev:m.revision,rt:m.response?.type,idx:m.response?.index,title:document.querySelector('#decision-title')?.textContent,audit,lastInput:inp,inputAgeMs:inp?Math.round(performance.now()-inp.t):null})}}catch(e){W.__sent.push({err:String(e)})}return pm.call(this,m,...a)}});
+ const p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await p.goto(url);await p.waitForFunction(()=>document.querySelector('#start')&&!document.querySelector('#start').disabled,null,{timeout:240000});
+ const build=await p.evaluate(()=>document.title);
+ await p.evaluate(o=>{for(const [k,v] of Object.entries(o)){const n=document.querySelector(k);if(!n)continue;n.value=v;n.dispatchEvent(new Event('change',{bubbles:true}))}},{'#mode':'play','#deck-a':deckA,'#deck-b':deckB,'#seat':'0','#game-seed':seed,'#first':'0'});
+ await p.evaluate(()=>document.querySelector('#start').click());await p.waitForTimeout(2500);await p.evaluate(()=>document.querySelector('#portrait-continue')?.click());
+ let decisions=0,qbTurn=0,qbKey=0;const t0=Date.now(),limit=1000*Number(secs||240);
+ while(Date.now()-t0<limit){
+  const s=await p.evaluate(()=>({t:document.querySelector('#decision-title')?.textContent,cue:document.querySelector('#cue-owner')?.textContent,screen:document.querySelector('#duel')?.dataset.screen,n:[...document.querySelectorAll('#choices button')].filter(x=>!x.disabled&&!x.dataset.inspect&&x.getClientRects().length).length}));
+  if(/COMPLETE/.test(s.cue||''))break;
+  if(s.n&&/Response window|Chain/.test(s.t||'')&&s.screen!=='field'&&(qbTurn++%3)!==2){const cl=await p.evaluate(()=>{const c=[...document.querySelectorAll('.decision-column button.pane-close')].find(x=>x.getClientRects().length);if(!c)return null;const r=c.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});
+   if(cl){await p.mouse.click(cl.x,cl.y);const ok=await p.waitForFunction(()=>{const b=document.querySelector('#pc-bar');if(!b||b.hidden||!b.getClientRects().length)return false;for(let n=b;n&&n!==document.documentElement;n=n.parentElement){const cs=getComputedStyle(n);if(+cs.opacity<.95||cs.visibility==='hidden')return false}return true},null,{timeout:1500}).then(()=>true,()=>false);
+    if(ok){decisions++;if(qbKey++%2===0){await p.evaluate(()=>document.activeElement?.blur?.());await p.keyboard.press('Space')}else{const x=await p.evaluate(()=>{const r=document.querySelector('#pc-pass').getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});await p.mouse.click(x.x,x.y)}await p.waitForTimeout(250);continue}}}/* quick bar: close the sheet like a person, then pass by Space or by pointer */
+  {const qb=await p.evaluate(()=>{const b=document.querySelector('#pc-bar');const x=document.querySelector('#pc-pass');if(!b||b.hidden||!x||!x.getClientRects().length)return null;const r=x.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});if(qb&&decisions%2===1){decisions++;await p.mouse.click(qb.x,qb.y);await p.waitForTimeout(200);continue}}/* quick bar by pointer */
+  if(s.screen==='field'&&decisions%5===3){const ph=await p.evaluate(()=>{const b=[...document.querySelectorAll('#phase-tracker button')].find(x=>!x.disabled&&x.getClientRects().length);if(!b)return null;const r=b.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});if(ph){decisions++;await p.mouse.click(ph.x,ph.y);await p.waitForTimeout(200);continue}}/* phase buttons */
+  if(s.cue==='YOUR DECISION'&&!/Get ready|Continuing|Preparing/.test(s.t||'')){
+   if(!s.n&&s.screen==='field'&&(decisions%2===0)){/* card-tap route: tap a playable card on the field/hand, then the first action in its menu */
+    const card=await p.evaluate(()=>{const n=[...document.querySelectorAll('.can-act')].find(x=>x.getClientRects().length);if(!n)return null;n.scrollIntoView({block:'center'});const r=n.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});
+    if(card){decisions++;await p.mouse.click(card.x,card.y);await p.waitForFunction(()=>{const m=document.querySelector('#card-action-menu');if(!m||m.hidden)return true;for(let n=m;n&&n!==document.documentElement;n=n.parentElement){const cs=getComputedStyle(n);if(+cs.opacity<.95||cs.visibility==='hidden')return false}return true},null,{timeout:2000}).catch(()=>{});/* click the menu only once a person could see it */const mb=await p.evaluate(()=>{const b=[...document.querySelectorAll('#card-action-menu button')].find(x=>x.getClientRects().length&&!/Read card|Close/.test(x.textContent));if(!b)return null;const r=b.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});if(mb)await p.mouse.click(mb.x,mb.y);else await p.keyboard.press('Escape');await p.waitForTimeout(200);continue}}
+   if(!s.n&&s.screen==='field'){const r=await p.evaluate(()=>{const c=document.querySelector('#cue-open');if(!c||!c.getClientRects().length)return null;const b=c.getBoundingClientRect();return {x:b.left+b.width/2,y:b.top+b.height/2}});if(r)await p.mouse.click(r.x,r.y);await p.waitForTimeout(250);continue}
+   if(s.n){decisions++;const pick=await p.evaluate(()=>{const bs=[...document.querySelectorAll('#choices button')].filter(n=>!n.disabled&&!n.dataset.inspect&&n.getClientRects().length);const want=[/No, do not/,/Activate/,/Special Summon/,/Normal Summon/,/Enter Battle/,/Attack/,/End turn/,/./];let j=null;for(const w of want){j=bs.find(x=>w.test(x.innerText.trim()));if(j)break}if(!j)return null;j.scrollIntoView({block:'center'});const r=j.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}});
+    if(pick)await p.mouse.click(pick.x,pick.y);await p.waitForTimeout(150);
+    const c=await p.evaluate(()=>{const c=document.querySelector('#confirm');if(c&&!c.disabled&&c.getClientRects().length){c.scrollIntoView({block:'center'});const r=c.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}}return null});if(c)await p.mouse.click(c.x,c.y);await p.waitForTimeout(150);continue}}
+  await p.waitForTimeout(60)}
+ await p.waitForTimeout(100);const raw=await p.evaluate(()=>{for(const a of (window.__ddlReplyAudit||[]))if(!window.__audit.includes(a))window.__audit.push(a);return {sent:window.__sent,inputs:window.__inputs,spaceOpen:window.__spaceOpen,audit:window.__audit}});
+ const manual=r=>r.audit&&/^manual/.test((raw.audit.find(a=>a.id===r.audit.id&&a.stage==='attempted')||r.audit).route||'');
+ const verdict=r=>{if(!r.audit)return 'UNKNOWN: no sent audit entry';const att=raw.audit.find(a=>a.id===r.audit.id&&a.stage==='attempted');if(!att)return 'UNKNOWN: no attempted entry';if(!/^manual/.test(att.route))return 'AUTOMATIC';
+  const same=att.evt!=null?raw.inputs.filter(i=>i.ts===att.evt):[],want=/^manual:click:/.test(att.route)?'click':/^manual:keydown:/.test(att.route)?'keydown':null;const inp=same.find(i=>i.type===want&&i.trusted)||same.find(i=>i.type===want)||same[0];/* timestamps are coarse: a stray synthetic Space can share a tick with a real click, so the answer's own input type decides */if(!inp)return 'UNKNOWN: no recorded input with the answer\'s event timestamp';if(inp.type==='keydown'){if(!/Space/.test(att.route))return 'UNKNOWN: keyboard input';if(!inp.trusted)return 'FAIL: answered by a synthetic Space';if(!inp.barVisible)return 'FAIL: answered by Space while the quick bar was not visible';return String(inp.rendered)===String(r.rev)?'PASS':'FAIL: Space on rendered '+inp.rendered+', reply for '+r.rev}
+  if(inp.hit?.ok!==true)return 'FAIL: input not hit-testable ('+(inp.hit?.why||'?')+')';if(String(inp.rendered)!==String(r.rev))return 'FAIL: input on rendered '+inp.rendered+', reply for '+r.rev;return 'PASS'};
+ for(const r of raw.sent)r.verdict=verdict(r);
+ const tally=raw.sent.reduce((a,r)=>{const k=r.verdict.split(':')[0];a[k]=(a[k]||0)+1;return a},{});
+ const spaceAudit=raw.audit.filter(a=>/Space/.test(a.route||''));
+ const unseen=raw.sent.filter(r=>/^(FAIL|UNKNOWN)/.test(r.verdict));
+ const auto=raw.sent.filter(r=>r.audit&&/^automatic/.test(r.audit.route)),addon=raw.sent.filter(r=>r.audit&&/^addon/.test(r.audit.route)),noAudit=raw.sent.filter(r=>!r.audit);
+ const summary={version:VERSION,build,url,deckA,deckB,seed,vp:vpName,secs:+secs,decisions,replies:raw.sent.length,verdicts:tally,manualRoutes:Object.entries(raw.sent.filter(r=>r.verdict==='PASS').reduce((a,r)=>{const att=raw.audit.find(x=>x.id===r.audit.id&&x.stage==='attempted');a[att.route]=(a[att.route]||0)+1;return a},{})),automaticReasons:Object.entries(raw.sent.filter(r=>r.verdict==='AUTOMATIC').reduce((a,r)=>{const att=raw.audit.find(x=>x.id===r.audit.id&&x.stage==='attempted');a[att.route]=(a[att.route]||0)+1;return a},{})),refused:Object.entries(raw.audit.filter(a=>a.stage==='refused').reduce((a,x)=>{const k=x.route+' · '+x.why;a[k]=(a[k]||0)+1;return a},{})),failOrUnknown:unseen.length,failOrUnknownSample:unseen.slice(0,10).map(r=>({rev:r.rev,rt:r.rt,title:r.title,verdict:r.verdict})),spaceAuditByStage:Object.entries(spaceAudit.reduce((a,x)=>{a[x.stage]=(a[x.stage]||0)+1;return a},{})),spaceWhileOpen:{presses:raw.spaceOpen.n},errors:errors.slice(0,5)};
+ fs.writeFileSync(out+'.json',JSON.stringify({summary,raw}));console.log(JSON.stringify(summary));await b.close()})();

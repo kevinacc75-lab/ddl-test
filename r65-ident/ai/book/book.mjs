@@ -267,7 +267,28 @@ export function handTrapUse(d,seat,m,blocked){
  const rank=n=>HT_ORDER.includes(n)?HT_ORDER.indexOf(n):10+SET_ORDER.indexOf(n);opts.sort((a,b)=>rank(a.n)-rank(b.n)||a.c.location-b.c.location);const best=opts[0];if(!best)return wbGhostOgre(d,seat,m,(c,i)=>blocked?.(c,i)||!!neverOnBlock(d,seat,c),()=>key);/* r46 W2 */
  return {index:best.i,card:best.n,reason:best.n+' on '+topName+(extra?' (an Extra Deck monster)':' (one of their key cards)')};
 }
+// r64 J3(b) Sky (ChatGPT sky-implementation-spec-r1 holds, from Akiza's r60 loss replays; authored by ChatGPT, pending
+// Seto/team fact check). Two concrete holds measured on their own (switch SKY_J3B; ON from r64 after its benchmark):
+//  - Eagle Booster protects OUR monster: not activated unless we control a face-up monster (Akiza: Eagle went onto their
+//    Mirrorjade in 4/4 games; the r63 probe saw Eagle offered with only the opponent's monster as target);
+//  - Afterburners! does not destroy their own Mirrorjade while we control a monster (its End Phase wipe), and when another
+//    face-up opposing monster is offered as its target, that one is taken instead (bookPick).
+export const SKY_J3B={on:true};/* r64: ON after the paired benchmark (Sky v WindBot Branded, 2 repeats × 16: candidate 12–20 vs baseline 11–21, 0 errors; no gain claimed, not worse) */
+const MIRRORJADE_CODE=44146295;
+const ownFaceUpMonster=(d,seat)=>d.zone(seat,4).some(x=>x&&(x.position&5));
+function skyJ3bBlock(d,seat,c){
+ if(!SKY_J3B.on||deckId(d,seat)!=='sky')return null;const n=d.name(c?.code||0);
+ if(n==='Sky Striker Mecha - Eagle Booster'&&!ownFaceUpMonster(d,seat))return 'SKY-J3B: Eagle Booster only protects our own monster (none face-up)';
+ if(n==='Sky Striker Maneuver - Afterburners!'&&ownFaceUpMonster(d,seat)){const opp=d.zone(1-seat,4).filter(x=>x&&(x.position&5));if(opp.length&&opp.every(x=>x.code===MIRRORJADE_CODE))return 'SKY-J3B: Afterburners! would destroy their Mirrorjade (End Phase wipe of our monsters)'}
+ return null}
+export function skyJ3bPick(d,seat,m,response){
+ if(!SKY_J3B.on||deckId(d,seat)!=='sky'||m?.type!==M.SELECT_CARD||response?.indicies?.length!==1)return null;
+ const src=d.currentEffect?.code;if(!src||d.name(src)!=='Sky Striker Maneuver - Afterburners!')return null;
+ const cards=m.selects||[],pick=cards[response.indicies[0]];if(!pick||pick.code!==MIRRORJADE_CODE||d.fromEngine(pick.controller)===seat)return null;
+ let best=-1,bv=-1;cards.forEach((c,i)=>{if(i===response.indicies[0]||c.code===MIRRORJADE_CODE||d.fromEngine(c.controller)===seat||c.location!==4)return;const v=oppValue(d,c);if(v>bv){bv=v;best=i}});
+ if(best<0)return null;return {response:{...response,indicies:[best]},rule:'SKY-J3B: Afterburners! on another monster, not their Mirrorjade',card:d.name(cards[best].code)}}
 export function bookActivationBlock(d,seat,c){
+ {const sk=skyJ3bBlock(d,seat,c);if(sk)return sk}/* r64 J3(b) Sky, benchmark switch */
  {const wb=wbActivationBlock(d,seat,c);if(wb)return wb}/* r46 W1/W3 */
  const ht=handTrapHold(d,seat,c);if(ht)return ht;
  {const no=neverOnBlock(d,seat,c);if(no)return no}/* r35 S3 Rev 7: before the book check, so every deck gets it */
@@ -342,6 +363,7 @@ export function bookSummonBlock(d,seat,c,isPayoff){
 export function oppValue(d,c){const card=d.db[c.code]||{},desc=card.desc||'';let v=(c.attack??card.attack??0);if(card.type&EXTRA_TYPES)v+=3000;if(/Quick Effect|during either player's turn|negate/i.test(desc))v+=1500;if(card.type&32)v+=300;if(!(c.position&5))v-=500;return Math.max(0,v)}
 // Card picks inside the book's own effects (search target, Fusion target, materials). Never adds an illegal pick.
 export function bookPick(d,seat,m,response){
+ {const sk=skyJ3bPick(d,seat,m,response);if(sk)return sk}/* r64 J3(b) Sky, benchmark switch */
  {const wb=wbPick(d,seat,m,response,M,R);if(wb)return wb}/* r46 W4 */
  {const ps=wbPosition(d,seat,m,response,M,R);if(ps)return ps}/* r48 S1 */
  if(isBrandedNov08(d.decks?.[seat])&&m?.type===M.SELECT_EFFECTYN&&response?.yes===false&&[45484331,73819701].includes(m.code)&&m.location===4)

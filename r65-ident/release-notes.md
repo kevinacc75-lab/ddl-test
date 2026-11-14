@@ -1,3 +1,22 @@
+# Duel Doctrine Lab · r65 TEST · answer checks tightened · 15 November 2026
+
+From ChatGPT's RELAY-220 review of r63 (MED-R63-1, -2, -3 and the probe findings), all accepted. Built and self-checked by Claude; pending ChatGPT review and the Seto team (offline until 20 Nov). Engine choices, timing and the AI are unchanged.
+
+- **Identity issued after the controls exist (MED-R63-1).** Drawing a prompt now clears the old identity first, draws the controls, and only then issues the new identity, with a new generation number stamped on each submitting surface (sheet, Confirm row, phase buttons, quick bar). The add-on event is published after that. A manual answer is refused if it has no user event, comes from an unknown surface, comes from a surface stamped for an earlier prompt, or does not match the prompt on screen.
+- **Quick bar and Space are manual answers (MED-R63-2).** They are recorded as `manual:click:quick-bar` and `manual:keydown:quick-bar/Space`. Configured passes are `automatic:addon(...)` or `automatic:empty-window-skip`. Every answer has an id with audit stages attempted / refused (why) / queued / not-sent / sent; refusals are recorded before any attempt.
+- **Grouped copies proof (MED-R63-3).** The allowlist is keyed by passcode (Engage 63166095, Reinforcement of the Army 32807846). It uses the link that is actually resolving (the newest unsolved link), requires that link to be the choosing player's, and requires every card's controller to be defined and equal to the choosing player. A **Show each copy** button lists every card as its own row; the original index is sent.
+- **Route check v3 (tools/browser/route-check.cjs).** Pairs each answer with its input exactly (the app records the user event's timeStamp; ties go to the input type the answer names), waits for the card menu to be fully visible before tapping it, and exercises the quick bar by pointer and by a real Space press after closing the sheet. Local result, Sky v Branded seed 3003, 240 s: tablet PASS 33 / AUTOMATIC 47; phone PASS 47 / AUTOMATIC 18; FAIL 0, UNKNOWN 0, refused 0 in both. Space pressed with the sheet open (249 and 4,552 presses): no answers.
+- **Not yet covered by a browser fixture:** Cancel / same-key redraw, a pending answer across a rewind, the inspector and pile menus. These have source/unit checks only.
+
+# Duel Doctrine Lab · r64 TEST · Sky Striker AI fixes · 15 November 2026
+
+Two holds from ChatGPT's sky-implementation-spec-r1 (J3(b); merged with Akiza's r60 loss replays; authored by ChatGPT, pending Seto/team fact check), built by Claude and benchmarked. Our Sky pilot only (deck id "sky"); every other deck and the human player are unaffected.
+
+- **Eagle Booster protects our own monster.** It is not activated unless we control a face-up monster. (Akiza: Eagle went onto Branded's Mirrorjade in 4/4 games; the r63 probe saw Eagle offered with only the opponent's monster as target.) In the benchmark this hold fired 107 times in 11 of 32 games.
+- **Afterburners! and their Mirrorjade.** Not activated when their own Mirrorjade is the only face-up opposing monster and we control a monster (its End Phase wipe); when another face-up opposing monster is offered as the target, that one is taken instead (4 + 4 times).
+- **Benchmark (paired, same machine, both arms in parallel):** Sky (ours) vs WindBot Branded, RELAY-122 seeds × 8, both first-player orders = 16 games per arm per repeat, 2 repeats. Baseline 6–10 and 5–11 (11–21); with the holds 5–11 and 7–9 (12–20). 0 engine errors, 0 rejections in all arms. Baseline vs itself differed in 1 game; baseline vs candidate in 2 and 5. **No gain is claimed**; it is not worse, and both holds remove a plain misplay, so they are ON (SKY_J3B in ai/book/book.mjs; the benchmark can switch it off).
+- J3(a) shared hand-trap policy stays OFF (r63 notes). The larger J3(b) Sky lines (draw, protect, break, recycle, recover) are not wired yet.
+
 # Duel Doctrine Lab · r63 TEST · answer checks + grouped copies · 14 November 2026
 
 From ChatGPT's RELAY-216 (J1-01) and RELAY-218 (MED-R62-1…4, grouped-copy spec r1). Built and self-verified by Claude; pending ChatGPT review and the Seto team (offline until 20 Nov).

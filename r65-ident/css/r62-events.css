@@ -57,3 +57,5 @@ body.in-duel[data-pc-play="1"] #choices .choice-row{display:flex;align-items:str
 body.in-duel[data-pc-play="1"] #choices .choice-row>.choice{flex:1 1 auto;min-height:44px}
 body.in-duel[data-pc-play="1"] #choices .choice-row>.inspect{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
 body.in-duel[data-pc-play="1"] #choices .choice-copy-count{margin-inline-start:.4em;color:var(--gold,#dab77d);font-weight:600;white-space:nowrap}
+/* r65: "Show each copy" (RELAY-220 grouped-copy proof): a plain text button under the grouped rows */
+body.in-duel[data-pc-play="1"] #choices .choice-show-copies{display:block;margin:6px 0 0;min-height:44px;padding:0 12px;background:none;border:1px solid #dab77d55;border-radius:10px;color:#dab77d;font-size:14px}
