@@ -1,0 +1,234 @@
+{
+  "build": "r66.1",
+  "commit": "3763c770e3187192f0289a9281c7cc4fe191e4b1",
+  "url": "https://kevinacc75-lab.github.io/ddl-test/r66-1-menu/",
+  "authorship": "ChatGPT; native UI observations; pending Claude automation and independent Seto/team check",
+  "decks": {
+    "A": "Zero Protocol / Sky Striker",
+    "B": "Kevy’s Branded Deck"
+  },
+  "seed": 3003,
+  "first": "A",
+  "humanSeat": "A",
+  "mode": "Play against the computer",
+  "pace": "Duel default",
+  "autoPlace": true,
+  "chainSetting": "Ask me",
+  "scope": "5 reached cases, 1 near-miss, 4 other not-reached cases = 10 requested slots; not automated native fixtures yet",
+  "commonSequence": [
+    "Start the above matchup. Wait for the Draw Phase Response window with Hornet Drones and no chain.",
+    "Press No, do not activate (first empty window). Wait for opponent Fuwalos CL1.",
+    "Press No, do not chain to Mulcharmy Fuwalos.",
+    "At the next Draw empty window press No, do not activate once more.",
+    "At the following Draw empty window press Hornet Drones Yes, activate. Wait for token summon and Roze optional-effect question.",
+    "Choose No on Use Sky Striker Ace - Roze’s effect?. Let empty automatic windows finish; reach Main Phase 1.",
+    "Open View actions. Click the FIRST Special Summon · Sky Striker Ace - Kagari (three Kagari copies are offered).",
+    "Stop at Choose Link materials; only Use · Sky Striker Ace Token and Cancel are offered.",
+    "Click Use · Sky Striker Ace Token. Allow auto-placement; wait for empty-chain prompt offering Kagari and Roze.",
+    "Click Activate this effect: Sky Striker Ace - Kagari, Recover a Sky Striker Spell.",
+    "Stop at Choose a card to add to hand, Hornet Drones in GY, required 1. This is the activation target, not a cost or resolving search.",
+    "Select Hornet Drones then Confirm. Journal now records Target · Hornet Drones, and chain response offers Roze.",
+    "Choose Yes, chain Roze. At the next own response window to CL2, choose No, do not chain (Widow Anchor).",
+    "Allow auto-placement during Resolve Chain 2. Stop at Choose battle position: Face-up Attack / Face-up Defence for Roze."
+  ],
+  "cases": [
+    {
+      "id": "C01",
+      "status": "NOT_REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [],
+      "expectedHeaderRowId": null,
+      "expectedHeader": null,
+      "observedTitle": null,
+      "notes": "Built CL2 Roze above CL1 Kagari, but Kagari target was selected before resolution; do not mislabel that as CL1 asking during resolution. No proven Deck selection after CL2 in this bounded traversal."
+    },
+    {
+      "id": "C02",
+      "status": "NOT_REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [],
+      "expectedHeaderRowId": null,
+      "expectedHeader": null,
+      "observedTitle": null,
+      "notes": "No selectable activation cost reached. Fuwalos discard was automatic from the AI hand, not a player cost-selection fixture. Do not call Hornet or Linkage resolution actions costs."
+    },
+    {
+      "id": "C03",
+      "status": "REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [
+        "Start the above matchup. Wait for the Draw Phase Response window with Hornet Drones and no chain.",
+        "Press No, do not activate (first empty window). Wait for opponent Fuwalos CL1.",
+        "Press No, do not chain to Mulcharmy Fuwalos.",
+        "At the next Draw empty window press No, do not activate once more.",
+        "At the following Draw empty window press Hornet Drones Yes, activate. Wait for token summon and Roze optional-effect question.",
+        "Choose No on Use Sky Striker Ace - Roze’s effect?. Let empty automatic windows finish; reach Main Phase 1.",
+        "Open View actions. Click the FIRST Special Summon · Sky Striker Ace - Kagari (three Kagari copies are offered).",
+        "Stop at Choose Link materials; only Use · Sky Striker Ace Token and Cancel are offered.",
+        "Click Use · Sky Striker Ace Token. Allow auto-placement; wait for empty-chain prompt offering Kagari and Roze.",
+        "Click Activate this effect: Sky Striker Ace - Kagari, Recover a Sky Striker Spell.",
+        "Stop at Choose a card to add to hand, Hornet Drones in GY, required 1. This is the activation target, not a cost or resolving search."
+      ],
+      "expectedHeaderRowId": "A-SELECT_CARD-A",
+      "expectedHeader": "Activating · Sky Striker Ace - Kagari · choose 1 card from your GY",
+      "observedTitle": "Choose a card to add to hand",
+      "notes": "Target selection at activation. Next journal Target entry confirms it; no Resolve Chain 1 before this selection. This build title confuses the future add with the current target step. With reviewed role refinement prefer choose 1 target in your GY; never COST. Enum should be captured by Claude when automating."
+    },
+    {
+      "id": "C04",
+      "status": "REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [
+        "Start the above matchup. Wait for the Draw Phase Response window with Hornet Drones and no chain.",
+        "Press No, do not activate (first empty window). Wait for opponent Fuwalos CL1.",
+        "Press No, do not chain to Mulcharmy Fuwalos.",
+        "At the next Draw empty window press No, do not activate once more.",
+        "At the following Draw empty window press Hornet Drones Yes, activate. Wait for token summon and Roze optional-effect question.",
+        "Choose No on Use Sky Striker Ace - Roze’s effect?. Let empty automatic windows finish; reach Main Phase 1.",
+        "Open View actions. Click the FIRST Special Summon · Sky Striker Ace - Kagari (three Kagari copies are offered).",
+        "Stop at Choose Link materials; only Use · Sky Striker Ace Token and Cancel are offered."
+      ],
+      "expectedHeaderRowId": "A-SELECT_UNSELECT_CARD-S",
+      "expectedHeader": "Summon procedure · Sky Striker Ace - Kagari · adjust the selected cards",
+      "observedTitle": "Choose Link materials",
+      "notes": "Legal Link-material procedure, no resolving chain. Expected native type/row inferred from the renderer; capture raw type when automating. Candidate is the Token; do not treat token removal as a cost discard."
+    },
+    {
+      "id": "C05",
+      "status": "NEAR_MISS_NOT_QUALIFYING",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [
+        "Start the above matchup. Wait for the Draw Phase Response window with Hornet Drones and no chain.",
+        "Press No, do not activate (first empty window). Wait for opponent Fuwalos CL1.",
+        "Press No, do not chain to Mulcharmy Fuwalos.",
+        "At the next Draw empty window press No, do not activate once more.",
+        "At the following Draw empty window press Hornet Drones Yes, activate. Wait for token summon and Roze optional-effect question.",
+        "Choose No on Use Sky Striker Ace - Roze’s effect?. Let empty automatic windows finish; reach Main Phase 1."
+      ],
+      "expectedHeaderRowId": "A-SELECT_EFFECTYN-A",
+      "expectedHeader": "Activating · Sky Striker Ace - Roze · use this effect?",
+      "observedTitle": "Use Sky Striker Ace - Roze’s effect?",
+      "notes": "Question follows Hornet Drones finishing and entering GY. Treat it as a follow-up trigger candidate; no evidence it is a Yes/No inside a still-resolving effect. Does not satisfy requested C05. Stage/source fallback if freshness unavailable."
+    },
+    {
+      "id": "C06",
+      "status": "REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [
+        "Start the above matchup. Wait for the Draw Phase Response window with Hornet Drones and no chain."
+      ],
+      "expectedHeaderRowId": "A-SELECT_CHAIN-E",
+      "expectedHeader": "Draw Phase · no Chain Link · choose an effect",
+      "observedTitle": "Response window",
+      "notes": "Observed body explicitly says Draw Phase, response window, nothing is on the chain. Hornet Drones offered from hand."
+    },
+    {
+      "id": "C07",
+      "status": "REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [
+        "Start the above matchup. Wait for the Draw Phase Response window with Hornet Drones and no chain.",
+        "Press No, do not activate (first empty window). Wait for opponent Fuwalos CL1."
+      ],
+      "expectedHeaderRowId": "A-SELECT_CHAIN-C",
+      "expectedHeader": "Response to CL 1 · Mulcharmy Fuwalos · choose an effect",
+      "observedTitle": "Chain response",
+      "notes": "Observed prior context CL1 Fuwalos; Hornet Drones is the possible response, not the source of the effect being responded to. Wait for AI Fuwalos after step2."
+    },
+    {
+      "id": "C08",
+      "status": "NOT_REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [],
+      "expectedHeaderRowId": null,
+      "expectedHeader": null,
+      "observedTitle": null,
+      "notes": "Stopped in first Main Phase during Roze resolution; no attack-target/damage-step case observed."
+    },
+    {
+      "id": "C09",
+      "status": "REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [
+        "Start the above matchup. Wait for the Draw Phase Response window with Hornet Drones and no chain.",
+        "Press No, do not activate (first empty window). Wait for opponent Fuwalos CL1.",
+        "Press No, do not chain to Mulcharmy Fuwalos.",
+        "At the next Draw empty window press No, do not activate once more.",
+        "At the following Draw empty window press Hornet Drones Yes, activate. Wait for token summon and Roze optional-effect question.",
+        "Choose No on Use Sky Striker Ace - Roze’s effect?. Let empty automatic windows finish; reach Main Phase 1.",
+        "Open View actions. Click the FIRST Special Summon · Sky Striker Ace - Kagari (three Kagari copies are offered).",
+        "Stop at Choose Link materials; only Use · Sky Striker Ace Token and Cancel are offered.",
+        "Click Use · Sky Striker Ace Token. Allow auto-placement; wait for empty-chain prompt offering Kagari and Roze.",
+        "Click Activate this effect: Sky Striker Ace - Kagari, Recover a Sky Striker Spell.",
+        "Stop at Choose a card to add to hand, Hornet Drones in GY, required 1. This is the activation target, not a cost or resolving search.",
+        "Select Hornet Drones then Confirm. Journal now records Target · Hornet Drones, and chain response offers Roze.",
+        "Choose Yes, chain Roze. At the next own response window to CL2, choose No, do not chain (Widow Anchor).",
+        "Allow auto-placement during Resolve Chain 2. Stop at Choose battle position: Face-up Attack / Face-up Defence for Roze."
+      ],
+      "expectedHeaderRowId": "A-SELECT_POSITION-R",
+      "expectedHeader": "Resolving CL 2 · Sky Striker Ace - Roze · choose a battle position",
+      "observedTitle": "Choose battle position",
+      "notes": "This is inside the effect that will summon Roze, after automatic field placement, before summon completion. Not a separate summon-procedure stage. Journal Resolve Chain 2 is visible while both chain tiles still say ACTIVATED; header must not infer semantic timing from those tiles."
+    },
+    {
+      "id": "C10",
+      "status": "NOT_REACHED",
+      "decks": {
+        "A": "Zero Protocol / Sky Striker",
+        "B": "Kevy’s Branded Deck"
+      },
+      "seed": 3003,
+      "first": "A",
+      "steps": [],
+      "expectedHeaderRowId": null,
+      "expectedHeader": null,
+      "observedTitle": null,
+      "notes": "No opponent set-card activation observed; Fuwalos from hand is not a face-down source. Must not reuse this as hidden-source clearance."
+    }
+  ]
+}
