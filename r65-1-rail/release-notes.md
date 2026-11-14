@@ -1,3 +1,21 @@
+# Duel Doctrine Lab · r65.1 TEST · choice list no longer covered · 15 November 2026
+
+Two screen faults found by Claude's route check v3 on the live r65 (both present since r62). Self-checked by Claude; pending ChatGPT review and the Seto team. Presentation only (CSS); engine, timing and answers unchanged.
+
+- **Landscape: the scene panel covered the pick list.** When an effect asks you to choose mid-resolution (seen: "Choose a card to add to hand" while the CL2 Ghost Ogre panel was still showing), the resolving-scene panel and the decision sheet both sat in the right rail and the panel covered the first choices. 192 of the probe's presses on that sheet landed on the panel's text in one 240 s run. While YOUR decision sheet is open, the scene panel now steps aside; it comes back when the sheet closes, and the chain stack on the left keeps every link's text. After the fix: 1 miss (a 0.3 s cut-in animation).
+- **Phone: Close scrolled away.** The sheet's Close button was absolutely placed inside the scrolling sheet, so after scrolling the list a tap where Close had been hit the board (the opponent's Extra Deck pile, which opened its viewer). Close is now pinned to the top right while the list scrolls. After the fix: Close reachable 32/32.
+- Route check v3 also gained: click target paths, a screenshot when a press aimed at the sheet lands elsewhere, Close reachability, card-tap reachability, and closing a stray pile viewer like a person.
+
+# Duel Doctrine Lab · r65 TEST · answer checks tightened · 15 November 2026
+
+From ChatGPT's RELAY-220 review of r63 (MED-R63-1, -2, -3 and the probe findings), all accepted. Built and self-checked by Claude; pending ChatGPT review and the Seto team (offline until 20 Nov). Engine choices, timing and the AI are unchanged.
+
+- **Identity issued after the controls exist (MED-R63-1).** Drawing a prompt now clears the old identity first, draws the controls, and only then issues the new identity, with a new generation number stamped on each submitting surface (sheet, Confirm row, phase buttons, quick bar). The add-on event is published after that. A manual answer is refused if it has no user event, comes from an unknown surface, comes from a surface stamped for an earlier prompt, or does not match the prompt on screen.
+- **Quick bar and Space are manual answers (MED-R63-2).** They are recorded as `manual:click:quick-bar` and `manual:keydown:quick-bar/Space`. Configured passes are `automatic:addon(...)` or `automatic:empty-window-skip`. Every answer has an id with audit stages attempted / refused (why) / queued / not-sent / sent; refusals are recorded before any attempt.
+- **Grouped copies proof (MED-R63-3).** The allowlist is keyed by passcode (Engage 63166095, Reinforcement of the Army 32807846). It uses the link that is actually resolving (the newest unsolved link), requires that link to be the choosing player's, and requires every card's controller to be defined and equal to the choosing player. A **Show each copy** button lists every card as its own row; the original index is sent.
+- **Route check v3 (tools/browser/route-check.cjs).** Pairs each answer with its input exactly (the app records the user event's timeStamp; ties go to the input type the answer names), waits for the card menu to be fully visible before tapping it, and exercises the quick bar by pointer and by a real Space press after closing the sheet. Local result, Sky v Branded seed 3003, 240 s: tablet PASS 33 / AUTOMATIC 47; phone PASS 47 / AUTOMATIC 18; FAIL 0, UNKNOWN 0, refused 0 in both. Space pressed with the sheet open (249 and 4,552 presses): no answers.
+- **Not yet covered by a browser fixture:** Cancel / same-key redraw, a pending answer across a rewind, the inspector and pile menus. These have source/unit checks only.
+
 # Duel Doctrine Lab · r64 TEST · Sky Striker AI fixes · 15 November 2026
 
 Two holds from ChatGPT's sky-implementation-spec-r1 (J3(b); merged with Akiza's r60 loss replays; authored by ChatGPT, pending Seto/team fact check), built by Claude and benchmarked. Our Sky pilot only (deck id "sky"); every other deck and the human player are unaffected.
