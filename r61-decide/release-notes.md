@@ -1,3 +1,22 @@
+# Duel Doctrine Lab · r61 TEST · one decision area · 14 November 2026
+
+Step 1 of ChatGPT's Duel-screen-declutter-r1 (RELAY-213, Drive 19pg9A0E…), answering Kevy's "so much going on the screen" (14 Nov 15:30). Built and self-verified by Claude; pending ChatGPT's integration review and the Seto team (offline until 20 Nov). CSS only (css/r61-decide.css, loaded last); engine choices, timing and answers are unchanged.
+
+- **One route per question.** While the decision sheet is open in Play, the duplicate routes to the same question hide: the "View actions" card, the floating "No response" bar and "Return to field". The sheet keeps its own No and Close buttons. (ChatGPT's live sample found three routes for one Yes/No.)
+- **Landscape (tablets, desktop, phones held sideways): a right-hand rail.** The sheet used to be a large, mostly empty panel over the whole board. It is now a rail at the right, as tall as its content, drawn at real pixel size (counter-scaled against the stage scale, so its text is never shrunk), and the board narrows to sit beside it. 1280×900: rail 360 px, board fully visible. 844×390: rail 280 px with 13 px text and 44 px rows.
+- **Phone portrait: a shorter bottom sheet** (at most 46% of the screen, scrolling inside), with the Confirm row kept in view while a long list scrolls. The chain-setting button steps aside while the sheet is open.
+- **Less chrome inside the sheet:** one title (the "YOUR DECISION" eyebrow and the nested frame are gone), Close in the title row, a solid background so the board never shows through.
+- Not in this step: the chain/event presentation (one event representation), the flight labels, notices and watch transport (step 2), and ChatGPT's r2 addendum (Akiza's playtest).
+
+# Duel Doctrine Lab · r60.1 TEST · response-window safety fix · 14 November 2026
+
+From the Seto team's RELAY-213 handover (A-1 HIGH, present since r59). Built and self-verified by Claude; the Seto team is offline until 20 Nov, so this is pending their review.
+
+- **A-1 (HIGH): a leftover "No response" button could pass a window you never saw.** While the next prompt waited behind "Get ready…", the previous prompt's No response bar stayed live; a tap (or Space) queued a pass for the new, unseen prompt. Reproduced on live r60 (Sky v Branded, seed 3003): 5 stale bars, 5 unseen passes, including the Widow Anchor / Linkage! / Hornet Drones window Seto named. Fix: while waiting, app.mjs tells the add-ons no human decision is on screen (the bar hides and any retry stops), and any answer offered for an older prompt is refused. After the fix: 0 and 0 on the same seed.
+- **A-2:** the behaviour is checked in a browser (tools/browser/stale-bar-check.cjs); the new node tests are source checks. A DOM-free unit test would need app.mjs restructuring.
+- **LOW wording:** a response window with nothing on the chain (after the draw, in the Standby Phase) now says "Response window", "You can activate …" and "No, do not activate". The engine choices are unchanged. The quick bar's own label is unchanged (play-comfort.mjs is pinned).
+- **B-1:** chokepoints.mjs header comment now says CP-001 r1.1 is rules-checked (RELAY-210).
+
 # Duel Doctrine Lab · r60 TEST · clearer duel screen + review fixes · 14 November 2026
 
 From Kevy's playtest (14 Nov 15:30 AEDT) and the Seto team's RELAY-210 LOWs, with ChatGPT's RELAY-211 design call. Built and self-verified by Claude; independent review requested.

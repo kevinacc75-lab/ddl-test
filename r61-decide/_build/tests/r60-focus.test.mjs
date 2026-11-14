@@ -8,7 +8,7 @@ test('(R60-1) card text: the rest of the printed text is fully readable; only th
  assert.match(css,/#event-effect-text \.effect-context,\s*body\[data-theme\] #event-stage #event-effect-text \.effect-context\{opacity:1!important;filter:none!important;color:#eef1f8!important;font-size:1em!important\}/);
  assert.match(css,/#card-live-effect \.effect-context\{opacity:1!important/);assert.match(css,/#effect-dock-text \.effect-context\{opacity:1!important/);
  assert.doesNotMatch(css,/url\(|@import/i);
- const links=[...html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map(m=>m[1]);assert.equal(links.at(-1),'./css/r60-focus.css','loaded last');
+ const links=[...html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map(m=>m[1]);assert.equal(links.at(-2),'./css/r60-focus.css','loaded after every older sheet (r61-decide.css follows it)');
  assert.ok(JSON.parse(read('offline-assets.json')).includes('./css/r60-focus.css'),'saved for offline use');
  // the highlight itself is untouched: effect-focus still wraps the active clause in <mark data-active-clause>
  assert.match(read('effect-focus.mjs'),/<mark data-active-clause><strong>/);

@@ -1,5 +1,5 @@
 // r57 Choke Point Lab content (13 Nov 2026). Format and CP-001 r1 authored by ChatGPT (RELAY-193, T13); built by Claude.
-// factCheck: pending Seto team; strategyReview: candidate (NOT a "best choke point" claim). Bubbles are ChatGPT's exact
+// factCheck: CP-001 r1.1 rules-checked by the Seto team in RELAY-210 (r60; was pending until then); strategyReview: candidate (NOT a "best choke point" claim). Bubbles are ChatGPT's exact
 // text (apostrophes typeset). Builder choices, listed so the team can check them:
 //  - mood "pointing" uses the tutors' presenting pose with its own spoken label (r58, tutors.mjs POSES);
 //  - the Pass branch (F0) shows ChatGPT's replacement line, then beats 5-7; Ash-only beats 3, 4 and 8 are not shown there

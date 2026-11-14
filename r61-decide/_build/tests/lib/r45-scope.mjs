@@ -6,11 +6,11 @@ export const R45_NEW=['ai/v4-flags.mjs','ai/book/v4-plan.mjs',...['ai/r46-flags.
 export const R52_CHANGED=['app-shell.mjs','pile-glow.mjs',/* r55 deck brains v1.1 (Seto team RELAY-179 fixes, ChatGPT RELAY-185 deltas): */'ai/book/dtw-plan.mjs','ai/book/hero-lines.mjs','ai/book/kashtira-lines.mjs','ai/book/mikanko-lines.mjs','ai/book/toon-lines.mjs','ai/brain/blueeyes-brain.mjs'/* r56 text only */,'ai/book/branded-lines.mjs'/* r58 comment only */,'load.mjs'/* r58.2 slow-connection download */,'ai/brain/dtw-brain.mjs','ai/brain/toon-brain.mjs'];/* r52: pile effect menu (pile-glow.mjs) wired with submit/getDecision/getDb (app-shell.mjs) */
 export const R45_DISPLAY=['decks.json'];/* Branded display name only: "Kevy's Branded Deck" (ids, keys, lists, format unchanged) */
 export const R45_BUILD=/^const BUILD='ddl-test r47 /;/* r46-adapted: the current build identity */
-export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-14-r60-focus'/;/* r46-adapted */
+export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-14-r61-decide'/;/* r46-adapted */
 export const R45_NAME="Kevy's Branded Deck";
 // r46 (Kevy 11 Nov 2026 14:54 AEDT): WindBot port (ai/book/book.mjs, optimal-pilot.mjs hooks; new ai/r46-flags.mjs, ai/book/windbot-port.mjs)
 // and victory boss art (new victory-boss.mjs, css/aurora.css append, index.html script tag). Identity is now r46.
-export const R46_TITLE='<title>TEST r60 — Duel Doctrine Lab · Clearer duel screen + review fixes</title>';
+export const R46_TITLE='<title>TEST r61 — Duel Doctrine Lab · One decision area</title>';
 export const R46_SCRIPT='<script type="module" src="victory-boss.mjs"></script>';
 
 // r47 (Claude, 11 Nov 2026): the Concede button is the only r47 change outside the AI rule files, app.mjs and css/aurora.css.
@@ -24,7 +24,7 @@ const R48_UNDO=JSON.parse(fs48.readFileSync(new URL('../fixtures/r48-worker-undo
 export const R49_LINK='<link rel="stylesheet" href="./css/r49-mobile.css">';
 // r49.1: library-worker.mjs gained art-additions.json loading. The exact r49.1 text maps back to the r49 text (fixture).
 const R491_LW=JSON.parse(fs48.readFileSync(new URL('../fixtures/r49_1-library-worker-undo.json',import.meta.url),'utf8'));
-export function r48Undo(file,text){if(file==='library-worker.mjs'){if(text!==R491_LW.from)throw Error('library-worker.mjs is not the r49.1 text');return R491_LW.to}if(file==='index.html'){let t=text;/* r52: the polish sheet link and the title-showcase script come out first, each exactly once */for(const R52 of ['\n<link rel="stylesheet" href="./css/r60-focus.css">'/* r60 */,'<link rel="stylesheet" href="./css/r58-learn-temple.css">'/* r58 */,'<link rel="stylesheet" href="./css/r53-learn.css">','<script type="module" src="learn/learn.mjs"></script>'/* r53 */,'<link rel="stylesheet" href="./css/r52-polish.css">','<script type="module" src="title-showcase.mjs"></script>']){if(t.split(R52).length!==2)throw Error('r52 insertion not found exactly once: '+R52);t=t.replace(R52,'')}/* r50: the look sheet link and the new default theme option come out first, each exactly once */
+export function r48Undo(file,text){if(file==='library-worker.mjs'){if(text!==R491_LW.from)throw Error('library-worker.mjs is not the r49.1 text');return R491_LW.to}if(file==='index.html'){let t=text;/* r52: the polish sheet link and the title-showcase script come out first, each exactly once */for(const R52 of ['\n<link rel="stylesheet" href="./css/r61-decide.css">'/* r61 */,'\n<link rel="stylesheet" href="./css/r60-focus.css">'/* r60 */,'<link rel="stylesheet" href="./css/r58-learn-temple.css">'/* r58 */,'<link rel="stylesheet" href="./css/r53-learn.css">','<script type="module" src="learn/learn.mjs"></script>'/* r53 */,'<link rel="stylesheet" href="./css/r52-polish.css">','<script type="module" src="title-showcase.mjs"></script>']){if(t.split(R52).length!==2)throw Error('r52 insertion not found exactly once: '+R52);t=t.replace(R52,'')}/* r50: the look sheet link and the new default theme option come out first, each exactly once */
   const R50_LINK='<link rel="stylesheet" href="./css/r50-egypt.css">',EG='<option value="egypt">Lapis &amp; Gold (Egyptian, default)</option><option value="aurora">Aurora</option>';
   if(t.split(R50_LINK).length!==2)throw Error('r50 stylesheet link not found exactly once');t=t.replace(R50_LINK,'');
   if(t.split(EG).length!==3)throw Error('r50 theme options not found exactly twice');t=t.split(EG).join('<option value="aurora">Aurora (default)</option>');
