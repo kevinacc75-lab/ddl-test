@@ -83,10 +83,25 @@ export function installLearn(root=document){
 <p class="lr-note">${esc(REVIEW.authored)}. Each lesson shows its own engine check from this build’s recorded test run.</p><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
  // r58: ChatGPT's learn-temple-r1 layout (RELAY-202): tutor above the board in DOM order, a scrolling workspace, a footer
  // with badges, flag and controls. Both C1 options are styled the same and focus lands on the prompt, not on an option.
+ // r60 (ChatGPT RELAY-211, from Seto team RELAY-210 LOW-1): on short screens the footer stays in normal flow, so a small
+ // cue under the bubble says where the controls are. It only scrolls and moves focus; it never answers, advances or
+ // picks a C1 option, and it shows only while the controls are out of view.
+ function jumpHTML(choosing,last,cp){const [text,name]=choosing?['Choose ↓','Scroll to your two choices']:last?[cp?'Compare and ruling ↓':'The ruling ↓',cp?'Scroll to the Compare and ruling button':'Scroll to The ruling button']:['Next ↓','Scroll to the Next button'];
+  return `<div class="lr-jumprow"><button type="button" class="lr-jump" data-act="jump" aria-label="${esc(name)}" hidden>${esc(text)}</button></div>`}
+ function jumpTarget(){return el.querySelector('.lr-footer .lr-controls')}
+ function scroller(n){for(let p=n?.parentElement;p&&p!==document.body;p=p.parentElement){const o=getComputedStyle(p).overflowY;if((o==='auto'||o==='scroll')&&p.scrollHeight>p.clientHeight+1)return p}return null}
+ function syncJump(){const j=el.querySelector('.lr-jump'),t=jumpTarget();if(!j||!t)return;const sc=scroller(t),r=t.getBoundingClientRect(),top=sc?Math.max(0,sc.getBoundingClientRect().top):0,bottom=Math.min(innerHeight,sc?sc.getBoundingClientRect().bottom:innerHeight);
+  const inView=r.top>=top-1&&r.bottom<=bottom+1;if(j.hidden!==inView)j.hidden=inView}
+ function jump(){const t=jumpTarget();if(!t)return;t.scrollIntoView({block:'end',behavior:reduced()?'auto':'smooth'});(el.querySelector('#lr-choice-label')||t.querySelector('.primary'))?.focus({preventScroll:true})}
+ let jumpWired=false;
+ function wireJump(){if(jumpWired)return;jumpWired=true;el.addEventListener('scroll',()=>{if(view==='play')requestAnimationFrame(syncJump)},{capture:true,passive:true});addEventListener('resize',()=>{if(view==='play'&&!el.hidden)syncJump()});
+  if(typeof ResizeObserver==='function')jumpRO=new ResizeObserver(()=>{if(view==='play'&&!el.hidden)syncJump()})}
+ let jumpRO=null;function watchJump(){if(!jumpRO)return;jumpRO.disconnect();jumpRO.observe(el);const w=el.querySelector('.lr-workspace');if(w)jumpRO.observe(w)}
  function player(){const l=ALL[lesson],seq=beatsOf(l),b=seq[beat],choosing=!!(b.choice&&!branch),last=!choosing&&beat===seq.length-1,cp=isCP(l),srcLed=(b.tags||[]).includes('SOURCE-LED');
   return `<div class="lr-screen lr-play" data-studio="temple" data-mood="${esc(b.mood)}"><div class="lr-top"><button type="button" class="lr-icon" data-act="home" aria-label="Back to lessons">‹</button><div class="lr-titles"><span class="lr-eyebrow">${cp?'CHOKE POINT LAB':'RULING DESK'} · ${esc(l.id)}${cp&&branch?' · '+esc(branchLabel(l)):''}</span><b>${esc(l.title)}</b></div>${soundBtn()}</div>
 <div class="lr-progress" aria-label="Step ${beat+1} of ${seq.length}${choosing?' so far':''}">${seq.map((_,i)=>`<span class="${i<beat?'past':i===beat?'now':''}"></span>`).join('')}${choosing?'<span class="lr-more" aria-hidden="true"></span>':''}</div>
 <div class="lr-talk"><div class="lr-guide">${guideSVG(b.mood)}</div><div class="lr-bubble" aria-live="polite"><span class="lr-who">${esc(guideName())}</span><p>${esc(b.say)}</p>${b.caption?`<p class="lr-caption">${esc(b.caption)}</p>`:''}</div></div>
+${jumpHTML(choosing,last,cp)}
 <div class="lr-workspace" data-beat="${beat}"><div class="lr-board">${boardHTML(b.board)}</div>
 ${textHTML(b.text,textOpen)}
 ${(b.tags||[]).length?`<div class="lr-tags">${b.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
@@ -116,8 +131,8 @@ ${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow"
 <div class="lr-controls"><button type="button" data-act="export" ${q.length?'':'disabled'}>Export for review</button><button type="button" class="primary" data-act="home">Done</button></div><div class="lr-toast" role="status" aria-live="polite"></div></div>`}
  function draw(focusSel){el.innerHTML=view==='home'?home():view==='play'?player():view==='ruling'?ruling():view==='guided'?guided():queue();el.dataset.view=view;el.dataset.motion=reduced()?'reduced':'full';
   const f=focusSel&&el.querySelector(focusSel)||el.querySelector('#lr-choice-label,.primary,[data-act=list],[data-act=close]');f?.focus({preventScroll:true});
-  if(view==='play'){const w=el.querySelector('.lr-workspace');if(w)w.scrollTop=0;el.querySelector('.lr-bubble')?.scrollIntoView({block:'nearest',behavior:'auto'});
-   el.querySelector('details.lr-text')?.addEventListener('toggle',e=>{textOpen=e.target.open})}}
+  if(view==='play'){const w=el.querySelector('.lr-workspace');if(w)w.scrollTop=0;el.querySelector('.lr-bubble')?.scrollIntoView({block:'nearest',behavior:'auto'});wireJump();watchJump();syncJump();
+   el.querySelector('details.lr-text')?.addEventListener('toggle',e=>{textOpen=e.target.open;syncJump()})}}
  function go(v,focus){view=v;draw(focus)}
  // r58: selector for the element that has focus now, so a redraw that is not caused by the user keeps their place.
  function keepFocus(){const a=document.activeElement;if(!a||!el.contains(a))return null;const d=a.dataset||{};
@@ -141,7 +156,7 @@ ${cp&&l.question?`<details class="lr-question"><summary><span class="lr-eyebrow"
   if(a==='otherbranch'){const l=ALL[lesson],ci=l.beats.filter(x=>!x.branch).findIndex(x=>x.choice),o=l.beats.find(x=>x.choice).choice.options.find(x=>x.branch!==branch);branch=o.branch;beat=ci+1;return playBeat()}
   if(a==='music'){prefs.music=prefs.music===false;save();syncMusic();draw('[data-act=music]');return}
   if(a==='sound'){prefs.sound=!prefs.sound;save();draw('[data-act=sound]');cue('paw',prefs.sound);return}
-  if(a==='next'){beat++;return playBeat()}if(a==='back'&&beat>0){beat--;if(isCP(ALL[lesson])&&beatsOf(ALL[lesson])[beat]?.choice)branch=null;return playBeat()}if(a==='replay'){return playBeat()}
+  if(a==='jump')return jump();if(a==='next'){beat++;return playBeat()}if(a==='back'&&beat>0){beat--;if(isCP(ALL[lesson])&&beatsOf(ALL[lesson])[beat]?.choice)branch=null;return playBeat()}if(a==='replay'){return playBeat()}
   if(a==='ruling'){prefs.progress[ALL[lesson].id]={done:true,beat,...(isCP(ALL[lesson])?{branch}:{})};save();go('ruling');cue('chime',prefs.sound);return}
   if(a==='restart'){beat=0;branch=null;return playBeat()}if(a==='nextlesson'){lesson++;beat=0;branch=null;return playBeat()}
   if(t.dataset.tutor){const r=selectTutor(t.dataset.tutor);draw('button[data-tutor="'+t.dataset.tutor+'"]')/* r58 RELAY-199 MED-1: the hero svg also carries data-tutor */;toast(r.tutor.shortName+(r.persisted?' will be your tutor.':' will be your tutor this session.'));cue('chime',prefs.sound);return}

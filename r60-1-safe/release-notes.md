@@ -1,3 +1,23 @@
+# Duel Doctrine Lab · r60.1 TEST · response-window safety fix · 14 November 2026
+
+From the Seto team's RELAY-213 handover (A-1 HIGH, present since r59). Built and self-verified by Claude; the Seto team is offline until 20 Nov, so this is pending their review.
+
+- **A-1 (HIGH): a leftover "No response" button could pass a window you never saw.** While the next prompt waited behind "Get ready…", the previous prompt's No response bar stayed live; a tap (or Space) queued a pass for the new, unseen prompt. Reproduced on live r60 (Sky v Branded, seed 3003): 5 stale bars, 5 unseen passes, including the Widow Anchor / Linkage! / Hornet Drones window Seto named. Fix: while waiting, app.mjs tells the add-ons no human decision is on screen (the bar hides and any retry stops), and any answer offered for an older prompt is refused. After the fix: 0 and 0 on the same seed.
+- **A-2:** the behaviour is checked in a browser (tools/browser/stale-bar-check.cjs); the new node tests are source checks. A DOM-free unit test would need app.mjs restructuring.
+- **LOW wording:** a response window with nothing on the chain (after the draw, in the Standby Phase) now says "Response window", "You can activate …" and "No, do not activate". The engine choices are unchanged. The quick bar's own label is unchanged (play-comfort.mjs is pinned).
+- **B-1:** chokepoints.mjs header comment now says CP-001 r1.1 is rules-checked (RELAY-210).
+
+# Duel Doctrine Lab · r60 TEST · clearer duel screen + review fixes · 14 November 2026
+
+From Kevy's playtest (14 Nov 15:30 AEDT) and the Seto team's RELAY-210 LOWs, with ChatGPT's RELAY-211 design call. Built and self-verified by Claude; independent review requested.
+
+- **Card text is highlighted, not dimmed** (Kevy: "can we have it that the card text is just highlighted instead? instead of being blurred?"). The rest of the printed text used to be at half opacity and grey; now every word is fully readable and only the clause in use is highlighted. Event stage, the text on the card, the effect dock and the Showtime resolve view. The caption now reads "RESOLVING TEXT · ACTIVE PART HIGHLIGHTED" (reworded by app.mjs; presentation.mjs stays byte-identical). New sheet css/r60-focus.css, loaded last.
+- **No more boxes on top of each other** (Kevy: "the boxes sometimes overlap when chain link activate and you still need to select a card as cost or tribute"). Reproduced at 412×915 and 1280×800: a "Use … effect?" / pick prompt opened its panel underneath the chain-resolution scene. Every human prompt now waits for the scene to finish, exactly as chain responses already did ("Get ready…" until then). Skip FX still ends the scene at once.
+- **Learn: "Next ↓" cue on short screens** (RELAY-210 LOW-1, ChatGPT RELAY-211 option a). Under the tutor bubble, only while the controls are out of view: "Next ↓", "The ruling ↓" (or "Compare and ruling ↓" in the Choke Point Lab) and "Choose ↓". It scrolls and moves focus only; it never answers, advances or picks a C1 option. 44 px target, visible focus, reduced motion respected.
+- **Offline start with missing files** (RELAY-210 LOW-2). Offline, the start asks the offline worker whether every core file is saved; if not, or if the engine fails to load or sends nothing within 15 s, it stops with "This duel needs files that aren’t saved for offline use yet…" and Retry. Online starts are unchanged. ("./" was already in the fill set.)
+- **CP-001 r1.1 rules-checked** (RELAY-210 §4.4): `rulesCheck:{relay:'RELAY-210',revision:1.1}`, so the badge and the note now say checked.
+- **Tests** (RELAY-210 LOW-3): CP-001 measures the end of the shown line before the turn-2 control, and asserts that the windows offering Ash are exactly the ones with Lode's declaration and then Sage's search as the current chain link.
+
 # Duel Doctrine Lab · r59 TEST · offline fix + review fixes · 14 November 2026
 
 Closes Seto team RELAY-206 MED-1, MED-2, MED-4 (with ChatGPT's RELAY-207 wording), MED-5 (ChatGPT's RELAY-205 §3 direction), LOW-1, LOW-2, LOW-3, LOW-4 and LOW-5. MED-3 is handled by design but could not be measured directly; see below. Built and self-verified by Claude; independent review requested.

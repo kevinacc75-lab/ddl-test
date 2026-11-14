@@ -18,7 +18,9 @@ export function cp001(withAsh){
  const d=scenario(build,{decks,first:1,seed:11,place});toIdle(build,d,1);
  const T=[],obs={laterWindows:[]},chainsAt=()=>d.chains.length;
  /* r59 (Seto team RELAY-206 MED-4): every later learner response window is recorded with what was offered, then passed */
- const passLater=(m,phase)=>{obs.laterWindows.push({phase,offered:(m.selects||[]).map(c=>c.code)});T.push('learner passes ('+phase+')');d.respond(answer(build,d))};
+ /* r60 (Seto team RELAY-210 LOW-3b): each window also records the card whose effect is the current chain link (0 = empty chain) */
+ const chainTop=()=>{const n=Number(q(d,'return Duel.GetCurrentChain()'));return n>0?Number(q(d,'return Duel.GetChainInfo('+n+',CHAININFO_TRIGGERING_CODE)')):0};
+ const passLater=(m,phase)=>{obs.laterWindows.push({phase,offered:(m.selects||[]).map(c=>c.code),top:chainTop()});T.push('learner passes ('+phase+')');d.respond(answer(build,d))};
  const snap=()=>({beryl:count(d,1,LOC.HAND,BERYL),maiden:count(d,1,LOC.HAND,MAIDEN),ash:count(d,0,LOC.HAND,ASH),lodeUp:count(d,1,LOC.SZONE,LODE,'and c:IsFaceup()')});
  obs.start=snap();
  // L1.01 child A: Lode card activation (search)
@@ -58,11 +60,13 @@ export function cp001(withAsh){
  for(let i=0;i<60&&d.prompt&&!(d.prompt.type===M.SELECT_IDLECMD&&seatOf(d.prompt)===1);i++){const m=d.prompt;if(seatOf(m)===1&&m.type===M.SELECT_CARD&&idx(m.selects,SPIRIT)<0&&idx(m.selects,LIGHTSTORM)>=0){d.respond(answer(build,d));continue}d.respond(answer(build,d))}
  /* r59 (Seto team RELAY-206 LOW-3): under Lode's lock Spirit's Tribute effect is NOT offered this turn (a LIGHT Dragon
     Synchro target is in the Extra Deck); control: on the next turn, with the lock gone, the opponent is offered it. */
+ /* r60 (Seto team RELAY-210 LOW-3a): the end of the SHOWN line is measured here, before the turn-2 control auto-plays */
+ obs.spirit=count(d,1,LOC.MZONE,SPIRIT);obs.materialsGone=count(d,1,LOC.MZONE,SAGE)+count(d,1,LOC.MZONE,BEWD);obs.end=snap();
  obs.spiritOfferedLocked=(d.prompt?.activates||[]).some(c=>c.code===SPIRIT);
  if(d.prompt?.type===M.SELECT_IDLECMD&&d.prompt.to_ep){d.respond({type:R.SELECT_IDLECMD,action:7,index:null});obs.spiritOfferedNextTurn=false;
   for(let i=0;i<120&&d.prompt&&!obs.spiritOfferedNextTurn;i++){const m=d.prompt;if(seatOf(m)===1&&((m.selects||[]).some(c=>c.code===SPIRIT)||(m.chains||[]).some(c=>c.code===SPIRIT))){obs.spiritOfferedNextTurn=true;break}
    if(m.type===M.SELECT_IDLECMD&&seatOf(m)===0&&m.to_bp===false&&m.to_ep){d.respond({type:R.SELECT_IDLECMD,action:7,index:null});continue}d.respond(answer(build,d))}}
- obs.spirit=count(d,1,LOC.MZONE,SPIRIT);obs.materialsGone=count(d,1,LOC.MZONE,SAGE)+count(d,1,LOC.MZONE,BEWD);obs.end=snap();
+ obs.turn2=snap();/* r60: turn-2 control state, kept apart from obs.end */
  return {d,T,obs}}
 test('(CP-001 F1) Ash on Lode’s search: Ash offered, CL2 resolves first, no Beryl added, Lode stays face-up; the declaration, Sage and Spirit Dragon still happen',()=>{
  const {obs,T}=cp001(true);
@@ -85,6 +89,8 @@ test('(CP-001 F0) control, the learner passes: Lode adds Beryl, then the same de
  assert.equal(obs.end.beryl,obs.start.beryl+1,'Beryl unused in hand');
  /* r59 (RELAY-206 MED-4, RELAY-207): CP-001 r1.1 F0 says Ash stayed live at both later windows and this replay passed them */
  const offeredAt=phase=>obs.laterWindows.some(w=>w.phase===phase&&w.offered.includes(ASH));
+ /* r60 (RELAY-210 LOW-3b): the windows that offer Ash are exactly the ones with Lode's declaration / Sage's search as the current chain link */
+ const ashWins=obs.laterWindows.filter(w=>w.offered.includes(ASH));assert.deepEqual(ashWins.map(w=>[w.phase,w.top]),[['declaration',LODE],['sage',SAGE]],'Ash offered only with Lode (declaration) and then Sage (search) on the chain: '+JSON.stringify(obs.laterWindows));
  assert.ok(offeredAt('declaration'),'Ash offered at Lode’s declaration');assert.ok(offeredAt('sage'),'Ash offered at Sage’s search');
  assert.equal(obs.end.ash,obs.start.ash,'and passed both: Ash still in hand');assert.equal(obs.spiritOfferedLocked,false);assert.equal(obs.spiritOfferedNextTurn,true);assert.equal(obs.lockOpp,true,'r58: the lock is applied after the declaration');assert.equal(obs.lockMe,false);assert.equal(obs.ashGY,0);assert.equal(obs.end.ash,obs.start.ash,'Ash still in the learner’s hand');console.log(T.join(' | '));
 });

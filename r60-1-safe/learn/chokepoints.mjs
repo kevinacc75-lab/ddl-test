@@ -1,5 +1,5 @@
 // r57 Choke Point Lab content (13 Nov 2026). Format and CP-001 r1 authored by ChatGPT (RELAY-193, T13); built by Claude.
-// factCheck: pending Seto team; strategyReview: candidate (NOT a "best choke point" claim). Bubbles are ChatGPT's exact
+// factCheck: CP-001 r1.1 rules-checked by the Seto team in RELAY-210 (r60; was pending until then); strategyReview: candidate (NOT a "best choke point" claim). Bubbles are ChatGPT's exact
 // text (apostrophes typeset). Builder choices, listed so the team can check them:
 //  - mood "pointing" uses the tutors' presenting pose with its own spoken label (r58, tutors.mjs POSES);
 //  - the Pass branch (F0) shows ChatGPT's replacement line, then beats 5-7; Ash-only beats 3, 4 and 8 are not shown there
@@ -24,7 +24,7 @@ const cid=c=>`https://www.db.yugioh-card.com/yugiohdb/card_search.action?cid=${c
 const E=()=>[null,null,null,null,null];
 const REVEAL='OPPONENT’S HAND · SCRIPTED LESSON · HAND REVEALED';
 export const CHOKEPOINTS=[
- {id:'CP-001',kind:'choke_point',revision:1.1/* r59: r1.1 (ChatGPT RELAY-207, from Seto team RELAY-206 MED-4); rules re-check pending */,rulesCheck:{relay:'RELAY-200',revision:1},level:'Beginner–Intermediate',minutes:5,title:'Stopped the search. Did we stop the line?',decks:'Blue-Eyes vs Sky Striker',
+ {id:'CP-001',kind:'choke_point',revision:1.1/* r59: r1.1 (ChatGPT RELAY-207, from Seto team RELAY-206 MED-4) */,rulesCheck:{relay:'RELAY-210',revision:1.1}/* r60: rules-checked by the Seto team, RELAY-210 section 4.4 */,level:'Beginner–Intermediate',minutes:5,title:'Stopped the search. Did we stop the line?',decks:'Blue-Eyes vs Sky Striker',
   engineTests:['CP-001 F1','CP-001 F0'],
   lineRef:{book:'ai/book/blueeyes-lines.mjs',line:'BE-SAGE',steps:['activate Primite Lordly Lode','summon Sage with Eyes of Blue','special Blue-Eyes Spirit Dragon'],commit:'6b4a699c540c966db0cb4b6935d94952615917b8'},
   strategy:'candidate',

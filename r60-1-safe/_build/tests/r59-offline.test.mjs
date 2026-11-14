@@ -15,14 +15,14 @@ test('(R59-2) MED-2/3: the worker saves what it serves, heals a missing core on 
  const s=read('sw.js');assert.match(s,/self\.addEventListener\('install',event=>event\.waitUntil\(self\.skipWaiting\(\)\)\);/,'no download at install');
  assert.match(s,/response\.status===200&&response\.type==='basic'&&!SKIP\(rel\)/,'any served same-origin file is saved (self-heal)');
  assert.match(s,/type==='offline-fill'\?\(filling\|\|=coreStatus\(true\)/);assert.match(s,/return \{ready:missing\.length===0,missing:missing\.length,total:list\.length\}/);
- assert.match(s,/CACHE=CACHE_PREFIX\+'2026-11-14-r59-offline'\+'@'\+SCOPE/);
+ assert.match(s,/CACHE=CACHE_PREFIX\+'2026-11-14-r60-1-safe'\+'@'\+SCOPE/);
  const a=read('app-shell.mjs');assert.match(a,/if\(st\?\.ready\)notify\('Offline duel files are ready\./,'"ready" only when the worker confirms');assert.doesNotMatch(a,/if\(registration\.active\)notify\('Offline duel files are ready/);
  assert.match(a,/c\.saveData\|\|\/\(\^\|-\)\(2g\|3g\)\$\/\.test/);assert.match(a,/window\.addEventListener\('duel-state',\(\)=>\{duelReady=true\},\{once:true\}\)/);assert.match(a,/},45000\)/);
 });
 test('(R59-3) LOW-1/2: rules credit only for the exact checked revision, badge and ruling note together',()=>{
  for(const l of LESSONS)assert.equal(rulesChecked(l),l.rulesCheck.relay,l.id);
- const cp=CHOKEPOINTS.find(l=>l.id==='CP-001');assert.equal(cp.revision,1.1);assert.equal(rulesChecked(cp),null,'CP-001 r1.1 is pending re-check');
- assert.match(rulesBadge(cp),/Rules: pending Seto team check/);assert.equal(authorNote(cp),'Authored by ChatGPT — pending Seto/team fact check');
+ const cp=CHOKEPOINTS.find(l=>l.id==='CP-001');assert.equal(cp.revision,1.1);assert.equal(rulesChecked(cp),'RELAY-210','r60: CP-001 r1.1 rules-checked in RELAY-210');
+ assert.match(rulesBadge(cp),/Rules: checked by Seto team \(RELAY-210\)/);assert.equal(authorNote(cp),'Authored by ChatGPT · rules checked by Seto team (RELAY-210)');
  const bumped={...LESSONS[0],revision:LESSONS[0].revision+1};assert.equal(rulesChecked(bumped),null);assert.match(rulesBadge(bumped),/pending/);assert.match(authorNote(bumped),/pending/);
  assert.equal(authorNote(LESSONS[3]),'Authored by ChatGPT · rules checked by Seto team (RELAY-199)');assert.equal(rulesChecked({rulesCheck:'RELAY-200',revision:1}),null,'old string form no longer counts');
 });
