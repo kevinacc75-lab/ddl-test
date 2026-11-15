@@ -1,7 +1,7 @@
 // r67 choice header + context reducer (ChatGPT RELAY-226 wording spec r1 and matrix; r67-resolving-context-review-r1).
 // Wording authored by ChatGPT; code and tests by Claude; self-checked by Claude, pending Seto team.
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
-import {createChoiceContext,header,ROWS,ERRATA_ROWS,ATTACK_ROWS,PROMPT_TYPES,CONTEXTS,TYPE_NAME,fill,values} from '../dist/choice-context.mjs';
+import {createChoiceContext,header,ROWS,ERRATA_ROWS,ATTACK_ROWS,OFFER_ROWS,REPLAY_ROWS,PROMPT_TYPES,CONTEXTS,TYPE_NAME,fill,values} from '../dist/choice-context.mjs';
 const MATRIX=JSON.parse(fs.readFileSync(new URL('./fixtures/r67-header-matrix.json',import.meta.url),'utf8'));
 const REPRO=JSON.parse(fs.readFileSync(new URL('./fixtures/r67-native-repro.json',import.meta.url),'utf8'));
 const read=f=>fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8');
@@ -187,7 +187,7 @@ test('(R67.1-3) an offered effect is context O ("Effect choice"), and answering 
  // an offer while a link is proven resolving is still the resolving row
  const w=createChoiceContext();w.ingest(msg({from:1,events:[{type:'activate',chain:1,code:100,player:0}],chain:[link(1,100)]}));
  y=msg({from:2,events:[{type:'resolve',chain:1,code:100,player:0}],chain:[link(1,100)],prompt:{type:T.SELECT_EFFECTYN,seat:0,player:0,code:200},revision:3});w.ingest(y);
- assert.equal(H(w,y).text,'Resolving CL 1 · Sky Striker Ace - Kagari · use this effect?');
+ assert.equal(H(w,y).text,'During CL 1 · Sky Striker Ace - Roze · use this effect?')/* r67.3-adapted: a different offered card during proven resolution is named as the offer (ChatGPT wording r1) */;
  // the offered row is an erratum kept apart from the 147-row matrix
  assert.equal(Object.keys(ERRATA_ROWS).length,1);assert.equal(ROWS['SELECT_EFFECTYN-O'],undefined);
 });
@@ -281,4 +281,152 @@ test('(R67.2-5) card menu readiness guard and reduced-motion load order',()=>{
  assert.match(f,/const close=\(\)=>\{[^}]*menuGen\+\+;menuReady=false/,'closing invalidates every button of that opening');
  const a=read('app.mjs');const decl=a.indexOf('let renderGen=0,tokenSerial=0,liveToken=null');const first=a.search(/\napplyPreferences\(\)|[;}]applyPreferences\(\);/);
  assert.ok(decl>0&&decl<a.indexOf('function applyPreferences'),'liveToken is declared before applyPreferences can run (reduced-motion load crash, r66–r67.1)');
+});
+
+/* ---------------- r67.3 (ChatGPT RELAY-236 review + replay-and-effect-offer-wording-r1) ---------------- */
+test('(R67.3-1) the attack association is settled by EVERY delivery, early returns included (RELAY-236 counterexample)',()=>{
+ // ChatGPT: attack sent at rev103 after span 1..1; an overlapping span 1..2 (attacker move id 2) used to keep the pending intent,
+ // so the next quiet span 3..2 at rev104 bound it and showed a verified attack header.
+ {const r=createChoiceContext();const b=msg({from:1,events:[{type:'phase',phase:8}],prompt:BCMD(),phase:8,revision:103});r.ingest(b);r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});
+  const o={...msg({from:1,phase:8,revision:103}),events:[{id:1,type:'phase',phase:8},{id:2,type:'move',code:500}]};o.eventSpan={from:1,to:2,complete:true};r.ingest(o);
+  assert.equal(r.state().attack,null,'overlap drops the pending intent');
+  const x=msg({from:3,prompt:TGT(),phase:8,revision:104});r.ingest(x);assert.notEqual(r.classify(x).ctx,'ATK');assert.doesNotMatch(HA(r,x).text,/^Attack target/)}
+ // a pure re-send of the battle prompt before the target prompt: the reply may not have been taken; drop the intent
+ {const r=createChoiceContext();const b=msg({from:1,events:[{type:'phase',phase:8}],prompt:BCMD(),phase:8,revision:103});r.ingest(b);r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});
+  r.ingest(msg({from:1,events:[{type:'phase',phase:8}],prompt:BCMD(),phase:8,revision:103}));assert.equal(r.state().attack,null);
+  const x=msg({from:2,prompt:TGT(),phase:8,revision:104});r.ingest(x);assert.notEqual(r.classify(x).ctx,'ATK')}
+ // an overlap AFTER binding drops the bound association too; a pure re-send of the same target prompt keeps it
+ {const {r,x}=attackRun();r.ingest(msg({from:2,prompt:TGT(),phase:8,revision:104}));assert.equal(r.classify(x).ctx,'ATK','same drawing re-sent');
+  const o={...msg({from:1,prompt:TGT(),phase:8,revision:104}),events:[{id:1,type:'phase',phase:8}]};o.eventSpan={from:1,to:2,complete:true};r.ingest(o);assert.equal(r.state().attackBound,null);assert.notEqual(r.classify(x).ctx,'ATK')}
+});
+
+test('(R67.3-2) attack target candidates must be EXACTLY the opposing player\'s monsters; malformed seat/player/controller fails',()=>{
+ const bad={
+  'candidate controller missing':{second:{prompt:TGT({selects:[{code:600,location:4,sequence:0}]})}},
+  'candidate controller invalid (2)':{second:{prompt:TGT({selects:[{code:600,controller:2,location:4,sequence:0}]})}},
+  'prompt player missing':{second:{prompt:TGT({player:undefined})}},
+  // ChatGPT: seat 0 / player 1 with an own (controller 0) candidate used to pass because 0 !== 1
+  'seat 0 but engine player 1 (attacker belonged to player 0)':{second:{prompt:TGT({player:1,selects:[{code:600,controller:0,location:4,sequence:0}]})}}};
+ for(const [why,o] of Object.entries(bad)){const {r,x}=attackRun(o);assert.notEqual(r.classify(x).ctx,'ATK',why)}
+ // capture side: an attack entry whose controller is not the chooser's engine player is never recorded
+ const r=createChoiceContext();const b=msg({from:1,prompt:BCMD({attacks:[{code:500,controller:1,location:4,sequence:2}]}),phase:8,revision:103});r.ingest(b);
+ r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});assert.equal(r.state().attack,null);
+ // and the ordinary C08 shape still passes
+ const ok=attackRun();assert.equal(ok.r.classify(ok.x).ctx,'ATK');
+});
+
+test('(R67.3-3) native C05 shape: a Yes/No naming a DIFFERENT card while CL1 resolves reads "During CL 1 · offered card"',()=>{
+ const N={...NAMES,700:'The Fallen & The Virtuous',800:'Toon Bookmark'};const nm=c=>N[c]||'';
+ const run=(offer,{name=nm}={})=>{const r=createChoiceContext();r.ingest(msg({from:1,events:[{type:'activate',chain:1,code:700,player:1}],chain:[link(1,700,1)],revision:30}));
+  const x=msg({from:2,events:[{type:'resolve',chain:1,code:700,player:1}],chain:[link(1,700,1)],prompt:{type:T.SELECT_EFFECTYN,seat:0,player:0,code:offer},revision:31});r.ingest(x);
+  return {c:r.classify(x),h:header(x.state.prompt,r.classify(x),{nameOf:name,view:0,phase:4})}};
+ let {c,h}=run(800);assert.equal(c.ctx,'RO');assert.equal(h.id,'A-SELECT_EFFECTYN-RO');assert.equal(h.text,'During CL 1 · Toon Bookmark · use this effect?');assert.equal(h.verified,true);
+ // offered name unknown: the proven link stays, the card is not guessed
+ ({h}=run(800,{name:c=>c===700?'The Fallen & The Virtuous':''}));assert.equal(h.text,'Resolving CL 1 · effect choice');assert.equal(h.verified,false);
+ // same card as the resolving link: the existing R row
+ ({c,h}=run(700));assert.equal(c.ctx,'R');assert.equal(h.text,'Resolving CL 1 · The Fallen & The Virtuous · use this effect?');
+ // no proven resolution: the offer is context O, never "During CL"
+ const r=createChoiceContext();const x=msg({from:1,chain:[link(1,700,1)],prompt:{type:T.SELECT_EFFECTYN,seat:0,player:0,code:800},revision:5});r.ingest(x);
+ assert.equal(r.classify(x).ctx,'O');assert.doesNotMatch(header(x.state.prompt,r.classify(x),{nameOf:nm,view:0,phase:4}).text,/^During CL/);
+ assert.equal(Object.keys(OFFER_ROWS).length,1);assert.equal(ROWS['SELECT_EFFECTYN-RO'],undefined);
+});
+
+test('(R67.3-4) menu readiness: every release requires the menu to be really visible; the time cap finishes the entrance first',()=>{
+ const f=read('play-flow.mjs');
+ assert.match(f,/const release=\(\)=>\{if\(g===menuGen&&!menu\.hidden&&menuVisible\(\)/,'immediate, finished, cancelled and capped paths all check visibility');
+ assert.match(f,/for\(const a of anims\)\{try\{if\(a\.playState!=='finished'\)a\.finish\(\)\}catch\{\}\}\s*if\(menuVisible\(\)\)release\(\)/,'at the cap: finish this opening\'s entrance, then check');
+ assert.match(f,/function menuVisible\(\)\{if\(menu\.hidden\|\|!menu\.getClientRects\(\)\.length\)return false;[^}]*\+cs\.opacity<\.95\)return false\}return true\}/);
+ assert.doesNotMatch(f,/READY_FALLBACK_MS=600/,'no flat time-based release');
+});
+
+/* ---------------- r67.4 (ChatGPT RELAY-238 §3: attack replay + post-Yes attack target) ---------------- */
+// Shape from Claude's native trace (RELAY-237c): our attack (app seat 0, Monster Zone 2), then a chain that removes and summons an
+// opposing monster, then SELECT_YESNO description 30 for the attacker. Seat 0 / engine player 1, as in 28 of the 36 traced cases.
+const REPLAY_NAMES={...NAMES2};const nameR=c=>REPLAY_NAMES[c]||'';
+const FIELD=(over={})=>[{lp:8000,zones:{4:[null,null,{code:500,position:1,sequence:2},null,null],...over.mine}},{lp:8000,zones:{4:[{code:0,position:8,sequence:0,hidden:true},{code:600,position:1,sequence:1},null,null,null],...over.theirs}}];
+const ATTACK_EV={type:'attack',code:500,from:{controller:0,location:4,sequence:2,position:1},to:{controller:1,location:4,sequence:0,position:1}};
+const CHAIN_EVS=[{type:'effectChosen',code:900,player:1,option:false},{type:'activate',chain:1,code:900,player:1},{type:'resolve',chain:1,code:900,player:1},{type:'move',code:600,reason:0,from:{controller:1,location:4,sequence:0},to:{controller:1,location:16,sequence:0}},{type:'summon',code:601,player:1,sequence:1,special:true,kind:'special'},{type:'resolutionReady',chain:1},{type:'chainEnd'}];
+const YN=(p={})=>({type:T.SELECT_YESNO,seat:0,player:1,description:30,...p});
+function replayRun({between=CHAIN_EVS,prompt=YN(),phase=8,field=FIELD(),gapFrom=null,attack=ATTACK_EV}={}){const r=createChoiceContext();
+ const a=msg({from:1,events:[{type:'phase',phase:8},...(attack?[attack]:[])],phase:8,revision:200});a.state.players=FIELD();r.ingest(a);
+ const x=msg({from:gapFrom??(a.eventSpan.to+1),events:between,prompt,phase,revision:201});x.state.players=field;r.ingest(x);
+ return {r,x,h:header(x.state.prompt,r.classify(x),{nameOf:nameR,view:0,phase})}}
+
+test('(R67.4-1) native replay shape: "Attack replay · attacker · continue this attack?"',()=>{
+ const {r,x,h}=replayRun();assert.equal(r.classify(x).ctx,'RP');assert.equal(h.id,'A-SELECT_YESNO-RP');assert.equal(h.verified,true);
+ assert.equal(h.text,'Attack replay · Blazing Cartesia, the Virtuous · continue this attack?');
+ assert.deepEqual(r.state().battle,{key:r.state().battle.key,code:500,seat:0,sequence:2},'app-seat public record, kept across the chain');
+ assert.doesNotMatch(h.text,/Raye|face-down/,'targets are never named');
+});
+
+test('(R67.4-2) no proof, no replay name: every broken link falls back to "Source not verified · choose Yes or No"',()=>{
+ const theirsMove=(e)=>[...CHAIN_EVS.slice(0,3),e,...CHAIN_EVS.slice(4)];
+ const cases={
+  'description 31 (choose an effect), not a replay':{prompt:YN({description:31})},
+  'another seat is asked':{prompt:YN({seat:1,player:0})},
+  'no attack event in history':{attack:null},
+  'attacker moved away (move FROM its slot)':{between:theirsMove({type:'move',code:500,from:{controller:0,location:4,sequence:2},to:{controller:0,location:16,sequence:0}})},
+  'something moved INTO the attacker slot':{between:theirsMove({type:'move',code:777,from:{controller:0,location:2,sequence:0},to:{controller:0,location:4,sequence:2}})},
+  'control changed (move to the other seat)':{between:theirsMove({type:'move',code:500,from:{controller:0,location:4,sequence:2},to:{controller:1,location:4,sequence:3}})},
+  'attacker position changed':{between:[...CHAIN_EVS,{type:'position',code:500,from:{controller:0,location:4,sequence:2}}]},
+  'a summon into the attacker slot':{between:[...CHAIN_EVS,{type:'summon',code:777,player:0,sequence:2,special:true,kind:'special'}]},
+  'an unknown event type':{between:[...CHAIN_EVS,{type:'mystery'}]},
+  'a phase event (battle ended)':{between:[...CHAIN_EVS,{type:'phase',phase:256}]},
+  'not a battle phase':{phase:4},
+  'snapshot: a different card at that slot (same-slot replacement)':{field:FIELD({mine:{4:[null,null,{code:501,position:1,sequence:2},null,null]}})},
+  'snapshot: slot empty':{field:FIELD({mine:{4:[null,null,null,null,null]}})},
+  'snapshot: face-down':{field:FIELD({mine:{4:[null,null,{code:500,position:8,sequence:2},null,null]}})},
+  'snapshot: hidden':{field:FIELD({mine:{4:[null,null,{code:0,position:1,sequence:2,hidden:true},null,null]}})},
+  'history gap before the question':{gapFrom:40}};
+ for(const [why,o] of Object.entries(cases)){const {r,x,h}=replayRun(o);assert.ok(!(r.classify(x).ctx==='RP'&&r.classify(x).proof),why);assert.doesNotMatch(h.text,/^Attack replay/,why)}
+ // unknown attacker name: fallback, not "Card effect"
+ {const {r,x}=replayRun();assert.equal(header(x.state.prompt,r.classify(x),{nameOf:()=>'',view:0,phase:8}).text,'Source not verified · choose Yes or No')}
+ // a new attack replaces the record; a reset or view change clears it; an overlap clears it
+ {const {r}=replayRun();r.reset();assert.equal(r.state().battle,null)}
+ {const {r}=replayRun();const y=msg({from:1,view:1,phase:8,revision:202});r.ingest(y);assert.equal(r.state().battle,null,'view change')}
+ {const {r,x}=replayRun();const o={...msg({from:1,phase:8,revision:201,prompt:YN()}),events:[{id:9,type:'chainEnd'},{id:10,type:'lpUpdate'}]};o.state.players=FIELD();o.eventSpan={from:9,to:10,complete:true};r.ingest(o);assert.equal(r.state().battle,null,'overlap: starts inside received history, ends past it')}
+ {const {r}=replayRun();const o=msg({from:1,phase:8,revision:201,prompt:YN()});o.state.players=FIELD();o.eventSpan={from:1,to:2,complete:true};o.events=[];r.ingest(o);assert.notEqual(r.state().battle,null,'a pure re-send of old history keeps it')}
+});
+
+test('(R67.4-3) post-Yes: only a SENT Yes to a PROVEN replay names the next target prompt; No, queued, stale or broken links do not',()=>{
+ const TGT2=(p={})=>card({seat:0,player:1,selects:[{code:601,controller:0,location:4,sequence:1}],...p});// engine player 1 chooses; opponent = engine 0
+ const next=(r,{events=[],prompt=TGT2(),revision=202}={})=>{const y=msg({from:r.state().trail.at(-1).to+1,events,prompt,phase:8,revision});y.state.players=FIELD();r.ingest(y);return y};
+ {const {r,x}=replayRun();r.noteOwnSent({rev:201,prompt:x.state.prompt,response:{type:3,yes:true}});const y=next(r);const c=r.classify(y);
+  assert.equal(c.ctx,'ATK');assert.equal(header(y.state.prompt,c,{nameOf:nameR,view:0,phase:8}).text,'Attack target · Blazing Cartesia, the Virtuous · choose 1 monster')}
+ const not=(why,f)=>{const {r,x}=replayRun();const y=f(r,x);assert.notEqual(r.classify(y).ctx,'ATK',why)};
+ not('No',(r,x)=>{r.noteOwnSent({rev:201,prompt:x.state.prompt,response:{type:3,yes:false}});return next(r,{prompt:{type:T.SELECT_BATTLECMD,seat:0,player:1,attacks:[]}})});
+ not('Yes queued, never sent',(r)=>next(r));
+ not('stale revision',(r,x)=>{r.noteOwnSent({rev:199,prompt:x.state.prompt,response:{type:3,yes:true}});return next(r)});
+ not('wrong reply code',(r,x)=>{r.noteOwnSent({rev:201,prompt:x.state.prompt,response:{type:0,yes:true}});return next(r)});
+ not('event between Yes and the target prompt',(r,x)=>{r.noteOwnSent({rev:201,prompt:x.state.prompt,response:{type:3,yes:true}});return next(r,{events:[{type:'move',code:601,from:{controller:1,location:4,sequence:1},to:{controller:1,location:16,sequence:0}}]})});
+ not('revision skipped',(r,x)=>{r.noteOwnSent({rev:201,prompt:x.state.prompt,response:{type:3,yes:true}});return next(r,{revision:203})});
+ not('own monsters as candidates',(r,x)=>{r.noteOwnSent({rev:201,prompt:x.state.prompt,response:{type:3,yes:true}});return next(r,{prompt:TGT2({selects:[{code:500,controller:1,location:4,sequence:2}]})})});
+ // a Yes to an UNPROVEN replay (attacker moved) arms nothing
+ {const {r,x}=replayRun({between:[...CHAIN_EVS,{type:'position',code:500,from:{controller:0,location:4,sequence:2}}]});r.noteOwnSent({rev:201,prompt:x.state.prompt,response:{type:3,yes:true}});assert.equal(r.state().attack,null)}
+});
+
+test('(R67.4-4) wiring and pins: Yes/No codes, SYSTEM[30], and the event list the record trusts',async()=>{
+ const {R,M}=await import('../dist/duel.mjs');assert.equal(R.SELECT_YESNO,3);assert.equal(M.SELECT_YESNO,13);
+ const d=fs.readFileSync(new URL('../dist/duel.mjs',import.meta.url),'utf8');assert.match(d,/30:'Continue the attack\?'|30:"Continue the attack\?"|\[30\]\s*=\s*'Continue the attack\?'/,'description 30 is the engine\'s replay question in our string table');
+ const emitted=[...new Set([...d.matchAll(/this\.event\('([a-zA-Z]+)'/g)].map(m=>m[1]))].sort();
+ const c=read('choice-context.mjs');const known=JSON.parse(c.match(/const KNOWN_EVENTS=new Set\((\[[^\]]*\])\)/)[1].replace(/'/g,'"')).sort();
+ assert.deepEqual(known,emitted,'the battle record fails closed on any event type duel.mjs does not emit today');
+ assert.equal(Object.keys(REPLAY_ROWS).length,1);assert.equal(ROWS['SELECT_YESNO-RP'],undefined);
+});
+
+test('(R67.4-5) engine-native replay fixtures, Yes and No, both seat/player settings (not a browser pass)',async()=>{
+ const {execFileSync}=await import('node:child_process');const os=await import('node:os');const path=await import('node:path');
+ for(const [file,args,attacker] of [['r674-replay-native-5000.json',['branded','blueeyes','5000','0'],'Garura, Wings of Resonant Life'],['r674-replay-native-5051.json',['branded','blueeyes','5051','1'],'Blazing Cartesia, the Virtuous']]){
+  const out=path.join(os.tmpdir(),'r674-'+args[2]+'-'+process.pid+'.json');
+  execFileSync(process.execPath,[new URL('../tools/fixtures/replay-native.mjs',import.meta.url).pathname,out,...args],{stdio:'ignore',timeout:240000});
+  const now=JSON.parse(fs.readFileSync(out,'utf8')),rec=JSON.parse(fs.readFileSync(new URL('./fixtures/'+file,import.meta.url),'utf8'));
+  assert.deepEqual(now.responses,rec.responses,file+': the engine reaches the replay with the same recorded responses');
+  for(const k of ['yes','no']){assert.equal(now[k].replayPrompt.type,13);assert.equal(now[k].replayPrompt.description,'30');
+   assert.equal(now[k].replayHeader.text,'Attack replay · '+attacker+' · continue this attack?',file+' '+k);assert.equal(now[k].replayHeader.verified,true)}
+  assert.equal(now.yes.next.typeName,'SELECT_CARD');assert.deepEqual(now.yes.next.eventsBetween,[]);
+  assert.equal(now.yes.nextHeader.text,'Attack target · '+attacker+' · choose 1 monster',file+' post-Yes');
+  assert.equal(now.no.next.typeName,'SELECT_BATTLECMD');assert.doesNotMatch(now.no.nextHeader.text,/Attack target/,file+' post-No');
+  assert.ok(now.yes.next.candidates.every(c=>c.location===4&&c.controller===1-now.yes.next.player),'candidates are the opposing engine player\'s monsters');
+  if(args[3]==='1')assert.notEqual(now.case.seat,now.case.player,'covers app seat ≠ engine player');
+  fs.rmSync(out,{force:true})}
 });

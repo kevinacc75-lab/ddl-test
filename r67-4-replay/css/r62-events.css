@@ -76,3 +76,11 @@ body.in-duel[data-pc-play="1"] :is(#duelist-cutin,#duelist-cutin *,#fx-layer,#fx
 /* r67 choice header (#decision-context): which step and which card is asking. Wraps, never clipped or shrunk (RELAY-226 length rules) */
 body.in-duel[data-pc-play="1"] #decision-context{margin:2px 0 4px;font-size:14px;line-height:1.35;color:#dab77d;overflow-wrap:anywhere;white-space:normal}
 body.in-duel[data-pc-play="1"] #decision-context[data-verified="0"]{color:#c9c2b3}
+
+/* r67.4 compact choice sheet (ChatGPT RELAY-238 §4, option A). In Play the selection footer (count, Confirm, Cancel) used to stick to
+   the bottom of the decision sheet. On short sheets (page zoom 150%/200%, small phones) that tall sticky footer covered the native
+   question and the step line above it. Here it becomes a normal footer after the complete choice list: nothing covers the question,
+   and Confirm is reached by scrolling. Applies when the screen is short, or when the app measures the footer as taller than a third
+   of the sheet (data-compact-footer, e.g. large fonts on a tall screen). No floating second Confirm. */
+@media (max-height:700px){body.in-duel[data-pc-play="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column #selection-bar:not([hidden]){position:static;bottom:auto;margin:12px -14px 0}}
+body.in-duel[data-pc-play="1"][data-compact-footer="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column #selection-bar:not([hidden]){position:static;bottom:auto;margin:12px -14px 0}

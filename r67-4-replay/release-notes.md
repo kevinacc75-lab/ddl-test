@@ -1,3 +1,45 @@
+# Duel Doctrine Lab · r67.4 TEST · attack replay and compact sheet · 15 November 2026
+
+From ChatGPT's review RELAY-238. The wording and the proof rules are ChatGPT's (replay-and-effect-offer-wording-r1, RELAY-238), pending Seto team check. Built and self-checked by Claude. Engine choices, legal options, timing and the AI are unchanged; duel.mjs is untouched.
+
+- **Attack replay line.** When an effect changes your opponent's monsters mid-attack, the duel asks whether to continue the attack. That question is the engine's description 30, "Continue the attack?", which Claude found in 55 of 576 AI-vs-AI games (RELAY-237b/c).
+  - The line now reads "Attack replay · Garura, Wings of Resonant Life · continue this attack?".
+  - The attacker comes from the duel's public attack record, which survives the chain in between, and is cross-checked against your field: same face-up card, same zone.
+  - Anything touching that zone (moving out or in, a position change, a summon into it), a phase or turn change, a reset, a gap, or an unknown event clears it, and the safe line "Source not verified · choose Yes or No" is used.
+- **After Yes, the target choice names your attacker again:** "Attack target · Garura… · choose 1 monster". Only an actually sent Yes to a proven replay does this, and only for the very next prompt with nothing in between. No goes back to the battle actions.
+- **Engine-native fixtures, not a browser pass.** Two recorded cases, Branded vs Blue-Eyes seeds 5000 and 5051 (one with your seat ≠ engine player), are replayed through the same engine and fed to the step line the way the worker sends them. The Yes and No paths are both checked.
+- **Compact choice sheet** (ChatGPT's option A). On short or zoomed screens the "Cards selected / Confirm / Cancel" bar used to stick over the question.
+  - At 150% on a phone, r67's line pushed the question under it; at 200% the question was covered even before r67.
+  - Now that bar sits after the choices whenever the screen is 700 px tall or less, or the bar would take more than a third of the panel (for example with large fonts).
+  - Nothing covers the question. Confirm is reached by scrolling, and there is no second floating Confirm.
+  - A new prompt starts the panel at its question; changing your selection or resizing never scrolls it.
+- **Checked:** the five native cases (C01, C02, C05, C08, C10) at six sizes (phone and tablet at 100%, 150% and 200%, standing in for zoom by a smaller screen): 480 prompts, nothing covering the question, no clipped text, no sideways scrolling. Real browser zoom and font-only enlargement were not tested.
+
+# Duel Doctrine Lab · r67.3 TEST · offer wording and hardening · 15 November 2026
+
+From ChatGPT's review of r67.2 (RELAY-236). The wording is ChatGPT's (replay-and-effect-offer-wording-r1), pending Seto team check. Built and self-checked by Claude. Engine choices, legal options, timing and the AI are unchanged.
+
+- **The right card in "use this effect?" during a resolution.** ChatGPT reached C05 in a real game: while The Fallen & The Virtuous resolves as CL1, the duel asks "Use Toon Bookmark's effect?".
+  - r67.2 said "Resolving CL 1 · The Fallen & The Virtuous · use this effect?", which points at the wrong card.
+  - It now says "During CL 1 · Toon Bookmark · use this effect?".
+  - If the offered card's name isn't known, it says "Resolving CL 1 · effect choice".
+  - The same card as the resolving link keeps the old line. Without a proven resolution, the offer keeps "Effect choice".
+- **Attack-target line, harder to fool.** These are ChatGPT's two counterexamples, now tests:
+  - an attack is forgotten by ANY re-sent or overlapping update before its target choice, not only by the next normal one;
+  - the target candidates must belong exactly to your opponent (engine player 0/1), and the attacking monster must be the attacking player's own. A missing or malformed controller now falls back.
+- **Card menus become usable only when really visible.** r67.2 enabled a menu after a time limit even if its animation was still running. Now:
+  - at the limit, the menu's entrance is finished first;
+  - every path that enables the menu checks that it is on screen and fully opaque, otherwise it stays unusable (Close and Escape still work).
+- **Menu checks: 15 instead of 9.** Enter and Space are now checked separately. New checks:
+  - Read card and Close while the menu opens;
+  - a 10-second entrance animation;
+  - a menu still invisible when the time limit is reached;
+  - exactly one manual answer per tap or Enter.
+- **New native cases C05 and C10** (ChatGPT's steps, Control both seats, seed 3003).
+  - C05 shows the corrected line.
+  - C10 (your chain response to a previously Set Fallen & Virtuous) shows the safe "Response window · source not verified": switching seat views clears proof by design.
+- **Not done:** the attack-replay line. It needs a real replay trace to identify the engine's replay question; no guessing.
+
 # Duel Doctrine Lab · r67.2 TEST · attack header and menu guard · 15 November 2026
 
 From ChatGPT's review of r67.1 (RELAY-234). The wording and the attack-header spec are ChatGPT's (own-attack-header-spec-r1), pending Seto team check. Built and self-checked by Claude. Engine choices, legal options, timing and the AI are unchanged.

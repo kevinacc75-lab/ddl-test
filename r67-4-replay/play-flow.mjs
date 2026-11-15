@@ -98,13 +98,18 @@ export function installPlayFlow({preferences,save,getDecision,submit,navigate,in
     means ready at once; otherwise when those animations finish or are cancelled, with a bounded fallback. */
  const READY_FALLBACK_MARGIN_MS=150,READY_FALLBACK_CAP_MS=3000;
  function arm(){const g=++menuGen;menuReady=false;menu.dataset.ready='false';if(menu.hidden)return g;
-  const release=()=>{if(g===menuGen&&!menu.hidden){menuReady=true;menu.dataset.ready='true'}};
+  const release=()=>{if(g===menuGen&&!menu.hidden&&menuVisible()/* r67.3: every path, including a forced finish, must leave the menu really visible */){menuReady=true;menu.dataset.ready='true'}};
   let anims=[];try{anims=(menu.getAnimations?.()||[]).filter(a=>{const t=a.effect?.getComputedTiming?.();return t&&Number.isFinite(t.endTime)&&a.playState!=='finished'})}catch{anims=[]}
   if(!anims.length){release();return g}
   Promise.all(anims.map(a=>a.finished.catch(()=>null))).then(release);
   /* bounded fallback in case the animation never reports finishing: its own remaining time plus a margin, capped */
   let left=0;for(const a of anims){const t=a.effect.getComputedTiming();left=Math.max(left,(t.endTime-(t.localTime??0))/(a.playbackRate||1))}
-  setTimeout(release,Math.min(READY_FALLBACK_CAP_MS,Math.max(0,left)+READY_FALLBACK_MARGIN_MS));return g}
+  /* r67.3 (ChatGPT RELAY-236 §3): reaching the time limit is not proof the menu can be seen (a long, paused or slowed animation).
+     At the limit, finish this opening's own entrance, then enable only if the menu is really on screen and opaque; otherwise
+     the menu stays inert (Close and Escape still work). */
+  setTimeout(()=>{if(g!==menuGen||menu.hidden||menuReady)return;for(const a of anims){try{if(a.playState!=='finished')a.finish()}catch{}}
+   if(menuVisible())release()},Math.min(READY_FALLBACK_CAP_MS,Math.max(0,left)+READY_FALLBACK_MARGIN_MS));return g}
+ function menuVisible(){if(menu.hidden||!menu.getClientRects().length)return false;for(let n=menu;n&&n!==document.documentElement;n=n.parentElement){const cs=getComputedStyle(n);if(cs.display==='none'||cs.visibility==='hidden'||+cs.opacity<.95)return false}return true}
  const live=g=>menuReady&&g===menuGen&&!menu.hidden;
  function locate(n){
   const hand=!!n.closest('#my-hand'),rect=n.getBoundingClientRect(),viewport={width:window.innerWidth,height:window.innerHeight};
