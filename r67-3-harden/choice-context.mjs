@@ -13,6 +13,16 @@ export const ROWS={"SELECT_CARD-R":["Resolving CL {cl} · {source} · choose {ra
    OFFERED card, but the player has not chosen to activate it yet, and scripts also use this prompt for effects that are applied
    rather than activated. So it gets its own neutral context O ("offered") instead of "Activating". Kept apart from the matrix. */
 export const ERRATA_ROWS={"SELECT_EFFECTYN-O":["Effect choice · {source} · use this effect?","Source not verified · use this effect?",0]};
+/* r67.2 own-attack target (ChatGPT own-attack-header-spec-r1, authored by ChatGPT, pending Seto/team check). An additive role
+   override, never global proof for B. Proof: THIS player's accepted (sent) Attack command, then the very next delivery is
+   revision+1, valid, continuous and carries no events, in a battle phase, for the same seat, and is a SELECT_CARD for exactly 1
+   card whose candidates are all in the opponent's Monster Zones. Anything else drops the association. */
+export const ATTACK_ROWS={"SELECT_CARD-ATK":["Attack target · {source} · choose 1 monster","Source not verified · choose 1 card",0]};
+/* r67.3 (ChatGPT replay-and-effect-offer-wording-r1, authored by ChatGPT, pending Seto/team check): a Yes/No that directly names a
+   DIFFERENT card while a link is proven resolving (native C05: Toon Bookmark's replacement during The Fallen & The Virtuous CL1).
+   "Resolving CL 1 · The Fallen & The Virtuous · use this effect?" pointed "this effect" at the wrong card. Not a new Chain Link. */
+export const OFFER_ROWS={"SELECT_EFFECTYN-RO":["During CL {cl} · {source} · use this effect?","Resolving CL {cl} · effect choice",0]};
+const MZONE=4,R_SELECT_BATTLECMD=0/* duel.mjs R.SELECT_BATTLECMD (the reply code, not the message code 10); test R67.2-5 pins it */;
 export const PROMPT_TYPES=['SELECT_CARD','SELECT_CHAIN','SELECT_EFFECTYN','SELECT_YESNO','SELECT_OPTION','SELECT_IDLECMD','SELECT_BATTLECMD','SELECT_POSITION','SELECT_PLACE','SELECT_DISFIELD','SELECT_TRIBUTE','SELECT_SUM','SELECT_UNSELECT_CARD','SELECT_COUNTER','SORT_CARD','SORT_CHAIN','ANNOUNCE_RACE','ANNOUNCE_ATTRIB','ANNOUNCE_CARD','ANNOUNCE_NUMBER','ROCK_PAPER_SCISSORS'];
 export const CONTEXTS={R:'Resolving link',A:'Activation / cost',S:'Summon / material procedure',C:'Response, chain present',E:'Response, chain empty',B:'Battle',I:'Phase / idle'};
 const TYPE_CODE={SELECT_BATTLECMD:10,SELECT_IDLECMD:11,SELECT_EFFECTYN:12,SELECT_YESNO:13,SELECT_OPTION:14,SELECT_CARD:15,SELECT_CHAIN:16,SELECT_PLACE:18,SELECT_POSITION:19,SELECT_TRIBUTE:20,SORT_CHAIN:21,SELECT_COUNTER:22,SELECT_SUM:23,SELECT_DISFIELD:24,SORT_CARD:25,SELECT_UNSELECT_CARD:26,ROCK_PAPER_SCISSORS:132,ANNOUNCE_RACE:140,ANNOUNCE_ATTRIB:141,ANNOUNCE_CARD:142,ANNOUNCE_NUMBER:143};
@@ -26,18 +36,25 @@ const PROCEDURE_OK=new Set(['move']);
 
 /* ---------------- the reducer (ChatGPT r67 review §"Reducer contract") ---------------- */
 export function createChoiceContext(){
- const s={key:null,lastTo:null,links:new Map(),resolving:null,activating:null,procedure:null,procedureLive:false,conflicts:[],life:0,trail:[],lastReply:null};
+ const s={key:null,lastTo:null,links:new Map(),resolving:null,activating:null,procedure:null,procedureLive:false,conflicts:[],life:0,trail:[],lastReply:null,attack:null,attackBound:null};
  const clearChain=()=>{s.links.clear();s.resolving=null;s.activating=null;s.life++};
  const api={
+  /* r67.2: called ONLY when this player's reply has actually been sent to the engine (not when queued, refused or not sent) */
+  noteOwnSent({rev,prompt,response}){const m=prompt,a=m?.type===10/* M.SELECT_BATTLECMD */&&response?.type===R_SELECT_BATTLECMD&&response.action===1/* Attack */&&Number.isInteger(response.index)?m.attacks?.[response.index]:null;
+   s.attack=a&&Number.isInteger(rev)&&Number.isInteger(a.code)&&a.code>0&&(m.player===0||m.player===1)&&a.controller===m.player?{key:s.key,rev,seat:own(m),index:response.index,attacker:{code:a.code,controller:a.controller,location:a.location,sequence:a.sequence},direct:!!a.can_direct}:null;return api},
   /* new duel, rewind, imported replay, error, New matchup: forget everything */
-  reset(){s.key=null;s.lastTo=null;clearChain();s.procedure=null;s.procedureLive=false;s.conflicts=[];s.trail=[];s.lastReply=null},
+  reset(){s.key=null;s.lastTo=null;clearChain();s.procedure=null;s.procedureLive=false;s.conflicts=[];s.trail=[];s.lastReply=null;s.attack=null;s.attackBound=null},
   /* one accepted worker 'state' message, after the session/epoch/stateSeq admission checks and before any presentation */
   ingest(x,session=''){
    const key=[session,x?.human?.epoch??'',x?.view,x?.mode,x?.study?1:0].join('|');
    if(key!==s.key){api.reset();s.key=key}
    const sp=x?.eventSpan,ev=Array.isArray(x?.events)?x.events:[];
    const okSpan=!!sp&&Number.isInteger(sp.from)&&Number.isInteger(sp.to);
-   if(okSpan&&s.lastTo!==null&&sp.from<=s.lastTo){/* a re-sent message (or an overlap): never replay old events */if(sp.to<=s.lastTo)return api;clearChain();s.procedure=null;s.procedureLive=false;s.lastTo=sp.to;api.reconcile(x);return api}
+   if(okSpan&&s.lastTo!==null&&sp.from<=s.lastTo){/* a re-sent message (or an overlap): never replay old events */
+    /* r67.3 (ChatGPT RELAY-236 §2): every accepted delivery settles the attack association, early returns included. A pure
+       re-send keeps only an already-bound prompt of the SAME revision; a pending (unbound) intent is dropped. An overlap drops both. */
+    if(sp.to<=s.lastTo){s.attack=null;if(s.attackBound&&x?.state?.revision!==s.attackBound.rev)s.attackBound=null;return api}
+    clearChain();s.procedure=null;s.procedureLive=false;s.attack=null;s.attackBound=null;s.lastTo=sp.to;api.reconcile(x);return api}
    /* r67.1 (RELAY-232 §4): event VALIDITY is separate from delivery CONTINUITY. Valid = every event has an id inside this
       message's own span, in increasing order. An invalid list proves nothing at all: clear and use none of its events.
       A valid list after a genuine history gap (ring loss, rewind) clears old context but may establish fresh context. */
@@ -47,6 +64,10 @@ export function createChoiceContext(){
    s.trail.push({from:sp?.from??null,to:sp?.to??null,complete:sp?.complete??null,valid,continuous,types:ev.map(e=>e.type).join(',').slice(0,200),rev:x?.state?.revision??null});if(s.trail.length>12)s.trail.shift();
    s.lastTo=okSpan?sp.to:null;
    const prompt=x?.state?.prompt,proc=s.procedure,rev=x?.state?.revision;s.procedureLive=false;
+   /* r67.2: an own attack intent is consumed by the very next delivery: bound only if nothing at all happened in between */
+   {const at=s.attack;s.attack=null;const quiet=continuous&&ev.length===0;
+    if(at&&at.key===s.key&&quiet&&rev===at.rev+1)s.attackBound={...at,rev};
+    else if(!(s.attackBound&&quiet&&rev===s.attackBound.rev))s.attackBound=null}
    for(const e of valid?ev:[]){
     if(e.type==='activate'){if(s.resolving){s.conflicts.push('activate during resolution');s.resolving=null}s.links.set(e.chain,{chain:e.chain,code:e.code||0,player:e.player,source:e.source||null,description:e.description,life:s.life,seen:true,solved:false,negated:false});
      /* NATIVE (r67 fixture, seed 3003 C03): this engine emits CHAINING (activate) BEFORE the activation's target/cost prompts;
@@ -78,7 +99,7 @@ export function createChoiceContext(){
    if(m.type===TYPE_CODE.SELECT_IDLECMD&&(response?.action===0||response?.action===1)&&Number.isInteger(response.index)){const c=(response.action===0?m.summons:m.special_summons)?.[response.index];s.procedure=c?.code?{rev,seat:m.seat,code:c.code,kind:response.action===0?'normal':'special'}:null;return}
    if(stage==='S'&&s.procedure&&s.procedureLive){s.procedure={...s.procedure,rev};return}
    s.procedure=null},
-  state(){return {resolving:s.resolving&&{...s.resolving},activating:s.activating&&{...s.activating},links:[...s.links.values()].map(l=>({...l})),procedure:s.procedureLive?{...s.procedure}:null,lastTo:s.lastTo,conflicts:s.conflicts.slice(-10),trail:s.trail.slice()}},
+  state(){return {resolving:s.resolving&&{...s.resolving},activating:s.activating&&{...s.activating},links:[...s.links.values()].map(l=>({...l})),procedure:s.procedureLive?{...s.procedure}:null,lastTo:s.lastTo,conflicts:s.conflicts.slice(-10),trail:s.trail.slice(),attack:s.attack&&{...s.attack,attacker:{...s.attack.attacker}},attackBound:s.attackBound&&{...s.attackBound,attacker:{...s.attackBound.attacker}}/* r67.2: only THIS player's own attacker, from its own sent reply */}},
   /* which matrix context this prompt is in, and whether its stage/source is proven */
   classify(x){return classify(s,x)}
  };
@@ -96,12 +117,15 @@ function classify(s,x){const m=x?.state?.prompt,phase=x?.state?.phase,snap=Array
   if(snap.some(c=>c.solved))return out('C',false,{conflict:'response window after resolution began'});
   if(l&&l.seen&&l.code===(top.code||0)&&!l.solved)return out('C',true,{cl:top.chain_size,source:{code:l.code,seat:l.player}});
   return out('C',false)}
- if(s.resolving){const c=snap.find(c=>c.chain_size===s.resolving.chain);if(c&&!c.solved&&(c.code||0)===s.resolving.code)return out('R',true,{cl:s.resolving.chain,source:{code:s.resolving.code,seat:s.resolving.player}});return out(plain,false)}
+ if(s.resolving){const c=snap.find(c=>c.chain_size===s.resolving.chain);if(c&&!c.solved&&(c.code||0)===s.resolving.code){if(t==='SELECT_EFFECTYN'&&Number.isInteger(m.code)&&m.code>0&&m.code!==s.resolving.code)return out('RO',true,{cl:s.resolving.chain,source:{code:m.code,seat:own(m)},offered:true});return out('R',true,{cl:s.resolving.chain,source:{code:s.resolving.code,seat:s.resolving.player}})}return out(plain,false)}
  if(t==='SELECT_EFFECTYN'&&m.code)return out('O',true,{source:{code:m.code,seat:own(m)},direct:true})/* the prompt names the OFFERED card; not yet an activation (r67.1 errata r2) */;
  /* an activation in progress labels only this player's prompt that arrives with it, or the one right after this player's own
     answer to a prompt that was itself shown as that activation (revision +1: nobody else decided anything in between) */
  const rev=x?.state?.revision,a=s.activating;
  if(a&&a.player===own(m)&&(a.rev===rev||(s.lastReply&&s.lastReply.stage==='A'&&s.lastReply.seat===own(m)&&rev===s.lastReply.rev+1&&s.lastReply.code===a.code&&(s.lastReply.chain??null)===(a.chain??null)))/* r67.1: the answered prompt must have shown THIS activation */)return out('A',true,{source:{code:a.code,seat:a.player},cl:a.chain});
+ {const ab=s.attackBound,cards=m.selects||m.cards||[];
+  if(ab&&t==='SELECT_CARD'&&rev===ab.rev&&own(m)===ab.seat&&BATTLE.has(phase)&&m.min===1&&m.max===1&&cards.length&&(m.player===0||m.player===1)&&ab.attacker.controller===m.player/* same engine player as the attack */&&cards.every(c=>c.location===MZONE&&c.controller===1-m.player/* exactly the opposing player; missing/invalid fails */))
+   return out('ATK',true,{source:{code:ab.attacker.code,seat:ab.seat},attacker:ab.attacker})}
  if(s.procedureLive&&s.procedure&&s.procedure.seat===own(m))return out('S',true,{source:{code:s.procedure.code,seat:s.procedure.seat}});
  return out(plain,false)}
 
@@ -110,7 +134,7 @@ const range=(a,b)=>Number.isInteger(a)&&Number.isInteger(b)&&a>=0&&b>=a?(a===b?S
 export function fill(template,v){return template.replace(/\{(\w+)\}/g,(_,k)=>v[k]??'')}
 export function values(m,c,{nameOf=()=>'',view=0,coinCall=false,phase}={}){const t=TYPE_NAME[m?.type],v={};
  v.phase=PHASE_NAME[phase]||'Current phase';v.battleStep=BATTLE.has(phase)?PHASE_NAME[phase]:'Battle';v.cl=c?.cl!=null?String(c.cl):'';
- const src=c?.source;v.source=!src?'':src.code?(nameOf(src.code)||'Card effect'):(src.seat!==view?'Opponent’s hidden card':'');
+ const src=c?.source;v.source=!src?'':src.code?(nameOf(src.code)||(c.ctx==='ATK'||c.ctx==='RO'?''/* attacker / offered card name unknown: use the fallback, never a generic stand-in */:'Card effect')):(src.seat!==view?'Opponent’s hidden card':'');
  if(t==='SELECT_CARD'){const r=range(m.min,m.max);v.range=r??'the required';v.cardWord=r==='1'?'card':'cards';const cards=m.selects||m.cards||[];v.zone='';if(cards.length&&Number.isInteger(m.player)){const loc=cards[0]?.location;if(ZONE_WORD[loc]&&cards.every(c=>c.location===loc&&c.controller===m.player))v.zone=' from your '+ZONE_WORD[loc]}}
  if(t==='SELECT_TRIBUTE')v.range=range(m.min,m.max)??'the required';
  const n=Number.isInteger(m?.count)&&m.count>0?m.count:null;v.count=n?String(n):'the required';
@@ -119,7 +143,7 @@ export function values(m,c,{nameOf=()=>'',view=0,coinCall=false,phase}={}){const
  v.coinCall=!!coinCall;return v}
 
 /* The header for one prompt. Unproven stage/source → the row's own fallback; context-conflict rows always use it. */
-export function header(m,c,opts={}){const t=TYPE_NAME[m?.type];if(!t||!c)return null;const id=t+'-'+c.ctx,row=ROWS[id]??ERRATA_ROWS[id];if(!row)return null;
+export function header(m,c,opts={}){const t=TYPE_NAME[m?.type];if(!t||!c)return null;const id=t+'-'+c.ctx,row=ROWS[id]??ERRATA_ROWS[id]??ATTACK_ROWS[id]??OFFER_ROWS[id];if(!row)return null;
  const v=values(m,c,opts);const needsProof=/\{(source|cl)\}/.test(row[0]);
  const sourceKnown=!/\{source\}/.test(row[0])||!!v.source;
  const useFallback=row[2]===1||(needsProof&&(!c.proof||!sourceKnown))||(row[0].includes('{cl}')&&!v.cl);

@@ -1,3 +1,46 @@
+# Duel Doctrine Lab · r67.3 TEST · offer wording and hardening · 15 November 2026
+
+From ChatGPT's review of r67.2 (RELAY-236). The wording is ChatGPT's (replay-and-effect-offer-wording-r1), pending Seto team check. Built and self-checked by Claude. Engine choices, legal options, timing and the AI are unchanged.
+
+- **The right card in "use this effect?" during a resolution.** ChatGPT reached C05 in a real game: while The Fallen & The Virtuous resolves as CL1, the duel asks "Use Toon Bookmark's effect?".
+  - r67.2 said "Resolving CL 1 · The Fallen & The Virtuous · use this effect?", which points at the wrong card.
+  - It now says "During CL 1 · Toon Bookmark · use this effect?".
+  - If the offered card's name isn't known, it says "Resolving CL 1 · effect choice".
+  - The same card as the resolving link keeps the old line. Without a proven resolution, the offer keeps "Effect choice".
+- **Attack-target line, harder to fool.** These are ChatGPT's two counterexamples, now tests:
+  - an attack is forgotten by ANY re-sent or overlapping update before its target choice, not only by the next normal one;
+  - the target candidates must belong exactly to your opponent (engine player 0/1), and the attacking monster must be the attacking player's own. A missing or malformed controller now falls back.
+- **Card menus become usable only when really visible.** r67.2 enabled a menu after a time limit even if its animation was still running. Now:
+  - at the limit, the menu's entrance is finished first;
+  - every path that enables the menu checks that it is on screen and fully opaque, otherwise it stays unusable (Close and Escape still work).
+- **Menu checks: 15 instead of 9.** Enter and Space are now checked separately. New checks:
+  - Read card and Close while the menu opens;
+  - a 10-second entrance animation;
+  - a menu still invisible when the time limit is reached;
+  - exactly one manual answer per tap or Enter.
+- **New native cases C05 and C10** (ChatGPT's steps, Control both seats, seed 3003).
+  - C05 shows the corrected line.
+  - C10 (your chain response to a previously Set Fallen & Virtuous) shows the safe "Response window · source not verified": switching seat views clears proof by design.
+- **Not done:** the attack-replay line. It needs a real replay trace to identify the engine's replay question; no guessing.
+
+# Duel Doctrine Lab · r67.2 TEST · attack header and menu guard · 15 November 2026
+
+From ChatGPT's review of r67.1 (RELAY-234). The wording and the attack-header spec are ChatGPT's (own-attack-header-spec-r1), pending Seto team check. Built and self-checked by Claude. Engine choices, legal options, timing and the AI are unchanged.
+
+- **Attack target header.** After you choose Attack with a monster, the target choice now reads "Attack target · Blazing Cartesia, the Virtuous · choose 1 monster", where r67.1 said "Source not verified · choose 1 card". All of these must hold, or it keeps the safe line:
+  - your Attack answer was actually sent (not just queued);
+  - the very next update is one step later with nothing at all in between;
+  - it is in a battle phase, for the same player;
+  - it asks for exactly 1 card;
+  - every candidate is in your opponent's Monster Zones.
+  
+  It never carries over to a later attack or a cancelled one, never names a face-down target, and a proven resolving effect still wins. The new row is kept apart from ChatGPT's 147-row matrix.
+- **Card menus ignore input until they have appeared.** A tap, Enter or Space on a card menu button while the menu is still fading in is now ignored (not saved for later). This covers the action buttons, Read card and Attack anyway; Close and Escape always work. Reduced motion means the menu is ready at once.
+  - Background: in r67.1 a fast second tap could pick an action from a menu nobody had seen yet. Claude's route-check caught this as 4 tablet FAILs, which first looked like a probe race.
+- **Fixed: stuck on "Loading card library…" with reduced motion.** If your device asks for reduced motion, r66 to r67.1 hit "Cannot access 'liveToken' before initialization" while loading and never finished. One variable is now declared earlier. Found while testing the menu guard.
+- **About text:** the r65 line uses ChatGPT's revised wording (B-01).
+- **New native case C01** (ChatGPT's steps): Branded vs Branded, Control both seats, seed 3003. Nadir Servant CL1, then Fuwalos CL2 resolves, then Nadir asks: "Resolving CL 1 · Nadir Servant · choose 1 card from your Extra Deck".
+
 # Duel Doctrine Lab · r67.1 TEST · header fixes and text audit · 15 November 2026
 
 Fixes from ChatGPT's review of r67 (RELAY-232), plus ChatGPT's player-facing text audit (RELAY-225/226, 53 rows). The wording is ChatGPT's, pending Seto team check. Built and self-checked by Claude. Engine choices, legal options, timing and the AI are unchanged.

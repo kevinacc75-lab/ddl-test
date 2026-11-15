@@ -3,14 +3,14 @@
 // sw.js cache, release-notes.md, offline-assets.json for the two new files). Older scope tests allow these explicitly.
 export const R45_AI_CHANGED=['ai/book/book.mjs','ai/book/branded-nov08.mjs','ai/book/sky-lines.mjs','ai/info-set.mjs','ai/world-pool.mjs','optimal-pilot.mjs'];
 export const R45_NEW=['ai/v4-flags.mjs','ai/book/v4-plan.mjs',...['ai/r46-flags.mjs','ai/book/windbot-port.mjs','victory-boss.mjs']/* r46-adapted: r46 new files */];
-export const R52_CHANGED=['app-shell.mjs','effect-focus.mjs'/* r67.1-adapted: COST badge text only (ChatGPT text audit B-29) */,'pile-glow.mjs',/* r55 deck brains v1.1 (Seto team RELAY-179 fixes, ChatGPT RELAY-185 deltas): */'ai/book/dtw-plan.mjs','ai/book/hero-lines.mjs','ai/book/kashtira-lines.mjs','ai/book/mikanko-lines.mjs','ai/book/toon-lines.mjs','ai/brain/blueeyes-brain.mjs'/* r56 text only */,'ai/book/branded-lines.mjs'/* r58 comment only */,'load.mjs'/* r58.2 slow-connection download */,'ai/brain/dtw-brain.mjs','ai/brain/toon-brain.mjs'];/* r52: pile effect menu (pile-glow.mjs) wired with submit/getDecision/getDb (app-shell.mjs) */
+export const R52_CHANGED=['app-shell.mjs','play-flow.mjs'/* r67.2-adapted: card-menu readiness guard only; byte pins use pinnedFlow() */,'effect-focus.mjs'/* r67.1-adapted: COST badge text only (ChatGPT text audit B-29) */,'pile-glow.mjs',/* r55 deck brains v1.1 (Seto team RELAY-179 fixes, ChatGPT RELAY-185 deltas): */'ai/book/dtw-plan.mjs','ai/book/hero-lines.mjs','ai/book/kashtira-lines.mjs','ai/book/mikanko-lines.mjs','ai/book/toon-lines.mjs','ai/brain/blueeyes-brain.mjs'/* r56 text only */,'ai/book/branded-lines.mjs'/* r58 comment only */,'load.mjs'/* r58.2 slow-connection download */,'ai/brain/dtw-brain.mjs','ai/brain/toon-brain.mjs'];/* r52: pile effect menu (pile-glow.mjs) wired with submit/getDecision/getDb (app-shell.mjs) */
 export const R45_DISPLAY=['decks.json'];/* Branded display name only: "Kevy's Branded Deck" (ids, keys, lists, format unchanged) */
 export const R45_BUILD=/^const BUILD='ddl-test r47 /;/* r46-adapted: the current build identity */
-export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-15-r67-1-audit'/;/* r46-adapted */
+export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-15-r67-3-harden'/;/* r46-adapted */
 export const R45_NAME="Kevy's Branded Deck";
 // r46 (Kevy 11 Nov 2026 14:54 AEDT): WindBot port (ai/book/book.mjs, optimal-pilot.mjs hooks; new ai/r46-flags.mjs, ai/book/windbot-port.mjs)
 // and victory boss art (new victory-boss.mjs, css/aurora.css append, index.html script tag). Identity is now r46.
-export const R46_TITLE='<title>TEST r67.1 — Duel Doctrine Lab · Header fixes and text audit</title>';
+export const R46_TITLE='<title>TEST r67.3 — Duel Doctrine Lab · Offer wording and hardening</title>';
 export const R46_SCRIPT='<script type="module" src="victory-boss.mjs"></script>';
 
 // r47 (Claude, 11 Nov 2026): the Concede button is the only r47 change outside the AI rule files, app.mjs and css/aurora.css.
@@ -32,3 +32,11 @@ export function r48Undo(file,text){if(file==='library-worker.mjs'){if(text!==R49
   if(t.split(EG).length!==3)throw Error('r50 theme options not found exactly twice');t=t.split(EG).join('<option value="aurora">Aurora (default)</option>');
   if(t.split(R49_LINK).length!==2)throw Error('r49 stylesheet link not found exactly once');return t.replace(R49_LINK,'')}if(file!=='worker.mjs')return text;if(h48('sha256').update(text).digest('hex')!==R48_UNDO.sha256)throw Error('worker.mjs is not the r48 text the undo fixture was made for');let out=text;for(const [a,b,r] of [...R48_UNDO.ops].reverse())out=out.slice(0,a)+r+out.slice(b);return out}
 export function r47Undo(file,text0){const text=r48Undo(file,text0);const cut=file==='worker.mjs'?R47_CONCEDE_WORKER:file==='index.html'?R47_CONCEDE_HTML:null;if(!cut)return text;if(text.split(cut).length!==2)throw Error('r47 concede insertion not found exactly once in '+file);return text.replace(cut,'')}
+
+/* r67.2-adapted: tests that pin play-flow.mjs byte-for-byte compare the r67.2 file minus exactly the card-menu readiness guard.
+   The fixture's sha256 must match the current file, so any further play-flow change makes these tests fail until re-adapted. */
+import {readFileSync as _rf} from 'node:fs';import {createHash as _ch} from 'node:crypto';
+const _PF=JSON.parse(_rf(new URL('../fixtures/r672-playflow-undo.json',import.meta.url),'utf8'));
+export function pinnedFlow(file,buf){if(file!=='play-flow.mjs')return buf;const t=Buffer.isBuffer(buf)?buf.toString('utf8'):String(buf);
+ if(_ch('sha256').update(t).digest('hex')!==_PF.sha256)throw Error('play-flow.mjs changed after r67.2: re-adapt r672-playflow-undo.json');
+ let o=t;for(const [a,b,r] of [..._PF.ops].reverse())o=o.slice(0,a)+r+o.slice(b);return Buffer.isBuffer(buf)?Buffer.from(o,'utf8'):o}

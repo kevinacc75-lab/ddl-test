@@ -74,7 +74,7 @@ export function fitPanel(anchor,size,viewport,obstacles=[]){
 }
 
 export function installPlayFlow({preferences,save,getDecision,submit,navigate,inspect,notify}){
- const pass=new ResponsePass();let latest=null,menuKey=null,menuCard=null,suppressClick=null,attacker=null;
+ const pass=new ResponsePass();let latest=null,menuKey=null,menuCard=null,suppressClick=null,attacker=null,menuGen=0,menuReady=false;
  const bar=document.createElement('section');bar.id='play-response-status';bar.setAttribute('aria-label','Response settings');
  bar.innerHTML='<span role="status" aria-live="polite"></span><button type="button"></button>';
  document.body.append(bar);
@@ -91,7 +91,26 @@ export function installPlayFlow({preferences,save,getDecision,submit,navigate,in
  button.onclick=()=>{if(pass.until){pass.stop(latest);preferences.autoSkipEmptyChain=false;save();notify('Auto-pass stopped. Responses are manual.')}else{pass.start(latest);notify(pass.until?'Auto-pass on until a response, attack or your turn.':'Your turn or a legal response needs your choice.')}sync();policyChanged()};
  const menu=document.createElement('section');menu.id='card-action-menu';menu.hidden=true;menu.setAttribute('aria-label','Available card actions');document.body.append(menu);
  const slotOf=n=>n?.dataset.slot??(n?.dataset.handSequence!==undefined?latest?.view+':2:'+n.dataset.handSequence:null);
- const close=()=>{menu.hidden=true;menu.replaceChildren();menuKey=null;menuCard=null};
+ const close=()=>{menu.hidden=true;menu.replaceChildren();menuKey=null;menuCard=null;menuGen++;menuReady=false;delete menu.dataset.ready};
+ /* r67.2 (ChatGPT RELAY-234 §2): a menu's action buttons do nothing until THIS opening of the menu has finished its entrance
+    animation, so a fast second tap (or Enter/Space) cannot act on a menu nobody has seen yet. Suppressed input is dropped, never
+    queued. Close and Escape always work. Readiness: no running finite animation (reduced motion, reopen with no new animation)
+    means ready at once; otherwise when those animations finish or are cancelled, with a bounded fallback. */
+ const READY_FALLBACK_MARGIN_MS=150,READY_FALLBACK_CAP_MS=3000;
+ function arm(){const g=++menuGen;menuReady=false;menu.dataset.ready='false';if(menu.hidden)return g;
+  const release=()=>{if(g===menuGen&&!menu.hidden&&menuVisible()/* r67.3: every path, including a forced finish, must leave the menu really visible */){menuReady=true;menu.dataset.ready='true'}};
+  let anims=[];try{anims=(menu.getAnimations?.()||[]).filter(a=>{const t=a.effect?.getComputedTiming?.();return t&&Number.isFinite(t.endTime)&&a.playState!=='finished'})}catch{anims=[]}
+  if(!anims.length){release();return g}
+  Promise.all(anims.map(a=>a.finished.catch(()=>null))).then(release);
+  /* bounded fallback in case the animation never reports finishing: its own remaining time plus a margin, capped */
+  let left=0;for(const a of anims){const t=a.effect.getComputedTiming();left=Math.max(left,(t.endTime-(t.localTime??0))/(a.playbackRate||1))}
+  /* r67.3 (ChatGPT RELAY-236 §3): reaching the time limit is not proof the menu can be seen (a long, paused or slowed animation).
+     At the limit, finish this opening's own entrance, then enable only if the menu is really on screen and opaque; otherwise
+     the menu stays inert (Close and Escape still work). */
+  setTimeout(()=>{if(g!==menuGen||menu.hidden||menuReady)return;for(const a of anims){try{if(a.playState!=='finished')a.finish()}catch{}}
+   if(menuVisible())release()},Math.min(READY_FALLBACK_CAP_MS,Math.max(0,left)+READY_FALLBACK_MARGIN_MS));return g}
+ function menuVisible(){if(menu.hidden||!menu.getClientRects().length)return false;for(let n=menu;n&&n!==document.documentElement;n=n.parentElement){const cs=getComputedStyle(n);if(cs.display==='none'||cs.visibility==='hidden'||+cs.opacity<.95)return false}return true}
+ const live=g=>menuReady&&g===menuGen&&!menu.hidden;
  function locate(n){
   const hand=!!n.closest('#my-hand'),rect=n.getBoundingClientRect(),viewport={width:window.innerWidth,height:window.innerHeight};
   const protectedNodes=document.querySelectorAll('#my-lp,#opp-lp,#turn-label,#duel-controls-toggle,#skip-fx,#play-response-status,.field-cue,.decision-column'+(hand?',#arena-scroll':''));
@@ -121,11 +140,11 @@ export function installPlayFlow({preferences,save,getDecision,submit,navigate,in
   for(const action of actions){const b=document.createElement('button');b.type='button';const attack=action.response.type===R.SELECT_BATTLECMD&&action.response.action===1;
    const emptyField=!(latest.state.players[1-latest.view]?.zones?.[4]||[]).some(Boolean);
    b.textContent=attack&&action.card.can_direct&&emptyField?'Direct Attack':action.actionLabel;
-   b.onclick=()=>{if(menuKey!==windowKey(getDecision())){close();return}const r=action.response;if(attack){const [seat,location,sequence]=publicSlot(action.card,latest.match?.first).split(':').map(Number);attacker=latest.state.players[seat]?.zones?.[location]?.[sequence]}close();submit(r)};menu.append(b)}
-  if(n.dataset.card){const b=document.createElement('button');b.type='button';b.textContent='Read card';b.onclick=()=>inspectCard(n);menu.append(b)}
-  const cancel=document.createElement('button');cancel.type='button';cancel.textContent='Close';cancel.onclick=close;menu.append(cancel);locate(n);
+   b.onclick=()=>{if(!live(b.__gen))return;if(menuKey!==windowKey(getDecision())){close();return}const r=action.response;if(attack){const [seat,location,sequence]=publicSlot(action.card,latest.match?.first).split(':').map(Number);attacker=latest.state.players[seat]?.zones?.[location]?.[sequence]}close();submit(r)};menu.append(b)}
+  if(n.dataset.card){const b=document.createElement('button');b.type='button';b.textContent='Read card';b.onclick=()=>{if(live(b.__gen))inspectCard(n)};menu.append(b)}
+  const cancel=document.createElement('button');cancel.type='button';cancel.textContent='Close';cancel.onclick=close;menu.append(cancel);locate(n);const g=arm();for(const x of menu.querySelectorAll('button'))x.__gen=g;
  }
- function target(n,choice){const caution=attackCaution(latest,attacker,choice.slot);if(!caution){submit(choice.response);return}close();menu.hidden=false;menuKey=windowKey(latest);menuCard=n;const p=document.createElement('p');p.textContent=caution;menu.append(p);const yes=document.createElement('button');yes.type='button';yes.textContent='Attack anyway';yes.onclick=()=>{if(menuKey!==windowKey(getDecision())){close();return}close();submit(choice.response)};const no=document.createElement('button');no.type='button';no.textContent='Choose another target';no.onclick=close;menu.append(yes,no);locate(n)}
+ function target(n,choice){const caution=attackCaution(latest,attacker,choice.slot);if(!caution){submit(choice.response);return}close();menu.hidden=false;menuKey=windowKey(latest);menuCard=n;const p=document.createElement('p');p.textContent=caution;menu.append(p);const yes=document.createElement('button');yes.type='button';yes.textContent='Attack anyway';yes.onclick=()=>{if(!live(yes.__gen))return;if(menuKey!==windowKey(getDecision())){close();return}close();submit(choice.response)};const no=document.createElement('button');no.type='button';no.textContent='Choose another target';no.onclick=close;menu.append(yes,no);locate(n);yes.__gen=arm()}
  function refresh(){const targets=attackTargetChoices(latest);for(const n of document.querySelectorAll('[data-slot],#my-hand [data-hand-sequence]')){const actions=cardActions(latest,slotOf(n)),target=targets.some(t=>t.slot===slotOf(n));n.classList.toggle('can-act',actions.length>0);n.classList.toggle('attack-target',target);if(target)n.setAttribute('aria-description','Legal attack target');else if(actions.length)n.setAttribute('aria-description','Available actions: '+actions.map(a=>a.actionLabel).join(', '));else n.removeAttribute('aria-description')}}
  document.addEventListener('click',e=>{
   const n=e.target.closest?.('[data-slot],#my-hand [data-hand-sequence]');

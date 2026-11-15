@@ -1,7 +1,7 @@
 // r67 choice header + context reducer (ChatGPT RELAY-226 wording spec r1 and matrix; r67-resolving-context-review-r1).
 // Wording authored by ChatGPT; code and tests by Claude; self-checked by Claude, pending Seto team.
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
-import {createChoiceContext,header,ROWS,ERRATA_ROWS,PROMPT_TYPES,CONTEXTS,TYPE_NAME,fill,values} from '../dist/choice-context.mjs';
+import {createChoiceContext,header,ROWS,ERRATA_ROWS,ATTACK_ROWS,OFFER_ROWS,PROMPT_TYPES,CONTEXTS,TYPE_NAME,fill,values} from '../dist/choice-context.mjs';
 const MATRIX=JSON.parse(fs.readFileSync(new URL('./fixtures/r67-header-matrix.json',import.meta.url),'utf8'));
 const REPRO=JSON.parse(fs.readFileSync(new URL('./fixtures/r67-native-repro.json',import.meta.url),'utf8'));
 const read=f=>fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8');
@@ -187,7 +187,7 @@ test('(R67.1-3) an offered effect is context O ("Effect choice"), and answering 
  // an offer while a link is proven resolving is still the resolving row
  const w=createChoiceContext();w.ingest(msg({from:1,events:[{type:'activate',chain:1,code:100,player:0}],chain:[link(1,100)]}));
  y=msg({from:2,events:[{type:'resolve',chain:1,code:100,player:0}],chain:[link(1,100)],prompt:{type:T.SELECT_EFFECTYN,seat:0,player:0,code:200},revision:3});w.ingest(y);
- assert.equal(H(w,y).text,'Resolving CL 1 · Sky Striker Ace - Kagari · use this effect?');
+ assert.equal(H(w,y).text,'During CL 1 · Sky Striker Ace - Roze · use this effect?')/* r67.3-adapted: a different offered card during proven resolution is named as the offer (ChatGPT wording r1) */;
  // the offered row is an erratum kept apart from the 147-row matrix
  assert.equal(Object.keys(ERRATA_ROWS).length,1);assert.equal(ROWS['SELECT_EFFECTYN-O'],undefined);
 });
@@ -199,5 +199,142 @@ test('(R67-14) wiring: worker eventSpan, raw ingest before presentation, grouped
  assert.ok(a.indexOf('choiceCtx.ingest(x,humanClientSession)')>a.indexOf('x.human.stateSeq<=humanStateSeq'),'after the admission checks');
  const cg=a.slice(a.indexOf('function copyGroups'),a.indexOf('function renderMulti'));assert.doesNotMatch(cg,/filter\(c=>!c\.solved\)/);assert.match(cg,/c0\.ctx!=='R'\|\|!c0\.proof/);
  assert.doesNotMatch(a,/ctx\.className='open-window-context'/);assert.match(a,/choiceCtx\.reset\(\);shell\?\.play\.reset\(\)/);
- assert.match(a,/noteReplyContext\(response\);worker\.postMessage\(\{type:'reply'/);
+ assert.match(a,/noteReplyContext\(response\);choiceCtx\.noteOwnSent\(\{rev:state\.revision,prompt:state\.prompt,response\}\);worker\.postMessage\(\{type:'reply'/)/* r67.2-adapted: the sent-only attack hook sits between */;
+});
+
+/* ---------------- r67.2 (ChatGPT RELAY-234: own-attack header spec r1, menu readiness, reduced-motion load) ---------------- */
+// C08 shape from the native fixture: BATTLECMD at rev 103 (phase 8, Battle Start), our Attack reply SENT, then rev 104 arrives
+// with an empty, continuous span and a 1-of-1 SELECT_CARD over the opponent's Monster Zone cards.
+const BCMD=(p={})=>({type:T.SELECT_BATTLECMD,seat:0,player:0,attacks:[{code:500,controller:0,location:4,sequence:2,can_direct:false},{code:500,controller:0,location:4,sequence:3,can_direct:false}],...p});
+const ATK_REPLY={type:0,action:1,index:0};
+const TGT=(p={})=>card({selects:[{code:600,controller:1,location:4,sequence:0},{code:0,controller:1,location:4,sequence:1,position:8}],...p});
+const NAMES2={...NAMES,500:'Blazing Cartesia, the Virtuous',600:'Sky Striker Ace - Raye'};const nameOf2=c=>NAMES2[c]||'';
+const HA=(r,x,o={})=>header(x.state.prompt,r.classify(x),{nameOf:nameOf2,view:x.view,phase:x.state.phase,...o});
+function attackRun({sentReply=ATK_REPLY,send=true,second={},secondMsg}={}){const r=createChoiceContext();
+ const b=msg({from:1,events:[{type:'phase',phase:8}],prompt:BCMD(),phase:8,revision:103});r.ingest(b);
+ if(send)r.noteOwnSent({rev:103,prompt:b.state.prompt,response:sentReply});
+ const x=secondMsg??msg({from:2,prompt:TGT(),phase:8,revision:104,...second});r.ingest(x);return {r,x}}
+
+test('(R67.2-1) own attack, then the very next quiet prompt over opponent monsters: "Attack target · attacker · choose 1 monster"',()=>{
+ const {r,x}=attackRun();const h=HA(r,x);assert.equal(r.classify(x).ctx,'ATK');
+ assert.equal(h.text,'Attack target · Blazing Cartesia, the Virtuous · choose 1 monster');assert.equal(h.id,'A-SELECT_CARD-ATK');assert.equal(h.verified,true);
+ assert.deepEqual(r.state().attackBound.attacker,{code:500,controller:0,location:4,sequence:2},'the physical attacker (index 0 → sequence 2), not just its code');
+ // the same drawing re-delivered (empty span again, same revision) keeps it; the next decision does not
+ r.ingest(msg({from:2,prompt:TGT(),phase:8,revision:104}));assert.equal(r.classify(x).ctx,'ATK');
+ const y=msg({from:2,prompt:BCMD(),phase:8,revision:105});r.ingest(y);assert.equal(r.state().attackBound,null);
+ // a face-down opposing target is never looked up or named: the header names only the attacker
+ assert.doesNotMatch(h.text,/Raye|face-down/);
+ // the second copy (index 1) is recorded as its own physical card
+ const q=attackRun({sentReply:{type:0,action:1,index:1}});assert.equal(q.r.state().attackBound.attacker.sequence,3);
+});
+
+test('(R67.2-2) no proof, no attack header: every broken link in the chain of proof falls back to "Source not verified"',()=>{
+ const cases={
+  'reply only queued, never sent':{send:false},
+  'not an Attack (Main Phase 2)':{sentReply:{type:0,action:2,index:null}},
+  'index outside the attack list':{sentReply:{type:0,action:1,index:9}},
+  'wrong reply code':{sentReply:{type:5,action:1,index:0}},
+  'something happened in between (an effect activated)':{second:{events:[{type:'activate',chain:1,code:777,player:1}],chain:[link(1,777,1)]}},
+  'attacker moved before the choice':{second:{events:[{type:'move',code:500}]}},
+  'revision skipped':{second:{revision:105}},
+  'different seat chooses':{second:{prompt:TGT({seat:1,player:1,selects:[{code:500,controller:0,location:4,sequence:2}]})}},
+  'own monsters as candidates (not an attack target)':{second:{prompt:TGT({selects:[{code:500,controller:0,location:4,sequence:2}]})}},
+  'a Graveyard choice during battle (cost/effect, not an attack target)':{second:{prompt:card()}},
+  'choose 1-2 (not a single attack target)':{second:{prompt:TGT({max:2})}},
+  'not a battle phase':{second:{phase:4}},
+  'history gap':{second:{from:9}},
+  'incomplete span':{second:{complete:false}},
+  'view changed':{second:{view:1}}};
+ for(const [why,o] of Object.entries(cases)){const {r,x}=attackRun(o);const h=HA(r,x);assert.notEqual(r.classify(x).ctx,'ATK',why);assert.doesNotMatch(h.text,/^Attack target/,why)}
+ // invalid event list (out of span)
+ {const r=createChoiceContext();const b=msg({from:1,prompt:BCMD(),phase:8,revision:103});r.ingest(b);r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});
+  const x={...msg({from:2,prompt:TGT(),phase:8,revision:104}),events:[{id:99,type:'move'}]};r.ingest(x);assert.notEqual(r.classify(x).ctx,'ATK')}
+ // reset between the reply and the prompt (new duel / rewind)
+ {const r=createChoiceContext();const b=msg({from:1,prompt:BCMD(),phase:8,revision:103});r.ingest(b);r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});r.reset();
+  const x=msg({from:1,prompt:TGT(),phase:8,revision:104});r.ingest(x);assert.notEqual(r.classify(x).ctx,'ATK')}
+ // attack cancelled at the target choice, then a later attack: only a NEW sent attack proves the new target prompt
+ {const {r}=attackRun();const back=msg({from:2,prompt:BCMD(),phase:8,revision:105});r.ingest(back);
+  const t2=msg({from:2,prompt:TGT(),phase:8,revision:106});r.ingest(t2);assert.notEqual(r.classify(t2).ctx,'ATK','no carry-over by code alone')}
+ // attacker name unknown: fallback, never a generic stand-in such as "Card effect"
+ {const {r,x}=attackRun();const h=header(x.state.prompt,r.classify(x),{nameOf:()=>'',view:0,phase:8});assert.equal(h.text,'Source not verified · choose 1 card');assert.equal(h.verified,false)}
+});
+
+test('(R67.2-3) proven resolving/activating context wins over a pending attack association',()=>{
+ // an attack prompt cannot be both; but if a resolving link is proven, R is used and the attack row is not
+ const r=createChoiceContext();r.ingest(msg({from:1,events:[{type:'activate',chain:1,code:100,player:0}],chain:[link(1,100)],phase:8,revision:102}));
+ const b=msg({from:2,events:[{type:'resolve',chain:1,code:100,player:0}],chain:[link(1,100)],prompt:BCMD(),phase:8,revision:103});r.ingest(b);r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});
+ const x=msg({from:3,chain:[link(1,100)],prompt:TGT(),phase:8,revision:104});r.ingest(x);assert.equal(r.classify(x).ctx,'R');
+ assert.equal(Object.keys(ATTACK_ROWS).length,1);assert.equal(ROWS['SELECT_CARD-ATK'],undefined);assert.equal(ERRATA_ROWS['SELECT_CARD-ATK'],undefined);
+});
+
+test('(R67.2-4) wiring: the attack hook runs only where a reply is actually SENT; the reply code matches the engine',async()=>{
+ const a=read('app.mjs');const n=a.split('choiceCtx.noteOwnSent(').length-1;assert.equal(n,2,'direct send and drained queue');
+ assert.match(a,/stage:'sent',ok:true,route:'drain'[^;]*\);choiceCtx\.noteOwnSent\(/);assert.match(a,/stage:'sent',ok:true,rev:state\.revision\}\);noteReplyContext\(response\);choiceCtx\.noteOwnSent\(/);
+ const q=a.slice(a.indexOf("stage:'queued'")-400,a.indexOf("stage:'queued'"));assert.doesNotMatch(q,/noteOwnSent/,'never at the queued point');
+ const {R,M}=await import('../dist/duel.mjs');const c=read('choice-context.mjs');assert.equal(R.SELECT_BATTLECMD,0);assert.equal(M.SELECT_BATTLECMD,10);assert.match(c,/R_SELECT_BATTLECMD=0/);
+});
+
+test('(R67.2-5) card menu readiness guard and reduced-motion load order',()=>{
+ const f=read('play-flow.mjs');assert.match(f,/function arm\(\)\{const g=\+\+menuGen;menuReady=false/);
+ assert.match(f,/b\.onclick=\(\)=>\{if\(!live\(b\.__gen\)\)return;/);assert.match(f,/yes\.onclick=\(\)=>\{if\(!live\(yes\.__gen\)\)return;/);
+ assert.match(f,/cancel\.onclick=close;/,'Close is never guarded');assert.match(f,/e\.key==='Escape'\)close\(\)/);
+ assert.match(f,/const close=\(\)=>\{[^}]*menuGen\+\+;menuReady=false/,'closing invalidates every button of that opening');
+ const a=read('app.mjs');const decl=a.indexOf('let renderGen=0,tokenSerial=0,liveToken=null');const first=a.search(/\napplyPreferences\(\)|[;}]applyPreferences\(\);/);
+ assert.ok(decl>0&&decl<a.indexOf('function applyPreferences'),'liveToken is declared before applyPreferences can run (reduced-motion load crash, r66–r67.1)');
+});
+
+/* ---------------- r67.3 (ChatGPT RELAY-236 review + replay-and-effect-offer-wording-r1) ---------------- */
+test('(R67.3-1) the attack association is settled by EVERY delivery, early returns included (RELAY-236 counterexample)',()=>{
+ // ChatGPT: attack sent at rev103 after span 1..1; an overlapping span 1..2 (attacker move id 2) used to keep the pending intent,
+ // so the next quiet span 3..2 at rev104 bound it and showed a verified attack header.
+ {const r=createChoiceContext();const b=msg({from:1,events:[{type:'phase',phase:8}],prompt:BCMD(),phase:8,revision:103});r.ingest(b);r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});
+  const o={...msg({from:1,phase:8,revision:103}),events:[{id:1,type:'phase',phase:8},{id:2,type:'move',code:500}]};o.eventSpan={from:1,to:2,complete:true};r.ingest(o);
+  assert.equal(r.state().attack,null,'overlap drops the pending intent');
+  const x=msg({from:3,prompt:TGT(),phase:8,revision:104});r.ingest(x);assert.notEqual(r.classify(x).ctx,'ATK');assert.doesNotMatch(HA(r,x).text,/^Attack target/)}
+ // a pure re-send of the battle prompt before the target prompt: the reply may not have been taken; drop the intent
+ {const r=createChoiceContext();const b=msg({from:1,events:[{type:'phase',phase:8}],prompt:BCMD(),phase:8,revision:103});r.ingest(b);r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});
+  r.ingest(msg({from:1,events:[{type:'phase',phase:8}],prompt:BCMD(),phase:8,revision:103}));assert.equal(r.state().attack,null);
+  const x=msg({from:2,prompt:TGT(),phase:8,revision:104});r.ingest(x);assert.notEqual(r.classify(x).ctx,'ATK')}
+ // an overlap AFTER binding drops the bound association too; a pure re-send of the same target prompt keeps it
+ {const {r,x}=attackRun();r.ingest(msg({from:2,prompt:TGT(),phase:8,revision:104}));assert.equal(r.classify(x).ctx,'ATK','same drawing re-sent');
+  const o={...msg({from:1,prompt:TGT(),phase:8,revision:104}),events:[{id:1,type:'phase',phase:8}]};o.eventSpan={from:1,to:2,complete:true};r.ingest(o);assert.equal(r.state().attackBound,null);assert.notEqual(r.classify(x).ctx,'ATK')}
+});
+
+test('(R67.3-2) attack target candidates must be EXACTLY the opposing player\'s monsters; malformed seat/player/controller fails',()=>{
+ const bad={
+  'candidate controller missing':{second:{prompt:TGT({selects:[{code:600,location:4,sequence:0}]})}},
+  'candidate controller invalid (2)':{second:{prompt:TGT({selects:[{code:600,controller:2,location:4,sequence:0}]})}},
+  'prompt player missing':{second:{prompt:TGT({player:undefined})}},
+  // ChatGPT: seat 0 / player 1 with an own (controller 0) candidate used to pass because 0 !== 1
+  'seat 0 but engine player 1 (attacker belonged to player 0)':{second:{prompt:TGT({player:1,selects:[{code:600,controller:0,location:4,sequence:0}]})}}};
+ for(const [why,o] of Object.entries(bad)){const {r,x}=attackRun(o);assert.notEqual(r.classify(x).ctx,'ATK',why)}
+ // capture side: an attack entry whose controller is not the chooser's engine player is never recorded
+ const r=createChoiceContext();const b=msg({from:1,prompt:BCMD({attacks:[{code:500,controller:1,location:4,sequence:2}]}),phase:8,revision:103});r.ingest(b);
+ r.noteOwnSent({rev:103,prompt:b.state.prompt,response:ATK_REPLY});assert.equal(r.state().attack,null);
+ // and the ordinary C08 shape still passes
+ const ok=attackRun();assert.equal(ok.r.classify(ok.x).ctx,'ATK');
+});
+
+test('(R67.3-3) native C05 shape: a Yes/No naming a DIFFERENT card while CL1 resolves reads "During CL 1 · offered card"',()=>{
+ const N={...NAMES,700:'The Fallen & The Virtuous',800:'Toon Bookmark'};const nm=c=>N[c]||'';
+ const run=(offer,{name=nm}={})=>{const r=createChoiceContext();r.ingest(msg({from:1,events:[{type:'activate',chain:1,code:700,player:1}],chain:[link(1,700,1)],revision:30}));
+  const x=msg({from:2,events:[{type:'resolve',chain:1,code:700,player:1}],chain:[link(1,700,1)],prompt:{type:T.SELECT_EFFECTYN,seat:0,player:0,code:offer},revision:31});r.ingest(x);
+  return {c:r.classify(x),h:header(x.state.prompt,r.classify(x),{nameOf:name,view:0,phase:4})}};
+ let {c,h}=run(800);assert.equal(c.ctx,'RO');assert.equal(h.id,'A-SELECT_EFFECTYN-RO');assert.equal(h.text,'During CL 1 · Toon Bookmark · use this effect?');assert.equal(h.verified,true);
+ // offered name unknown: the proven link stays, the card is not guessed
+ ({h}=run(800,{name:c=>c===700?'The Fallen & The Virtuous':''}));assert.equal(h.text,'Resolving CL 1 · effect choice');assert.equal(h.verified,false);
+ // same card as the resolving link: the existing R row
+ ({c,h}=run(700));assert.equal(c.ctx,'R');assert.equal(h.text,'Resolving CL 1 · The Fallen & The Virtuous · use this effect?');
+ // no proven resolution: the offer is context O, never "During CL"
+ const r=createChoiceContext();const x=msg({from:1,chain:[link(1,700,1)],prompt:{type:T.SELECT_EFFECTYN,seat:0,player:0,code:800},revision:5});r.ingest(x);
+ assert.equal(r.classify(x).ctx,'O');assert.doesNotMatch(header(x.state.prompt,r.classify(x),{nameOf:nm,view:0,phase:4}).text,/^During CL/);
+ assert.equal(Object.keys(OFFER_ROWS).length,1);assert.equal(ROWS['SELECT_EFFECTYN-RO'],undefined);
+});
+
+test('(R67.3-4) menu readiness: every release requires the menu to be really visible; the time cap finishes the entrance first',()=>{
+ const f=read('play-flow.mjs');
+ assert.match(f,/const release=\(\)=>\{if\(g===menuGen&&!menu\.hidden&&menuVisible\(\)/,'immediate, finished, cancelled and capped paths all check visibility');
+ assert.match(f,/for\(const a of anims\)\{try\{if\(a\.playState!=='finished'\)a\.finish\(\)\}catch\{\}\}\s*if\(menuVisible\(\)\)release\(\)/,'at the cap: finish this opening\'s entrance, then check');
+ assert.match(f,/function menuVisible\(\)\{if\(menu\.hidden\|\|!menu\.getClientRects\(\)\.length\)return false;[^}]*\+cs\.opacity<\.95\)return false\}return true\}/);
+ assert.doesNotMatch(f,/READY_FALLBACK_MS=600/,'no flat time-based release');
 });

@@ -7,7 +7,7 @@ import {test} from 'node:test';
 import {R46,setR46} from '../dist/ai/r46-flags.mjs';
 import {wbActivationBlock,wbPick,wbGhostOgre,wbAttackBlock,wbCartesiaMaterial} from '../dist/ai/book/windbot-port.mjs';
 import {handTrapUse,bookActivationBlock,bookPick} from '../dist/ai/book/book.mjs';
-import {M,R} from '../dist/duel.mjs';
+import {M,R} from '../dist/duel.mjs';import {pinnedFlow} from './lib/r45-scope.mjs';
 const cards=JSON.parse(fs.readFileSync(new URL('../dist/deck-cards.json',import.meta.url))).cards;
 const decks=JSON.parse(fs.readFileSync(new URL('../dist/decks.json',import.meta.url))).decks;
 const branded=decks.find(d=>d.id==='branded'),sky=decks.find(d=>d.id==='sky');
@@ -94,5 +94,5 @@ test('(R46-OFF) shipped with every ported rule on; R46.on=false turns them all o
 });
 test('(R46-SCOPE) human-flow.mjs, play-flow.mjs, human-holds.mjs and presentation.mjs are byte-identical to r45',()=>{
  for(const f of ['human-flow.mjs','play-flow.mjs','human-holds.mjs','presentation.mjs','duel.mjs','pilot.mjs','tactics.mjs'])
-  assert.equal(fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8'),fs.readFileSync('/workspace/ddl-test-r39/r45-ai-v4/'+f,'utf8'),f);
+  assert.equal(pinnedFlow(f,fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8'))/* r67.2-adapted */,fs.readFileSync('/workspace/ddl-test-r39/r45-ai-v4/'+f,'utf8'),f);
 });

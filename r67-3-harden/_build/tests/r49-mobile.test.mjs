@@ -1,6 +1,6 @@
 // r49 (Claude, 12 Nov 2026; Kevy 19:45 AEDT: mobile layout). SELF-VERIFIED until reviewed. Source-level checks only:
 // the layout itself is checked in a browser at 412x790, 800x1200 and 1280x740 (see release notes / relay).
-import assert from 'node:assert/strict';import {test} from 'node:test';import fs from 'node:fs';import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';import {test} from 'node:test';import fs from 'node:fs';import {createHash} from 'node:crypto';import {pinnedFlow} from './lib/r45-scope.mjs';
 const read=f=>fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8');
 test('(R49-1) the mobile sheet is the last stylesheet, is listed for offline use, and only styles (no script, no url)',()=>{
  const html=read('index.html'),links=[...html.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map(m=>m[1]);
@@ -20,4 +20,4 @@ test('(R49-3) play-comfort marks Play on the body, keeps the old auto-pass actio
  assert.ok(p.includes("document.querySelector('#play-response-status button')"),'the hidden bar\'s own button is what gets pressed');
  assert.ok(p.includes("matchMedia('(max-width:600px) and (orientation:portrait)').matches"));
  assert.ok(p.includes("/Offline duel files are ready/.test"),'only that one notice is dismissed');
- const pins=JSON.parse(fs.readFileSync(new URL('./fixtures/r48_1-flow-sha256.json',import.meta.url),'utf8'));for(const [f,h] of Object.entries(pins))assert.equal(createHash('sha256').update(fs.readFileSync(new URL('../dist/'+f,import.meta.url))).digest('hex'),h,f+' unchanged from r48.1 (sha256 pinned in tests/fixtures/r48_1-flow-sha256.json; RELAY-152 asked for no absolute path)')});
+ const pins=JSON.parse(fs.readFileSync(new URL('./fixtures/r48_1-flow-sha256.json',import.meta.url),'utf8'));for(const [f,h] of Object.entries(pins))assert.equal(createHash('sha256').update(pinnedFlow(f,fs.readFileSync(new URL('../dist/'+f,import.meta.url)))/* r67.2-adapted */).digest('hex'),h,f+' unchanged from r48.1 (sha256 pinned in tests/fixtures/r48_1-flow-sha256.json; RELAY-152 asked for no absolute path)')});

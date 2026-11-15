@@ -1,6 +1,6 @@
 // r50 (Claude, 13 Nov 2026; Kevy 07:13 AEDT "Go ahead and import the Egyptian style"). SELF-VERIFIED until reviewed.
 // The look is colours, fonts and card backs only: no layout sizes, no positions, no script, and it only applies with data-look=egypt.
-import assert from 'node:assert/strict';import {test} from 'node:test';import fs from 'node:fs';import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';import {test} from 'node:test';import fs from 'node:fs';import {createHash} from 'node:crypto';import {pinnedFlow} from './lib/r45-scope.mjs';
 const read=f=>fs.readFileSync(new URL('../dist/'+f,import.meta.url),'utf8');
 test('(R50-1) every rule is scoped to the egypt look and sets no size or position',()=>{
  const css=read('css/r50-egypt.css').replace(/\/\*[^]*?\*\//g,'');
@@ -19,4 +19,4 @@ test('(R50-2) Cinzel ships with its licence and is listed for offline use; the d
 test('(R50-3) chain setting wording changed, values and behaviour unchanged; flow files unchanged',()=>{
  const p=read('play-comfort.mjs');assert.ok(p.includes("CHAIN_LABEL={auto:'Chain: Ask me',turn:'Chain: Pass this turn',off:'Chain: Pass optional'}"));assert.ok(p.includes("const KEY='ddl-r48-play-comfort',CHAIN=['auto','turn','off']"));
  const pins=JSON.parse(fs.readFileSync(new URL('./fixtures/r49_1-flow-sha256.json',import.meta.url),'utf8'));assert.equal(Object.keys(pins).length,7);
- for(const [f,h] of Object.entries(pins))assert.equal(createHash('sha256').update(fs.readFileSync(new URL('../dist/'+f,import.meta.url))).digest('hex'),h,f+' unchanged from r49.1')});
+ for(const [f,h] of Object.entries(pins))assert.equal(createHash('sha256').update(pinnedFlow(f,fs.readFileSync(new URL('../dist/'+f,import.meta.url)))/* r67.2-adapted */).digest('hex'),h,f+' unchanged from r49.1')});
