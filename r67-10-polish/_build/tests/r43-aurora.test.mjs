@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 import {execFileSync} from 'node:child_process';
-import {R45_AI_CHANGED,R45_DISPLAY,R45_BUILD,R45_CACHE,R45_NAME,r47Undo,R52_CHANGED,pinnedFlow,undoR675Decks} from './lib/r45-scope.mjs';/* r45-adapted */
+import {R45_AI_CHANGED,R45_DISPLAY,R45_BUILD,R45_CACHE,R45_NAME,r47Undo,R52_CHANGED,pinnedFlow,undoR675Decks,R679_FX,undoR679} from './lib/r45-scope.mjs';/* r45-adapted */
 const dist=f=>new URL('../dist/'+f,import.meta.url);
 const read=f=>fs.readFileSync(dist(f),'utf8');
 const sha=f=>crypto.createHash('sha256').update(pinnedFlow(f,fs.readFileSync(dist(f)))).digest('hex')/* r67.2-adapted: play-flow minus the menu guard */;
@@ -14,13 +14,14 @@ const LEGACY=['style','arena','mobile-motion','vibrant','master-duel','lab-shell
 /* r44: + ai/book/branded-nov08.mjs, the Super Polymerization own-face-down fix (RELAY-135; Kevy 11 Nov 01:58 AEDT), pinned by tests/r44-superpoly.test.mjs */
 const R44_AI_FIX='ai/book/branded-nov08.mjs';
 /* r45: + the AI v4 files listed in lib/r45-scope.mjs */
-const ALLOWED_CHANGED=[...new Set(['app.mjs','deck-list.mjs','decks.json','index.html','offline-assets.json','release-notes.md','sw.js','worker.mjs','library-worker.mjs'/* r49.1: art-additions.json loading */,R44_AI_FIX,...R45_AI_CHANGED,...R52_CHANGED.filter(f=>f!=='play-flow.mjs'&&f!=='pilot.mjs')/* r52; r67.2-adapted: play-flow is compared minus the menu guard (pinnedFlow); r67.7-adapted: pilot.mjs likewise minus the retarget hook, so it must match r42 exactly */])].sort();
+const ALLOWED_CHANGED=[...new Set([...R679_FX.filter(f=>f==='dl-fx.mjs')/* r67.9-adapted: compared minus the battle effects below */,'app.mjs','deck-list.mjs','decks.json','index.html','offline-assets.json','release-notes.md','sw.js','worker.mjs','library-worker.mjs'/* r49.1: art-additions.json loading */,R44_AI_FIX,...R45_AI_CHANGED,...R52_CHANGED.filter(f=>f!=='play-flow.mjs'&&f!=='pilot.mjs')/* r52; r67.2-adapted: play-flow is compared minus the menu guard (pinnedFlow); r67.7-adapted: pilot.mjs likewise minus the retarget hook, so it must match r42 exactly */])].sort();
 
 test('(R43-1) only shell/presentation files differ from r42; engine, AI, rules, prompt timing, decks logic and every legacy stylesheet are byte-identical',()=>{
  const changed=Object.keys(r42).filter(f=>sha(f)!==r42[f]).sort();
  assert.deepEqual(changed,ALLOWED_CHANGED);
  for(const f of Object.keys(r42))assert.ok(fs.existsSync(dist(f)),'r42 file missing: '+f);
- for(const f of ['human-flow.mjs','play-flow.mjs','human-holds.mjs','presentation.mjs','duel.mjs','random.mjs','deck-validator.mjs','windbot/edo.mjs','pilot.mjs','cards.json.gz','scripts.json.gz','dl-fx.mjs','coin-cutscene.mjs'])assert.equal(sha(f),r42[f],f);
+ for(const f of ['human-flow.mjs','play-flow.mjs','human-holds.mjs','presentation.mjs','duel.mjs','random.mjs','deck-validator.mjs','windbot/edo.mjs','pilot.mjs','cards.json.gz','scripts.json.gz','coin-cutscene.mjs'])assert.equal(sha(f),r42[f],f);
+ assert.equal(crypto.createHash('sha256').update(undoR679('dl-fx.mjs',read('dl-fx.mjs'))).digest('hex'),r42['dl-fx.mjs'],'dl-fx.mjs minus the r67.9 battle effects');/* r67.9-adapted */
  for(const f of Object.keys(r42).filter(f=>/^(ai|core|windbot|wb|art|banlists|audio)\//.test(f)&&f!==R44_AI_FIX&&!R45_AI_CHANGED.includes(f)&&!R52_CHANGED.includes(f)/* r55 */))assert.equal(sha(f),r42[f],f);
  for(const n of LEGACY)assert.equal(sha(n+'.css'),r42[n+'.css'],n+'.css kept unchanged for comparison');
 });
@@ -65,8 +66,8 @@ test('(R43-6, r44 scope) decorative art is original: hero, LP avatars, victory f
  assert.match(read('deck-list.mjs'),/<img src="\$\{esc\(c\.art\)\}" alt="\$\{esc\(name\)\}"/);
 });
 test('(R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only',()=>{
- const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r67\.8<\/span>/);/* r46-adapted */
- assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r67\.8/);/* r46-adapted */
+ const html=read('index.html');assert.doesNotMatch(html,/<span class="release">TEST r42/);assert.match(html,/<span class="release test-badge"[^>]*>TEST r67\.10<\/span>/);/* r46-adapted */
+ assert.match(read('app.mjs'),/<p class="about-build" id="about-build"><b>About this build:<\/b> TEST r67\.10/);/* r46-adapted */
  const ui=read('ui-polish.mjs').replace(/^\/\/.*$/mg,'');assert.doesNotMatch(ui,/import |postMessage|Worker|Math\.random|setTimeout|setInterval|duel|respond/);assert.match(ui,/setProperty\('--pop-shift'/);
  assert.match(html,/<script type="module" src="ui-polish\.mjs"><\/script><\/body>/);
 });

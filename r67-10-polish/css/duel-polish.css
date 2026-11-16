@@ -1,0 +1,30 @@
+/* Authored by ChatGPT — pending Seto/team fact check. Static gradients; only transform/opacity animate. */
+.ddl-polish-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:20px;max-width:100%;margin:0 6px 0 0;padding:1px 8px;flex:0 1 auto;order:-1;border:1px solid #c7a65a45;border-radius:12px;background:linear-gradient(105deg,#111e38f5,#182c48ef 60%,#101a2fee);color:#f5e3bb;pointer-events:none;isolation:isolate;overflow:hidden;box-sizing:border-box}
+.ddl-polish-bar[hidden]{display:none}
+.ddl-polish-enabled .midline>#phase-display{display:none} /* phase tracker and turn badge stay intact */
+.ddl-phase-banner{position:relative;flex:1;min-width:0;font-size:11px;font-weight:700;letter-spacing:.12em;line-height:1.25;text-transform:uppercase;padding:0;overflow-wrap:anywhere}
+.ddl-phase-banner:before,.ddl-phase-banner:after{content:"";position:absolute;left:0;width:min(220px,90%);height:1px;background:linear-gradient(90deg,#e9cb7d,transparent)}
+.ddl-phase-banner:before{top:0}.ddl-phase-banner:after{bottom:0}.ddl-phase-banner[data-battle="true"]{color:#ffd6e6}
+.ddl-chain-pill{flex:0 1 auto;font-size:10px;line-height:1.4;letter-spacing:.025em;text-align:right;border-left:1px solid #c7a65a45;padding-left:10px;overflow-wrap:anywhere;color:#d9e5ef}
+.ddl-chain-pill[data-stage="resolve"],.ddl-chain-pill[data-stage="chainLock"]{color:#ffe0a0}.ddl-chain-pill[data-stage="negate"]{color:#ffb4bf}
+/* r67.10 integration (Claude): the existing scheduled phase announcement is KEPT (hiding it left a blank, still-timed pause) and
+   restyled as the reel's E3 glass plate below. This lane label stays as the persistent status. */
+.ddl-polish-enabled .chain-aura:has(>.ddl-chain-halo)>[data-chain-badge]{opacity:0} /* only replace a coin where the new halo really exists */
+.ddl-chain-halo{position:absolute;inset:-5px;border:2px solid #ecd58c;border-radius:50%;box-shadow:0 0 0 4px #d6af4f12,0 0 17px #e2bd5866,inset 0 0 10px #e2bd5822;pointer-events:none!important;z-index:2;opacity:.8}
+.ddl-chain-halo i{position:absolute;top:0;left:0;display:grid;place-items:center;min-width:23px;height:23px;border:1px solid #ffdf83;border-radius:50%;background:#172039;color:#fff0bd;font:700 12px/1 system-ui;font-style:normal}
+.ddl-chain-halo.is-negated{border-color:#e9a5ba}.ddl-chain-halo.is-negated i{color:#ffd5e1}
+#my-lp,#opp-lp{position:relative}.ddl-lp-frame{position:absolute;inset:-3px;border:2px solid #e7bd61;border-radius:inherit;box-shadow:0 0 14px #edc66b66;pointer-events:none!important;z-index:1;opacity:0}.ddl-lp-frame[data-kind="gain"]{border-color:#90dbbd;box-shadow:0 0 14px #90dbbd66}.ddl-lp-frame[data-kind="loss"]{border-color:#ffc0bb;box-shadow:0 0 14px #ef8c8a66}
+@media(max-width:600px){.ddl-polish-bar{gap:6px;padding:1px 6px;margin:0 4px 0 0}.ddl-phase-banner{letter-spacing:.06em}.ddl-chain-pill{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.ddl-chain-halo{box-shadow:none}.ddl-lp-frame{display:none}}
+body.quiet-motion .ddl-chain-halo{box-shadow:none}body.quiet-motion .ddl-lp-frame{display:none}
+/* r67.10 integration (Claude) — E3 "Battle Phase" plate as in Kevy's reference video (RELAY-262b): the existing phase announcement,
+   same timing and scheduler, restyled: a translucent navy plate, thin gold hairlines above and below that run past the plate and fade
+   at the ends, letter-spaced small caps; rose for the Battle Phase, calm gold for the others. Static styling only (the existing
+   entrance animation is unchanged); no blur filter (phone cost). */
+/* Specificity: #event-stage#event-stage beats the theme and pace rules (one id); !important only where those rules use it. */
+#event-stage#event-stage[data-kind="phase"] .event-copy{overflow:visible;clip-path:none!important;padding:11px clamp(26px,6vw,54px) 10px!important;border-radius:12px!important;background:linear-gradient(180deg,rgba(24,36,70,.82),rgba(11,17,41,.88))!important;border:1px solid rgba(233,203,125,.32)!important;box-shadow:0 12px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.09)!important}
+#event-stage#event-stage[data-kind="phase"] .event-copy::before,#event-stage#event-stage[data-kind="phase"] .event-copy::after{content:"";display:block;position:absolute;left:-16%;right:-16%;width:auto;height:1px;border:0;background:linear-gradient(90deg,transparent,#e9cb7d 22%,#fff3c9 50%,#e9cb7d 78%,transparent);box-shadow:0 0 8px rgba(233,203,125,.75);pointer-events:none}
+#event-stage#event-stage[data-kind="phase"] .event-copy::before{top:-8px;bottom:auto}#event-stage#event-stage[data-kind="phase"] .event-copy::after{bottom:-8px;top:auto}
+#event-stage#event-stage[data-kind="phase"] #event-title{font-variant:small-caps;letter-spacing:.2em;color:#f4e3b5!important;text-shadow:0 0 12px rgba(233,203,125,.45)}
+#event-stage#event-stage[data-kind="phase"][data-ddl-phase="battle"] #event-title{color:#ffc6da!important;text-shadow:0 0 14px rgba(255,110,165,.6),0 0 2px rgba(255,255,255,.6)}
+#event-stage#event-stage[data-kind="phase"][data-ddl-phase="battle"] .event-copy{border-color:rgba(255,170,205,.4)!important}

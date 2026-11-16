@@ -1,3 +1,27 @@
+# Duel Doctrine Lab · r67.10 TEST · Duel polish (with ChatGPT) · 17 November 2026
+
+Display only: the rules engine, the AI and Kevy's deck list are unchanged. Claude's parts are self-checked by Claude, pending ChatGPT review and the Seto team. ChatGPT's parts are "Authored by ChatGPT — pending Seto/team fact check".
+
+- **From Kevy's reference video (Job L, RELAY-262b/263).**
+  - **Phase plate (E3).** The phase announcement is now a navy glass plate with gold hairlines above and below and letter-spaced small caps: rose for the Battle Phase, calm gold for the others. It keeps the same timing as before.
+  - **Status strip (ChatGPT).** A compact strip in the field's middle lane shows the phase and the chain: Building, Resolving, Negated, complete.
+  - **Chain ring (ChatGPT, E5).** A gold ring with the chain number appears on the activating card, but only when that exact face-up card is identified on the field.
+  - **Life Points glow (ChatGPT).** The Life Points frame glows when Life Points change: rose for a loss, gold for a cost, mint for a gain. The existing counter is unchanged.
+- **Battle effects never cover a decision (ChatGPT's MED-R679-1 finding).** The impact and FINAL BLOW are now clipped to the part of the screen beside any decision box, whatever its shape. If a box opens over a playing effect, the effect is removed. The impact is skipped when its Life Points are under a decision box. The FINAL BLOW's white flash is softer.
+- **Same rules as the other effects.** Instant and FX off show no new animations, reduced motion keeps them still, and nothing blocks taps or delays a decision. The camera move from the video was left out, so phone choices stay steady.
+
+# Duel Doctrine Lab · r67.9 TEST · Final Blow battle effects · 17 November 2026
+
+Self-checked by Claude, pending ChatGPT review and the Seto team. Display only: the rules engine, the AI and Kevy's deck list are unchanged.
+
+- **From Kevy's reference video (Job L, RELAY-262b E7–E11).** Our own CSS effects; nothing is copied from the video.
+  - **Attack streak:** the attacker's card leaves four fading afterimages and a trail of gold sparks as it flies at its target.
+  - **Battle impact:** when battle damage lands, the Life Points get a white flash, blue and gold rings and converging speed lines, with a new impact sound.
+  - **FINAL BLOW:** the winning battle hit sets off a supernova from the losing Life Points (white core to pink, violet and blue, a bright rim, gold orbit rings, a star flare and sparks) with a "FINAL BLOW" title over the duel table and its own sound. Burn damage and costs don't trigger it.
+- **Same rules as the other effects.** They are timed to the speed setting and removed when the batch ends (none at Instant), go calm (fade only) with reduced motion, and are pointer-free. The big effects never paint over the decision prompt.
+- Both new sounds are in Sound Studio (BATTLE IMPACT, FINAL BLOW).
+- ChatGPT's share of Job L (phase banner, chain ring and status pill, Life Points glow) follows in the next build.
+
 # Duel Doctrine Lab · r67.8 TEST · battle-retarget board scan · 16 November 2026
 
 Self-checked by Claude, pending ChatGPT review and the Seto team. Kevy's deck list is unchanged.

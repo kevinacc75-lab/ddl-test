@@ -66,10 +66,36 @@ body[data-dlfx="off"] .dlfx{display:none!important}
 .dlfx-anim.dlfx-dice .dlfx-token{animation:dlfx-roll 850ms cubic-bezier(.3,.6,.4,1) both}
 .dlfx-toggle-label{display:flex;gap:6px;align-items:center}
 .sound-tile.dlfx-tile{outline:1px dashed var(--tile-color)}
+/* r67.9 Job L (Kevy's reference video, E7-E11). Self-checked by Claude, pending ChatGPT and the Seto team.
+   Transform/opacity animations only; every delay+duration ends inside --dlfx-ms, so nothing outlives the module's removal. */
+/* E7 attack streak: afterimages of the attacker's card box chase the streak, with gold sparks shed along the path */
+.dlfx-slash .dlfx-ghost{position:absolute;left:calc(var(--dlfx-cw,60px)*-.5);top:calc(var(--dlfx-ch,86px)*-.5);width:var(--dlfx-cw,60px);height:var(--dlfx-ch,86px);border-radius:6px;border:2px solid rgba(255,230,170,.9);background:linear-gradient(160deg,rgba(255,255,255,.35),rgba(255,209,102,.18) 50%,rgba(180,140,255,.12));box-shadow:0 0 14px rgba(255,209,102,.55);opacity:0;animation:dlfx-ghost calc(var(--dlfx-ms)*.55) cubic-bezier(.55,0,.9,.45) both;animation-delay:calc(var(--dlfx-ms)*var(--k)*.06)}
+.dlfx-direct .dlfx-ghost{border-color:rgba(255,190,205,.9);box-shadow:0 0 14px rgba(255,77,109,.55)}
+.dlfx-slash .dlfx-spark{position:absolute;left:calc(8% + var(--k)*15%);top:-3px;width:6px;height:6px;border-radius:50%;background:#fff7dc;box-shadow:0 0 6px #ffd166,0 0 12px rgba(255,209,102,.7);opacity:0;animation:dlfx-spark calc(var(--dlfx-ms)*.45) ease-out both;animation-delay:calc(var(--dlfx-ms)*(.08 + var(--k)*.05))}
+.dlfx-slash .dlfx-spark:nth-child(odd){--dlfx-sy:16px}
+/* E8 battle impact at the Life Points: white flash, blue and gold rings, speed lines converging on the point */
+.dlfx-impact{overflow:hidden;contain:paint}/* r67.10: a clip box = the safe region (sized by dl-fx.mjs) */
+.dlfx-impact .im-c{position:absolute;left:var(--im-x,0);top:var(--im-y,0);width:0;height:0}
+.dlfx-impact .im-flash{position:absolute;left:-70px;top:-70px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,#fff 0,rgba(255,255,255,.85) 25%,rgba(255,240,200,.25) 55%,transparent 70%);opacity:0;animation:dlfx-imflash calc(var(--dlfx-ms)*.45) ease-out both}
+.dlfx-impact .im-ring{position:absolute;left:-60px;top:-60px;width:120px;height:120px;border-radius:50%;border:3px solid #7fd8ff;box-shadow:0 0 12px rgba(63,211,255,.8),inset 0 0 10px rgba(63,211,255,.5);opacity:0;animation:dlfx-imring calc(var(--dlfx-ms)*.6) cubic-bezier(.15,.7,.3,1) both}
+.dlfx-impact .im-ring2{border-color:var(--dlfx-gold);box-shadow:0 0 12px rgba(255,209,102,.8);animation-delay:calc(var(--dlfx-ms)*.12)}
+.dlfx-impact .im-line{position:absolute;left:0;top:-1.5px;width:90px;height:3px;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 70%,rgba(255,255,255,.2));transform-origin:0 50%;opacity:0;--a:calc(var(--i)*36deg + 8deg);animation:dlfx-imline calc(var(--dlfx-ms)*.4) cubic-bezier(.5,0,.8,.4) both;animation-delay:calc(var(--dlfx-ms)*.02*var(--i))}
+/* E9-E11 FINAL BLOW: the lethal battle hit only. A supernova from the losing Life Points, over the window, under the decision prompt. */
+.dlfx-finale{overflow:hidden;contain:paint}/* sized by dl-fx.mjs to stop at the decision prompt's edge */
+.dlfx-finale>*{position:absolute}
+.dlfx-finale .fb-flash{inset:0;background:radial-gradient(circle at var(--fb-x) var(--fb-y),#fff 0,rgba(255,255,255,.62) 22%,rgba(220,230,255,.2) 55%,transparent 85%);/* r67.10: restrained wash (ChatGPT RELAY-263) */opacity:0;animation:dlfx-fbflash calc(var(--dlfx-ms)*.32) ease-out both}
+.dlfx-finale .fb-core{left:calc(var(--fb-x) - var(--fb-r)*.6);top:calc(var(--fb-y) - var(--fb-r)*.6);width:calc(var(--fb-r)*1.2);height:calc(var(--fb-r)*1.2);border-radius:50%;background:radial-gradient(circle,#fff 0,#fff6ea 6%,#ff9ad0 16%,#c46cff 30%,rgba(80,70,255,.75) 44%,rgba(30,40,160,.4) 58%,transparent 70%);opacity:0;animation:dlfx-fbcore var(--dlfx-ms) cubic-bezier(.1,.8,.3,1) both}
+.dlfx-finale .fb-rim{left:calc(var(--fb-x) - var(--fb-r)*.5);top:calc(var(--fb-y) - var(--fb-r)*.5);width:var(--fb-r);height:var(--fb-r);border-radius:50%;border:4px solid #fff;box-shadow:0 0 18px #fff,0 0 40px rgba(180,140,255,.8),inset 0 0 24px rgba(255,160,220,.6);opacity:0;animation:dlfx-fbrim calc(var(--dlfx-ms)*.55) cubic-bezier(.1,.7,.3,1) both;animation-delay:calc(var(--dlfx-ms)*.06)}
+.dlfx-finale .fb-rim2{border-width:2px;border-color:#9fdcff;animation-delay:calc(var(--dlfx-ms)*.2)}
+.dlfx-finale .fb-orbit{left:calc(var(--fb-x) - var(--fb-r)*.22);top:calc(var(--fb-y) - var(--fb-r)*.08);width:calc(var(--fb-r)*.44);height:calc(var(--fb-r)*.16);border-radius:50%;border:2px solid rgba(255,214,120,.95);box-shadow:0 0 10px rgba(255,209,102,.7);opacity:0;--o:-24deg;animation:dlfx-fborbit calc(var(--dlfx-ms)*.7) ease-out both;animation-delay:calc(var(--dlfx-ms)*.22)}
+.dlfx-finale .fb-orbit2{border-color:rgba(130,200,255,.9);box-shadow:0 0 10px rgba(63,211,255,.6);--o:38deg;animation-delay:calc(var(--dlfx-ms)*.28)}
+.dlfx-finale .fb-star{left:calc(var(--fb-x) - 70px);top:calc(var(--fb-y) - 70px);width:140px;height:140px;background:radial-gradient(circle,#fff 0,#fff3d6 18%,rgba(255,200,140,.6) 34%,transparent 60%);clip-path:polygon(50% 0,56% 44%,100% 50%,56% 56%,50% 100%,44% 56%,0 50%,44% 44%);opacity:0;animation:dlfx-fbstar calc(var(--dlfx-ms)*.75) ease-out both;animation-delay:calc(var(--dlfx-ms)*.18)}
+.dlfx-finale .fb-spark{left:var(--fb-x);top:var(--fb-y);width:5px;height:5px;margin:-2.5px;border-radius:50%;background:#fff;box-shadow:0 0 6px #ffd6f0,0 0 10px rgba(180,140,255,.8);opacity:0;--a:calc(var(--i)*30deg + 7deg);animation:dlfx-fbspark calc(var(--dlfx-ms)*.6) cubic-bezier(.2,.7,.4,1) both;animation-delay:calc(var(--dlfx-ms)*(.22 + var(--i)*.012))}
+.dlfx-finale .fb-tag{left:var(--fb-tx,50%);top:var(--fb-ty,42%);transform:translate(-50%,-50%);white-space:nowrap;font-size:clamp(22px,6vw,40px);font-weight:900;font-style:italic;letter-spacing:.14em;color:#fff;-webkit-text-stroke:1.5px #b8860b;text-shadow:0 0 14px rgba(255,209,102,.95),0 0 30px rgba(180,140,255,.8),3px 3px 0 #2a1600;opacity:0;animation:dlfx-fbtag calc(var(--dlfx-ms)*.72) cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(var(--dlfx-ms)*.26)}
 /* reduced motion: still tags only, short fade */
 body.dlfx-still .dlfx *,body.dlfx-still .dlfx{animation-name:dlfx-fade!important;animation-duration:var(--dlfx-ms)!important}
-body.dlfx-still .dlfx-pillar .dlfx-beam,body.dlfx-still .dlfx-pillar .dlfx-ring,body.dlfx-still .dlfx-mote,body.dlfx-still .dlfx-streak,body.dlfx-still .dlfx-tip,body.dlfx-still .dlfx-star{display:none}
-@media (prefers-reduced-motion: reduce){.dlfx,.dlfx *{animation-name:dlfx-fade!important}.dlfx-beam,.dlfx-ring,.dlfx-mote,.dlfx-streak,.dlfx-tip,.dlfx-star{display:none}}
+body.dlfx-still .dlfx-pillar .dlfx-beam,body.dlfx-still .dlfx-pillar .dlfx-ring,body.dlfx-still .dlfx-mote,body.dlfx-still .dlfx-streak,body.dlfx-still .dlfx-tip,body.dlfx-still .dlfx-star,body.dlfx-still .dlfx-ghost,body.dlfx-still .dlfx-spark,body.dlfx-still .im-flash,body.dlfx-still .im-ring,body.dlfx-still .im-line,body.dlfx-still .fb-flash,body.dlfx-still .fb-rim,body.dlfx-still .fb-orbit,body.dlfx-still .fb-star,body.dlfx-still .fb-spark{display:none}
+@media (prefers-reduced-motion: reduce){.dlfx,.dlfx *{animation-name:dlfx-fade!important}.dlfx-beam,.dlfx-ring,.dlfx-mote,.dlfx-streak,.dlfx-tip,.dlfx-star,.dlfx-ghost,.dlfx-spark,.im-flash,.im-ring,.im-line,.fb-flash,.fb-rim,.fb-orbit,.fb-star,.fb-spark{display:none}}
 @keyframes dlfx-rise{0%{transform:scaleY(0);opacity:0}25%{transform:scaleY(1.05);opacity:1}70%{opacity:.8}100%{transform:scaleY(1);opacity:0}}
 @keyframes dlfx-ring{0%{transform:translateX(-50%) scale(.3);opacity:0}20%{opacity:1}100%{transform:translateX(-50%) scale(1.5);opacity:0}}
 @keyframes dlfx-mote{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(calc(var(--dlfx-h,180px)*-.9));opacity:0}}
@@ -85,4 +111,15 @@ body.dlfx-still .dlfx-pillar .dlfx-beam,body.dlfx-still .dlfx-pillar .dlfx-ring,
 @keyframes dlfx-flip{0%{transform:rotateX(0) translateY(0)}45%{transform:rotateX(900deg) translateY(-14px)}100%{transform:rotateX(1440deg) translateY(0)}}
 @keyframes dlfx-roll{0%{transform:rotate(0) translateX(-20px)}70%{transform:rotate(620deg) translateX(0)}100%{transform:rotate(720deg)}}
 @keyframes dlfx-fade{0%{opacity:0}15%{opacity:1}80%{opacity:1}100%{opacity:0}}
-
+@keyframes dlfx-ghost{0%{opacity:0;transform:translateX(0) rotate(calc(var(--dlfx-ang,0deg)*-1)) scale(1)}12%{opacity:calc(.62 - var(--k)*.12)}100%{opacity:0;transform:translateX(var(--dlfx-len,200px)) rotate(calc(var(--dlfx-ang,0deg)*-1)) scale(.82)}}
+@keyframes dlfx-spark{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1;transform:translate(-4px,calc(var(--dlfx-sy,-16px)*.3)) scale(1.2)}100%{opacity:0;transform:translate(-18px,var(--dlfx-sy,-16px)) scale(.3)}}
+@keyframes dlfx-imflash{0%{opacity:0;transform:scale(.3)}25%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.4)}}
+@keyframes dlfx-imring{0%{opacity:0;transform:scale(.15)}15%{opacity:1}100%{opacity:0;transform:scale(1.9)}}
+@keyframes dlfx-imline{0%{opacity:0;transform:rotate(var(--a)) translateX(150px) scaleX(1.2)}30%{opacity:.95}100%{opacity:0;transform:rotate(var(--a)) translateX(14px) scaleX(.3)}}
+@keyframes dlfx-fbflash{0%{opacity:0}18%{opacity:.5}100%{opacity:0}}
+@keyframes dlfx-fbcore{0%{opacity:0;transform:scale(.04)}10%{opacity:1}30%{opacity:.95;transform:scale(.8)}70%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(1.06)}}
+@keyframes dlfx-fbrim{0%{opacity:0;transform:scale(.05)}12%{opacity:1}100%{opacity:0;transform:scale(1.25)}}
+@keyframes dlfx-fborbit{0%{opacity:0;transform:rotate(var(--o)) scale(.3)}25%{opacity:1}100%{opacity:0;transform:rotate(calc(var(--o) + 160deg)) scale(1.35)}}
+@keyframes dlfx-fbstar{0%{opacity:0;transform:translateY(0) rotate(0) scale(.2)}25%{opacity:1;transform:translateY(-10px) rotate(12deg) scale(1.15)}100%{opacity:0;transform:translateY(-60px) rotate(45deg) scale(.7)}}
+@keyframes dlfx-fbspark{0%{opacity:0;transform:rotate(var(--a)) translateX(10px) scale(.6)}20%{opacity:1}100%{opacity:0;transform:rotate(var(--a)) translateX(calc(var(--fb-r)*.32)) translateY(-14px) scale(.2)}}
+@keyframes dlfx-fbtag{0%{opacity:0;transform:translate(-50%,-50%) scale(1.8)}18%{opacity:1;transform:translate(-50%,-50%) scale(.95)}26%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-62%) scale(1)}}
