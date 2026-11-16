@@ -1,3 +1,22 @@
+# Duel Doctrine Lab · r67.11 TEST · Effects never cover a decision · 17 November 2026
+
+Self-checked by Claude, pending ChatGPT review and the Seto team. Display only: the rules engine, the AI and Kevy's deck list are unchanged.
+
+- **ChatGPT's LOW-R6710-1 (RELAY-266).** The clip boxes for the impact and FINAL BLOW are now rounded inward, so they can't reach even a fraction of a pixel into a decision box. The box that is drawn is exactly the box that is watched.
+- **The small labels too (the RELAY-265/266 follow-up).** When a decision box is open, summon pillars, chain tags, the attack streak and its label, the Life Points damage number and the turn banner are clipped to the space beside it. If a label's spot is under the box, it isn't shown. With no decision box open, nothing changes.
+
+# Duel Doctrine Lab · r67.10 TEST · Duel polish (with ChatGPT) · 17 November 2026
+
+Display only: the rules engine, the AI and Kevy's deck list are unchanged. Claude's parts are self-checked by Claude, pending ChatGPT review and the Seto team. ChatGPT's parts are "Authored by ChatGPT — pending Seto/team fact check".
+
+- **From Kevy's reference video (Job L, RELAY-262b/263).**
+  - **Phase plate (E3).** The phase announcement is now a navy glass plate with gold hairlines above and below and letter-spaced small caps: rose for the Battle Phase, calm gold for the others. It keeps the same timing as before.
+  - **Status strip (ChatGPT).** A compact strip in the field's middle lane shows the phase and the chain: Building, Resolving, Negated, complete.
+  - **Chain ring (ChatGPT, E5).** A gold ring with the chain number appears on the activating card, but only when that exact face-up card is identified on the field.
+  - **Life Points glow (ChatGPT).** The Life Points frame glows when Life Points change: rose for a loss, gold for a cost, mint for a gain. The existing counter is unchanged.
+- **Battle effects never cover a decision (ChatGPT's MED-R679-1 finding).** The impact and FINAL BLOW are now clipped to the part of the screen beside any decision box, whatever its shape. If a box opens over a playing effect, the effect is removed. The impact is skipped when its Life Points are under a decision box. The FINAL BLOW's white flash is softer.
+- **Same rules as the other effects.** Instant and FX off show no new animations, reduced motion keeps them still, and nothing blocks taps or delays a decision. The camera move from the video was left out, so phone choices stay steady.
+
 # Duel Doctrine Lab · r67.9 TEST · Final Blow battle effects · 17 November 2026
 
 Self-checked by Claude, pending ChatGPT review and the Seto team. Display only: the rules engine, the AI and Kevy's deck list are unchanged.

@@ -10,7 +10,7 @@ const kinds=p=>p.map(x=>x.kind+(x.impact?'+impact':''));
 
 function shim({prompt=null}={}){
  const nodes=[];const mk=tag=>{const n={tag,className:'',style:{props:{},setProperty(k,v){this.props[k]=v}},dataset:{},attrs:{},isConnected:true,innerHTML:'',textContent:'',
-  classList:{s:new Set(),add(c){this.s.add(c)},remove(c){this.s.delete(c)},contains(c){return this.s.has(c)}},setAttribute(k,v){this.attrs[k]=v},remove(){this.isConnected=false},getBoundingClientRect(){return {left:0,top:0,width:0,height:0}}};nodes.push(n);return n};
+  classList:{s:new Set(),add(c){this.s.add(c)},remove(c){this.s.delete(c)},contains(c){return this.s.has(c)}},setAttribute(k,v){this.attrs[k]=v},append(c){c.parent=this;(this.children||=[]).push(c)},remove(){this.isConnected=false},getBoundingClientRect(){return {left:0,top:0,width:0,height:0}}};nodes.push(n);return n};
  const body=mk('body');body.append=n=>{n.parent=body};
  const table={getBoundingClientRect:()=>({left:200,top:60,width:800,height:600,right:1000,bottom:660})};
  const dc=prompt&&{getBoundingClientRect:()=>prompt};
@@ -41,7 +41,8 @@ test('(R67.9-2) run: streak ghosts/sparks, impact and finale mount with the righ
   assert.equal((slash.innerHTML.match(/dlfx-ghost/g)||[]).length,4);assert.equal((slash.innerHTML.match(/dlfx-spark/g)||[]).length,6);
   assert.equal(slash.style.props['--dlfx-cw'],'60px');assert.equal(slash.style.props['--dlfx-ch'],'86px');
   assert.equal((imp.innerHTML.match(/im-line/g)||[]).length,10);assert.match(imp.innerHTML,/im-ring im-ring2/);assert.equal(imp.dataset.side,'bottom');
-  assert.equal(imp.style.left,'140px');assert.equal(imp.style.top,'730px');/* our Life Points centre */
+  assert.equal(imp.style.left,'0px');assert.equal(imp.style.top,'0px');assert.equal(imp.style.props['--im-x'],'140px');assert.equal(imp.style.props['--im-y'],'730px');/* r67.10-adapted: a clip box (no prompt = the window), centred on our Life Points */
+  assert.equal(imp.style.width,'1280px');assert.equal(imp.style.height,'800px');
   for(const part of ['fb-flash','fb-core','fb-rim fb-rim2','fb-orbit fb-orbit2','fb-star'])assert.match(fin.innerHTML,new RegExp(part));
   assert.equal((fin.innerHTML.match(/fb-spark/g)||[]).length,12);assert.match(fin.innerHTML,/<b class="fb-tag">FINAL BLOW<\/b>/);
   assert.equal(fin.style.props['--fb-x'],'140px');assert.equal(fin.style.props['--fb-y'],'730px');/* the losing Life Points */
@@ -89,3 +90,51 @@ test('(R67.9-4) CSS contract: transform/opacity keyframes, reduced-motion fallba
   const t=val(calc(b,b.indexOf('calc(',b.indexOf('animation:'))))+val(calc(o,o.indexOf('calc(',o.indexOf('animation-delay:'))));assert.ok(t<=1.0001,ov+' ends at '+t);checked++}
  assert.ok(checked>=14,'checked '+checked);
 });
+
+// ---- r67.10 (ChatGPT RELAY-263 MED-R679-1): footprint-safe regions for every prompt shape, and cleanup when a prompt moves over an effect.
+const parts=doc=>{const ns=mounted(doc);return {imp:ns.find(n=>/dlfx-impact/.test(n.className)),fin:ns.find(n=>/dlfx-finale/.test(n.className))}};
+const px=v=>parseInt(v);
+const rectOf=n=>({left:px(n.style.left),top:px(n.style.top),right:px(n.style.left)+px(n.style.width),bottom:px(n.style.top)+px(n.style.height)});
+const overlaps=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+const P=(left,top,width,height)=>({left,top,width,height,right:left+width,bottom:top+height});
+
+test('(R67.10-1) ChatGPT\'s counterexample: Life Points centre just above a bottom sheet -> the impact plays but its clip box ends at the sheet',()=>{
+ clearDlfx();const prompt=P(0,740,1280,60),doc=shim({prompt});runBatch({events:lethal,preset:'duel',duration:1600,point},doc);
+ const {imp,fin}=parts(doc);assert.ok(imp,'impact mounted (its anchor is outside the sheet)');
+ assert.deepEqual(rectOf(imp),{left:0,top:0,right:1280,bottom:740});assert.equal(overlaps(rectOf(imp),prompt),false);
+ assert.equal(imp.style.props['--im-y'],'730px');/* the rings and lines can extend 250px, but overflow is clipped at y=740 (css: .dlfx-impact overflow:hidden) */
+ assert.equal(overlaps(rectOf(fin),prompt),false);clearDlfx();
+});
+
+test('(R67.10-2) every prompt shape: no impact/finale clip box overlaps any visible prompt; impact skipped when its anchor is covered',()=>{
+ const cases=[
+  ['full-width bottom sheet',P(0,480,1280,320)],['desktop right column',P(900,90,300,600)],['left column',P(0,60,320,740)],
+  ['centred narrow sheet',P(440,560,400,240)],['centred narrow sheet over our LP',P(60,600,400,200)],['top banner',P(0,0,1280,120)],
+  ['corner box near our LP',P(250,640,200,160)],['prompt covers almost everything',P(20,20,1240,760)]];
+ for(const [name,prompt] of cases){clearDlfx();const doc=shim({prompt});runBatch({events:lethal,preset:'duel',duration:1600,point},doc);const {imp,fin}=parts(doc);
+  const lpCentre={x:140,y:730},covered=lpCentre.x>=prompt.left&&lpCentre.x<=prompt.right&&lpCentre.y>=prompt.top&&lpCentre.y<=prompt.bottom;
+  if(covered)assert.equal(imp,undefined,name+': impact skipped');else{assert.ok(imp,name+': impact mounted');assert.equal(overlaps(rectOf(imp),prompt),false,name+' impact')}
+  if(fin)assert.equal(overlaps(rectOf(fin),prompt),false,name+' finale');
+  for(const n of [imp,fin].filter(Boolean)){const r=rectOf(n);assert.ok(r.left>=0&&r.top>=0&&r.right<=1280&&r.bottom<=800,name+' inside the window')}}
+ // the near-total prompt leaves no strip >= 40px: neither big effect plays
+ clearDlfx();const doc=shim({prompt:P(20,20,1240,760)});runBatch({events:lethal,preset:'duel',duration:1600,point},doc);assert.deepEqual(parts(doc),{imp:undefined,fin:undefined});clearDlfx();
+});
+
+test('(R67.10-3) a prompt that appears over a playing effect, or a resize, removes it; a prompt that closes leaves it playing',()=>{
+ const run=prompt=>{clearDlfx();const doc=shim({prompt:null});const cbs=[];doc.defaultView.addEventListener=(t,f)=>{if(t==='resize')cbs.push(f)};
+  let current=null;doc.querySelector=(q=>s=>s==='.decision-column'?(current&&{getBoundingClientRect:()=>current}):q(s))(doc.querySelector);
+  runBatch({events:lethal,preset:'duel',duration:1600,point},doc);return {doc,set:p=>{current=p},check:()=>{for(const f of cbs)f()}}};
+ // the window listener is installed once per window object: give each run a fresh one
+ let r=run();let {imp,fin}=parts(r.doc);assert.ok(imp&&fin);
+ r.set(P(0,600,1280,200));r.check();assert.equal(imp.isConnected,false,'impact removed: the sheet now covers its box');assert.equal(fin.isConnected,false,'finale removed');
+ r=run();({imp,fin}=parts(r.doc));r.set(null);r.check();assert.equal(imp.isConnected,true);assert.equal(fin.isConnected,true,'no prompt: keeps playing');
+ r=run();({imp,fin}=parts(r.doc));r.doc.defaultView.innerWidth=1000;r.check();assert.equal(fin.isConnected,false,'resize removes');clearDlfx();
+});
+
+test('(R67.10-4) CSS: the impact is a clip box with its parts in .im-c; both clip boxes hide overflow',()=>{
+ const css=fs.readFileSync('dist/css/fx.css','utf8'),js=fs.readFileSync('dist/dl-fx.mjs','utf8');
+ assert.match(css,/\.dlfx-impact\{overflow:hidden;contain:paint\}/);assert.match(css,/\.dlfx-finale\{overflow:hidden;contain:paint\}/);
+ assert.match(css,/\.dlfx-impact \.im-c\{position:absolute;left:var\(--im-x,0\);top:var\(--im-y,0\);width:0;height:0\}/);
+ assert.match(js,/<span class="im-c">/);assert.doesNotMatch(js,/inside\(promptBox/,'no centre-only check left');
+});
+

@@ -124,10 +124,42 @@ export function playCoinAudition(sound,kind='coin',{face='heads',ms=3000}={}){tr
 
 function reducedNow(doc){try{return doc.body.classList.contains('quiet-motion')||!!doc.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)').matches}catch{return false}}
 function box(node){try{const r=node?.getBoundingClientRect?.();return r&&r.width&&r.height?r:null}catch{return null}}
-function mount(doc,cls,ms,{x,y,html='',text}={}){const n=doc.createElement('div');n.className='dlfx '+cls;n.setAttribute('aria-hidden','true');n.style.setProperty('--dlfx-ms',Math.max(1,Math.round(ms))+'ms');if(x!==undefined){n.style.left=Math.round(x)+'px';n.style.top=Math.round(y)+'px'}if(html)n.innerHTML=html;if(text!==undefined)n.textContent=text;doc.body.append(n);live.add(n);n.__dlfx=setTimeout(()=>{n.remove();live.delete(n)},Math.max(1,Math.round(ms)));return n}/* r41: removed at exactly ms (no +40 cleanup) */
-/* r67.9: the visible decision prompt (the big battle effects stay off it so it is always readable) */
-function promptBox(doc){try{const n=doc.querySelector('.decision-column');if(!n)return null;const cs=doc.defaultView?.getComputedStyle?.(n);if(cs&&(cs.display==='none'||cs.visibility==='hidden'))return null;const r=n.getBoundingClientRect();return r&&r.width>0&&r.height>0?r:null}catch{return null}}
-const inside=(r,x,y)=>!!r&&x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom;
+function mount(doc,cls,ms,{x,y,html='',text,safe=false}={}){const n=doc.createElement('div');n.className='dlfx '+cls;n.setAttribute('aria-hidden','true');n.style.setProperty('--dlfx-ms',Math.max(1,Math.round(ms))+'ms');if(x!==undefined){n.style.left=Math.round(x)+'px';n.style.top=Math.round(y)+'px'}if(html)n.innerHTML=html;if(text!==undefined)n.textContent=text;
+ /* r67.11 (RELAY-265/266 open follow-up): the small tags (summon, chain, attack streak, Life Points number) also stay off decision
+    boxes. With a visible prompt, the tag is placed in a clip box = the safe strip that holds its anchor (contain:paint makes that box
+    the containing block of the fixed tag); if its anchor is under a prompt it is not shown at all. No prompt: exactly as before. */
+ let host=n;if(safe&&x!==undefined&&promptBox(doc)){const sr=safeRegion(doc,x,y);if(!sr)return n;/* detached: never painted */
+  const w=doc.createElement('div');w.className='dlfx dlfx-clipbox';w.setAttribute('aria-hidden','true');w.style.left=sr.left+'px';w.style.top=sr.top+'px';w.style.width=sr.width+'px';w.style.height=sr.height+'px';
+  n.style.left=Math.round(x)-sr.left+'px';n.style.top=Math.round(y)-sr.top+'px';w.append(n);host=w;guardPrompt(doc,w,sr)}
+ doc.body.append(host);live.add(host);host.__dlfx=setTimeout(()=>{host.remove();live.delete(host)},Math.max(1,Math.round(ms)));return n}/* r41: removed at exactly ms (no +40 cleanup) */
+/* r67.10 (ChatGPT RELAY-263 MED-R679-1): the big battle effects (impact, FINAL BLOW) are clipped to a SAFE REGION that excludes
+   every visible decision box, whatever its shape or side, so no part of them (rings, lines, shadows) can cross a prompt. The region
+   is the largest strip of the window beside the prompts' bounding box: above, below, left or right of it. The impact needs its Life
+   Points inside that strip (otherwise it is skipped); the finale takes the strip with its anchor, else the largest one. If the
+   prompts or the window change size while an effect plays, the effect is removed at once (stale geometry is never trusted). */
+const PROMPTS=['.decision-column','#selection-bar'];
+function promptEls(doc){const out=[];for(const q of PROMPTS){try{const n=doc.querySelector(q);if(n)out.push(n)}catch{}}return out}
+export function promptBox(doc){let u=null;for(const n of promptEls(doc)){try{const cs=doc.defaultView?.getComputedStyle?.(n);if(n.hidden||cs&&(cs.display==='none'||cs.visibility==='hidden'))continue;const r=n.getBoundingClientRect();if(!r||!(r.width>0&&r.height>0))continue;
+ u=u?{left:Math.min(u.left,r.left),top:Math.min(u.top,r.top),right:Math.max(u.right,r.right),bottom:Math.max(u.bottom,r.bottom)}:{left:r.left,top:r.top,right:r.right,bottom:r.bottom}}catch{}}
+ return u&&{...u,width:u.right-u.left,height:u.bottom-u.top}}
+const viewport=doc=>({vw:doc.defaultView?.innerWidth||1280,vh:doc.defaultView?.innerHeight||800});
+export function safeRegion(doc,ax,ay,{needAnchor=true}={}){const {vw,vh}=viewport(doc),p=promptBox(doc);
+ if(!p)return {left:0,top:0,width:Math.floor(vw),height:Math.floor(vh)};
+ /* r67.11 (ChatGPT RELAY-266 LOW-R6710-1): quantised INWARD (ceil left/top, floor right/bottom) so the integer box that is painted
+    and guarded is never larger than the exact strip, even with fractional prompt edges. */
+ const c=[[0,0,vw,p.top],[0,p.bottom,vw,vh],[0,0,p.left,vh],[p.right,0,vw,vh]].map(([l,t,r,b])=>{const L=Math.ceil(Math.max(0,l)),T=Math.ceil(Math.max(0,t)),R=Math.floor(Math.min(vw,r)),B=Math.floor(Math.min(vh,b));return {left:L,top:T,width:R-L,height:B-T}}).filter(x=>x.width>=40&&x.height>=40);
+ const has=x=>ax>=x.left&&ax<=x.left+x.width&&ay>=x.top&&ay<=x.top+x.height,area=x=>x.width*x.height;
+ const pick=(c.filter(has).sort((a,b)=>area(b)-area(a))[0])||(needAnchor?null:c.sort((a,b)=>area(b)-area(a))[0]);return pick||null}
+const watched=new WeakSet();
+/* Removes a guarded effect only if the prompts NOW overlap its clip box (a prompt that grows, moves or appears over it), or the window
+   resized. A prompt that shrinks or closes leaves it playing. */
+function guardPrompt(doc,n,region){n.__dlfxRegion=region;n.__dlfxView=Object.values(viewport(doc)).join(',');const w=doc.defaultView;
+ const check=()=>{const p=promptBox(doc),vs=Object.values(viewport(doc)).join(',');for(const x of [...live]){const g=x.__dlfxRegion;if(!g)continue;
+  const hit=p&&p.left<g.left+g.width&&p.right>g.left&&p.top<g.top+g.height&&p.bottom>g.top;if(hit||x.__dlfxView!==vs){try{clearTimeout(x.__dlfx);x.remove()}catch{}live.delete(x)}}};
+ if(w&&!watched.has(w)){watched.add(w);try{w.addEventListener('resize',check)}catch{}try{w.__dlfxRO=typeof w.ResizeObserver==='function'?new w.ResizeObserver(check):null}catch{}try{w.__dlfxCheck=check}catch{}}
+ for(const el of promptEls(doc))try{w?.__dlfxRO?.observe(el)}catch{}
+ /* plus a per-frame check while a guarded effect lives: it also catches a prompt that slides in or moves without resizing */
+ if(w&&typeof w.requestAnimationFrame==='function'&&!w.__dlfxRAF){const tick=()=>{w.__dlfxCheck?.();if([...live].some(x=>x.__dlfxRegion&&x.isConnected!==false))w.__dlfxRAF=w.requestAnimationFrame(tick);else w.__dlfxRAF=0};w.__dlfxRAF=w.requestAnimationFrame(tick)}}
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 export function runBatch(detail,doc=globalThis.document){
@@ -149,30 +181,33 @@ export function runBatch(detail,doc=globalThis.document){
      else{coinSound(sound,'dice','throw',opts);setTimeout(()=>{if(n.isConnected)coinSound(sound,'dice','land',opts)},reduced?150:800);setTimeout(()=>{if(n.isConnected)coinSound(sound,'dice','reveal',opts)},reduced?250:930)}}catch{}
     void k;continue}
    if(p.kind==='pillar'){const r=box(point({controller:e.player,location:L.MZONE,sequence:e.sequence}));if(!r)continue;
-    const n=mount(doc,'dlfx-pillar'+(e.special?' dlfx-special':''),ms,{x:r.left+r.width/2,y:r.top+r.height,html:`<i class="dlfx-beam"></i><i class="dlfx-ring"></i><i class="dlfx-ring dlfx-ring2"></i>${Array.from({length:6},(_,i)=>`<i class="dlfx-mote" style="--i:${i}"></i>`).join('')}<b class="dlfx-tag">${esc(p.text)}</b>`});
+    const n=mount(doc,'dlfx-pillar'+(e.special?' dlfx-special':''),ms,{safe:true,x:r.left+r.width/2,y:r.top+r.height,html:`<i class="dlfx-beam"></i><i class="dlfx-ring"></i><i class="dlfx-ring dlfx-ring2"></i>${Array.from({length:6},(_,i)=>`<i class="dlfx-mote" style="--i:${i}"></i>`).join('')}<b class="dlfx-tag">${esc(p.text)}</b>`});
     n.style.setProperty('--dlfx-w',r.width+'px');n.style.setProperty('--dlfx-h',Math.max(r.height*2.2,120)+'px');hear('pillar',e.player);continue}
    if(p.kind==='tag'){const anchor=point(e.to)||point(e.from),r=box(anchor);if(!r)continue;const delay=Math.round(Math.min(stagger++,5)*Math.min(70,ms*.08));
-    const n=mount(doc,'dlfx-zonetag',ms,{x:r.left+r.width/2,y:r.top+r.height*.5,text:p.text});n.style.setProperty('--dlfx-delay',delay+'ms');n.style.setProperty('--dlfx-ms',Math.max(1,ms-delay)+'ms');n.dataset.kind=/COST/.test(p.text)?'cost':/MATERIAL|TRIBUTED/.test(p.text)?'material':/DESTROYED/.test(p.text)?'destroy':/BANISHED/.test(p.text)?'banish':'move';hear('tag',e.to?.controller);continue}
+    const n=mount(doc,'dlfx-zonetag',ms,{safe:true,x:r.left+r.width/2,y:r.top+r.height*.5,text:p.text});n.style.setProperty('--dlfx-delay',delay+'ms');n.style.setProperty('--dlfx-ms',Math.max(1,ms-delay)+'ms');n.dataset.kind=/COST/.test(p.text)?'cost':/MATERIAL|TRIBUTED/.test(p.text)?'material':/DESTROYED/.test(p.text)?'destroy':/BANISHED/.test(p.text)?'banish':'move';hear('tag',e.to?.controller);continue}
    if(p.kind==='chain'){const a=chainAnchor(e),neg=/NEGATED/.test(p.text);let r=a?box(point(a.source)):null,generic=false;
     if(!r&&neg){const t=box(doc.querySelector('.arena-surface'))||box(doc.querySelector('.table-wrap'));const w=doc.defaultView?.innerWidth||1280,h=doc.defaultView?.innerHeight||800;r=t||{left:w/2,top:h/2,width:0,height:0};generic=true}/* r41: unanchored negate -> generic badge */
     if(!r)continue;
-    const n=mount(doc,'dlfx-chain'+(generic?' dlfx-chain-generic':''),ms,{x:r.left+r.width/2,y:r.top+r.height/2,html:`<i class="dlfx-hex"></i><b class="dlfx-tag">${esc(p.text)}</b>`});n.dataset.kind=e.type==='activate'?'activate':neg?'negate':'resolve';hear('chain',a?.player??e.player);continue}
+    const n=mount(doc,'dlfx-chain'+(generic?' dlfx-chain-generic':''),ms,{safe:true,x:r.left+r.width/2,y:r.top+r.height/2,html:`<i class="dlfx-hex"></i><b class="dlfx-tag">${esc(p.text)}</b>`});n.dataset.kind=e.type==='activate'?'activate':neg?'negate':'resolve';hear('chain',a?.player??e.player);continue}
    if(p.kind==='slash'){const a=box(point(e.from)),defender=e.to?point(e.to):point({controller:1-(Number(e.from?.controller)||0),location:0}),b=box(defender);if(!a||!b)continue;
     const x1=a.left+a.width/2,y1=a.top+a.height/2,x2=b.left+b.width/2,y2=b.top+b.height/2,len=Math.hypot(x2-x1,y2-y1),ang=Math.atan2(y2-y1,x2-x1)*180/Math.PI;
-    const n=mount(doc,'dlfx-slash'+(e.to?'':' dlfx-direct'),ms,{x:x1,y:y1,html:`<i class="dlfx-streak"></i>${[1,2,3,4].map(k=>`<i class="dlfx-ghost" style="--k:${k}"></i>`).join('')}${[0,1,2,3,4,5].map(k=>`<i class="dlfx-spark" style="--k:${k}"></i>`).join('')}<i class="dlfx-tip"></i>`});n.style.setProperty('--dlfx-cw',Math.round(Math.min(a.width,90))+'px');n.style.setProperty('--dlfx-ch',Math.round(Math.min(a.height,130))+'px');/* r67.9: afterimage ghosts + sparks */n.style.setProperty('--dlfx-len',Math.round(len)+'px');n.style.setProperty('--dlfx-ang',ang.toFixed(1)+'deg');
-    mount(doc,'dlfx-slashtag',ms,{x:(x1+x2)/2,y:(y1+y2)/2,text:p.text});hear('slash',e.from?.controller);continue}
+    const n=mount(doc,'dlfx-slash'+(e.to?'':' dlfx-direct'),ms,{safe:true,x:x1,y:y1,html:`<i class="dlfx-streak"></i>${[1,2,3,4].map(k=>`<i class="dlfx-ghost" style="--k:${k}"></i>`).join('')}${[0,1,2,3,4,5].map(k=>`<i class="dlfx-spark" style="--k:${k}"></i>`).join('')}<i class="dlfx-tip"></i>`});n.style.setProperty('--dlfx-cw',Math.round(Math.min(a.width,90))+'px');n.style.setProperty('--dlfx-ch',Math.round(Math.min(a.height,130))+'px');/* r67.9: afterimage ghosts + sparks */n.style.setProperty('--dlfx-len',Math.round(len)+'px');n.style.setProperty('--dlfx-ang',ang.toFixed(1)+'deg');
+    mount(doc,'dlfx-slashtag',ms,{safe:true,x:(x1+x2)/2,y:(y1+y2)/2,text:p.text});hear('slash',e.from?.controller);continue}
    if(p.kind==='finale'){const lp=box(point({controller:e.player,location:0})),table=box(doc.querySelector('.arena-surface'))||box(doc.querySelector('.table-wrap'));if(!lp||!table)continue;
-    const vw=doc.defaultView?.innerWidth||1280,vh=doc.defaultView?.innerHeight||800;/* the whole window, fading out softly (no hard table edge); z-index under the decision column */
-    const n=mount(doc,'dlfx-finale',ms,{x:0,y:0,html:`<i class="fb-flash"></i><i class="fb-core"></i><i class="fb-rim"></i><i class="fb-rim fb-rim2"></i><i class="fb-orbit"></i><i class="fb-orbit fb-orbit2"></i><i class="fb-star"></i>${Array.from({length:12},(_,i)=>`<i class="fb-spark" style="--i:${i}"></i>`).join('')}<b class="fb-tag">FINAL BLOW</b>`});
-    const dc=promptBox(doc);let fw=vw,fh=vh;if(dc){if(dc.width>=vw*.9)fh=Math.max(0,dc.top);else if(dc.left>vw/2)fw=Math.max(0,dc.left)}/* never paint over the decision prompt */
-    n.style.width=Math.round(fw)+'px';n.style.height=Math.round(fh)+'px';n.style.setProperty('--fb-x',Math.round(lp.left+lp.width/2)+'px');n.style.setProperty('--fb-y',Math.round(lp.top+lp.height/2)+'px');
-    n.style.setProperty('--fb-tx',Math.round(table.left+table.width/2)+'px');n.style.setProperty('--fb-ty',Math.round(table.top+table.height*.42)+'px');
+    const fx=lp.left+lp.width/2,fy=lp.top+lp.height/2,sr=safeRegion(doc,fx,fy,{needAnchor:false});if(!sr)continue;/* r67.10: the safe region (never over a prompt) */
+    const n=mount(doc,'dlfx-finale',ms,{x:sr.left,y:sr.top,html:`<i class="fb-flash"></i><i class="fb-core"></i><i class="fb-rim"></i><i class="fb-rim fb-rim2"></i><i class="fb-orbit"></i><i class="fb-orbit fb-orbit2"></i><i class="fb-star"></i>${Array.from({length:12},(_,i)=>`<i class="fb-spark" style="--i:${i}"></i>`).join('')}<b class="fb-tag">FINAL BLOW</b>`});
+    n.style.width=sr.width+'px';n.style.height=sr.height+'px';/* integers from safeRegion: painted box = guarded box */n.style.setProperty('--fb-x',Math.round(fx-sr.left)+'px');n.style.setProperty('--fb-y',Math.round(fy-sr.top)+'px');
+    {const tx=Math.min(Math.max(table.left+table.width/2,sr.left+80),sr.left+sr.width-80),ty=Math.min(Math.max(table.top+table.height*.42,sr.top+30),sr.top+sr.height-30);/* the title stays inside the region */
+     n.style.setProperty('--fb-tx',Math.round(tx-sr.left)+'px');n.style.setProperty('--fb-ty',Math.round(ty-sr.top)+'px')}guardPrompt(doc,n,sr);
     n.style.setProperty('--fb-r',Math.round(Math.hypot(table.width,table.height))+'px');hear('finale',1-(Number(e.player)||0));continue}
    if(p.kind==='burst'){const r=box(point({controller:e.player,location:0}));if(!r)continue;
-    if(p.impact&&!inside(promptBox(doc),r.left+r.width/2,r.top+r.height/2)){const m=mount(doc,'dlfx-impact',ms,{x:r.left+r.width/2,y:r.top+r.height/2,html:`<i class="im-flash"></i><i class="im-ring"></i><i class="im-ring im-ring2"></i>${Array.from({length:10},(_,i)=>`<i class="im-line" style="--i:${i}"></i>`).join('')}`});m.dataset.side=r.top<(doc.defaultView?.innerHeight||800)/2?'top':'bottom';hear('impact',e.player)}/* r67.9 */
-    const top=r.top<(doc.defaultView?.innerHeight||800)/2,n=mount(doc,'dlfx-burst',ms,{x:r.left+r.width/2,y:top?r.bottom+34:r.top-30,html:`<i class="dlfx-star"></i><strong>${p.sign}${p.amount}</strong><small>${esc(p.caption)}</small>`});n.dataset.kind=p.lpKind;hear(p.lpKind==='gain'?'gain':'burst',e.player);continue}
+    const ix=r.left+r.width/2,iy=r.top+r.height/2,ir=p.impact?safeRegion(doc,ix,iy):null;
+    if(ir){const m=mount(doc,'dlfx-impact',ms,{x:ir.left,y:ir.top,html:`<span class="im-c"><i class="im-flash"></i><i class="im-ring"></i><i class="im-ring im-ring2"></i>${Array.from({length:10},(_,i)=>`<i class="im-line" style="--i:${i}"></i>`).join('')}</span>`});
+     m.style.width=ir.width+'px';m.style.height=ir.height+'px';m.style.setProperty('--im-x',Math.round(ix-ir.left)+'px');m.style.setProperty('--im-y',Math.round(iy-ir.top)+'px');
+     m.dataset.side=r.top<(doc.defaultView?.innerHeight||800)/2?'top':'bottom';guardPrompt(doc,m,ir);hear('impact',e.player)}/* r67.9; r67.10: clipped to the safe region, skipped if its Life Points are under a prompt */
+    const top=r.top<(doc.defaultView?.innerHeight||800)/2,n=mount(doc,'dlfx-burst',ms,{safe:true,x:r.left+r.width/2,y:top?r.bottom+34:r.top-30,html:`<i class="dlfx-star"></i><strong>${p.sign}${p.amount}</strong><small>${esc(p.caption)}</small>`});n.dataset.kind=p.lpKind;hear(p.lpKind==='gain'?'gain':'burst',e.player);continue}
    if(p.kind==='turn'){const table=box(doc.querySelector('.arena-surface'))||box(doc.querySelector('.table-wrap'))||{left:0,top:34,width:doc.defaultView?.innerWidth||1280};const deck=detail.deckNames?.[e.player]||'';
-    mount(doc,'dlfx-turn',ms,{x:table.left,y:Math.max(0,table.top-34),html:`<span><b>TURN ${Number(e.turn)||''}</b>${deck?' · '+esc(deck):''}</span>`}).style.setProperty('--dlfx-tw',table.width+'px');hear('turn',e.player);continue}
+    mount(doc,'dlfx-turn',ms,{safe:true,x:table.left,y:Math.max(0,table.top-34),html:`<span><b>TURN ${Number(e.turn)||''}</b>${deck?' · '+esc(deck):''}</span>`}).style.setProperty('--dlfx-tw',table.width+'px');hear('turn',e.player);continue}
   }
   return plan}catch{return []}}
 
