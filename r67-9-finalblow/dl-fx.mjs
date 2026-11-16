@@ -36,6 +36,12 @@
 //    sound bus fades to silence by the same moment. Documented exception: the compact coin / dice chip (shown only when
 //    the full coin cutscene is off, in non-Instant paces) keeps DLFX_CHIP_MS because it is the only on-board display of
 //    the engine's result; it is pointer-events:none, never holds play and is cleared by the next batch or Skip FX.
+// r67.9 (Claude, Kevy 16 Nov 23:50 AEDT: "The animation and polish is what I want", reference reel studied frame by frame in
+// RELAY-262b; our own CSS/Web Audio, nothing copied): the attack streak gets afterimage ghosts and sparks; battle damage gets an
+// IMPACT (converging speed lines, double ring, flash) on the LP display; the LETHAL hit (engine damage event whose after-LP is 0)
+// gets the FINAL BLOW: a supernova over the table from the losing player's LP (white flash, expanding core and rim, star flare,
+// orbit rings, sparkles, "FINAL BLOW" tag). Same contract as everything here: engine events only, fire-and-forget, removed at
+// exactly the batch span, off at Instant, still/fade-only under reduced motion, pointer-events none, the table only.
 import {coinSound,tossSoundSeed,tossLine,tossWon} from './coin-cutscene.mjs';
 export const DLFX_KEY='ddl-dlfx';
 export const DLFX_CAP=Object.freeze({learning:1500,duel:1100,broadcast:750});
@@ -76,7 +82,8 @@ export function planBatch(events,{preset='duel',duration=0,enabled=true,coinShow
   else if(e.type==='move'&&!e.b1Material){const t=moveTag(e);if(t&&tags<DLFX_MAX_TAGS){tags++;out.push({kind:'tag',event:e,text:t})}}
   else if(['activate','resolve','negate'].includes(e.type)){const t=chainTag(e);if(t)out.push({kind:'chain',event:e,text:t})}
   else if(e.type==='attack')out.push({kind:'slash',event:e,text:e.to?'ATTACK DECLARED':'DIRECT ATTACK DECLARED'});
-  else if(['damage','cost','recover','lpUpdate'].includes(e.type)){const t=lpTag(e);if(t)out.push({event:e,...t,lpKind:t.kind,kind:'burst'})}
+  else if(['damage','cost','recover','lpUpdate'].includes(e.type)){const t=lpTag(e);if(t)out.push({event:e,...t,lpKind:t.kind,kind:'burst',impact:e.type==='damage'&&(!!e.combat||e.source==='battle')});
+   if(e.type==='damage'&&(!!e.combat||e.source==='battle')&&Number(e.before)>0&&Number(e.after)<=0)out.push({kind:'finale',event:e})/* r67.9: the lethal BATTLE hit only (RELAY-262b) */}/* r67.9: the lethal hit */
   else if(e.type==='turn')out.push({kind:'turn',event:e})}
  return out.map(p=>({...p,span}))}
 
@@ -104,6 +111,8 @@ export function dlfxSound(sound,kind,{dest,seat}={}){try{if(!audible(sound))retu
   else if(kind==='burst'){T(70,.32,{end:34,type:'sine',gain:.16,attack:.003});N(.09,{gain:.12,frequency:3200,end:400,attack:.001});T(330,.16,{end:165,type:'square',gain:.03,lowpass:1400,attack:.002})}
   else if(kind==='gain'){for(const [i,f] of [784,1047,1319].entries())T(f,.22,{at:i*.06,type:'sine',gain:.05,attack:.004})}
   else if(kind==='turn'){T(523,.5,{type:'triangle',gain:.05,attack:.01});T(784,.5,{at:.09,type:'triangle',gain:.05,attack:.01});T(1047,.6,{at:.18,type:'triangle',gain:.045,attack:.01});N(.3,{gain:.04,frequency:2000,end:6000,attack:.12})}
+  else if(kind==='impact'){N(.16,{gain:.11,frequency:5200,end:900,attack:.002});T(92,.26,{end:46,type:'sine',gain:.14,attack:.002});T(1760,.12,{at:.02,end:880,type:'triangle',gain:.03,attack:.002})}
+  else if(kind==='finale'){N(.5,{gain:.09,frequency:900,end:9000,attack:.05});T(55,.9,{end:27,type:'sine',gain:.2,attack:.004});T(110,.7,{at:.03,end:55,type:'triangle',gain:.06,attack:.004});N(.35,{gain:.08,frequency:6000,end:1200,at:.08,attack:.002});for(const [i,f] of [1047,1319,1568,2093,2637].entries())T(f,.5,{at:.18+i*.05,type:'sine',gain:.035,attack:.01})}
   else if(kind==='tag'){T(1760,.07,{type:'sine',gain:.03,attack:.002});T(2637,.09,{at:.035,type:'sine',gain:.02,attack:.002})}
   else if(kind==='chain'){T(1175,.12,{type:'triangle',gain:.03,attack:.003});T(1568,.14,{at:.05,type:'triangle',gain:.025,attack:.003})}
   else return false;
@@ -116,6 +125,9 @@ export function playCoinAudition(sound,kind='coin',{face='heads',ms=3000}={}){tr
 function reducedNow(doc){try{return doc.body.classList.contains('quiet-motion')||!!doc.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)').matches}catch{return false}}
 function box(node){try{const r=node?.getBoundingClientRect?.();return r&&r.width&&r.height?r:null}catch{return null}}
 function mount(doc,cls,ms,{x,y,html='',text}={}){const n=doc.createElement('div');n.className='dlfx '+cls;n.setAttribute('aria-hidden','true');n.style.setProperty('--dlfx-ms',Math.max(1,Math.round(ms))+'ms');if(x!==undefined){n.style.left=Math.round(x)+'px';n.style.top=Math.round(y)+'px'}if(html)n.innerHTML=html;if(text!==undefined)n.textContent=text;doc.body.append(n);live.add(n);n.__dlfx=setTimeout(()=>{n.remove();live.delete(n)},Math.max(1,Math.round(ms)));return n}/* r41: removed at exactly ms (no +40 cleanup) */
+/* r67.9: the visible decision prompt (the big battle effects stay off it so it is always readable) */
+function promptBox(doc){try{const n=doc.querySelector('.decision-column');if(!n)return null;const cs=doc.defaultView?.getComputedStyle?.(n);if(cs&&(cs.display==='none'||cs.visibility==='hidden'))return null;const r=n.getBoundingClientRect();return r&&r.width>0&&r.height>0?r:null}catch{return null}}
+const inside=(r,x,y)=>!!r&&x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 export function runBatch(detail,doc=globalThis.document){
@@ -147,9 +159,17 @@ export function runBatch(detail,doc=globalThis.document){
     const n=mount(doc,'dlfx-chain'+(generic?' dlfx-chain-generic':''),ms,{x:r.left+r.width/2,y:r.top+r.height/2,html:`<i class="dlfx-hex"></i><b class="dlfx-tag">${esc(p.text)}</b>`});n.dataset.kind=e.type==='activate'?'activate':neg?'negate':'resolve';hear('chain',a?.player??e.player);continue}
    if(p.kind==='slash'){const a=box(point(e.from)),defender=e.to?point(e.to):point({controller:1-(Number(e.from?.controller)||0),location:0}),b=box(defender);if(!a||!b)continue;
     const x1=a.left+a.width/2,y1=a.top+a.height/2,x2=b.left+b.width/2,y2=b.top+b.height/2,len=Math.hypot(x2-x1,y2-y1),ang=Math.atan2(y2-y1,x2-x1)*180/Math.PI;
-    const n=mount(doc,'dlfx-slash'+(e.to?'':' dlfx-direct'),ms,{x:x1,y:y1,html:`<i class="dlfx-streak"></i><i class="dlfx-tip"></i>`});n.style.setProperty('--dlfx-len',Math.round(len)+'px');n.style.setProperty('--dlfx-ang',ang.toFixed(1)+'deg');
+    const n=mount(doc,'dlfx-slash'+(e.to?'':' dlfx-direct'),ms,{x:x1,y:y1,html:`<i class="dlfx-streak"></i>${[1,2,3,4].map(k=>`<i class="dlfx-ghost" style="--k:${k}"></i>`).join('')}${[0,1,2,3,4,5].map(k=>`<i class="dlfx-spark" style="--k:${k}"></i>`).join('')}<i class="dlfx-tip"></i>`});n.style.setProperty('--dlfx-cw',Math.round(Math.min(a.width,90))+'px');n.style.setProperty('--dlfx-ch',Math.round(Math.min(a.height,130))+'px');/* r67.9: afterimage ghosts + sparks */n.style.setProperty('--dlfx-len',Math.round(len)+'px');n.style.setProperty('--dlfx-ang',ang.toFixed(1)+'deg');
     mount(doc,'dlfx-slashtag',ms,{x:(x1+x2)/2,y:(y1+y2)/2,text:p.text});hear('slash',e.from?.controller);continue}
+   if(p.kind==='finale'){const lp=box(point({controller:e.player,location:0})),table=box(doc.querySelector('.arena-surface'))||box(doc.querySelector('.table-wrap'));if(!lp||!table)continue;
+    const vw=doc.defaultView?.innerWidth||1280,vh=doc.defaultView?.innerHeight||800;/* the whole window, fading out softly (no hard table edge); z-index under the decision column */
+    const n=mount(doc,'dlfx-finale',ms,{x:0,y:0,html:`<i class="fb-flash"></i><i class="fb-core"></i><i class="fb-rim"></i><i class="fb-rim fb-rim2"></i><i class="fb-orbit"></i><i class="fb-orbit fb-orbit2"></i><i class="fb-star"></i>${Array.from({length:12},(_,i)=>`<i class="fb-spark" style="--i:${i}"></i>`).join('')}<b class="fb-tag">FINAL BLOW</b>`});
+    const dc=promptBox(doc);let fw=vw,fh=vh;if(dc){if(dc.width>=vw*.9)fh=Math.max(0,dc.top);else if(dc.left>vw/2)fw=Math.max(0,dc.left)}/* never paint over the decision prompt */
+    n.style.width=Math.round(fw)+'px';n.style.height=Math.round(fh)+'px';n.style.setProperty('--fb-x',Math.round(lp.left+lp.width/2)+'px');n.style.setProperty('--fb-y',Math.round(lp.top+lp.height/2)+'px');
+    n.style.setProperty('--fb-tx',Math.round(table.left+table.width/2)+'px');n.style.setProperty('--fb-ty',Math.round(table.top+table.height*.42)+'px');
+    n.style.setProperty('--fb-r',Math.round(Math.hypot(table.width,table.height))+'px');hear('finale',1-(Number(e.player)||0));continue}
    if(p.kind==='burst'){const r=box(point({controller:e.player,location:0}));if(!r)continue;
+    if(p.impact&&!inside(promptBox(doc),r.left+r.width/2,r.top+r.height/2)){const m=mount(doc,'dlfx-impact',ms,{x:r.left+r.width/2,y:r.top+r.height/2,html:`<i class="im-flash"></i><i class="im-ring"></i><i class="im-ring im-ring2"></i>${Array.from({length:10},(_,i)=>`<i class="im-line" style="--i:${i}"></i>`).join('')}`});m.dataset.side=r.top<(doc.defaultView?.innerHeight||800)/2?'top':'bottom';hear('impact',e.player)}/* r67.9 */
     const top=r.top<(doc.defaultView?.innerHeight||800)/2,n=mount(doc,'dlfx-burst',ms,{x:r.left+r.width/2,y:top?r.bottom+34:r.top-30,html:`<i class="dlfx-star"></i><strong>${p.sign}${p.amount}</strong><small>${esc(p.caption)}</small>`});n.dataset.kind=p.lpKind;hear(p.lpKind==='gain'?'gain':'burst',e.player);continue}
    if(p.kind==='turn'){const table=box(doc.querySelector('.arena-surface'))||box(doc.querySelector('.table-wrap'))||{left:0,top:34,width:doc.defaultView?.innerWidth||1280};const deck=detail.deckNames?.[e.player]||'';
     mount(doc,'dlfx-turn',ms,{x:table.left,y:Math.max(0,table.top-34),html:`<span><b>TURN ${Number(e.turn)||''}</b>${deck?' · '+esc(deck):''}</span>`}).style.setProperty('--dlfx-tw',table.width+'px');hear('turn',e.player);continue}
@@ -166,7 +186,7 @@ export function installToggles(doc=globalThis.document){try{const on=dlfxEnabled
 // Sound Studio: add Coin toss / Dice roll and the new accents to the existing board when it opens.
 export function installStudio(doc=globalThis.document){try{const body=doc.getElementById('modal-body');if(!body||studioObserver)return;
   let flip=0;const fill=()=>{const board=body.querySelector('.sound-board');if(!board||board.querySelector('[data-dlfx-audition]'))return;
-   for(const [cue,label,group] of [['coin','COIN TOSS','COIN · DICE'],['dice','DICE ROLL','COIN · DICE'],['pillar','SUMMON PILLAR','DL-STYLE FX'],['slash','ATTACK SLASH','DL-STYLE FX'],['burst','DAMAGE BURST','DL-STYLE FX'],['turn','TURN SWEEP','DL-STYLE FX']]){
+   for(const [cue,label,group] of [['coin','COIN TOSS','COIN · DICE'],['dice','DICE ROLL','COIN · DICE'],['pillar','SUMMON PILLAR','DL-STYLE FX'],['slash','ATTACK SLASH','DL-STYLE FX'],['burst','DAMAGE BURST','DL-STYLE FX'],['turn','TURN SWEEP','DL-STYLE FX'],['impact','BATTLE IMPACT','DL-STYLE FX'],['finale','FINAL BLOW','DL-STYLE FX']]){
     const b=doc.createElement('button');b.className='sound-tile dlfx-tile';b.dataset.dlfxAudition=cue;b.style.setProperty('--tile-color',group==='COIN · DICE'?'#f2c14e':'#3fd3ff');b.innerHTML=label+'<small>'+group+'</small>';
     b.onclick=()=>{const s=globalThis.ddlSound;try{s?.stop?.();s?.unlock?.()}catch{}const go=()=>{if(cue==='coin'||cue==='dice')playCoinAudition(s,cue,{face:(flip++%2)?'tails':'heads'});else dlfxSound(s,cue,{})};if(s?.context?.state==='running')go();else setTimeout(go,120);b.classList.remove('audition');void b.offsetWidth;b.classList.add('audition')};board.append(b)}};
   studioObserver=new (doc.defaultView?.MutationObserver||globalThis.MutationObserver)(fill);studioObserver.observe(body,{childList:true,subtree:true});fill()}catch{}}

@@ -62,6 +62,14 @@ export function armReplayToken(pilot,d,p,m,response){
 const MODELLED=/Uzuhime the Manifested Mikanko|Ohime the Manifested Mikanko|Hu-Li the Jewel Mikanko|Ha-Re the Sword Mikanko|Ni-Ni the Mirror Mikanko/;
 const CALC=/damage calculation|Damage Step|piercing|inflicts? piercing|If this card battles|When this card battles|battles an? |attacks an? Defen[cs]e Position|battle damage/i;
 const DESTROYED=/(?<!Cannot be )destroyed by battle/i;
+/* r67.8 (ChatGPT RELAY-259 MED-R677-1): battle-relevant effects can come from the WHOLE public board, not just the two cards in the
+   battle (e.g. Toon Kingdom: "If a Toon monster you control would be destroyed by battle ... banish ... instead"). Face-up cards
+   other than the attacker and the candidates are scanned per side; negated ones (status bit 1) are skipped; hidden cards are never
+   identified. Anything found -> abstain and keep the baseline (we don't project branch-aware outcomes or guess optional choices). */
+const THEIR_PROTECT=/would be destroyed by battle|cannot be destroyed by battle|destroyed by battle or card effect, you can|damage calculation|Damage Step|battle damage|piercing|cannot be targeted for attacks|attack target|negate the attack|end the Battle Phase/i;
+const THEIR_REACT=/destroyed by battle/i;/* their reaction to a battle destruction: matters only if we expect to destroy */
+const OUR_CHANGE=/would be destroyed by battle|damage calculation|Damage Step|battle damage|piercing|gains? \d+ ATK during/i;
+const boardText=(d,c)=>String(d.db?.[c.code]?.desc||'').replace(/\(except during the Damage Step\)/gi,'');
 /* "(except during the Damage Step)" only limits WHEN an effect can be used; it changes no battle, so it is not counted. */
 const text=(d,c)=>String(d.db?.[c.code]?.desc||'').replace(/Cannot be destroyed by battle/gi,'').replace(/\(except during the Damage Step\)/gi,'');
 
@@ -89,5 +97,17 @@ export function replayRetarget(d,p,m,pilot,battleOutcome,context,enemy){
   if(r.destroyed&&DESTROYED.test(text(d,target)))return log({abstain:'a target the model expects to destroy has its own battle-destruction effect: '+name});
   if(r.lost&&DESTROYED.test(text(d,attacker)))return log({abstain:'the attacker would be destroyed and has its own battle-destruction effect'});
  }
+ // r67.8: an effect still resolving after the attack (an activation with no chain end since) is not a clean retarget window.
+ {const ev=d.events||[],ai=ev.map(e=>e.type).lastIndexOf('attack'),since=ev.slice(ai+1).map(e=>e.type);if(since.lastIndexOf('activate')>since.lastIndexOf('chainEnd'))return log({abstain:'an effect is still resolving after the attack'})}
+ // r67.8 MED-R677-1: whole public board.
+ const inBattle=new Set([attacker,...targets.map(x=>x.t)]),anyDestroyed=targets.some(x=>battleOutcome(context,attacker,x.t).destroyed);
+ for(const side of [1-p,p])for(const loc of [MZONE,8]){for(const c of d.zone(side,loc)||[]){
+  if(!c||inBattle.has(c)||!faceUp(c)||((c.status||0)&1))continue;
+  if(inBattle.has(c)||(side===p&&c.sequence===attacker.sequence&&loc===MZONE)||(side!==p&&loc===MZONE&&targets.some(x=>x.t.sequence===c.sequence)))continue;
+  const t=boardText(d,c),name=d.db?.[c.code]?.name||String(c.code);
+  if(side!==p&&THEIR_PROTECT.test(t))return log({abstain:'public protection or battle change on their board: '+name});
+  if(side!==p&&anyDestroyed&&THEIR_REACT.test(t))return log({abstain:'their board reacts to a battle destruction: '+name});
+  if(side===p&&OUR_CHANGE.test(t))return log({abstain:'a card on our board changes battle: '+name});
+ }}
  return log({attacker,targets});
 }

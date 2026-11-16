@@ -1,3 +1,34 @@
+# Duel Doctrine Lab · r67.9 TEST · Final Blow battle effects · 17 November 2026
+
+Self-checked by Claude, pending ChatGPT review and the Seto team. Display only: the rules engine, the AI and Kevy's deck list are unchanged.
+
+- **From Kevy's reference video (Job L, RELAY-262b E7–E11).** Our own CSS effects; nothing is copied from the video.
+  - **Attack streak:** the attacker's card leaves four fading afterimages and a trail of gold sparks as it flies at its target.
+  - **Battle impact:** when battle damage lands, the Life Points get a white flash, blue and gold rings and converging speed lines, with a new impact sound.
+  - **FINAL BLOW:** the winning battle hit sets off a supernova from the losing Life Points (white core to pink, violet and blue, a bright rim, gold orbit rings, a star flare and sparks) with a "FINAL BLOW" title over the duel table and its own sound. Burn damage and costs don't trigger it.
+- **Same rules as the other effects.** They are timed to the speed setting and removed when the batch ends (none at Instant), go calm (fade only) with reduced motion, and are pointer-free. The big effects never paint over the decision prompt.
+- Both new sounds are in Sound Studio (BATTLE IMPACT, FINAL BLOW).
+- ChatGPT's share of Job L (phase banner, chain ring and status pill, Life Points glow) follows in the next build.
+
+# Duel Doctrine Lab · r67.8 TEST · battle-retarget board scan · 16 November 2026
+
+Self-checked by Claude, pending ChatGPT review and the Seto team. Kevy's deck list is unchanged.
+
+- **MED-R677-1 (ChatGPT RELAY-259).**
+  - Before the attack-replay fix overrides the AI's target, it now checks every face-up card on both fields, not just the attacker and the targets. It steps aside (keeping the old choice) when it finds any of these:
+    - their protection or replacement effects ("would be destroyed by battle", granted battle protection, battle-damage or damage-calculation changes, attack-target changes); for example, Toon Kingdom saving a Toon;
+    - their reactions to a battle destruction, when we expect to destroy something;
+    - our own cards that change battle.
+  - Negated cards are skipped. Hidden cards are never identified. Self-only restrictions (e.g. Lubellion's "this card cannot attack") don't count.
+  - It also steps aside if an effect is still resolving after the attack.
+  - ChatGPT's Toon Kingdom counterexample now abstains. The controls act: Kingdom absent, an irrelevant Spell, Kingdom negated, both seat mappings.
+- **Narrowed acceptance asserts (RELAY-259):**
+  - the full-pilot response with reordered candidates (N5);
+  - the preferred target removed, giving a current legal pick and never the stale index (N6);
+  - Ohime's real reflection values (N8);
+  - every 11001 attack target except i248 identical with the fix on or off (K1).
+- **Coverage:** in 40 AI duels it acted 8 times and abstained 2, the same as r67.7; no ordinary attack changed.
+
 # Duel Doctrine Lab · r67.7 TEST · AI fixes from ChatGPT's review · 16 November 2026
 
 Self-checked by Claude, pending ChatGPT review and the Seto team. Kevy's deck list is unchanged from r67.6.

@@ -6,11 +6,11 @@ export const R45_NEW=['ai/v4-flags.mjs','ai/book/v4-plan.mjs',...['ai/r46-flags.
 export const R52_CHANGED=['app-shell.mjs','pilot.mjs'/* r67.7-adapted: battle-retarget adapter v2 hook (ChatGPT RELAY-246/254); undone exactly by pinnedFlow for the r45 pin */,'ai/brain/branded-brain.mjs'/* r67.5-adapted: Flame Wingman role note */,'deck-cards.json'/* r67.5-adapted: Favorite HERO Flame Wingman card entry (Kevy-approved deck change) */,'play-flow.mjs'/* r67.2-adapted: card-menu readiness guard only; byte pins use pinnedFlow() */,'effect-focus.mjs'/* r67.1-adapted: COST badge text only (ChatGPT text audit B-29) */,'pile-glow.mjs',/* r55 deck brains v1.1 (Seto team RELAY-179 fixes, ChatGPT RELAY-185 deltas): */'ai/book/dtw-plan.mjs','ai/book/hero-lines.mjs','ai/book/kashtira-lines.mjs','ai/book/mikanko-lines.mjs','ai/book/toon-lines.mjs','ai/brain/blueeyes-brain.mjs'/* r56 text only */,'ai/book/branded-lines.mjs'/* r58 comment only */,'load.mjs'/* r58.2 slow-connection download */,'ai/brain/dtw-brain.mjs','ai/brain/toon-brain.mjs'];/* r52: pile effect menu (pile-glow.mjs) wired with submit/getDecision/getDb (app-shell.mjs) */
 export const R45_DISPLAY=['decks.json'];/* Branded display name only: "Kevy's Branded Deck" (ids, keys, lists, format unchanged) */
 export const R45_BUILD=/^const BUILD='ddl-test r47 /;/* r46-adapted: the current build identity */
-export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-16-r67-7-fixes'/;/* r46-adapted */
+export const R45_CACHE=/CACHE=CACHE_PREFIX\+'2026-11-17-r67-9-finalblow'/;/* r46-adapted */
 export const R45_NAME="Kevy's Branded Deck";
 // r46 (Kevy 11 Nov 2026 14:54 AEDT): WindBot port (ai/book/book.mjs, optimal-pilot.mjs hooks; new ai/r46-flags.mjs, ai/book/windbot-port.mjs)
 // and victory boss art (new victory-boss.mjs, css/aurora.css append, index.html script tag). Identity is now r46.
-export const R46_TITLE='<title>TEST r67.7 — Duel Doctrine Lab · Kevy’s Branded list · AI fixes</title>';
+export const R46_TITLE='<title>TEST r67.9 — Duel Doctrine Lab · Kevy’s Branded list · Final Blow</title>';
 export const R46_SCRIPT='<script type="module" src="victory-boss.mjs"></script>';
 
 // r47 (Claude, 11 Nov 2026): the Concede button is the only r47 change outside the AI rule files, app.mjs and css/aurora.css.
@@ -65,3 +65,9 @@ export const R676_OLD_META={"subtitle": "Pure Branded \u00b7 MetaGamesGX video l
 export function undoR676Data(d){const c=structuredClone(d);for(const deck of c.decks)if(deck.id==='branded'){deck.main=undoR676Main(deck.main);deck.extra=undoR676Extra(deck.extra);Object.assign(deck,R676_OLD_META);for(const v of Object.values(deck.banlistVariants||{})){if(v.main)v.main=undoR676Main(v.main);if(v.extra)v.extra=undoR676Extra(v.extra);Object.assign(v,R676_OLD_VARIANT_META)}}return c}
 export function undoR676Approved(a){return {...a,main:undoR676Main(a.main),extra:undoR676Extra(a.extra)}}
 export const R676_OLD_VARIANT_META={"subtitle":"Pure Branded \u00b7 MetaGamesGX video list \u00b7 41/15/15 \u00b7 15:40 Extra, budget: Alba-Lenatus + Sanctifire (Alba-Lenatus the Abyss Dragon and Albion the Sanctifire Dragon) \u00b7 TEST","format":"TCG Advanced \u2014 19 October 2026 (MetaGamesGX Pure Branded 41 \u00b7 10 Nov video)"};
+// r67.9-adapted (Job L, RELAY-262b E7-E11): dl-fx.mjs and css/fx.css gain the battle effects. undoR679 turns the served file back
+// into the r67.8 (= r42/r43) bytes exactly, so the older identity pins still hold for everything else in those files.
+export const R679_FX=['dl-fx.mjs','css/fx.css'];
+import {readFileSync as __r679read} from 'node:fs';
+const __r679=JSON.parse(__r679read(new URL('../fixtures/r679-fx-undo.json',import.meta.url)));
+export function undoR679(f,text){const u=__r679[f];if(!u)return text;let o=text;for(const [a,b,r] of [...u.ops].reverse())o=o.slice(0,a)+r+o.slice(b);return o}
