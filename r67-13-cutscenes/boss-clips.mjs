@@ -32,7 +32,11 @@ export const BOSS_CLIPS=Object.freeze({
  55273560:Object.freeze({src:'clips/55273560.mp4',tint:'#ee9629',ms:7100,on:'summon',name:"Incredible Ecclesia, the Virtuous"}),
  87758525:Object.freeze({src:'clips/87758525.mp4',tint:'#25f253',ms:7100,on:'summon',name:"Favorite HERO Shining Flare Wingman"}),
  42141493:Object.freeze({src:'clips/42141493.mp4',tint:'#2967ee',ms:7100,on:'activate',name:"Mulcharmy Fuwalos"}),
- 94145021:Object.freeze({src:'clips/94145021.mp4',tint:'#de30e8',ms:7100,on:'activate',name:"Droll & Lock Bird"})
+ 94145021:Object.freeze({src:'clips/94145021.mp4',tint:'#de30e8',ms:7100,on:'activate',name:"Droll & Lock Bird"}),
+ 45883110:Object.freeze({src:'clips/45883110.mp4',tint:'#ff193b',ms:7100,on:'summon',name:"Guiding Quem, the Virtuous"}),
+ 95515789:Object.freeze({src:'clips/95515789.mp4',tint:'#fd1c1a',ms:7100,on:'summon',name:"Blazing Cartesia, the Virtuous"}),
+ 60303688:Object.freeze({src:'clips/60303688.mp4',tint:'#d69041',ms:7100,on:'summon',name:"Dogmatika Ecclesia, the Virtuous"}),
+ 73819701:Object.freeze({src:'clips/73819701.mp4',tint:'#dc6d3b',ms:7100,on:'summon',name:"Fallen of the White Dragon"})
 });
 export const CLIP_GRACE_MS=2500;
 const FACEDOWN=10;// POS_FACEDOWN_ATTACK 2 | POS_FACEDOWN_DEFENSE 8: a set card never reveals its clip
