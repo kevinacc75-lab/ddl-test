@@ -53,6 +53,10 @@ export const BOSS_CLIPS=Object.freeze({
  50005218:Object.freeze({src:'clips/50005218.mp4',grad:['#2b49d3','#ff2f00'],tint:'#ff191a',ms:7100,on:'activate',name:"Sky Striker Airspace - Area Zero"})
 });
 export const CLIP_GRACE_MS=2500;
+// r67.13 transitions (Kevy 20 Nov 00:07: "some generic transition animation so the animations don't seem so chopped in ... maybe
+// the field swirls or the camera pans out to a cutscene" and "a more gradual sound fade out and back in"): the clip zooms
+// out of the card's spot on the field inside a colour swirl, then shrinks back into it; music and clip sound ramp, not cut.
+export const INTRO_MS=650,OUTRO_MS=520,SKIP_OUTRO_MS=360;
 const FACEDOWN=10;// POS_FACEDOWN_ATTACK 2 | POS_FACEDOWN_DEFENSE 8: a set card never reveals its clip
 const baseCode=(code,db,registry)=>{const a=db?.[code]?.alias;return a&&registry[a]?a:code};
 export function clipFor(e,db={},registry=BOSS_CLIPS){
@@ -70,7 +74,8 @@ export class ClipDirector{
   if(!on)return batches;const out=[];
   for(const batch of batches){
    for(const e of batch.events){const hit=clipFor(e,db,this.registry);if(!hit||this.played.has(hit.code))continue;this.played.add(hit.code);
-    out.push({events:[{type:'bossClip',id:e.id,code:hit.code,player:e.player,trigger:e.type,clip:hit.clip}],duration:hit.clip.ms+CLIP_GRACE_MS})}
+    const at=e.type==='summon'?{controller:e.player,location:4,sequence:e.sequence}:(e.location!=null&&e.sequence!=null?{controller:e.player,location:e.location,sequence:e.sequence}:null);
+    out.push({events:[{type:'bossClip',id:e.id,code:hit.code,player:e.player,trigger:e.type,clip:hit.clip,at}],duration:hit.clip.ms+CLIP_GRACE_MS+INTRO_MS+OUTRO_MS})}
    out.push(batch);
   }
   return out;
@@ -85,11 +90,15 @@ const SHEET=`
 .boss-clip{position:fixed;inset:0;z-index:2147483000;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;color:#fff;overflow:hidden;touch-action:manipulation;cursor:pointer;
  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2.4dvh,24px);padding:clamp(56px,8dvh,84px) 12px max(18px,env(safe-area-inset-bottom));box-sizing:border-box;
  background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--clip-tint) 30%,transparent),transparent 62%),linear-gradient(170deg,color-mix(in srgb,var(--clip-top) 42%,rgba(6,4,10,.62)),color-mix(in srgb,var(--clip-tint) 22%,rgba(6,4,10,.66)) 50%,color-mix(in srgb,var(--clip-bot) 42%,rgba(6,4,10,.62)));
- -webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);animation:bossClipIn .32s ease-out both}
+ -webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);animation:bossClipIn .45s ease-out both}
+.boss-clip.is-out{animation:none}
+.boss-clip-swirl{position:fixed;left:var(--sx,50%);top:var(--sy,50%);width:150vmax;height:150vmax;margin:-75vmax 0 0 -75vmax;border-radius:50%;pointer-events:none;z-index:0;opacity:0;
+ background:conic-gradient(from 0deg,var(--clip-tint),transparent 18%,var(--clip-top) 33%,transparent 50%,var(--clip-bot) 66%,transparent 82%,var(--clip-tint));
+ -webkit-mask:radial-gradient(circle,transparent 0 6%,#000 14% 40%,transparent 62%);mask:radial-gradient(circle,transparent 0 6%,#000 14% 40%,transparent 62%);mix-blend-mode:screen}
 .boss-clip::backdrop{background:rgba(0,0,0,.25)}
 .boss-clip-glow{position:absolute;inset:-12%;background:var(--clip-poster) center/cover no-repeat;filter:blur(48px) saturate(1.5);opacity:.4;pointer-events:none;z-index:0}
 .boss-clip-frame{position:relative;z-index:1;flex:none;width:min(94vw,calc(100dvh - 230px));aspect-ratio:1;border-radius:18px;overflow:hidden;background:#000;
- box-shadow:0 0 0 2px rgba(255,214,120,.85),0 0 0 5px rgba(0,0,0,.55),0 0 46px 6px color-mix(in srgb,var(--clip-tint) 70%,transparent),0 24px 60px rgba(0,0,0,.7);animation:bossClipFrame .45s cubic-bezier(.2,1.3,.4,1) both}
+ box-shadow:0 0 0 2px rgba(255,214,120,.85),0 0 0 5px rgba(0,0,0,.55),0 0 46px 6px color-mix(in srgb,var(--clip-tint) 70%,transparent),0 24px 60px rgba(0,0,0,.7);will-change:transform,opacity}
 .boss-clip-frame::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 60px rgba(0,0,0,.55)}
 .boss-clip-video{display:block;width:100%;height:100%;object-fit:cover;background:#000;pointer-events:none}
 .boss-clip-caption{position:relative;z-index:1;margin:0;display:grid;justify-items:center;gap:6px;text-align:center;pointer-events:none;max-width:min(94vw,760px)}
@@ -114,7 +123,11 @@ const CSS={
 
 // Kevy 19 Nov: the clips carry their own sound effects, so the duel music dips while one plays and comes back after.
 const DUCK_LEVEL=.12;
-function duckMusic(down){try{const s=globalThis.ddlSound,c=s?.context,g=s?.duckBus?.gain;if(!c||!g)return;const t=c.currentTime;g.cancelScheduledValues(t);g.setTargetAtTime(down?DUCK_LEVEL:1,t,down?.08:.35)}catch{}}
+function duckMusic(down){try{const s=globalThis.ddlSound,c=s?.context,g=s?.duckBus?.gain;if(!c||!g)return;const t=c.currentTime;g.cancelScheduledValues(t);g.setValueAtTime(g.value,t);g.linearRampToValueAtTime(down?DUCK_LEVEL:1,t+(down?.9:1.6))}catch{}}
+function whoosh(gain=.55){try{const s=globalThis.ddlSound;if(s&&s._enabled!==false)s.sample?.('whoosh',{gain})}catch{}}
+// Clip sound fades in and out instead of starting or stopping abruptly (iOS ignores video.volume; harmless there).
+function fadeVolume(v,to,ms){try{const from=v.volume,t0=performance.now(),step=()=>{const k=Math.min(1,(performance.now()-t0)/ms);try{v.volume=Math.max(0,Math.min(1,from+(to-from)*k))}catch{}if(k<1&&v.isConnected)requestAnimationFrame(step)};step()}catch{}}
+const slotRect=(doc,at)=>{try{if(!at)return null;const n=doc.querySelector(`[data-slot="${at.controller}:${at.location}:${at.sequence}"]`),r=n?.getBoundingClientRect();return r&&r.width>4&&r.height>4?r:null}catch{return null}};
 export class BossClipPlayer{
  constructor({document,onEnd=()=>{}}){Object.assign(this,{document,onEnd});this.node=null;this.video=null}
  get active(){return !!this.node}
@@ -126,23 +139,46 @@ export class BossClipPlayer{
   const sheet=doc.createElement('style');sheet.textContent=SHEET;
   const glow=doc.createElement('div');glow.className='boss-clip-glow';
   const frame=doc.createElement('div');frame.className='boss-clip-frame';
-  const v=doc.createElement('video');v.className='boss-clip-video';v.src=clip.src;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.autoplay=true;v.disablePictureInPicture=true;frame.append(v);
+  const v=doc.createElement('video');v.className='boss-clip-video';v.src=clip.src;v.poster=clip.src.replace(/\.mp4$/,'-f0.jpg');v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.autoplay=true;v.disablePictureInPicture=true;frame.append(v);
   const cap=doc.createElement('p');cap.className='boss-clip-caption';
   const tag=doc.createElement('span');tag.className='boss-clip-tag';tag.textContent=e.trigger==='activate'?'ACTIVATED':'SUMMONED';
   const sep=doc.createElement('span');sep.className='boss-clip-sep';sep.textContent=' · ';
   const nm=doc.createElement('span');nm.className='boss-clip-name';nm.textContent=name||'';nm.style.setProperty('font-family','Cinzel,Georgia,serif','important');
   const rule=doc.createElement('span');rule.className='boss-clip-rule';rule.setAttribute('aria-hidden','true');cap.append(tag,sep,nm,rule);
   const skip=doc.createElement('button');skip.type='button';skip.className='boss-clip-skip';skip.style.cssText=CSS.skip;skip.textContent='Skip ▸';skip.setAttribute('aria-label','Skip cut scene');
-  root.append(sheet,glow,frame,cap,skip);this.node=root;this.video=v;
-  const end=reason=>{if(this.node!==root)return;this.clear();this.onEnd(reason)};
+  const swirl=doc.createElement('div');swirl.className='boss-clip-swirl';
+  root.append(sheet,swirl,glow,frame,cap,skip);this.node=root;this.video=v;v.autoplay=false;
+  const anim=(el,kf,opt)=>{try{return el.animate?.(kf,{fill:'both',...opt})}catch{return null}};
+  let ending=false;
+  // Outro: the clip shrinks back toward the card's spot, the veil fades, the music ramps back; then the duel carries on.
+  const end=reason=>{if(this.node!==root||ending)return;ending=true;
+   if(reason==='error'||!root.animate){this.clear();this.onEnd(reason);return}
+   const ms=reason==='skip'?SKIP_OUTRO_MS:OUTRO_MS;root.classList.add('is-out');duckMusic(false);fadeVolume(v,0,ms*.8);if(reason==='skip')whoosh(.35);
+   const to=slotRect(doc,e.at),fr=frame.getBoundingClientRect();
+   const tx=to?`translate(${to.left+to.width/2-(fr.left+fr.width/2)}px,${to.top+to.height/2-(fr.top+fr.height/2)}px) scale(${Math.max(.08,to.width/fr.width)}) rotate(4deg)`:'scale(.72)';
+   anim(frame,[{transform:'none',opacity:1},{transform:tx,opacity:0}],{duration:ms,easing:'cubic-bezier(.55,0,.75,.35)'});
+   anim(cap,[{opacity:1,transform:'none'},{opacity:0,transform:'translateY(14px)'}],{duration:ms*.6,easing:'ease-in'});
+   anim(skip,[{opacity:1},{opacity:0}],{duration:ms*.5});
+   anim(swirl,[{opacity:0,transform:'rotate(0) scale(1.4)'},{opacity:.55,transform:'rotate(-120deg) scale(.6)',offset:.5},{opacity:0,transform:'rotate(-240deg) scale(.1)'}],{duration:ms*1.1,easing:'ease-in'});
+   anim(root,[{opacity:1},{opacity:1,offset:.45},{opacity:0}],{duration:ms+60,easing:'ease-in'});
+   setTimeout(()=>{if(this.node!==root)return;this.clear();this.onEnd(reason)},ms+70)};
   v.addEventListener('ended',()=>end('ended'));v.addEventListener('error',()=>end('error'));
   root.addEventListener('pointerup',ev=>{ev.preventDefault();ev.stopPropagation();end('skip')});
   skip.addEventListener('click',ev=>{ev.stopPropagation();end('skip')});
   root.addEventListener('keydown',ev=>{if(ev.key===' '||ev.key==='Enter'){ev.preventDefault();end('skip')}});
   root.addEventListener('cancel',ev=>{ev.preventDefault();end('skip')});// Escape
   duckMusic(true);doc.body.append(root);try{root.showModal()}catch{root.setAttribute('open','')}try{skip.focus({preventScroll:true})}catch{}
-  // Autoplay with sound needs an earlier tap; in a duel there always is one. If the browser still refuses, play muted.
-  const p=v.play?.();if(p&&p.catch)p.catch(()=>{if(this.node!==root)return;v.muted=true;v.play?.()?.catch?.(()=>end('error'))});
+  // Intro: a colour swirl opens from the card's spot on the field and the clip zooms out of it ("camera dives in").
+  const from=slotRect(doc,e.at),fr=frame.getBoundingClientRect();
+  if(from&&fr.width){root.style.setProperty('--sx',(from.left+from.width/2)+'px');root.style.setProperty('--sy',(from.top+from.height/2)+'px')}
+  const fx=from&&fr.width?`translate(${from.left+from.width/2-(fr.left+fr.width/2)}px,${from.top+from.height/2-(fr.top+fr.height/2)}px) scale(${Math.max(.08,from.width/fr.width)}) rotate(-8deg)`:'scale(.35) rotate(-8deg)';
+  whoosh();
+  anim(swirl,[{opacity:0,transform:'rotate(0) scale(.05)'},{opacity:.9,transform:'rotate(260deg) scale(.8)',offset:.55},{opacity:0,transform:'rotate(420deg) scale(1.6)'}],{duration:INTRO_MS+450,easing:'cubic-bezier(.3,.6,.4,1)'});
+  anim(frame,[{transform:fx,opacity:0,filter:'brightness(2.4)'},{opacity:1,offset:.35},{transform:'none',opacity:1,filter:'brightness(1)'}],{duration:INTRO_MS,easing:'cubic-bezier(.2,.9,.25,1.05)'});
+  // The clip starts as the zoom lands, so its first frame (the card art) is what flies out of the field.
+  try{v.volume=0}catch{}
+  const start=()=>{if(this.node!==root||ending)return;const p=v.play?.();fadeVolume(v,1,450);if(p&&p.catch)p.catch(()=>{if(this.node!==root)return;v.muted=true;v.play?.()?.catch?.(()=>end('error'))})};
+  if(root.animate)setTimeout(start,Math.round(INTRO_MS*.7));else start();
   return root;
  }
  hold(value){if(!this.video)return;try{value?this.video.pause():this.video.play()?.catch?.(()=>{})}catch{}}

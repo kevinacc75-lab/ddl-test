@@ -5,7 +5,7 @@
 //    plays; resumes on video end, tap, Skip button or video error; second play in the same duel has no clip;
 //    no clip with cinematics off / skip cut-ins / Instant; an unregistered card is unchanged.
 import assert from 'node:assert/strict';import fs from 'node:fs';import {JSDOM} from 'jsdom';
-import {BOSS_CLIPS,clipFor,ClipDirector,CLIP_GRACE_MS} from '../dist/boss-clips.mjs';
+import {BOSS_CLIPS,clipFor,ClipDirector,CLIP_GRACE_MS,INTRO_MS,OUTRO_MS} from '../dist/boss-clips.mjs';
 const FW=35809262;
 assert.equal(BOSS_CLIPS[FW].ms,7100);for(const [c,k] of Object.entries(BOSS_CLIPS))assert.ok(fs.existsSync('dist/'+k.src),'clip file present for '+c);
 // r67.13: every registered card is in Kevy's Branded deck and maps to the right trigger.
@@ -21,7 +21,7 @@ assert.equal(clipFor({type:'activate',code:11},dbA,reg)?.code,2,'alt art uses th
 assert.equal(clipFor({type:'summon',code:1,private:true},{},reg),null,'private');assert.equal(clipFor({type:'summon',code:1,position:8},{},reg),null,'face-down');
 assert.equal(clipFor({type:'move',code:1},{},reg),null,'not a play');
 {const d=new ClipDirector(reg);const b=()=>[{events:[{type:'phase',id:1},{type:'activate',code:2,player:1,id:2}],duration:900}];
- const o1=d.decorate(b(),true);assert.equal(o1.length,2);assert.equal(o1[0].events[0].type,'bossClip');assert.equal(o1[0].events[0].code,2);assert.equal(o1[0].duration,5000+CLIP_GRACE_MS);assert.deepEqual(o1[1].events.map(e=>e.id),[1,2],'original batch kept whole, after the clip');
+ const o1=d.decorate(b(),true);assert.equal(o1.length,2);assert.equal(o1[0].events[0].type,'bossClip');assert.equal(o1[0].events[0].code,2);assert.equal(o1[0].duration,5000+CLIP_GRACE_MS+INTRO_MS+OUTRO_MS,'r67.13: the wait also covers the intro and outro transitions');assert.deepEqual(o1[1].events.map(e=>e.id),[1,2],'original batch kept whole, after the clip');
  assert.equal(d.decorate(b(),true).length,1,'second play in the same duel: no clip');
  d.reset();assert.equal(d.decorate(b(),true).length,2,'new duel: clip again');
  const d2=new ClipDirector(reg);assert.equal(d2.decorate(b(),false).length,1,'gate off: no clip');assert.equal(d2.decorate(b(),true).length,2,'gate off does not use up the first play');}

@@ -7,6 +7,7 @@ Kevy's feature, built by Claude. Clips made by Kevy with Grok Imagine. Not yet i
   - Activated: The Fallen & The Virtuous, Mulcharmy Fuwalos, Droll & Lock Bird, Branded Fusion, Super Polymerization, Ash Blossom & Joyous Spring, Ghost Ogre & Snow Rabbit.
 - Look (Kevy's feedback, 19 Nov): the duel stays faintly visible behind a blurred veil lit in the clip's own colours, the clip sits in a gold-edged frame, and the card name appears as a gold Cinzel title with a coloured SUMMONED / ACTIVATED tag.
   - Sky Striker: Raye, Roze, Kagari, Shizuku, Hayate, Ace = Zero and Amatsu (summoned); Engage!, Widow Anchor and Area Zero (activated).
+- Transitions (Kevy, 20 Nov): a colour swirl opens from the card's spot on the field and the clip zooms out of it; at the end it shrinks back into the field. The duel music fades down and back up gradually, and the clip's own sound fades in and out.
 - Tap anywhere or press Skip to end a clip early. The duel music dips while a clip plays.
 - Clips are off with cinematics off, reduced motion, "skip cut-ins" or the Instant pace.
 - Add `?bossclip-test` to the address for a "Cut scenes" button that plays any clip on demand.
