@@ -1,0 +1,34 @@
+/* Phase A human-flow styles (Seto build, 2026-10-17). Targets are at least 44x44 CSS px. */
+.sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.chain-prompt{display:grid;gap:8px}
+.chain-prompt .chain-prior{margin:0;font-size:12px;opacity:.8}
+.chain-prompt .chain-title{margin:0;font-weight:700;font-size:15px;line-height:1.3}
+.chain-prompt .chain-row{display:flex;gap:6px;align-items:stretch}
+.chain-prompt .chain-row .choice{flex:1}
+.chain-prompt .choice,.chain-prompt .inspect{min-width:44px;min-height:44px;box-sizing:border-box}
+.chain-prompt .inspect{display:inline-flex;align-items:center;justify-content:center}
+.chain-prompt .chain-yes-label{margin-left:auto;padding-left:10px;white-space:nowrap}
+.chain-prompt .chain-pass{justify-content:center;text-align:center}
+.chain-prompt button.choice{display:grid;grid-template-columns:auto minmax(0,1fr) 44px;width:100%;min-width:0}
+.chain-prompt .choice>img{grid-column:1;grid-row:1;width:44px}
+.chain-prompt .choice .choice-text{grid-column:2;grid-row:1;min-width:0;max-width:none;overflow:visible!important;white-space:normal!important}
+.chain-prompt .choice .choice-text b,.chain-prompt .choice .choice-text small{display:block;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;-webkit-line-clamp:unset!important;overflow-wrap:anywhere;max-height:none!important;height:auto!important}
+.chain-prompt .choice .inspect{grid-column:3;grid-row:1}
+.chain-prompt .chain-yes-label{grid-column:1/-1;grid-row:2;margin:0;padding:0;white-space:normal}
+.chain-prompt button.choice.chain-pass{display:flex;justify-content:center;text-align:center}
+/* Keep the turn context in the prompt's normal flow. The full-screen turn
+   overlay is suppressed only while that prompt is open; queue time is unchanged. */
+.chain-prompt[data-turn-label]::before{content:attr(data-turn-label);display:block;font-size:13px;line-height:1.4;font-weight:700;overflow-wrap:anywhere}
+body:has(#duel[data-screen=play] .chain-prompt) #event-stage[data-kind=draw],
+body:has(#duel[data-screen=play] .chain-prompt) #event-stage[data-kind=turn],
+body:has(#duel[data-screen=play] .chain-prompt) #event-stage[data-kind=phase]{display:none!important}
+#auto-chain-note{margin:6px 0 0;padding:8px 10px;min-height:44px;box-sizing:border-box;display:flex;align-items:center;border-left:4px solid currentColor;font-size:13px}
+#auto-chain-note[hidden]{display:none}
+#lab-auto-skip-chain{min-width:24px;min-height:24px}
+.chain-prompt .choice{display:flex;align-items:center;gap:10px;text-align:left}
+.chain-prompt .choice .choice-text{flex:1 1 auto;min-width:0}
+.chain-prompt .choice .inspect{flex:0 0 44px;margin-left:0}
+.chain-prompt .chain-pass{justify-content:center;text-align:center}
+#human-choice-status{display:grid;gap:8px;padding:10px;border:1px solid currentColor;font-size:15px;line-height:1.4}
+#human-choice-status[hidden]{display:none}
+#human-choice-status button{min-width:44px;min-height:44px;white-space:normal}

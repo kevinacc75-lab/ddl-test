@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="toon deck emblem (original)">
+<defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2f9a"/><stop offset=".55" stop-color="#4b2bb8"/><stop offset="1" stop-color="#8a2ba8"/></linearGradient>
+<linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6ad5"/><stop offset="1" stop-color="#ffd166"/></linearGradient>
+<radialGradient id="g3" cx=".5" cy=".38" r=".6"><stop offset="0" stop-color="#ffffff" stop-opacity=".35"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient></defs>
+<rect width="200" height="200" rx="28" fill="url(#g1)"/>
+<polygon points="100.0,16.0 172.7,58.0 172.7,142.0 100.0,184.0 27.3,142.0 27.3,58.0" fill="none" stroke="#3fe0ff" stroke-opacity=".55" stroke-width="3"/>
+<polygon points="100.0,30.0 160.6,65.0 160.6,135.0 100.0,170.0 39.4,135.0 39.4,65.0" fill="#ffd166" fill-opacity=".18" stroke="#ffd166" stroke-width="4"/>
+<circle cx="100" cy="100" r="92" fill="url(#g3)"/>
+<polygon points="100.0,52.0 112.9,82.2 145.7,85.2 120.9,106.8 128.2,138.8 100.0,122.0 71.8,138.8 79.1,106.8 54.3,85.2 87.1,82.2" fill="url(#g2)"/><circle cx="100" cy="100" r="10" fill="#fff"/>
+</svg>

@@ -1,0 +1,1293 @@
+TAP version 13
+# (M) Branded 41 approved export, rendered deck viewer and scoped teaching plan: PASS
+# Subtest: tests/branded-export.test.mjs
+ok 1 - tests/branded-export.test.mjs
+  ---
+  duration_ms: 439.147001
+  type: 'test'
+  ...
+# Subtest: (M) exact approved 41/15/15, original + Tri-Kitt, shared Albaz cap across zones
+ok 2 - (M) exact approved 41/15/15, original + Tri-Kitt, shared Albaz cap across zones
+  ---
+  duration_ms: 3.396776
+  type: 'test'
+  ...
+# Subtest: (M) Ash on Branded Fusion preserves the activation-turn Fusion lock (shipped engine)
+ok 3 - (M) Ash on Branded Fusion preserves the activation-turn Fusion lock (shipped engine)
+  ---
+  duration_ms: 80.60698
+  type: 'test'
+  ...
+# Subtest: (M/P) Nadir delay is enforced by policy while Synchro is offered; engine suppresses it after resolution
+ok 4 - (M/P) Nadir delay is enforced by policy while Synchro is offered; engine suppresses it after resolution
+  ---
+  duration_ms: 72.591911
+  type: 'test'
+  ...
+# Subtest: (M) White sends a legal Albaz-mentioned Extra Deck card and recruits Ecclesia, never Cartesia
+ok 5 - (M) White sends a legal Albaz-mentioned Extra Deck card and recruits Ecclesia, never Cartesia
+  ---
+  duration_ms: 36.948983
+  type: 'test'
+  ...
+# Subtest: (M) White restricts Garura summon but permits an otherwise-legal Nadir send
+ok 6 - (M) White restricts Garura summon but permits an otherwise-legal Nadir send
+  ---
+  duration_ms: 53.10511
+  type: 'test'
+  ...
+# Subtest: (M) F&V send excludes Granguignol; dumped Fusion is not a legal revive target
+ok 7 - (M) F&V send excludes Granguignol; dumped Fusion is not a legal revive target
+  ---
+  duration_ms: 69.991849
+  type: 'test'
+  ...
+# Subtest: (M/P) original Kitt is a legal Branded Spell search, book prefers Branded Fusion
+ok 8 - (M/P) original Kitt is a legal Branded Spell search, book prefers Branded Fusion
+  ---
+  duration_ms: 37.997582
+  type: 'test'
+  ...
+# Subtest: (M) Branded Fusion cannot offer three-material Dogma
+ok 9 - (M) Branded Fusion cannot offer three-material Dogma
+  ---
+  duration_ms: 33.330492
+  type: 'test'
+  ...
+# Subtest: (P) Bystial holds our only protected GY resource; otherwise prefers legal opposing target
+ok 10 - (P) Bystial holds our only protected GY resource; otherwise prefers legal opposing target
+  ---
+  duration_ms: 55.416209
+  type: 'test'
+  ...
+# Subtest: (A) r42: White first-turn line makes no empty-board Synchro (Three Champions held without a target)
+ok 11 - (A) r42: White first-turn line makes no empty-board Synchro (Three Champions held without a target)
+  ---
+  duration_ms: 61.655803
+  type: 'test'
+  ...
+# Subtest: (A) White converts Ecclesia into original Albaz to break an opposing Extra Deck board
+ok 12 - (A) White converts Ecclesia into original Albaz to break an opposing Extra Deck board
+  ---
+  duration_ms: 44.765384
+  type: 'test'
+  ...
+# Subtest: (A) Nadir after Extra Deck prefers Garura/Titaniklad; removed Lulu route does not crash
+ok 13 - (A) Nadir after Extra Deck prefers Garura/Titaniklad; removed Lulu route does not crash
+  ---
+  duration_ms: 27.795655
+  type: 'test'
+  ...
+# Subtest: (A) after opposing Ash, pilot recovers into a Fusion without a Synchro rescue
+ok 14 - (A) after opposing Ash, pilot recovers into a Fusion without a Synchro rescue
+  ---
+  duration_ms: 41.798024
+  type: 'test'
+  ...
+# Subtest: (P) Nadir without Cartesia does not force the Garura delayed line
+ok 15 - (P) Nadir without Cartesia does not force the Garura delayed line
+  ---
+  duration_ms: 25.762917
+  type: 'test'
+  ...
+# Subtest: (P) delayed Nadir with Cartesia/Quem live prefers Garura at the native send prompt
+ok 16 - (P) delayed Nadir with Cartesia/Quem live prefers Garura at the native send prompt
+  ---
+  duration_ms: 26.871872
+  type: 'test'
+  ...
+# Subtest: (P) delayed Nadir Garura line is not forced after the native Normal Summon was used
+ok 17 - (P) delayed Nadir Garura line is not forced after the native Normal Summon was used
+  ---
+  duration_ms: 27.080031
+  type: 'test'
+  ...
+# Subtest: (P/A) Three Champions does not negate its own field against an empty or vanilla board
+ok 18 - (P/A) Three Champions does not negate its own field against an empty or vanilla board
+  ---
+  duration_ms: 69.511475
+  type: 'test'
+  ...
+# Subtest: (P) Three Champions chooses a worthwhile opposing card over the legal friendly card
+ok 19 - (P) Three Champions chooses a worthwhile opposing card over the legal friendly card
+  ---
+  duration_ms: 27.830627
+  type: 'test'
+  ...
+# Subtest: (A) r42: White does not Synchro Three Champions against vanilla; with a worthwhile target it does
+ok 20 - (A) r42: White does not Synchro Three Champions against vanilla; with a worthwhile target it does
+  ---
+  duration_ms: 87.549029
+  type: 'test'
+  ...
+# Subtest: (P) White and Ecclesia keep offered Branded Fusion ahead of Branded in White and Synchro
+ok 21 - (P) White and Ecclesia keep offered Branded Fusion ahead of Branded in White and Synchro
+  ---
+  duration_ms: 29.194729
+  type: 'test'
+  ...
+# Subtest: (A) White + Branded in White produces a Fusion payoff without stranding the spell
+ok 22 - (A) White + Branded in White produces a Fusion payoff without stranding the spell
+  ---
+  duration_ms: 47.608868
+  type: 'test'
+  ...
+# Subtest: (A) White uses offered original Kitt to search Branded Fusion before Synchro
+ok 23 - (A) White uses offered original Kitt to search Branded Fusion before Synchro
+  ---
+  duration_ms: 46.392042
+  type: 'test'
+  ...
+# Subtest: (P) F&V chooses revival with no opponent target and destruction when one is available
+ok 24 - (P) F&V chooses revival with no opponent target and destruction when one is available
+  ---
+  duration_ms: 48.423388
+  type: 'test'
+  ...
+# Subtest: (P) Branded uses Ash Blossom & Joyous Spring on opposing on-field Aluber
+ok 25 - (P) Branded uses Ash Blossom & Joyous Spring on opposing on-field Aluber
+  ---
+  duration_ms: 25.732819
+  type: 'test'
+  ...
+# Subtest: (P) Branded uses Ghost Ogre & Snow Rabbit on opposing on-field Aluber
+ok 26 - (P) Branded uses Ghost Ogre & Snow Rabbit on opposing on-field Aluber
+  ---
+  duration_ms: 24.956144
+  type: 'test'
+  ...
+# Subtest: (P) an opposing Fusion that cannot be used as material does not trigger White’s Albaz board-break override
+ok 27 - (P) an opposing Fusion that cannot be used as material does not trigger White’s Albaz board-break override
+  ---
+  duration_ms: 53.219828
+  type: 'test'
+  ...
+# Subtest: (P) after an opposing Aluber search, Branded takes the native Droll response window
+ok 28 - (P) after an opposing Aluber search, Branded takes the native Droll response window
+  ---
+  duration_ms: 27.815405
+  type: 'test'
+  ...
+# Subtest: (M/P) Branded uses Fuwalos in an offered opponent-turn window with an empty field
+ok 29 - (M/P) Branded uses Fuwalos in an offered opponent-turn window with an empty field
+  ---
+  duration_ms: 23.587798
+  type: 'test'
+  ...
+# Subtest: (P) Retribution recovers the offered Branded Fusion and leaves F&V in the GY
+ok 30 - (P) Retribution recovers the offered Branded Fusion and leaves F&V in the GY
+  ---
+  duration_ms: 39.869906
+  type: 'test'
+  ...
+# Subtest: (P) B4 holds F&V when Ecclesia is present but the only GY monster is a dumped Fusion
+ok 31 - (P) B4 holds F&V when Ecclesia is present but the only GY monster is a dumped Fusion
+  ---
+  duration_ms: 34.384739
+  type: 'test'
+  ...
+# Subtest: (P) B4 releases F&V when the same board has a legal target in the opposing GY
+ok 32 - (P) B4 releases F&V when the same board has a legal target in the opposing GY
+  ---
+  duration_ms: 27.472408
+  type: 'test'
+  ...
+# Subtest: (P) B4 releases F&V for an opposing face-up target and overrides a friendly destroy pick
+ok 33 - (P) B4 releases F&V for an opposing face-up target and overrides a friendly destroy pick
+  ---
+  duration_ms: 27.392674
+  type: 'test'
+  ...
+# Subtest: (P) removed-card routes (Bystial/Deployment/Lost/Lulu) do not crash bookIdle/bookPick
+ok 34 - (P) removed-card routes (Bystial/Deployment/Lost/Lulu) do not crash bookIdle/bookPick
+  ---
+  duration_ms: 27.035698
+  type: 'test'
+  ...
+# Subtest: (P) Branded in White is a preferred Aluber/Kitt search behind Fusion
+ok 35 - (P) Branded in White is a preferred Aluber/Kitt search behind Fusion
+  ---
+  duration_ms: 25.9688
+  type: 'test'
+  ...
+# Subtest: (M) Gallant Bandit is in card DB with script and side art present
+ok 36 - (M) Gallant Bandit is in card DB with script and side art present
+  ---
+  duration_ms: 0.246316
+  type: 'test'
+  ...
+# ok 1 every token a preset deck can make shows the official card image (YGOPRODeck, unedited, hash-recorded) - plus Scapegoat's four Sheep Tokens; Scapegoat Token uses a Sheep Token image; all precached
+# ok 2 token-cards.json lists exactly the Token-type cards of cards.json.gz, and only tokens get art entries
+# ok 3 applyTokenArt: own image or the generic card for every token; cards with art and non-tokens untouched
+# ok 4 r39: cards/scripts retain r36.1 token surface; only intentional Branded-41 additions differ (Gallant Bandit + Hyperinvoked Aeon script)
+# ok 5 token-fx is loaded and precached; it listens only for summon presentation events and checks the token list
+# ok 6 token-fx timing: none at Instant, a short fade for reduced motion, full otherwise
+# r36 token card tests: 6 passed
+# Subtest: tests/r36-token-cards.test.mjs
+ok 3 - tests/r36-token-cards.test.mjs
+  ---
+  duration_ms: 638.968139
+  type: 'test'
+  ...
+# {"test":"r37-windbot","pass":true,"node":"v22.23.4","report":{"fixed":{"selects":7,"amount":8,"solutions":20,"maxSummoned":true},"unfixed":{"selects":0,"must":7,"mustCodes":[69247929,4,10,2,33555488,2746810368,262144],"solutions":0},"windbot":{"turn":4,"finished":true,"wbDecisions":124,"rejected":0,"stalled":0,"messagesToBot":19977,"executor":"[26-11-13 22:14:05] Deck found, loading AI_Albaz\\n"}}}
+# Subtest: tests/r37-windbot.test.mjs
+ok 4 - tests/r37-windbot.test.mjs
+  ---
+  duration_ms: 10734.314568
+  type: 'test'
+  ...
+# Subtest: r40 display only (r41-adapted): engine, rules data and random are byte-identical to r39; only the listed r41 AI/deck files differ
+ok 39 - r40 display only (r41-adapted): engine, rules data and random are byte-identical to r39; only the listed r41 AI/deck files differ
+  ---
+  duration_ms: 232.42501
+  type: 'test'
+  ...
+# Subtest: r41 worker.mjs differs from r39 only in the BUILD identity line
+ok 40 - r41 worker.mjs differs from r39 only in the BUILD identity line
+  ---
+  duration_ms: 4.183255
+  type: 'test'
+  ...
+# Subtest: r40 presentation hook is one fire-and-forget dispatch at the start of each batch
+ok 41 - r40 presentation hook is one fire-and-forget dispatch at the start of each batch
+  ---
+  duration_ms: 1.414261
+  type: 'test'
+  ...
+# Subtest: r40 dl-fx.mjs never touches the duel, worker, randomness or timing
+ok 42 - r40 dl-fx.mjs never touches the duel, worker, randomness or timing
+  ---
+  duration_ms: 0.726772
+  type: 'test'
+  ...
+# Subtest: r40 plan: nothing at Instant, nothing without a batch duration, nothing when switched off
+ok 43 - r40 plan: nothing at Instant, nothing without a batch duration, nothing when switched off
+  ---
+  duration_ms: 0.601081
+  type: 'test'
+  ...
+# Subtest: r40 coin / dice chip only when the full cutscene is not shown, never at Instant; result read, never made
+ok 44 - r40 coin / dice chip only when the full cutscene is not shown, never at Instant; result read, never made
+  ---
+  duration_ms: 0.190574
+  type: 'test'
+  ...
+# Subtest: r40 tags follow the engine reason bits and never name a card
+ok 45 - r40 tags follow the engine reason bits and never name a card
+  ---
+  duration_ms: 0.402552
+  type: 'test'
+  ...
+# Subtest: r40 sounds are silent unless audio is running and audible (muted or no context: nothing scheduled)
+ok 46 - r40 sounds are silent unless audio is running and audible (muted or no context: nothing scheduled)
+  ---
+  duration_ms: 0.401685
+  type: 'test'
+  ...
+# Subtest: (R41-1 script) Branded in White Lua: no Extra Deck lock / activity counter; Dragon material required; GY banish only with Albaz
+ok 47 - (R41-1 script) Branded in White Lua: no Extra Deck lock / activity counter; Dragon material required; GY banish only with Albaz
+  ---
+  duration_ms: 1.189325
+  type: 'test'
+  ...
+# Subtest: (R41-1 native) after a Synchro, Branded in White is still offered while Branded Fusion is not
+ok 48 - (R41-1 native) after a Synchro, Branded in White is still offered while Branded Fusion is not
+  ---
+  duration_ms: 88.218238
+  type: 'test'
+  ...
+# Subtest: (R41-1 teaching) Branded in White card, K08-WHITE-SPELL, K08-WHITE and lock table: no Synchro lock, Dragon material
+ok 49 - (R41-1 teaching) Branded in White card, K08-WHITE-SPELL, K08-WHITE and lock table: no Synchro lock, Dragon material
+  ---
+  duration_ms: 0.99134
+  type: 'test'
+  ...
+# Subtest: (R41-2 native) Normal Summoning Tri-Brigade Springans Kitt offers no effect and adds nothing
+ok 50 - (R41-2 native) Normal Summoning Tri-Brigade Springans Kitt offers no effect and adds nothing
+  ---
+  duration_ms: 27.537252
+  type: 'test'
+  ...
+# Subtest: (R41-2 policy) no Normal Summon line or starter status for Tri-Kitt; hand Special Summon only beside Mercourier
+ok 51 - (R41-2 policy) no Normal Summon line or starter status for Tri-Kitt; hand Special Summon only beside Mercourier
+  ---
+  duration_ms: 51.573862
+  type: 'test'
+  ...
+# Subtest: (R41-2 teaching) Tri-Kitt card text: no Normal Summon effect; original Kitt stays the searcher
+ok 52 - (R41-2 teaching) Tri-Kitt card text: no Normal Summon effect; original Kitt stays the searcher
+  ---
+  duration_ms: 0.50152
+  type: 'test'
+  ...
+# Subtest: (R41-D) Extra Deck matches the 15:40 frame; Main 41 and Side 15 unchanged from r40; legal on tcg-2026-10-19
+ok 53 - (R41-D) Extra Deck matches the 15:40 frame; Main 41 and Side 15 unchanged from r40; legal on tcg-2026-10-19
+  ---
+  duration_ms: 2.772415
+  type: 'test'
+  ...
+# Subtest: (R41-3) unanchored negate uses the recorded activation anchor of the same chain link
+ok 54 - (R41-3) unanchored negate uses the recorded activation anchor of the same chain link
+  ---
+  duration_ms: 1.878664
+  type: 'test'
+  ...
+# Subtest: (R41-3) unanchored negate with no known link mounts a generic table-centre NEGATED badge; a mismatched code is not reused
+ok 55 - (R41-3) unanchored negate with no known link mounts a generic table-centre NEGATED badge; a mismatched code is not reused
+  ---
+  duration_ms: 0.628215
+  type: 'test'
+  ...
+# Subtest: (R41-4) turn, burst, tags, pillar, chain and slash are removed within the batch budget (Broadcast 400 ms; 150 ms)
+ok 56 - (R41-4) turn, burst, tags, pillar, chain and slash are removed within the batch budget (Broadcast 400 ms; 150 ms)
+  ---
+  duration_ms: 1.932845
+  type: 'test'
+  ...
+# Subtest: (R41-4) documented exception: the compact coin chip keeps DLFX_CHIP_MS only when the full cutscene is off; none at Instant
+ok 57 - (R41-4) documented exception: the compact coin chip keeps DLFX_CHIP_MS only when the full cutscene is off; none at Instant
+  ---
+  duration_ms: 0.412413
+  type: 'test'
+  ...
+# Subtest: (R41-4) accent sound bus fades to zero by the batch budget and its cut timer is within budget
+ok 58 - (R41-4) accent sound bus fades to zero by the batch budget and its cut timer is within budget
+  ---
+  duration_ms: 0.385019
+  type: 'test'
+  ...
+# Subtest: (R42-D) Extra = Mirrorjade, 3 Dogma, Mixousia, Quaeritis, 2 Granguignol, Lubellion, Rindbrumm, Titaniklad, Garura, Three Champions, Alba-Lenatus, Sanctifire; Main/Side = r41; legal
+ok 59 - (R42-D) Extra = Mirrorjade, 3 Dogma, Mixousia, Quaeritis, 2 Granguignol, Lubellion, Rindbrumm, Titaniklad, Garura, Three Champions, Alba-Lenatus, Sanctifire; Main/Side = r41; legal
+  ---
+  duration_ms: 2.936427
+  type: 'test'
+  ...
+# Subtest: (R42-AI) no Aeon or Ecclesia-and-the-Dark-Dragon route left in the nov08 book or brain; swap points are centralised
+ok 60 - (R42-AI) no Aeon or Ecclesia-and-the-Dark-Dragon route left in the nov08 book or brain; swap points are centralised
+  ---
+  duration_ms: 1.089586
+  type: 'test'
+  ...
+# Subtest: (R42-K) Kitt lesson: search only when the original Springans Kitt is Normal or Special Summoned; Tri-Brigade Kitt has no search
+ok 61 - (R42-K) Kitt lesson: search only when the original Springans Kitt is Normal or Special Summoned; Tri-Brigade Kitt has no search
+  ---
+  duration_ms: 0.321171
+  type: 'test'
+  ...
+# Subtest: (R42-1) White + Ecclesia: Three Champions is held on an empty or vanilla board (book and base policy); made against a real target
+ok 62 - (R42-1) White + Ecclesia: Three Champions is held on an empty or vanilla board (book and base policy); made against a real target
+  ---
+  duration_ms: 131.597752
+  type: 'test'
+  ...
+# Subtest: (R42-1b) the White Idle step itself never picks a Synchro without a target, and only ever Three Champions (no other Level 8 Synchro)
+ok 63 - (R42-1b) the White Idle step itself never picks a Synchro without a target, and only ever Three Champions (no other Level 8 Synchro)
+  ---
+  duration_ms: 50.989764
+  type: 'test'
+  ...
+# Subtest: (R42-2 pick) Cartesia on our turn with White + Ecclesia picks Sanctifire over another offered Level 8 Fusion; not with Mirrorjade offered
+ok 64 - (R42-2 pick) Cartesia on our turn with White + Ecclesia picks Sanctifire over another offered Level 8 Fusion; not with Mirrorjade offered
+  ---
+  duration_ms: 26.276503
+  type: 'test'
+  ...
+# Subtest: (R42-2 native) White + Ecclesia + field Cartesia: the pilot fuses Albion the Sanctifire Dragon (Albaz-as-White + LIGHT Spellcaster)
+ok 65 - (R42-2 native) White + Ecclesia + field Cartesia: the pilot fuses Albion the Sanctifire Dragon (Albaz-as-White + LIGHT Spellcaster)
+  ---
+  duration_ms: 43.785375
+  type: 'test'
+  ...
+# Subtest: (R42-3) Super Polymerization guard: Sanctifire / Alba-Lenatus only with Albaz (or White) on a field plus the other material on a field
+ok 66 - (R42-3) Super Polymerization guard: Sanctifire / Alba-Lenatus only with Albaz (or White) on a field plus the other material on a field
+  ---
+  duration_ms: 286.605206
+  type: 'test'
+  ...
+# Subtest: (R42-4) Sanctifire and Alba-Lenatus are never Fusion Material: the 511 guard, and the engine never offers them for Mirrorjade
+ok 67 - (R42-4) Sanctifire and Alba-Lenatus are never Fusion Material: the 511 guard, and the engine never offers them for Mirrorjade
+  ---
+  duration_ms: 32.3117
+  type: 'test'
+  ...
+# Subtest: (R42-5) Alba-Lenatus End Phase search: Branded Fusion (Fusion Normal Spell) qualifies, Super Polymerization (Quick-Play) does not
+ok 68 - (R42-5) Alba-Lenatus End Phase search: Branded Fusion (Fusion Normal Spell) qualifies, Super Polymerization (Quick-Play) does not
+  ---
+  duration_ms: 0.53847
+  type: 'test'
+  ...
+# Subtest: (R42-6) Sanctifire opponent-turn revive: held with no Albaz-line body in our GY; picks our best body and gives them the weakest
+ok 69 - (R42-6) Sanctifire opponent-turn revive: held with no Albaz-line body in our GY; picks our best body and gives them the weakest
+  ---
+  duration_ms: 23.974488
+  type: 'test'
+  ...
+# Subtest: (R42-7) Nadir is not kept waiting for a Three Champions Synchro that the r42 hold would refuse
+ok 70 - (R42-7) Nadir is not kept waiting for a Three Champions Synchro that the r42 hold would refuse
+  ---
+  duration_ms: 24.12416
+  type: 'test'
+  ...
+# Subtest: (R43-1) only shell/presentation files differ from r42; engine, AI, rules, prompt timing, decks logic and every legacy stylesheet are byte-identical
+ok 71 - (R43-1) only shell/presentation files differ from r42; engine, AI, rules, prompt timing, decks logic and every legacy stylesheet are byte-identical
+  ---
+  duration_ms: 266.018624
+  type: 'test'
+  ...
+# Subtest: (R43-2) worker.mjs differs from r42 only in the BUILD identity line
+ok 72 - (R43-2) worker.mjs differs from r42 only in the BUILD identity line
+  ---
+  duration_ms: 4.701982
+  type: 'test'
+  ...
+# Subtest: (R43-3) decks.json: only the Branded description text changed; every list is identical to r42
+ok 73 - (R43-3) decks.json: only the Branded description text changed; every list is identical to r42
+  ---
+  duration_ms: 2.189972
+  type: 'test'
+  ...
+# Subtest: (R43-4) the 7 bundles reproduce the 23 r42 sheets in the same order (only url rebasing and the listed, scan-proven !important drops)
+not ok 74 - (R43-4) the 7 bundles reproduce the 23 r42 sheets in the same order (only url rebasing and the listed, scan-proven !important drops)
+  ---
+  duration_ms: 1.666629
+  type: 'test'
+  location: '/home/claude/r47/tests/r43-aurora.test.mjs:38:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      [
+        './css/tokens.css',
+        './css/base.css',
+        './css/theme-showtime.css',
+        './css/duel.css',
+    ...
+        './css/aurora.css',
+    +   './css/r49-mobile.css',
+    +   './css/r50-egypt.css',
+    +   './css/r52-polish.css',
+    +   './css/r53-learn.css',
+    +   './css/r58-learn-temple.css'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: './css/tokens.css'
+    1: './css/base.css'
+    2: './css/theme-showtime.css'
+    3: './css/duel.css'
+    4: './css/panels.css'
+    5: './css/fx.css'
+    6: './css/aurora.css'
+  actual:
+    0: './css/tokens.css'
+    1: './css/base.css'
+    2: './css/theme-showtime.css'
+    3: './css/duel.css'
+    4: './css/panels.css'
+    5: './css/fx.css'
+    6: './css/aurora.css'
+    7: './css/r49-mobile.css'
+    8: './css/r50-egypt.css'
+    9: './css/r52-polish.css'
+    10: './css/r53-learn.css'
+    11: './css/r58-learn-temple.css'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///home/claude/r47/tests/r43-aurora.test.mjs:40:9)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: (R43-5) tokens: type 12/14/16/20/28/40, radius 8/14/20, motion 120/220/400 ms; Aurora is the default and every theme stays selectable
+ok 75 - (R43-5) tokens: type 12/14/16/20/28/40, radius 8/14/20, motion 120/220/400 ms; Aurora is the default and every theme stays selectable
+  ---
+  duration_ms: 1.098137
+  type: 'test'
+  ...
+# Subtest: (R43-6, r44 scope) decorative art is original: hero, LP avatars, victory frame; deck tiles use boss card art; card images stay on cards
+ok 76 - (R43-6, r44 scope) decorative art is original: hero, LP avatars, victory frame; deck tiles use boss card art; card images stay on cards
+  ---
+  duration_ms: 0.959021
+  type: 'test'
+  ...
+# Subtest: (R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only
+ok 77 - (R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only
+  ---
+  duration_ms: 0.603489
+  type: 'test'
+  ...
+# Subtest: (R43-8) offline manifest lists every new file and every listed file exists; sw cache renamed
+ok 78 - (R43-8) offline manifest lists every new file and every listed file exists; sw cache renamed
+  ---
+  duration_ms: 2.269686
+  type: 'test'
+  ...
+# Subtest: (R44-1) only app.mjs, css/aurora.css, identity files and the Super Poly policy file differ from r43; engine, rest of AI, rules, decks.json, art and emblems byte-identical
+ok 79 - (R44-1) only app.mjs, css/aurora.css, identity files and the Super Poly policy file differ from r43; engine, rest of AI, rules, decks.json, art and emblems byte-identical
+  ---
+  duration_ms: 148.206165
+  type: 'test'
+  ...
+# Subtest: (R44-2) every preset deck has a boss in its own list with local card art, used on its tile
+ok 80 - (R44-2) every preset deck has a boss in its own list with local card art, used on its tile
+  ---
+  duration_ms: 1.44547
+  type: 'test'
+  ...
+# Subtest: (R44-3) Aurora tile background: blurred boss art under a readable gradient; LP avatars and hero crest keep emblems
+ok 81 - (R44-3) Aurora tile background: blurred boss art under a readable gradient; LP avatars and hero crest keep emblems
+  ---
+  duration_ms: 0.940597
+  type: 'test'
+  ...
+# Subtest: (R44-SP1) own face-up Albaz + own face-down Ecclesia: the engine offers Sanctifire and the policy keeps it (seed 19)
+ok 82 - (R44-SP1) own face-up Albaz + own face-down Ecclesia: the engine offers Sanctifire and the policy keeps it (seed 19)
+  ---
+  duration_ms: 79.430617
+  type: 'test'
+  ...
+# Subtest: (R44-SP2) + opposing face-up Lubellion: Mirrorjade and Sanctifire both offered; a Sanctifire pick is not switched to Mirrorjade
+ok 83 - (R44-SP2) + opposing face-up Lubellion: Mirrorjade and Sanctifire both offered; a Sanctifire pick is not switched to Mirrorjade
+  ---
+  duration_ms: 31.86916
+  type: 'test'
+  ...
+# Subtest: (R44-SP3) other guards kept: opponent face-down monsters never count; Lenatus still needs Albaz + a real Dragon; no seat = r42 reading
+ok 84 - (R44-SP3) other guards kept: opponent face-down monsters never count; Lenatus still needs Albaz + a real Dragon; no seat = r42 reading
+  ---
+  duration_ms: 89.622158
+  type: 'test'
+  ...
+# Subtest: (R44-SP4) the fix is confined to the Super Poly material reading in branded-nov08.mjs
+ok 85 - (R44-SP4) the fix is confined to the Super Poly material reading in branded-nov08.mjs
+  ---
+  duration_ms: 3.971727
+  type: 'test'
+  ...
+# Subtest: (R44-SP5) replacement filter also reads own face-down material: an unsupported Lenatus pick is replaced by the legal Sanctifire
+ok 86 - (R44-SP5) replacement filter also reads own face-down material: an unsupported Lenatus pick is replaced by the legal Sanctifire
+  ---
+  duration_ms: 29.538331
+  type: 'test'
+  ...
+# Subtest: (R45-FV1) B4 holds F&V when the only legal revive is the opponent's Ash Blossom (fails on r44)
+ok 87 - (R45-FV1) B4 holds F&V when the only legal revive is the opponent's Ash Blossom (fails on r44)
+  ---
+  duration_ms: 70.411844
+  type: 'test'
+  ...
+# Subtest: (R45-FV2) F&V revival prefers our Fallen of Albaz; a base pick of the opponent's Ash Blossom is overridden by the book (fails on r44)
+ok 88 - (R45-FV2) F&V revival prefers our Fallen of Albaz; a base pick of the opponent's Ash Blossom is overridden by the book (fails on r44)
+  ---
+  duration_ms: 31.054042
+  type: 'test'
+  ...
+# Subtest: (R45-K) hand-trap key cards against Branded include Fallen of Albaz, Albion the Shrouded Dragon, Super Polymerization, Mercourier, Cocatorium (fails on r44)
+ok 89 - (R45-K) hand-trap key cards against Branded include Fallen of Albaz, Albion the Shrouded Dragon, Super Polymerization, Mercourier, Cocatorium (fails on r44)
+  ---
+  duration_ms: 0.542206
+  type: 'test'
+  ...
+# Subtest: (R45-L1) visible lethal in Main Phase 1 on turn 2: the pilot enters Battle instead of another book step (fails on r44)
+ok 90 - (R45-L1) visible lethal in Main Phase 1 on turn 2: the pilot enters Battle instead of another book step (fails on r44)
+  ---
+  duration_ms: 34.79559
+  type: 'test'
+  ...
+# Subtest: (R45-L1b) a lethal baseline is trusted over search for every deck, a plain step is not (fails on r44)
+ok 91 - (R45-L1b) a lethal baseline is trusted over search for every deck, a plain step is not (fails on r44)
+  ---
+  duration_ms: 0.350436
+  type: 'test'
+  ...
+# Subtest: (R45-L2) damage but no lethal (3000 into 8000), or a bigger opposing monster: the lethal rule stays out
+ok 92 - (R45-L2) damage but no lethal (3000 into 8000), or a bigger opposing monster: the lethal rule stays out
+  ---
+  duration_ms: 66.957293
+  type: 'test'
+  ...
+# Subtest: (R45-L3) turn 2 End Phase with a damaging attack available becomes Battle Phase; not on turn 1
+ok 93 - (R45-L3) turn 2 End Phase with a damaging attack available becomes Battle Phase; not on turn 1
+  ---
+  duration_ms: 60.526336
+  type: 'test'
+  ...
+# Subtest: (R45-LEN) our face-up Albaz + their face-up Lubellion on turn 2: Alba-Lenatus is summoned with Albaz + Lubellion (fails on r44)
+ok 94 - (R45-LEN) our face-up Albaz + their face-up Lubellion on turn 2: Alba-Lenatus is summoned with Albaz + Lubellion (fails on r44)
+  ---
+  duration_ms: 34.30509
+  type: 'test'
+  ...
+# Subtest: (R45-LEN2) no Lenatus contact on turn 1 or against a face-up Mirrorjade only
+ok 95 - (R45-LEN2) no Lenatus contact on turn 1 or against a face-up Mirrorjade only
+  ---
+  duration_ms: 55.185093
+  type: 'test'
+  ...
+# Subtest: (R45-REC) recovery lines exist and Albion the Shrouded Dragon in hand starts V4-R-ALBION when no opener applies (fails on r44)
+ok 96 - (R45-REC) recovery lines exist and Albion the Shrouded Dragon in hand starts V4-R-ALBION when no opener applies (fails on r44)
+  ---
+  duration_ms: 27.555808
+  type: 'test'
+  ...
+# Subtest: (R45-SKY) Sky Striker v4 lines exist (three lines, picks, hand-trap holds) but ship OFF: default is the r44 holds-only Sky book
+ok 97 - (R45-SKY) Sky Striker v4 lines exist (three lines, picks, hand-trap holds) but ship OFF: default is the r44 holds-only Sky book
+  ---
+  duration_ms: 86.829703
+  type: 'test'
+  ...
+# Subtest: (R45-POOL) world-pool maintenance obeys refillCap and the time room; defaults unchanged (fails on r44)
+ok 98 - (R45-POOL) world-pool maintenance obeys refillCap and the time room; defaults unchanged (fails on r44)
+  ---
+  duration_ms: 41.319765
+  type: 'test'
+  ...
+# Subtest: (R45-SEARCH) the pilot search passes the v4 caps and soft stop; full is relative to the pool size; finished is reported
+ok 99 - (R45-SEARCH) the pilot search passes the v4 caps and soft stop; full is relative to the pool size; finished is reported
+  ---
+  duration_ms: 0.52329
+  type: 'test'
+  ...
+# Subtest: (R45-C) the Albaz Super Poly comment no longer says face-up only
+ok 100 - (R45-C) the Albaz Super Poly comment no longer says face-up only
+  ---
+  duration_ms: 0.164296
+  type: 'test'
+  ...
+# Subtest: (R45-N) the Branded deck is shown as "Kevy's Branded Deck" in every display; id, format, lists and file names unchanged (fails on r44)
+ok 101 - (R45-N) the Branded deck is shown as "Kevy's Branded Deck" in every display; id, format, lists and file names unchanged (fails on r44)
+  ---
+  duration_ms: 1.303622
+  type: 'test'
+  ...
+# Subtest: (R45-FORCED) a forced chain is never answered with a pass when every offered option is held (fails on r44)
+ok 102 - (R45-FORCED) a forced chain is never answered with a pass when every offered option is held (fails on r44)
+  ---
+  duration_ms: 0.23117
+  type: 'test'
+  ...
+# Subtest: (R46-A1) every preset deck, either seat winning: official boss art is shown and labelled with the winner deck name
+ok 103 - (R46-A1) every preset deck, either seat winning: official boss art is shown and labelled with the winner deck name
+  ---
+  duration_ms: 2.476761
+  type: 'test'
+  ...
+# Subtest: (R46-A2) emblem fallback: no art or an image error removes the art and keeps the deck label; a draw shows no winner art
+ok 104 - (R46-A2) emblem fallback: no art or an image error removes the art and keeps the deck label; a draw shows no winner art
+  ---
+  duration_ms: 0.458697
+  type: 'test'
+  ...
+# Subtest: (R46-A3) re-opening with a different winner never keeps the previous boss name
+ok 105 - (R46-A3) re-opening with a different winner never keeps the previous boss name
+  ---
+  duration_ms: 0.165175
+  type: 'test'
+  ...
+# Subtest: (R46-A4) wiring: loaded on the page and precached; Aurora shows the art over the emblem; emblem per deck; portrait size; presentation.mjs unchanged
+ok 106 - (R46-A4) wiring: loaded on the page and precached; Aurora shows the art over the emblem; emblem per deck; portrait size; presentation.mjs unchanged
+  ---
+  duration_ms: 4.551177
+  type: 'test'
+  ...
+# Subtest: (R46-W1) a hand trap is never chained to our own chain link (WindBot DefaultTrap); off gives r45 (fails on r45)
+ok 107 - (R46-W1) a hand trap is never chained to our own chain link (WindBot DefaultTrap); off gives r45 (fails on r45)
+  ---
+  duration_ms: 1.706156
+  type: 'test'
+  ...
+# Subtest: (R46-W2) Ghost Ogre answers their key / Extra Deck card activated on the field, never their Mirrorjade (fails on r45)
+ok 108 - (R46-W2) Ghost Ogre answers their key / Extra Deck card activated on the field, never their Mirrorjade (fails on r45)
+  ---
+  duration_ms: 0.607636
+  type: 'test'
+  ...
+# Subtest: (R46-W3) Mirrorjade on their turn waits for an Extra Deck monster, an activating Albaz, battle or their End Phase (fails on r45)
+ok 109 - (R46-W3) Mirrorjade on their turn waits for an Extra Deck monster, an activating Albaz, battle or their End Phase (fails on r45)
+  ---
+  duration_ms: 0.394261
+  type: 'test'
+  ...
+# Subtest: (R46-W4) Mirrorjade cost follows the WindBot order adapted to the 41 list (fails on r45)
+ok 110 - (R46-W4) Mirrorjade cost follows the WindBot order adapted to the 41 list (fails on r45)
+  ---
+  duration_ms: 0.80724
+  type: 'test'
+  ...
+# Subtest: (R46-W9) Mulcharmy Fuwalos only on their turn before the Battle Phase (fails on r45)
+ok 111 - (R46-W9) Mulcharmy Fuwalos only on their turn before the Battle Phase (fails on r45)
+  ---
+  duration_ms: 0.216315
+  type: 'test'
+  ...
+# Subtest: (R46-W10) a SET Infinite Impermanence answers their key monster effect on the field (fails on r45)
+ok 112 - (R46-W10) a SET Infinite Impermanence answers their key monster effect on the field (fails on r45)
+  ---
+  duration_ms: 0.207794
+  type: 'test'
+  ...
+# Subtest: (R46-W11) Cartesia never fuses away our Mirrorjade; on their turn only Mirrorjade / Sanctifire / delayed Nadir (fails on r45)
+ok 113 - (R46-W11) Cartesia never fuses away our Mirrorjade; on their turn only Mirrorjade / Sanctifire / delayed Nadir (fails on r45)
+  ---
+  duration_ms: 0.372105
+  type: 'test'
+  ...
+# Subtest: (R46-W12) no attack into a face-up monster it cannot destroy; direct / weaker / face-down targets still allowed (fails on r45)
+ok 114 - (R46-W12) no attack into a face-up monster it cannot destroy; direct / weaker / face-down targets still allowed (fails on r45)
+  ---
+  duration_ms: 0.947722
+  type: 'test'
+  ...
+# Subtest: (R46-OFF) shipped with every ported rule on; R46.on=false turns them all off
+ok 115 - (R46-OFF) shipped with every ported rule on; R46.on=false turns them all off
+  ---
+  duration_ms: 0.371121
+  type: 'test'
+  ...
+# Subtest: (R46-SCOPE) human-flow.mjs, play-flow.mjs, human-holds.mjs and presentation.mjs are byte-identical to r45
+ok 116 - (R46-SCOPE) human-flow.mjs, play-flow.mjs, human-holds.mjs and presentation.mjs are byte-identical to r45
+  ---
+  duration_ms: 4.02635
+  type: 'test'
+  ...
+# Subtest: (R47-W12a) Ohime the Manifested Mikanko (0 ATK) attacks Blue-Eyes: 3000 reflected, Ohime stays; r46 rule blocked it (fails on r46)
+ok 117 - (R47-W12a) Ohime the Manifested Mikanko (0 ATK) attacks Blue-Eyes: 3000 reflected, Ohime stays; r46 rule blocked it (fails on r46)
+  ---
+  duration_ms: 93.803279
+  type: 'test'
+  ...
+# Subtest: (R47-W12b) Scareclaw Kashtira attacks from Defense Position with 2600 DEF into Aluber (1800): 800 damage; r46 rule blocked it (fails on r46)
+ok 118 - (R47-W12b) Scareclaw Kashtira attacks from Defense Position with 2600 DEF into Aluber (1800): 800 damage; r46 rule blocked it (fails on r46)
+  ---
+  duration_ms: 67.513453
+  type: 'test'
+  ...
+# Subtest: (R47-W12c) the guard r46 added is kept: Aluber (1800) into Blue-Eyes (3000) is still held back; a 3000 vs 3000 trade is left to the policy
+ok 119 - (R47-W12c) the guard r46 added is kept: Aluber (1800) into Blue-Eyes (3000) is still held back; a 3000 vs 3000 trade is left to the policy
+  ---
+  duration_ms: 121.936275
+  type: 'test'
+  ...
+# Subtest: (R47-W1a) our Forbidden Droplet chained to our own Branded Fusion against their face-up Lubellion is allowed; r46 rule blocked it (fails on r46)
+ok 120 - (R47-W1a) our Forbidden Droplet chained to our own Branded Fusion against their face-up Lubellion is allowed; r46 rule blocked it (fails on r46)
+  ---
+  duration_ms: 31.166011
+  type: 'test'
+  ...
+# Subtest: (R47-W1b) the safeguard is kept: an answer-type hand trap is never chained to our own link, and a monster negate is still held with no face-up Effect Monster to use it on
+ok 121 - (R47-W1b) the safeguard is kept: an answer-type hand trap is never chained to our own link, and a monster negate is still held with no face-up Effect Monster to use it on
+  ---
+  duration_ms: 83.736597
+  type: 'test'
+  ...
+# Subtest: (R47-FLAGS) the r47 switches ship ON and the r46 switches are unchanged
+ok 122 - (R47-FLAGS) the r47 switches ship ON and the r46 switches are unchanged
+  ---
+  duration_ms: 0.195614
+  type: 'test'
+  ...
+# Subtest: (R48-A1) seat 0 concedes after 0 responses: the exported record reopens as the same finished duel
+ok 123 - (R48-A1) seat 0 concedes after 0 responses: the exported record reopens as the same finished duel
+  ---
+  duration_ms: 88.980653
+  type: 'test'
+  ...
+# Subtest: (R48-A1) seat 0 concedes after 3 responses: the exported record reopens as the same finished duel
+ok 124 - (R48-A1) seat 0 concedes after 3 responses: the exported record reopens as the same finished duel
+  ---
+  duration_ms: 56.146655
+  type: 'test'
+  ...
+# Subtest: (R48-A1) seat 1 concedes after 0 responses: the exported record reopens as the same finished duel
+ok 125 - (R48-A1) seat 1 concedes after 0 responses: the exported record reopens as the same finished duel
+  ---
+  duration_ms: 58.742292
+  type: 'test'
+  ...
+# Subtest: (R48-A1) seat 1 concedes after 3 responses: the exported record reopens as the same finished duel
+ok 126 - (R48-A1) seat 1 concedes after 3 responses: the exported record reopens as the same finished duel
+  ---
+  duration_ms: 65.086358
+  type: 'test'
+  ...
+# Subtest: (R48-A2) duplicate, stale and malformed concessions are rejected and change nothing
+ok 127 - (R48-A2) duplicate, stale and malformed concessions are rejected and change nothing
+  ---
+  duration_ms: 29.103116
+  type: 'test'
+  ...
+# Subtest: (R48-A3) the worker and page carry the record on every replay path; non-Play concede is still refused
+ok 128 - (R48-A3) the worker and page carry the record on every replay path; non-Play concede is still refused
+  ---
+  duration_ms: 0.824215
+  type: 'test'
+  ...
+# Subtest: (R48-B1) auto-place picks only a single zone on our own field: Extra Monster Zone first, then the centre outwards
+ok 129 - (R48-B1) auto-place picks only a single zone on our own field: Extra Monster Zone first, then the centre outwards
+  ---
+  duration_ms: 0.435917
+  type: 'test'
+  ...
+# Subtest: (R48-B2) chain pass: only optional windows that offer a card; Auto shows the button, Pass modes answer; mandatory always asks
+ok 130 - (R48-B2) chain pass: only optional windows that offer a card; Auto shows the button, Pass modes answer; mandatory always asks
+  ---
+  duration_ms: 0.305426
+  type: 'test'
+  ...
+# Subtest: (R48-B3) gold aura lists exactly the cards the engine offers to Summon, Set, activate or attack with
+ok 131 - (R48-B3) gold aura lists exactly the cards the engine offers to Summon, Set, activate or attack with
+  ---
+  duration_ms: 0.446415
+  type: 'test'
+  ...
+# Subtest: (R48-C) S1: on the opponent's turn a small or out-classed Special Summon takes Defense; our turn, big bodies, battle-text monsters and the switch are unchanged
+ok 132 - (R48-C) S1: on the opponent's turn a small or out-classed Special Summon takes Defense; our turn, big bodies, battle-text monsters and the switch are unchanged
+  ---
+  duration_ms: 127.627282
+  type: 'test'
+  ...
+# Subtest: (R48.1-1) queue during a hold -> cancel -> retry ticks -> release: the cancelled pass is not queued or sent again
+ok 133 - (R48.1-1) queue during a hold -> cancel -> retry ticks -> release: the cancelled pass is not queued or sent again
+  ---
+  duration_ms: 1.579
+  type: 'test'
+  ...
+# Subtest: (R48.1-2) a busy page is retried until it takes the answer, then never again; a changed decision ends the retry
+ok 134 - (R48.1-2) a busy page is retried until it takes the answer, then never again; a changed decision ends the retry
+  ---
+  duration_ms: 0.249083
+  type: 'test'
+  ...
+# Subtest: (R48.1-3) the page adapter reports queued / sent / wait / refused and the add-on uses only makeSender
+ok 135 - (R48.1-3) the page adapter reports queued / sent / wait / refused and the add-on uses only makeSender
+  ---
+  duration_ms: 1.37722
+  type: 'test'
+  ...
+# Subtest: (R49-1) the mobile sheet is the last stylesheet, is listed for offline use, and only styles (no script, no url)
+ok 136 - (R49-1) the mobile sheet is the last stylesheet, is listed for offline use, and only styles (no script, no url)
+  ---
+  duration_ms: 4.219175
+  type: 'test'
+  ...
+# Subtest: (R49-2) phone-upright, tablet-upright and landscape blocks exist; the decision sheet can never be wider than the screen
+ok 137 - (R49-2) phone-upright, tablet-upright and landscape blocks exist; the decision sheet can never be wider than the screen
+  ---
+  duration_ms: 0.412723
+  type: 'test'
+  ...
+# Subtest: (R49-3) play-comfort marks Play on the body, keeps the old auto-pass action reachable, and only skips the rotate card on upright phones
+ok 138 - (R49-3) play-comfort marks Play on the body, keeps the old auto-pass action reachable, and only skips the rotate card on upright phones
+  ---
+  duration_ms: 1.555488
+  type: 'test'
+  ...
+# Subtest: (R49.1-1) after the art additions every preset deck card has art, and each art file ships
+ok 139 - (R49.1-1) after the art additions every preset deck card has art, and each art file ships
+  ---
+  duration_ms: 78.181707
+  type: 'test'
+  ...
+# Subtest: (R49.1-2) an addition never replaces existing art and rejects anything but an art/ image path
+ok 140 - (R49.1-2) an addition never replaces existing art and rejects anything but an art/ image path
+  ---
+  duration_ms: 0.292787
+  type: 'test'
+  ...
+# Subtest: (R50-1) every rule is scoped to the egypt look and sets no size or position
+ok 141 - (R50-1) every rule is scoped to the egypt look and sets no size or position
+  ---
+  duration_ms: 1.60972
+  type: 'test'
+  ...
+# Subtest: (R50-2) Cinzel ships with its licence and is listed for offline use; the default migrates once from Aurora only
+ok 142 - (R50-2) Cinzel ships with its licence and is listed for offline use; the default migrates once from Aurora only
+  ---
+  duration_ms: 0.807349
+  type: 'test'
+  ...
+# Subtest: (R50-3) chain setting wording changed, values and behaviour unchanged; flow files unchanged
+ok 143 - (R50-3) chain setting wording changed, values and behaviour unchanged; flow files unchanged
+  ---
+  duration_ms: 1.01702
+  type: 'test'
+  ...
+# Subtest: (R51-1) own side, left to right and top to bottom: Field, Extra | rows | Banish, Graveyard, Deck
+ok 144 - (R51-1) own side, left to right and top to bottom: Field, Extra | rows | Banish, Graveyard, Deck
+  ---
+  duration_ms: 1.668756
+  type: 'test'
+  ...
+# Subtest: (R51-2) opponent side is turned to face them: Deck, Graveyard, Banish on our left; Extra, Field on our right; spells/traps above monsters
+ok 145 - (R51-2) opponent side is turned to face them: Deck, Graveyard, Banish on our left; Extra, Field on our right; spells/traps above monsters
+  ---
+  duration_ms: 0.240974
+  type: 'test'
+  ...
+# Subtest: (R51-3) every pile keeps its data hooks (click to view Graveyard, Banish, Extra Deck; Deck count)
+ok 146 - (R51-3) every pile keeps its data hooks (click to view Graveyard, Banish, Extra Deck; Deck count)
+  ---
+  duration_ms: 1.076674
+  type: 'test'
+  ...
+# Subtest: (R52-1) one card with two offered effects counts 1; two copies count 2; each offered effect is its own menu row
+ok 147 - (R52-1) one card with two offered effects counts 1; two copies count 2; each offered effect is its own menu row
+  ---
+  duration_ms: 1.147478
+  type: 'test'
+  ...
+# Subtest: (R52-2) only engine-offered responses, only the viewing player, never the Main Deck, hand or field
+ok 148 - (R52-2) only engine-offered responses, only the viewing player, never the Main Deck, hand or field
+  ---
+  duration_ms: 0.782439
+  type: 'test'
+  ...
+# Subtest: (R52-3) Extra Deck summons are not effects: only an offered activation lights the pile
+ok 149 - (R52-3) Extra Deck summons are not effects: only an offered activation lights the pile
+  ---
+  duration_ms: 0.163187
+  type: 'test'
+  ...
+# Subtest: (R52-4) chain windows and battle chains map to their own response types; AI turn, Watch and finished duels show nothing
+ok 150 - (R52-4) chain windows and battle chains map to their own response types; AI turn, Watch and finished duels show nothing
+  ---
+  duration_ms: 0.988499
+  type: 'test'
+  ...
+# Subtest: (R52-5) seat 1: the slot is mapped once from the native controller, so our own pile still lights
+ok 151 - (R52-5) seat 1: the slot is mapped once from the native controller, so our own pile still lights
+  ---
+  duration_ms: 0.194944
+  type: 'test'
+  ...
+# Subtest: (R52-6) an effect the clause map cannot name gets a plain numbered label, never a guessed title
+ok 152 - (R52-6) an effect the clause map cannot name gets a plain numbered label, never a guessed title
+  ---
+  duration_ms: 0.24357
+  type: 'test'
+  ...
+# Subtest: (R52-7) the menu sends only after re-checking the decision key, and opening it sends nothing
+ok 153 - (R52-7) the menu sends only after re-checking the decision key, and opening it sends nothing
+  ---
+  duration_ms: 0.356567
+  type: 'test'
+  ...
+# Subtest: (R52-8) title showcase: one boss per deck, matching decks.json, art files present, no franchise logo
+ok 154 - (R52-8) title showcase: one boss per deck, matching decks.json, art files present, no franchise logo
+  ---
+  duration_ms: 0.775191
+  type: 'test'
+  ...
+# Subtest: (R52-9) wiring: stylesheet after r50, showcase script, offline list, About text
+ok 155 - (R52-9) wiring: stylesheet after r50, showcase script, offline list, About text
+  ---
+  duration_ms: 0.805103
+  type: 'test'
+  ...
+# Subtest: (R53-1) every quoted card text is the exact bundled text, and every highlight is inside it
+ok 156 - (R53-1) every quoted card text is the exact bundled text, and every highlight is inside it
+  ---
+  duration_ms: 1.449344
+  type: 'test'
+  ...
+# Subtest: (R53-2) bubbles stay short, verdicts come from the reviewed enum (with summon_negated), rulings <= 50 words with sources
+ok 157 - (R53-2) bubbles stay short, verdicts come from the reviewed enum (with summon_negated), rulings <= 50 words with sources
+  ---
+  duration_ms: 0.409402
+  type: 'test'
+  ...
+# Subtest: (R53-3) the Seto-team fixes are in (RELAY-180)
+ok 158 - (R53-3) the Seto-team fixes are in (RELAY-180)
+  ---
+  duration_ms: 0.250851
+  type: 'test'
+  ...
+# Subtest: (R53-4) two separate trust badges; rules stay pending; fail-safe wording never claims a save that failed
+ok 159 - (R53-4) two separate trust badges; rules stay pending; fail-safe wording never claims a save that failed
+  ---
+  duration_ms: 0.852633
+  type: 'test'
+  ...
+# Subtest: (R53-5) the archived Guide (Lapawri, kept in guide.mjs) still draws every mood with its own ids; boards render zones, chain and stamps
+ok 160 - (R53-5) the archived Guide (Lapawri, kept in guide.mjs) still draws every mood with its own ids; boards render zones, chain and stamps
+  ---
+  duration_ms: 1.280936
+  type: 'test'
+  ...
+# Subtest: (RD-001) Engage is offered with empty Main Monster Zones; after a legal Ghost Belle Normal Summon it is not offered; nothing was negated
+ok 161 - (RD-001) Engage is offered with empty Main Monster Zones; after a legal Ghost Belle Normal Summon it is not offered; nothing was negated
+  ---
+  duration_ms: 63.362346
+  type: 'test'
+  ...
+# Subtest: (RD-001 control) a Link in the Extra Monster Zone leaves the Main Monster Zones empty: Engage is offered; Kagari recovery is NOT offered
+ok 162 - (RD-001 control) a Link in the Extra Monster Zone leaves the Main Monster Zones empty: Engage is offered; Kagari recovery is NOT offered
+  ---
+  duration_ms: 34.638681
+  type: 'test'
+  ...
+# Subtest: (RD-002) Fenrir summon procedure makes no Chain Link; its later search does, and Ash negates that search
+ok 163 - (RD-002) Fenrir summon procedure makes no Chain Link; its later search does, and Ash negates that search
+  ---
+  duration_ms: 33.21557
+  type: 'test'
+  ...
+# Subtest: (RD-003) Tenki Chain Link 1, Ash Chain Link 2: Ash resolves first, no search, Tenki stays face-up
+ok 164 - (RD-003) Tenki Chain Link 1, Ash Chain Link 2: Ash resolves first, no search, Tenki stays face-up
+  ---
+  duration_ms: 34.598002
+  type: 'test'
+  ...
+# Subtest: (RD-003 control) without Ash, Tenki resolves and adds Gold Leo
+ok 165 - (RD-003 control) without Ash, Tenki resolves and adds Gold Leo
+  ---
+  duration_ms: 35.547822
+  type: 'test'
+  ...
+# Subtest: (R54-AI1) Normal Summon holds bind root search and close-out extras
+ok 166 - (R54-AI1) Normal Summon holds bind root search and close-out extras
+  ---
+  duration_ms: 1.018403
+  type: 'test'
+  ...
+# Subtest: (R54-1) chain lines: monster effect vs Spell/Trap wording; resolve and chain-end only for real chains
+ok 167 - (R54-1) chain lines: monster effect vs Spell/Trap wording; resolve and chain-end only for real chains
+  ---
+  duration_ms: 1.550008
+  type: 'test'
+  ...
+# Subtest: (R54-2) a negation is never explained as activation vs effect (RELAY-176 GD05); it is queued as a subtype gap
+ok 168 - (R54-2) a negation is never explained as activation vs effect (RELAY-176 GD05); it is queued as a subtype gap
+  ---
+  duration_ms: 0.327525
+  type: 'test'
+  ...
+# Subtest: (R54-3) Fisherman of Legend is on the unsure list (RELAY-179 addendum): fail-safe, never an explanation
+ok 169 - (R54-3) Fisherman of Legend is on the unsure list (RELAY-179 addendum): fail-safe, never an explanation
+  ---
+  duration_ms: 0.120984
+  type: 'test'
+  ...
+# Subtest: (R54-4) no rules-causal template is enabled while rules review is pending (RELAY-180 HIGH 1)
+ok 170 - (R54-4) no rules-causal template is enabled while rules review is pending (RELAY-180 HIGH 1)
+  ---
+  duration_ms: 0.425294
+  type: 'test'
+  ...
+# Subtest: (R54-5) damage, cost, summons and face-down banish lines use only event facts
+ok 171 - (R54-5) damage, cost, summons and face-down banish lines use only event facts
+  ---
+  duration_ms: 0.177092
+  type: 'test'
+  ...
+# Subtest: (R54-6) Lapawri archived in r55 (tutors picked); music plays only inside Learn; app hands the coach events, not choices to answer
+ok 172 - (R54-6) Lapawri archived in r55 (tutors picked); music plays only inside Learn; app hands the coach events, not choices to answer
+  ---
+  duration_ms: 0.429923
+  type: 'test'
+  ...
+# Subtest: (R55-1) Toon: Dark Magician searches Toon Terror with nothing to banish; Deck-summon picks never take Harpie
+ok 173 - (R55-1) Toon: Dark Magician searches Toon Terror with nothing to banish; Deck-summon picks never take Harpie
+  ---
+  duration_ms: 1.56832
+  type: 'test'
+  ...
+# Subtest: (R55-2) HERO: Infernal Rage Tributes for Sunrise by default
+ok 174 - (R55-2) HERO: Infernal Rage Tributes for Sunrise by default
+  ---
+  duration_ms: 0.123995
+  type: 'test'
+  ...
+# Subtest: (R55-3) Mikanko first turn: Fire Dance held -> Sanaki; otherwise Noble Twins
+ok 175 - (R55-3) Mikanko first turn: Fire Dance held -> Sanaki; otherwise Noble Twins
+  ---
+  duration_ms: 0.159523
+  type: 'test'
+  ...
+# Subtest: (R55-4) Kashtira: Riseheart-led opening only when no free Level 7 is in hand
+ok 176 - (R55-4) Kashtira: Riseheart-led opening only when no free Level 7 is in hand
+  ---
+  duration_ms: 0.149802
+  type: 'test'
+  ...
+# Subtest: (R55-5) Time Typhoon: no "either result unlocks Exceed"; the Exceed reason only on our Main Phase; Fisherman not a held interruption
+ok 177 - (R55-5) Time Typhoon: no "either result unlocks Exceed"; the Exceed reason only on our Main Phase; Fisherman not a held interruption
+  ---
+  duration_ms: 0.346284
+  type: 'test'
+  ...
+# Subtest: (R55-E1) the engine badge needs a recorded pass for EVERY listed test; missing is NOT RUN, any failure is visible
+ok 178 - (R55-E1) the engine badge needs a recorded pass for EVERY listed test; missing is NOT RUN, any failure is visible
+  ---
+  duration_ms: 1.3998
+  type: 'test'
+  ...
+# Subtest: (R55-E2) RELAY-192 content: RD-004 r2 s6 wording, exact Rulebook label, RD-002 r3 title
+ok 179 - (R55-E2) RELAY-192 content: RD-004 r2 s6 wording, exact Rulebook label, RD-002 r3 title
+  ---
+  duration_ms: 0.264671
+  type: 'test'
+  ...
+# Subtest: (R55-E3) Learn is a real modal: background inert while open, Tab wraps both ways, focus restored on close
+ok 180 - (R55-E3) Learn is a real modal: background inert while open, Tab wraps both ways, focus restored on close
+  ---
+  duration_ms: 0.316493
+  type: 'test'
+  ...
+# Subtest: (RD-004) the cost is paid before the answer; Veiler negates the effect; the cost is not refunded; Big Bang has no target
+ok 181 - (RD-004) the cost is paid before the answer; Veiler negates the effect; the cost is not refunded; Big Bang has no target
+  ---
+  duration_ms: 79.966043
+  type: 'test'
+  ...
+# Subtest: (RD-004 control) without Veiler: the top 3 opposing cards are banished face-down and Riseheart becomes Level 7
+ok 182 - (RD-004 control) without Veiler: the top 3 opposing cards are banished face-down and Riseheart becomes Level 7
+  ---
+  duration_ms: 31.42896
+  type: 'test'
+  ...
+# Subtest: (R55-T1) four tutors, each tied to its real card, with atlas and card art shipped
+ok 183 - (R55-T1) four tutors, each tied to its real card, with atlas and card art shipped
+  ---
+  duration_ms: 2.475689
+  type: 'test'
+  ...
+# Subtest: (R55-T2) every tutor draws all seven moods from its own atlas cell; neutral blinks; unknown moods fall back
+ok 184 - (R55-T2) every tutor draws all seven moods from its own atlas cell; neutral blinks; unknown moods fall back
+  ---
+  duration_ms: 0.948965
+  type: 'test'
+  ...
+# Subtest: (R55-T3) default is Dark Magician Girl; only registry ids can be picked; storage failure still picks for the session
+ok 185 - (R55-T3) default is Dark Magician Girl; only registry ids can be picked; storage failure still picks for the session
+  ---
+  duration_ms: 0.47657
+  type: 'test'
+  ...
+# Subtest: (R55-T4) wiring: Learn and the coach draw the picked tutor, Lapawri is archived not offered, offline list and credits
+ok 186 - (R55-T4) wiring: Learn and the coach draw the picked tutor, Lapawri is archived not offered, offline list and credits
+  ---
+  duration_ms: 0.508366
+  type: 'test'
+  ...
+# Subtest: (RD-005 A) Ghost Belle negates Fire Dance’s activation; the negated activation does not use the limit: the second Fire Dance is offered
+ok 187 - (RD-005 A) Ghost Belle negates Fire Dance’s activation; the negated activation does not use the limit: the second Fire Dance is offered
+  ---
+  duration_ms: 76.695703
+  type: 'test'
+  ...
+# Subtest: (RD-005 B) control: the first Fire Dance resolves; the limit is used: the second copy is NOT offered although Hu-Li is a valid GY target
+ok 188 - (RD-005 B) control: the first Fire Dance resolves; the limit is used: the second copy is NOT offered although Hu-Li is a valid GY target
+  ---
+  duration_ms: 33.715046
+  type: 'test'
+  ...
+# Subtest: (R56-1) RD-005 r2: exact bubbles, verdicts, ruling; s06 is marked source-led; both engine scenes listed
+ok 189 - (R56-1) RD-005 r2: exact bubbles, verdicts, ruling; s06 is marked source-led; both engine scenes listed
+  ---
+  duration_ms: 1.389038
+  type: 'test'
+  ...
+# Subtest: (R56-2) the lesson board can show the Graveyard
+ok 190 - (R56-2) the lesson board can show the Graveyard
+  ---
+  duration_ms: 0.542042
+  type: 'test'
+  ...
+# Subtest: (R56-3) handOff greys only the hand copy, not the same card on the field
+ok 191 - (R56-3) handOff greys only the hand copy, not the same card on the field
+  ---
+  duration_ms: 0.178705
+  type: 'test'
+  ...
+# opp activates Lode (CL1) | learner chains Ash (CL2) | opp activates Lode declaration (fresh chain) | declares Blue-Eyes White Dragon | opp Normal Summons Sage | Sage search: yes | Sage adds Maiden | opp Synchro Summons Spirit Dragon
+# opp activates Lode (CL1) | learner passes | Lode adds Ether Beryl | opp activates Lode declaration (fresh chain) | declares Blue-Eyes White Dragon | opp Normal Summons Sage | Sage search: yes | Sage adds Maiden | opp Synchro Summons Spirit Dragon
+# Subtest: (CP-001 F1) Ash on Lode’s search: Ash offered, CL2 resolves first, no Beryl added, Lode stays face-up; the declaration, Sage and Spirit Dragon still happen
+ok 192 - (CP-001 F1) Ash on Lode’s search: Ash offered, CL2 resolves first, no Beryl added, Lode stays face-up; the declaration, Sage and Spirit Dragon still happen
+  ---
+  duration_ms: 107.715258
+  type: 'test'
+  ...
+# Subtest: (CP-001 F0) control, the learner passes: Lode adds Beryl, then the same declaration, Sage and Spirit Dragon line
+ok 193 - (CP-001 F0) control, the learner passes: Lode adds Beryl, then the same declaration, Sage and Spirit Dragon line
+  ---
+  duration_ms: 47.902612
+  type: 'test'
+  ...
+# Subtest: (R57-1) CP-001: ChatGPT’s exact bubbles, ruling and catch; Pass branch skips the Ash-only beats
+ok 194 - (R57-1) CP-001: ChatGPT’s exact bubbles, ruling and catch; Pass branch skips the Ash-only beats
+  ---
+  duration_ms: 1.642982
+  type: 'test'
+  ...
+# Subtest: (R57-2) cards and text: names match the bundled data, quoted Lode text is exact, highlights are inside it, art exists
+ok 195 - (R57-2) cards and text: names match the bundled data, quoted Lode text is exact, highlights are inside it, art exists
+  ---
+  duration_ms: 0.383913
+  type: 'test'
+  ...
+# Subtest: (R57-3) the scripted reveal is labelled, the opponent field draws, and the engine tests named by the lesson exist
+ok 196 - (R57-3) the scripted reveal is labelled, the opponent field draws, and the engine tests named by the lesson exist
+  ---
+  duration_ms: 0.734856
+  type: 'test'
+  ...
+# Subtest: (R57-4) wiring: one player for both kinds, choices sit in the sticky control bar, compare the other branch, flags carry the branch and this build
+ok 197 - (R57-4) wiring: one player for both kinds, choices sit in the sticky control bar, compare the other branch, flags carry the branch and this build
+  ---
+  duration_ms: 0.323276
+  type: 'test'
+  ...
+# Subtest: (R58-1) RELAY-200 MED-1: each CP-001 branch shows its own true board after C1
+ok 198 - (R58-1) RELAY-200 MED-1: each CP-001 branch shows its own true board after C1
+  ---
+  duration_ms: 1.405499
+  type: 'test'
+  ...
+# Subtest: (R58-2) rules badge per lesson revision; engine badge says source-led on SOURCE-LED steps; tooltip names the lesson’s own tests
+ok 199 - (R58-2) rules badge per lesson revision; engine badge says source-led on SOURCE-LED steps; tooltip names the lesson’s own tests
+  ---
+  duration_ms: 0.456907
+  type: 'test'
+  ...
+# Subtest: (R58-3) RELAY-199 MED-1 and RELAY-200 LOW-4: tutor focus selector, Escape with focus lost, C1 options equal and unfocused
+ok 200 - (R58-3) RELAY-199 MED-1 and RELAY-200 LOW-4: tutor focus selector, Escape with focus lost, C1 options equal and unfocused
+  ---
+  duration_ms: 0.319751
+  type: 'test'
+  ...
+# Subtest: (R58-4) learn-temple-r1 contract: tutor above the board in DOM order, workspace, footer; zones labelled; card text folds
+ok 201 - (R58-4) learn-temple-r1 contract: tutor above the board in DOM order, workspace, footer; zones labelled; card text folds
+  ---
+  duration_ms: 0.875764
+  type: 'test'
+  ...
+# Subtest: (R58-5) small fixes: pointing label, CP chips, True Light note, KITT comment, Rulebook p. 51, RD-005 s03 board
+ok 202 - (R58-5) small fixes: pointing label, CP chips, True Light note, KITT comment, Rulebook p. 51, RD-005 s03 board
+  ---
+  duration_ms: 0.678882
+  type: 'test'
+  ...
+# Subtest: (R58-6) evidence parser: a failure is sticky and SKIP/TODO is not a pass
+ok 203 - (R58-6) evidence parser: a failure is sticky and SKIP/TODO is not a pass
+  ---
+  duration_ms: 38.426957
+  type: 'test'
+  ...
+1..203
+# tests 203
+# suites 0
+# pass 202
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23796.880365
+(run with approved.json from r42 _build in the working directory; the one failure needs tools/build-css.mjs)

@@ -1,0 +1,1333 @@
+{
+  "authorship": "Authored by ChatGPT — pending Seto/team fact check",
+  "reference_commit": "2470b4bb83fe42a59f45486e229049df30257b6a",
+  "status": "design proposal; not runtime code",
+  "contexts": 7,
+  "prompt_types": 21,
+  "row_count": 147,
+  "rows": [
+    {
+      "id": "A-SELECT_CARD-R",
+      "native_prompt_type": "SELECT_CARD",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose {range} {cardWord}{zone}",
+      "source_fields": "m.min/max; m.selects[].controller/location; fresh, scoped hint only; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose {range} {cardWord}{zone}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CARD-A",
+      "native_prompt_type": "SELECT_CARD",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose {range} {cardWord}{zone}",
+      "source_fields": "m.min/max; m.selects[].controller/location; fresh, scoped hint only; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose {range} {cardWord}{zone}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CARD-S",
+      "native_prompt_type": "SELECT_CARD",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose {range} {cardWord}{zone}",
+      "source_fields": "m.min/max; m.selects[].controller/location; fresh, scoped hint only; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose {range} {cardWord}{zone}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CARD-C",
+      "native_prompt_type": "SELECT_CARD",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose {range} {cardWord}{zone}",
+      "source_fields": "m.min/max; m.selects[].controller/location; fresh, scoped hint only; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose {range} {cardWord}{zone}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CARD-E",
+      "native_prompt_type": "SELECT_CARD",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose {range} {cardWord}{zone}",
+      "source_fields": "m.min/max; m.selects[].controller/location; fresh, scoped hint only; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose {range} {cardWord}{zone}",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_CARD-B",
+      "native_prompt_type": "SELECT_CARD",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose {range} {cardWord}{zone}",
+      "source_fields": "m.min/max; m.selects[].controller/location; fresh, scoped hint only; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose {range} {cardWord}{zone}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CARD-I",
+      "native_prompt_type": "SELECT_CARD",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose {range} {cardWord}{zone}",
+      "source_fields": "m.min/max; m.selects[].controller/location; fresh, scoped hint only; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose {range} {cardWord}{zone}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CHAIN-R",
+      "native_prompt_type": "SELECT_CHAIN",
+      "context": "Resolving link",
+      "header_text": "Response window · choose an effect{mandatory}",
+      "source_fields": "m.forced; m.selects; state.chain; phase; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Response window · source not verified · choose an effect{mandatory}",
+      "disposition": "context conflict: do not invent a response during resolution; retain native response choice with neutral context"
+    },
+    {
+      "id": "A-SELECT_CHAIN-A",
+      "native_prompt_type": "SELECT_CHAIN",
+      "context": "Activation / cost",
+      "header_text": "Response window · choose an effect{mandatory}",
+      "source_fields": "m.forced; m.selects; state.chain; phase; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Response window · source not verified · choose an effect{mandatory}",
+      "disposition": "context conflict: do not invent a response during resolution; retain native response choice with neutral context"
+    },
+    {
+      "id": "A-SELECT_CHAIN-S",
+      "native_prompt_type": "SELECT_CHAIN",
+      "context": "Summon / material procedure",
+      "header_text": "Response window · choose an effect{mandatory}",
+      "source_fields": "m.forced; m.selects; state.chain; phase; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Response window · source not verified · choose an effect{mandatory}",
+      "disposition": "context conflict: do not invent a response during resolution; retain native response choice with neutral context"
+    },
+    {
+      "id": "A-SELECT_CHAIN-C",
+      "native_prompt_type": "SELECT_CHAIN",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose an effect{mandatory}",
+      "source_fields": "m.forced; m.selects; state.chain; phase; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Response window · source not verified · choose an effect{mandatory}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CHAIN-E",
+      "native_prompt_type": "SELECT_CHAIN",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · no Chain Link · choose an effect{mandatory}",
+      "source_fields": "m.forced; m.selects; state.chain; phase; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · no Chain Link · choose an effect{mandatory}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_CHAIN-B",
+      "native_prompt_type": "SELECT_CHAIN",
+      "context": "Battle",
+      "header_text": "Response window · choose an effect{mandatory}",
+      "source_fields": "m.forced; m.selects; state.chain; phase; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Response window · source not verified · choose an effect{mandatory}",
+      "disposition": "context conflict: do not invent a response during resolution; retain native response choice with neutral context"
+    },
+    {
+      "id": "A-SELECT_CHAIN-I",
+      "native_prompt_type": "SELECT_CHAIN",
+      "context": "Phase / idle",
+      "header_text": "Response window · choose an effect{mandatory}",
+      "source_fields": "m.forced; m.selects; state.chain; phase; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Response window · source not verified · choose an effect{mandatory}",
+      "disposition": "context conflict: do not invent a response during resolution; retain native response choice with neutral context"
+    },
+    {
+      "id": "A-SELECT_EFFECTYN-R",
+      "native_prompt_type": "SELECT_EFFECTYN",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · use this effect?",
+      "source_fields": "m.code/controller/location/sequence/position/description; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · use this effect?",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_EFFECTYN-A",
+      "native_prompt_type": "SELECT_EFFECTYN",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · use this effect?",
+      "source_fields": "m.code/controller/location/sequence/position/description; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · use this effect?",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_EFFECTYN-S",
+      "native_prompt_type": "SELECT_EFFECTYN",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · use this effect?",
+      "source_fields": "m.code/controller/location/sequence/position/description; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · use this effect?",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_EFFECTYN-C",
+      "native_prompt_type": "SELECT_EFFECTYN",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · use this effect?",
+      "source_fields": "m.code/controller/location/sequence/position/description; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · use this effect?",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_EFFECTYN-E",
+      "native_prompt_type": "SELECT_EFFECTYN",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · use this effect?",
+      "source_fields": "m.code/controller/location/sequence/position/description; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · use this effect?",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_EFFECTYN-B",
+      "native_prompt_type": "SELECT_EFFECTYN",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · use this effect?",
+      "source_fields": "m.code/controller/location/sequence/position/description; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · use this effect?",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_EFFECTYN-I",
+      "native_prompt_type": "SELECT_EFFECTYN",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · use this effect?",
+      "source_fields": "m.code/controller/location/sequence/position/description; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · use this effect?",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_YESNO-R",
+      "native_prompt_type": "SELECT_YESNO",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose Yes or No",
+      "source_fields": "m.description; verified system-question mapping, if any; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose Yes or No",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_YESNO-A",
+      "native_prompt_type": "SELECT_YESNO",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose Yes or No",
+      "source_fields": "m.description; verified system-question mapping, if any; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose Yes or No",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_YESNO-S",
+      "native_prompt_type": "SELECT_YESNO",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose Yes or No",
+      "source_fields": "m.description; verified system-question mapping, if any; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose Yes or No",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_YESNO-C",
+      "native_prompt_type": "SELECT_YESNO",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose Yes or No",
+      "source_fields": "m.description; verified system-question mapping, if any; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose Yes or No",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_YESNO-E",
+      "native_prompt_type": "SELECT_YESNO",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose Yes or No",
+      "source_fields": "m.description; verified system-question mapping, if any; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose Yes or No",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_YESNO-B",
+      "native_prompt_type": "SELECT_YESNO",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose Yes or No",
+      "source_fields": "m.description; verified system-question mapping, if any; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose Yes or No",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_YESNO-I",
+      "native_prompt_type": "SELECT_YESNO",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose Yes or No",
+      "source_fields": "m.description; verified system-question mapping, if any; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose Yes or No",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_OPTION-R",
+      "native_prompt_type": "SELECT_OPTION",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose an option",
+      "source_fields": "m.options; verified decodeEffectId and scoped effect mapping; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose an option",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_OPTION-A",
+      "native_prompt_type": "SELECT_OPTION",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose an option",
+      "source_fields": "m.options; verified decodeEffectId and scoped effect mapping; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose an option",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_OPTION-S",
+      "native_prompt_type": "SELECT_OPTION",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose an option",
+      "source_fields": "m.options; verified decodeEffectId and scoped effect mapping; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose an option",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_OPTION-C",
+      "native_prompt_type": "SELECT_OPTION",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose an option",
+      "source_fields": "m.options; verified decodeEffectId and scoped effect mapping; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose an option",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_OPTION-E",
+      "native_prompt_type": "SELECT_OPTION",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose an option",
+      "source_fields": "m.options; verified decodeEffectId and scoped effect mapping; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose an option",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_OPTION-B",
+      "native_prompt_type": "SELECT_OPTION",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose an option",
+      "source_fields": "m.options; verified decodeEffectId and scoped effect mapping; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose an option",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_OPTION-I",
+      "native_prompt_type": "SELECT_OPTION",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose an option",
+      "source_fields": "m.options; verified decodeEffectId and scoped effect mapping; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose an option",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_IDLECMD-R",
+      "native_prompt_type": "SELECT_IDLECMD",
+      "context": "Resolving link",
+      "header_text": "{phase} · choose your next play",
+      "source_fields": "state.phase; m.summons/special_summons/activates/to_bp/to_ep; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "{phase} · choose your next play",
+      "disposition": "idle action list has no single source; conflicting resolving/cost inference is discarded"
+    },
+    {
+      "id": "A-SELECT_IDLECMD-A",
+      "native_prompt_type": "SELECT_IDLECMD",
+      "context": "Activation / cost",
+      "header_text": "{phase} · choose your next play",
+      "source_fields": "state.phase; m.summons/special_summons/activates/to_bp/to_ep; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "{phase} · choose your next play",
+      "disposition": "idle action list has no single source; conflicting resolving/cost inference is discarded"
+    },
+    {
+      "id": "A-SELECT_IDLECMD-S",
+      "native_prompt_type": "SELECT_IDLECMD",
+      "context": "Summon / material procedure",
+      "header_text": "{phase} · choose your next play",
+      "source_fields": "state.phase; m.summons/special_summons/activates/to_bp/to_ep; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "{phase} · choose your next play",
+      "disposition": "idle action list has no single source; conflicting resolving/cost inference is discarded"
+    },
+    {
+      "id": "A-SELECT_IDLECMD-C",
+      "native_prompt_type": "SELECT_IDLECMD",
+      "context": "Response, chain present",
+      "header_text": "{phase} · choose your next play",
+      "source_fields": "state.phase; m.summons/special_summons/activates/to_bp/to_ep; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "{phase} · choose your next play",
+      "disposition": "idle action list has no single source; conflicting resolving/cost inference is discarded"
+    },
+    {
+      "id": "A-SELECT_IDLECMD-E",
+      "native_prompt_type": "SELECT_IDLECMD",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose your next play",
+      "source_fields": "state.phase; m.summons/special_summons/activates/to_bp/to_ep; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose your next play",
+      "disposition": "idle action list has no single source; conflicting resolving/cost inference is discarded"
+    },
+    {
+      "id": "A-SELECT_IDLECMD-B",
+      "native_prompt_type": "SELECT_IDLECMD",
+      "context": "Battle",
+      "header_text": "{phase} · choose your next play",
+      "source_fields": "state.phase; m.summons/special_summons/activates/to_bp/to_ep; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "{phase} · choose your next play",
+      "disposition": "idle action list has no single source; conflicting resolving/cost inference is discarded"
+    },
+    {
+      "id": "A-SELECT_IDLECMD-I",
+      "native_prompt_type": "SELECT_IDLECMD",
+      "context": "Phase / idle",
+      "header_text": "{phase} · choose your next play",
+      "source_fields": "state.phase; m.summons/special_summons/activates/to_bp/to_ep; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "{phase} · choose your next play",
+      "disposition": "idle action list has no single source; conflicting resolving/cost inference is discarded"
+    },
+    {
+      "id": "A-SELECT_BATTLECMD-R",
+      "native_prompt_type": "SELECT_BATTLECMD",
+      "context": "Resolving link",
+      "header_text": "{battleStep} · choose a battle action",
+      "source_fields": "state.phase; m.chains/attacks/to_m2/to_ep; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "{battleStep} · choose a battle action",
+      "disposition": "battle action list has no single source; never label the whole list as resolving a card"
+    },
+    {
+      "id": "A-SELECT_BATTLECMD-A",
+      "native_prompt_type": "SELECT_BATTLECMD",
+      "context": "Activation / cost",
+      "header_text": "{battleStep} · choose a battle action",
+      "source_fields": "state.phase; m.chains/attacks/to_m2/to_ep; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "{battleStep} · choose a battle action",
+      "disposition": "battle action list has no single source; never label the whole list as resolving a card"
+    },
+    {
+      "id": "A-SELECT_BATTLECMD-S",
+      "native_prompt_type": "SELECT_BATTLECMD",
+      "context": "Summon / material procedure",
+      "header_text": "{battleStep} · choose a battle action",
+      "source_fields": "state.phase; m.chains/attacks/to_m2/to_ep; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "{battleStep} · choose a battle action",
+      "disposition": "battle action list has no single source; never label the whole list as resolving a card"
+    },
+    {
+      "id": "A-SELECT_BATTLECMD-C",
+      "native_prompt_type": "SELECT_BATTLECMD",
+      "context": "Response, chain present",
+      "header_text": "{battleStep} · choose a battle action",
+      "source_fields": "state.phase; m.chains/attacks/to_m2/to_ep; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "{battleStep} · choose a battle action",
+      "disposition": "battle action list has no single source; never label the whole list as resolving a card"
+    },
+    {
+      "id": "A-SELECT_BATTLECMD-E",
+      "native_prompt_type": "SELECT_BATTLECMD",
+      "context": "Response, chain empty",
+      "header_text": "{battleStep} · choose a battle action",
+      "source_fields": "state.phase; m.chains/attacks/to_m2/to_ep; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{battleStep} · choose a battle action",
+      "disposition": "battle action list has no single source; never label the whole list as resolving a card"
+    },
+    {
+      "id": "A-SELECT_BATTLECMD-B",
+      "native_prompt_type": "SELECT_BATTLECMD",
+      "context": "Battle",
+      "header_text": "{battleStep} · choose a battle action",
+      "source_fields": "state.phase; m.chains/attacks/to_m2/to_ep; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "{battleStep} · choose a battle action",
+      "disposition": "battle action list has no single source; never label the whole list as resolving a card"
+    },
+    {
+      "id": "A-SELECT_BATTLECMD-I",
+      "native_prompt_type": "SELECT_BATTLECMD",
+      "context": "Phase / idle",
+      "header_text": "{battleStep} · choose a battle action",
+      "source_fields": "state.phase; m.chains/attacks/to_m2/to_ep; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "{battleStep} · choose a battle action",
+      "disposition": "battle action list has no single source; never label the whole list as resolving a card"
+    },
+    {
+      "id": "A-SELECT_POSITION-R",
+      "native_prompt_type": "SELECT_POSITION",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose a battle position",
+      "source_fields": "m.positions; m.code only if identity permitted; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose a battle position",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_POSITION-A",
+      "native_prompt_type": "SELECT_POSITION",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose a battle position",
+      "source_fields": "m.positions; m.code only if identity permitted; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose a battle position",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_POSITION-S",
+      "native_prompt_type": "SELECT_POSITION",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose a battle position",
+      "source_fields": "m.positions; m.code only if identity permitted; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose a battle position",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_POSITION-C",
+      "native_prompt_type": "SELECT_POSITION",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose a battle position",
+      "source_fields": "m.positions; m.code only if identity permitted; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose a battle position",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_POSITION-E",
+      "native_prompt_type": "SELECT_POSITION",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose a battle position",
+      "source_fields": "m.positions; m.code only if identity permitted; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose a battle position",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_POSITION-B",
+      "native_prompt_type": "SELECT_POSITION",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose a battle position",
+      "source_fields": "m.positions; m.code only if identity permitted; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose a battle position",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_POSITION-I",
+      "native_prompt_type": "SELECT_POSITION",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose a battle position",
+      "source_fields": "m.positions; m.code only if identity permitted; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose a battle position",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_PLACE-R",
+      "native_prompt_type": "SELECT_PLACE",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose {count} {zoneWord}",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose {count} {zoneWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_PLACE-A",
+      "native_prompt_type": "SELECT_PLACE",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose {count} {zoneWord}",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose {count} {zoneWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_PLACE-S",
+      "native_prompt_type": "SELECT_PLACE",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose {count} {zoneWord}",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose {count} {zoneWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_PLACE-C",
+      "native_prompt_type": "SELECT_PLACE",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose {count} {zoneWord}",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose {count} {zoneWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_PLACE-E",
+      "native_prompt_type": "SELECT_PLACE",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose {count} {zoneWord}",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose {count} {zoneWord}",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_PLACE-B",
+      "native_prompt_type": "SELECT_PLACE",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose {count} {zoneWord}",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose {count} {zoneWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_PLACE-I",
+      "native_prompt_type": "SELECT_PLACE",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose {count} {zoneWord}",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose {count} {zoneWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_DISFIELD-R",
+      "native_prompt_type": "SELECT_DISFIELD",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose {count} {zoneWord} to disable",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose {count} {zoneWord} to disable",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_DISFIELD-A",
+      "native_prompt_type": "SELECT_DISFIELD",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose {count} {zoneWord} to disable",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose {count} {zoneWord} to disable",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_DISFIELD-S",
+      "native_prompt_type": "SELECT_DISFIELD",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose {count} {zoneWord} to disable",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose {count} {zoneWord} to disable",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_DISFIELD-C",
+      "native_prompt_type": "SELECT_DISFIELD",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose {count} {zoneWord} to disable",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose {count} {zoneWord} to disable",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_DISFIELD-E",
+      "native_prompt_type": "SELECT_DISFIELD",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose {count} {zoneWord} to disable",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose {count} {zoneWord} to disable",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_DISFIELD-B",
+      "native_prompt_type": "SELECT_DISFIELD",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose {count} {zoneWord} to disable",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose {count} {zoneWord} to disable",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_DISFIELD-I",
+      "native_prompt_type": "SELECT_DISFIELD",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose {count} {zoneWord} to disable",
+      "source_fields": "m.count; field_mask; offered choices[].response.places; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose {count} {zoneWord} to disable",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_TRIBUTE-R",
+      "native_prompt_type": "SELECT_TRIBUTE",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose Tributes · value {range}",
+      "source_fields": "m.min/max; m.selects[].release_param (value, not monster count); active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose Tributes · value {range}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_TRIBUTE-A",
+      "native_prompt_type": "SELECT_TRIBUTE",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose Tributes · value {range}",
+      "source_fields": "m.min/max; m.selects[].release_param (value, not monster count); current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose Tributes · value {range}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_TRIBUTE-S",
+      "native_prompt_type": "SELECT_TRIBUTE",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose Tributes · value {range}",
+      "source_fields": "m.min/max; m.selects[].release_param (value, not monster count); explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose Tributes · value {range}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_TRIBUTE-C",
+      "native_prompt_type": "SELECT_TRIBUTE",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose Tributes · value {range}",
+      "source_fields": "m.min/max; m.selects[].release_param (value, not monster count); current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose Tributes · value {range}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_TRIBUTE-E",
+      "native_prompt_type": "SELECT_TRIBUTE",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose Tributes · value {range}",
+      "source_fields": "m.min/max; m.selects[].release_param (value, not monster count); current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose Tributes · value {range}",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_TRIBUTE-B",
+      "native_prompt_type": "SELECT_TRIBUTE",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose Tributes · value {range}",
+      "source_fields": "m.min/max; m.selects[].release_param (value, not monster count); current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose Tributes · value {range}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_TRIBUTE-I",
+      "native_prompt_type": "SELECT_TRIBUTE",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose Tributes · value {range}",
+      "source_fields": "m.min/max; m.selects[].release_param (value, not monster count); current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose Tributes · value {range}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_SUM-R",
+      "native_prompt_type": "SELECT_SUM",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose a valid set of cards",
+      "source_fields": "m.amount/min/max/select_max; selects_must/selects; validated sum evaluator; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose a valid set of cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_SUM-A",
+      "native_prompt_type": "SELECT_SUM",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose a valid set of cards",
+      "source_fields": "m.amount/min/max/select_max; selects_must/selects; validated sum evaluator; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose a valid set of cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_SUM-S",
+      "native_prompt_type": "SELECT_SUM",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose a valid set of cards",
+      "source_fields": "m.amount/min/max/select_max; selects_must/selects; validated sum evaluator; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose a valid set of cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_SUM-C",
+      "native_prompt_type": "SELECT_SUM",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose a valid set of cards",
+      "source_fields": "m.amount/min/max/select_max; selects_must/selects; validated sum evaluator; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose a valid set of cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_SUM-E",
+      "native_prompt_type": "SELECT_SUM",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose a valid set of cards",
+      "source_fields": "m.amount/min/max/select_max; selects_must/selects; validated sum evaluator; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose a valid set of cards",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_SUM-B",
+      "native_prompt_type": "SELECT_SUM",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose a valid set of cards",
+      "source_fields": "m.amount/min/max/select_max; selects_must/selects; validated sum evaluator; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose a valid set of cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_SUM-I",
+      "native_prompt_type": "SELECT_SUM",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose a valid set of cards",
+      "source_fields": "m.amount/min/max/select_max; selects_must/selects; validated sum evaluator; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose a valid set of cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_UNSELECT_CARD-R",
+      "native_prompt_type": "SELECT_UNSELECT_CARD",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · adjust the selected cards",
+      "source_fields": "m.select_cards/unselect_cards; min/max; can_finish/can_cancel; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · adjust the selected cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_UNSELECT_CARD-A",
+      "native_prompt_type": "SELECT_UNSELECT_CARD",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · adjust the selected cards",
+      "source_fields": "m.select_cards/unselect_cards; min/max; can_finish/can_cancel; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · adjust the selected cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_UNSELECT_CARD-S",
+      "native_prompt_type": "SELECT_UNSELECT_CARD",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · adjust the selected cards",
+      "source_fields": "m.select_cards/unselect_cards; min/max; can_finish/can_cancel; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · adjust the selected cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_UNSELECT_CARD-C",
+      "native_prompt_type": "SELECT_UNSELECT_CARD",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · adjust the selected cards",
+      "source_fields": "m.select_cards/unselect_cards; min/max; can_finish/can_cancel; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · adjust the selected cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_UNSELECT_CARD-E",
+      "native_prompt_type": "SELECT_UNSELECT_CARD",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · adjust the selected cards",
+      "source_fields": "m.select_cards/unselect_cards; min/max; can_finish/can_cancel; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · adjust the selected cards",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_UNSELECT_CARD-B",
+      "native_prompt_type": "SELECT_UNSELECT_CARD",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · adjust the selected cards",
+      "source_fields": "m.select_cards/unselect_cards; min/max; can_finish/can_cancel; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · adjust the selected cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_UNSELECT_CARD-I",
+      "native_prompt_type": "SELECT_UNSELECT_CARD",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · adjust the selected cards",
+      "source_fields": "m.select_cards/unselect_cards; min/max; can_finish/can_cancel; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · adjust the selected cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_COUNTER-R",
+      "native_prompt_type": "SELECT_COUNTER",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose {count} {counterWord}",
+      "source_fields": "m.count/counter_type; m.cards[].count; verified counter name or generic; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose {count} {counterWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_COUNTER-A",
+      "native_prompt_type": "SELECT_COUNTER",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose {count} {counterWord}",
+      "source_fields": "m.count/counter_type; m.cards[].count; verified counter name or generic; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose {count} {counterWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_COUNTER-S",
+      "native_prompt_type": "SELECT_COUNTER",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose {count} {counterWord}",
+      "source_fields": "m.count/counter_type; m.cards[].count; verified counter name or generic; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose {count} {counterWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_COUNTER-C",
+      "native_prompt_type": "SELECT_COUNTER",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose {count} {counterWord}",
+      "source_fields": "m.count/counter_type; m.cards[].count; verified counter name or generic; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose {count} {counterWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_COUNTER-E",
+      "native_prompt_type": "SELECT_COUNTER",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose {count} {counterWord}",
+      "source_fields": "m.count/counter_type; m.cards[].count; verified counter name or generic; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose {count} {counterWord}",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SELECT_COUNTER-B",
+      "native_prompt_type": "SELECT_COUNTER",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose {count} {counterWord}",
+      "source_fields": "m.count/counter_type; m.cards[].count; verified counter name or generic; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose {count} {counterWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SELECT_COUNTER-I",
+      "native_prompt_type": "SELECT_COUNTER",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose {count} {counterWord}",
+      "source_fields": "m.count/counter_type; m.cards[].count; verified counter name or generic; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose {count} {counterWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SORT_CARD-R",
+      "native_prompt_type": "SORT_CARD",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · order these cards",
+      "source_fields": "m.cards; native sort-card order contract; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · order these cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SORT_CARD-A",
+      "native_prompt_type": "SORT_CARD",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · order these cards",
+      "source_fields": "m.cards; native sort-card order contract; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · order these cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SORT_CARD-S",
+      "native_prompt_type": "SORT_CARD",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · order these cards",
+      "source_fields": "m.cards; native sort-card order contract; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · order these cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SORT_CARD-C",
+      "native_prompt_type": "SORT_CARD",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · order these cards",
+      "source_fields": "m.cards; native sort-card order contract; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · order these cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SORT_CARD-E",
+      "native_prompt_type": "SORT_CARD",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · order these cards",
+      "source_fields": "m.cards; native sort-card order contract; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · order these cards",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-SORT_CARD-B",
+      "native_prompt_type": "SORT_CARD",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · order these cards",
+      "source_fields": "m.cards; native sort-card order contract; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · order these cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SORT_CARD-I",
+      "native_prompt_type": "SORT_CARD",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · order these cards",
+      "source_fields": "m.cards; native sort-card order contract; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · order these cards",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-SORT_CHAIN-R",
+      "native_prompt_type": "SORT_CHAIN",
+      "context": "Resolving link",
+      "header_text": "Chain order · order your triggered effects",
+      "source_fields": "m.cards; native sort-chain contract; no predicted outcome; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Chain order · order your triggered effects",
+      "disposition": "ordering trigger candidates, not resolving existing links; no single source"
+    },
+    {
+      "id": "A-SORT_CHAIN-A",
+      "native_prompt_type": "SORT_CHAIN",
+      "context": "Activation / cost",
+      "header_text": "Chain order · order your triggered effects",
+      "source_fields": "m.cards; native sort-chain contract; no predicted outcome; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Chain order · order your triggered effects",
+      "disposition": "ordering trigger candidates, not resolving existing links; no single source"
+    },
+    {
+      "id": "A-SORT_CHAIN-S",
+      "native_prompt_type": "SORT_CHAIN",
+      "context": "Summon / material procedure",
+      "header_text": "Chain order · order your triggered effects",
+      "source_fields": "m.cards; native sort-chain contract; no predicted outcome; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Chain order · order your triggered effects",
+      "disposition": "ordering trigger candidates, not resolving existing links; no single source"
+    },
+    {
+      "id": "A-SORT_CHAIN-C",
+      "native_prompt_type": "SORT_CHAIN",
+      "context": "Response, chain present",
+      "header_text": "Chain order · order your triggered effects",
+      "source_fields": "m.cards; native sort-chain contract; no predicted outcome; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Chain order · order your triggered effects",
+      "disposition": "ordering trigger candidates, not resolving existing links; no single source"
+    },
+    {
+      "id": "A-SORT_CHAIN-E",
+      "native_prompt_type": "SORT_CHAIN",
+      "context": "Response, chain empty",
+      "header_text": "Chain order · order your triggered effects",
+      "source_fields": "m.cards; native sort-chain contract; no predicted outcome; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "Chain order · order your triggered effects",
+      "disposition": "ordering trigger candidates, not resolving existing links; no single source"
+    },
+    {
+      "id": "A-SORT_CHAIN-B",
+      "native_prompt_type": "SORT_CHAIN",
+      "context": "Battle",
+      "header_text": "Chain order · order your triggered effects",
+      "source_fields": "m.cards; native sort-chain contract; no predicted outcome; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Chain order · order your triggered effects",
+      "disposition": "ordering trigger candidates, not resolving existing links; no single source"
+    },
+    {
+      "id": "A-SORT_CHAIN-I",
+      "native_prompt_type": "SORT_CHAIN",
+      "context": "Phase / idle",
+      "header_text": "Chain order · order your triggered effects",
+      "source_fields": "m.cards; native sort-chain contract; no predicted outcome; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Chain order · order your triggered effects",
+      "disposition": "ordering trigger candidates, not resolving existing links; no single source"
+    },
+    {
+      "id": "A-ANNOUNCE_RACE-R",
+      "native_prompt_type": "ANNOUNCE_RACE",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · declare {count} monster {typeWord}",
+      "source_fields": "m.count; m.available race mask; UI says monster Type; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · declare {count} monster {typeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_RACE-A",
+      "native_prompt_type": "ANNOUNCE_RACE",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · declare {count} monster {typeWord}",
+      "source_fields": "m.count; m.available race mask; UI says monster Type; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · declare {count} monster {typeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_RACE-S",
+      "native_prompt_type": "ANNOUNCE_RACE",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · declare {count} monster {typeWord}",
+      "source_fields": "m.count; m.available race mask; UI says monster Type; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · declare {count} monster {typeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_RACE-C",
+      "native_prompt_type": "ANNOUNCE_RACE",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · declare {count} monster {typeWord}",
+      "source_fields": "m.count; m.available race mask; UI says monster Type; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · declare {count} monster {typeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_RACE-E",
+      "native_prompt_type": "ANNOUNCE_RACE",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · declare {count} monster {typeWord}",
+      "source_fields": "m.count; m.available race mask; UI says monster Type; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · declare {count} monster {typeWord}",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-ANNOUNCE_RACE-B",
+      "native_prompt_type": "ANNOUNCE_RACE",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · declare {count} monster {typeWord}",
+      "source_fields": "m.count; m.available race mask; UI says monster Type; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · declare {count} monster {typeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_RACE-I",
+      "native_prompt_type": "ANNOUNCE_RACE",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · declare {count} monster {typeWord}",
+      "source_fields": "m.count; m.available race mask; UI says monster Type; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · declare {count} monster {typeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_ATTRIB-R",
+      "native_prompt_type": "ANNOUNCE_ATTRIB",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · declare {count} {attributeWord}",
+      "source_fields": "m.count; m.available Attribute mask; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · declare {count} {attributeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_ATTRIB-A",
+      "native_prompt_type": "ANNOUNCE_ATTRIB",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · declare {count} {attributeWord}",
+      "source_fields": "m.count; m.available Attribute mask; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · declare {count} {attributeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_ATTRIB-S",
+      "native_prompt_type": "ANNOUNCE_ATTRIB",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · declare {count} {attributeWord}",
+      "source_fields": "m.count; m.available Attribute mask; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · declare {count} {attributeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_ATTRIB-C",
+      "native_prompt_type": "ANNOUNCE_ATTRIB",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · declare {count} {attributeWord}",
+      "source_fields": "m.count; m.available Attribute mask; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · declare {count} {attributeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_ATTRIB-E",
+      "native_prompt_type": "ANNOUNCE_ATTRIB",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · declare {count} {attributeWord}",
+      "source_fields": "m.count; m.available Attribute mask; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · declare {count} {attributeWord}",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-ANNOUNCE_ATTRIB-B",
+      "native_prompt_type": "ANNOUNCE_ATTRIB",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · declare {count} {attributeWord}",
+      "source_fields": "m.count; m.available Attribute mask; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · declare {count} {attributeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_ATTRIB-I",
+      "native_prompt_type": "ANNOUNCE_ATTRIB",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · declare {count} {attributeWord}",
+      "source_fields": "m.count; m.available Attribute mask; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · declare {count} {attributeWord}",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_CARD-R",
+      "native_prompt_type": "ANNOUNCE_CARD",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · declare a card name",
+      "source_fields": "m.opcodes; offered legal choices; declared name is not a source card; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · declare a card name",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_CARD-A",
+      "native_prompt_type": "ANNOUNCE_CARD",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · declare a card name",
+      "source_fields": "m.opcodes; offered legal choices; declared name is not a source card; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · declare a card name",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_CARD-S",
+      "native_prompt_type": "ANNOUNCE_CARD",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · declare a card name",
+      "source_fields": "m.opcodes; offered legal choices; declared name is not a source card; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · declare a card name",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_CARD-C",
+      "native_prompt_type": "ANNOUNCE_CARD",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · declare a card name",
+      "source_fields": "m.opcodes; offered legal choices; declared name is not a source card; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · declare a card name",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_CARD-E",
+      "native_prompt_type": "ANNOUNCE_CARD",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · declare a card name",
+      "source_fields": "m.opcodes; offered legal choices; declared name is not a source card; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · declare a card name",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-ANNOUNCE_CARD-B",
+      "native_prompt_type": "ANNOUNCE_CARD",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · declare a card name",
+      "source_fields": "m.opcodes; offered legal choices; declared name is not a source card; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · declare a card name",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_CARD-I",
+      "native_prompt_type": "ANNOUNCE_CARD",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · declare a card name",
+      "source_fields": "m.opcodes; offered legal choices; declared name is not a source card; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · declare a card name",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_NUMBER-R",
+      "native_prompt_type": "ANNOUNCE_NUMBER",
+      "context": "Resolving link",
+      "header_text": "Resolving CL {cl} · {source} · choose a number",
+      "source_fields": "m.options; displayed option value, not response ordinal; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Source not verified · choose a number",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_NUMBER-A",
+      "native_prompt_type": "ANNOUNCE_NUMBER",
+      "context": "Activation / cost",
+      "header_text": "Activating · {source} · choose a number",
+      "source_fields": "m.options; displayed option value, not response ordinal; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Source not verified · choose a number",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_NUMBER-S",
+      "native_prompt_type": "ANNOUNCE_NUMBER",
+      "context": "Summon / material procedure",
+      "header_text": "Summon procedure · {source} · choose a number",
+      "source_fields": "m.options; displayed option value, not response ordinal; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Source not verified · choose a number",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_NUMBER-C",
+      "native_prompt_type": "ANNOUNCE_NUMBER",
+      "context": "Response, chain present",
+      "header_text": "Response to CL {cl} · {source} · choose a number",
+      "source_fields": "m.options; displayed option value, not response ordinal; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Source not verified · choose a number",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_NUMBER-E",
+      "native_prompt_type": "ANNOUNCE_NUMBER",
+      "context": "Response, chain empty",
+      "header_text": "{phase} · choose a number",
+      "source_fields": "m.options; displayed option value, not response ordinal; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "{phase} · choose a number",
+      "disposition": "phase is known; no chain source is inferred; add a directly verified source only as optional detail"
+    },
+    {
+      "id": "A-ANNOUNCE_NUMBER-B",
+      "native_prompt_type": "ANNOUNCE_NUMBER",
+      "context": "Battle",
+      "header_text": "{battleStep} · {source} · choose a number",
+      "source_fields": "m.options; displayed option value, not response ordinal; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Source not verified · choose a number",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ANNOUNCE_NUMBER-I",
+      "native_prompt_type": "ANNOUNCE_NUMBER",
+      "context": "Phase / idle",
+      "header_text": "{phase} · {source} · choose a number",
+      "source_fields": "m.options; displayed option value, not response ordinal; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Source not verified · choose a number",
+      "disposition": "verified-context template; use fallback if its context proof is absent"
+    },
+    {
+      "id": "A-ROCK_PAPER_SCISSORS-R",
+      "native_prompt_type": "ROCK_PAPER_SCISSORS",
+      "context": "Resolving link",
+      "header_text": "Rock, Paper, Scissors · make your choice",
+      "source_fields": "m.player; native prompt; no card source invented; active resolve event / authoritative resolvingChain matched to same lifecycle state.chain entry",
+      "fallback": "Rock, Paper, Scissors · make your choice",
+      "disposition": "no card source; context-independent native choice"
+    },
+    {
+      "id": "A-ROCK_PAPER_SCISSORS-A",
+      "native_prompt_type": "ROCK_PAPER_SCISSORS",
+      "context": "Activation / cost",
+      "header_text": "Rock, Paper, Scissors · make your choice",
+      "source_fields": "m.player; native prompt; no card source invented; current accepted effectChosen pending activation and reviewed role; no CL allocated before CHAINING",
+      "fallback": "Rock, Paper, Scissors · make your choice",
+      "disposition": "no card source; context-independent native choice"
+    },
+    {
+      "id": "A-ROCK_PAPER_SCISSORS-S",
+      "native_prompt_type": "ROCK_PAPER_SCISSORS",
+      "context": "Summon / material procedure",
+      "header_text": "Rock, Paper, Scissors · make your choice",
+      "source_fields": "m.player; native prompt; no card source invented; explicit current procedure/source binding; native material hint is not proof of procedure",
+      "fallback": "Rock, Paper, Scissors · make your choice",
+      "disposition": "no card source; context-independent native choice"
+    },
+    {
+      "id": "A-ROCK_PAPER_SCISSORS-C",
+      "native_prompt_type": "ROCK_PAPER_SCISSORS",
+      "context": "Response, chain present",
+      "header_text": "Rock, Paper, Scissors · make your choice",
+      "source_fields": "m.player; native prompt; no card source invented; current response prompt; last eligible existing chain entry, not called resolving",
+      "fallback": "Rock, Paper, Scissors · make your choice",
+      "disposition": "no card source; context-independent native choice"
+    },
+    {
+      "id": "A-ROCK_PAPER_SCISSORS-E",
+      "native_prompt_type": "ROCK_PAPER_SCISSORS",
+      "context": "Response, chain empty",
+      "header_text": "Rock, Paper, Scissors · make your choice",
+      "source_fields": "m.player; native prompt; no card source invented; current response prompt plus empty state.chain; phase from current state",
+      "fallback": "Rock, Paper, Scissors · make your choice",
+      "disposition": "no card source; context-independent native choice"
+    },
+    {
+      "id": "A-ROCK_PAPER_SCISSORS-B",
+      "native_prompt_type": "ROCK_PAPER_SCISSORS",
+      "context": "Battle",
+      "header_text": "Rock, Paper, Scissors · make your choice",
+      "source_fields": "m.player; native prompt; no card source invented; current phase and explicit attack identity; phase alone never proves effect source",
+      "fallback": "Rock, Paper, Scissors · make your choice",
+      "disposition": "no card source; context-independent native choice"
+    },
+    {
+      "id": "A-ROCK_PAPER_SCISSORS-I",
+      "native_prompt_type": "ROCK_PAPER_SCISSORS",
+      "context": "Phase / idle",
+      "header_text": "Rock, Paper, Scissors · make your choice",
+      "source_fields": "m.player; native prompt; no card source invented; current phase plus directly bound prompt source, otherwise no source inference",
+      "fallback": "Rock, Paper, Scissors · make your choice",
+      "disposition": "no card source; context-independent native choice"
+    }
+  ]
+}

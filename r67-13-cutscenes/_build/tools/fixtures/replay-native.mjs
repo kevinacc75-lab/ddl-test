@@ -1,0 +1,42 @@
+// r67.4 native attack-replay fixture (ChatGPT RELAY-238 §3). Engine-native, NOT a browser pass.
+// 1. Runs the recorded trace case (default: Kevy's Branded vs Blue-Eyes, seed 5000, first 0) with our AI pilots on both seats
+//    (search off, as in RELAY-237c) until the first SELECT_YESNO description 30, recording every accepted response.
+// 2. Replays that response list on a fresh duel and builds every delivery the way worker.mjs send() does (snapshot for the view,
+//    visiblePresentationEvents, eventSpan {from,to,complete}, mode 'play', view = the attacking seat), feeding the real reducer.
+// 3. Yes path and No path: a SENT reply is noted (noteOwnSent), the engine responds, and the next delivery is classified.
+// Usage: node tools/fixtures/replay-native.mjs <out.json> [deckA] [deckB] [seed] [first]
+import fs from 'node:fs';import crypto from 'node:crypto';
+const R47='/home/claude/r47/';process.chdir(R47);
+const [out,deckA='branded',deckB='blueeyes',seedS='5000',firstS='0']=process.argv.slice(2);const seed=+seedS,first=+firstS;
+const {loadBuild,db,scripts}=await import(R47+'tests/lib/engine-scenario.mjs');
+const {createOptimalPilots}=await import(R47+'dist/optimal-pilot.mjs');const {safeView}=await import(R47+'dist/ai/knowledge.mjs');
+const {visiblePresentationEvents}=await import(R47+'dist/event-data.mjs');const {createChoiceContext,header}=await import(R47+'dist/choice-context.mjs');
+const build=await loadBuild(true),{Duel,M,R}=build,live=build.live;
+const decks=JSON.parse(fs.readFileSync('dist/decks.json')).decks.map(d=>d.banlistVariants?.['tcg-2026-10-19']?{...d,...d.banlistVariants['tcg-2026-10-19']}:d);
+const pair=[decks.find(d=>d.id===deckA),decks.find(d=>d.id===deckB)];const cards=JSON.parse(fs.readFileSync('dist/deck-cards.json')).cards;const nameOf=c=>cards[String(c)]?.name||'';
+const quiet=f=>{const l=console.log;console.log=()=>{};try{return f()}finally{console.log=l}};
+// 1. record
+const d0=new Duel(live.core,db,scripts),pilots=createOptimalPilots({seed,searchEnabled:false});d0.start(pair,{seed,first});const responses=[];let found=null,n=0;
+quiet(()=>{while(d0.prompt&&!d0.finished&&n<6000){n++;const m=d0.prompt;if(m.type===M.SELECT_YESNO&&String(m.description)==='30'){found={seat:m.seat,player:m.player,turn:d0.turn,phase:d0.phase};break}
+ const plan=pilots[m.seat].base(safeView(d0,m.seat));if(!plan)break;d0.respond(plan.response);responses.push(plan.response);pilots[m.seat].observe?.(plan)}});
+if(!found){console.log(JSON.stringify({error:'no replay prompt reached',responses:responses.length}));process.exit(2)}
+// 2+3. replay with worker-style deliveries
+function replayTo(answer){const d=new Duel(live.core,db,scripts);d.start(pair,{seed,first});const view=found.seat,r=createChoiceContext();let delivered=0,rev=0;const msgs=[];
+ const send=()=>{const snap=d.snapshot(view,false),from=delivered+1,events=visiblePresentationEvents(d.events.filter(e=>e.id>delivered),view,{study:false,mode:'play'});
+  const x={type:'state',human:{epoch:1},view,mode:'play',study:false,eventSpan:{from,to:d.eventSeq,complete:d.eventSeq<from||(d.events[0]?.id??Infinity)<=from},events,state:snap};delivered=d.eventSeq;r.ingest(x,'fixture');return x};
+ quiet(()=>{send();for(const resp of responses){d.respond(resp);send()}});
+ const at=msgs[0]=d.snapshot(view,false);const xr=send();/* a re-send of the same drawing, as the app may receive */
+ const c1=r.classify(xr),h1=header(xr.state.prompt,c1,{nameOf,view,phase:xr.state.phase});
+ const evSinceAttack=(()=>{const ev=d.events,i=ev.map(e=>e.type).lastIndexOf('attack');return i>=0?ev.slice(i):[]})();
+ const reply={type:R.SELECT_YESNO,yes:answer};r.noteOwnSent({rev:xr.state.revision,prompt:xr.state.prompt,response:reply});quiet(()=>d.respond(reply));const xn=send();
+ const c2=r.classify(xn),h2=header(xn.state.prompt,c2,{nameOf,view,phase:xn.state.phase});
+ const P=xn.state.prompt;return {view,replayPrompt:{type:xr.state.prompt.type,description:String(xr.state.prompt.description),seat:xr.state.prompt.seat,player:xr.state.prompt.player,revision:xr.state.revision,phase:xr.state.phase},
+  replayHeader:{id:h1?.id,text:h1?.text,verified:h1?.verified,ctx:c1?.ctx},battleRecord:r.state().battle&&null,reply,eventsSinceAttack:evSinceAttack,
+  next:{type:P?.type,typeName:Object.keys(M).find(k=>M[k]===P?.type),seat:P?.seat,player:P?.player,min:P?.min,max:P?.max,candidates:(P?.selects||P?.cards||[]).map(c=>({code:c.code,name:nameOf(c.code)||null,controller:c.controller,location:c.location,sequence:c.sequence,position:c.position})),attacks:P?.attacks,revision:xn.state.revision,eventsBetween:xn.events.map(e=>e.type),span:xn.eventSpan},
+  nextHeader:{id:h2?.id,text:h2?.text,verified:h2?.verified,ctx:c2?.ctx},trail:r.state().trail.slice(-3)}}
+const yes=replayTo(true),no=replayTo(false);
+const sha=f=>crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+const res={what:'r67.4 engine-native attack-replay fixture (not a browser pass)',authorship:'Generated by Claude; replay row and proof authored by ChatGPT, pending Seto/team check',case:{deckA,deckB,seed,first,turn:found.turn,phase:found.phase,seat:found.seat,player:found.player,responsesBeforeReplay:responses.length},
+ identities:{choiceContext:sha('dist/choice-context.mjs'),duel:sha('dist/duel.mjs'),eventData:sha('dist/event-data.mjs'),node:process.version},yes,no,responses};
+fs.writeFileSync(out,JSON.stringify(res,null,1));
+console.log(JSON.stringify({case:res.case,yes:{replay:yes.replayHeader,next:yes.nextHeader,nextType:yes.next.typeName,between:yes.next.eventsBetween},no:{replay:no.replayHeader,next:no.nextHeader,nextType:no.next.typeName}},null,1));

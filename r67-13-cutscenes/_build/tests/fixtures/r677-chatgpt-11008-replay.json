@@ -1,0 +1,2785 @@
+{
+  "version": "2.2.0-rc",
+  "decks": [
+    {
+      "id": "sky",
+      "name": "Zero Protocol",
+      "subtitle": "Sky Striker · RC4.1",
+      "accent": "#81c9e2",
+      "boss": 63288573,
+      "source": "Sky Striker Doctrine · current source",
+      "format": "TCG Advanced — 19 October 2026 (Akiza substitutes, Tea PASS)",
+      "main": [
+        26077387,
+        26077387,
+        26077387,
+        37351133,
+        37351133,
+        14558127,
+        14558127,
+        14558127,
+        94145021,
+        73642296,
+        63166095,
+        63166095,
+        25955749,
+        9726840,
+        9726840,
+        9726840,
+        98338152,
+        98338152,
+        98338152,
+        51227866,
+        52340444,
+        32807846,
+        34433770,
+        24010609,
+        70368879,
+        70368879,
+        70368879,
+        35261759,
+        35261759,
+        25733157,
+        42141493,
+        24299458,
+        24299458,
+        24299458,
+        99550630,
+        99550630,
+        50005218,
+        10045474,
+        10045474,
+        10045474
+      ],
+      "extra": [
+        76072561,
+        76072561,
+        76072561,
+        63288573,
+        63288573,
+        63288573,
+        90673288,
+        8491308,
+        98462037,
+        63013339,
+        25072579,
+        75147529,
+        12421694,
+        29301450,
+        17217034
+      ],
+      "side": [
+        42141493,
+        42141493,
+        84192580,
+        15693423,
+        15693423,
+        15693423,
+        8267140,
+        8267140,
+        8267140,
+        78114463,
+        78114463,
+        78114463,
+        12580477,
+        18144506,
+        41420027
+      ]
+    },
+    {
+      "id": "branded",
+      "name": "Kevy's Branded Deck",
+      "subtitle": "Kevy's own list · 16 Nov 2026 · 40/15/15 · 2 Albaz, 1 White Dragon · Extra: Flame Wingman + Shining Flare Wingman · TEST",
+      "accent": "#ef705e",
+      "boss": 44146295,
+      "source": "Kevy's posted list, 16 Nov 2026 00:41 AEDT; confirmed as his current deck 16 Nov 12:45 AEDT (built from the MetaGamesGX Pure Branded list of 10 Nov)",
+      "format": "TCG Advanced — 19 October 2026 (MetaGamesGX Pure Branded 41 · 10 Nov video)",
+      "main": [
+        62962630,
+        62962630,
+        62962630,
+        68468459,
+        68468459,
+        73819701,
+        45484331,
+        19304410,
+        95515789,
+        95515789,
+        60303688,
+        45883110,
+        55273560,
+        55273560,
+        94395649,
+        19096726,
+        42141493,
+        42141493,
+        42141493,
+        14558127,
+        14558127,
+        14558127,
+        59438930,
+        59438930,
+        59438930,
+        94145021,
+        44362883,
+        34995106,
+        75500286,
+        1984618,
+        1984618,
+        1984618,
+        29948294,
+        36637374,
+        48130397,
+        48130397,
+        48130397,
+        30271097,
+        30271097,
+        30271097
+      ],
+      "extra": [
+        44146295,
+        76666602,
+        76666602,
+        80843006,
+        72272462,
+        24915933,
+        13243124,
+        87758525,
+        70534340,
+        51409648,
+        41373230,
+        11765832,
+        74405783,
+        3410461,
+        38811586
+      ],
+      "side": [
+        27204311,
+        27204311,
+        24203749,
+        24203749,
+        24203749,
+        4227096,
+        4227096,
+        4227096,
+        15693423,
+        15693423,
+        15693423,
+        14883228,
+        14883228,
+        14883228,
+        17751597
+      ],
+      "label": "TCG Advanced · 19 Oct 2026"
+    }
+  ],
+  "seed": 11008,
+  "first": 0,
+  "aiMode": "enhanced",
+  "build": "ddl-test r67.6 Kevy Branded list on r67.5 on r65.1 choice list no longer covered on r65 answer checks tightened on r64 Sky Striker AI fixes on r63 answer checks + grouped copies on r62 calmer chain scenes on r61 one decision area on r60.1 response-window safety fix on r60 clearer duel screen + review fixes on r59 offline fix + review fixes on r58.3 waiting label kept on r58.2 phone loading fix on r58.1 focus fix on r58 Learn design + review fixes on r57 Choke Point Lab (CP-001) on r56 RD-005 Fire Dance lesson on r55 deck brains v1.1 + RD-004 on r54 Guided Duel coach + Learn music + AI-1 search hold fix on r53 learning mode (Ruling Desk) on r52 boss showcase title + pile effect menu + polish on r51 standard field layout on r50 Lapis & Gold look on r49.1 Gold Sarcophagus art fix on r49 mobile layout (phone portrait, tablets; one response control) on r48.1 retry fix (an automatic answer is offered once) on r48 play comfort (No response, chain setting, auto-place, gold aura) + concession in replays + S1 position rule on r47 battle/chain rule fix + Concede on r46 AI WindBot port + victory boss art on r45 AI v4 on r44 Aurora boss art on r43 Aurora P1 / r42 Branded MetaGamesGX 41 budget Extra (Alba-Lenatus + Sanctifire) TEST 2026-11-13-r51-field",
+  "pilots": [
+    "optimal",
+    "optimal"
+  ],
+  "responses": [
+    {
+      "type": 1,
+      "action": 0,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        8
+      ]
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        4
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        5
+      ]
+    },
+    {
+      "type": 8,
+      "index": 1
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 1
+        }
+      ]
+    },
+    {
+      "type": 7,
+      "index": 1
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 1,
+      "index": 3
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        3
+      ]
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 4,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 4,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 1
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 7,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 7,
+      "index": 3
+    },
+    {
+      "type": 7,
+      "index": 1
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 1
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 4
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 2
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 4
+    },
+    {
+      "type": 3,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 5,
+      "indicies": [
+        4
+      ]
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 4,
+      "index": 1
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 0,
+      "index": 2
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 1
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        2
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        3
+      ]
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 7,
+      "index": 3
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 1
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        2
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        10
+      ]
+    },
+    {
+      "type": 7,
+      "index": 2
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 1
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 6,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 0,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        3
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 2,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 7,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 7,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        2
+      ]
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 2
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 4
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 0,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 1
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        7
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 6,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        3
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 2,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 7,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 1
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        2
+      ]
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 3
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 1
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 0,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 4
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 8,
+      "index": 1
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 3,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        5
+      ]
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 4
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 1
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 2,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 2,
+      "index": 1
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 6,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 5
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 3
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 2,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 7,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 1
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        2
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        2
+      ]
+    },
+    {
+      "type": 3,
+      "yes": true
+    },
+    {
+      "type": 8,
+      "index": 1
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 5
+        }
+      ]
+    },
+    {
+      "type": 2,
+      "yes": true
+    },
+    {
+      "type": 5,
+      "indicies": [
+        1
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 5,
+      "index": 0
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 8,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 5,
+      "indicies": [
+        2
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 3,
+      "yes": true
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 6,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 1
+    },
+    {
+      "type": 5,
+      "indicies": [
+        3
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 2,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 7,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 1,
+          "location": 4,
+          "sequence": 1
+        }
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 1,
+      "action": 6,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 3
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 10,
+      "places": [
+        {
+          "player": 0,
+          "location": 4,
+          "sequence": 0
+        }
+      ]
+    },
+    {
+      "type": 11,
+      "position": 4
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 1
+    },
+    {
+      "type": 5,
+      "indicies": [
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 0,
+      "action": 1,
+      "index": 0
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    },
+    {
+      "type": 8,
+      "index": null
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+/* r33 polish (Claude, 23 Oct). Kevy 22 Oct 23:29: "the animations at times can be janky not sure if it's just the tablet".
+   1. No sideways page drift on phones: the Showtime launch button (fixed, skewed) widened the page by ~23 px. */
+html{overflow-x:clip}
+/* Balanced (the automatic choice on phones and tablets) and Smooth: the duel profile showed these animations re-painting
+   large areas every frame. High keeps the full effects. */
+/* 2. Learning route glow: a steady glow, not a box-shadow re-painted every frame for as long as the route shows. */
+body:is([data-graphics=balanced],[data-graphics=smooth]) :is(.lr-glow,.lr-activate,.lr-target){animation:none!important}
+/* 3. Learning route dashes: flow for about 3 seconds, then hold still. */
+body:is([data-graphics=balanced],[data-graphics=smooth]) .lr-flow{animation-iteration-count:4}
+/* 4. Zone and hand flares: a shadow pulse only. The brightness filter re-rendered the whole hand or zone each frame. */
+@keyframes fx23-zone-lite{0%{box-shadow:0 0 0 0 transparent}25%{box-shadow:0 0 0 3px var(--fx23-color),0 0 14px 4px var(--fx23-color)}100%{box-shadow:0 0 0 0 transparent}}
+body:is([data-graphics=balanced],[data-graphics=smooth]) :is(.fx23-field-flare,.fx23-link-flare,.fx23-zone-flare,.fx23-deck-flare){animation-name:fx23-zone-lite!important}
+/* 5. Combo-plan chip: it moves to its place at once (its top/padding transition re-laid out the page each frame). */
+.lr-plan-mini{transition:none}

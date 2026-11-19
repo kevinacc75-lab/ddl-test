@@ -1,0 +1,933 @@
+{
+"id": "tcg-2026-09-21",
+"label": "TCG Advanced · 21 Sep 2026",
+"source": "https://www.yugioh-card.com/en/limited/list_2026-09-21/",
+"effective": "2026-09-21",
+"status": "CORRECTED (Tea, round 3): reconciled by name+status against Konami list effective 21 Sep 2026 (225 restricted cards). Unlimited-status entries omitted by design (max 3 = default).",
+"cards": {
+"80181649": {
+"name": "\"A Case for K9\"",
+"max": 1
+},
+"21044178": {
+"name": "Abyss Dweller",
+"max": 0
+},
+"62320425": {
+"name": "Agido the Ancient Sentinel",
+"max": 0
+},
+"13332685": {
+"name": "Ame no Habakiri no Mitsurugi",
+"max": 1
+},
+"58921041": {
+"name": "Anti-Spell Fragrance",
+"max": 1
+},
+"4280258": {
+"name": "Apollousa, Bow of the Goddess",
+"max": 0
+},
+"4280259": {
+"name": "Apollousa, Bow of the Goddess",
+"max": 0
+},
+"43262273": {
+"name": "Appointer of the Red Lotus",
+"max": 0
+},
+"59509952": {
+"name": "Archlord Kristya",
+"max": 0
+},
+"6728559": {
+"name": "Archnemeses Protos",
+"max": 0
+},
+"80237445": {
+"name": "Artifact Mjollnir",
+"max": 0
+},
+"20292186": {
+"name": "Artifact Scythe",
+"max": 0
+},
+"76794549": {
+"name": "Astrograph Sorcerer",
+"max": 1
+},
+"440556": {
+"name": "Bahamut Shark",
+"max": 0
+},
+"84815190": {
+"name": "Baronne de Fleur",
+"max": 0
+},
+"19740112": {
+"name": "Barrier Statue of the Drought",
+"max": 0
+},
+"47961808": {
+"name": "Barrier Statue of the Inferno",
+"max": 0
+},
+"73356503": {
+"name": "Barrier Statue of the Stormwinds",
+"max": 0
+},
+"10963799": {
+"name": "Barrier Statue of the Torrent",
+"max": 0
+},
+"27552504": {
+"name": "Beatrice, Lady of the Eternal",
+"max": 0
+},
+"9929398": {
+"name": "Blackwing - Gofu the Vague Shadow",
+"max": 0
+},
+"94689206": {
+"name": "Block Dragon",
+"max": 0
+},
+"85106525": {
+"name": "Bonfire",
+"max": 1
+},
+"27548199": {
+"name": "Borreload Savage Dragon",
+"max": 0
+},
+"1041278": {
+"name": "Branded Expulsion",
+"max": 0
+},
+"44362883": {
+"name": "Branded Fusion",
+"max": 1
+},
+"29948294": {
+"name": "Branded in High Spirits",
+"max": 2
+},
+"7394770": {
+"name": "Brilliant Fusion",
+"max": 1
+},
+"69243953": {
+"name": "Butterfly Dagger - Elma",
+"max": 0
+},
+"6637331": {
+"name": "Bystial Druiswurm",
+"max": 1
+},
+"33854624": {
+"name": "Bystial Magnamhut",
+"max": 1
+},
+"24224830": {
+"name": "Called by the Grave",
+"max": 1
+},
+"72892473": {
+"name": "Card Destruction",
+"max": 1
+},
+"59750328": {
+"name": "Card of Demise",
+"max": 1
+},
+"57953380": {
+"name": "Card of Safe Return",
+"max": 0
+},
+"91623717": {
+"name": "Chain Strike",
+"max": 1
+},
+"3040496": {
+"name": "Chaos Ruler, the Chaotic Magical Dragon",
+"max": 0
+},
+"99266988": {
+"name": "Chaos Space",
+"max": 1
+},
+"67616300": {
+"name": "Chicken Game",
+"max": 1
+},
+"60682203": {
+"name": "Cold Wave",
+"max": 0
+},
+"17375316": {
+"name": "Confiscation",
+"max": 0
+},
+"65681983": {
+"name": "Crossout Designator",
+"max": 1
+},
+"50588353": {
+"name": "Crystron Halqifibrax",
+"max": 0
+},
+"31603289": {
+"name": "Cupsy★Yummy Way",
+"max": 1
+},
+"31425736": {
+"name": "Cupsy☆Yummy",
+"max": 1
+},
+"98095162": {
+"name": "Curious, the Lightsworn Dominion",
+"max": 0
+},
+"3685372": {
+"name": "CXyz Gimmick Puppet Fanatix Machinix",
+"max": 0
+},
+"69015963": {
+"name": "Cyber-Stein",
+"max": 0
+},
+"581014": {
+"name": "Daigusto Emeral",
+"max": 1
+},
+"15341821": {
+"name": "Dandylion",
+"max": 0
+},
+"44763025": {
+"name": "Delinquent Duo",
+"max": 0
+},
+"23557835": {
+"name": "Dimension Fusion",
+"max": 0
+},
+"91800273": {
+"name": "Dimension Shifter",
+"max": 0
+},
+"83326048": {
+"name": "Dimensional Barrier",
+"max": 0
+},
+"15854426": {
+"name": "Divine Wind of Mist Valley",
+"max": 1
+},
+"8903700": {
+"name": "Djinn Releaser of Rituals",
+"max": 0
+},
+"33760966": {
+"name": "Dracotail Arthalion",
+"max": 2
+},
+"75003700": {
+"name": "Dracotail Lukias",
+"max": 2
+},
+"7375867": {
+"name": "Dracotail Mululu",
+"max": 1
+},
+"94145021": {
+"name": "Droll & Lock Bird",
+"max": 2
+},
+"94145022": {
+"name": "Droll & Lock Bird",
+"max": 2
+},
+"51858306": {
+"name": "Eclipse Wyvern",
+"max": 0
+},
+"59581480": {
+"name": "Elfnote Tinia",
+"max": 1
+},
+"38273745": {
+"name": "Evilswarm Ouroboros",
+"max": 0
+},
+"33396948": {
+"name": "Exodia the Forbidden One",
+"max": 1
+},
+"34022970": {
+"name": "Ext Ryzeal",
+"max": 1
+},
+"55623480": {
+"name": "Fairy Tail - Snow",
+"max": 1
+},
+"78706415": {
+"name": "Fiber Jar",
+"max": 0
+},
+"46640168": {
+"name": "Fiendsmith's Lacrima",
+"max": 1
+},
+"95308449": {
+"name": "Final Countdown",
+"max": 1
+},
+"93369354": {
+"name": "Fishborg Blaster",
+"max": 0
+},
+"81439173": {
+"name": "Foolish Burial",
+"max": 1
+},
+"81439174": {
+"name": "Foolish Burial",
+"max": 1
+},
+"42009836": {
+"name": "Fossil Dyna Pachycephalo",
+"max": 0
+},
+"27970830": {
+"name": "Gateway of the Six",
+"max": 1
+},
+"39512984": {
+"name": "Gem-Knight Master Diamond",
+"max": 1
+},
+"42703248": {
+"name": "Giant Trunade",
+"max": 0
+},
+"55204071": {
+"name": "Gimmick Puppet Nightmare",
+"max": 0
+},
+"75500286": {
+"name": "Gold Sarcophagus",
+"max": 1
+},
+"53334471": {
+"name": "Gozen Match",
+"max": 1
+},
+"79571449": {
+"name": "Graceful Charity",
+"max": 0
+},
+"75732622": {
+"name": "Grinder Golem",
+"max": 0
+},
+"59537380": {
+"name": "Guardragon Agarpain",
+"max": 0
+},
+"86148577": {
+"name": "Guardragon Elpy",
+"max": 0
+},
+"18144507": {
+"name": "Harpie's Feather Duster",
+"max": 1
+},
+"18144506": {
+"name": "Harpie's Feather Duster",
+"max": 1
+},
+"87639778": {
+"name": "Harpie's Feather Storm",
+"max": 0
+},
+"19613556": {
+"name": "Heavy Storm",
+"max": 0
+},
+"24094258": {
+"name": "Heavymetalfoes Electrumite",
+"max": 0
+},
+"79606837": {
+"name": "Herald of the Arc Light",
+"max": 0
+},
+"62242678": {
+"name": "Hot Red Dragon Archfiend King Calamity",
+"max": 0
+},
+"8633261": {
+"name": "Ice Ryzeal",
+"max": 2
+},
+"61740673": {
+"name": "Imperial Order",
+"max": 0
+},
+"66957584": {
+"name": "Infernity Launcher",
+"max": 1
+},
+"1845204": {
+"name": "Instant Fusion",
+"max": 1
+},
+"93946239": {
+"name": "Into the Void",
+"max": 1
+},
+"59934749": {
+"name": "Isolde, Two Tales of the Noble Knights",
+"max": 0
+},
+"41855169": {
+"name": "Jowgen the Spiritualist",
+"max": 0
+},
+"47960073": {
+"name": "K9-04 Noroi",
+"max": 0
+},
+"28642461": {
+"name": "K9-66a Jokul",
+"max": 1
+},
+"35059553": {
+"name": "Kaiser Colosseum",
+"max": 0
+},
+"48626373": {
+"name": "Kashtira Arise-Heart",
+"max": 0
+},
+"25926710": {
+"name": "Kelbek the Ancient Vanguard",
+"max": 0
+},
+"63542003": {
+"name": "Keldo the Sacred Protector",
+"max": 1
+},
+"6153210": {
+"name": "Ketu Dracotail",
+"max": 1
+},
+"17209452": {
+"name": "Kewl Tune Rotary",
+"max": 0
+},
+"11398059": {
+"name": "King of the Feral Imps",
+"max": 0
+},
+"39064822": {
+"name": "Knightmare Goblin",
+"max": 0
+},
+"65330383": {
+"name": "Knightmare Gryphon",
+"max": 0
+},
+"3679218": {
+"name": "Knightmare Mermaid",
+"max": 0
+},
+"28566710": {
+"name": "Last Turn",
+"max": 0
+},
+"85602018": {
+"name": "Last Will",
+"max": 0
+},
+"34086406": {
+"name": "Lavalval Chain",
+"max": 0
+},
+"7902349": {
+"name": "Left Arm of the Forbidden One",
+"max": 1
+},
+"44519536": {
+"name": "Left Leg of the Forbidden One",
+"max": 1
+},
+"57421866": {
+"name": "Level Eater",
+"max": 0
+},
+"30342076": {
+"name": "Link Decoder",
+"max": 0
+},
+"85243784": {
+"name": "Linkross",
+"max": 0
+},
+"41999284": {
+"name": "Linkuriboh",
+"max": 1
+},
+"32723153": {
+"name": "Magical Explosion",
+"max": 1
+},
+"71650854": {
+"name": "Magical Mid-Breaker Field",
+"max": 1
+},
+"34206604": {
+"name": "Magical Scientist",
+"max": 0
+},
+"32061192": {
+"name": "Maliss <P> Dormouse",
+"max": 1
+},
+"69272449": {
+"name": "Maliss <P> White Rabbit",
+"max": 1
+},
+"95454996": {
+"name": "Maliss <Q> White Binder",
+"max": 0
+},
+"68337209": {
+"name": "Maliss in Underground",
+"max": 2
+},
+"34906152": {
+"name": "Mass Driver",
+"max": 0
+},
+"36521307": {
+"name": "Mathmech Circular",
+"max": 1
+},
+"23434538": {
+"name": "Maxx \"C\"",
+"max": 0
+},
+"44097050": {
+"name": "Mecha Phantom Beast Auroradon",
+"max": 0
+},
+"38572779": {
+"name": "Miscellaneousaurus",
+"max": 1
+},
+"43040603": {
+"name": "Monster Gate",
+"max": 1
+},
+"83764719": {
+"name": "Monster Reborn",
+"max": 1
+},
+"83764718": {
+"name": "Monster Reborn",
+"max": 1
+},
+"71818935": {
+"name": "Moon of the Closed Heaven",
+"max": 0
+},
+"99937011": {
+"name": "Mudora the Sword Oracle",
+"max": 1
+},
+"76375976": {
+"name": "Mystic Mine",
+"max": 0
+},
+"61049315": {
+"name": "Naturia Rosewhip",
+"max": 0
+},
+"3734202": {
+"name": "Naturia Sacred Tree",
+"max": 1
+},
+"54719828": {
+"name": "Number 16: Shock Master",
+"max": 0
+},
+"75433814": {
+"name": "Number 40: Gimmick Puppet of Strings",
+"max": 1
+},
+"10389142": {
+"name": "Number 42: Galaxy Tomahawk",
+"max": 0
+},
+"35772782": {
+"name": "Number 67: Pair-a-Dice Smasher",
+"max": 0
+},
+"63504681": {
+"name": "Number 86: Heroic Champion - Rhongomyniad",
+"max": 0
+},
+"95474755": {
+"name": "Number 89: Diablosis the Mind Hacker",
+"max": 0
+},
+"58820923": {
+"name": "Number 95: Galaxy-Eyes Dark Matter Dragon",
+"max": 0
+},
+"69170557": {
+"name": "Number C40: Gimmick Puppet of Dark Strings",
+"max": 1
+},
+"52653092": {
+"name": "Number S0: Utopic ZEXAL",
+"max": 0
+},
+"72537897": {
+"name": "Obedience Schooled",
+"max": 1
+},
+"33782437": {
+"name": "One Day of Peace",
+"max": 1
+},
+"2295440": {
+"name": "One for One",
+"max": 1
+},
+"89023486": {
+"name": "Original Sinful Spoils - Snake-Eye",
+"max": 0
+},
+"34945480": {
+"name": "Outer Entity Azathot",
+"max": 0
+},
+"74191942": {
+"name": "Painful Choice",
+"max": 0
+},
+"90884403": {
+"name": "Phantasmal Lord Ultimitl Bishbaalkin",
+"max": 0
+},
+"80453041": {
+"name": "Phantom of Yubel",
+"max": 1
+},
+"23558733": {
+"name": "Phoenixian Cluster Amaryllis",
+"max": 0
+},
+"55144522": {
+"name": "Pot of Greed",
+"max": 0
+},
+"84211599": {
+"name": "Pot of Prosperity",
+"max": 1
+},
+"25725326": {
+"name": "Prank-Kids Meow-Meow-Mu",
+"max": 0
+},
+"70369116": {
+"name": "Predaplant Verte Anaconda",
+"max": 0
+},
+"25661743": {
+"name": "Prohibited Power Patron Portal - Terminus",
+"max": 1
+},
+"58036229": {
+"name": "Protectcode Talker",
+"max": 0
+},
+"38814750": {
+"name": "PSY-Framegear Gamma",
+"max": 1
+},
+"74586817": {
+"name": "PSY-Framelord Omega",
+"max": 0
+},
+"21347668": {
+"name": "Purrely Sleepy Memory",
+"max": 2
+},
+"67115133": {
+"name": "Radiant Typhoon Chant",
+"max": 1
+},
+"32548318": {
+"name": "Rahu Dracotail",
+"max": 1
+},
+"58577036": {
+"name": "Reasoning",
+"max": 1
+},
+"23002292": {
+"name": "Red Reboot",
+"max": 0
+},
+"32807846": {
+"name": "Reinforcement of the Army",
+"max": 1
+},
+"34989413": {
+"name": "Reprodocus",
+"max": 0
+},
+"27174286": {
+"name": "Return from the Different Dimension",
+"max": 0
+},
+"70903634": {
+"name": "Right Arm of the Forbidden One",
+"max": 1
+},
+"8124921": {
+"name": "Right Leg of the Forbidden One",
+"max": 1
+},
+"90846359": {
+"name": "Rivalry of Warlords",
+"max": 1
+},
+"1357146": {
+"name": "Ronintoadin",
+"max": 0
+},
+"93016201": {
+"name": "Royal Oppression",
+"max": 0
+},
+"34909328": {
+"name": "Ryzeal Detonator",
+"max": 1
+},
+"66730191": {
+"name": "Sangen Kaimen",
+"max": 1
+},
+"30336082": {
+"name": "Sangen Summoning",
+"max": 1
+},
+"24940422": {
+"name": "Sekka's Light",
+"max": 1
+},
+"57585212": {
+"name": "Self-Destruct Button",
+"max": 0
+},
+"73468603": {
+"name": "Set Rotation",
+"max": 1
+},
+"72330894": {
+"name": "Simorgh, Bird of Sovereignty",
+"max": 0
+},
+"3280747": {
+"name": "Sixth Sense",
+"max": 0
+},
+"82732705": {
+"name": "Skill Drain",
+"max": 1
+},
+"52340444": {
+"name": "Sky Striker Mecha - Hornet Drones",
+"max": 1
+},
+"71344451": {
+"name": "Slash Draw",
+"max": 1
+},
+"63789924": {
+"name": "Smoke Grenade of the Thief",
+"max": 0
+},
+"41420027": {
+"name": "Solemn Judgment",
+"max": 1
+},
+"54447022": {
+"name": "Soul Charge",
+"max": 0
+},
+"59859086": {
+"name": "Splash Mage",
+"max": 0
+},
+"27381364": {
+"name": "Spright Elf",
+"max": 0
+},
+"91258852": {
+"name": "SPYRAL Master Plan",
+"max": 0
+},
+"73539069": {
+"name": "Striker Dragon",
+"max": 1
+},
+"20663556": {
+"name": "Substitoad",
+"max": 1
+},
+"23516703": {
+"name": "Summon Limit",
+"max": 0
+},
+"61665245": {
+"name": "Summon Sorceress",
+"max": 1
+},
+"93896655": {
+"name": "Sunavalon Dryas",
+"max": 1
+},
+"65563871": {
+"name": "Sunvine Healer",
+"max": 1
+},
+"33918636": {
+"name": "Superheavy Samurai Scarecrow",
+"max": 0
+},
+"43387895": {
+"name": "Supreme King Dragon Starving Venom",
+"max": 0
+},
+"35844557": {
+"name": "Sword Ryzeal",
+"max": 2
+},
+"99243014": {
+"name": "Synchro Overtake",
+"max": 1
+},
+"90953320": {
+"name": "T.G. Hyper Librarian",
+"max": 1
+},
+"37961969": {
+"name": "Tearlaments Havnis",
+"max": 1
+},
+"92731385": {
+"name": "Tearlaments Kitkallos",
+"max": 0
+},
+"74078255": {
+"name": "Tearlaments Merrli",
+"max": 1
+},
+"572850": {
+"name": "Tearlaments Scheiren",
+"max": 1
+},
+"63101919": {
+"name": "Tempest Magician",
+"max": 0
+},
+"91810826": {
+"name": "Tenpai Dragon Chundra",
+"max": 1
+},
+"73628505": {
+"name": "Terraforming",
+"max": 1
+},
+"11110587": {
+"name": "That Grass Looks Greener",
+"max": 1
+},
+"42829885": {
+"name": "The Forceful Sentry",
+"max": 0
+},
+"88071625": {
+"name": "The Tyrant Neptune",
+"max": 0
+},
+"24207889": {
+"name": "There Can Be Only One",
+"max": 1
+},
+"22593417": {
+"name": "Topologic Gumblar Dragon",
+"max": 0
+},
+"64697231": {
+"name": "Trap Dustshoot",
+"max": 0
+},
+"25311006": {
+"name": "Triple Tactics Talent",
+"max": 1
+},
+"88581108": {
+"name": "True King of All Calamities",
+"max": 0
+},
+"80604092": {
+"name": "Ultimate Offering",
+"max": 0
+},
+"80604091": {
+"name": "Ultimate Offering",
+"max": 0
+},
+"83152482": {
+"name": "Union Carrier",
+"max": 0
+},
+"5851097": {
+"name": "Vanity's Emptiness",
+"max": 0
+},
+"93156774": {
+"name": "Vanquish Soul Hollie Sue",
+"max": 1
+},
+"44910027": {
+"name": "Victory Dragon",
+"max": 0
+},
+"16923472": {
+"name": "Wind-Up Hunter",
+"max": 0
+},
+"30581601": {
+"name": "Yummy★Snatchy",
+"max": 1
+},
+"85115440": {
+"name": "Zoodiac Broadbull",
+"max": 0
+},
+"78872731": {
+"name": "Zoodiac Ratpier",
+"max": 1
+}
+}
+}

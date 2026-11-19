@@ -1,0 +1,65 @@
+/* r33 deck-list viewer (deck-list.mjs). Light on effects so it scrolls smoothly on tablets: no blur, no animation. */
+.dv-open{margin-top:6px;min-height:36px;width:100%}
+.deck-viewer{width:min(1100px,100vw - 24px);max-width:none;height:min(92vh,100dvh - 24px);max-height:none;padding:0;border:1px solid #64799b88;border-radius:16px;background:#0c1430;color:var(--text,#eef2ff);display:none;flex-direction:column;overflow:hidden}
+.deck-viewer[open]{display:flex}
+.deck-viewer::backdrop{background:#04081acc}
+.dv-head{display:flex;gap:14px;align-items:flex-end;padding:16px 18px 10px;border-bottom:1px solid #64799b44}
+.dv-head>div{flex:1;min-width:0}
+.dv-head h2{margin:2px 0;font-size:clamp(20px,3vw,28px);line-height:1.1}
+.dv-head p{margin:0}
+.dv-switch{display:grid;gap:4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted,#9fb0d0)}
+.dv-switch select{min-height:40px;background:#0f1a36;color:inherit;border:1px solid #64799b88;border-radius:10px;padding:0 10px;font:inherit;text-transform:none;letter-spacing:0;font-size:15px}
+.dv-close{min-width:44px;min-height:44px;font-size:24px;line-height:1;border-radius:12px;background:#ffffff10;border:1px solid #64799b66;color:inherit}
+.dv-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 18px;border-bottom:1px solid #64799b33}
+.dv-actions button{min-height:40px}
+.dv-body{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:0 18px 24px}
+.dv-jump{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:8px;padding:12px 0 8px;background:#0c1430}
+.dv-jump a{padding:6px 12px;border-radius:999px;border:1px solid #64799b66;color:inherit;text-decoration:none;font-size:14px}
+.dv-jump a b{opacity:.75;margin-left:4px}
+.dv-zone{content-visibility:auto;contain-intrinsic-size:auto 900px;scroll-margin-top:52px}
+.dv-zone h3{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin:18px 0 4px;font-size:20px}
+.dv-zone h3 small{font-size:13px;font-weight:400;color:var(--muted,#9fb0d0)}
+.dv-zone h4{margin:12px 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#9fb0d0)}
+.dv-zone h3 b,.dv-zone h4 b{color:var(--mint,#7ef0c8)}
+.dv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.dv-card{--frame:#c9733a;display:flex;flex-direction:column;gap:4px;padding:6px;text-align:left;border-radius:10px;border:1px solid #64799b55;border-top:3px solid var(--frame);background:#121c3c;color:inherit;font:inherit;cursor:pointer;min-width:0}
+.dv-card:focus-visible{outline:2px solid var(--mint,#7ef0c8);outline-offset:2px}
+.dv-card[data-frame=normal]{--frame:#d1b14d}.dv-card[data-frame=spell]{--frame:#1fa596}.dv-card[data-frame=trap]{--frame:#c2478a}.dv-card[data-frame=ritual]{--frame:#5b8fd6}
+.dv-card[data-frame=fusion]{--frame:#9a62d6}.dv-card[data-frame=synchro]{--frame:#e3e7ee}.dv-card[data-frame=xyz]{--frame:#8a8fa3}.dv-card[data-frame=link]{--frame:#3f86d8}
+.dv-art{position:relative;display:block;aspect-ratio:268/391;border-radius:6px;overflow:hidden;background:#0a1128}
+.dv-art img{width:100%;height:100%;object-fit:cover;display:block}
+.dv-count{position:absolute;right:4px;bottom:4px;min-width:30px;padding:2px 6px;border-radius:8px;background:#05091cdd;border:1px solid #ffffff44;font-size:15px;text-align:center}
+.dv-limit{position:absolute;left:4px;top:4px;padding:1px 6px;border-radius:6px;font-style:normal;font-size:11px;font-weight:700;background:#e0a01e;color:#1a1200}
+.dv-limit[data-limit=Limited]{background:#e8524a;color:#fff}
+.dv-name{font-size:13px;font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em}
+.dv-stats{font-size:11px;color:var(--muted,#9fb0d0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:640px){.dv-head{flex-wrap:wrap}.dv-switch{order:3;width:100%}.dv-grid{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}.dv-body,.dv-actions,.dv-head{padding-left:12px;padding-right:12px}.deck-viewer{inset:0;margin:0;width:100%;height:100%;max-width:100%;max-height:100%;border:0;border-radius:0}.dv-jump{gap:6px}.dv-jump a{padding:5px 10px;font-size:13px;white-space:nowrap}}
+body[data-theme=classic] .deck-viewer,body[data-theme=contrast] .deck-viewer{background:#0b0f18}
+body[data-theme=contrast] .dv-card{border-color:#fff}
+/* r33 deck brain: "How it plays" panel, role tags and card notes. */
+.dv-role{align-self:flex-start;font-style:normal;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:5px;background:#ffffff14;color:var(--muted,#9fb0d0)}
+.dv-role[data-role=starter]{background:#fde04722;color:#fde047}.dv-role[data-role=extender]{background:#60a5fa22;color:#93c5fd}.dv-role[data-role=payoff]{background:#c084fc22;color:#d8b4fe}
+.dv-role[data-role=interruption]{background:#f43f5e22;color:#fda4af}.dv-role[data-role=handtrap]{background:#34d39922;color:#6ee7b7}
+.dv-does{display:none;font-size:12px;line-height:1.35;color:var(--text,#eef2ff);opacity:.9}
+.deck-viewer[data-notes=on] .dv-does{display:block}
+.deck-viewer[data-notes=on] .dv-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.deck-viewer[data-notes=on] .dv-card{display:grid;grid-template-columns:72px 1fr;grid-template-rows:auto auto auto 1fr;column-gap:10px;align-items:start}
+.deck-viewer[data-notes=on] .dv-art{grid-row:1/span 4}
+.dv-brain{margin:14px 0 6px;padding:14px 16px;border:1px solid #64799b55;border-left:4px solid var(--mint,#7ef0c8);border-radius:12px;background:#101a38;scroll-margin-top:52px}
+.dv-brain h3{margin:0 0 6px;font-size:20px}
+.dv-brain h4{margin:14px 0 6px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#9fb0d0)}
+.dv-plan{margin:0 0 4px;font-size:15px;line-height:1.45}
+.dv-routes{margin:0;padding-left:20px;display:grid;gap:10px}
+.dv-routes>li>b{font-size:14px}
+.dv-routes ol{margin:4px 0 2px;padding-left:18px;font-size:13px;line-height:1.45}
+.dv-routes small,.dv-notes{font-size:13px;color:var(--muted,#9fb0d0)}
+.dv-notes{margin:0;padding-left:18px;line-height:1.5}
+.dv-actions [aria-pressed=true]{outline:2px solid var(--mint,#7ef0c8)}
+/* r34: "In this deck" note in the card dossier. */
+.dv-dossier-brain{margin-top:14px;padding:10px 12px;border-left:4px solid var(--mint,#7ef0c8);border-radius:8px;background:#ffffff0d}
+.dv-dossier-brain h3{margin:0 0 6px;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.dv-dossier-brain p{margin:6px 0;font-size:14px;line-height:1.45}
+.dv-dossier-brain .dv-role{margin-left:6px}
+/* r33.1: imported cards with no art file: a framed initial instead of a blank. */
+.dv-noart{display:grid;place-items:center;border:2px solid var(--frame);background:linear-gradient(160deg,#1b2650,#0a1128)}
+.dv-noart::after{content:attr(data-initial);font-size:28px;font-weight:800;opacity:.7}

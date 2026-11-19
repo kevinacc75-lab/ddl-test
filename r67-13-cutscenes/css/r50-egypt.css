@@ -1,0 +1,101 @@
+/* r50 "Lapis & Gold" look (Claude as lead/builder, 13 Nov 2026; Kevy 07:13 AEDT: "Go ahead and import the Egyptian style").
+   From the design draft Kevy reviewed on 13 Nov ("Looks pretty good"). Original visuals only: lapis, gold leaf, sandstone,
+   carved double borders, cartouche-shaped plates, an original winged-sun card back. No franchise symbols. Colours and
+   fonts only: it layers on the Aurora layout (body[data-theme=aurora]) when body[data-look=egypt] is set, so every
+   size and position rule (including css/r49-mobile.css) is unchanged. Theme "Aurora" in FX settings turns it off. */
+@font-face{font-family:'Cinzel';src:url('../fonts/cinzel-700.woff2') format('woff2');font-weight:500 700;font-style:normal;font-display:swap}
+@font-face{font-family:'Cinzel';src:url('../fonts/cinzel-900.woff2') format('woff2');font-weight:800 900;font-style:normal;font-display:swap}
+/* Cinzel: SIL Open Font License 1.1, licenses/cinzel-OFL.txt (from @fontsource/cinzel 5.1.0) */
+body[data-theme=aurora][data-look=egypt]{
+ --eg-night:#0E1A3A;--eg-lapis:#1B2E6B;--eg-deep:#070D1F;--eg-well:#0B132B;--eg-gold:#D9B25B;--eg-gold-hi:#F2D48A;--eg-gold-lo:#C99A3E;
+ --eg-sand:#C9A36B;--eg-papyrus:#EADBB8;--eg-cream:#FFF1C9;--eg-muted:#CDBB93;--eg-bronze:#2A1E10;--eg-bronze-lo:#160F07;--eg-turq:#3FB6A8;--eg-carnelian:#B4452F;
+ --ddl-font-display:'Cinzel',Georgia,'Times New Roman',serif;
+ --bg:radial-gradient(1100px 700px at 50% 30%,#1B2E6B 0%,transparent 70%),linear-gradient(180deg,#0E1A3A 0%,#0B1530 55%,#070D1F 100%);
+ --surface:rgba(242,212,138,.07);--surface-strong:#14214a;--surface-low:#0B132B;--surface-reading:#101c40;
+ --border:rgba(217,178,91,.55);--inner-glow:rgba(242,212,138,.10);
+ --primary:var(--eg-gold);--secondary:var(--eg-carnelian);--highlight:var(--eg-gold-hi);--gold:var(--eg-gold-hi);
+ --text:var(--eg-papyrus);--muted:var(--eg-muted);--white:var(--eg-cream);--ink:#1B1205;--shadow:rgba(3,6,18,.55);--veil:rgba(7,13,31,.92);
+ --positive:#9be3b6;--negative:#f2a38f;--danger:#d9583f;--warning:var(--eg-gold-hi);
+ --primary-fill:linear-gradient(180deg,#F2D48A 0%,#C99A3E 100%);
+ --mint:var(--eg-turq);--coral:var(--eg-carnelian);
+ --glass:linear-gradient(180deg,rgba(42,30,16,.94),rgba(22,15,7,.94));--panel:rgba(22,15,7,.94);--line:var(--border);--mat:var(--eg-lapis);
+ --aurora-field:radial-gradient(ellipse 70% 55% at 50% 50%,rgba(27,46,107,.95) 0%,rgba(14,26,58,1) 70%),#0E1A3A;
+ --aurora-zone-bg:rgba(7,13,31,.55);--aurora-zone-line:rgba(217,178,91,.45);
+ color:var(--eg-papyrus)
+}
+/* type: carved display face for names, numbers and titles; Inter stays for reading */
+body[data-theme=aurora][data-look=egypt] :is(h1,.lp-value,.event-copy h2,#event-title,.scene-title,#scene-name,#victory-title,.chain-number,.brand > span){font-family:var(--ddl-font-display);letter-spacing:.04em}
+body[data-theme=aurora][data-look=egypt] h1 em{color:var(--eg-gold-hi);text-shadow:0 0 20px rgba(242,212,138,.35)}
+body[data-theme=aurora][data-look=egypt] .eyebrow{color:var(--eg-gold)}
+body[data-theme=aurora][data-look=egypt] .brand{color:var(--eg-cream)}
+body[data-theme=aurora][data-look=egypt] .brand b{color:var(--eg-gold-hi)}
+/* buttons */
+body[data-theme=aurora][data-look=egypt] button{background:rgba(11,19,43,.9);border:1px solid rgba(217,178,91,.6);color:var(--eg-papyrus)}
+body[data-theme=aurora][data-look=egypt] button:hover:not(:disabled){background:rgba(27,46,107,.9);border-color:var(--eg-gold-hi)}
+body[data-theme=aurora][data-look=egypt] :is(.primary,#start),body[data-theme=aurora][data-look=egypt] :is(.primary,#start):hover:not(:disabled){background:var(--primary-fill);color:#1B1205;border:1px solid var(--eg-cream);font-family:var(--ddl-font-display);letter-spacing:.06em;text-shadow:none;box-shadow:0 8px 22px rgba(201,154,62,.35),inset 0 1px 0 rgba(255,241,201,.6)}
+body[data-theme=aurora][data-look=egypt] select,body[data-theme=aurora][data-look=egypt] input:not([type=checkbox]):not([type=range]):not([type=radio]){background:rgba(7,13,31,.85);border:1px solid rgba(217,178,91,.55);color:var(--eg-papyrus)}
+body[data-theme=aurora][data-look=egypt] select option{background:#0E1A3A;color:var(--eg-papyrus)}
+body[data-theme=aurora][data-look=egypt] input[type=range],body[data-theme=aurora][data-look=egypt] input[type=checkbox]{accent-color:var(--eg-gold)}
+/* panels: carved bronze plates with a gold double border */
+body[data-theme=aurora][data-look=egypt] :is(.panel,.matchup-panel,.arena-toolbar,.settings-popover,dialog,#duel-controls,.effect-dock,.practice-settings,.match-study,.pilot-config,.honest-note,.decision-column,#notice,#event-stage .event-copy){background:var(--glass);border:1px solid var(--eg-gold);box-shadow:inset 0 0 0 3px rgba(22,15,7,.95),inset 0 0 0 4px rgba(217,178,91,.32),0 14px 40px rgba(3,6,18,.55)}
+body[data-theme=aurora][data-look=egypt] dialog::backdrop{background:rgba(7,13,31,.7)}
+body[data-theme=aurora][data-look=egypt] .topbar{background:linear-gradient(180deg,rgba(22,15,7,.92),rgba(14,26,58,.6));border-bottom:1px solid rgba(217,178,91,.45)}
+body[data-theme=aurora][data-look=egypt] .media-settings > summary{background:rgba(11,19,43,.9);border:1px solid rgba(217,178,91,.6);color:var(--eg-papyrus)}
+/* deck tiles on the setup screen */
+body[data-theme=aurora][data-look=egypt] .deck-tile,body[data-theme=aurora][data-look=egypt] .deck-tile[style*="--tile-art"]{background:linear-gradient(170deg,rgba(27,46,107,.85),rgba(14,26,58,.95));border:1px solid rgba(217,178,91,.6)}
+body[data-theme=aurora][data-look=egypt] .deck-tile:hover{box-shadow:0 14px 34px rgba(242,212,138,.25)}
+body[data-theme=aurora][data-look=egypt] .deck-tile .tile-body{background:linear-gradient(180deg,rgba(14,26,58,0) 0%,rgba(14,26,58,.7) 30%,rgba(7,13,31,.9) 100%)}
+body[data-theme=aurora][data-look=egypt] .deck-tile .tile-body p{color:var(--eg-papyrus)}
+body[data-theme=aurora][data-look=egypt] .hero-art{box-shadow:0 18px 50px rgba(3,6,18,.6),0 0 0 2px var(--eg-gold)}
+body[data-theme=aurora][data-look=egypt] .art-stamp{background:linear-gradient(0deg,rgba(7,13,31,.9),transparent);color:var(--eg-cream)}
+/* the duel: lapis night, a sandstone slab, gold-lined zones */
+body[data-theme=aurora][data-look=egypt].in-duel #duel .duel-table,body[data-theme=aurora][data-look=egypt] #duel .duel-table{background:var(--aurora-field)}
+body[data-theme=aurora][data-look=egypt].in-duel #duel .arena-surface{background:linear-gradient(180deg,rgba(201,163,107,.16) 0%,rgba(201,163,107,.07) 50%,rgba(201,163,107,.16) 100%);border:2px solid rgba(217,178,91,.75);box-shadow:inset 0 0 0 5px rgba(14,26,58,.9),inset 0 0 0 6px rgba(217,178,91,.35),0 18px 50px rgba(3,6,18,.55)}
+body[data-theme=aurora][data-look=egypt] #duel .half,body[data-theme=aurora][data-look=egypt] #duel .half[data-deck-theme]{background:transparent}
+body[data-theme=aurora][data-look=egypt] #duel .opponent-half[data-deck-theme]{background:linear-gradient(180deg,rgba(180,69,47,.16),rgba(180,69,47,0))}
+body[data-theme=aurora][data-look=egypt] #duel .own-half[data-deck-theme]{background:linear-gradient(0deg,rgba(63,182,168,.16),rgba(63,182,168,0))}
+body[data-theme=aurora][data-look=egypt] #duel .zone{background:var(--aurora-zone-bg);border:1px solid var(--aurora-zone-line);box-shadow:inset 0 0 12px rgba(0,0,0,.35)}
+body[data-theme=aurora][data-look=egypt] #duel .zone.occupied{background:rgba(7,13,31,.75);border-color:rgba(242,212,138,.8)}
+body[data-theme=aurora][data-look=egypt] #duel .zone-emz{border-color:var(--eg-gold-hi);background:rgba(7,13,31,.6);box-shadow:0 0 0 3px rgba(14,26,58,.9),0 0 0 4px rgba(217,178,91,.45)}
+body[data-theme=aurora][data-look=egypt] #duel .zone-caption{color:var(--eg-muted);text-shadow:0 1px 2px rgba(0,0,0,.6)}
+body[data-theme=aurora][data-look=egypt] #duel .midline :is(span,b,small){color:var(--eg-gold-hi);text-shadow:0 1px 3px rgba(0,0,0,.6)}
+body[data-theme=aurora][data-look=egypt] #duel .zone .card-stats{background:rgba(22,15,7,.92);color:var(--eg-cream);border-color:rgba(217,178,91,.7)}
+/* card backs: lapis with a gold inner frame and an original winged sun */
+body[data-look=egypt] .hand-back,body[data-look=egypt] .zone .back{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 26' fill='none' stroke='%23D9B25B' stroke-width='1.8'%3E%3Ccircle cx='32' cy='13' r='6' fill='%23B4452F' stroke='%23F2D48A'/%3E%3Cpath d='M26 13C18 6 9 5 1 8M38 13c8-7 17-8 25-5M26 16c-6 4-13 6-20 6M38 16c6 4 13 6 20 6'/%3E%3C/svg%3E") center/70% auto no-repeat,linear-gradient(160deg,#1B2E6B,#0E1A3A);border:1px solid #D9B25B;box-shadow:inset 0 0 0 2px #0E1A3A,inset 0 0 0 3px rgba(217,178,91,.5)}
+/* player plates as cartouches: turquoise for you, carnelian for the opponent */
+body[data-theme=aurora][data-look=egypt] .player-bar{background:linear-gradient(180deg,var(--eg-bronze) 0%,var(--eg-bronze-lo) 100%);border:2px solid var(--eg-gold);border-radius:999px;box-shadow:inset 0 0 0 3px var(--eg-bronze-lo),inset 0 0 0 4px rgba(217,178,91,.45),0 8px 24px rgba(3,6,18,.5)}
+body[data-theme=aurora][data-look=egypt] .player-bar .lp-value{color:var(--eg-cream);text-shadow:0 0 14px rgba(242,212,138,.35)}
+body[data-theme=aurora][data-look=egypt] .player-bar small{color:var(--eg-muted)}
+body[data-theme=aurora][data-look=egypt] .player-bar :is(b,strong){color:var(--eg-gold-hi)}
+body[data-theme=aurora][data-look=egypt] .lp-meter i{background:linear-gradient(90deg,var(--eg-gold-lo),var(--eg-gold-hi))}
+body[data-theme=aurora][data-look=egypt] .player-bar.own .player-avatar{box-shadow:0 0 0 2px var(--eg-gold),0 0 0 4px var(--eg-turq)}
+body[data-theme=aurora][data-look=egypt] .player-bar.opponent .player-avatar{box-shadow:0 0 0 2px var(--eg-gold),0 0 0 4px var(--eg-carnelian)}
+/* phase tracker, pace and tool buttons */
+body[data-theme=aurora][data-look=egypt] .phase-tracker button{background:rgba(11,19,43,.9);border:1px solid rgba(217,178,91,.45);color:var(--eg-muted)}
+body[data-theme=aurora][data-look=egypt] .phase-tracker [aria-current=step] button{background:var(--primary-fill);color:#1B1205;border-color:var(--eg-cream);box-shadow:0 0 14px rgba(242,212,138,.45)}
+body[data-theme=aurora][data-look=egypt] .quick-pace{background:rgba(11,19,43,.92);border:1px solid rgba(217,178,91,.5)}
+body[data-theme=aurora][data-look=egypt] .quick-pace button[aria-pressed=true],body[data-theme=aurora][data-look=egypt] .quick-pace button.active,body[data-theme=aurora][data-look=egypt] .quick-pace button[aria-current]{background:var(--primary-fill);color:#1B1205}
+body[data-theme=aurora][data-look=egypt] :is(#skip-fx,#chain-log-btn,#duel-controls-toggle,#pause,#step,#new){background:rgba(11,19,43,.92);border:1px solid rgba(217,178,91,.6);color:var(--eg-gold-hi)}
+/* the decision list and the cue */
+body[data-theme=aurora][data-look=egypt] #choices button.choice{background:rgba(242,212,138,.07);border:1px solid rgba(217,178,91,.5);color:var(--eg-cream)}
+body[data-theme=aurora][data-look=egypt] #choices button.choice:hover:not(:disabled){background:rgba(242,212,138,.14);border-color:var(--eg-gold-hi)}
+body[data-theme=aurora][data-look=egypt] #cue-open{background:var(--primary-fill);color:#1B1205;border:1px solid var(--eg-cream);font-family:var(--ddl-font-display);font-weight:900;letter-spacing:.04em}
+body[data-theme=aurora][data-look=egypt] #cue-owner{color:var(--eg-gold)}
+/* play comfort controls in the same language */
+body[data-look=egypt] #pc-chain{background:#0B132B;border-color:rgba(217,178,91,.7);color:#F2D48A;font-family:'Cinzel',Georgia,serif;font-weight:700}
+body[data-look=egypt] #pc-chain[data-mode=turn],body[data-look=egypt] #pc-chain[data-mode=off]{background:#3a1710;border-color:#d9583f;color:#ffd9cc}
+body[data-look=egypt] #pc-pass{background:#EADBB8;border-color:#EADBB8;color:#1B1205;font-family:'Cinzel',Georgia,serif;font-weight:900;box-shadow:0 0 0 2px rgba(7,13,31,.6),0 8px 22px rgba(3,6,18,.55)}
+body[data-look=egypt] #pc-pass small{color:#4a3a1c;font-family:Inter,system-ui,sans-serif;font-weight:600}
+body[data-look=egypt] #pc-toast{background:rgba(22,15,7,.96);border-color:#D9B25B;color:#FFF1C9}
+body[data-look=egypt] .test-badge{color:#F2D48A}
+/* r50: the duel HUD sheets use #duel id selectors; these match them so the look reaches the table */
+body[data-look=egypt].in-duel #duel .player-bar,body[data-look=egypt] #duel .player-bar{background:linear-gradient(180deg,#2A1E10 0%,#160F07 100%);border:2px solid #D9B25B;border-left-width:2px;border-radius:999px;backdrop-filter:none;box-shadow:inset 0 0 0 3px #160F07,inset 0 0 0 4px rgba(217,178,91,.45),0 8px 24px rgba(3,6,18,.5)}
+body[data-look=egypt].in-duel #duel .player-bar .lp-value{color:#FFF1C9;text-shadow:0 0 14px rgba(242,212,138,.35)}
+body[data-look=egypt].in-duel #duel .player-bar :is(b,strong){color:#F2D48A}
+body[data-look=egypt].in-duel #duel .player-bar small{color:#CDBB93}
+body[data-look=egypt].in-duel #duel .player-bar.own img{box-shadow:0 0 0 2px #D9B25B,0 0 0 4px #3FB6A8;border-radius:50%}
+body[data-look=egypt].in-duel #duel .player-bar.opponent img{box-shadow:0 0 0 2px #D9B25B,0 0 0 4px #B4452F;border-radius:50%}
+body[data-look=egypt] #duel :is(.pile-sleeve,.back,.hand-back){background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 26' fill='none' stroke='%23D9B25B' stroke-width='1.8'%3E%3Ccircle cx='32' cy='13' r='6' fill='%23B4452F' stroke='%23F2D48A'/%3E%3Cpath d='M26 13C18 6 9 5 1 8M38 13c8-7 17-8 25-5M26 16c-6 4-13 6-20 6M38 16c6 4 13 6 20 6'/%3E%3C/svg%3E") center/68% auto no-repeat,linear-gradient(160deg,#1B2E6B,#0E1A3A);border:1px solid #D9B25B;box-shadow:inset 0 0 0 2px #0E1A3A,inset 0 0 0 3px rgba(217,178,91,.5);color:#D9B25B}
+body[data-look=egypt] #duel :is(.back,.hand-back)::before,body[data-look=egypt] #duel .pile-sleeve::before{content:none;display:none}
+body[data-look=egypt].in-duel #phase-tracker [aria-current=step] button,body[data-look=egypt].in-duel #duel .phase-tracker [aria-current] button{color:#1B1205;background:linear-gradient(180deg,#F2D48A,#C99A3E);border-color:#FFF1C9;box-shadow:0 0 14px rgba(242,212,138,.45)}
+body[data-look=egypt].in-duel #phase-tracker button{background:rgba(11,19,43,.9);border-color:rgba(217,178,91,.45);color:#CDBB93}

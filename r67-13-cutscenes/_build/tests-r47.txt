@@ -1,0 +1,545 @@
+TAP version 13
+# node:fs:560
+#   return binding.open(
+#                  ^
+# Error: ENOENT: no such file or directory, open 'approved.json'
+#     at Object.openSync (node:fs:560:18)
+#     at Object.readFileSync (node:fs:444:35)
+#     at file:///home/claude/r47/tests/branded-export.test.mjs:13:67
+#     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+#     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: 'approved.json'
+# }
+# Node.js v22.22.0
+# Subtest: tests/branded-export.test.mjs
+not ok 1 - tests/branded-export.test.mjs
+  ---
+  duration_ms: 54.296121
+  type: 'test'
+  location: '/home/claude/r47/tests/branded-export.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:fs:560
+#   return binding.open(
+#                  ^
+# Error: ENOENT: no such file or directory, open 'approved.json'
+#     at Object.openSync (node:fs:560:18)
+#     at Object.readFileSync (node:fs:444:35)
+#     at file:///home/claude/r47/tests/branded-nov08.test.mjs:10:30
+#     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+#     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: 'approved.json'
+# }
+# Node.js v22.22.0
+# Subtest: tests/branded-nov08.test.mjs
+not ok 2 - tests/branded-nov08.test.mjs
+  ---
+  duration_ms: 434.691309
+  type: 'test'
+  location: '/home/claude/r47/tests/branded-nov08.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# ok 1 every token a preset deck can make shows the official card image (YGOPRODeck, unedited, hash-recorded) - plus Scapegoat's four Sheep Tokens; Scapegoat Token uses a Sheep Token image; all precached
+# ok 2 token-cards.json lists exactly the Token-type cards of cards.json.gz, and only tokens get art entries
+# ok 3 applyTokenArt: own image or the generic card for every token; cards with art and non-tokens untouched
+# ok 4 r39: cards/scripts retain r36.1 token surface; only intentional Branded-41 additions differ (Gallant Bandit + Hyperinvoked Aeon script)
+# ok 5 token-fx is loaded and precached; it listens only for summon presentation events and checks the token list
+# ok 6 token-fx timing: none at Instant, a short fade for reduced motion, full otherwise
+# r36 token card tests: 6 passed
+# Subtest: tests/r36-token-cards.test.mjs
+ok 3 - tests/r36-token-cards.test.mjs
+  ---
+  duration_ms: 1010.456978
+  type: 'test'
+  ...
+# {"test":"r37-windbot","pass":true,"node":"v22.22.0","report":{"fixed":{"selects":7,"amount":8,"solutions":20,"maxSummoned":true},"unfixed":{"selects":0,"must":7,"mustCodes":[69247929,4,10,2,33555488,2746810368,262144],"solutions":0},"windbot":{"turn":4,"finished":true,"wbDecisions":124,"rejected":0,"stalled":0,"messagesToBot":19977,"executor":"[26-11-12 07:14:29] Deck found, loading AI_Albaz\\n"}}}
+# Subtest: tests/r37-windbot.test.mjs
+ok 4 - tests/r37-windbot.test.mjs
+  ---
+  duration_ms: 11323.253415
+  type: 'test'
+  ...
+# Subtest: r40 display only (r41-adapted): engine, rules data and random are byte-identical to r39; only the listed r41 AI/deck files differ
+ok 5 - r40 display only (r41-adapted): engine, rules data and random are byte-identical to r39; only the listed r41 AI/deck files differ
+  ---
+  duration_ms: 345.352898
+  type: 'test'
+  ...
+# Subtest: r41 worker.mjs differs from r39 only in the BUILD identity line
+ok 6 - r41 worker.mjs differs from r39 only in the BUILD identity line
+  ---
+  duration_ms: 2.464404
+  type: 'test'
+  ...
+# Subtest: r40 presentation hook is one fire-and-forget dispatch at the start of each batch
+ok 7 - r40 presentation hook is one fire-and-forget dispatch at the start of each batch
+  ---
+  duration_ms: 319.0891
+  type: 'test'
+  ...
+# Subtest: r40 dl-fx.mjs never touches the duel, worker, randomness or timing
+ok 8 - r40 dl-fx.mjs never touches the duel, worker, randomness or timing
+  ---
+  duration_ms: 1.190621
+  type: 'test'
+  ...
+# Subtest: r40 plan: nothing at Instant, nothing without a batch duration, nothing when switched off
+ok 9 - r40 plan: nothing at Instant, nothing without a batch duration, nothing when switched off
+  ---
+  duration_ms: 1.000267
+  type: 'test'
+  ...
+# Subtest: r40 coin / dice chip only when the full cutscene is not shown, never at Instant; result read, never made
+ok 10 - r40 coin / dice chip only when the full cutscene is not shown, never at Instant; result read, never made
+  ---
+  duration_ms: 0.205778
+  type: 'test'
+  ...
+# Subtest: r40 tags follow the engine reason bits and never name a card
+ok 11 - r40 tags follow the engine reason bits and never name a card
+  ---
+  duration_ms: 0.562003
+  type: 'test'
+  ...
+# Subtest: r40 sounds are silent unless audio is running and audible (muted or no context: nothing scheduled)
+ok 12 - r40 sounds are silent unless audio is running and audible (muted or no context: nothing scheduled)
+  ---
+  duration_ms: 0.352028
+  type: 'test'
+  ...
+# node:fs:560
+#   return binding.open(
+#                  ^
+# Error: ENOENT: no such file or directory, open 'approved.json'
+#     at Object.openSync (node:fs:560:18)
+#     at Object.readFileSync (node:fs:444:35)
+#     at file:///home/claude/r47/tests/r41-fixes.test.mjs:17:30
+#     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+#     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: 'approved.json'
+# }
+# Node.js v22.22.0
+# Subtest: tests/r41-fixes.test.mjs
+not ok 6 - tests/r41-fixes.test.mjs
+  ---
+  duration_ms: 502.875549
+  type: 'test'
+  location: '/home/claude/r47/tests/r41-fixes.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:fs:560
+#   return binding.open(
+#                  ^
+# Error: ENOENT: no such file or directory, open 'approved.json'
+#     at Object.openSync (node:fs:560:18)
+#     at Object.readFileSync (node:fs:444:35)
+#     at file:///home/claude/r47/tests/r42-swap.test.mjs:16:30
+#     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+#     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+#     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: 'approved.json'
+# }
+# Node.js v22.22.0
+# Subtest: tests/r42-swap.test.mjs
+not ok 7 - tests/r42-swap.test.mjs
+  ---
+  duration_ms: 452.859791
+  type: 'test'
+  location: '/home/claude/r47/tests/r42-swap.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: (R43-1) only shell/presentation files differ from r42; engine, AI, rules, prompt timing, decks logic and every legacy stylesheet are byte-identical
+ok 15 - (R43-1) only shell/presentation files differ from r42; engine, AI, rules, prompt timing, decks logic and every legacy stylesheet are byte-identical
+  ---
+  duration_ms: 382.153485
+  type: 'test'
+  ...
+# Subtest: (R43-2) worker.mjs differs from r42 only in the BUILD identity line
+ok 16 - (R43-2) worker.mjs differs from r42 only in the BUILD identity line
+  ---
+  duration_ms: 416.51005
+  type: 'test'
+  ...
+# Subtest: (R43-3) decks.json: only the Branded description text changed; every list is identical to r42
+ok 17 - (R43-3) decks.json: only the Branded description text changed; every list is identical to r42
+  ---
+  duration_ms: 218.927008
+  type: 'test'
+  ...
+# Subtest: (R43-4) the 7 bundles reproduce the 23 r42 sheets in the same order (only url rebasing and the listed, scan-proven !important drops)
+not ok 18 - (R43-4) the 7 bundles reproduce the 23 r42 sheets in the same order (only url rebasing and the listed, scan-proven !important drops)
+  ---
+  duration_ms: 69.942031
+  type: 'test'
+  location: '/home/claude/r47/tests/r43-aurora.test.mjs:38:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Command failed: /opt/node22/bin/node /home/claude/r47/tools/build-css.mjs /tmp/r43css-HJES1a
+    node:internal/modules/cjs/loader:1386
+      throw err;
+      ^
+    
+    Error: Cannot find module '/home/claude/r47/tools/build-css.mjs'
+        at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+        at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+        at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+        at Function._load (node:internal/modules/cjs/loader:1192:37)
+        at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+        at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+        at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+        at node:internal/main/run_main_module:36:49 {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: []
+    }
+    
+    Node.js v22.22.0
+    
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)
+    defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    Function._load (node:internal/modules/cjs/loader:1192:37)
+    TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    node:internal/main/run_main_module:36:49 {
+    genericNodeError (node:internal/errors:983:15)
+    wrappedFn (node:internal/errors:537:14)
+    checkExecSyncError (node:child_process:916:11)
+    execFileSync (node:child_process:952:15)
+    TestContext.<anonymous> (file:///home/claude/r47/tests/r43-aurora.test.mjs:43:2)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+# Subtest: (R43-5) tokens: type 12/14/16/20/28/40, radius 8/14/20, motion 120/220/400 ms; Aurora is the default and every theme stays selectable
+ok 19 - (R43-5) tokens: type 12/14/16/20/28/40, radius 8/14/20, motion 120/220/400 ms; Aurora is the default and every theme stays selectable
+  ---
+  duration_ms: 1.26346
+  type: 'test'
+  ...
+# Subtest: (R43-6, r44 scope) decorative art is original: hero, LP avatars, victory frame; deck tiles use boss card art; card images stay on cards
+ok 20 - (R43-6, r44 scope) decorative art is original: hero, LP avatars, victory frame; deck tiles use boss card art; card images stay on cards
+  ---
+  duration_ms: 1.123846
+  type: 'test'
+  ...
+# Subtest: (R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only
+ok 21 - (R43-7) header: release string moved into Help · About; FX settings popover clamp is presentation-only
+  ---
+  duration_ms: 0.766227
+  type: 'test'
+  ...
+# Subtest: (R43-8) offline manifest lists every new file and every listed file exists; sw cache renamed
+ok 22 - (R43-8) offline manifest lists every new file and every listed file exists; sw cache renamed
+  ---
+  duration_ms: 2.652424
+  type: 'test'
+  ...
+# Subtest: (R44-1) only app.mjs, css/aurora.css, identity files and the Super Poly policy file differ from r43; engine, rest of AI, rules, decks.json, art and emblems byte-identical
+ok 23 - (R44-1) only app.mjs, css/aurora.css, identity files and the Super Poly policy file differ from r43; engine, rest of AI, rules, decks.json, art and emblems byte-identical
+  ---
+  duration_ms: 616.525302
+  type: 'test'
+  ...
+# Subtest: (R44-2) every preset deck has a boss in its own list with local card art, used on its tile
+ok 24 - (R44-2) every preset deck has a boss in its own list with local card art, used on its tile
+  ---
+  duration_ms: 2.203651
+  type: 'test'
+  ...
+# Subtest: (R44-3) Aurora tile background: blurred boss art under a readable gradient; LP avatars and hero crest keep emblems
+ok 25 - (R44-3) Aurora tile background: blurred boss art under a readable gradient; LP avatars and hero crest keep emblems
+  ---
+  duration_ms: 1.10872
+  type: 'test'
+  ...
+# Subtest: (R44-SP1) own face-up Albaz + own face-down Ecclesia: the engine offers Sanctifire and the policy keeps it (seed 19)
+ok 26 - (R44-SP1) own face-up Albaz + own face-down Ecclesia: the engine offers Sanctifire and the policy keeps it (seed 19)
+  ---
+  duration_ms: 106.501329
+  type: 'test'
+  ...
+# Subtest: (R44-SP2) + opposing face-up Lubellion: Mirrorjade and Sanctifire both offered; a Sanctifire pick is not switched to Mirrorjade
+ok 27 - (R44-SP2) + opposing face-up Lubellion: Mirrorjade and Sanctifire both offered; a Sanctifire pick is not switched to Mirrorjade
+  ---
+  duration_ms: 47.18032
+  type: 'test'
+  ...
+# Subtest: (R44-SP3) other guards kept: opponent face-down monsters never count; Lenatus still needs Albaz + a real Dragon; no seat = r42 reading
+ok 28 - (R44-SP3) other guards kept: opponent face-down monsters never count; Lenatus still needs Albaz + a real Dragon; no seat = r42 reading
+  ---
+  duration_ms: 92.647048
+  type: 'test'
+  ...
+# Subtest: (R44-SP4) the fix is confined to the Super Poly material reading in branded-nov08.mjs
+ok 29 - (R44-SP4) the fix is confined to the Super Poly material reading in branded-nov08.mjs
+  ---
+  duration_ms: 332.834098
+  type: 'test'
+  ...
+# Subtest: (R44-SP5) replacement filter also reads own face-down material: an unsupported Lenatus pick is replaced by the legal Sanctifire
+ok 30 - (R44-SP5) replacement filter also reads own face-down material: an unsupported Lenatus pick is replaced by the legal Sanctifire
+  ---
+  duration_ms: 24.565853
+  type: 'test'
+  ...
+# Subtest: (R45-FV1) B4 holds F&V when the only legal revive is the opponent's Ash Blossom (fails on r44)
+ok 31 - (R45-FV1) B4 holds F&V when the only legal revive is the opponent's Ash Blossom (fails on r44)
+  ---
+  duration_ms: 80.704124
+  type: 'test'
+  ...
+# Subtest: (R45-FV2) F&V revival prefers our Fallen of Albaz; a base pick of the opponent's Ash Blossom is overridden by the book (fails on r44)
+ok 32 - (R45-FV2) F&V revival prefers our Fallen of Albaz; a base pick of the opponent's Ash Blossom is overridden by the book (fails on r44)
+  ---
+  duration_ms: 33.831389
+  type: 'test'
+  ...
+# Subtest: (R45-K) hand-trap key cards against Branded include Fallen of Albaz, Albion the Shrouded Dragon, Super Polymerization, Mercourier, Cocatorium (fails on r44)
+ok 33 - (R45-K) hand-trap key cards against Branded include Fallen of Albaz, Albion the Shrouded Dragon, Super Polymerization, Mercourier, Cocatorium (fails on r44)
+  ---
+  duration_ms: 0.673584
+  type: 'test'
+  ...
+# Subtest: (R45-L1) visible lethal in Main Phase 1 on turn 2: the pilot enters Battle instead of another book step (fails on r44)
+ok 34 - (R45-L1) visible lethal in Main Phase 1 on turn 2: the pilot enters Battle instead of another book step (fails on r44)
+  ---
+  duration_ms: 35.290304
+  type: 'test'
+  ...
+# Subtest: (R45-L1b) a lethal baseline is trusted over search for every deck, a plain step is not (fails on r44)
+ok 35 - (R45-L1b) a lethal baseline is trusted over search for every deck, a plain step is not (fails on r44)
+  ---
+  duration_ms: 0.449593
+  type: 'test'
+  ...
+# Subtest: (R45-L2) damage but no lethal (3000 into 8000), or a bigger opposing monster: the lethal rule stays out
+ok 36 - (R45-L2) damage but no lethal (3000 into 8000), or a bigger opposing monster: the lethal rule stays out
+  ---
+  duration_ms: 75.950364
+  type: 'test'
+  ...
+# Subtest: (R45-L3) turn 2 End Phase with a damaging attack available becomes Battle Phase; not on turn 1
+ok 37 - (R45-L3) turn 2 End Phase with a damaging attack available becomes Battle Phase; not on turn 1
+  ---
+  duration_ms: 67.538598
+  type: 'test'
+  ...
+# Subtest: (R45-LEN) our face-up Albaz + their face-up Lubellion on turn 2: Alba-Lenatus is summoned with Albaz + Lubellion (fails on r44)
+ok 38 - (R45-LEN) our face-up Albaz + their face-up Lubellion on turn 2: Alba-Lenatus is summoned with Albaz + Lubellion (fails on r44)
+  ---
+  duration_ms: 36.386631
+  type: 'test'
+  ...
+# Subtest: (R45-LEN2) no Lenatus contact on turn 1 or against a face-up Mirrorjade only
+ok 39 - (R45-LEN2) no Lenatus contact on turn 1 or against a face-up Mirrorjade only
+  ---
+  duration_ms: 50.251679
+  type: 'test'
+  ...
+# Subtest: (R45-REC) recovery lines exist and Albion the Shrouded Dragon in hand starts V4-R-ALBION when no opener applies (fails on r44)
+ok 40 - (R45-REC) recovery lines exist and Albion the Shrouded Dragon in hand starts V4-R-ALBION when no opener applies (fails on r44)
+  ---
+  duration_ms: 23.455014
+  type: 'test'
+  ...
+# Subtest: (R45-SKY) Sky Striker v4 lines exist (three lines, picks, hand-trap holds) but ship OFF: default is the r44 holds-only Sky book
+ok 41 - (R45-SKY) Sky Striker v4 lines exist (three lines, picks, hand-trap holds) but ship OFF: default is the r44 holds-only Sky book
+  ---
+  duration_ms: 84.019404
+  type: 'test'
+  ...
+# Subtest: (R45-POOL) world-pool maintenance obeys refillCap and the time room; defaults unchanged (fails on r44)
+ok 42 - (R45-POOL) world-pool maintenance obeys refillCap and the time room; defaults unchanged (fails on r44)
+  ---
+  duration_ms: 51.125387
+  type: 'test'
+  ...
+# Subtest: (R45-SEARCH) the pilot search passes the v4 caps and soft stop; full is relative to the pool size; finished is reported
+ok 43 - (R45-SEARCH) the pilot search passes the v4 caps and soft stop; full is relative to the pool size; finished is reported
+  ---
+  duration_ms: 0.687541
+  type: 'test'
+  ...
+# Subtest: (R45-C) the Albaz Super Poly comment no longer says face-up only
+ok 44 - (R45-C) the Albaz Super Poly comment no longer says face-up only
+  ---
+  duration_ms: 0.400696
+  type: 'test'
+  ...
+# Subtest: (R45-N) the Branded deck is shown as "Kevy's Branded Deck" in every display; id, format, lists and file names unchanged (fails on r44)
+ok 45 - (R45-N) the Branded deck is shown as "Kevy's Branded Deck" in every display; id, format, lists and file names unchanged (fails on r44)
+  ---
+  duration_ms: 1.715291
+  type: 'test'
+  ...
+# Subtest: (R45-FORCED) a forced chain is never answered with a pass when every offered option is held (fails on r44)
+ok 46 - (R45-FORCED) a forced chain is never answered with a pass when every offered option is held (fails on r44)
+  ---
+  duration_ms: 0.506247
+  type: 'test'
+  ...
+# Subtest: (R46-A1) every preset deck, either seat winning: official boss art is shown and labelled with the winner deck name
+ok 47 - (R46-A1) every preset deck, either seat winning: official boss art is shown and labelled with the winner deck name
+  ---
+  duration_ms: 2.281627
+  type: 'test'
+  ...
+# Subtest: (R46-A2) emblem fallback: no art or an image error removes the art and keeps the deck label; a draw shows no winner art
+ok 48 - (R46-A2) emblem fallback: no art or an image error removes the art and keeps the deck label; a draw shows no winner art
+  ---
+  duration_ms: 0.501337
+  type: 'test'
+  ...
+# Subtest: (R46-A3) re-opening with a different winner never keeps the previous boss name
+ok 49 - (R46-A3) re-opening with a different winner never keeps the previous boss name
+  ---
+  duration_ms: 0.306988
+  type: 'test'
+  ...
+# Subtest: (R46-A4) wiring: loaded on the page and precached; Aurora shows the art over the emblem; emblem per deck; portrait size; presentation.mjs unchanged
+ok 50 - (R46-A4) wiring: loaded on the page and precached; Aurora shows the art over the emblem; emblem per deck; portrait size; presentation.mjs unchanged
+  ---
+  duration_ms: 123.447486
+  type: 'test'
+  ...
+# Subtest: (R46-W1) a hand trap is never chained to our own chain link (WindBot DefaultTrap); off gives r45 (fails on r45)
+ok 51 - (R46-W1) a hand trap is never chained to our own chain link (WindBot DefaultTrap); off gives r45 (fails on r45)
+  ---
+  duration_ms: 1.569073
+  type: 'test'
+  ...
+# Subtest: (R46-W2) Ghost Ogre answers their key / Extra Deck card activated on the field, never their Mirrorjade (fails on r45)
+ok 52 - (R46-W2) Ghost Ogre answers their key / Extra Deck card activated on the field, never their Mirrorjade (fails on r45)
+  ---
+  duration_ms: 0.620957
+  type: 'test'
+  ...
+# Subtest: (R46-W3) Mirrorjade on their turn waits for an Extra Deck monster, an activating Albaz, battle or their End Phase (fails on r45)
+ok 53 - (R46-W3) Mirrorjade on their turn waits for an Extra Deck monster, an activating Albaz, battle or their End Phase (fails on r45)
+  ---
+  duration_ms: 0.360302
+  type: 'test'
+  ...
+# Subtest: (R46-W4) Mirrorjade cost follows the WindBot order adapted to the 41 list (fails on r45)
+ok 54 - (R46-W4) Mirrorjade cost follows the WindBot order adapted to the 41 list (fails on r45)
+  ---
+  duration_ms: 0.759651
+  type: 'test'
+  ...
+# Subtest: (R46-W9) Mulcharmy Fuwalos only on their turn before the Battle Phase (fails on r45)
+ok 55 - (R46-W9) Mulcharmy Fuwalos only on their turn before the Battle Phase (fails on r45)
+  ---
+  duration_ms: 0.226807
+  type: 'test'
+  ...
+# Subtest: (R46-W10) a SET Infinite Impermanence answers their key monster effect on the field (fails on r45)
+ok 56 - (R46-W10) a SET Infinite Impermanence answers their key monster effect on the field (fails on r45)
+  ---
+  duration_ms: 0.251888
+  type: 'test'
+  ...
+# Subtest: (R46-W11) Cartesia never fuses away our Mirrorjade; on their turn only Mirrorjade / Sanctifire / delayed Nadir (fails on r45)
+ok 57 - (R46-W11) Cartesia never fuses away our Mirrorjade; on their turn only Mirrorjade / Sanctifire / delayed Nadir (fails on r45)
+  ---
+  duration_ms: 0.441365
+  type: 'test'
+  ...
+# Subtest: (R46-W12) no attack into a face-up monster it cannot destroy; direct / weaker / face-down targets still allowed (fails on r45)
+ok 58 - (R46-W12) no attack into a face-up monster it cannot destroy; direct / weaker / face-down targets still allowed (fails on r45)
+  ---
+  duration_ms: 0.91013
+  type: 'test'
+  ...
+# Subtest: (R46-OFF) shipped with every ported rule on; R46.on=false turns them all off
+ok 59 - (R46-OFF) shipped with every ported rule on; R46.on=false turns them all off
+  ---
+  duration_ms: 0.392366
+  type: 'test'
+  ...
+# Subtest: (R46-SCOPE) human-flow.mjs, play-flow.mjs, human-holds.mjs and presentation.mjs are byte-identical to r45
+ok 60 - (R46-SCOPE) human-flow.mjs, play-flow.mjs, human-holds.mjs and presentation.mjs are byte-identical to r45
+  ---
+  duration_ms: 165.637254
+  type: 'test'
+  ...
+# Subtest: (R47-W12a) Ohime the Manifested Mikanko (0 ATK) attacks Blue-Eyes: 3000 reflected, Ohime stays; r46 rule blocked it (fails on r46)
+ok 61 - (R47-W12a) Ohime the Manifested Mikanko (0 ATK) attacks Blue-Eyes: 3000 reflected, Ohime stays; r46 rule blocked it (fails on r46)
+  ---
+  duration_ms: 87.163511
+  type: 'test'
+  ...
+# Subtest: (R47-W12b) Scareclaw Kashtira attacks from Defense Position with 2600 DEF into Aluber (1800): 800 damage; r46 rule blocked it (fails on r46)
+ok 62 - (R47-W12b) Scareclaw Kashtira attacks from Defense Position with 2600 DEF into Aluber (1800): 800 damage; r46 rule blocked it (fails on r46)
+  ---
+  duration_ms: 61.871382
+  type: 'test'
+  ...
+# Subtest: (R47-W12c) the guard r46 added is kept: Aluber (1800) into Blue-Eyes (3000) is still held back; a 3000 vs 3000 trade is left to the policy
+ok 63 - (R47-W12c) the guard r46 added is kept: Aluber (1800) into Blue-Eyes (3000) is still held back; a 3000 vs 3000 trade is left to the policy
+  ---
+  duration_ms: 98.204901
+  type: 'test'
+  ...
+# Subtest: (R47-W1a) our Forbidden Droplet chained to our own Branded Fusion against their face-up Lubellion is allowed; r46 rule blocked it (fails on r46)
+ok 64 - (R47-W1a) our Forbidden Droplet chained to our own Branded Fusion against their face-up Lubellion is allowed; r46 rule blocked it (fails on r46)
+  ---
+  duration_ms: 32.165564
+  type: 'test'
+  ...
+# Subtest: (R47-W1b) the safeguard is kept: an answer-type hand trap is never chained to our own link, and a monster negate is still held with no face-up Effect Monster to use it on
+ok 65 - (R47-W1b) the safeguard is kept: an answer-type hand trap is never chained to our own link, and a monster negate is still held with no face-up Effect Monster to use it on
+  ---
+  duration_ms: 85.580797
+  type: 'test'
+  ...
+# Subtest: (R47-FLAGS) the r47 switches ship ON and the r46 switches are unchanged
+ok 66 - (R47-FLAGS) the r47 switches ship ON and the r46 switches are unchanged
+  ---
+  duration_ms: 0.192172
+  type: 'test'
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 61
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19864.665677

@@ -1,0 +1,17 @@
+{
+  "passcode": 24203749,
+  "name": "The Great Gallant Bandit",
+  "source": "https://raw.githubusercontent.com/ProjectIgnis/CardScripts/master/official/c24203749.lua",
+  "upstream": "ProjectIgnis/CardScripts official/c24203749.lua",
+  "sha256": "e2e6693e0ce92afac4181c9644fb519d62c6b4bfff6a35f7da1f37908cd214f0",
+  "bytes": 4184,
+  "card_attrs": {
+    "type": 33,
+    "attribute": 8,
+    "race": 1,
+    "level": 10,
+    "atk": 2500,
+    "def": 2000
+  },
+  "art": "images.ygoprodeck.com \u2192 art/24203749.jpg (existing site pipeline)"
+}

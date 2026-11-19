@@ -1,0 +1,106 @@
+/* 0.8 — adaptive field, reachable controls and stable effect reading. */
+body{overflow-x:clip}button,select,input{touch-action:manipulation}
+#duel[data-arena-size=adaptive] .arena-surface{min-width:0}
+#duel[data-arena-size=adaptive] .duel-table{max-width:clamp(600px,90dvh,1180px);margin-inline:auto}
+#duel[data-arena-size=adaptive] .half{gap:10px;grid-template-columns:clamp(58px,7vw,90px) minmax(0,1fr) clamp(58px,7vw,90px)}
+#duel[data-arena-size=adaptive] .zone-row{gap:6px}
+#duel[data-arena-size=adaptive] .pile{min-height:64px}
+#duel[data-arena-size=adaptive] .pile-col{gap:8px}
+#duel[data-arena-size=adaptive] .zone .card-stats{font-size:clamp(12px,1.1vw,12px)}
+body.arena-focused .arena-toolbar,body.arena-focused .zone-legend,body.arena-focused .field-heading{display:none}
+.duel-controls-fab{position:fixed;z-index:48;left:max(18px,env(safe-area-inset-left));bottom:calc(24px + env(safe-area-inset-bottom));min-height:48px;background:var(--palette-404);border:1px solid var(--palette-405);color:var(--palette-93);box-shadow:0 5px 22px var(--palette-59);padding:12px 18px;border-radius:24px;font-weight:700;font-size:13px}
+#duel-controls{width:min(580px,calc(100% - 24px));max-height:85dvh;border:1px solid var(--palette-406);padding:24px;background:linear-gradient(160deg,var(--palette-407),var(--palette-408));overscroll-behavior:contain;scrollbar-width:thin}
+#duel-controls::backdrop{background:var(--palette-409);backdrop-filter:none}
+.controls-heading{display:flex;gap:12px;align-items:center;justify-content:space-between;position:sticky;top:-24px;background:var(--palette-410);padding-block:12px;z-index:1}.controls-heading h2{font-size:25px}.controls-heading .eyebrow{font-size:12px;letter-spacing:.12em}.controls-heading button{min-width:44px;min-height:44px;font-size:24px;padding:0}.controls-actions{display:flex;flex-wrap:wrap;gap:8px;margin-block:16px}.controls-actions button{flex:1;min-width:110px;min-height:44px;font-size:12px}.controls-actions [aria-pressed=true]{border-color:var(--palette-411);background:var(--palette-412);color:var(--palette-413)}.controls-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}.controls-grid label{display:grid;gap:8px;font-size:12px;color:var(--palette-414)}.controls-grid select{font-size:13px;min-height:48px}.controls-checks{display:grid;gap:10px;margin-top:20px}.controls-checks label{display:flex;gap:12px;align-items:center;font-size:13px;min-height:44px}.controls-checks input[type=checkbox]{width:22px;height:22px;accent-color:var(--palette-415)}.controls-checks input[type=range]{flex:1;min-height:44px;accent-color:var(--palette-415)}.controls-note{font-size:12px;line-height:1.7;color:var(--palette-416);border-top:1px solid var(--palette-417);padding-top:16px}.scene-controls{position:absolute;left:max(16px,env(safe-area-inset-left));top:calc(16px + env(safe-area-inset-top));z-index:10;min-height:44px;background:var(--palette-418);border:1px solid var(--palette-419);font-size:12px}
+/* Hold leaves the same card in place. Only transform and opacity animate entry. */
+.fx-held #event-stage *,.fx-held #fx-layer *,.fx-held #summon-scene *,.fx-held #victory-scene *{animation-play-state:paused!important}
+@keyframes event-copy-in{0%{opacity:0;transform:translateY(16px) scale(1.03)}15%,90%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-5px)}}
+#event-stage .event-copy{filter:none}
+#event-stage[data-spotlight=true]{display:grid;grid-template-columns:minmax(120px,220px) minmax(0,560px);grid-template-rows:auto minmax(0,1fr) auto auto;align-content:center;align-items:center;justify-content:center;column-gap:24px;row-gap:12px;padding:clamp(20px,6dvh,65px) max(24px,env(safe-area-inset-right)) 100px;max-height:100dvh;background:var(--palette-420);isolation:isolate}
+#event-stage[data-spotlight=true] .event-card-wrap{display:block;grid-column:1;grid-row:1/4;position:relative;inset:auto;width:100%;height:auto;transform:none;opacity:1;align-self:center;z-index:1}
+#event-stage[data-spotlight=true] .event-card-wrap img{width:100%;height:auto;max-height:60dvh;opacity:1;object-fit:contain;filter:none;animation:none;border:1px solid var(--event-color);border-radius:7px;box-shadow:0 0 0 5px var(--palette-421),0 12px 30px var(--palette-394)}
+#event-stage[data-spotlight=true] .event-copy{grid-column:2;grid-row:1;align-self:center;width:100%;min-width:0;max-width:none;margin:0;padding:16px 20px;animation:none!important}
+#event-stage[data-spotlight=true] #event-title{font-size:clamp(22px,3vw,38px);line-height:1.1}
+#event-stage[data-spotlight=true] #event-seal{display:none}
+#event-stage[data-spotlight=true] #event-kicker{font-size:12px;letter-spacing:.08em;margin:0 0 10px}
+#event-stage[data-spotlight=true] #event-line{font-size:16px;letter-spacing:0;margin-top:10px}
+#event-stage[data-spotlight=true] .event-sweep,#event-stage[data-spotlight=true] .event-orbit,#event-stage[data-spotlight=true] .event-bars{display:none}
+#event-effect{display:flex;flex-direction:column;grid-column:2;grid-row:2;min-width:0;min-height:0;align-self:stretch;margin:0;padding:14px 16px;border:1px solid color-mix(in srgb,var(--event-color) 40%,var(--palette-422));background:var(--palette-423);border-radius:8px}
+#event-effect-caption{font:600 12px/1.5 monospace;letter-spacing:.1em;color:var(--palette-424);margin:0 0 8px}
+#event-effect-label{font:600 12px/1.5 'Duel UI',sans-serif;color:var(--event-color);margin:0 0 10px}
+#event-effect-text{min-height:0;flex:1 1 auto;position:relative;font-size:15px;line-height:1.65;max-height:min(34dvh,340px);overflow:auto;overscroll-behavior:contain;pointer-events:auto;touch-action:pan-y;scrollbar-width:thin;scrollbar-color:var(--event-color) var(--palette-425);padding-right:5px;white-space:pre-line}
+.effect-context{display:block;font-size:.88em;color:var(--palette-426);line-height:1.7;margin:7px 0}
+#event-effect-text mark{color:var(--event-color);background:color-mix(in srgb,var(--event-color) 12%,var(--palette-427));border-left:4px solid var(--event-color);padding:12px;line-height:1.7;border-radius:0 5px 5px 0}
+#event-effect-text mark strong{font-weight:700}
+#effect-sequence{grid-column:2;grid-row:3;display:flex;gap:6px;font:600 12px/1.5 monospace;letter-spacing:.12em}
+#effect-sequence span{flex:1;border:1px solid var(--palette-428);border-radius:4px;padding:6px 12px;text-align:center;color:var(--palette-429)}
+#effect-sequence .active{background:color-mix(in srgb,var(--event-color) 14%,var(--palette-430));color:var(--event-color);border-color:var(--event-color)}
+#event-chain-strip{position:static;grid-column:1/-1;grid-row:4;width:100%;max-width:100%;min-width:0;justify-content:flex-start;overflow-x:auto;pointer-events:auto;touch-action:pan-x;padding:8px 1px;scrollbar-width:thin;overscroll-behavior-x:contain}
+#event-chain-strip .chain-thumb{min-width:180px;max-width:240px}.chain-thumb.current{box-shadow:none;border-width:2px}.chain-thumb.resolving.current{border-color:var(--palette-431)}.chain-thumb.negated.current{border-color:var(--palette-432)}
+#effect-dock-text{white-space:pre-line}.effect-dock>button{min-height:44px}
+@media(max-width:760px){
+ #duel{padding-inline:8px;padding-bottom:calc(140px + env(safe-area-inset-bottom))}
+ #duel[data-arena-size=adaptive] .duel-table{max-width:100%;padding:8px 4px}
+ #duel[data-arena-size=adaptive] .arena-scroll{padding:5px 2px 8px;overflow-x:hidden}
+ #duel[data-arena-size=adaptive] .half{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;align-items:stretch}
+ #duel[data-arena-size=adaptive] .pile-col{display:contents}
+ #duel[data-arena-size=adaptive] .placement-zones{grid-column:1/-1;grid-row:1}
+ #duel[data-arena-size=adaptive] .opponent-half .placement-zones{grid-row:2}
+ #duel[data-arena-size=adaptive] .pile{min-height:48px;font-size:12px;padding:5px 1px;letter-spacing:0;line-height:1.2}
+ #duel[data-arena-size=adaptive] .pile b{font-size:17px;margin-top:3px}
+ #duel[data-arena-size=adaptive] .pile-symbol{display:none}
+ #duel[data-arena-size=adaptive] .pile-col .zone{height:48px;aspect-ratio:auto}
+ #duel[data-arena-size=adaptive] .pile-col .zone img{max-height:48px}
+ #duel[data-arena-size=adaptive] .pile-col .zone .zone-caption{font-size:12px;padding:2px 0}
+ #duel[data-arena-size=adaptive] .pile-col .zone .zone-label{font-size:12px;padding-top:15px}
+ #duel[data-arena-size=adaptive] .zone-caption{font-size:12px;letter-spacing:0;padding:3px 1px}
+ #duel[data-arena-size=adaptive] .zone-label{font-size:12px;padding:17px 2px 5px;line-height:1.4}
+ #duel[data-arena-size=adaptive] .zone .card-stats{font-size:12px;padding:4px 0;letter-spacing:0}
+ #duel[data-arena-size=adaptive] .zone .text-card{font-size:12px;padding:20px 3px}
+ #duel[data-arena-size=adaptive] .zone .material-dot{top:21px;font-size:12px}
+ #duel[data-arena-size=adaptive] .shared-emz{width:64%;gap:8px;margin:8px auto}
+ #duel[data-arena-size=adaptive] .bridge-mark{font-size:12px;letter-spacing:0}
+ #duel[data-arena-size=adaptive] .bridge-mark>span{font-size:24px}
+ #duel[data-arena-size=adaptive] .bridge-mark>small{font-size:12px}
+ #duel .opponent-hand button{width:25px;height:36px}#duel .hand-back{width:22px;height:31px}
+ #duel .midline{margin:8px 0;padding:8px 0;font-size:12px;letter-spacing:0}
+ .duel-controls-fab{bottom:calc(80px + env(safe-area-inset-bottom));left:max(12px,env(safe-area-inset-left));font-size:12px;padding:10px 16px}
+ .duel-nav{backdrop-filter:none}
+ #skip-fx{min-height:44px;bottom:calc(80px + env(safe-area-inset-bottom));right:max(12px,env(safe-area-inset-right));padding:10px 12px}
+ #duel-controls{width:100%;max-width:100%;max-height:87dvh;top:auto;bottom:0;margin:0;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+ .controls-heading{top:-18px}.controls-grid{gap:16px 10px}.controls-grid select{font-size:12px}
+ .scene-controls{font-size:12px;padding:9px;left:10px}.scene-skip{font-size:12px;min-height:44px}
+ #event-ribbon{display:none}#event-stage[data-spotlight=true]{grid-template-columns:115px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto auto;gap:10px;padding:calc(20px + env(safe-area-inset-top)) 12px calc(144px + env(safe-area-inset-bottom));align-content:center}
+ #event-stage[data-spotlight=true] .event-card-wrap{grid-column:1;grid-row:1;width:115px}
+ #event-stage[data-spotlight=true] .event-card-wrap img{max-height:25dvh}
+ #event-stage[data-spotlight=true] .event-copy{grid-column:2;grid-row:1;padding:14px 12px}
+ #event-stage[data-spotlight=true] #event-title{font-size:22px;letter-spacing:.025em}#event-stage[data-spotlight=true] #event-line{font-size:13px;line-height:1.5}
+ #event-stage[data-spotlight=true] #event-kicker{font-size:12px;line-height:1.5}
+ #event-effect{grid-column:1/-1;grid-row:2;padding:12px}#event-effect-text{font-size:14px;max-height:35dvh;line-height:1.7}
+ #effect-sequence{grid-column:1/-1}#event-chain-strip .chain-thumb{min-width:172px;max-width:205px}.chain-thumb img{width:35px;height:49px}.chain-thumb>span{font-size:12px}.chain-thumb small{font-size:12px}
+}
+@media(max-width:1100px),(pointer:coarse){.movement-track{filter:none;animation:none}.track-dashes,.track-destination{animation:none}.event-copy{filter:none}.fx-arrival,.fx-effect{animation:none}.scene-aura{filter:none}.scene-particles{display:none}}
+@media(orientation:landscape) and (max-height:600px){
+ #duel[data-arena-size=adaptive] .duel-table{max-width:min(100%,900px)}
+ #duel[data-arena-size=adaptive] .zone-row .zone{aspect-ratio:auto;height:clamp(44px,12dvh,72px)}
+ #duel[data-arena-size=adaptive] .shared-emz{width:160px;gap:6px;margin:5px auto}
+ #duel[data-arena-size=adaptive] .emz-shell>.zone{height:48px;aspect-ratio:auto}
+ #duel[data-arena-size=adaptive] .pile-col .zone{height:48px;aspect-ratio:auto}
+ #duel[data-arena-size=adaptive] .pile{min-height:44px;font-size:12px;padding:3px}#duel[data-arena-size=adaptive] .pile b{font-size:16px}#duel[data-arena-size=adaptive] .pile-symbol{display:none}
+ #duel .opponent-hand{display:none}#duel .player-bar{padding:3px}#duel .player-bar .lp-value{font-size:20px}#duel .midline{margin:4px 0;padding:4px}
+ .arena-toolbar,.zone-legend{display:none}.arena-focused .duel-nav{position:fixed;left:auto;top:8px;right:max(8px,env(safe-area-inset-right));bottom:auto;width:250px;gap:4px;z-index:35}.arena-focused .duel-nav button{font-size:12px;padding:6px 3px;min-height:36px}.arena-focused .duel-nav button span{display:none}
+ .duel-controls-fab{bottom:calc(10px + env(safe-area-inset-bottom));left:max(12px,env(safe-area-inset-left));min-height:44px}#skip-fx{bottom:calc(10px + env(safe-area-inset-bottom))}
+ #event-stage[data-spotlight=true]{grid-template-columns:125px minmax(0,600px);grid-template-rows:auto minmax(0,1fr) auto auto;gap:7px 18px;padding:calc(10px + env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) 64px}
+ #event-stage[data-spotlight=true] .event-card-wrap{grid-column:1;grid-row:1/4;width:125px}#event-stage[data-spotlight=true] .event-card-wrap img{max-height:65dvh}
+ #event-stage[data-spotlight=true] .event-copy{grid-column:2;grid-row:1;padding:8px 14px}#event-stage[data-spotlight=true] #event-title{font-size:22px}#event-stage[data-spotlight=true] #event-kicker{margin-bottom:4px}#event-stage[data-spotlight=true] #event-line{font-size:12px;margin-top:5px}
+ #event-effect{grid-column:2;grid-row:2;padding:8px 12px}#event-effect-caption{display:none}#event-effect-label{margin-bottom:4px;font-size:12px}#event-effect-text{font-size:13px;max-height:25dvh}#effect-sequence{grid-column:2;grid-row:3;font-size:12px}#effect-sequence span{padding:3px}
+ #event-chain-strip{grid-row:4;padding:3px 0}#event-chain-strip .chain-thumb{padding:5px;min-width:170px}#event-chain-strip .chain-thumb img{width:25px;height:35px}#event-chain-strip .chain-thumb small{display:none}
+ #duel-controls{width:min(620px,92vw);max-height:94dvh;bottom:auto;margin:auto;border-radius:12px}
+}
+
+#effect-sequence span{position:relative;overflow:hidden}#effect-sequence i{position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--event-color);transform-origin:left;animation:effect-reading var(--event-duration,3.2s) linear both}
+@keyframes effect-reading{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.quiet-motion #effect-sequence i{animation:none;transform:none}
+@media(prefers-reduced-motion:reduce){#effect-sequence i{animation:none;transform:none}}
+
+.studio-volume{display:flex;align-items:center;gap:16px;font-size:14px;margin:18px 0}.studio-volume input{flex:1;min-height:44px;accent-color:var(--palette-433)}
