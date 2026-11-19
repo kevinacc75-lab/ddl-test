@@ -68,6 +68,12 @@ export const CLIP_GRACE_MS=2500;
 // the field swirls or the camera pans out to a cutscene" and "a more gradual sound fade out and back in"): the clip zooms
 // out of the card's spot on the field inside a colour swirl, then shrinks back into it; music and clip sound ramp, not cut.
 export const INTRO_MS=650,OUTRO_MS=520,SKIP_OUTRO_MS=360;
+// r67.13 fix (Kevy 20 Nov 00:45: "some of the sky striker animations didn't play"): the step used to last a fixed time, so a
+// clip still loading on a tablet was cut off or never seen. Now the player ends the step itself (video end, Skip, a load that
+// never starts, or a stall) and the duel's timer is only a safety cap. Clips also start loading when their step is queued.
+export const LOAD_ALLOWANCE_MS=12000,START_TIMEOUT_MS=9000,STALL_MS=5000;
+const PRELOADED=new Map();// src -> <video> already loading, reused by the player
+export function preloadClip(src,doc=globalThis.document){try{if(!doc||PRELOADED.has(src))return;const v=doc.createElement('video');v.preload='auto';v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.src=src;v.load?.();PRELOADED.set(src,v);while(PRELOADED.size>4){const [k,old]=PRELOADED.entries().next().value;PRELOADED.delete(k);try{old.removeAttribute('src');old.load?.()}catch{}}}catch{}}
 const FACEDOWN=10;// POS_FACEDOWN_ATTACK 2 | POS_FACEDOWN_DEFENSE 8: a set card never reveals its clip
 const baseCode=(code,db,registry)=>{const a=db?.[code]?.alias;return a&&registry[a]?a:code};
 export function clipFor(e,db={},registry=BOSS_CLIPS){
@@ -85,8 +91,8 @@ export class ClipDirector{
   if(!on)return batches;const out=[];
   for(const batch of batches){
    for(const e of batch.events){const hit=clipFor(e,db,this.registry);if(!hit||this.played.has(hit.code))continue;this.played.add(hit.code);
-    const at=e.type==='summon'?{controller:e.player,location:4,sequence:e.sequence}:(e.location!=null&&e.sequence!=null?{controller:e.player,location:e.location,sequence:e.sequence}:null);
-    out.push({events:[{type:'bossClip',id:e.id,code:hit.code,player:e.player,trigger:e.type,clip:hit.clip,at}],duration:hit.clip.ms+CLIP_GRACE_MS+INTRO_MS+OUTRO_MS})}
+    const src=e.source,at=e.type==='summon'?{controller:e.player,location:4,sequence:e.sequence}:src&&src.location!=null&&src.sequence!=null?{controller:src.controller??e.player,location:src.location,sequence:src.sequence}:(e.location!=null&&e.sequence!=null?{controller:e.player,location:e.location,sequence:e.sequence}:null);
+    out.push({events:[{type:'bossClip',id:e.id,code:hit.code,player:e.player,trigger:e.type,clip:hit.clip,at}],duration:hit.clip.ms+CLIP_GRACE_MS+INTRO_MS+OUTRO_MS+LOAD_ALLOWANCE_MS});preloadClip(hit.clip.src)}
    out.push(batch);
   }
   return out;
@@ -111,6 +117,8 @@ const SHEET=`
 .boss-clip-frame{position:relative;z-index:1;flex:none;width:min(94vw,calc(100dvh - 230px));aspect-ratio:1;border-radius:18px;overflow:hidden;background:#000;
  box-shadow:0 0 0 2px rgba(255,214,120,.85),0 0 0 5px rgba(0,0,0,.55),0 0 46px 6px color-mix(in srgb,var(--clip-tint) 70%,transparent),0 24px 60px rgba(0,0,0,.7);will-change:transform,opacity}
 .boss-clip-frame::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 60px rgba(0,0,0,.55)}
+.boss-clip-frame.is-loading::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,236,190,.28) 50%,transparent 70%) 0 0/250% 100%;animation:bossClipLoad 1.2s linear infinite}
+@keyframes bossClipLoad{from{background-position:130% 0}to{background-position:-130% 0}}
 .boss-clip-video{display:block;width:100%;height:100%;object-fit:cover;background:#000;pointer-events:none}
 .boss-clip-caption{position:relative;z-index:1;margin:0;display:grid;justify-items:center;gap:6px;text-align:center;pointer-events:none;max-width:min(94vw,760px)}
 .boss-clip-tag{font:800 clamp(11px,1.6vw,14px)/1 'Duel UI',Inter,system-ui,sans-serif;letter-spacing:.32em;padding:6px 14px 6px 18px;border-radius:999px;color:#fff;
@@ -150,7 +158,7 @@ export class BossClipPlayer{
   const sheet=doc.createElement('style');sheet.textContent=SHEET;
   const glow=doc.createElement('div');glow.className='boss-clip-glow';
   const frame=doc.createElement('div');frame.className='boss-clip-frame';
-  const v=doc.createElement('video');v.className='boss-clip-video';v.src=clip.src;v.poster=clip.src.replace(/\.mp4$/,'-f0.jpg');v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.autoplay=true;v.disablePictureInPicture=true;frame.append(v);
+  const pre=PRELOADED.get(clip.src);PRELOADED.delete(clip.src);const v=pre||doc.createElement('video');v.className='boss-clip-video';if(!pre)v.src=clip.src;v.muted=false;v.poster=clip.src.replace(/\.mp4$/,'-f0.jpg');v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.autoplay=true;v.disablePictureInPicture=true;frame.append(v);
   const cap=doc.createElement('p');cap.className='boss-clip-caption';
   const tag=doc.createElement('span');tag.className='boss-clip-tag';tag.textContent=e.trigger==='activate'?'ACTIVATED':'SUMMONED';
   const sep=doc.createElement('span');sep.className='boss-clip-sep';sep.textContent=' · ';
@@ -158,7 +166,15 @@ export class BossClipPlayer{
   const rule=doc.createElement('span');rule.className='boss-clip-rule';rule.setAttribute('aria-hidden','true');cap.append(tag,sep,nm,rule);
   const skip=doc.createElement('button');skip.type='button';skip.className='boss-clip-skip';skip.style.cssText=CSS.skip;skip.textContent='Skip ▸';skip.setAttribute('aria-label','Skip cut scene');
   const swirl=doc.createElement('div');swirl.className='boss-clip-swirl';
-  root.append(sheet,swirl,glow,frame,cap,skip);this.node=root;this.video=v;v.autoplay=false;
+  root.append(sheet,swirl,glow,frame,cap,skip);this.node=root;this.video=v;v.autoplay=false;this.held=false;
+  // Loading and stall guard: a soft glow shows while the clip buffers; a clip that never starts, or freezes, ends cleanly.
+  const t0=Date.now();let started=false,lastT=-1,lastMove=Date.now();
+  const loading=on=>frame.classList.toggle('is-loading',!!on);loading(true);
+  v.addEventListener('playing',()=>{started=true;loading(false)});v.addEventListener('waiting',()=>loading(true));v.addEventListener('canplay',()=>{if(started)loading(false)});
+  const guard=setInterval(()=>{if(this.node!==root){clearInterval(guard);return}if(this.held||ending)return;const now=Date.now();
+   if(!started){if(now-t0>INTRO_MS+START_TIMEOUT_MS){clearInterval(guard);end('error')}return}
+   if(v.currentTime!==lastT){lastT=v.currentTime;lastMove=now;return}
+   if(!v.paused&&now-lastMove>STALL_MS){clearInterval(guard);end('ended')}},400);
   const anim=(el,kf,opt)=>{try{return el.animate?.(kf,{fill:'both',...opt})}catch{return null}};
   let ending=false;
   // Outro: the clip shrinks back toward the card's spot, the veil fades, the music ramps back; then the duel carries on.
@@ -192,7 +208,7 @@ export class BossClipPlayer{
   if(root.animate)setTimeout(start,Math.round(INTRO_MS*.7));else start();
   return root;
  }
- hold(value){if(!this.video)return;try{value?this.video.pause():this.video.play()?.catch?.(()=>{})}catch{}}
+ hold(value){this.held=!!value;if(!this.video)return;try{value?this.video.pause():this.video.play()?.catch?.(()=>{})}catch{}}
  clear(){if(this.node)duckMusic(false);if(this.video){try{this.video.pause();this.video.removeAttribute('src');this.video.load?.()}catch{}}try{this.node?.open&&this.node.close?.()}catch{}this.node?.remove();this.node=null;this.video=null}
 }
 
