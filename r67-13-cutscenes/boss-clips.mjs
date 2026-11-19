@@ -50,7 +50,18 @@ export const BOSS_CLIPS=Object.freeze({
  25072579:Object.freeze({src:'clips/25072579.mp4',grad:['#348cca','#2aa3d4'],tint:'#49a5ce',ms:7100,on:'summon',name:"Prototype Sky Striker Ace - Amatsu"}),
  63166095:Object.freeze({src:'clips/63166095.mp4',grad:['#1ce2b0','#1ae2e4'],tint:'#39dfab',ms:7100,on:'activate',name:"Sky Striker Mobilize - Engage!"}),
  98338152:Object.freeze({src:'clips/98338152.mp4',grad:['#cf8b2f','#cb7d33'],tint:'#dc923b',ms:7100,on:'activate',name:"Sky Striker Mecha - Widow Anchor"}),
- 50005218:Object.freeze({src:'clips/50005218.mp4',grad:['#2b49d3','#ff2f00'],tint:'#ff191a',ms:7100,on:'activate',name:"Sky Striker Airspace - Area Zero"})
+ 50005218:Object.freeze({src:'clips/50005218.mp4',grad:['#2b49d3','#ff2f00'],tint:'#ff191a',ms:7100,on:'activate',name:"Sky Striker Airspace - Area Zero"}),
+ // Sky Striker set 2 (Kevy, 20 Nov 00:28)
+ 52340444:Object.freeze({src:'clips/52340444.mp4',grad:['#3aa5c4','#34bdca'],tint:'#53c5b4',ms:7100,on:'activate',name:"Sky Striker Mecha - Hornet Drones"}),
+ 51227866:Object.freeze({src:'clips/51227866.mp4',grad:['#ff9600','#e87616'],tint:'#ff9d19',ms:7100,on:'activate',name:"Sky Striker Mecha - Shark Cannon"}),
+ 9726840:Object.freeze({src:'clips/9726840.mp4',grad:['#2a71d4','#4175bd'],tint:'#30aae7',ms:7100,on:'activate',name:"Sky Striker Mobilize - Linkage!"}),
+ 99550630:Object.freeze({src:'clips/99550630.mp4',grad:['#ff7900','#ff6b00'],tint:'#ff8719',ms:7100,on:'activate',name:"Sky Striker Maneuver - Afterburners!"}),
+ 34433770:Object.freeze({src:'clips/34433770.mp4',grad:['#3e67c0','#446cba'],tint:'#4e7fc9',ms:7100,on:'activate',name:"Sky Striker Special Maneuver - Lemnisgate!"}),
+ 24010609:Object.freeze({src:'clips/24010609.mp4',grad:['#0f72ef','#0087ff'],tint:'#1d81fb',ms:7100,on:'activate',name:"Sky Striker Mecha Modules - Multirole"}),
+ 98462037:Object.freeze({src:'clips/98462037.mp4',grad:['#b929d5','#c31ce2'],tint:'#c139de',ms:7100,on:'summon',name:"Sky Striker Ace - Azalea"}),
+ 12421694:Object.freeze({src:'clips/12421694.mp4',grad:['#fcba02','#ffcd00'],tint:'#ffca19',ms:7100,on:'summon',name:"Sky Striker Ace - Kaina"}),
+ 17217034:Object.freeze({src:'clips/17217034.mp4',grad:['#bf3fb5','#d32b3c'],tint:'#e92e8a',ms:7100,on:'summon',name:"Combined Maneuver - Engage Zero!"}),
+ 10045474:Object.freeze({src:'clips/10045474.mp4',grad:['#4a7bb4','#00abff'],tint:'#4f9fc8',ms:7100,on:'activate',name:"Infinite Impermanence"})
 });
 export const CLIP_GRACE_MS=2500;
 // r67.13 transitions (Kevy 20 Nov 00:07: "some generic transition animation so the animations don't seem so chopped in ... maybe
