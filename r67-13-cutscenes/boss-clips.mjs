@@ -28,7 +28,11 @@ export const BOSS_CLIPS=Object.freeze({
  44362883:Object.freeze({src:'clips/44362883.mp4',tint:'#fb601c',ms:7100,on:'activate',name:"Branded Fusion"}),
  48130397:Object.freeze({src:'clips/48130397.mp4',tint:'#8f7cff',ms:7100,on:'activate',name:"Super Polymerization"}),
  14558127:Object.freeze({src:'clips/14558127.mp4',tint:'#ff4719',ms:7100,on:'activate',name:"Ash Blossom & Joyous Spring"}),
- 59438930:Object.freeze({src:'clips/59438930.mp4',tint:'#c057a0',ms:7100,on:'activate',name:"Ghost Ogre & Snow Rabbit"})
+ 59438930:Object.freeze({src:'clips/59438930.mp4',tint:'#c057a0',ms:7100,on:'activate',name:"Ghost Ogre & Snow Rabbit"}),
+ 55273560:Object.freeze({src:'clips/55273560.mp4',tint:'#ee9629',ms:7100,on:'summon',name:"Incredible Ecclesia, the Virtuous"}),
+ 87758525:Object.freeze({src:'clips/87758525.mp4',tint:'#25f253',ms:7100,on:'summon',name:"Favorite HERO Shining Flare Wingman"}),
+ 42141493:Object.freeze({src:'clips/42141493.mp4',tint:'#2967ee',ms:7100,on:'activate',name:"Mulcharmy Fuwalos"}),
+ 94145021:Object.freeze({src:'clips/94145021.mp4',tint:'#de30e8',ms:7100,on:'activate',name:"Droll & Lock Bird"})
 });
 export const CLIP_GRACE_MS=2500;
 const FACEDOWN=10;// POS_FACEDOWN_ATTACK 2 | POS_FACEDOWN_DEFENSE 8: a set card never reveals its clip
