@@ -16,19 +16,19 @@
 // Kevy's Grok Imagine clips (19 Nov 2026), about 7 s each, square, with sound effects. Favorite HERO Flame Wingman
 // shares the Elemental HERO Flame Wingman clip (Kevy's Branded deck plays the Favorite HERO version).
 export const BOSS_CLIPS=Object.freeze({
- 35809262:Object.freeze({src:'clips/35809262.mp4',ms:7100,on:'summon',name:"Elemental HERO Flame Wingman"}),
- 13243124:Object.freeze({src:'clips/35809262.mp4',ms:7100,on:'summon',name:"Favorite HERO Flame Wingman"}),
- 68468459:Object.freeze({src:'clips/68468459.mp4',ms:7100,on:'summon',name:"Fallen of Albaz"}),
- 62962630:Object.freeze({src:'clips/62962630.mp4',ms:7100,on:'summon',name:"Aluber the Jester of Despia"}),
- 44146295:Object.freeze({src:'clips/44146295.mp4',ms:7100,on:'summon',name:"Mirrorjade the Iceblade Dragon"}),
- 72272462:Object.freeze({src:'clips/72272462.mp4',ms:7100,on:'summon',name:"Despian Quaeritis"}),
- 76666602:Object.freeze({src:'clips/76666602.mp4',ms:7100,on:'summon',name:"The Dragon that Devours the Dogma"}),
- 41373230:Object.freeze({src:'clips/41373230.mp4',ms:7100,on:'summon',name:"Titaniklad the Ash Dragon"}),
- 70534340:Object.freeze({src:'clips/70534340.mp4',ms:7100,on:'summon',name:"Lubellion the Searing Dragon"}),
- 44362883:Object.freeze({src:'clips/44362883.mp4',ms:7100,on:'activate',name:"Branded Fusion"}),
- 48130397:Object.freeze({src:'clips/48130397.mp4',ms:7100,on:'activate',name:"Super Polymerization"}),
- 14558127:Object.freeze({src:'clips/14558127.mp4',ms:7100,on:'activate',name:"Ash Blossom & Joyous Spring"}),
- 59438930:Object.freeze({src:'clips/59438930.mp4',ms:7100,on:'activate',name:"Ghost Ogre & Snow Rabbit"})
+ 35809262:Object.freeze({src:'clips/35809262.mp4',tint:'#ee802a',ms:7100,on:'summon',name:"Elemental HERO Flame Wingman"}),
+ 13243124:Object.freeze({src:'clips/35809262.mp4',tint:'#ee802a',ms:7100,on:'summon',name:"Favorite HERO Flame Wingman"}),
+ 68468459:Object.freeze({src:'clips/68468459.mp4',tint:'#e05438',ms:7100,on:'summon',name:"Fallen of Albaz"}),
+ 62962630:Object.freeze({src:'clips/62962630.mp4',tint:'#f52240',ms:7100,on:'summon',name:"Aluber the Jester of Despia"}),
+ 44146295:Object.freeze({src:'clips/44146295.mp4',tint:'#5b8cff',ms:7100,on:'summon',name:"Mirrorjade the Iceblade Dragon"}),
+ 72272462:Object.freeze({src:'clips/72272462.mp4',tint:'#fe1a4d',ms:7100,on:'summon',name:"Despian Quaeritis"}),
+ 76666602:Object.freeze({src:'clips/76666602.mp4',tint:'#f54a23',ms:7100,on:'summon',name:"The Dragon that Devours the Dogma"}),
+ 41373230:Object.freeze({src:'clips/41373230.mp4',tint:'#eb372c',ms:7100,on:'summon',name:"Titaniklad the Ash Dragon"}),
+ 70534340:Object.freeze({src:'clips/70534340.mp4',tint:'#ffb019',ms:7100,on:'summon',name:"Lubellion the Searing Dragon"}),
+ 44362883:Object.freeze({src:'clips/44362883.mp4',tint:'#fb601c',ms:7100,on:'activate',name:"Branded Fusion"}),
+ 48130397:Object.freeze({src:'clips/48130397.mp4',tint:'#8f7cff',ms:7100,on:'activate',name:"Super Polymerization"}),
+ 14558127:Object.freeze({src:'clips/14558127.mp4',tint:'#ff4719',ms:7100,on:'activate',name:"Ash Blossom & Joyous Spring"}),
+ 59438930:Object.freeze({src:'clips/59438930.mp4',tint:'#c057a0',ms:7100,on:'activate',name:"Ghost Ogre & Snow Rabbit"})
 });
 export const CLIP_GRACE_MS=2500;
 const FACEDOWN=10;// POS_FACEDOWN_ATTACK 2 | POS_FACEDOWN_DEFENSE 8: a set card never reveals its clip
@@ -55,13 +55,40 @@ export class ClipDirector{
  }
 }
 
+// r67.13 look (Kevy 19 Nov 22:25: "its own matching background so it kind of blends with the game" and "its own unique
+// title"): the duel stays faintly visible behind a blurred, darkened veil lit in the clip's own colour; the clip sits in a
+// gold-edged frame; the title is a banner in the game's Cinzel lettering with a coloured SUMMON / ACTIVATE tag.
+// The styles live in a <style> inside the dialog, so no page stylesheet (or its pinned order) changes.
+const SHEET=`
+.boss-clip{position:fixed;inset:0;z-index:2147483000;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;color:#fff;overflow:hidden;touch-action:manipulation;cursor:pointer;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2.4dvh,24px);padding:clamp(56px,8dvh,84px) 12px max(18px,env(safe-area-inset-bottom));box-sizing:border-box;
+ background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--clip-tint) 34%,transparent),transparent 62%),rgba(6,4,10,.6);
+ -webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);animation:bossClipIn .32s ease-out both}
+.boss-clip::backdrop{background:rgba(0,0,0,.25)}
+.boss-clip-glow{position:absolute;inset:-12%;background:var(--clip-poster) center/cover no-repeat;filter:blur(48px) saturate(1.5);opacity:.4;pointer-events:none;z-index:0}
+.boss-clip-frame{position:relative;z-index:1;flex:none;width:min(94vw,calc(100dvh - 230px));aspect-ratio:1;border-radius:18px;overflow:hidden;background:#000;
+ box-shadow:0 0 0 2px rgba(255,214,120,.85),0 0 0 5px rgba(0,0,0,.55),0 0 46px 6px color-mix(in srgb,var(--clip-tint) 70%,transparent),0 24px 60px rgba(0,0,0,.7);animation:bossClipFrame .45s cubic-bezier(.2,1.3,.4,1) both}
+.boss-clip-frame::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 60px rgba(0,0,0,.55)}
+.boss-clip-video{display:block;width:100%;height:100%;object-fit:cover;background:#000;pointer-events:none}
+.boss-clip-caption{position:relative;z-index:1;margin:0;display:grid;justify-items:center;gap:6px;text-align:center;pointer-events:none;max-width:min(94vw,760px)}
+.boss-clip-tag{font:800 clamp(11px,1.6vw,14px)/1 'Duel UI',Inter,system-ui,sans-serif;letter-spacing:.32em;padding:6px 14px 6px 18px;border-radius:999px;color:#fff;
+ background:linear-gradient(90deg,color-mix(in srgb,var(--clip-tint) 85%,#000),var(--clip-tint));box-shadow:0 0 18px color-mix(in srgb,var(--clip-tint) 70%,transparent);animation:bossClipTag .5s .25s ease-out both}
+.boss-clip-sep{display:none}
+.boss-clip-name{font:900 clamp(24px,5vw,46px)/1.1 Cinzel,Georgia,serif;letter-spacing:.03em;
+ background:linear-gradient(180deg,#fff6d8 0%,#ffd77a 45%,#c9902e 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+ filter:drop-shadow(0 2px 0 rgba(0,0,0,.9)) drop-shadow(0 0 14px color-mix(in srgb,var(--clip-tint) 75%,transparent));animation:bossClipName .6s .35s cubic-bezier(.2,1,.3,1) both}
+.boss-clip-rule{width:min(70vw,420px);height:2px;background:linear-gradient(90deg,transparent,#ffd77a,transparent);animation:bossClipRule .6s .45s ease-out both}
+@keyframes bossClipIn{from{opacity:0}}
+@keyframes bossClipFrame{from{opacity:0;transform:scale(.86)}}
+@keyframes bossClipTag{from{opacity:0;transform:translateY(8px)}}
+@keyframes bossClipName{from{opacity:0;letter-spacing:.4em;transform:translateY(10px)}}
+@keyframes bossClipRule{from{transform:scaleX(0)}}
+@media (orientation:landscape) and (max-height:520px){.boss-clip{flex-direction:row;padding:12px 64px}.boss-clip-frame{width:calc(100dvh - 24px)}.boss-clip-caption{max-width:36vw}}
+`;
 const CSS={
- root:'position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#000;color:#fff;overflow:hidden;touch-action:manipulation;cursor:pointer',
- video:'width:100vw;height:100vh;height:100dvh;object-fit:contain;background:#000;pointer-events:none',
- caption:'position:absolute;left:0;right:0;bottom:max(16px,env(safe-area-inset-bottom));margin:0;padding:0 112px 0 16px;color:#fff;font:700 clamp(14px,2.4vw,22px)/1.2 system-ui,sans-serif;letter-spacing:.06em;text-shadow:0 2px 6px #000;pointer-events:none',
- skip:'position:absolute;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));min-width:96px;min-height:48px;padding:0 18px;border:2px solid #fff;border-radius:24px;background:rgba(0,0,0,.55);color:#fff;font:700 16px/1 system-ui,sans-serif;cursor:pointer',
+ skip:"position:absolute;z-index:2;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));min-width:96px;min-height:48px;padding:0 18px;border:2px solid rgba(255,214,120,.9);border-radius:24px;background:rgba(0,0,0,.55);color:#ffe7a8;font:800 16px/1 'Duel UI',Inter,system-ui,sans-serif;letter-spacing:.08em;cursor:pointer",
  test:'position:fixed;left:12px;bottom:12px;z-index:2147482000;min-height:48px;padding:0 16px;border-radius:24px;border:2px solid #ffd54a;background:#1b1b1b;color:#ffd54a;font:700 15px/1 system-ui,sans-serif'
-};// inline styles: no new stylesheet, so the pinned stylesheet order is untouched
+};
 
 // Kevy 19 Nov: the clips carry their own sound effects, so the duel music dips while one plays and comes back after.
 const DUCK_LEVEL=.12;
@@ -72,11 +99,19 @@ export class BossClipPlayer{
  play(e,{name=''}={}){
   this.clear();const doc=this.document,clip=e.clip;
   // A modal <dialog> joins the top layer, so the clip covers any decision sheet or menu dialog already open.
-  const root=doc.createElement('dialog');root.className='boss-clip';root.style.cssText=CSS.root;root.setAttribute('aria-label',(name||'Card')+' cut scene');
-  const v=doc.createElement('video');v.className='boss-clip-video';v.style.cssText=CSS.video;v.src=clip.src;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.autoplay=true;v.disablePictureInPicture=true;
-  const cap=doc.createElement('p');cap.className='boss-clip-caption';cap.style.cssText=CSS.caption;cap.textContent=(e.trigger==='activate'?'ACTIVATED · ':'SUMMONED · ')+(name||'');
+  const root=doc.createElement('dialog');root.className='boss-clip';root.setAttribute('aria-label',(name||'Card')+' cut scene');
+  root.style.setProperty('--clip-tint',clip.tint||'#d9a441');root.style.setProperty('--clip-poster',`url("${clip.src.replace(/\.mp4$/,'.jpg')}")`);
+  const sheet=doc.createElement('style');sheet.textContent=SHEET;
+  const glow=doc.createElement('div');glow.className='boss-clip-glow';
+  const frame=doc.createElement('div');frame.className='boss-clip-frame';
+  const v=doc.createElement('video');v.className='boss-clip-video';v.src=clip.src;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.autoplay=true;v.disablePictureInPicture=true;frame.append(v);
+  const cap=doc.createElement('p');cap.className='boss-clip-caption';
+  const tag=doc.createElement('span');tag.className='boss-clip-tag';tag.textContent=e.trigger==='activate'?'ACTIVATED':'SUMMONED';
+  const sep=doc.createElement('span');sep.className='boss-clip-sep';sep.textContent=' · ';
+  const nm=doc.createElement('span');nm.className='boss-clip-name';nm.textContent=name||'';nm.style.setProperty('font-family','Cinzel,Georgia,serif','important');
+  const rule=doc.createElement('span');rule.className='boss-clip-rule';rule.setAttribute('aria-hidden','true');cap.append(tag,sep,nm,rule);
   const skip=doc.createElement('button');skip.type='button';skip.className='boss-clip-skip';skip.style.cssText=CSS.skip;skip.textContent='Skip ▸';skip.setAttribute('aria-label','Skip cut scene');
-  root.append(v,cap,skip);this.node=root;this.video=v;
+  root.append(sheet,glow,frame,cap,skip);this.node=root;this.video=v;
   const end=reason=>{if(this.node!==root)return;this.clear();this.onEnd(reason)};
   v.addEventListener('ended',()=>end('ended'));v.addEventListener('error',()=>end('error'));
   root.addEventListener('pointerup',ev=>{ev.preventDefault();ev.stopPropagation();end('skip')});
