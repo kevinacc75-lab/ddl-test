@@ -9,9 +9,9 @@ import {BOSS_CLIPS,clipFor,ClipDirector,CLIP_GRACE_MS} from '../dist/boss-clips.
 const FW=35809262;
 assert.equal(BOSS_CLIPS[FW].ms,7100);for(const [c,k] of Object.entries(BOSS_CLIPS))assert.ok(fs.existsSync('dist/'+k.src),'clip file present for '+c);
 // r67.13: every registered card is in Kevy's Branded deck and maps to the right trigger.
-{const want={summon:[74405783,3410461,45883110,95515789,60303688,73819701,55273560,87758525,68468459,62962630,44146295,72272462,76666602,41373230,70534340,13243124,35809262],activate:[30271097,42141493,94145021,44362883,48130397,14558127,59438930]};
+{const want={summon:[26077387,37351133,63288573,90673288,8491308,76072561,25072579,74405783,3410461,45883110,95515789,60303688,73819701,55273560,87758525,68468459,62962630,44146295,72272462,76666602,41373230,70534340,13243124,35809262],activate:[63166095,98338152,50005218,30271097,42141493,94145021,44362883,48130397,14558127,59438930]};
  for(const [on,cs] of Object.entries(want))for(const c of cs)assert.equal(BOSS_CLIPS[c]?.on,on,c+' '+on);
- const deck=JSON.stringify(JSON.parse(fs.readFileSync('dist/decks.json','utf8')).decks[0]);for(const c of Object.keys(BOSS_CLIPS))if(+c!==FW)assert.ok(deck.includes(c),c+' in the Branded deck');}
+ const deck=JSON.stringify(JSON.parse(fs.readFileSync('dist/decks.json','utf8')).decks.filter(d=>d.id==='branded'||d.id==='sky'));for(const c of Object.keys(BOSS_CLIPS))if(+c!==FW)assert.ok(deck.includes(c),c+' in the Branded or Sky Striker deck');}
 const reg={1:{src:'a.mp4',ms:5000,on:'summon'},2:{src:'b.mp4',ms:5000,on:'activate'},3:{src:'c.mp4',ms:5000,on:'both'}};
 const dbA={11:{code:11,alias:2}};
 assert.ok(clipFor({type:'summon',code:1},{},reg));assert.equal(clipFor({type:'activate',code:1},{},reg),null,'summon-only card: activation ignored');

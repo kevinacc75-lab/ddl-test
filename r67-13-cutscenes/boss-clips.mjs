@@ -16,30 +16,41 @@
 // Kevy's Grok Imagine clips (19 Nov 2026), about 7 s each, square, with sound effects. Favorite HERO Flame Wingman
 // shares the Elemental HERO Flame Wingman clip (Kevy's Branded deck plays the Favorite HERO version).
 export const BOSS_CLIPS=Object.freeze({
- 35809262:Object.freeze({src:'clips/35809262.mp4',tint:'#ee802a',ms:7100,on:'summon',name:"Elemental HERO Flame Wingman"}),
- 13243124:Object.freeze({src:'clips/35809262.mp4',tint:'#ee802a',ms:7100,on:'summon',name:"Favorite HERO Flame Wingman"}),
- 68468459:Object.freeze({src:'clips/68468459.mp4',tint:'#e05438',ms:7100,on:'summon',name:"Fallen of Albaz"}),
- 62962630:Object.freeze({src:'clips/62962630.mp4',tint:'#f52240',ms:7100,on:'summon',name:"Aluber the Jester of Despia"}),
- 44146295:Object.freeze({src:'clips/44146295.mp4',tint:'#5b8cff',ms:7100,on:'summon',name:"Mirrorjade the Iceblade Dragon"}),
- 72272462:Object.freeze({src:'clips/72272462.mp4',tint:'#fe1a4d',ms:7100,on:'summon',name:"Despian Quaeritis"}),
- 76666602:Object.freeze({src:'clips/76666602.mp4',tint:'#f54a23',ms:7100,on:'summon',name:"The Dragon that Devours the Dogma"}),
- 41373230:Object.freeze({src:'clips/41373230.mp4',tint:'#eb372c',ms:7100,on:'summon',name:"Titaniklad the Ash Dragon"}),
- 70534340:Object.freeze({src:'clips/70534340.mp4',tint:'#ffb019',ms:7100,on:'summon',name:"Lubellion the Searing Dragon"}),
- 44362883:Object.freeze({src:'clips/44362883.mp4',tint:'#fb601c',ms:7100,on:'activate',name:"Branded Fusion"}),
- 48130397:Object.freeze({src:'clips/48130397.mp4',tint:'#8f7cff',ms:7100,on:'activate',name:"Super Polymerization"}),
- 14558127:Object.freeze({src:'clips/14558127.mp4',tint:'#ff4719',ms:7100,on:'activate',name:"Ash Blossom & Joyous Spring"}),
- 59438930:Object.freeze({src:'clips/59438930.mp4',tint:'#c057a0',ms:7100,on:'activate',name:"Ghost Ogre & Snow Rabbit"}),
- 55273560:Object.freeze({src:'clips/55273560.mp4',tint:'#ee9629',ms:7100,on:'summon',name:"Incredible Ecclesia, the Virtuous"}),
- 87758525:Object.freeze({src:'clips/87758525.mp4',tint:'#25f253',ms:7100,on:'summon',name:"Favorite HERO Shining Flare Wingman"}),
- 42141493:Object.freeze({src:'clips/42141493.mp4',tint:'#2967ee',ms:7100,on:'activate',name:"Mulcharmy Fuwalos"}),
- 94145021:Object.freeze({src:'clips/94145021.mp4',tint:'#de30e8',ms:7100,on:'activate',name:"Droll & Lock Bird"}),
- 45883110:Object.freeze({src:'clips/45883110.mp4',tint:'#ff193b',ms:7100,on:'summon',name:"Guiding Quem, the Virtuous"}),
- 95515789:Object.freeze({src:'clips/95515789.mp4',tint:'#fd1c1a',ms:7100,on:'summon',name:"Blazing Cartesia, the Virtuous"}),
- 60303688:Object.freeze({src:'clips/60303688.mp4',tint:'#d69041',ms:7100,on:'summon',name:"Dogmatika Ecclesia, the Virtuous"}),
- 73819701:Object.freeze({src:'clips/73819701.mp4',tint:'#dc6d3b',ms:7100,on:'summon',name:"Fallen of the White Dragon"}),
- 74405783:Object.freeze({src:'clips/74405783.mp4',tint:'#ffbf19',ms:7100,on:'summon',name:"The Three Champions of Swordsoul"}),
- 3410461:Object.freeze({src:'clips/3410461.mp4',tint:'#ff2819',ms:7100,on:'summon',name:"Alba-Lenatus the Abyss Dragon"}),
- 30271097:Object.freeze({src:'clips/30271097.mp4',tint:'#d64d41',ms:7100,on:'activate',name:"The Fallen & The Virtuous"})
+ 35809262:Object.freeze({src:'clips/35809262.mp4',grad:['#d48b2a','#ff8300'],tint:'#ee802a',ms:7100,on:'summon',name:"Elemental HERO Flame Wingman"}),
+ 13243124:Object.freeze({src:'clips/35809262.mp4',grad:['#d48b2a','#ff8300'],tint:'#ee802a',ms:7100,on:'summon',name:"Favorite HERO Flame Wingman"}),
+ 68468459:Object.freeze({src:'clips/68468459.mp4',grad:['#d44d2a','#d95c25'],tint:'#e05438',ms:7100,on:'summon',name:"Fallen of Albaz"}),
+ 62962630:Object.freeze({src:'clips/62962630.mp4',grad:['#ea1614','#da2924'],tint:'#f52240',ms:7100,on:'summon',name:"Aluber the Jester of Despia"}),
+ 44146295:Object.freeze({src:'clips/44146295.mp4',grad:['#3d0ef0','#2562d9'],tint:'#5b8cff',ms:7100,on:'summon',name:"Mirrorjade the Iceblade Dragon"}),
+ 72272462:Object.freeze({src:'clips/72272462.mp4',grad:['#f30b2c','#f10d33'],tint:'#fe1a4d',ms:7100,on:'summon',name:"Despian Quaeritis"}),
+ 76666602:Object.freeze({src:'clips/76666602.mp4',grad:['#eb4713','#d75027'],tint:'#f54a23',ms:7100,on:'summon',name:"The Dragon that Devours the Dogma"}),
+ 41373230:Object.freeze({src:'clips/41373230.mp4',grad:['#e22e1c','#d35a2b'],tint:'#eb372c',ms:7100,on:'summon',name:"Titaniklad the Ash Dragon"}),
+ 70534340:Object.freeze({src:'clips/70534340.mp4',grad:['#ff5a00','#ffb400'],tint:'#ffb019',ms:7100,on:'summon',name:"Lubellion the Searing Dragon"}),
+ 44362883:Object.freeze({src:'clips/44362883.mp4',grad:['#be4d40','#e4661a'],tint:'#fb601c',ms:7100,on:'activate',name:"Branded Fusion"}),
+ 48130397:Object.freeze({src:'clips/48130397.mp4',grad:['#5e67a0','#5f759f'],tint:'#8f7cff',ms:7100,on:'activate',name:"Super Polymerization"}),
+ 14558127:Object.freeze({src:'clips/14558127.mp4',grad:['#ff2300','#fc0c02'],tint:'#ff4719',ms:7100,on:'activate',name:"Ash Blossom & Joyous Spring"}),
+ 59438930:Object.freeze({src:'clips/59438930.mp4',grad:['#fb0306','#3372cb'],tint:'#c057a0',ms:7100,on:'activate',name:"Ghost Ogre & Snow Rabbit"}),
+ 55273560:Object.freeze({src:'clips/55273560.mp4',grad:['#f68708','#dc8e22'],tint:'#ee9629',ms:7100,on:'summon',name:"Incredible Ecclesia, the Virtuous"}),
+ 87758525:Object.freeze({src:'clips/87758525.mp4',grad:['#36c5c8','#21d9dd'],tint:'#25f253',ms:7100,on:'summon',name:"Favorite HERO Shining Flare Wingman"}),
+ 42141493:Object.freeze({src:'clips/42141493.mp4',grad:['#1563e9','#1d60e1'],tint:'#2967ee',ms:7100,on:'activate',name:"Mulcharmy Fuwalos"}),
+ 94145021:Object.freeze({src:'clips/94145021.mp4',grad:['#ca34c0','#de2090'],tint:'#de30e8',ms:7100,on:'activate',name:"Droll & Lock Bird"}),
+ 45883110:Object.freeze({src:'clips/45883110.mp4',grad:['#f40a0f','#ea141d'],tint:'#ff193b',ms:7100,on:'summon',name:"Guiding Quem, the Virtuous"}),
+ 95515789:Object.freeze({src:'clips/95515789.mp4',grad:['#e72817','#f81a06'],tint:'#fd1c1a',ms:7100,on:'summon',name:"Blazing Cartesia, the Virtuous"}),
+ 60303688:Object.freeze({src:'clips/60303688.mp4',grad:['#d48a2a','#df8d1f'],tint:'#d69041',ms:7100,on:'summon',name:"Dogmatika Ecclesia, the Virtuous"}),
+ 73819701:Object.freeze({src:'clips/73819701.mp4',grad:['#be5a40','#ef6d0f'],tint:'#dc6d3b',ms:7100,on:'summon',name:"Fallen of the White Dragon"}),
+ 74405783:Object.freeze({src:'clips/74405783.mp4',grad:['#f4a70a','#f79f07'],tint:'#ffbf19',ms:7100,on:'summon',name:"The Three Champions of Swordsoul"}),
+ 3410461:Object.freeze({src:'clips/3410461.mp4',grad:['#fc1202','#fe5600'],tint:'#ff2819',ms:7100,on:'summon',name:"Alba-Lenatus the Abyss Dragon"}),
+ 30271097:Object.freeze({src:'clips/30271097.mp4',grad:['#da4924','#a3715b'],tint:'#d64d41',ms:7100,on:'activate',name:"The Fallen & The Virtuous"}),
+ // Sky Striker set (Kevy's Grok clips, 19 Nov 23:43)
+ 26077387:Object.freeze({src:'clips/26077387.mp4',grad:['#00aaff','#1199ed'],tint:'#1992ff',ms:7100,on:'summon',name:"Sky Striker Ace - Raye"}),
+ 37351133:Object.freeze({src:'clips/37351133.mp4',grad:['#ff001a','#ff001a'],tint:'#ff1957',ms:7100,on:'summon',name:"Sky Striker Ace - Roze"}),
+ 63288573:Object.freeze({src:'clips/63288573.mp4',grad:['#fa6104','#ff7b00'],tint:'#ff8019',ms:7100,on:'summon',name:"Sky Striker Ace - Kagari"}),
+ 90673288:Object.freeze({src:'clips/90673288.mp4',grad:['#3197cd','#1e78e0'],tint:'#3589e2',ms:7100,on:'summon',name:"Sky Striker Ace - Shizuku"}),
+ 8491308:Object.freeze({src:'clips/8491308.mp4',grad:['#37e11d','#3de519'],tint:'#46ff19',ms:7100,on:'summon',name:"Sky Striker Ace - Hayate"}),
+ 76072561:Object.freeze({src:'clips/76072561.mp4',grad:['#2092de','#0eaef0'],tint:'#19d1ff',ms:7100,on:'summon',name:"Sky Striker Ace = Zero"}),
+ 25072579:Object.freeze({src:'clips/25072579.mp4',grad:['#348cca','#2aa3d4'],tint:'#49a5ce',ms:7100,on:'summon',name:"Prototype Sky Striker Ace - Amatsu"}),
+ 63166095:Object.freeze({src:'clips/63166095.mp4',grad:['#1ce2b0','#1ae2e4'],tint:'#39dfab',ms:7100,on:'activate',name:"Sky Striker Mobilize - Engage!"}),
+ 98338152:Object.freeze({src:'clips/98338152.mp4',grad:['#cf8b2f','#cb7d33'],tint:'#dc923b',ms:7100,on:'activate',name:"Sky Striker Mecha - Widow Anchor"}),
+ 50005218:Object.freeze({src:'clips/50005218.mp4',grad:['#2b49d3','#ff2f00'],tint:'#ff191a',ms:7100,on:'activate',name:"Sky Striker Airspace - Area Zero"})
 });
 export const CLIP_GRACE_MS=2500;
 const FACEDOWN=10;// POS_FACEDOWN_ATTACK 2 | POS_FACEDOWN_DEFENSE 8: a set card never reveals its clip
@@ -73,7 +84,7 @@ export class ClipDirector{
 const SHEET=`
 .boss-clip{position:fixed;inset:0;z-index:2147483000;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;color:#fff;overflow:hidden;touch-action:manipulation;cursor:pointer;
  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2.4dvh,24px);padding:clamp(56px,8dvh,84px) 12px max(18px,env(safe-area-inset-bottom));box-sizing:border-box;
- background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--clip-tint) 34%,transparent),transparent 62%),rgba(6,4,10,.6);
+ background:radial-gradient(ellipse at 50% 42%,color-mix(in srgb,var(--clip-tint) 30%,transparent),transparent 62%),linear-gradient(170deg,color-mix(in srgb,var(--clip-top) 42%,rgba(6,4,10,.62)),color-mix(in srgb,var(--clip-tint) 22%,rgba(6,4,10,.66)) 50%,color-mix(in srgb,var(--clip-bot) 42%,rgba(6,4,10,.62)));
  -webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);animation:bossClipIn .32s ease-out both}
 .boss-clip::backdrop{background:rgba(0,0,0,.25)}
 .boss-clip-glow{position:absolute;inset:-12%;background:var(--clip-poster) center/cover no-repeat;filter:blur(48px) saturate(1.5);opacity:.4;pointer-events:none;z-index:0}
@@ -111,7 +122,7 @@ export class BossClipPlayer{
   this.clear();const doc=this.document,clip=e.clip;
   // A modal <dialog> joins the top layer, so the clip covers any decision sheet or menu dialog already open.
   const root=doc.createElement('dialog');root.className='boss-clip';root.setAttribute('aria-label',(name||'Card')+' cut scene');
-  root.style.setProperty('--clip-tint',clip.tint||'#d9a441');root.style.setProperty('--clip-poster',`url("${clip.src.replace(/\.mp4$/,'.jpg')}")`);
+  root.style.setProperty('--clip-tint',clip.tint||'#d9a441');root.style.setProperty('--clip-top',clip.grad?.[0]||clip.tint||'#d9a441');root.style.setProperty('--clip-bot',clip.grad?.[1]||clip.tint||'#d9a441');root.style.setProperty('--clip-poster',`url("${clip.src.replace(/\.mp4$/,'.jpg')}")`);
   const sheet=doc.createElement('style');sheet.textContent=SHEET;
   const glow=doc.createElement('div');glow.className='boss-clip-glow';
   const frame=doc.createElement('div');frame.className='boss-clip-frame';

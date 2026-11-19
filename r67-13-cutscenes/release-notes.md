@@ -6,6 +6,7 @@ Kevy's feature, built by Claude. Clips made by Kevy with Grok Imagine. Not yet i
   - Summoned: The Three Champions of Swordsoul, Alba-Lenatus the Abyss Dragon, Guiding Quem, Blazing Cartesia, Dogmatika Ecclesia, Fallen of the White Dragon, Incredible Ecclesia, Favorite HERO Shining Flare Wingman, Fallen of Albaz, Aluber the Jester of Despia, Mirrorjade the Iceblade Dragon, Despian Quaeritis, The Dragon that Devours the Dogma, Titaniklad the Ash Dragon, Lubellion the Searing Dragon, Favorite HERO / Elemental HERO Flame Wingman.
   - Activated: The Fallen & The Virtuous, Mulcharmy Fuwalos, Droll & Lock Bird, Branded Fusion, Super Polymerization, Ash Blossom & Joyous Spring, Ghost Ogre & Snow Rabbit.
 - Look (Kevy's feedback, 19 Nov): the duel stays faintly visible behind a blurred veil lit in the clip's own colours, the clip sits in a gold-edged frame, and the card name appears as a gold Cinzel title with a coloured SUMMONED / ACTIVATED tag.
+  - Sky Striker: Raye, Roze, Kagari, Shizuku, Hayate, Ace = Zero and Amatsu (summoned); Engage!, Widow Anchor and Area Zero (activated).
 - Tap anywhere or press Skip to end a clip early. The duel music dips while a clip plays.
 - Clips are off with cinematics off, reduced motion, "skip cut-ins" or the Instant pace.
 - Add `?bossclip-test` to the address for a "Cut scenes" button that plays any clip on demand.
