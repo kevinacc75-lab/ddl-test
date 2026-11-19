@@ -36,7 +36,10 @@ export const BOSS_CLIPS=Object.freeze({
  45883110:Object.freeze({src:'clips/45883110.mp4',tint:'#ff193b',ms:7100,on:'summon',name:"Guiding Quem, the Virtuous"}),
  95515789:Object.freeze({src:'clips/95515789.mp4',tint:'#fd1c1a',ms:7100,on:'summon',name:"Blazing Cartesia, the Virtuous"}),
  60303688:Object.freeze({src:'clips/60303688.mp4',tint:'#d69041',ms:7100,on:'summon',name:"Dogmatika Ecclesia, the Virtuous"}),
- 73819701:Object.freeze({src:'clips/73819701.mp4',tint:'#dc6d3b',ms:7100,on:'summon',name:"Fallen of the White Dragon"})
+ 73819701:Object.freeze({src:'clips/73819701.mp4',tint:'#dc6d3b',ms:7100,on:'summon',name:"Fallen of the White Dragon"}),
+ 74405783:Object.freeze({src:'clips/74405783.mp4',tint:'#ffbf19',ms:7100,on:'summon',name:"The Three Champions of Swordsoul"}),
+ 3410461:Object.freeze({src:'clips/3410461.mp4',tint:'#ff2819',ms:7100,on:'summon',name:"Alba-Lenatus the Abyss Dragon"}),
+ 30271097:Object.freeze({src:'clips/30271097.mp4',tint:'#d64d41',ms:7100,on:'activate',name:"The Fallen & The Virtuous"})
 });
 export const CLIP_GRACE_MS=2500;
 const FACEDOWN=10;// POS_FACEDOWN_ATTACK 2 | POS_FACEDOWN_DEFENSE 8: a set card never reveals its clip

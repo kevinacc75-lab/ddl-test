@@ -3,8 +3,8 @@
 Kevy's feature, built by Claude. Clips made by Kevy with Grok Imagine. Not yet independently reviewed. Presentation only: the rules engine, the AI and Kevy's deck list are unchanged.
 
 - **Cut scenes.** The first time in a duel that one of these cards is played, its short video (about 7 seconds, with sound effects) plays full screen, then the duel carries on with the normal scene. Later plays of the same card in that duel show the normal scene only.
-  - Summoned: Guiding Quem, Blazing Cartesia, Dogmatika Ecclesia, Fallen of the White Dragon, Incredible Ecclesia, Favorite HERO Shining Flare Wingman, Fallen of Albaz, Aluber the Jester of Despia, Mirrorjade the Iceblade Dragon, Despian Quaeritis, The Dragon that Devours the Dogma, Titaniklad the Ash Dragon, Lubellion the Searing Dragon, Favorite HERO / Elemental HERO Flame Wingman.
-  - Activated: Mulcharmy Fuwalos, Droll & Lock Bird, Branded Fusion, Super Polymerization, Ash Blossom & Joyous Spring, Ghost Ogre & Snow Rabbit.
+  - Summoned: The Three Champions of Swordsoul, Alba-Lenatus the Abyss Dragon, Guiding Quem, Blazing Cartesia, Dogmatika Ecclesia, Fallen of the White Dragon, Incredible Ecclesia, Favorite HERO Shining Flare Wingman, Fallen of Albaz, Aluber the Jester of Despia, Mirrorjade the Iceblade Dragon, Despian Quaeritis, The Dragon that Devours the Dogma, Titaniklad the Ash Dragon, Lubellion the Searing Dragon, Favorite HERO / Elemental HERO Flame Wingman.
+  - Activated: The Fallen & The Virtuous, Mulcharmy Fuwalos, Droll & Lock Bird, Branded Fusion, Super Polymerization, Ash Blossom & Joyous Spring, Ghost Ogre & Snow Rabbit.
 - Look (Kevy's feedback, 19 Nov): the duel stays faintly visible behind a blurred veil lit in the clip's own colours, the clip sits in a gold-edged frame, and the card name appears as a gold Cinzel title with a coloured SUMMONED / ACTIVATED tag.
 - Tap anywhere or press Skip to end a clip early. The duel music dips while a clip plays.
 - Clips are off with cinematics off, reduced motion, "skip cut-ins" or the Instant pace.
