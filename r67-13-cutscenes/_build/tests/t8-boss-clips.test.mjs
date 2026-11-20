@@ -54,6 +54,23 @@ try{
  // Gates.
  for(const cfg of [{cinematics:false},{skipCutins:true},{preset:'instant'}]){fresh(cfg);p.play([summon(FW)],id);await sleep(30);assert.ok(!clipNode(),'no clip with '+JSON.stringify(cfg));const w=await settle();assert.ok(!p.active,'duel continues with '+JSON.stringify(cfg))}
  fresh();p.play([summon(5)],id);await sleep(30);assert.ok(!clipNode(),'unregistered card: no clip');await settle();
- console.log('t8-boss-clips: PASS');
+ 
+// r67.13 regression (Kevy 20 Nov 14:02): Branded Fusion activated from the hand reached the engine as 'activate' (id 90) but the
+// scene planner folded it away, so no clip played. Triggers now come from the raw events; the clip goes before the first
+// planned scene at or after the trigger.
+{const d=new ClipDirector();const BF=44362883;
+ const raw=[{id:89,type:'move',code:BF},{id:90,type:'activate',code:BF,player:0,source:{controller:0,location:8,sequence:0},chain:1},{id:91,type:'resolve',code:BF,chain:1}];
+ const planned=[{events:[{id:80,type:'draw'}],duration:500},{events:[{id:89,type:'move',code:BF},{id:91,type:'resolve',code:BF}],duration:900}];
+ const out=d.decorate(planned,true,{},raw);
+ assert.equal(out.length,3,'one clip step added');assert.equal(out[0].events[0].id,80);assert.equal(out[1].events[0].type,'bossClip');assert.equal(out[1].events[0].code,BF);
+ assert.deepEqual(out[1].events[0].at,{controller:0,location:8,sequence:0},'opens from the spell zone');
+ assert.equal(out[2],planned[1]);
+ assert.equal(d.decorate([{events:[{id:120,type:'resolve',code:BF}],duration:1}],true,{},[{id:119,type:'activate',code:BF,player:0}]).length,1,'still once per duel');
+ // trigger whose scene is deferred to a later delivery still plays now
+ const d2=new ClipDirector();const o2=d2.decorate([{events:[{id:5,type:'draw'}],duration:1}],true,{},[{id:9,type:'activate',code:29095457,player:1}]);
+ assert.equal(o2.length,2);assert.equal(o2[1].events[0].type,'bossClip');
+ // private activations never trigger
+ assert.equal(new ClipDirector().decorate([],true,{},[{id:3,type:'activate',code:BF,player:1,private:true}]).length,0);}
+console.log('t8-boss-clips: PASS');
 }finally{p.reset();dom.window.close()}
 process.exit(0);

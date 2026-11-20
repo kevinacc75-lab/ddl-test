@@ -109,14 +109,25 @@ export function clipFor(e,db={},registry=BOSS_CLIPS){
 export class ClipDirector{
  constructor(registry=BOSS_CLIPS){this.registry=registry;this.reset()}
  reset(){this.played=new Set()}
- decorate(batches,on,db={}){
-  if(!on)return batches;const out=[];
+ // r67.13 fix (Kevy 20 Nov 14:02: "branded fusion, primite drillbeam and primite lordly lode didn't trigger a cutscene"):
+ // the scene planner can fold a spell's 'activate' into a combined scene (e.g. one activated straight from the hand), so
+ // reading only its output missed it. When the raw engine events are passed, triggers come from them, and each clip is
+ // placed before the first planned scene at or after its triggering event.
+ decorate(batches,on,db={},raw=null){
+  if(!on)return batches;
+  const hits=[];
+  const scan=raw||batches.flatMap(b=>b.events);
+  for(const e of scan){const hit=clipFor(e,db,this.registry);if(!hit||this.played.has(hit.code))continue;this.played.add(hit.code);hits.push({e,hit})}
+  if(!hits.length)return batches;
+  const step=({e,hit})=>{const src=e.source,at=e.type==='summon'?{controller:e.player,location:4,sequence:e.sequence}:src&&src.location!=null&&src.sequence!=null?{controller:src.controller??e.player,location:src.location,sequence:src.sequence}:(e.location!=null&&e.sequence!=null?{controller:e.player,location:e.location,sequence:e.sequence}:null);
+   preloadClip(hit.clip.src);return {events:[{type:'bossClip',id:e.id,code:hit.code,player:e.player,trigger:e.type,clip:hit.clip,at}],duration:hit.clip.ms+CLIP_GRACE_MS+INTRO_MS+OUTRO_MS+LOAD_ALLOWANCE_MS}};
+  const out=[];let k=0;
   for(const batch of batches){
-   for(const e of batch.events){const hit=clipFor(e,db,this.registry);if(!hit||this.played.has(hit.code))continue;this.played.add(hit.code);
-    const src=e.source,at=e.type==='summon'?{controller:e.player,location:4,sequence:e.sequence}:src&&src.location!=null&&src.sequence!=null?{controller:src.controller??e.player,location:src.location,sequence:src.sequence}:(e.location!=null&&e.sequence!=null?{controller:e.player,location:e.location,sequence:e.sequence}:null);
-    out.push({events:[{type:'bossClip',id:e.id,code:hit.code,player:e.player,trigger:e.type,clip:hit.clip,at}],duration:hit.clip.ms+CLIP_GRACE_MS+INTRO_MS+OUTRO_MS+LOAD_ALLOWANCE_MS});preloadClip(hit.clip.src)}
+   const ids=batch.events.map(x=>x.id).filter(Number.isFinite),top=ids.length?Math.max(...ids):-Infinity;
+   while(k<hits.length&&(raw?(Number.isFinite(hits[k].e.id)&&top>=hits[k].e.id):batch.events.includes(hits[k].e)))out.push(step(hits[k++]));
    out.push(batch);
   }
+  while(k<hits.length)out.push(step(hits[k++]));// trigger not in any planned scene yet (deferred): play it now
   return out;
  }
 }
