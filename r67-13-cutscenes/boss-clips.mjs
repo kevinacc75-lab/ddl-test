@@ -72,7 +72,18 @@ export const BOSS_CLIPS=Object.freeze({
  56532353:Object.freeze({src:'clips/56532353.mp4',grad:['#4839c5','#e4791a'],tint:'#6177b7',ms:7100,on:'summon',name:"Neo Blue-Eyes Ultimate Dragon"}),
  11443677:Object.freeze({src:'clips/11443677.mp4',grad:['#f1970d','#f87506'],tint:'#ff9119',ms:7100,on:'summon',name:"Blue-Eyes Tyrant Dragon"}),
  17725109:Object.freeze({src:'clips/17725109.mp4',grad:['#3881c6','#3591c9'],tint:'#3a9ade',ms:7100,on:'activate',name:"Roar of the Blue-Eyed Dragons"}),
- 97268402:Object.freeze({src:'clips/97268402.mp4',grad:['#4594b9','#2990d5'],tint:'#42a4d5',ms:7100,on:'activate',name:"Effect Veiler"})
+ 97268402:Object.freeze({src:'clips/97268402.mp4',grad:['#4594b9','#2990d5'],tint:'#42a4d5',ms:7100,on:'activate',name:"Effect Veiler"}),
+ // Blue-Eyes set 2 (Kevy, 20 Nov 13:42)
+ 21123811:Object.freeze({src:'clips/21123811.mp4',grad:['#3f90bf','#2a80d4'],tint:'#3d7eda',ms:7100,on:'summon',name:"Cosmic Blazar Dragon"}),
+ 63436931:Object.freeze({src:'clips/63436931.mp4',grad:['#ef160f','#f2220c'],tint:'#ec352b',ms:7100,on:'summon',name:"Crimson Dragon"}),
+ 10515412:Object.freeze({src:'clips/10515412.mp4',grad:['#5888a6','#008bff'],tint:'#679db1',ms:7100,on:'summon',name:"Lightstorm Dragon"}),
+ 42097666:Object.freeze({src:'clips/42097666.mp4',grad:['#3b82c3','#1e99e0'],tint:'#4794d0',ms:7100,on:'summon',name:"Spirit with Eyes of Blue"}),
+ 80326401:Object.freeze({src:'clips/80326401.mp4',grad:['#b9a545','#aac13d'],tint:'#b6c651',ms:7100,on:'activate',name:"Wishes for Eyes of Blue"}),
+ 62089826:Object.freeze({src:'clips/62089826.mp4',grad:['#a49a5a','#48acb6'],tint:'#6fa884',ms:7100,on:'activate',name:"True Light"}),
+ 43219114:Object.freeze({src:'clips/43219114.mp4',grad:['#089cf6','#2387db'],tint:'#1da3fb',ms:7100,on:'activate',name:"Majesty of the White Dragons"}),
+ 24382602:Object.freeze({src:'clips/24382602.mp4',grad:['#4b7eb3','#4d87b1'],tint:'#6088b8',ms:7100,on:'activate',name:"Mausoleum of White"}),
+ 56506740:Object.freeze({src:'clips/56506740.mp4',grad:['#ad5163','#a15d6a'],tint:'#b06777',ms:7100,on:'activate',name:"Primite Lordly Lode"}),
+ 29095457:Object.freeze({src:'clips/29095457.mp4',grad:['#2a7ed4','#00a6ff'],tint:'#28a6ef',ms:7100,on:'activate',name:"Primite Drillbeam"})
 });
 export const CLIP_GRACE_MS=2500;
 // r67.13 transitions (Kevy 20 Nov 00:07: "some generic transition animation so the animations don't seem so chopped in ... maybe
