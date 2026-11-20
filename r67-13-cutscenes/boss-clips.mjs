@@ -61,7 +61,18 @@ export const BOSS_CLIPS=Object.freeze({
  98462037:Object.freeze({src:'clips/98462037.mp4',grad:['#b929d5','#c31ce2'],tint:'#c139de',ms:7100,on:'summon',name:"Sky Striker Ace - Azalea"}),
  12421694:Object.freeze({src:'clips/12421694.mp4',grad:['#fcba02','#ffcd00'],tint:'#ffca19',ms:7100,on:'summon',name:"Sky Striker Ace - Kaina"}),
  17217034:Object.freeze({src:'clips/17217034.mp4',grad:['#bf3fb5','#d32b3c'],tint:'#e92e8a',ms:7100,on:'summon',name:"Combined Maneuver - Engage Zero!"}),
- 10045474:Object.freeze({src:'clips/10045474.mp4',grad:['#4a7bb4','#00abff'],tint:'#4f9fc8',ms:7100,on:'activate',name:"Infinite Impermanence"})
+ 10045474:Object.freeze({src:'clips/10045474.mp4',grad:['#4a7bb4','#00abff'],tint:'#4f9fc8',ms:7100,on:'activate',name:"Infinite Impermanence"}),
+ // Blue-Eyes set 1 (Kevy, 20 Nov 12:25)
+ 89631139:Object.freeze({src:'clips/89631139.mp4',grad:['#2c79d2','#2e7ad0'],tint:'#4788d0',ms:7100,on:'summon',name:"Blue-Eyes White Dragon"}),
+ 8240199:Object.freeze({src:'clips/8240199.mp4',grad:['#2286dc','#3575c9'],tint:'#3f8ad8',ms:7100,on:'summon',name:"Sage with Eyes of Blue"}),
+ 17947697:Object.freeze({src:'clips/17947697.mp4',grad:['#4a95b4','#9ca658'],tint:'#6cab89',ms:7100,on:'summon',name:"Maiden of White"}),
+ 63198739:Object.freeze({src:'clips/63198739.mp4',grad:['#d62828','#d62829'],tint:'#d93f40',ms:7100,on:'summon',name:"Primite Dragon Ether Beryl"}),
+ 59822133:Object.freeze({src:'clips/59822133.mp4',grad:['#2a60d4','#4d78b1'],tint:'#507ac8',ms:7100,on:'summon',name:"Blue-Eyes Spirit Dragon"}),
+ 89604813:Object.freeze({src:'clips/89604813.mp4',grad:['#a95575','#e9aa15'],tint:'#f5a822',ms:7100,on:'summon',name:"Blue-Eyes Ultimate Spirit Dragon"}),
+ 56532353:Object.freeze({src:'clips/56532353.mp4',grad:['#4839c5','#e4791a'],tint:'#6177b7',ms:7100,on:'summon',name:"Neo Blue-Eyes Ultimate Dragon"}),
+ 11443677:Object.freeze({src:'clips/11443677.mp4',grad:['#f1970d','#f87506'],tint:'#ff9119',ms:7100,on:'summon',name:"Blue-Eyes Tyrant Dragon"}),
+ 17725109:Object.freeze({src:'clips/17725109.mp4',grad:['#3881c6','#3591c9'],tint:'#3a9ade',ms:7100,on:'activate',name:"Roar of the Blue-Eyed Dragons"}),
+ 97268402:Object.freeze({src:'clips/97268402.mp4',grad:['#4594b9','#2990d5'],tint:'#42a4d5',ms:7100,on:'activate',name:"Effect Veiler"})
 });
 export const CLIP_GRACE_MS=2500;
 // r67.13 transitions (Kevy 20 Nov 00:07: "some generic transition animation so the animations don't seem so chopped in ... maybe
