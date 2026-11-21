@@ -11,7 +11,8 @@ export const BOSSES=[
  {deck:'kashtira',deckName:'Sealed Horizon',boss:73542331,name:'Kashtira Shangri-Ira',art:'art/73542331.jpg'},
  {deck:'toon',deckName:'Ink Riot',boss:21296502,name:'Toon Dark Magician',art:'art/21296502.jpg'},
  {deck:'hero',deckName:'HERO — Mask & Vision',boss:23204029,name:'Contrast HERO Chaos',art:'art/23204029.jpg'},
- {deck:'dtw',deckName:'Time Typhoon',boss:17242022,name:'Red-Eyes Black Dragon Exceed',art:'art/17242022.jpg'}
+ {deck:'dtw',deckName:'Time Typhoon',boss:17242022,name:'Red-Eyes Black Dragon Exceed',art:'art/17242022.jpg'},
+ {deck:'toonfriend',deckName:'Toons (2026)',boss:71808988,name:'Blue-Eyes Toon Ultimate Dragon',art:'art/71808988.jpg'},
 ];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const ring=(i,n)=>((i%n)+n)%n;

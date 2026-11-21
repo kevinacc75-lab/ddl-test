@@ -20,7 +20,7 @@ test('(R44-1) only app.mjs, css/aurora.css, identity files and the Super Poly po
 });
 test('(R44-2) every preset deck has a boss in its own list with local card art, used on its tile',()=>{
  const {decks}=JSON.parse(read('decks.json'));const {cards}=JSON.parse(read('deck-cards.json'));const off=JSON.parse(read('offline-assets.json'));
- assert.equal(decks.length,9);
+ assert.equal(decks.length,10)/* r67.13-adapted: Kevy's friend's Toon deck added on Kevy's request (21 Nov 2026) */;
  for(const d of decks){assert.ok([...d.main,...d.extra].includes(d.boss),d.id+' boss in list');const a=cards[String(d.boss)]?.art;assert.match(a,/^art\/\d+\.(jpg|webp)$/,d.id);assert.ok(fs.existsSync(dist(a)),a);assert.ok(off.includes('./'+a),'precached '+a)}
  const app=read('app.mjs');assert.match(app,/const bossArt=d=>art\(d\.boss\)/);assert.match(app,/data-boss="\$\{esc\(String\(d\.boss\|\|''\)\)\}"\$\{bossBg\(d\)\}>\$\{bossTile\(d\)\}<div class="tile-body">/);
  assert.match(app,/--tile-art:url\(&quot;\$\{esc\(absArt\(bossArt\(d\)\)\)\}&quot;\)/);
