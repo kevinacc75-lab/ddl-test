@@ -84,3 +84,12 @@ body.in-duel[data-pc-play="1"] #decision-context[data-verified="0"]{color:#c9c2b
    of the sheet (data-compact-footer, e.g. large fonts on a tall screen). No floating second Confirm. */
 @media (max-height:700px){body.in-duel[data-pc-play="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column #selection-bar:not([hidden]){position:static;bottom:auto;margin:12px -14px 0}}
 body.in-duel[data-pc-play="1"][data-compact-footer="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column #selection-bar:not([hidden]){position:static;bottom:auto;margin:12px -14px 0}
+
+/* r67.12 T5a-1 (T4 blocker 2, finding F1; Claude 18 Nov 2026, author check only, review pending). On tablets the choice list (#choices,
+   max-height 540px) scrolled INSIDE the decision sheet, which scrolls too, and the sticky selection footer sits at the sheet's bottom edge.
+   So the end of the inner list could never move clear of "Confirm selection": the last card's centre hit Confirm (about 75px overlap,
+   both orientations). Fix, as phones already do (r49-mobile): one scroller only. The list grows inside the sheet, the footer stays sticky,
+   and scroll-padding keeps any choice scrolled into view above the footer. At the sheet's end the footer sits after the last choice. */
+body.in-duel.tablet-stage[data-pc-play="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column #choices{max-height:none!important;overflow:visible!important}
+body.in-duel.tablet-stage[data-pc-play="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column:has(#selection-bar:not([hidden])){scroll-padding-bottom:calc(var(--sel-bar-h,120px) + 8px)}
+body.in-duel[data-pc-play="1"][data-compact-footer="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column{scroll-padding-bottom:0}
