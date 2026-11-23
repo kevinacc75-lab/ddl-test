@@ -313,11 +313,19 @@ let sheetRevShown=null,footerObserver=null;
 function compactFooter(){const bar=$('#selection-bar'),col=bar?.closest('.decision-column'),b=document.body;
  if(!bar||bar.hidden||!bar.getClientRects().length){delete b.dataset.compactFooter;return}/* no visible footer: nothing to place */
  if(!col||!col.clientHeight||!bar.offsetHeight){b.dataset.compactFooter='1';return}/* r67.7 (ChatGPT RELAY-240 §2): a VISIBLE footer we can't measure goes to safe normal flow, never back to sticky */
- b.dataset.compactFooter=bar.offsetHeight>col.clientHeight/3?'1':'0';col.style.setProperty('--sel-bar-h',bar.offsetHeight+'px')/* r67.12 T5a-1: sticky footer height for the sheet's scroll-padding (css/r62-events.css) */}
+ b.dataset.compactFooter=bar.offsetHeight>col.clientHeight/3?'1':'0';col.style.setProperty('--sel-bar-h',bar.offsetHeight+'px')/* r67.12 T5a-1: sticky footer height for the sheet's scroll-padding (css/r62-events.css) */
+ coverFooter(col,bar)}
+/* T10-F7 (RELAY-308/309; Claude 23 Nov 2026, author check only, review pending): the sheet's scroll-padding must equal the part of the
+   scrollport the sticky footer COVERS (inner bottom edge minus the footer's top), not the footer's height. Measured in layout px (the
+   tablet stage is scaled), clamped at 0; the 8px breathing room stays in the CSS. Re-measured on resize and on scroll (coalesced to one
+   frame); written only when the value changes. Static or hidden footer: 0. */
+let coverRaf=0,coverCol=null;
+function coverFooter(col,bar){if(!col)return;let v=0;if(bar&&!bar.hidden&&bar.getClientRects().length&&getComputedStyle(bar).position==='sticky'){const cq=col.getBoundingClientRect(),bq=bar.getBoundingClientRect(),s=col.offsetHeight?cq.height/col.offsetHeight:1;v=Math.max(0,Math.round((cq.top+(col.clientTop+col.clientHeight)*s-bq.top)/(s||1)))}const px=v+'px';if(col.style.getPropertyValue('--sel-bar-cover')!==px)col.style.setProperty('--sel-bar-cover',px)}
+function watchFooterCover(col){if(!col||coverCol===col)return;coverCol=col;col.addEventListener('scroll',()=>{if(coverRaf)return;coverRaf=requestAnimationFrame(()=>{coverRaf=0;const bar=$('#selection-bar');coverFooter(bar?.closest('.decision-column'),bar)})},{passive:true})}
 function layoutDecisionSheet(){const bar=$('#selection-bar'),col=bar?.closest('.decision-column');
  if(col&&state?.prompt&&state.revision!==sheetRevShown){sheetRevShown=state.revision;col.scrollTop=0}
  if(!footerObserver&&bar&&col&&typeof ResizeObserver==='function'){footerObserver=new ResizeObserver(()=>compactFooter());footerObserver.observe(bar);footerObserver.observe(col)}
- compactFooter()}
+ watchFooterCover(col);compactFooter()}
 function renderDecision(x){const shownKey=humanFlow.current?.key??null,shownRev=state?.revision;if(cardMenuTok&&!$('#card-action-menu')?.hidden)shell?.play.close?.();/* r66: a card menu opened for the previous drawing would only be refused; close it so nothing looks tappable that is not */clearRendered();const tok=issueToken();drawToken=tok;document.body.dataset.decider=isAi?'ai':'human';
  renderDecisionBody(x);layoutDecisionSheet();
  if(!isAi&&!disabled&&state&&!state.finished&&mode!=='watch'&&!!state.prompt&&$('#choices').querySelector('button:not([disabled]),input:not([disabled]),select'))markRendered(tok);updatePhaseControls();
@@ -366,8 +374,20 @@ function copyGroups(m,cards){if(m.type!==M.SELECT_CARD||m.min!==1||m.max!==1||!A
  for(const [i,c] of cards.entries()){if(!c.code||c.location!==1||!Number.isInteger(c.controller)||c.controller!==ctl||!Number.isInteger(c.sequence)||c.sequence<0)return null;const p=c.location+':'+c.sequence;if(phys.has(p))return null;phys.add(p);
   const k=c.code+':'+c.controller+':'+c.location+':'+(c.position??'');if(!groups.has(k))groups.set(k,[]);groups.get(k).push(i)}
  const out=[...groups.values()].map(g=>g.sort((a,b)=>a-b));return out.some(g=>g.length>1)?out:null}
+/* T10-K4b (RELAY-308/309; Claude 23 Nov 2026, author check only, review pending): the reply stays index-based, but a kept selection
+   is valid only for the same ordered candidates. A redraw whose candidate identities changed clears it. Identity = code, controller,
+   location, sequence, position (+ label/value for announce lists), never the label or code alone. If a card lacks a location or
+   sequence, equivalence can't be shown, so any replaced candidate list clears it. Rotation/resize redraws reuse the same list: kept. */
+/* T10-K4b r2 (ChatGPT RELAY-313; Claude 23 Nov 2026, author check only, review pending): the guard runs on the rows actually drawn
+   (after announce rows are built from m.available), and its identity includes the prompt type and, for announce prompts, the mask, so a
+   same-revision redraw that changes ANNOUNCE_RACE/ANNOUNCE_ATTRIB options (e.g. mask 3 -> 6) clears the selection. Announce rows have no
+   location/sequence but are fully identified by type + bit value, so they count as stable. */
+function guardSelection(m,cards,isMask){const list=m.selects||m.cards||null,stable=isMask||cards.every(c=>c&&c.location!=null&&c.sequence!=null),sig=JSON.stringify([m.type,isMask?String(m.available):null,cards.map(c=>[c?.code,c?.controller,c?.location,c?.sequence,c?.position,c?.label??null,c?.value!=null?String(c.value):null])]);
+ if(selGuard&&selected.size&&(stable?sig!==selGuard.sig:list!==selGuard.list))selected.clear();selGuard={sig,list}}
+let selGuard=null;/* T10 gate (Claude 23 Nov 21:22): declared after guardSelection, not between copyGroups and the next function, so the R65-4 source-slice test still parses copyGroups (no behaviour change) */
 function renderMulti(m){const tok=drawToken;/* r66 (RELAY-224 MED-R65-1): every control drawn here submits with this render's token */$('#selection-bar').hidden=false;copiesToggle.hidden=true;copiesToggle.onclick=null;$('#cancel-select').hidden=!m.can_cancel;$('#cancel-select').onclick=()=>reply({type:m.type===M.SELECT_TRIBUTE?R.SELECT_TRIBUTE:R.SELECT_CARD,indicies:null},null,tok);const isCounter=m.type===M.SELECT_COUNTER,isMask=[M.ANNOUNCE_RACE,M.ANNOUNCE_ATTRIB].includes(m.type);let cards=m.selects||m.cards||[];
  if(isMask){const races=['Warrior','Spellcaster','Fairy','Fiend','Zombie','Machine','Aqua','Pyro','Rock','Winged Beast','Plant','Insect','Thunder','Dragon','Beast','Beast-Warrior','Dinosaur','Fish','Sea Serpent','Reptile','Psychic','Divine-Beast','Creator God','Wyrm','Cyberse','Illusion'];const attrs=['EARTH','WATER','FIRE','WIND','LIGHT','DARK','DIVINE'];cards=[];for(let i=0;i<64;i++)if(BigInt(m.available)&(1n<<BigInt(i)))cards.push({code:0,label:(m.type===M.ANNOUNCE_RACE?races:attrs)[i]||'Type '+i,value:m.type===M.ANNOUNCE_RACE?1n<<BigInt(i):2**i})}
+ guardSelection(m,cards,isMask);
  /* r63 grouped copies r1 (ChatGPT Grouped-copy-selection-spec-r1, pending Seto team): ONLY a one-card SELECT_CARD while the
     resolving chain link is an allowlisted own-Deck search (Engage), and only when every offered card is a distinct physical
     copy in that Deck. Same code + controller + location + position form one row "×n"; the row selects the lowest original

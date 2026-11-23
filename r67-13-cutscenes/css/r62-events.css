@@ -91,5 +91,12 @@ body.in-duel[data-pc-play="1"][data-compact-footer="1"]:not(#_):not(#_):not(#_):
    both orientations). Fix, as phones already do (r49-mobile): one scroller only. The list grows inside the sheet, the footer stays sticky,
    and scroll-padding keeps any choice scrolled into view above the footer. At the sheet's end the footer sits after the last choice. */
 body.in-duel.tablet-stage[data-pc-play="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column #choices{max-height:none!important;overflow:visible!important}
-body.in-duel.tablet-stage[data-pc-play="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column:has(#selection-bar:not([hidden])){scroll-padding-bottom:calc(var(--sel-bar-h,120px) + 8px)}
+/* T10-F7/F8 (RELAY-308/309; Claude 23 Nov 2026, author check only, review pending): pad by the space the sticky footer covers
+   (--sel-bar-cover, measured in app.mjs), and only while it is sticky: not in compact mode, not in the <=700px static range (exact
+   complement via 'not all and'). A static or hidden footer gets no padding. */
+@media not all and (max-height:700px){body.in-duel.tablet-stage[data-pc-play="1"]:not([data-compact-footer="1"]):not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column:has(#selection-bar:not([hidden])){scroll-padding-bottom:calc(var(--sel-bar-cover,var(--sel-bar-h,120px)) + 8px)}}
 body.in-duel[data-pc-play="1"][data-compact-footer="1"]:not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column{scroll-padding-bottom:0}
+/* T10 F9 ring room (ChatGPT RELAY-317 chose 8 px; Claude 23 Nov 2026 21:20 AEDT, private candidate). The keyboard focus ring paints 5 px outside a
+   row; without scroll padding a row scrolled to the sheet's top (Shift+Tab) or to a static/compact/hidden footer's edge has its ring clipped.
+   8 px top and bottom on tablets; this is ring room, not footer padding. The sticky rule above is more specific and keeps cover+8 (not stacked). */
+body.in-duel.tablet-stage[data-pc-play="1"]:not(#_):not(#_):not(#_):not(#_):not(#_) #duel:not([data-screen=field]) .decision-column{scroll-padding-top:8px;scroll-padding-bottom:8px}
