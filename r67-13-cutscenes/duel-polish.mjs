@@ -4,7 +4,7 @@ export const PHASE_NAMES={1:'Draw Phase',2:'Standby Phase',4:'Main Phase 1',8:'B
 export function polishPolicy(o={},systemReduced=false){return {enabled:o.cinematics!==false,instant:o.preset==='instant',reduced:!!o.motion||systemReduced,scale:Math.max(.3,Math.min(2,Number(o.fxPace)||1))};}
 export function chainLabel(e){const n=Number(e.chain??e.count);const cl=Number.isInteger(n)&&n>0?`Chain ${n}`:'Chain';return e.type==='activate'?`${cl} · Building`:['resolve','chainLock'].includes(e.type)?`${cl} · Resolving`:e.type==='negate'?`${cl} · Negated`:e.type==='chainEnd'?'Chain complete':null;}
 export function createDuelPolish({options=()=>({}),doc=document,win=window}={}){
- const media=win.matchMedia?.('(prefers-reduced-motion: reduce)');let bar,phase,pill,view=0,key=null,ready=false,lastPhase='',disposed=false,generation=0;
+ const media=win.matchMedia?.('(prefers-reduced-motion: reduce)');let bar,phase,pill,view=0,key=null,ready=false,lastPhase='',disposed=false,generation=0,anchor=-1,terminal=false;
  if(!doc.getElementById('ddl-polish-style')){const link=doc.createElement('link');link.id='ddl-polish-style';link.rel='stylesheet';link.href=new URL('./css/duel-polish.css',import.meta.url).href;doc.head?.append(link);}
  const animations=new Set(),rings=new Map(),nodes=new Set();let clearPill;
  const policy=()=>polishPolicy(options(),!!media?.matches);
@@ -16,6 +16,7 @@ export function createDuelPolish({options=()=>({}),doc=document,win=window}={}){
   // One animation per decorative node: rapid events replace instead of queueing.
   for(const a of node.getAnimations?.()||[])a.cancel();
   const a=node.animate(frames,{duration:Math.round(ms*p.scale),easing:'cubic-bezier(.2,.8,.2,1)',fill:'none'});animations.add(a);a.finished.catch(()=>{}).finally(()=>animations.delete(a));return a;}
+ function stage(label){/* r67.10 integration (Claude): styles the existing E3 announcement. F4 r4: set only from the accepted phase (plate), never from an older event */const st=doc.getElementById?.('event-stage');if(st)st.dataset.ddlPhase=label==='Battle Phase'?'battle':'calm'}
  function clearRings(){for(const n of nodes)if(n.classList.contains('ddl-chain-halo')){n.remove();nodes.delete(n)}rings.clear();}
  function ring(e){const p=policy();if(!p.enabled||p.instant||!Number.isInteger(e.chain)||e.chain<1)return;
   const s=e.source;if(!s||![0,1].includes(s.controller)||![4,8].includes(s.location)||!Number.isInteger(s.sequence)||!Number.isInteger(e.code)||e.code<1)return;
@@ -27,13 +28,13 @@ export function createDuelPolish({options=()=>({}),doc=document,win=window}={}){
   animate(halo,[{opacity:.35,transform:'scale(.94)'},{opacity:1,transform:'scale(1.045)',offset:.3},{opacity:.5,transform:'scale(1)',offset:.55},{opacity:1,transform:'scale(1.045)',offset:.8},{opacity:.8,transform:'scale(1)'}],760);
  }
  function onEvent({detail:e}){if(!ready||disposed||!e||!mount())return;const p=policy();if(!p.enabled)return;
-  if(e.type==='phase'){const label=PHASE_NAMES[e.phase];{const st=doc.getElementById?.('event-stage');if(st&&label)st.dataset.ddlPhase=label==='Battle Phase'?'battle':'calm'}/* r67.10 integration (Claude): styles the existing E3 announcement */if(label&&label!==lastPhase){lastPhase=label;phase.textContent=label;phase.dataset.battle=String(label==='Battle Phase');animate(phase,[{opacity:.2,transform:'translateY(4px) scale(.98)'},{opacity:1,transform:'translateY(0) scale(1)'}],label==='Battle Phase'?340:180)}}
+  if(e.type==='phase'){const label=PHASE_NAMES[e.phase];const id=Number.isFinite(e.id)?e.id:null,newer=!terminal&&(id===null||id>anchor);/* n3 (RELAY-334): an event at or below the newest accepted phase, or any phase after the terminal state, no longer repaints the plate */if(label&&newer){if(id!==null)anchor=id;stage(label)}/* LOW-F4-2 (RELAY-336): the E3 palette follows the same accepted phase as the plate */if(label&&newer&&label!==lastPhase){lastPhase=label;phase.textContent=label;phase.dataset.battle=String(label==='Battle Phase');animate(phase,[{opacity:.2,transform:'translateY(4px) scale(.98)'},{opacity:1,transform:'translateY(0) scale(1)'}],label==='Battle Phase'?340:180)}}
   const label=chainLabel(e);if(label){clearTimeout(clearPill);pill.textContent=label;pill.dataset.stage=e.type;animate(pill,[{opacity:.35,transform:'translateY(2px)'},{opacity:1,transform:'translateY(0)'}],160)}
   if(e.type==='activate'){const gen=generation;queueMicrotask(()=>{if(ready&&!disposed&&gen===generation)ring(e)})}
   if(e.type==='negate'){const n=rings.get(e.chain);if(n)n.classList.add('is-negated')}
   if(e.type==='chainEnd'){generation++;clearRings();if(!p.instant)clearPill=setTimeout(()=>{pill.textContent='No active chain';delete pill.dataset.stage},Math.round(900*p.scale));else {pill.textContent='No active chain';delete pill.dataset.stage}}
   if(e.type==='move'){generation++;const hit=[e.from,e.to].filter(Boolean).map(s=>[s.controller,s.location,s.sequence].join(':'));for(const [id,n]of rings)if(hit.includes(n.dataset.slot)){n.remove();nodes.delete(n);rings.delete(id)}}
-  if(e.type==='turn'||e.type==='win'){generation++;clearRings();clearTimeout(clearPill);pill.textContent='No active chain';delete pill.dataset.stage;if(e.type==='win')phase.textContent='Duel complete';}
+  if(e.type==='turn'||e.type==='win'){generation++;clearRings();clearTimeout(clearPill);pill.textContent='No active chain';delete pill.dataset.stage;if(e.type==='win'){terminal=true;lastPhase='';phase.textContent='Duel complete';delete phase.dataset.battle;stage('')}}
  }
  function onLp({detail:d}){if(!ready||disposed||d?.type!=='start')return;const p=policy(),e=d.event;if(!p.enabled||p.instant||!e||![0,1].includes(e.player))return;
   const host=doc.querySelector(e.player===view?'#my-lp':'#opp-lp');if(!host)return;
@@ -42,9 +43,16 @@ export function createDuelPolish({options=()=>({}),doc=document,win=window}={}){
   if(a)a.finished.catch(()=>{}).finally(()=>{frame.remove();nodes.delete(frame)});else {frame.remove();nodes.delete(frame)}
   // Existing createLpFx owns count-up/count-down, timing, sound and authoritative final values.
  }
- function reset(){ready=false;key=null;lastPhase='';cancel();if(phase){phase.textContent='Duel ready';delete phase.dataset.battle}if(pill){pill.textContent='Chain details in panel';delete pill.dataset.stage}}
+ function reset(){ready=false;key=null;lastPhase='';anchor=-1;terminal=false;cancel();if(phase){phase.textContent='Duel ready';delete phase.dataset.battle}if(pill){pill.textContent='Chain details in panel';delete pill.dataset.stage}}
  function configure(){cancel();const p=policy();if(bar)bar.hidden=!p.enabled;doc.body.classList.toggle('ddl-polish-enabled',p.enabled&&!!bar?.isConnected);}
- function accept(msg){if(disposed||!msg?.state)return;const next=[msg.human?.epoch??0,msg.match?.seed??'',msg.view,msg.mode].join(':');if(key!==next){reset();key=next}view=msg.view??0;ready=true;mount();if(bar)bar.hidden=!policy().enabled;}
+ function accept(msg){if(disposed||!msg?.state)return;const next=[msg.human?.epoch??0,msg.match?.seed??'',msg.mode].join(':');if(key!==next){reset();key=next}else if((msg.view??0)!==view)cancel();/* same duel, other seat: drop decorations as before, keep the phase */view=msg.view??0;ready=true;mount();if(bar)bar.hidden=!policy().enabled;syncPhase(msg.state,msg.lastEventId);}
+ // F4 (RELAY-330, Claude build): a seat-view change is the same duel, so it no longer resets the plate. After a reset the plate is taken from the
+ // current duel state; 'Duel ready' only before turn 1; an unknown mid-duel phase is left blank until a verified phase arrives. Events still drive changes.
+ // n3 (RELAY-334, F4 r3): the newest accepted snapshot's known phase is painted before its prompt. Ordering = event ids: a snapshot covers events up to
+ // lastEventId, so a snapshot or phase event at or below the anchor is older and cannot overwrite it. Unknown phase keeps the last verified same-duel phase.
+ // Terminal wins until reset() (explicit rewind or new duel). A snapshot without lastEventId has no ordering: it only fills an empty plate (r2 rule).
+ function syncPhase(st,seq){if(!phase)return;if(st.finished||terminal){/* LOW-F4-1 (RELAY-332): terminal state wins over a cached phase */terminal=true;lastPhase='';phase.textContent='Duel complete';delete phase.dataset.battle;stage('');return}
+  const label=PHASE_NAMES[st.phase],ordered=Number.isFinite(seq);if(label){if(ordered?seq>=anchor:!lastPhase){if(ordered)anchor=seq;lastPhase=label;phase.textContent=label;phase.dataset.battle=String(label==='Battle Phase');stage(label)}}else if(!lastPhase&&Number(st.turn)>=1)phase.textContent='';}
  function clearTransient(){cancel();if(pill){pill.textContent='Chain details in panel';delete pill.dataset.stage}}
  function visibility(){if(doc.hidden)clearTransient()}
  function skip(e){if(e.type==='keydown'?e.key==='Escape':e.target?.closest?.('#skip-fx,#skip-scene,#skip-victory,#controls-skip'))clearTransient()}

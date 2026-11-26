@@ -103,3 +103,22 @@ body.in-duel #duel .pile-col.field-side .pile{height:35%}
  body.in-duel:not(#_):not(#_) #duel .pile-col .zone-deck::after{content:'DECK'}
  body.in-duel:not(#_):not(#_) #duel .pile-col .zone-extra::after{content:'EXTRA'}
 }
+
+/* T5a-3 F3 r1 (RELAY-330 direction; Claude 25 Nov 2026 00:20-00:35 AEDT, private candidate, not reviewed). Compact portrait (<=600 px wide, which
+   includes a 768x1024 tablet at 150% and 200% page zoom): the pile columns were 45 px wide and ~12 px per pile, so each 18 px count badge sat
+   on the next pile's 8 px label (Deck/GY/Banish unreadable). Each pile becomes one line, label then count, in its own box; columns widen to
+   58 px (the five zones keep ~45 px each); the decorative pile stack and the aria-hidden 'FUSION ARENA' watermark are hidden here only.
+   Spoken labels (aria-label with the count) and the DOM are unchanged. Scoped to short compact portrait (<=760 px tall) so ordinary
+   phones (e.g. 390x844), which already fit, keep their pile art; wider or taller layouts are not touched. */
+@media (max-width:600px) and (max-height:760px) and (orientation:portrait){
+ body.in-duel:not(#_):not(#_):not(#_) #duel .half{grid-template-columns:58px minmax(0,1fr) 58px!important}
+ body.in-duel:not(#_):not(#_):not(#_) #duel .pile-col{gap:1px!important;min-width:0}
+ body.in-duel:not(#_):not(#_):not(#_) #duel .pile-col .pile{flex-direction:row!important;align-items:center!important;justify-content:space-between!important;gap:2px;padding:0 4px!important;min-height:0!important;overflow:hidden}
+ body.in-duel:not(#_):not(#_):not(#_) #duel .pile-col .pile .pile-stack{display:none!important}
+ body.in-duel:not(#_):not(#_):not(#_) #duel .pile-col .pile::after{order:-1;font:700 10px/1 Inter,system-ui,sans-serif!important;letter-spacing:0;color:#F4E7C6}
+ body.in-duel:not(#_):not(#_):not(#_) #duel .pile-col .pile b{position:static!important;font:800 11px/1 Inter,system-ui,sans-serif!important;color:#fff;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;min-width:0!important;width:auto!important;height:auto!important}
+ body.in-duel:not(#_):not(#_):not(#_) #duel .pile-col .pile{flex:1 1 0!important;height:auto!important}
+ /* Field Spell slot took a fixed 48 px of a ~39 px column and squeezed Extra Deck to 2 px: share the column instead */
+ body.in-duel:not(#_):not(#_):not(#_) #duel .pile-col.field-side>.zone{flex:2 1 0!important;height:auto!important;width:100%!important}
+ body.in-duel:not(#_):not(#_):not(#_) #duel .bridge-mark{display:none!important}
+}

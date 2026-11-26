@@ -108,17 +108,26 @@ export function clipFor(e,db={},registry=BOSS_CLIPS){
 // Once per card per duel (either player). reset() at every new duel; nothing is marked while the gate is off.
 export class ClipDirector{
  constructor(registry=BOSS_CLIPS){this.registry=registry;this.reset()}
- reset(){this.played=new Set()}
+ reset(){this.played=new Set();this.open=new Map()}// open: chain link -> clip hit of an activation not yet resolved
  // r67.13 fix (Kevy 20 Nov 14:02: "branded fusion, primite drillbeam and primite lordly lode didn't trigger a cutscene"):
  // the scene planner can fold a spell's 'activate' into a combined scene (e.g. one activated straight from the hand), so
  // reading only its output missed it. When the raw engine events are passed, triggers come from them, and each clip is
  // placed before the first planned scene at or after its triggering event.
  decorate(batches,on,db={},raw=null){
-  if(!on)return batches;
+  // T8 HIGH-1 (Seto team, RELAY-340): activate clips fire when the card goes on the chain. If that chain link is negated, the
+  // flag is released so a later successful activation still gets its clip, and if the negation is already in this stream the
+  // clip is withheld. Negations are read even with the gate off, so a flag taken earlier is still released.
   const hits=[];
   const scan=raw||batches.flatMap(b=>b.events);
-  for(const e of scan){const hit=clipFor(e,db,this.registry);if(!hit||this.played.has(hit.code))continue;this.played.add(hit.code);hits.push({e,hit})}
-  if(!hits.length)return batches;
+  for(const e of scan){
+   if(!e)continue;
+   if(e.type==='chainEnd'){this.open.clear();continue}
+   if(e.type==='negate'){const o=e.chain!=null&&this.open.get(e.chain);if(o){this.open.delete(e.chain);const i=hits.indexOf(o);if(i>=0)hits.splice(i,1);this.played.delete(o.hit.code)}continue}
+   if(e.type==='activate'&&e.chain!=null)this.open.delete(e.chain);
+   if(!on)continue;
+   const hit=clipFor(e,db,this.registry);if(!hit||this.played.has(hit.code))continue;this.played.add(hit.code);const h={e,hit};hits.push(h);if(e.type==='activate'&&e.chain!=null)this.open.set(e.chain,h);
+  }
+  if(!on||!hits.length)return batches;
   const step=({e,hit})=>{const src=e.source,at=e.type==='summon'?{controller:e.player,location:4,sequence:e.sequence}:src&&src.location!=null&&src.sequence!=null?{controller:src.controller??e.player,location:src.location,sequence:src.sequence}:(e.location!=null&&e.sequence!=null?{controller:e.player,location:e.location,sequence:e.sequence}:null);
    preloadClip(hit.clip.src);return {events:[{type:'bossClip',id:e.id,code:hit.code,player:e.player,trigger:e.type,clip:hit.clip,at}],duration:hit.clip.ms+CLIP_GRACE_MS+INTRO_MS+OUTRO_MS+LOAD_ALLOWANCE_MS}};
   const out=[];let k=0;

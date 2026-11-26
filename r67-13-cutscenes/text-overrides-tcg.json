@@ -19,7 +19,7 @@
     "entries": 34
    }
   ],
-  "entries": 70,
+  "entries": 73,
   "sharedIdentical": [
    "14558128",
    "27204311",
@@ -30,7 +30,8 @@
    "84192580"
   ],
   "conflicts": 0,
-  "use": "UI card text only (library-worker.mjs). Engine, AI and gate use the bundled card data."
+  "use": "UI card text only (library-worker.mjs). Engine, AI and gate use the bundled card data.",
+  "t12": "25 Nov 2026 (Claude, private candidate): +3 entries from Seto RELAY-345 item 1 (Tea). dbName = bundled name; name = printed TCG name (library-worker.mjs renames only when dbName matches)."
  },
  "cards": {
   "1948619": {
@@ -71,6 +72,15 @@
    "source": "Konami Neuron cid=15057",
    "from": [
     "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "7293697": {
+   "dbName": "Toon World the Perfect World",
+   "name": "Perfect Toon World",
+   "desc": "This card's name becomes \"Toon World\" while in the Field Zone. Once per turn, during your Main Phase: You can add 1 \"Toon\" card, or 1 card that mentions a \"Toon\" card by name, from your Deck to your hand. You can only use this effect of \"Perfect Toon World\" thrice per turn. If another card's effect activates, at the start of its resolution, you can banish 1 Toon monster you control until immediately after that effect resolves (each unique original monster name can only be banished once per turn, by you, by this effect of \"Perfect Toon World\").",
+   "source": "Konami Neuron cid=23161 (Seto team, Tea, RELAY-345, fetched 25 Nov 2026 06:35 AEDT; MAMS, 13 Nov 2026)",
+   "from": [
+    "RELAY-345 item 1 (T12 MED-4)"
    ]
   },
   "10045474": {
@@ -284,6 +294,14 @@
     "tcg-text-overrides-ehero-2026-10-20.json"
    ]
   },
+  "34298391": {
+   "name": "Mind Scan",
+   "desc": "While you have a \"Toon\" card in your field or GY, your opponent must keep their hand revealed, also you can look at their Set cards at any time. If you have a Toon monster and a \"Toon\" Spell in your field and/or GY: You can declare 1 card name (you cannot declare a name whose effect has been activated in a current Chain); until the end of this turn while this card is face-up, negate the activated effects of cards with that original name. You can only use this effect of \"Mind Scan\" once per turn.",
+   "source": "Konami Neuron cid=23162 (Seto team, Tea, RELAY-345, fetched 25 Nov 2026 06:35 AEDT; MAMS, 13 Nov 2026)",
+   "from": [
+    "RELAY-345 item 1 (T12 MED-4)"
+   ]
+  },
   "36637374": {
    "name": "Branded Opening",
    "desc": "Discard 1 card, then take 1 \"Despia\" monster from your Deck, and either add it to your hand or Special Summon it in Defense Position, also for the rest of this turn after this card resolves, you cannot Special Summon from the Extra Deck, except Fusion Monsters. If a Fusion Monster(s) you control would be destroyed by card effect, you can banish this card from your GY instead. You can only use each effect of \"Branded Opening\" once per turn.",
@@ -468,6 +486,15 @@
    "source": "Konami Neuron cid=17070",
    "from": [
     "tcg-text-overrides-v5.3-candidate.json"
+   ]
+  },
+  "72921536": {
+   "dbName": "Comic Cat",
+   "name": "Animimicat",
+   "desc": "This card is treated as a Toon monster while \"Toon World\" is on the field. During the Main Phase (Quick Effect): You can Tribute 1 monster (if you control \"Toon World\", you can Tribute 1 monster your opponent controls instead), and if you do, Special Summon 1 monster that mentions \"Toon World\" from your hand or Deck, ignoring its Summoning conditions. You can only use this effect of \"Animimicat\" once per turn.",
+   "source": "Konami Neuron cid=23157 (Seto team, Tea, RELAY-345, fetched 25 Nov 2026 06:35 AEDT; MAMS, 13 Nov 2026)",
+   "from": [
+    "RELAY-345 item 1 (T12 MED-4)"
    ]
   },
   "73628505": {
